@@ -1,0 +1,155 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+<html lang="en" data-ng-app="travel_portal_hotel_profile">
+<head>
+<title>@title</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="Thu, 19 Nov 1900 08:52:00 GMT">
+<link rel="shortcut icon" href='@routes.Assets.at("app/images/icons/favicon.ico")'>
+<link rel="apple-touch-icon" href='@routes.Assets.at("images/icons/favicon.png")'>
+<link rel="apple-touch-icon" sizes="72x72" href='@routes.Assets.at("images/icons/favicon-72x72.png")'>
+<link rel="apple-touch-icon" sizes="114x114" href='@routes.Assets.at("images/icons/favicon-114x114.png")'>
+<!--Loading bootstrap css-->
+<!--<link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">-->
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css")'>
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/font-awesome/css/font-awesome.min.css")'>
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/bootstrap/css/bootstrap.min.css")'>
+<!--LOADING STYLESHEET FOR PAGE-->
+<!--Loading style vendors-->
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/animate.css/animate.css")'>
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/jquery-pace/pace.css")'>
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/iCheck/skins/all.css")'>
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/jquery-notific8/jquery.notific8.min.css")'>
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/bootstrap-daterangepicker/daterangepicker-bs3.css")'>
+<!--Loading style-->
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/css/themes/style1/orange-blue.css")' class="default-style">
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/css/themes/style1/orange-blue.css")' id="theme-change"
+	class="style-change color-change">
+<link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/style-responsive.css")'>
+</head>
+<body class=" ">
+<div>
+    
+    <!--BEGIN BACK TO TOP--><!--<a id="totop" href="#">
+    <i class="fa fa-angle-up"></i></a>--><!--END BACK TO TOP--><!--BEGIN TOPBAR-->
+    <div id="header-topbar-option-demo" class="page-header-topbar">
+        <nav id="topbar" role="navigation" style="margin-bottom: 0; z-index: 2" class="navbar navbar-default navbar-static-top">
+            <div class="navbar-header">
+                <button type="button" data-toggle="collapse" data-target=".sidebar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                <a id="logo" href="#" class="navbar-brand"><span class="fa fa-rocket"></span><span class="logo-text" style="font-size: 20px !important">TRAVEL PORTAL</span><span style="display: none" class="logo-text-icon">µ</span></a></div>
+            <div class="topbar-main"><a id="menu-toggle" href="#" class="hidden-xs"><i class="fa fa-bars"></i></a>
+                
+                <form id="topbar-search" action="#" method="GET" class="hidden-xs">
+                    <div class="input-group"><input type="text" placeholder="Search..." class="form-control"/><span class="input-group-btn"><a href="javascript:;" class="btn submit"><i class="fa fa-search"></i></a></span></div>
+                </form>
+                <ul class="nav navbar navbar-top-links navbar-right mbn">
+                    
+                    <li id="topbar-chat" class="hidden-xs">
+						<a href="javascript:void(0)" class="btn-chat">Home</a>
+					</li>
+                    <li id="topbar-chat" class="hidden-xs">
+						<a href="javascript:void(0)" class="btn-chat">Supplier Area</a>
+					</li>
+					<li id="topbar-chat" class="hidden-xs">
+						<a href="javascript:void(0)" class="btn-chat">Contact US</a>
+					</li>
+                </ul>
+            </div>
+        </nav>
+        <!--BEGIN MODAL CONFIG PORTLET-->
+        
+        <!--END MODAL CONFIG PORTLET--></div>
+    <!--END TOPBAR-->
+    <div id="wrapper"><!--BEGIN SIDEBAR MENU-->
+        <nav id="sidebar" role="navigation" class="navbar-default navbar-static-side">
+            <div class="sidebar-collapse menu-scroll">
+                <ul id="side-menu" class="nav">
+                    <li class="user-panel">
+                        
+                    </li>
+                    <li><a href="#"><i class="fa fa-tachometer fa-fw">
+                        <div class="icon-bg bg-orange"></div>
+                    </i><span class="menu-title">Hotel Profile</span></a></li>
+                    
+                    <li><a href="#"><i class="fa fa-desktop fa-fw">
+                        <div class="icon-bg bg-pink"></div>
+                    </i><span class="menu-title">Room Types</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="#"><i class="fa fa-align-left"></i><span class="submenu-title">Create Room Types</span></a></li>
+							<li><a href="#"><i class="fa fa-align-left"></i><span class="submenu-title">Edit Room Types</span></a></li>
+                        </ul>
+                    </li>
+                    <!--li.charts-sum<div id="ajax-loaded-data-sidebar"></div>--></ul>
+            </div>
+        </nav>
+        <!--END SIDEBAR MENU--><!--BEGIN CHAT FORM-->
+        
+        <!--END CHAT FORM--><!--BEGIN PAGE WRAPPER-->
+	@content
+		<!--BEGIN FOOTER-->
+        <div id="footer">
+            <div class="copyright">2014 © &mu;Admin - Responsive Multi-Style Admin Template</div>
+        </div>
+        <!--END FOOTER--><!--END PAGE WRAPPER--></div>
+</div>
+	<script src='@routes.Assets.at("app/js/jquery-1.10.2.min.js")'></script>
+	<script src='@routes.Assets.at("app/js/jquery-migrate-1.2.1.min.js")'></script>
+	<script src='@routes.Assets.at("app/js/jquery-ui.js")'></script>
+	<!--loading bootstrap js-->
+	<script src='@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")'></script>
+	<script
+		src='@routes.Assets.at("app/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js")'></script>
+	<script src='@routes.Assets.at("app/js/html5shiv.js")'></script>
+	<script src='@routes.Assets.at("app/js/respond.min.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/metisMenu/jquery.metisMenu.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/slimScroll/jquery.slimscroll.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/jquery-cookie/jquery.cookie.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/iCheck/icheck.min.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/iCheck/custom.min.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/jquery-notific8/jquery.notific8.min.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/jquery-highcharts/highcharts.js")'></script>
+	<script src='@routes.Assets.at("app/js/jquery.menu.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/jquery-pace/pace.min.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/holder/holder.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/responsive-tabs/responsive-tabs.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/jquery-news-ticker/jquery.newsTicker.min.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/moment/moment.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/bootstrap-daterangepicker/daterangepicker.js")'></script>
+	<!--CORE JAVASCRIPT-->
+	<script src='@routes.Assets.at("app/js/main.js")'></script>
+	<!--LOADING SCRIPTS FOR PAGE-->
+	<script src='@routes.Assets.at("app/js/ui-tabs.js")'></script>
+	<!--<script type="text/javascript">(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-145464-14', 'auto');
+ga('send', 'pageview');
+
+
+</script>-->
+</body>
+</html>
