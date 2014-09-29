@@ -1,2 +1,153 @@
-<script>console.log("---");</script>
-hotel_description.scala.html
+
+<form method="post" ng-submit="saveDescription()" role="form" class="form-horizontal" data-ng-controller="generalInfoProfileController">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Profile description</label>
+				<div class="col-md-9">
+					<textarea id="message3" data-ng-model="generalInfo.description" name="message3" rows="6"
+						class="form-control"></textarea>
+				</div>
+			</div>	
+			
+			<!-- <div>
+			<div class="form-group">
+				<label class="col-md-4 control-label">Profile description to be entered here:</label>
+				</div>
+				
+				<div class="col-md-4">
+					<textarea id="message3" data-ng-model="generalInfo.description" name="message3" rows="6"
+						class="form-control" style="margin-left: 17%;"></textarea>
+				</div>
+			</div> -->
+		<div>
+			
+			<div class="form-group">
+				<label class="col-md-12 control-label" style="text-align: left;color: blue;">The BANGKOK HOTEL LOTUS SUKHUMVIT is a(Please tick the boxes that are applicable):</label>
+				</div><br>
+				<div>
+				
+			<table align="center">
+							
+<tbody style="font-size: smaller;"><tr>
+	<td style="width: 27%;"><label><input type="checkbox">  Airport Apartment</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Airport Hotel</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  All Suite</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Art Decor</label></td>
+	
+</tr>
+<tr>
+	<td style="width: 27%;"><label><input type="checkbox">  Beach Apartment</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Beach Resort</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Boutique</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Business</label></td>
+	
+</tr>
+<tr>
+	<td style="width: 27%;"><label><input type="checkbox">  Camp Site</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Child Friendly</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  City apartment</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  City hotel</label></td>
+	
+</tr>
+<tr>
+	<td style="width: 27%;"><label><input type="checkbox">  Colonial Style</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Desert Resort</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Design Trendy</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Diving Resort</label></td>
+	
+</tr>
+  <tr>
+	<td style="width: 27%;"><label><input type="checkbox">  Eco Friendly</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Equestrian Resort</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Family Style</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Floatel</label></td>
+	
+</tr> 
+<tr>
+    <td style="width: 27%;"><label><input type="checkbox">  Full Service</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Golf Resort</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Health Resort</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Heritage Building</label></td>
+	
+</tr>
+<tr>
+	<td style="width: 27%;"><label><input type="checkbox">  Honeymoon</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Leisure</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Limited Service</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Lodge</label></td>
+	
+</tr>
+<tr>
+	<td style="width: 27%;"><label><input type="checkbox">  Modern</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Motel</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Pet Friendly</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Polo Resort</label></td>
+	
+</tr>
+<tr>
+	<td style="width: 27%;"><label><input type="checkbox">  Renaissance Style</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Resort</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Ski Resort</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Spa Resort</label></td>
+	
+</tr> 
+<tr>
+    <td style="width: 27%;"><label><input type="checkbox">  Sports Resort</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Tourist</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Traditional</label></td>
+	<td style="width: 27%;"><label><input type="checkbox">  Villa Apartment</label></td>
+</tr>
+<tr>
+	<td style="width: 27%;"><label><input type="checkbox">  Villa Resort</label></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>							
+	</tbody>
+	</table>
+		</div>
+		</div>					<br>
+																
+								
+								
+					<div class="form-group">
+						<label class="col-md-3 control-label">Hotel Located in </label>
+				<div class="col-md-9">
+					<select class="form-control" data-ng-model="generalInfo.location" data-ng-options="country.countryName for country in countries track by country.countryCode" style="width: 70%;">
+						<option>-- Choose One --</option>
+					</select><label class="col-md-3 control-label">area</label>
+					
+				</div>
+				
+			</div>
+								
+								<br>
+							<div class="form-group">
+							<label class="col-md-3 control-label">Shopping is </label>
+				<div class="col-md-9">
+					<select class="form-control" data-ng-model="generalInfo.location" data-ng-options="country.countryName for country in countries track by country.countryCode" style="width: 70%;">
+						<option>-- Choose One --</option>
+					</select>and
+				</div>
+			</div>
+							<br>
+							<div class="form-group">
+							<label class="col-md-3 control-label">the nightlife/restaurants </label>
+				<div class="col-md-9">
+					<select class="form-control" data-ng-model="generalInfo.location" data-ng-options="country.countryName for country in countries track by country.countryCode" style="width: 70%;">
+						<option>-- Choose One --</option>
+					</select>
+				</div>
+			</div>the hotel.
+			
+			
+			
+		</div>
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+	</div>
+</form>
+
+<style>
+table.ex1 {
+    border-collapse: separate;
+    border-spacing: 35px;
+}
+
+</style>

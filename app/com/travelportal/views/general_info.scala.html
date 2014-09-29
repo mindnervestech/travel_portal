@@ -1,5 +1,5 @@
 @(hotelGeneralInfo: com.travelportal.vm.HotelGeneralInfoVM)
-<form role="form" class="form-horizontal" data-ng-controller="generalInfoProfileController">
+<form method="post" ng-submit="savegeneralinfo()" role="form" class="form-horizontal" data-ng-controller="generalInfoProfileController">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="form-group">
@@ -25,7 +25,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Country</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.countryCode" data-ng-options="country.countryName for country in countries track by country.countryCode">
+					<select class="form-control" data-ng-model="generalInfo.countryCode" ng-change="onStateselect()" data-ng-options="country.countryName for country in countries track by country.countryCode">
 						<option>Select Country...</option>
 					</select>
 				</div>
@@ -33,8 +33,8 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">City</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.cityCode" data-ng-options="cities.cityName for cities in array track by city.cityCode">
-						<option>Select City...</option>
+					<select class="form-control" data-ng-model="generalInfo.cityCode" data-ng-options="cities.cityname.cityName for cities in cityname track by cities.cityCode">
+							<option>Select City...</option>
 					</select>
 				</div>
 			</div>
@@ -72,7 +72,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Hotel affiliate to</label>
 				<div class="col-md-9">
-					<select class="form-control">
+					<select class="form-control" data-ng-model="generalInfo.affiliate">
 						<option>Accor Hotels</option>
 						<option>A & O Group</option>
 						<option>A Famosa</option>
@@ -84,7 +84,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Choose Currency</label>
 				<div class="col-md-9">
-					<select class="form-control">
+					<select class="form-control" data-ng-model="generalInfo.currency">
 						<option>THB - Thai Baht</option>
 						<option>AUD - Australian Dollar</option>
 					</select>
@@ -131,6 +131,6 @@
 			</div>
 			<hr class="mtxxl mbxxl" style="border-color: black">
 		</div>
-
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
 	</div>
 </form>
