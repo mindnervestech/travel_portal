@@ -1,5 +1,6 @@
 package com.travelportal.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,4 +12,6 @@ import javax.persistence.Table;
 public class ShoppingFacility {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@Column(name="shopping_area")
+	private String shoppingArea;
 }

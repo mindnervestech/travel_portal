@@ -5,13 +5,12 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-GET    /hotel_profile               controllers.Application.hotel_profile()
+#GET    /hotel_profile               controllers.Application.hotel_profile()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 GET /hotel_profile/:profileId 		com.travelportal.controllers.HotelProfileController.hotelProfile(profileId: Integer)
 GET /countries						com.travelportal.controllers.TravelPortalUtilsController.getCountries()
-GET /Citys/:countriesID						com.travelportal.controllers.TravelPortalUtilsController.getCities(countriesID: Integer)
-GET     /getCityname/:countriesCode					    com.travelportal.controllers.TravelPortalUtilsController.getCityname(countriesCode:Integer)
+GET /cities/:countryCode				com.travelportal.controllers.TravelPortalUtilsController.getCities(countryCode: Integer)
 POST  /saveGeneralInfo                           com.travelportal.controllers.TravelPortalUtilsController.saveGeneralInfo()
