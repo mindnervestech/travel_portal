@@ -59,6 +59,6 @@ public class HotelChain {
 	}
 
 	public static List<HotelChain> getChainHotels() {
-		return JPA.em().createQuery("select c from HotelChain ").getResultList();
+		return JPA.em().createQuery("select c from HotelChain c ").getResultList();
 	}
 }

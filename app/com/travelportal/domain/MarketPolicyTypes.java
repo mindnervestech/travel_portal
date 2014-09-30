@@ -1,11 +1,15 @@
 package com.travelportal.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import play.db.jpa.JPA;
 
 @Entity
 @Table(name="market_policy_types")
@@ -55,5 +59,8 @@ public class MarketPolicyTypes { //Seed table.
 		this.displayOrder = displayOrder;
 	}
 	
+	public static List<MarketPolicyTypes> getMarketPolicyTypes() {
+		return JPA.em().createQuery("select c from MarketPolicyTypes c ").getResultList();
+	}
 	
 }

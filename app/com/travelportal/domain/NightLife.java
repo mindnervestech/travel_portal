@@ -1,11 +1,15 @@
 package com.travelportal.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import play.db.jpa.JPA;
 
 @Entity
 @Table(name="night_life")
@@ -38,6 +42,11 @@ public class NightLife {
 	 */
 	public void setNightLifeNm(String nightLifeNm) {
 		this.nightLifeNm = nightLifeNm;
+	}
+	
+	
+	public static List<NightLife> getNightLife() {
+		return JPA.em().createQuery("select c from NightLife c ").getResultList();
 	}
 	
 	

@@ -2,11 +2,25 @@
 <form method="post" ng-submit="saveDescription()" role="form" class="form-horizontal" data-ng-controller="generalInfoProfileController">
 	<div class="row">
 		<div class="col-md-12">
+		<div>
+		<b>Hotel Description:</b><br> 
+Please enter a short description of your property to highlight the main features and facilities. The text should be limited to a maximum of 1000 characters. The description in English is mandatory and other languages are optional. 
+The text will be displayed the way it is entered and therefore avoid typing the entire description in capital letters.<br>
+		</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Profile description</label>
 				<div class="col-md-9">
 					<textarea id="message3" data-ng-model="generalInfo.description" name="message3" rows="6"
-						class="form-control"></textarea>
+						class="form-control">
+						Located on Sukumvit Road. 7 min from the Queen Sirikit National Convention Centre.
+						 4 mn walk from Emporium Shopping Mall, Royal National Park and Sky train station. 
+						 4 food and beverage outlets. Fitness centre. Conference and seminar facilities.
+						 The Bangkok Hotel Lotus Sukhumvit is centrally located and offers free private parking, 
+						 an outdoor swimming pool and sauna.Bangkok Hotel Lotus is situated near several shopping and entertainment venues.
+						  Phrom Phong Skytrain station is a short stroll away.
+						  Rooms are fitted with air conditioning, cable television and coffee/tea making facilities.
+						  Free Wi-Fi is available. 24-hour room service is provided.
+						</textarea>
 				</div>
 			</div>	
 			
@@ -22,10 +36,21 @@
 			</div> -->
 		<div>
 			
+			
 			<div class="form-group">
-				<label class="col-md-12 control-label" style="text-align: left;color: blue;">The BANGKOK HOTEL LOTUS SUKHUMVIT is a(Please tick the boxes that are applicable):</label>
+				<label class="col-md-12 control-label" style="text-align: left;color: blue;">The {{generalInfo.companyName}} is a(Please tick the boxes that are applicable):</label>
 				</div><br>
+				
 				<div>
+				<label ng-repeat="serv in services"  for="checkbox_{{$index}}" style="padding-right: 30px;width: 24%;">
+			  <input
+  				  type="checkbox"
+  				  name="checkbox_{{$index}}"
+  				  id="checkbox_{{$index}}"
+   					 ng-true-value="{{serv.serviceId}}"
+    			ng-model="generalInfo.selected"> {{serv.serviceName}}</label>
+    			</div>
+				<!-- <div>
 				
 			<table align="center">
 							
@@ -102,7 +127,7 @@
 	<td style="width: 27%;"><label><input type="checkbox">  Villa Resort</label></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>							
 	</tbody>
 	</table>
-		</div>
+		</div> -->
 		</div>					<br>
 																
 								
@@ -110,9 +135,9 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">Hotel Located in </label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.location" data-ng-options="country.countryName for country in countries track by country.countryCode" style="width: 70%;">
+					<select class="form-control" data-ng-model="generalInfo.location" data-ng-options="location.locationId as location.locationNm for location in location" style="width: 70%;float: left;">
 						<option>-- Choose One --</option>
-					</select><label class="col-md-3 control-label">area</label>
+					</select><label class="col-md-3 control-label"  style="text-align: left;">area</label>
 					
 				</div>
 				
@@ -122,20 +147,20 @@
 							<div class="form-group">
 							<label class="col-md-3 control-label">Shopping is </label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.location" data-ng-options="country.countryName for country in countries track by country.countryCode" style="width: 70%;">
+					<select class="form-control" data-ng-model="generalInfo.shopping" data-ng-options="shopping.id as shopping.shoppingArea for shopping in shoppingfacility" style="width: 70%;float: left;">
 						<option>-- Choose One --</option>
-					</select>and
+					</select><label class="col-md-3 control-label"  style="text-align: left;">and</label> 
 				</div>
 			</div>
 							<br>
 							<div class="form-group">
 							<label class="col-md-3 control-label">the nightlife/restaurants </label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.location" data-ng-options="country.countryName for country in countries track by country.countryCode" style="width: 70%;">
+					<select class="form-control" data-ng-model="generalInfo.night" data-ng-options="night.nightLifeCode as night.nightLifeNm for night in nightlife" style="width: 70%;float: left;">
 						<option>-- Choose One --</option>
-					</select>
+					</select><label class="col-md-3 control-label"  style="text-align: left;">the hotel.</label>
 				</div>
-			</div>the hotel.
+			</div>
 			
 			
 			

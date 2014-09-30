@@ -25,7 +25,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Country</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.countryCode" ng-change="onCountryChange()" data-ng-options="country.countryName for country in countries track by country.countryCode">
+					<select class="form-control" data-ng-model="generalInfo.countryCode" ng-change="onCountryChange()" data-ng-options="country.countryCode as country.countryName for country in countries">
 						<option>Select Country...</option>
 					</select>
 				</div>
@@ -33,7 +33,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">City</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.cityCode" data-ng-options="city.cityName for city in cities track by city.cityCode">
+					<select class="form-control" data-ng-model="generalInfo.cityCode" data-ng-options="city.cityCode as city.cityName for  city in cities">
 							<option>Select City...</option>
 					</select>
 				</div>
@@ -51,42 +51,51 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Is hotel part of Chain</label>
 				<div class="col-md-9">
-					<div class="checkbox">
-						<label>
-							<div class="iradio_minimal-grey"
+							<!-- <div class="iradio_minimal-grey"
 								style="position: relative;">
-								<input id="optionsRadios22" type="radio" value="option1"
+								<input type="radio" name="val" data-ng-model="generalInfo.partchain" value="Yes" 
 									style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
 								<ins class="iCheck-helper"
 									style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
 							</div>&nbsp; Yes</label><label><div class="iradio_minimal-grey"
 								style="position: relative;">
-								<input id="inlineCheckbox22" type="radio" value="option2"
+								<input type="radio" name="val" data-ng-model="generalInfo.marketrate" value="No" 
 									style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
 								<ins class="iCheck-helper"
 									style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
-							</div>&nbsp; No</label>
-					</div>
+							</div>&nbsp; No</label>  -->
+							<label><input type="radio" name="test" data-ng-model="generalInfo.countryCode" value="1000"/> One</label>
+  							<label><input type="radio" name="test" data-ng-model="generalInfo.countryCode" value="2000"/> Two</label>{{generalInfo.countryCode}}
 				</div>
 			</div>
+			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Hotel affiliate to</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.affiliate">
-						<option>Accor Hotels</option>
-						<option>A & O Group</option>
-						<option>A Famosa</option>
+					<select class="form-control" data-ng-model="generalInfo.affiliate" data-ng-options="hotelchainname.chainHotelCode as hotelchainname.chainHotelName for hotelchainname in hotelchain" >
+						<option>Select Hotel affiliate...</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Please choose your hotel brand :</label>
+				<div class="col-md-9">
+					<select class="form-control" data-ng-model="generalInfo.brand" data-ng-options="hotelbrandname.brandsCode as hotelbrandname.brandName for hotelbrandname in hotelbrand" >
+						<option>Select Hotel Brand...</option>
 					</select>
 				</div>
 			</div>
 
 			<hr class="mtxxl mbxxl" style="border-color: black">
+			<div>
+			Please choose the currency from the drop down menu that you wish to supply the net payable rates in:
+			</div>
+			<br>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Choose Currency</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.currency">
-						<option>THB - Thai Baht</option>
-						<option>AUD - Australian Dollar</option>
+					<select class="form-control" data-ng-model="generalInfo.currency" data-ng-options="currencyname.currencyCode as currencyname.currencyName for currencyname in currency">
+						<option>Select Currency...</option>
 					</select>
 				</div>
 			</div>
@@ -97,40 +106,60 @@
 				<div class="col-md-9">
 					<div class="form-group">
 						<div class="radio mtx">
-							<label class=""><div class="iradio_minimal-grey checked"
+							 <label class="" ng-repeat="markettype in marketrate" style="width: 100%; float: left;margin-bottom: 1%;"><div class="iradio_minimal-grey"
 									style="position: relative;">
-									<input id="optionsRadios1" type="radio" name="optionsRadios"
-										value="option1" checked="checked"
+									<input id="abc{{$index}}" type="radio" name="optionsRadios" ng-model="generalInfo.marketrate"
+										ng-value="markettype.marketPolicyTypeId" 
 										style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
 									<ins class="iCheck-helper"
 										style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
-								</div>&nbsp; Based on Travel Agent Area</label>
+								</div>&nbsp; {{markettype.marketPolicyTypeNm}}</label> 
 						</div>
-						<div class="radio mtx">
-							<label class=""><div class="iradio_minimal-grey"
-									style="position: relative;">
-									<input id="optionsRadios2" type="radio" name="optionsRadios"
-										value="option2"
-										style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
-									<ins class="iCheck-helper"
-										style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
-								</div>&nbsp; Based on Passenger Residency</label>
-						</div>
-						<div class="radio disabled mtx">
-							<label><div class="iradio_minimal-grey disabled"
-									style="position: relative;">
-									<input id="optionsRadios3" type="radio" name="optionsRadios"
-										value="option3" disabled="disabled"
-										style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
-									<ins class="iCheck-helper"
-										style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
-								</div>&nbsp; Based on Passenger Nationality</label>
-						</div>
+						
 					</div>
 				</div>
 			</div>
 			<hr class="mtxxl mbxxl" style="border-color: black">
+			<div>
+			<div>Please select the star rating and only use the approved authorized licensed rating given to your property. We reserve the right to change the rating if required </div>
+			<br>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Choose a Star Rating:</label>
+				<div class="col-md-9">
+					<select class="form-control" data-ng-model="generalInfo.staterate" data-ng-options="starrate.starRatingTxt as starrate.starRatingTxt for starrate in starrating" style="width: 70%;" >
+						<option>Select Star Rating...</option>
+					</select>
+				</div>
+			</div>
+			<div>
+			
+			A First-class accommodation category that highlights luxury, hospitality, and premium customer service related services. These are outstanding lodging facilities offering fine cuisine, an extensive range of amenities/services. May be centrally located and easy access to the commercial business areas.
+			</div>
+            <br>
+            <div>
+            Please choose a password that you will remember. Your password should be a minimum of 6 characters long and easy to remember. For security reasons, DO NOT use a simple password like your hotel name. Your Property ID will always be your hotel name exactly as written on the DOTW agreement and as listed above in field labeled Property/Hotel Name (please do not make changes). 
+Note: Once you click update if you made changes here, the system will log you out and you will need to log back with your new password.
+			</div>
+			<br>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Password :</label>
+				<div class="col-md-9">
+					<input type="text" data-ng-model="generalInfo.password" class="form-control" style="width: 70%;">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">Verify :</label>
+				<div class="col-md-9">
+					<input type="text" data-ng-model="generalInfo.verify" class="form-control" style="width: 70%;">
+				</div>
+			</div>
+			
+			</div>
+			
+		<hr class="mtxxl mbxxl" style="border-color: black">	
 		</div>
+		
                  <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
 	</div>
 </form>

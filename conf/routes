@@ -5,7 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-#GET    /hotel_profile               controllers.Application.hotel_profile()
+#GET    /hotel_profile               com.travelportal.controllers.TravelPortalUtilsController.hotel_profile()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -14,3 +14,14 @@ GET /hotel_profile/:profileId 		com.travelportal.controllers.HotelProfileControl
 GET /countries						com.travelportal.controllers.TravelPortalUtilsController.getCountries()
 GET /cities/:countryCode				com.travelportal.controllers.TravelPortalUtilsController.getCities(countryCode: Integer)
 POST  /saveGeneralInfo                           com.travelportal.controllers.TravelPortalUtilsController.saveGeneralInfo()
+GET   /hotelchains                    com.travelportal.controllers.TravelPortalUtilsController.getChainHotels()
+GET   /currency                    com.travelportal.controllers.TravelPortalUtilsController.getcurrency()
+GET   /hotelbrands                com.travelportal.controllers.TravelPortalUtilsController.gethotelbrand()
+GET   /starrating                com.travelportal.controllers.TravelPortalUtilsController.getstarrating()
+GET   /marketrate                com.travelportal.controllers.TravelPortalUtilsController.getmarketrate()
+GET   /location                com.travelportal.controllers.TravelPortalUtilsController.getlocations()
+GET   /shoppingfacility                com.travelportal.controllers.TravelPortalUtilsController.getshoppingfacility()
+GET   /nightlife                com.travelportal.controllers.TravelPortalUtilsController.getnightlife()
+GET   /services                com.travelportal.controllers.TravelPortalUtilsController.getservices()
+
+
