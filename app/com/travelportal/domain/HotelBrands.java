@@ -52,4 +52,9 @@ public class HotelBrands {
 		return JPA.em().createQuery("select c from HotelBrands c ").getResultList();
 	}
 	
+	
+	public static HotelBrands getHotelBrandsbyCode(int code) {
+		return (HotelBrands) JPA.em().createQuery("select c from HotelBrands c where brandsCode = ?1").setParameter(1, code).getSingleResult();
+	}
+	
 }

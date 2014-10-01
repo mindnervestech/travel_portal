@@ -48,4 +48,8 @@ public class Country {
 	public static List<Country> getCountries() {
 		return JPA.em().createQuery("select c from Country c").getResultList();
 	}
+	
+	public static Country getCountryByCode(int code) {
+		return (Country) JPA.em().createQuery("select c from Country c where countryCode = ?1").setParameter(1, code).getSingleResult();
+	}
 }

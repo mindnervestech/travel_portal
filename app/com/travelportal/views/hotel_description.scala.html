@@ -1,25 +1,18 @@
 
-<form method="post" ng-submit="saveDescription()" role="form" class="form-horizontal" data-ng-controller="generalInfoProfileController">
+<form method="post" ng-submit="saveDescription()" role="form" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
-		<div>
-		<b>Hotel Description:</b><br> 
+					
+			<div>
+		<label><b>Hotel Description:</b></label><br> 
 Please enter a short description of your property to highlight the main features and facilities. The text should be limited to a maximum of 1000 characters. The description in English is mandatory and other languages are optional. 
 The text will be displayed the way it is entered and therefore avoid typing the entire description in capital letters.<br>
 		</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Profile description</label>
 				<div class="col-md-9">
-					<textarea id="message3" data-ng-model="generalInfo.description" name="message3" rows="6"
-						class="form-control">
-						Located on Sukumvit Road. 7 min from the Queen Sirikit National Convention Centre.
-						 4 mn walk from Emporium Shopping Mall, Royal National Park and Sky train station. 
-						 4 food and beverage outlets. Fitness centre. Conference and seminar facilities.
-						 The Bangkok Hotel Lotus Sukhumvit is centrally located and offers free private parking, 
-						 an outdoor swimming pool and sauna.Bangkok Hotel Lotus is situated near several shopping and entertainment venues.
-						  Phrom Phong Skytrain station is a short stroll away.
-						  Rooms are fitted with air conditioning, cable television and coffee/tea making facilities.
-						  Free Wi-Fi is available. 24-hour room service is provided.
+					<textarea id="message3" data-ng-model="descrip.description" name="message3" rows="6"
+						class="form-control"  placeholder="Located on Sukumvit Road. 7 min from the Queen Sirikit National Convention Centre.4 mn walk from Emporium Shopping Mall, Royal National Park and Sky train station.4 food and beverage outlets. Fitness centre. Conference and seminar facilities.The Bangkok Hotel Lotus Sukhumvit is centrally located and offers free private parking, an outdoor swimming pool and sauna.Bangkok Hotel Lotus is situated near several shopping and entertainment venues.Phrom Phong Skytrain station is a short stroll away.Rooms are fitted with air conditioning, cable television and coffee/tea making facilities.Free Wi-Fi is available. 24-hour room service is provided." >					
 						</textarea>
 				</div>
 			</div>	
@@ -42,92 +35,14 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 				</div><br>
 				
 				<div>
-				<label ng-repeat="serv in services"  for="checkbox_{{$index}}" style="padding-right: 30px;width: 24%;">
+				<label ng-repeat="serv in services" style="padding-right: 30px;width: 24%;">
 			  <input
   				  type="checkbox"
-  				  name="checkbox_{{$index}}"
-  				  id="checkbox_{{$index}}"
-   					 ng-true-value="{{serv.serviceId}}"
-    			ng-model="generalInfo.selected"> {{serv.serviceName}}</label>
+  				  	checklist-value="{{serv.serviceId}}"
+   					checklist-model="generalInfo.selected"> {{serv.serviceName}}</label>
     			</div>
-				<!-- <div>
 				
-			<table align="center">
-							
-<tbody style="font-size: smaller;"><tr>
-	<td style="width: 27%;"><label><input type="checkbox">  Airport Apartment</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Airport Hotel</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  All Suite</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Art Decor</label></td>
-	
-</tr>
-<tr>
-	<td style="width: 27%;"><label><input type="checkbox">  Beach Apartment</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Beach Resort</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Boutique</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Business</label></td>
-	
-</tr>
-<tr>
-	<td style="width: 27%;"><label><input type="checkbox">  Camp Site</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Child Friendly</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  City apartment</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  City hotel</label></td>
-	
-</tr>
-<tr>
-	<td style="width: 27%;"><label><input type="checkbox">  Colonial Style</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Desert Resort</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Design Trendy</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Diving Resort</label></td>
-	
-</tr>
-  <tr>
-	<td style="width: 27%;"><label><input type="checkbox">  Eco Friendly</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Equestrian Resort</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Family Style</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Floatel</label></td>
-	
-</tr> 
-<tr>
-    <td style="width: 27%;"><label><input type="checkbox">  Full Service</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Golf Resort</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Health Resort</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Heritage Building</label></td>
-	
-</tr>
-<tr>
-	<td style="width: 27%;"><label><input type="checkbox">  Honeymoon</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Leisure</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Limited Service</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Lodge</label></td>
-	
-</tr>
-<tr>
-	<td style="width: 27%;"><label><input type="checkbox">  Modern</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Motel</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Pet Friendly</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Polo Resort</label></td>
-	
-</tr>
-<tr>
-	<td style="width: 27%;"><label><input type="checkbox">  Renaissance Style</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Resort</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Ski Resort</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Spa Resort</label></td>
-	
-</tr> 
-<tr>
-    <td style="width: 27%;"><label><input type="checkbox">  Sports Resort</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Tourist</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Traditional</label></td>
-	<td style="width: 27%;"><label><input type="checkbox">  Villa Apartment</label></td>
-</tr>
-<tr>
-	<td style="width: 27%;"><label><input type="checkbox">  Villa Resort</label></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>							
-	</tbody>
-	</table>
-		</div> -->
+				
 		</div>					<br>
 																
 								
@@ -135,7 +50,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 					<div class="form-group">
 						<label class="col-md-3 control-label">Hotel Located in </label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.location" data-ng-options="location.locationId as location.locationNm for location in location" style="width: 70%;float: left;">
+					<select class="form-control" data-ng-model="descrip.location" data-ng-options="location.locationId as location.locationNm for location in location" style="width: 70%;float: left;">
 						<option>-- Choose One --</option>
 					</select><label class="col-md-3 control-label"  style="text-align: left;">area</label>
 					
@@ -147,7 +62,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 							<div class="form-group">
 							<label class="col-md-3 control-label">Shopping is </label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.shopping" data-ng-options="shopping.id as shopping.shoppingArea for shopping in shoppingfacility" style="width: 70%;float: left;">
+					<select class="form-control" data-ng-model="descrip.shopping" data-ng-options="shopping.id as shopping.shoppingArea for shopping in shoppingfacility" style="width: 70%;float: left;">
 						<option>-- Choose One --</option>
 					</select><label class="col-md-3 control-label"  style="text-align: left;">and</label> 
 				</div>
@@ -156,7 +71,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 							<div class="form-group">
 							<label class="col-md-3 control-label">the nightlife/restaurants </label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.night" data-ng-options="night.nightLifeCode as night.nightLifeNm for night in nightlife" style="width: 70%;float: left;">
+					<select class="form-control" data-ng-model="descrip.night" data-ng-options="night.nightLifeCode as night.nightLifeNm for night in nightlife" style="width: 70%;float: left;">
 						<option>-- Choose One --</option>
 					</select><label class="col-md-3 control-label"  style="text-align: left;">the hotel.</label>
 				</div>
@@ -165,7 +80,66 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 			
 			
 		</div>
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+				
+		<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+		
+		<div>
+			<label><b>HOTEL LOCATION</b></label>
+			
+			<label class="col-md-12 control-label" style="margin-bottom: 3%;">Please enter 3 words ONLY that will give the user an idea of where your Property is located. . </label><br>
+			<div>
+			
+			<table style="width: 96%;">
+			<tr>
+			<td></td>
+			<td>Hyde Park</td>
+			<td>Piccadilly</td>
+			<td>Buckingham Palace</td>
+			</tr>
+			<tr>
+			<td></td>
+			<td>1</td>
+			<td>2</td>
+			<td>3</td>
+			</tr>
+			<tr>
+			<tr>
+			<td style="width: 115px;float: left;">
+				<label class="col-md-12 control-label">*Enter Here :</label>
+				</td>
+				<td>
+					<div class="form-group">
+				     <div class="col-md-9">
+					   <input type="text" name="hydepark" data-ng-model="descrip.hydepark" class="form-control">
+				    </div>
+			    </div>
+			    </td>
+				<td>
+				<div class="form-group">
+					<div class="col-md-9">
+						<input type="text" name="piccadilly" data-ng-model="descrip.piccadilly" class="form-control">
+					</div>
+			    </div>
+				</td>
+				<td>
+				   <div class="form-group">
+					 <div class="col-md-9">
+						<input type="text" name="Buckinghampalace" data-ng-model="descrip.Buckinghampalace" class="form-control">
+					 </div>
+			     </div>
+				</td>
+				
+				</tr>
+			</div>
+						
+			</table>
+			
+			
+		</div>
+                
+	</div>
+		     
+                 <button type="submit" ng-init="descrip.code = supp" class="btn btn-primary" style="margin-left: 84%;">Save</button>
 	</div>
 </form>
 

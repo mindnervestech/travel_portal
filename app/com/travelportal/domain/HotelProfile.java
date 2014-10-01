@@ -1,6 +1,7 @@
 package com.travelportal.domain;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,9 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
 
 @Entity
 @Table(name="hotel_profile")
@@ -592,5 +595,34 @@ public class HotelProfile {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	
+	public static HotelProfile findById(Long id) {
+    	Query query = JPA.em().createQuery("Select a from HotelProfile a where a.id = ?1");
+		query.setParameter(1, id);
+    	return (HotelProfile) query.getSingleResult();
+    }
+	
+	@Transactional
+    public void save() {
+		JPA.em().persist(this);
+        JPA.em().flush();     
+    }
+      
+    @Transactional
+    public void delete() {
+        JPA.em().remove(this);
+    }
+    
+    @Transactional
+    public void merge() {
+        JPA.em().merge(this);
+    }
+    
+    @Transactional
+    public void refresh() {
+        JPA.em().refresh(this);
+    }
+	
 	
 }

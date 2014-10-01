@@ -1,5 +1,5 @@
 @(hotelGeneralInfo: com.travelportal.vm.HotelGeneralInfoVM)
-<form method="post" ng-submit="savegeneralinfo()" role="form" class="form-horizontal" data-ng-controller="generalInfoProfileController">
+<form method="post" ng-submit="savegeneralinfo()" role="form" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="form-group">
@@ -12,7 +12,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Company Name</label>
 				<div class="col-md-9">
-					<input type="text" data-ng-model="generalInfo.companyName" placeholder="Hotel Name" class="form-control">
+					<input type="text" name="companyName" data-ng-model="generalInfo.companyName" placeholder="Hotel Name" class="form-control">
 				</div>
 			</div>
 			<div class="form-group">
@@ -51,7 +51,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Is hotel part of Chain</label>
 				<div class="col-md-9">
-							<!-- <div class="iradio_minimal-grey"
+							 <div class="iradio_minimal-grey"
 								style="position: relative;">
 								<input type="radio" name="val" data-ng-model="generalInfo.partchain" value="Yes" 
 									style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
@@ -59,13 +59,14 @@
 									style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
 							</div>&nbsp; Yes</label><label><div class="iradio_minimal-grey"
 								style="position: relative;">
-								<input type="radio" name="val" data-ng-model="generalInfo.marketrate" value="No" 
+								<input type="radio" name="val" data-ng-model="generalInfo.partchain" value="No" 
 									style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
 								<ins class="iCheck-helper"
 									style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
-							</div>&nbsp; No</label>  -->
-							<label><input type="radio" name="test" data-ng-model="generalInfo.countryCode" value="1000"/> One</label>
-  							<label><input type="radio" name="test" data-ng-model="generalInfo.countryCode" value="2000"/> Two</label>{{generalInfo.countryCode}}
+							</div>&nbsp; No</label>   
+							<!--   <input type="radio" name="somethign" value="1" data-ng-model="checkboxSelection"/> Checkbox 1
+                <input type="radio" name="somethign" value="2" data-ng-model="checkboxSelection"/> Checkbox 2 -->
+							
 				</div>
 			</div>
 			
@@ -105,14 +106,13 @@
 					Market Specific Rates</label>
 				<div class="col-md-9">
 					<div class="form-group">
-						<div class="radio mtx">
-							 <label class="" ng-repeat="markettype in marketrate" style="width: 100%; float: left;margin-bottom: 1%;"><div class="iradio_minimal-grey"
-									style="position: relative;">
-									<input id="abc{{$index}}" type="radio" name="optionsRadios" ng-model="generalInfo.marketrate"
-										ng-value="markettype.marketPolicyTypeId" 
-										style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
-									<ins class="iCheck-helper"
-										style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+						<div class="radio mtx" style="margin-left: 8%;">
+							 <label class="" ng-repeat="markettype in marketrate" style="width: 100%; float: left;margin-bottom: 1%;">
+							 <div style="position: relative;">
+									
+									<input  type="radio" name="optionsRadios" ng-model="generalInfo.marketrate"
+										ng-value="markettype.marketPolicyTypeId">
+									
 								</div>&nbsp; {{markettype.marketPolicyTypeNm}}</label> 
 						</div>
 						

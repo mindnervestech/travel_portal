@@ -2,6 +2,8 @@ package com.travelportal.controllers;
 
 import java.util.List;
 
+
+import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -12,6 +14,7 @@ import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelBrands;
 import com.travelportal.domain.HotelChain;
+import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.Location;
@@ -23,15 +26,7 @@ import views.html.hotel_profile;
 
 public class TravelPortalUtilsController extends Controller {
 
-	
-public static Result hotel_profile() {
 		
-		
-		HotelGeneralInfoVM hotelGeneralInfoVM=new HotelGeneralInfoVM();
-	hotelGeneralInfoVM.setSupplierCode(new Long(0));
-        return ok(hotel_profile.render("Your new application is ready.",hotelGeneralInfoVM));
-    }
-	
 	@Transactional
 	public static Result getCountries() {
 		List<Country> countries = Country.getCountries(); 
@@ -107,19 +102,53 @@ public static Result hotel_profile() {
 	public static Result saveGeneralInfo() {
 
 
-		/*  System.out.println("//////////8888////////");
-	   System.out.println("hiiiiiiiiiiiiiiii");
-	   System.out.println("//////////////////");
-		JsonNode json = request().body().asJson();
-		DynamicForm form = DynamicForm.form().bindFromRequest();
-		System.out.println(form);
-		Json.fromJson(json, HotelGeneralInfoVM.class);
-		HotelGeneralInfoVM hotelGeneralInfoVM = Json.fromJson(json, HotelGeneralInfoVM.class);
+	   
+	    DynamicForm form = DynamicForm.form().bindFromRequest();
+		
+	  
+		HotelProfile hotelprofile = new HotelProfile();
+		//hotelprofile.setSupplier_code(form.get("supplierCode"));
+		
+		hotelprofile.setHotelName(form.get("companyName"));
+		hotelprofile.setAddress(form.get("hotelAddress"));
+		hotelprofile.setCountry(Country.getCountryByCode(Integer.parseInt(form.get("countryCode"))));
+		hotelprofile.setCity(City.getCityByCode(Integer.parseInt(form.get("cityCode"))));
+		hotelprofile.setHotelEmailAddr(form.get("emailAddr"));
+		hotelprofile.setHoteBrands(HotelBrands.getHotelBrandsbyCode(Integer.parseInt(form.get("brand"))));
+		hotelprofile.setPassword(form.get("password"));
+		hotelprofile.setStartRatings(Integer.parseInt(form.get("staterate")));
+		hotelprofile.setVerifyPassword(form.get("verify"));
+		
+		
+		hotelprofile.save();
+		hotelprofile.getSupplier_code();
+		return ok(hotelprofile.getId()+"");
+	}
+	
+	@Transactional
+	public static Result getupdateDescription() {
 
+				   
+	    DynamicForm form = DynamicForm.form().bindFromRequest();
+		
+	  
 
-		newspaperdetails.save();*/
+		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("code")));
+        		
+		
+	    
+		//HotelProfile hotelprofile = new HotelProfile();
+		hotelprofile.setHotelProfileDesc(form.get("description"));
+		hotelprofile.setLocation(Location.getlocationIdByCode(Integer.parseInt(form.get("location"))));
+		hotelprofile.setShoppingFacility(ShoppingFacility.getShoppingFacilityByCode(Integer.parseInt(form.get("shopping"))));
+		hotelprofile.setNightLife(NightLife.getNightLifeByCode(Integer.parseInt(form.get("night"))));
+		hotelprofile.setZipCode(form.get("hydepark"));
+		hotelprofile.setHotelWebSite(form.get("piccadilly"));
+		hotelprofile.setHotelGeneralManager(form.get("Buckinghampalace"));
+		
+		
+		hotelprofile.merge();
 		return ok();
 	}
-
-
+	
 }

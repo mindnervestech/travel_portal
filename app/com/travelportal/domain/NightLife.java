@@ -49,5 +49,8 @@ public class NightLife {
 		return JPA.em().createQuery("select c from NightLife c ").getResultList();
 	}
 	
+	public static NightLife getNightLifeByCode(int code) {
+		return (NightLife) JPA.em().createQuery("select c from NightLife c where nightLifeCode = ?1").setParameter(1, code).getSingleResult();
+	}
 	
 }

@@ -55,4 +55,9 @@ public class City {
 		q.setParameter("cCode", countryCode);
 		return q.getResultList();
 	}
+	
+	public static City getCityByCode(int code) {
+		return (City) JPA.em().createQuery("select c from City c where cityCode = ?1").setParameter(1, code).getSingleResult();
+	}
+	
 }

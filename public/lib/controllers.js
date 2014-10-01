@@ -63,16 +63,31 @@ angular.module('travel_portal_hotel_profile').
 	}); 
 	
 	$scope.radioValue;
+	$scope.supp;
 	
 	$scope.savegeneralinfo = function() {
 		console.log($scope.generalInfo);
 		
 		$http.post('/saveGeneralInfo', $scope.generalInfo).success(function(data){
 			console.log('success');
+			$scope.supp=data;
+			console.log($scope.supp);
+			//$scope.saveDescription($scope.supp);
+			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
 	};
+	
+	$scope.saveDescription=function(){
+			$scope.descrip.code = $scope.supp;
+			console.log($scope.descrip);
+			$http.post('/updateDescription',$scope.descrip).success(function(data){
+					console.log('success');
+			}).error(function(data, status, headers, config) {
+				console.log('ERROR');
+			});
+	}
 
 	$scope.onCountryChange = function() {
 		console.log($scope.generalInfo.countryCode);

@@ -63,4 +63,8 @@ public class Location {
 		return JPA.em().createQuery("select c from Location c ").getResultList();
 	}
 	
+	public static Location getlocationIdByCode(int code) {
+		return (Location) JPA.em().createQuery("select c from Location c where locationId = ?1").setParameter(1, code).getSingleResult();
+	}
+	
 }

@@ -40,7 +40,9 @@ public class ShoppingFacility {
 	public static List<ShoppingFacility> gethotelStarratings() {
 		return JPA.em().createQuery("select c from ShoppingFacility c ").getResultList();
 	}
-	
-	
+		
+	public static ShoppingFacility getShoppingFacilityByCode(int code) {
+		return (ShoppingFacility) JPA.em().createQuery("select c from ShoppingFacility c where id = ?1").setParameter(1, code).getSingleResult();
+	}
 	
 }

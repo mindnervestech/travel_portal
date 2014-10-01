@@ -2,7 +2,7 @@
 @layout(message) {
 <script>
 </script>
-        <div id="page-wrapper"><!--BEGIN TITLE & BREADCRUMB PAGE-->
+        <div id="page-wrapper" data-ng-controller="generalInfoProfileController"><!--BEGIN TITLE & BREADCRUMB PAGE-->
             <!--END TITLE & BREADCRUMB PAGE--><!--BEGIN CONTENT-->
             <div class="page-content">
                 <div class="row">
@@ -19,8 +19,8 @@
                                     <ul id="myTab2" class="nav nav-tabs">
                                         <li class="active"><a href="#profile0" data-toggle="tab">HOTEL GENERAL INFORMATION</a></li>
                                         <li><a href="#profile1" data-toggle="tab">HOTEL DESCRIPTION</a></li>
-                                        <li><a href="#profile2" data-toggle="tab">HOTEL LOCATION</a></li>
-                                        <li><a href="#profile3" data-toggle="tab">HOTEL INTERNAL INFORMATION</a></li>
+                                        <!-- <li><a href="#profile2" data-toggle="tab">HOTEL LOCATION</a></li> -->
+                                        <li><a href="#profile2" data-toggle="tab">HOTEL INTERNAL INFORMATION</a></li>
                                         <li><a href="#profile4" data-toggle="tab">HOTEL CONTACT INFORMATION</a></li>
                                         <li><a href="#profile5" data-toggle="tab">HOTEL COMMUNICATION</a></li>
                                         <li><a href="#profile6" data-toggle="tab">BILLING INFORMATION</a></li>
@@ -40,10 +40,10 @@
                                         <div id="profile1" 	class="tab-pane fade">
                                         	@com.travelportal.views.html.hotel_description()
                                         </div>
-                                        <div id="profile2" 	class="tab-pane fade">
+                                        <!-- <div id="profile2" 	class="tab-pane fade">
                                         	@com.travelportal.views.html.hotel_location()
-                                        </div>
-                                        <div id="profile3" 	class="tab-pane fade">
+                                        </div> -->
+                                        <div id="profile2" 	class="tab-pane fade">
                                         	@com.travelportal.views.html.internal_information()
                                         </div>
                                         <div id="profile4" 	class="tab-pane fade">
