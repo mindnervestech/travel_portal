@@ -62,6 +62,9 @@ angular.module('travel_portal_hotel_profile').
 		
 	}); 
 	
+	
+	
+	
 	$scope.radioValue;
 	$scope.supp;
 	
@@ -78,6 +81,47 @@ angular.module('travel_portal_hotel_profile').
 			console.log('ERROR');
 		});
 	};
+	
+
+	$scope.saveInternalInfo = function() {
+			$scope.internalInfo.code = $scope.supp ;
+			console.log($scope.internalInfo);
+			$http.post('/updateInternalInfo',$scope.internalInfo).success(function(data){
+				console.log('success');
+			}).error(function(data, status, headers, config) {
+				console.log('ERROR');
+			});
+	}
+		
+	/*$scope.value1=false;
+	$scope.sameadd=function()
+	{
+		alert("hiikkkk");
+	}*/
+	
+	$scope.SaveContactinfo = function() {
+		alert("Hiiiiiii..");
+		$scope.contactInfo.code = $scope.supp;
+		console.log($scope.contactInfo);
+		$http.post('/updateContactInfo',$scope.contactInfo).success(function(data){
+			console.log('success');
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+		
+	}
+	$scope.savecommunciat=function()
+	{
+		$scope.comunicationhotel.code=$scope.supp;
+		console.log($scope.comunicationhotel);
+		alert("Hiiiiiiiii.");
+		$http.post('/updateComunication',$scope.comunicationhotel).success(function(data){
+			console.log('success');
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+		
+	}
 	
 	$scope.saveDescription=function(){
 			$scope.descrip.code = $scope.supp;

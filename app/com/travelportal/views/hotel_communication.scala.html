@@ -1,1 +1,71 @@
-<script>console.log("---");</script>
+
+<form method="post" ng-submit="savecommunciat()" role="form" class="form-horizontal">
+	<div class="row">
+		<div class="col-md-12">
+					
+			<div>
+		<label>DOTW	will send all bookings, amendments and cancellation information<b> Via E-mail</b> as shown below:</label><br> 
+
+		</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label"><b>*E-mail:</b> </label>
+				<div class="col-md-9">
+					<input type="text" name="email" data-ng-model="comunicationhotel.email" class="form-control">
+				</div>
+			</div>
+			
+		<div class="form-group">
+				<label class="col-md-3 control-label"><b>*Reconfirm E-mail:</b></label>
+				<div class="col-md-9">
+					<input type="text" name="Remail" data-ng-model="comunicationhotel.Remail" class="form-control">
+				</div>
+			</div>
+			
+			<div class="col-md-12">
+			<label style="float: left;"><b>*Do you need to copy anyone else on each booking?</b></label>
+			 <div class="col-md-3" style="float: left;">
+							 <div style="position: relative;">
+								<input type="radio" name="val" data-ng-model="comunicationhotel.Remail" value="Yes">
+								&nbsp; Yes
+							</div></label>
+							<label>
+							
+							<div style="position: relative;">
+								<input type="radio" name="val" data-ng-model="comunicationhotel.Remail" value="No">
+								&nbsp; No
+							</div></label>   
+						
+							
+				</div>
+			</div>
+							
+					
+			<div>
+			<label>You may also include a backup e-mail address. This e-mail address will be listed as copy - CC. If you choose to copy-CC, please advise your staff NOT to DUPLICATE reservations in your system. </label>
+			<br>
+			</div>	
+			
+			<div>
+			<br>
+			<label>Please provide the Copy-CC e-mail address to be used:</label>
+			</div>	
+															
+			<div class="form-group">
+				<label class="col-md-3 control-label"><b>*CC-Email: </b></label>
+				<div class="col-md-9">
+					<input type="text" name="ccmail" data-ng-model="comunicationhotel.ccmail" class="form-control">
+				</div>
+			</div>
+			
+		<div class="form-group">
+				<label class="col-md-3 control-label"><b> *Reconfirm CC-Email: </b></label>
+				<div class="col-md-9">
+					<input type="text" name="Rccmail" data-ng-model="comunicationhotel.Rccmail" class="form-control">
+				</div>
+			</div>
+			
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+	</div>
+</form>
+

@@ -131,13 +131,8 @@ public class TravelPortalUtilsController extends Controller {
 				   
 	    DynamicForm form = DynamicForm.form().bindFromRequest();
 		
-	  
-
 		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("code")));
         		
-		
-	    
-		//HotelProfile hotelprofile = new HotelProfile();
 		hotelprofile.setHotelProfileDesc(form.get("description"));
 		hotelprofile.setLocation(Location.getlocationIdByCode(Integer.parseInt(form.get("location"))));
 		hotelprofile.setShoppingFacility(ShoppingFacility.getShoppingFacilityByCode(Integer.parseInt(form.get("shopping"))));
@@ -145,6 +140,82 @@ public class TravelPortalUtilsController extends Controller {
 		hotelprofile.setZipCode(form.get("hydepark"));
 		hotelprofile.setHotelWebSite(form.get("piccadilly"));
 		hotelprofile.setHotelGeneralManager(form.get("Buckinghampalace"));
+		
+		
+		hotelprofile.merge();
+		return ok();
+	}
+	
+	
+	@Transactional
+	public static Result getupdateInternalInfo() {
+
+				   
+	    DynamicForm form = DynamicForm.form().bindFromRequest();
+		
+	    System.out.println("(((((((())))))))))))");
+	    System.out.println(form.get("code"));
+	    System.out.println("(((((((())))))))))))");
+		
+	    HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("code")));
+        		
+		hotelprofile.setHotelGeneralManager(form.get("generalManager"));
+		hotelprofile.setGeneralMgrEmail(form.get("GMemail"));
+		hotelprofile.setHotelBuiltYear(Integer.parseInt(form.get("Built")));
+		hotelprofile.setHotelWebSite(form.get("websit"));
+		hotelprofile.setNoOfFloors(Integer.parseInt(form.get("noFloors")));
+		hotelprofile.setNoOfRooms(Integer.parseInt(form.get("room")));
+		
+		/*-------------------wong entry-----------------*/
+		
+		hotelprofile.setZipCode(form.get("GuestTelenumber"));
+		hotelprofile.setHotelWebSite(form.get("GuestTelenumber"));
+		hotelprofile.setHotelGeneralManager(form.get("lastRenov"));
+		hotelprofile.setHotelProfileDesc(form.get("email"));
+		
+		hotelprofile.merge();
+		return ok();
+	}
+	
+	
+	
+	@Transactional
+	public static Result getupdateContactInfo() {
+
+				   
+	    DynamicForm form = DynamicForm.form().bindFromRequest();
+		
+		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("code")));
+        		
+		hotelprofile.setHotelGeneralManager(form.get("DirectFaxNumber"));
+		hotelprofile.setGeneralMgrEmail(form.get("Extension"));
+		hotelprofile.setHotelWebSite(form.get("RDirectFaxNumber"));
+	
+		hotelprofile.setZipCode(form.get("RemailAddr"));
+		hotelprofile.setHotelWebSite(form.get("TollfreeTel"));
+		hotelprofile.setHotelGeneralManager(form.get("contactName"));
+		
+		
+		hotelprofile.merge();
+		return ok();
+	}
+	
+	@Transactional
+	public static Result getupdateComunication() {
+
+				   
+	    DynamicForm form = DynamicForm.form().bindFromRequest();
+		System.out.println(form.get("code"));
+	    
+		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("code")));
+        		
+		/*hotelprofile.setHotelGeneralManager(form.get("DirectFaxNumber"));
+		hotelprofile.setGeneralMgrEmail(form.get("Extension"));
+		hotelprofile.setHotelWebSite(form.get("RDirectFaxNumber"));
+	
+		hotelprofile.setZipCode(form.get("RemailAddr"));
+		hotelprofile.setHotelWebSite(form.get("TollfreeTel"));
+		hotelprofile.setHotelGeneralManager(form.get("contactName"));*/
 		
 		
 		hotelprofile.merge();
