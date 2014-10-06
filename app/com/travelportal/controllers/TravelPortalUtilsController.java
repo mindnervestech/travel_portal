@@ -2,7 +2,6 @@ package com.travelportal.controllers;
 
 import java.util.List;
 
-
 import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
@@ -21,8 +20,7 @@ import com.travelportal.domain.Location;
 import com.travelportal.domain.MarketPolicyTypes;
 import com.travelportal.domain.NightLife;
 import com.travelportal.domain.ShoppingFacility;
-import com.travelportal.vm.HotelGeneralInfoVM;
-import views.html.hotel_profile;
+import com.travelportal.domain.rooms.RoomAmenities;
 
 public class TravelPortalUtilsController extends Controller {
 
@@ -220,6 +218,12 @@ public class TravelPortalUtilsController extends Controller {
 		
 		hotelprofile.merge();
 		return ok();
+	}
+	
+	@Transactional(readOnly=true)
+	private static Result getHotelRoomAmenities() {
+		List<RoomAmenities> rAmenities = RoomAmenities.getRoomAmenities();
+		return ok(Json.toJson(rAmenities));
 	}
 	
 }

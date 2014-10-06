@@ -7,6 +7,7 @@ import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.hotel_profile;
+import views.html.home;
 
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.vm.HotelGeneralInfoVM;
@@ -36,5 +37,8 @@ public class HotelProfileController extends Controller {
 		}
         return ok(hotel_profile.render("Hotel Profile", gInfo));
     }
-	
+
+	public static Result home() {
+		return ok(home.render("Home Page"));
+	} 
 }

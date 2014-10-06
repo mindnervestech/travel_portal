@@ -1,0 +1,176 @@
+
+<form method="post" ng-submit="SaveContactinfo()" role="form" class="form-horizontal">
+	<div class="row">
+		<div class="col-md-12">
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Main Contact Name:</label>
+				<div class="col-md-9">
+					<input type="text" name="contactName" data-ng-model="contactInfo.contactName" class="form-control">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Title:</label>
+				<div class="col-md-9">
+					<input type="text" name="title" data-ng-model="contactInfo.title" class="form-control">
+				</div>
+			</div>
+			
+						
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Salutation :</label>
+				<div class="col-md-9">
+					<select class="form-control" data-ng-model="contactInfo.salutation">
+							<option>--choose one--</option>
+							<option>Mr.</option>
+							<option>Ms.</option>
+							<option>Mrs.</option>
+							<option>Miss</option>
+							<option>Dr.</option>
+							<option>Madam</option>
+							<option>Sir</option>
+							<option>Sir/Madam</option>
+							<option>Child</option>
+							<option>Messrs.</option>
+					</select>
+				</div>
+			</div>
+			
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Direct Telephone:</label>
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="teleCode" data-ng-model="contactInfo.teleCode" class="form-control">
+				</div>
+				
+					<div class="col-md-3">
+					<input type="text" name="telenumber" data-ng-model="contactInfo.teleNumber" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Direct Fax :</label>
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="DirectFaxCode" data-ng-model="contactInfo.DirectFaxCode" class="form-control">
+				</div>
+				<div class="col-md-3">
+					<input type="text" name="DirectFaxNuber" data-ng-model="contactInfo.DirectFaxNumber" class="form-control">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">Extension: :</label>
+				<div class="col-md-9">
+					<input type="text" name="Extension" data-ng-model="contactInfo.Extension" class="form-control">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">Email</label>
+				<div class="col-md-9">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						<input type="email" data-ng-model="contactInfo.emailAddr" class="form-control">
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">Toll Free Tel:</label>
+				<div class="col-md-9">
+					<input type="text" name="tollfreeTel" data-ng-model="contactInfo.TollfreeTel" class="form-control">
+				</div>
+			</div>
+			
+			
+						
+		<hr class="mtxxl mbxxl" style="border-color: black">	
+		</div>
+		
+		<div class="col-md-12">
+			<label>If the reservation contact is the same as main contact check here: </label>
+			<input type="checkbox" ng-model="value1" ng-checked='sameadd()'>
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Reservations Contact Name:</label>
+				<div class="col-md-9">
+					<input type="text" name="contactName" data-ng-model="contactInfo.RcontactName" class="form-control">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Title:</label>
+				<div class="col-md-9">
+					<input type="text" name="title" data-ng-model="contactInfo.Rtitle" class="form-control">
+				</div>
+			</div>
+			
+				
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Direct Telephone:</label>
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="teleCode" data-ng-model="contactInfo.RteleCode" class="form-control">
+				</div>
+				
+					<div class="col-md-3">
+					<input type="text" name="telenumber" data-ng-model="contactInfo.RteleNumber" class="form-control">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">Email</label>
+				<div class="col-md-9">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						<input type="email" data-ng-model="contactInfo.RemailAddr" class="form-control">
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">Extension: :</label>
+				<div class="col-md-9">
+					<input type="text" name="Extension" data-ng-model="contactInfo.RExtension" class="form-control">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Reservations Department Telephone:</label>
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="DirectFaxCode" data-ng-model="contactInfo.RDirectFaxCode" class="form-control">
+				</div>
+				<div class="col-md-3">
+					<input type="text" name="DirectFaxNuber" data-ng-model="contactInfo.RDirectFaxNumber" class="form-control">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Reservations Department Fax:	</label>
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="DirectFaxCode" data-ng-model="contactInfo.RDirectFaxCode" class="form-control">
+				</div>
+				<div class="col-md-3">
+					<input type="text" name="DirectFaxNuber" data-ng-model="contactInfo.RDirectFaxNumber" class="form-control">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Reservations Department Fax:	</label>
+				<div class="col-md-9">
+					<input type="text" name="tollfreeTel" data-ng-model="contactInfo.RTollfreeTel" class="form-control">
+				</div>
+			</div>
+			
+			
+						
+		<hr class="mtxxl mbxxl" style="border-color: black">	
+		</div>  
+		
+		
+		
+		
+		 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+                
+	</div>
+</form>

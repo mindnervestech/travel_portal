@@ -1,12 +1,11 @@
-@(hotelGeneralInfo: com.travelportal.vm.HotelGeneralInfoVM)
-<form method="post" ng-submit="savegeneralinfo()" role="form" class="form-horizontal">
+<form method="post" data-ng-submit="savegeneralinfo()" role="form" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="form-group">
 				<label class="col-md-3 control-label">Supplier Code</label>
 				<div class="col-md-9">
 					<input type="text" placeholder="Supplier Code" class="form-control"
-						data-ng-model="generalInfo.supplierCode" value="@Html(hotelGeneralInfo.getSupplierCode().toString())" disabled="disabled">
+						data-ng-model="generalInfo.supplierCode" value="" disabled="disabled">
 				</div>
 			</div>
 			<div class="form-group">
@@ -51,22 +50,14 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Is hotel part of Chain</label>
 				<div class="col-md-9">
-							 <div class="iradio_minimal-grey"
-								style="position: relative;">
-								<input type="radio" name="val" data-ng-model="generalInfo.partchain" value="Yes" 
-									style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
-								<ins class="iCheck-helper"
-									style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
-							</div>&nbsp; Yes</label><label><div class="iradio_minimal-grey"
-								style="position: relative;">
-								<input type="radio" name="val" data-ng-model="generalInfo.partchain" value="No" 
-									style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
-								<ins class="iCheck-helper"
-									style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
-							</div>&nbsp; No</label>   
-							<!--   <input type="radio" name="somethign" value="1" data-ng-model="checkboxSelection"/> Checkbox 1
-                <input type="radio" name="somethign" value="2" data-ng-model="checkboxSelection"/> Checkbox 2 -->
-							
+					<div style="position: relative;">
+						<input type="radio" name="val" data-ng-model="generalInfo.partOfchain" value="Yes">
+						&nbsp; Yes
+					</div>
+					<div style="position: relative;">
+						<input type="radio" name="val" data-ng-model="generalInfo.partOfchain" value="No">
+						&nbsp; No
+					</div> 
 				</div>
 			</div>
 			

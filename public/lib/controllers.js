@@ -1,5 +1,33 @@
-angular.module('travel_portal_hotel_profile').
-	controller("generalInfoProfileController",['$scope', '$http',function($scope, $http){
+angular.module('travel_portal').
+	controller("hoteRoomController",['$scope', '$http',function($scope, $http){
+		
+			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10];
+			$scope.supplierCode = 12345;
+			console.log("hoteRoomController successfully initialized.");
+
+			$scope.$watch("sel_room_type", function(selRoomType) {
+				console.log("room type changed...  " + selRoomType);
+				//call service to get the details of the selected room type..
+			});
+			
+			$scope.initRoomTypePage = function() {
+				//call the all room type service to get all the room types stored in db for supplier.
+				$http.get("/hotel/roomtypes?supplierCode="+$scope.supplierCode).success(function(response) {
+					$scope.hotelRoomTypes = response;
+				});
+				
+				//call the all room type service to get all the room types stored in db for supplier.
+				$http.get("/room/amenities").success(function(response) {
+					$scope.roomAmenities = response;
+				});
+			}
+			
+		}]
+);
+
+
+angular.module('travel_portal').
+	controller("hoteProfileController",['$scope', '$http',function($scope, $http){
 	
 	$scope.generalInfo = {};
 	$scope.countries = [];

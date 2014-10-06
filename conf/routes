@@ -10,7 +10,7 @@ GET     /                           controllers.Application.index()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
-POST  /hotel_profile/:profileId 		com.travelportal.controllers.HotelProfileController.hotelProfile(profileId: Integer)
+GET /hotel_profile/:profileId 		com.travelportal.controllers.HotelProfileController.hotelProfile(profileId: Integer)
 GET /countries						com.travelportal.controllers.TravelPortalUtilsController.getCountries()
 GET   /cities/:countryCode				com.travelportal.controllers.TravelPortalUtilsController.getCities(countryCode: Integer)
 POST  /saveGeneralInfo                com.travelportal.controllers.TravelPortalUtilsController.saveGeneralInfo()
@@ -28,4 +28,13 @@ POST  /updateInternalInfo         com.travelportal.controllers.TravelPortalUtils
 POST  /updateContactInfo         com.travelportal.controllers.TravelPortalUtilsController.getupdateContactInfo()
 POST  /updateComunication         com.travelportal.controllers.TravelPortalUtilsController.getupdateComunication()
 
+#following routes are used for fetch room details, Add Room Type and Edit Room Type
+#home screen for edit
 
+GET /home	com.travelportal.controllers.HotelProfileController.home()
+
+GET /hotel/roomtypes		com.travelportal.controllers.HotelRoomController.fetchAllRoomTypesForEdit()
+GET /hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.fetchToEditHotelDetails(roomId: Long)
+POST /hotel/roomtypes			com.travelportal.controllers.HotelRoomController.saveOrUpdateHotelRoom()
+#POST /hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.editHotelRoom(roomId: Long)
+GET /room/amenities				com.travelportal.controllers.HotelRoomController.getAvailableRoomAmenities()
