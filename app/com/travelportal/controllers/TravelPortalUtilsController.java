@@ -2,6 +2,7 @@ package com.travelportal.controllers;
 
 import java.util.List;
 
+
 import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
@@ -192,6 +193,29 @@ public class TravelPortalUtilsController extends Controller {
 		hotelprofile.setZipCode(form.get("RemailAddr"));
 		hotelprofile.setHotelWebSite(form.get("TollfreeTel"));
 		hotelprofile.setHotelGeneralManager(form.get("contactName"));
+		
+		
+		hotelprofile.merge();
+		return ok();
+	}
+	
+	
+	@Transactional
+	public static Result getupdatebillingInfo() {
+
+				   
+	    DynamicForm form = DynamicForm.form().bindFromRequest();
+		System.out.println(form.get("Name"));
+	    
+		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("code")));
+        		
+		/*hotelprofile.setHotelGeneralManager(form.get("DirectFaxNumber"));
+		hotelprofile.setGeneralMgrEmail(form.get("Extension"));
+		hotelprofile.setHotelWebSite(form.get("RDirectFaxNumber"));
+	
+		hotelprofile.setZipCode(form.get("RemailAddr"));
+		hotelprofile.setHotelWebSite(form.get("TollfreeTel"));
+		hotelprofile.setHotelGeneralManager(form.get("contactName"));*/
 		
 		
 		hotelprofile.merge();

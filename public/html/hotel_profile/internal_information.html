@@ -2,123 +2,132 @@
 <form method="post" ng-submit="saveInternalInfo()" role="form" class="form-horizontal">
 	<div class="row">
 	<div>
-				<div class="col-md-6" style="font-size: smaller;">
+				<div class="col-md-12">
 			
-			<div class="form-group">
-				<label class="col-md-5 control-label">Year Hotel Was Built:</label>
+					
+		<div class="form-group">
+				<label class="col-md-3 control-label">Year Hotel Was Built:</label>
 				<div class="col-md-3">
-					<input type="text" name="hotelbuilt" data-ng-model="internalInfo.Built" class="form-control" style="height: 21px;padding-left: 0px;padding-right: 0px;font-size: inherit;">
+					<input type="text" name="hotelbuilt" data-ng-model="internalInfo.Built" class="form-control">
 				</div>
-			</div>	
+				
+				<label class="col-md-3 control-label">Last Renovated:</label>
+				<div class="col-md-3">
+					<input type="text" name="lastRenov" data-ng-model="internalInfo.lastRenov" class="form-control">
+					<p>(year, e.g. 2001)</p>
+				</div>
+			</div>
+		
 		
 		<div class="form-group">
-				<label class="col-md-3 control-label">*Is your hotel fire safety compliant?</label>
-				<div class="col-md-9">
+				<label class="col-md-5 control-label" style="text-align: left;margin-left: 4%;">*Is your hotel fire safety compliant?</label>
+				<div class="col-md-5">
 				
-				<div style="position: relative;">
+				<div style="float: left;margin-right: 5%;">
 						<input type="radio" name="val" data-ng-model="internalInfo.safety" value="Yes">
 						&nbsp; Yes
 					</div>
-					<div style="position: relative;">
+					<div>
 						<input type="radio" name="val" data-ng-model="internalInfo.safety" value="No">
 						&nbsp; No
 					</div> 
 				
-				
-							 <div class="iradio_minimal-grey"
-								style="position: relative;">
-								<input type="radio" name="val" data-ng-model="internalInfo.safety" value="Yes">
-								
-							</div>&nbsp; Yes</label><label><div class="iradio_minimal-grey" tyle="position: relative;">
-								<input type="radio" name="val" data-ng-model="internalInfo.safety" value="No">
-							
-							</div>&nbsp; No</label>  
 					</div>
 			</div>		
-		<div class="form-group">
-				<label class="col-md-5 control-label">*Number of Floors:</label>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Number of Floors:</label>
 				<div class="col-md-3">
-					<input type="text" name="floors" data-ng-model="internalInfo.noFloors" class="form-control" style="height: 21px;padding-left: 0px;padding-right: 0px;font-size: inherit;">
+					<input type="text" name="floors" data-ng-model="internalInfo.noFloors" class="form-control">
 				</div>
-			</div>	
 				
-          <div class="form-group">
+				<label class="col-md-3 control-label">*Number of Rooms:</label>
+				<div class="col-md-3">
+					<input type="text" name="noroom" data-ng-model="internalInfo.room" class="form-control">
+					
+				</div>
+			</div>
+			
+	
+	      <div class="form-group">
 				<label class="col-md-3 control-label">*Guest Telephone:</label>
-				<div class="col-md-9">
-					<input type="text" name="citycode" data-ng-model="internalInfo.GuestTele" class="form-control" style="width: 10%;height: 21px;padding-left: 0px;padding-right: 0px;font-size: inherit;float: left;"><p style="float: left;">-</p>
-					<input type="text" name="number" data-ng-model="internalInfo.GuestTelenumber" class="form-control" style="width: 40%;height: 21px;padding-left: 0px;padding-right: 0px;font-size: inherit;float: left;">
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="citycode" data-ng-model="internalInfo.GuestTele" class="form-control">
+				</div>
+				<p style="float: left;">-</p>
+				<div class="col-md-3">
+					<input type="text" name="number" data-ng-model="internalInfo.GuestTelenumber" class="form-control">
 				</div>
 			</div>
 			
-			<div class="form-group">
-				<label class="col-md-3 control-label">Hotel Web Site:</label>
-				<div class="col-md-6">
-					<input type="text" name="website" data-ng-model="internalInfo.websit" class="form-control" style="height: 21px;padding-left: 0px;padding-right: 0px;font-size: inherit;">
-				</div>
-			</div>	
 			
-			 <div class="form-group">
-				<label class="col-md-3 control-label">*Direct Telephone:</label>
-				<div class="col-md-9">
-					<input type="text" name="citycode" data-ng-model="internalInfo.teleCode" class="form-control" style="width: 10%;height: 21px;padding-left: 0px;padding-right: 0px;font-size: inherit;float: left;"><p style="float: left;">-</p>
-					<input type="text" name="number" data-ng-model="internalInfo.number" class="form-control" style="width: 40%;height: 21px;padding-left: 0px;padding-right: 0px;font-size: inherit;float: left;">
-				</div>
-			</div>	
-			<div class="form-group">
-				<label class="col-md-3 control-label">*Hotel General Manager:</label>
-				<div class="col-md-6">
-					<input type="text" name="generalManager" data-ng-model="internalInfo.generalManager" class="form-control" style="height: 21px;padding-left: 0px;padding-right: 0px;font-size: inherit;">
-				</div>
-			</div>	
-			</div>
-			
-			<div class="col-md-6" style="font-size: smaller;">
-			
-			     <div class="form-group">
-				       <label class="col-md-5 control-label">Last Renovated:</label>
-				      <div class="col-md-3">
-				      	<input type="text" name="hotelbuilt" data-ng-model="internalInfo.lastRenov" class="form-control" style="height: 21px;padding-left: 0px;padding-right: 0px;font-size: smaller;">
-				      	<p>(year, e.g. 2001)</p>
-			        	</div>
-			    </div>
-			      <div class="form-group">
-				<label class="col-md-5 control-label">*Number of Rooms:	</label>
-				<div class="col-md-4">
-					<input type="text" name="floors" data-ng-model="internalInfo.room" class="form-control" style="height: 21px;padding-left: 0px;padding-right: 0px;font-size: smaller;">
-				</div>
-			</div>	
-			
+				
 			<div class="form-group">
 				<label class="col-md-3 control-label">Guest Fax:</label>
-				<div class="col-md-9">
-					<input type="text" name="citycode" data-ng-model="internalInfo.faxCode" class="form-control" style="width: 10%;height: 21px;padding-left: 0px;padding-right: 0px;font-size: smaller;float: left;"><p style="float: left;">-</p>
-					<input type="text" name="number" data-ng-model="internalInfo.faxnumber" class="form-control" style="width: 40%;height: 21px;padding-left: 0px;padding-right: 0px;font-size: smaller;float: left;">
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="citycode" data-ng-model="internalInfo.faxCode" class="form-control">
+				</div>
+				<p style="float: left;">-</p>
+				<div class="col-md-3">
+					<input type="text" name="number" data-ng-model="internalInfo.faxnumber" class="form-control">
 				</div>
 			</div>	
-			<div class="form-group">
+         
+         <div class="form-group">
+				<label class="col-md-3 control-label">Hotel Web Site:</label>
+				<div class="col-md-9">
+					<input type="text" name="website" data-ng-model="internalInfo.websit" class="form-control">
+				</div>
+		</div>
+       
+       <div class="form-group">
 				<label class="col-md-3 control-label">Hotel E-mail:</label>
-				<div class="col-md-6">
-					<input type="text" name="email" data-ng-model="internalInfo.email" class="form-control" style="height: 21px;padding-left: 0px;padding-right: 0px;font-size: smaller;">
+				<div class="col-md-9">
+					<input type="text" name="email" data-ng-model="internalInfo.email" class="form-control">
 				</div>
 			</div>	
 			
+					
 			 <div class="form-group">
-				<label class="col-md-3 control-label">Direct Fax:</label>
-				<div class="col-md-9">
-					<input type="text" name="citycode" data-ng-model="internalInfo.dirFaxCode" class="form-control" style="width: 10%;height: 21px;padding-left: 0px;padding-right: 0px;font-size: smaller;float: left;"><p style="float: left;">-</p>
-					<input type="text" name="number" data-ng-model="internalInfo.dirFaxnumber" class="form-control" style="width: 40%;height: 21px;padding-left: 0px;padding-right: 0px;font-size: smaller;float: left;">
+				<label class="col-md-3 control-label">*Direct Telephone:</label>
+				<div class="col-md-2" style="width: 13%">
+					<input type="text" name="citycode" data-ng-model="internalInfo.teleCode" class="form-control">
+				</div>
+				<p style="float: left;">-</p>
+				<div class="col-md-3">
+					<input type="text" name="number" data-ng-model="internalInfo.number" class="form-control">
 				</div>
 			</div>	
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">Direct Fax:</label>
+				<div class="col-md-2" style="width: 13%">
+					<input type="text" name="citycode" data-ng-model="internalInfo.dirFaxCode" class="form-control">
+				</div>
+				<p style="float: left;">-</p>
+				<div class="col-md-3">
+					<input type="text" name="number" data-ng-model="internalInfo.dirFaxnumber" class="form-control">
+				</div>
+			</div>	
+						
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">*Hotel General Manager:</label>
+				<div class="col-md-9">
+					<input type="text" name="generalManager" data-ng-model="internalInfo.generalManager" class="form-control">
+				</div>
+			</div>	
+			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*General Mgr. E-mail:</label>
-				<div class="col-md-6">
-					<input type="text" name="generalManager" data-ng-model="internalInfo.GMemail" class="form-control" style="height: 21px;padding-left: 0px;padding-right: 0px;font-size: smaller;">
+				<div class="col-md-9">
+					<input type="text" name="generalManager" data-ng-model="internalInfo.GMemail" class="form-control">
 				</div>
 			</div>
-			
 			</div>
-			
+		 
 		</div>
+		<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
 		 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
                 
 	</div>

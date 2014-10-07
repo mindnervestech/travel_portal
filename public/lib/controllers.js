@@ -27,7 +27,7 @@ angular.module('travel_portal').
 
 
 angular.module('travel_portal').
-	controller("hoteProfileController",['$scope', '$http',function($scope, $http){
+	controller("hoteProfileController",['$scope', '$http', '$rootScope',function($scope, $http, $rootScope){
 	
 	$scope.generalInfo = {};
 	$scope.countries = [];
@@ -89,19 +89,61 @@ angular.module('travel_portal').
 		$scope.services = response;
 		
 	}); 
+/*	$scope.carts = [];*/
+	
+	$scope.serviceClicked = function(e, generalInfo) {
+		console.log(generalInfo);
+		console.log("*************");
+		console.log($scope.services);
+		
+		if($(e.target).is(":checked")) {
+				newItem(generalInfo);
+		} else {
+			//DeleteItem(generalInfo);
+		}
+	}
+	
+	function newItem(generalInfo) {
+		
+		return cartItem = {
+			id:generalInfo.serviceId	
+						
+	    }
+	}
+	
+	/*$scope.PushItems = function(c) {
+		$scope.carts.push(c);
+		
+	}*/
+	
+	
+	
+	/*DeleteItem = function(generalInfo){
+				    			    	
+		angular.forEach($scope.services, function(obj, index){
+			 if ((generalInfo.$$id === obj.id) || (generalInfo.id === obj.id)) {
+		    	$scope.services.splice(index, 1);
+		    		    			    	
+		    	
+		       	return;
+		    };
+		  });
+			  
+		}*/
 	
 	
 	
 	
 	$scope.radioValue;
-	$scope.supp;
+	//$scope.supp;
+	//$rootScope.supp="";
 	
 	$scope.savegeneralinfo = function() {
 		console.log($scope.generalInfo);
 		
 		$http.post('/saveGeneralInfo', $scope.generalInfo).success(function(data){
 			console.log('success');
-			$scope.supp=data;
+			$rootScope.supp=data;
 			console.log($scope.supp);
 			//$scope.saveDescription($scope.supp);
 			
@@ -112,7 +154,7 @@ angular.module('travel_portal').
 	
 
 	$scope.saveInternalInfo = function() {
-			$scope.internalInfo.code = $scope.supp ;
+			$scope.internalInfo.code = $rootScope.supp ;
 			console.log($scope.internalInfo);
 			$http.post('/updateInternalInfo',$scope.internalInfo).success(function(data){
 				console.log('success');
@@ -121,16 +163,43 @@ angular.module('travel_portal').
 			});
 	}
 		
-	/*$scope.value1=false;
+	//$scope.value1=false;
 	$scope.sameadd=function()
 	{
-		alert("hiikkkk");
-	}*/
+		
+	if($scope.value1==true)
+	{
+		$scope.contactInfo.RcontactName=$scope.contactInfo.contactName;
+		$scope.contactInfo.RemailAddr=$scope.contactInfo.emailAddr;
+		$scope.contactInfo.Rtitle=$scope.contactInfo.title;
+		$scope.contactInfo.RteleCode=$scope.contactInfo.teleCode;
+		$scope.contactInfo.RteleNumber=$scope.contactInfo.teleNumber;
+		$scope.contactInfo.RExtension=$scope.contactInfo.Extension;
+	}
+	else
+		{
+		$scope.contactInfo.RcontactName="";
+		$scope.contactInfo.RemailAddr="";
+		$scope.contactInfo.Rtitle="";
+		$scope.contactInfo.RteleCode="";
+		$scope.contactInfo.RteleNumber="";
+		$scope.contactInfo.RExtension="";
+
+		
+		}
+	}
 	
 	$scope.SaveContactinfo = function() {
-		alert("Hiiiiiii..");
-		$scope.contactInfo.code = $scope.supp;
+		
+		$scope.contactInfo.code = $rootScope.supp;
+		console.log("/////////////");
+		console.log($scope.supp);
+		console.log("/////////////");
 		console.log($scope.contactInfo);
+		
+		
+		
+		
 		$http.post('/updateContactInfo',$scope.contactInfo).success(function(data){
 			console.log('success');
 		}).error(function(data, status, headers, config) {
@@ -138,11 +207,27 @@ angular.module('travel_portal').
 		});
 		
 	}
+	
+	
+	$scope.Savebillinginfo=function()
+	{
+		$scope.bill.code=$rootScope.supp;
+	
+		console.log($scope.bill);
+		$http.post('/updatebillingInfo',$scope.bill).success(function(data){
+			console.log('success');
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+	
+	}
+	
+	
+	
 	$scope.savecommunciat=function()
 	{
-		$scope.comunicationhotel.code=$scope.supp;
+		$scope.comunicationhotel.code=$rootScope.supp;
 		console.log($scope.comunicationhotel);
-		alert("Hiiiiiiiii.");
 		$http.post('/updateComunication',$scope.comunicationhotel).success(function(data){
 			console.log('success');
 		}).error(function(data, status, headers, config) {
@@ -152,7 +237,8 @@ angular.module('travel_portal').
 	}
 	
 	$scope.saveDescription=function(){
-			$scope.descrip.code = $scope.supp;
+		
+			$scope.descrip.code = $rootScope.supp;
 			console.log($scope.descrip);
 			$http.post('/updateDescription',$scope.descrip).success(function(data){
 					console.log('success');

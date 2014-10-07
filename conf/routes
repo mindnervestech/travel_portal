@@ -27,6 +27,9 @@ GET   /services                com.travelportal.controllers.TravelPortalUtilsCon
 POST  /updateInternalInfo         com.travelportal.controllers.TravelPortalUtilsController.getupdateInternalInfo()
 POST  /updateContactInfo         com.travelportal.controllers.TravelPortalUtilsController.getupdateContactInfo()
 POST  /updateComunication         com.travelportal.controllers.TravelPortalUtilsController.getupdateComunication()
+POST  /updatebillingInfo         com.travelportal.controllers.TravelPortalUtilsController.getupdatebillingInfo()  
+
+
 
 #following routes are used for fetch room details, Add Room Type and Edit Room Type
 #home screen for edit
