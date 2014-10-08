@@ -1,0 +1,44 @@
+
+<form method="post" ng-submit="saveleisure_sport()" role="form" class="form-horizontal">
+	<div class="row">
+		<div class="col-md-12">
+					
+			<div>
+		<label><b>Please check ALL that apply to your hotel:</b></label><br> 
+		</div>
+		
+			
+		
+		 <div>
+		
+			
+			<div class="form-group">
+				
+				</div><br>
+				
+				<div>
+				<label ng-repeat="leisure in services" style="padding-right: 30px;width: 24%;">
+				
+				  <input
+  				  type="checkbox"
+  				    ng-click="leisureClicked($event,leisure)"
+  				   	ng-model="leisure.isSelected">					
+   					 {{leisure.serviceName}}</label>
+    			</div>
+				
+				
+		</div>		 		<br>
+																
+			
+			
+			
+		</div>
+				
+		<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+		
+		
+		     
+                 <button type="submit" ng-init="descrip.code = supp" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+	</div>
+</form>
+

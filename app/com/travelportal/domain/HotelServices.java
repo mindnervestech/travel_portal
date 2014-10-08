@@ -78,4 +78,8 @@ public class HotelServices {
 		return JPA.em().createQuery("select c from HotelServices c").getResultList();
 	}
 	
+	public static List<HotelServices> getallhotelservice(List<Integer> list) {
+		return JPA.em().createQuery("select c from HotelServices c where serviceId IN ?1").setParameter(1, list).getResultList();
+	}
+	
 }

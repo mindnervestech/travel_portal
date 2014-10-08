@@ -85,66 +85,141 @@ angular.module('travel_portal').
 	
 
 	$http.get("/services").success(function(response) {
-		console.log("getting services...");
 		$scope.services = response;
 		
 	}); 
-/*	$scope.carts = [];*/
 	
-	$scope.serviceClicked = function(e, generalInfo) {
-		console.log(generalInfo);
-		console.log("*************");
-		console.log($scope.services);
+	$http.get("/amenities").success(function(response){
+		$scope.amenities=response;
+	});
+	
+	$http.get("/business").success(function(response){
+		console.log("getting business");
+		$scope.business=response;
+	});
+	
+	$http.get("/leisureSport").success(function(response){
+		console.log("getting leisureSport");
+		$scope.leisureSport=response;
+	});
+	
+	$scope.service_check = [];
+	$scope.amenities_check = [];
+	$scope.business_check=[];
+	$scope.leisure_sport_check=[];
+	
+	
+	
+$scope.leisureClicked = function(e, leisure) {
 		
 		if($(e.target).is(":checked")) {
-				newItem(generalInfo);
+			$scope.leisure_sport_check.push(leisure);
 		} else {
-			//DeleteItem(generalInfo);
+			//DeletebusinessItem(businessInfo);
+		}
+		console.log("//////////");
+		console.log($scope.leisure_sport_check);
+	}
+	
+/*DeletebusinessItem = function(leisure){
+
+angular.forEach($scope.leisure_sport_check, function(obj, index){
+	
+	 if ((leisure. === obj)) {
+    	$scope.leisure_sport_check.splice(index, 1);
+    
+       	return;
+    };
+  });
+	  
+}*/	
+
+	
+	
+	$scope.businessClicked = function(e, businessInfo) {
+		
+		if($(e.target).is(":checked")) {
+			$scope.business_check.push(businessInfo);
+		} else {
+			//DeletebusinessItem(businessInfo);
+		}
+		console.log("//////////");
+		console.log($scope.business_check);
+	}
+	
+/*DeletebusinessItem = function(businessInfo){
+
+angular.forEach($scope.business_check, function(obj, index){
+	
+	 if ((businessInfo. === obj.)) {
+    	$scope.business_check.splice(index, 1);
+    
+       	return;
+    };
+  });
+	  
+}*/	
+
+
+
+	$scope.amenitiesClicked = function(e, amenitiesInfo) {
+		
+		if($(e.target).is(":checked")) {
+			$scope.amenities_check.push(amenitiesInfo.amenitiesCode);
+		} else {
+			DeleteamenitiesItem(amenitiesInfo);
 		}
 	}
 	
-	function newItem(generalInfo) {
+	DeleteamenitiesItem = function(amenitiesInfo){
 		
-		return cartItem = {
-			id:generalInfo.serviceId	
-						
-	    }
-	}
-	
-	/*$scope.PushItems = function(c) {
-		$scope.carts.push(c);
-		
-	}*/
-	
-	
-	
-	/*DeleteItem = function(generalInfo){
-				    			    	
-		angular.forEach($scope.services, function(obj, index){
-			 if ((generalInfo.$$id === obj.id) || (generalInfo.id === obj.id)) {
-		    	$scope.services.splice(index, 1);
-		    		    			    	
-		    	
+		angular.forEach($scope.amenities_check, function(obj, index){
+			
+			 if ((amenitiesInfo.amenitiesCode == obj)) {
+		    	$scope.amenities_check.splice(index, 1);
+		    
 		       	return;
 		    };
 		  });
 			  
-		}*/
+		}
+	
+	
+	$scope.serviceClicked = function(e, generalInfo) {
+				
+		if($(e.target).is(":checked")) {
+			$scope.service_check.push(generalInfo.serviceId);
+		} else {
+			DeleteItem(generalInfo);
+		}
+		
+	}
+	
+	
+	DeleteItem = function(generalInfo){
+				    			    	
+		angular.forEach($scope.service_check, function(obj, index){
+			 if ((generalInfo.serviceId === obj.serviceId) || (generalInfo.serviceId === obj.serviceId)) {
+		    	$scope.service_check.splice(index, 1);
+		    
+		       	return;
+		    };
+		  });
+			  
+		}
 	
 	
 	
 	
 	$scope.radioValue;
-	//$scope.supp;
-	//$rootScope.supp="";
 	
 	$scope.savegeneralinfo = function() {
 		console.log($scope.generalInfo);
 		
 		$http.post('/saveGeneralInfo', $scope.generalInfo).success(function(data){
 			console.log('success');
-			$rootScope.supp=data;
-			console.log($scope.supp);
+			$rootScope.supplierCode=data;
+			console.log($scope.supplierCode);
 			//$scope.saveDescription($scope.supp);
 			
 		}).error(function(data, status, headers, config) {
@@ -154,7 +229,7 @@ angular.module('travel_portal').
 	
 
 	$scope.saveInternalInfo = function() {
-			$scope.internalInfo.code = $rootScope.supp ;
+			$scope.internalInfo.code = $rootScope.supplierCode ;
 			console.log($scope.internalInfo);
 			$http.post('/updateInternalInfo',$scope.internalInfo).success(function(data){
 				console.log('success');
@@ -191,15 +266,8 @@ angular.module('travel_portal').
 	
 	$scope.SaveContactinfo = function() {
 		
-		$scope.contactInfo.code = $rootScope.supp;
-		console.log("/////////////");
-		console.log($scope.supp);
-		console.log("/////////////");
-		console.log($scope.contactInfo);
-		
-		
-		
-		
+		$scope.contactInfo.code = $rootScope.supplierCode;
+				
 		$http.post('/updateContactInfo',$scope.contactInfo).success(function(data){
 			console.log('success');
 		}).error(function(data, status, headers, config) {
@@ -211,7 +279,7 @@ angular.module('travel_portal').
 	
 	$scope.Savebillinginfo=function()
 	{
-		$scope.bill.code=$rootScope.supp;
+		$scope.bill.code=$rootScope.supplierCode;
 	
 		console.log($scope.bill);
 		$http.post('/updatebillingInfo',$scope.bill).success(function(data){
@@ -226,7 +294,7 @@ angular.module('travel_portal').
 	
 	$scope.savecommunciat=function()
 	{
-		$scope.comunicationhotel.code=$rootScope.supp;
+		$scope.comunicationhotel.code=$rootScope.supplierCode;
 		console.log($scope.comunicationhotel);
 		$http.post('/updateComunication',$scope.comunicationhotel).success(function(data){
 			console.log('success');
@@ -238,14 +306,28 @@ angular.module('travel_portal').
 	
 	$scope.saveDescription=function(){
 		
-			$scope.descrip.code = $rootScope.supp;
+			$scope.descrip.supplierCode = $rootScope.supplierCode;
+		
+				$scope.descrip.services = $scope.service_check;
+			
+			/*console.log($scope.service_check);
+			console.log("//////////////////");
+			console.log($scope.descrip.service);
+			console.log("//////////////////");*/
 			console.log($scope.descrip);
+			console.log("//////////////////");
 			$http.post('/updateDescription',$scope.descrip).success(function(data){
 					console.log('success');
 			}).error(function(data, status, headers, config) {
 				console.log('ERROR');
 			});
 	}
+	
+	$scope.saveAmenities=function(){
+		$scope.amenitiesInfo.code=$rootScope.supplierCode;
+		$scope.amenitiesInfo.amenities=$scope.amenities_check;
+	}
+	
 
 	$scope.onCountryChange = function() {
 		console.log($scope.generalInfo.countryCode);

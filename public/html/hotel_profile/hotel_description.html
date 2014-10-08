@@ -2,7 +2,13 @@
 <form method="post" ng-submit="saveDescription()" role="form" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
-					
+				
+				
+			
+				<div class="col-md-9">
+					<input type="text" name="supplierCode" data-ng-model="generalInfo.supplierCode" placeholder="Hotel Name" class="form-control">
+				</div>
+			
 			<div>
 		<label><b>Hotel Description:</b></label><br> 
 Please enter a short description of your property to highlight the main features and facilities. The text should be limited to a maximum of 1000 characters. The description in English is mandatory and other languages are optional. 
@@ -12,7 +18,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 			<br>
 				<label class="col-md-3 control-label"><b>Profile description</b></label>
 				<div class="col-md-9">
-					<textarea id="message3" data-ng-model="descrip.description" name="message3" rows="6"
+					<textarea id="message3" name="description" data-ng-model="descrip.description" name="message3" rows="6"
 						class="form-control"  placeholder="Located on Sukumvit Road. 7 min from the Queen Sirikit National Convention Centre.4 mn walk from Emporium Shopping Mall, Royal National Park and Sky train station.4 food and beverage outlets. Fitness centre. Conference and seminar facilities.The Bangkok Hotel Lotus Sukhumvit is centrally located and offers free private parking, an outdoor swimming pool and sauna.Bangkok Hotel Lotus is situated near several shopping and entertainment venues.Phrom Phong Skytrain station is a short stroll away.Rooms are fitted with air conditioning, cable television and coffee/tea making facilities.Free Wi-Fi is available. 24-hour room service is provided." >					
 						</textarea>
 				</div>
@@ -20,6 +26,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 			
 		
 		<div>
+		
 			<!-- checklist-value="{{serv.serviceId}}"  -->
 			
 			<div class="form-group">
@@ -30,7 +37,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 				<label ng-repeat="generalInfo in services" style="padding-right: 30px;width: 24%;">
 				
 				  <input
-  				  type="checkbox"
+  				  type="checkbox" name="services"
   				    ng-click="serviceClicked($event,generalInfo)"
   				   	ng-model="generalInfo.isSelected">					
    					 {{generalInfo.serviceName}}</label>
@@ -44,7 +51,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 					<div class="form-group">
 						<label class="col-md-3 control-label"><b>Hotel Located in</b> </label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="descrip.location" data-ng-options="location.locationId as location.locationNm for location in location" style="width: 70%;float: left;">
+					<select class="form-control" name="hotelLocation" data-ng-model="descrip.hotelLocation" data-ng-options="location.locationId as location.locationNm for location in location" style="width: 70%;float: left;">
 						<option>-- Choose One --</option>
 					</select><label class="col-md-3 control-label"  style="text-align: left;"><b>area</b></label>
 					
@@ -56,7 +63,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 							<div class="form-group">
 							<label class="col-md-3 control-label"><b>Shopping is</b> </label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="descrip.shopping" data-ng-options="shopping.id as shopping.shoppingArea for shopping in shoppingfacility" style="width: 70%;float: left;">
+					<select class="form-control" name="shoppingFacilityCode" data-ng-model="descrip.shoppingFacilityCode" data-ng-options="shopping.id as shopping.shoppingArea for shopping in shoppingfacility" style="width: 70%;float: left;">
 						<option>-- Choose One --</option>
 					</select><label class="col-md-3 control-label"  style="text-align: left;"><b>and</b></label> 
 				</div>
@@ -65,7 +72,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 							<div class="form-group">
 							<label class="col-md-3 control-label"><b>the nightlife/restaurants</b> </label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="descrip.night" data-ng-options="night.nightLifeCode as night.nightLifeNm for night in nightlife" style="width: 70%;float: left;">
+					<select class="form-control" name="nightLifeCode" data-ng-model="descrip.nightLifeCode" data-ng-options="night.nightLifeCode as night.nightLifeNm for night in nightlife" style="width: 70%;float: left;">
 						<option>-- Choose One --</option>
 					</select><label class="col-md-3 control-label"  style="text-align: left;"><b>the hotel.</b></label>
 				</div>
@@ -81,7 +88,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 			<label style="margin-left: 2%;s"><b>HOTEL LOCATION</b></label>
 			
 			<label class="col-md-12 control-label" style="margin-bottom: 3%;">Please enter 3 words ONLY that will give the user an idea of where your Property is located. . </label><br>
-			<div>
+			<!-- <div>
 			
 			<table style="width: 96%;">
 					
@@ -124,11 +131,11 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 			</table>
 			
 			
-		</div>
+		</div> -->
             <br>    
 	</div>
 		     
-                 <button type="submit" ng-init="descrip.code = supp" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
 	</div>
 </form>
 

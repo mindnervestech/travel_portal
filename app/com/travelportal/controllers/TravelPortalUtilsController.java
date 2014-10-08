@@ -2,26 +2,42 @@ package com.travelportal.controllers;
 
 import java.util.List;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+
 
 import play.data.DynamicForm;
+import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.travelportal.domain.AmenitiesType;
+import com.travelportal.domain.BillingInformation;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
+import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelBrands;
 import com.travelportal.domain.HotelChain;
+import com.travelportal.domain.HotelPrivateContacts;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.Location;
 import com.travelportal.domain.MarketPolicyTypes;
 import com.travelportal.domain.NightLife;
+import com.travelportal.domain.Salutation;
 import com.travelportal.domain.ShoppingFacility;
 import com.travelportal.domain.rooms.RoomAmenities;
+import com.travelportal.views.html.billing_information;
+import com.travelportal.vm.HotelDescription;
+import com.travelportal.vm.HotelGeneralInfoVM;
 
 public class TravelPortalUtilsController extends Controller {
 
@@ -84,6 +100,26 @@ public class TravelPortalUtilsController extends Controller {
 		return ok(Json.toJson(hotelservice));
 	}
 	
+	
+	@Transactional
+	public static Result getamenities() {
+		List<HotelAmenities> hotelamenities = HotelAmenities.getamenities();
+		return ok(Json.toJson(hotelamenities));
+	}
+		
+	@Transactional
+	public static Result getbusiness() {
+		
+		return ok();
+	}
+	
+		
+	@Transactional
+	public static Result getleisureSport() {
+		
+		return ok();
+	}
+	
 	@Transactional
 	public static Result getstarrating() {
 		List<HotelStarRatings> hotelstarratings = HotelStarRatings.gethotelStarratings();
@@ -127,18 +163,41 @@ public class TravelPortalUtilsController extends Controller {
 	@Transactional
 	public static Result getupdateDescription() {
 
-				   
-	    DynamicForm form = DynamicForm.form().bindFromRequest();
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelDescription.class);
+		HotelDescription hoteldescription = Json.fromJson(json, HotelDescription.class);
+				
+	
 		
-		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("code")));
-        		
-		hotelprofile.setHotelProfileDesc(form.get("description"));
-		hotelprofile.setLocation(Location.getlocationIdByCode(Integer.parseInt(form.get("location"))));
-		hotelprofile.setShoppingFacility(ShoppingFacility.getShoppingFacilityByCode(Integer.parseInt(form.get("shopping"))));
-		hotelprofile.setNightLife(NightLife.getNightLifeByCode(Integer.parseInt(form.get("night"))));
-		hotelprofile.setZipCode(form.get("hydepark"));
+		//hotelgeneralinfo.save();
+		//return ok();		   
+		
+		
+	   /* DynamicForm form = DynamicForm.form().bindFromRequest();
+		System.out.println("//////////////");
+		System.out.println(form.get("service[1]"));
+	    */
+
+	
+		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
+		System.out.println("//////////////////");		
+		System.out.println(form.get("supplierCode"));
+		hotelprofile.setHotelProfileDesc(hoteldescription.getDescription());
+		hotelprofile.setLocation(Location.getlocationIdByCode(hoteldescription.getHotelLocation()));
+		hotelprofile.setShoppingFacility(ShoppingFacility.getShoppingFacilityByCode(hoteldescription.getShoppingFacilityCode()));
+		hotelprofile.setNightLife(NightLife.getNightLifeByCode(hoteldescription.getNightLifeCode()));
+		hotelprofile.setServices(HotelServices.getallhotelservice(hoteldescription.getServices()));
+		
+		
+		//hotelprofile.setHotelProfileDesc(form.get("description"));
+		//hotelprofile.setLocation(Location.getlocationIdByCode(Integer.parseInt(form.get("hotelLocation"))));
+		//hotelprofile.setShoppingFacility(ShoppingFacility.getShoppingFacilityByCode(Integer.parseInt(form.get("shoppingFacilityCode"))));
+		//hotelprofile.setNightLife(NightLife.getNightLifeByCode(Integer.parseInt(form.get("nightLifeCode"))));
+		//hotelprofile.setServices(form.get("services"));
+		/*hotelprofile.setZipCode(form.get("hydepark"));
 		hotelprofile.setHotelWebSite(form.get("piccadilly"));
-		hotelprofile.setHotelGeneralManager(form.get("Buckinghampalace"));
+		hotelprofile.setHotelGeneralManager(form.get("Buckinghampalace"));*/
 		
 		
 		hotelprofile.merge();
@@ -161,6 +220,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelprofile.setHotelGeneralManager(form.get("generalManager"));
 		hotelprofile.setGeneralMgrEmail(form.get("GMemail"));
 		hotelprofile.setHotelBuiltYear(Integer.parseInt(form.get("Built")));
+		hotelprofile.setHotelRenovationYear(Integer.parseInt(form.get("lastRenov")));
 		hotelprofile.setHotelWebSite(form.get("websit"));
 		hotelprofile.setNoOfFloors(Integer.parseInt(form.get("noFloors")));
 		hotelprofile.setNoOfRooms(Integer.parseInt(form.get("room")));
@@ -169,7 +229,6 @@ public class TravelPortalUtilsController extends Controller {
 		
 		hotelprofile.setZipCode(form.get("GuestTelenumber"));
 		hotelprofile.setHotelWebSite(form.get("GuestTelenumber"));
-		hotelprofile.setHotelGeneralManager(form.get("lastRenov"));
 		hotelprofile.setHotelProfileDesc(form.get("email"));
 		
 		hotelprofile.merge();
@@ -181,21 +240,37 @@ public class TravelPortalUtilsController extends Controller {
 	@Transactional
 	public static Result getupdateContactInfo() {
 
-				   
+	
+		
+		
+		
+		
 	    DynamicForm form = DynamicForm.form().bindFromRequest();
 		
-		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("code")));
-        		
-		hotelprofile.setHotelGeneralManager(form.get("DirectFaxNumber"));
-		hotelprofile.setGeneralMgrEmail(form.get("Extension"));
-		hotelprofile.setHotelWebSite(form.get("RDirectFaxNumber"));
+	    HotelPrivateContacts hotelprivatecontacts =new HotelPrivateContacts();
+        
+	   hotelprivatecontacts.setMainContactPersonName(form.get("contactName"));
+	 /*   hotelprivatecontacts.setMainContactPersonTitle();
+	    hotelprivatecontacts.setMainContactTelNo();
+	    hotelprivatecontacts.setMainContactFaxNo();
+	    hotelprivatecontacts.setMainContactExt(Integer.parseInt(form.get("Extension")));
+	    hotelprivatecontacts.setMainContactEmailAddr();
+	    hotelprivatecontacts.setTollFreeNo(form.get("TollfreeTel"));
+	    hotelprivatecontacts.setReservationSameAsMainContact();
+	    hotelprivatecontacts.setReservationContactPersonName();
+	    hotelprivatecontacts.setReservationContactPersonTitle();
+	    hotelprivatecontacts.setReservationContactTelNo();
+	    hotelprivatecontacts.setDeptTelNo();
+	    hotelprivatecontacts.setDeptFaxNo();
+	    hotelprivatecontacts.setDeptExtNo();
+	    hotelprivatecontacts.setReservationContactExt();*/
+	    hotelprivatecontacts.setReservationContactEmailAddr(form.get("RemailAddr"));
+	    
+		
 	
-		hotelprofile.setZipCode(form.get("RemailAddr"));
-		hotelprofile.setHotelWebSite(form.get("TollfreeTel"));
-		hotelprofile.setHotelGeneralManager(form.get("contactName"));
 		
 		
-		hotelprofile.merge();
+		hotelprivatecontacts.save();
 		return ok();
 	}
 	
@@ -205,20 +280,20 @@ public class TravelPortalUtilsController extends Controller {
 
 				   
 	    DynamicForm form = DynamicForm.form().bindFromRequest();
-		System.out.println(form.get("Name"));
+		//System.out.println(form.get("Name"));
 	    
-		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("code")));
-        		
-		/*hotelprofile.setHotelGeneralManager(form.get("DirectFaxNumber"));
-		hotelprofile.setGeneralMgrEmail(form.get("Extension"));
-		hotelprofile.setHotelWebSite(form.get("RDirectFaxNumber"));
+		BillingInformation billinginfo= new BillingInformation();
+		//billinginfo.setInvoiceToHotel(form.get("Invoices"));
+		billinginfo.setFirstName(form.get("Name"));
+		billinginfo.setLastName(form.get("lastName"));
+		billinginfo.setTitle(form.get("title"));
 	
-		hotelprofile.setZipCode(form.get("RemailAddr"));
-		hotelprofile.setHotelWebSite(form.get("TollfreeTel"));
-		hotelprofile.setHotelGeneralManager(form.get("contactName"));*/
+		billinginfo.setEmailAddr(form.get("email"));
+		/*billinginfo.setTelNo(Integer.parseInt(form.get("telephcode"))+Integer.parseInt(form.get("teleNumber")));
+		billinginfo.setFaxNo(Integer.parseInt(form.get("dirFaxcode"))+Integer.parseInt(form.get("dirFaxNumber")));*/
 		
 		
-		hotelprofile.merge();
+        billinginfo.save();
 		return ok();
 	}
 	
@@ -232,7 +307,7 @@ public class TravelPortalUtilsController extends Controller {
 		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("code")));
         		
 		/*hotelprofile.setHotelGeneralManager(form.get("DirectFaxNumber"));
-		hotelprofile.setGeneralMgrEmail(form.get("Extension"));
+		hotelprofile.setGeneralMgrEmail(form.get("email"));
 		hotelprofile.setHotelWebSite(form.get("RDirectFaxNumber"));
 	
 		hotelprofile.setZipCode(form.get("RemailAddr"));

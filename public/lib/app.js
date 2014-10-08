@@ -43,15 +43,15 @@ angular.module('travel_portal',['ngRoute']).config(function ($routeProvider) {
 		controller: 'hoteProfileController'
 	})
 	.when('/profile9', {
-		templateUrl: '/assets/html/hotel_profile/hotel_description.html',
+		templateUrl: '/assets/html/hotel_profile/business_amenities.html',
 		controller: 'hoteProfileController'
 	})
 	.when('/profile10', {
-		templateUrl: '/assets/html/hotel_profile/hotel_description.html',
+		templateUrl: '/assets/html/hotel_profile/leisure_sport.html',
 		controller: 'hoteProfileController'
 	})
 	.when('/profile11', {
-		templateUrl: '/assets/html/hotel_profile/hotel_description.html',
+		templateUrl: '/assets/html/hotel_profile/area_attraction.html',
 		controller: 'hoteProfileController'
 	})
 	.when('/profile12', {

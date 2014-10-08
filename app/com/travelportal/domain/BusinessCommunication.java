@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
+
 @Entity
 @Table(name="business_communication")
 public class BusinessCommunication {
@@ -59,5 +62,27 @@ public class BusinessCommunication {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	
+	@Transactional
+    public void save() {
+		JPA.em().persist(this);
+        JPA.em().flush();     
+    }
+      
+    @Transactional
+    public void delete() {
+        JPA.em().remove(this);
+    }
+    
+    @Transactional
+    public void merge() {
+        JPA.em().merge(this);
+    }
+    
+    @Transactional
+    public void refresh() {
+        JPA.em().refresh(this);
+    }
 	
 }
