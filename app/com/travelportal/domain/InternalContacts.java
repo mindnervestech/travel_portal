@@ -8,6 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
+
 @Entity
 @Table(name="internal_contacts")
 public class InternalContacts {
@@ -24,6 +27,18 @@ public class InternalContacts {
 	private int directTelValue;
 	private int directFaxCityCode;
 	private int directFaxValue;
+	
+	
+	public SupplierCode getSupplierCode() {
+		return supplier_code;
+	}
+	/**
+	 * @param location the location to set
+	 */
+	public void setSupplierCode(SupplierCode supplier_code) {
+		this.supplier_code = supplier_code;
+	}
+	
 	/**
 	 * @return the id
 	 */
@@ -132,5 +147,28 @@ public class InternalContacts {
 	public void setDirectFaxValue(int directFaxValue) {
 		this.directFaxValue = directFaxValue;
 	}
+	
+		
+	
+	@Transactional
+    public void save() {
+		JPA.em().persist(this);
+        JPA.em().flush();     
+    }
+      
+    @Transactional
+    public void delete() {
+        JPA.em().remove(this);
+    }
+    
+    @Transactional
+    public void merge() {
+        JPA.em().merge(this);
+    }
+    
+    @Transactional
+    public void refresh() {
+        JPA.em().refresh(this);
+    }
 	
 }

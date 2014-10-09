@@ -5,15 +5,16 @@
 				
 				
 			
-				<div class="col-md-9">
-					<input type="text" name="supplierCode" data-ng-model="generalInfo.supplierCode" placeholder="Hotel Name" class="form-control">
-				</div>
 			
 			<div>
 		<label><b>Hotel Description:</b></label><br> 
 Please enter a short description of your property to highlight the main features and facilities. The text should be limited to a maximum of 1000 characters. The description in English is mandatory and other languages are optional. 
 The text will be displayed the way it is entered and therefore avoid typing the entire description in capital letters.<br>
 		</div>
+		
+				<div ng-show="false" class="col-md-9">
+					<input type="text"  name="supplierCode" data-ng-model="generalInfo.supplierCode" placeholder="Hotel Name" class="form-control">
+				</div>
 			<div class="form-group">
 			<br>
 				<label class="col-md-3 control-label"><b>Profile description</b></label>
@@ -30,7 +31,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 			<!-- checklist-value="{{serv.serviceId}}"  -->
 			
 			<div class="form-group">
-				<label class="col-md-12 control-label" style="text-align: left;color: blue;">The {{generalInfo.companyName}} is a(Please tick the boxes that are applicable):</label>
+				<label class="col-md-12 control-label" style="text-align: left;color: blue;">The {{supplierName}} is a(Please tick the boxes that are applicable):</label>
 				</div><br>
 				
 				<div>
@@ -88,7 +89,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 			<label style="margin-left: 2%;s"><b>HOTEL LOCATION</b></label>
 			
 			<label class="col-md-12 control-label" style="margin-bottom: 3%;">Please enter 3 words ONLY that will give the user an idea of where your Property is located. . </label><br>
-			<!-- <div>
+		 <div>
 			
 			<table style="width: 96%;">
 					
@@ -99,21 +100,21 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 				<td>
 					<div class="form-group">
 				     <div class="col-md-9">
-					   <input type="text" name="hydepark" data-ng-model="descrip.hydepark" class="form-control">
+					   <input type="text" name="location1" data-ng-model="descrip.location1" class="form-control">
 				    </div>
 			    </div>
 			    </td>
 				<td>
 				<div class="form-group">
 					<div class="col-md-9">
-						<input type="text" name="piccadilly" data-ng-model="descrip.piccadilly" class="form-control">
+						<input type="text" name="location2" data-ng-model="descrip.location2" class="form-control">
 					</div>
 			    </div>
 				</td>
 				<td>
 				   <div class="form-group">
 					 <div class="col-md-9">
-						<input type="text" name="Buckinghampalace" data-ng-model="descrip.Buckinghampalace" class="form-control">
+						<input type="text" name="location3" data-ng-model="descrip.location3" class="form-control">
 					 </div>
 			     </div>
 				</td>
@@ -131,8 +132,8 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 			</table>
 			
 			
-		</div> -->
-            <br>    
+		</div> 
+		            <br>    
 	</div>
 		     
                  <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>

@@ -1,11 +1,15 @@
 package com.travelportal.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import play.db.jpa.JPA;
 
 @Entity
 @Table(name="salutation")
@@ -39,4 +43,14 @@ public class Salutation {
 	public void setSalutationValue(String salutationValue) {
 		this.salutationValue = salutationValue;
 	}
+	
+	
+	public static List<Salutation> getsalutation() {
+		return JPA.em().createQuery("select c from Salutation c").getResultList();
+	}
+	
+	public static Salutation getsalutationIdIdByCode(int code) {
+		return (Salutation) JPA.em().createQuery("select c from Salutation c where salutationId = ?1").setParameter(1, code).getSingleResult();
+	}
+	
 }

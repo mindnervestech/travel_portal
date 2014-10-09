@@ -60,8 +60,19 @@ public class HotelAmenities {
 		this.amenitiesType = amenitiesType;
 	}
 	
-	public static List<HotelAmenities> getamenities() {
-		return JPA.em().createQuery("select c from HotelAmenities c").getResultList();
+	/*public static Location getlocationIdByCode(int code) {
+		return (Location) JPA.em().createQuery("select c from Location c where locationId = ?1").setParameter(1, code).getSingleResult();
+	}*/
+	
+	public static List<HotelAmenities> getamenities(AmenitiesType amenitiescode) {
+		System.out.println("///////////////////");
+		System.out.println(amenitiescode);
+		
+		return JPA.em().createQuery("select c from HotelAmenities c where amenitiesType = ?1"). setParameter(1,amenitiescode).getResultList();
+	}
+	
+	public static List<HotelAmenities> getallhotelamenities(List<Integer> list) {
+		return JPA.em().createQuery("select c from HotelAmenities c where amenitiesCode IN ?1").setParameter(1, list).getResultList();
 	}
 	
 }

@@ -6,7 +6,7 @@
 			<div>
 		<label><b>Please check ALL that apply to your hotel:</b></label><br> 
 		</div>
-		
+		<!-- ng-show="false" -->
 			
 		
 		 <div>
@@ -17,19 +17,18 @@
 				</div><br>
 				
 				<div>
-				<label ng-repeat="leisure in services" style="padding-right: 30px;width: 24%;">
+				<label ng-repeat="leisure in leisureSport" style="padding-right: 30px;width: 24%;">
 				
 				  <input
   				  type="checkbox"
   				    ng-click="leisureClicked($event,leisure)"
   				   	ng-model="leisure.isSelected">					
-   					 {{leisure.serviceName}}</label>
+   					 {{leisure.amenitiesNm}}</label>
     			</div>
 				
 				
 		</div>		 		<br>
 																
-			
 			
 			
 		</div>
@@ -38,7 +37,7 @@
 		
 		
 		     
-                 <button type="submit" ng-init="descrip.code = supp" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+                 <button type="submit" ng-init="leisure.supplierCode = supplierCode" class="btn btn-primary" style="margin-left: 84%;">Save</button>
 	</div>
 </form>
 

@@ -9,6 +9,10 @@ public class HotelDescription {
 	private int shoppingFacilityCode;
 	private int hotelLocation;
 	private int nightLifeCode;
+	private String location1;
+	private String location2;
+	private String location3;
+	
 	
 	/**
 	 * @return the supplierCode
@@ -81,6 +85,30 @@ public class HotelDescription {
 	 */
 	public void setNightLifeCode(int nightLifeCode) {
 		this.nightLifeCode = nightLifeCode;
+	}
+	
+	public String getlocation1() {
+		return location1;
+	}
+	
+	public void setlocation1(String location1) {
+		this.location1 = location1;
+	}
+	
+	public String getlocation2() {
+		return location2;
+	}
+	
+	public void setlocation2(String location2) {
+		this.location2 = location2;
+	}
+	
+	public String getlocation3() {
+		return location3;
+	}
+	
+	public void setlocation3(String location3) {
+		this.location3 = location3;
 	}
 	
 	

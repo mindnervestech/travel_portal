@@ -63,4 +63,10 @@ public class AmenitiesType {
 	public static List<AmenitiesType> getamenities() {
 		return JPA.em().createQuery("select c from AmenitiesType c").getResultList();
 	}
+	
+	public static AmenitiesType getamenitiesIdByCode(int code) {
+		return (AmenitiesType) JPA.em().createQuery("select c from AmenitiesType c where amenitiesTypeCode = ?1").setParameter(1, code).getSingleResult();
+	}
+	
+	
 }

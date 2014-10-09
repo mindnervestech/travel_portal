@@ -17,22 +17,14 @@
 				</div>
 			</div>
 			
+			
 						
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Salutation :</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="contactInfo.salutation">
+					<select class="form-control" name="salutation" data-ng-model="contactInfo.salutation" data-ng-options="salut.salutationId as salut.salutationValue for salut in salutation">
 							<option>--choose one--</option>
-							<option>Mr.</option>
-							<option>Ms.</option>
-							<option>Mrs.</option>
-							<option>Miss</option>
-							<option>Dr.</option>
-							<option>Madam</option>
-							<option>Sir</option>
-							<option>Sir/Madam</option>
-							<option>Child</option>
-							<option>Messrs.</option>
+							
 					</select>
 				</div>
 			</div>
@@ -89,7 +81,7 @@
 		
 		<div class="col-md-12">
 			<label>If the reservation contact is the same as main contact check here: </label>
-			<input type="checkbox" ng-model="value1" ng-change="sameadd()">
+			<input type="checkbox" ng-model="contactInfo.value1" ng-change="sameadd()">
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Contact Name:</label>
 				<div class="col-md-9">

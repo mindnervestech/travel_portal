@@ -27,82 +27,121 @@ public class HotelProfile {
 	@JoinColumn(name="supplier_code")
 	@OneToOne
 	private SupplierCode supplier_code;
+	 
 	@Column(name="id", unique=true)
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
 	@Column(name="supplier_nm")
 	private String supplierName;
+	
 	@Column(name="hotel_nm")
 	private String hotelName;
+	
 	@Column(name="address")
 	private String address;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Country country; //countryCode value should be in supplier profile table.
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private City city;
+	
 	@Column(name="zip_code")
 	private String zipCode;
+	
 	@Column(name="hotel_part_of_chain")
 	private boolean partOfChain;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelBrands hoteBrands;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelChain chainHotel;
+	
 	private boolean safetyMeasuresCompliance;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Currency currency;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private MarketPolicyTypes marketPolicyType;
+	
 	@Column(name="star_ratings_value")
-	private int startRatings;  //1,2 ... 
+	private int startRatings;  //1,2 ...
+	
 	@Column(name="password")
 	private String password;
+	
 	@Column(name="verify_password")
 	private String verifyPassword;
+	
 	@Column(name="hotel_profile_desc")
 	private String hotelProfileDesc;
+	
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<HotelServices> services;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Location location; 
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private ShoppingFacility shoppingFacility; //drop down of different values
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private NightLife nightLife;
+	
 	@Column(name="hotel_built_year")
 	private int hotelBuiltYear;
+	
 	@Column(name="hotel_renovation_year")
 	private int hotelRenovationYear;
+	
 	@Column(name="fire_safety_compliance")
 	private boolean fireSafetyCompliance;
+	
 	@Column(name="no_of_floors")
 	private int noOfFloors;
+	
 	@Column(name="no_of_rooms")
 	private int noOfRooms;
+	
 	@Column(name="hotel_web_site")
 	private String hotelWebSite;
+	
 	@Column(name="hotel_email_addr")
 	private String hotelEmailAddr;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private InternalContacts internalContacts;
+	
 	@Column(name="general_mgr")
 	private String hotelGeneralManager;
+	
 	@Column(name="general_mgr_email")
 	private String generalMgrEmail;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelPrivateContacts privateContacts;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private BusinessCommunication communication;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private BillingInformation billingInfo;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelTaxes hotelTaxes;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelTariffDetails tariffNotes;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelSupplementaryFacilities supplimentaryFacilities;
+	
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<HotelMealPlan> meanPlans;
+	
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<HotelAmenities> amenities;
 	
@@ -302,6 +341,7 @@ public class HotelProfile {
 	public void setServices(List<HotelServices> services) {
 		this.services = services;
 	}
+	
 	/**
 	 * @return the location
 	 */
@@ -314,6 +354,9 @@ public class HotelProfile {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
+	
+	
+	
 	
 	/**
 	 * @return the nightLife
@@ -569,7 +612,7 @@ public class HotelProfile {
 	 * @param amenities the amenities to set
 	 */
 	public void setAmenities(List<HotelAmenities> amenities) {
-		this.amenities = amenities;
+		this.amenities.addAll(amenities);
 	}
 	/**
 	 * @return the supplier_code

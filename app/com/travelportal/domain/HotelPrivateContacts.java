@@ -1,6 +1,8 @@
 package com.travelportal.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,6 +36,9 @@ public class HotelPrivateContacts {
 	private String deptExtNo;
 	private int reservationContactExt;
 	private String reservationContactEmailAddr;
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private Salutation salutation_salutation_id;
+	
 	/**
 	 * @return the contactId
 	 */
@@ -251,6 +256,15 @@ public class HotelPrivateContacts {
 	public void setReservationContactEmailAddr(String reservationContactEmailAddr) {
 		this.reservationContactEmailAddr = reservationContactEmailAddr;
 	}
+	
+	public Salutation getSalutation_salutation_id() {
+		return salutation_salutation_id;
+	}
+	
+	public void setSalutation_salutation_id(Salutation salutation_salutation_id) {
+		this.salutation_salutation_id = salutation_salutation_id;
+	}
+	
 	
 	@Transactional
     public void save() {

@@ -89,76 +89,80 @@ angular.module('travel_portal').
 		
 	}); 
 	
+	
+		//$scope.amenitiescode="1";
 	$http.get("/amenities").success(function(response){
 		$scope.amenities=response;
 	});
 	
+	//$scope.businesscode="2";
 	$http.get("/business").success(function(response){
-		console.log("getting business");
 		$scope.business=response;
 	});
 	
 	$http.get("/leisureSport").success(function(response){
-		console.log("getting leisureSport");
 		$scope.leisureSport=response;
 	});
 	
+	$http.get("/salutation").success(function(response){
+		console.log("getting salutation");
+		$scope.salutation=response;
+		console.log($scope.salutation);
+	});
+	
+	
 	$scope.service_check = [];
 	$scope.amenities_check = [];
-	$scope.business_check=[];
-	$scope.leisure_sport_check=[];
+	$scope.business_check = [];
+	$scope.leisure_sport_check = [];
 	
 	
 	
 $scope.leisureClicked = function(e, leisure) {
 		
 		if($(e.target).is(":checked")) {
-			$scope.leisure_sport_check.push(leisure);
+			$scope.leisure_sport_check.push(leisure.amenitiesCode);
 		} else {
-			//DeletebusinessItem(businessInfo);
+			DeleteleisureItem(leisure);
 		}
-		console.log("//////////");
-		console.log($scope.leisure_sport_check);
 	}
 	
-/*DeletebusinessItem = function(leisure){
+DeleteleisureItem = function(leisure){
 
 angular.forEach($scope.leisure_sport_check, function(obj, index){
 	
-	 if ((leisure. === obj)) {
+	 if ((leisure.amenitiesCode == obj)) {
     	$scope.leisure_sport_check.splice(index, 1);
     
        	return;
     };
   });
 	  
-}*/	
+}
 
-	
-	
+		
 	$scope.businessClicked = function(e, businessInfo) {
 		
 		if($(e.target).is(":checked")) {
-			$scope.business_check.push(businessInfo);
+			$scope.business_check.push(businessInfo.amenitiesCode);
 		} else {
-			//DeletebusinessItem(businessInfo);
+			DeletebusinessItem(businessInfo);
 		}
-		console.log("//////////");
-		console.log($scope.business_check);
+		
 	}
 	
-/*DeletebusinessItem = function(businessInfo){
+DeletebusinessItem = function(businessInfo){
 
 angular.forEach($scope.business_check, function(obj, index){
 	
-	 if ((businessInfo. === obj.)) {
+	 if ((businessInfo.amenitiesCode == obj)) {
     	$scope.business_check.splice(index, 1);
     
        	return;
     };
   });
 	  
-}*/	
+}
 
 
 
@@ -169,6 +173,8 @@ angular.forEach($scope.business_check, function(obj, index){
 		} else {
 			DeleteamenitiesItem(amenitiesInfo);
 		}
+		console.log("//////////");
+		console.log($scope.amenities_check);
 	}
 	
 	DeleteamenitiesItem = function(amenitiesInfo){
@@ -210,7 +216,6 @@ angular.forEach($scope.business_check, function(obj, index){
 	
 	
 	
-	
 	$scope.radioValue;
 	
 	$scope.savegeneralinfo = function() {
@@ -218,8 +223,10 @@ angular.forEach($scope.business_check, function(obj, index){
 		
 		$http.post('/saveGeneralInfo', $scope.generalInfo).success(function(data){
 			console.log('success');
-			$rootScope.supplierCode=data;
-			console.log($scope.supplierCode);
+			console.log(data);
+			$rootScope.supplierCode=data.ID;
+			$rootScope.supplierName=data.NAME;
+			
 			//$scope.saveDescription($scope.supp);
 			
 		}).error(function(data, status, headers, config) {
@@ -242,7 +249,7 @@ angular.forEach($scope.business_check, function(obj, index){
 	$scope.sameadd=function()
 	{
 		
-	if($scope.value1==true)
+	if($scope.contactInfo.value1==true)
 	{
 		$scope.contactInfo.RcontactName=$scope.contactInfo.contactName;
 		$scope.contactInfo.RemailAddr=$scope.contactInfo.emailAddr;
@@ -323,9 +330,38 @@ angular.forEach($scope.business_check, function(obj, index){
 			});
 	}
 	
-	$scope.saveAmenities=function(){
-		$scope.amenitiesInfo.code=$rootScope.supplierCode;
-		$scope.amenitiesInfo.amenities=$scope.amenities_check;
+	$scope.saveleisure_sport = function(){
+	//	$scope.leisure.supplierCode=$rootScope.supplierCode;
+		$scope.leisure.amenities=$scope.leisure_sport_check;
+		console.log($scope.leisure);
+		$http.post('/saveamenities',$scope.leisure).success(function(data){
+			console.log('success');
+	}).error(function(data, status, headers, config) {
+		console.log('ERROR');
+	});
+	}
+	
+	$scope.savebusiness = function(){
+		//$scope.businessInfo.supplierCode=$rootScope.supplierCode;
+		$scope.businessInfo.amenities=$scope.business_check;
+		console.log($scope.businessInfo);
+		$http.post('/saveamenities',$scope.businessInfo).success(function(data){
+			console.log('success');
+	}).error(function(data, status, headers, config) {
+		console.log('ERROR');
+	});
+	}
+	
+	$scope.saveAmenities = function(){
+		//console.log($scope.amenitiesInfo.supplierCode);
+	//$scope.amenitiesInfo.supplierCode=$scope.amenitiesInfo.supplierCode;
+		$scope.amenitiesInfo.amenities =$scope.amenities_check;
+		console.log($scope.amenitiesInfo);
+		$http.post('/saveamenities',$scope.amenitiesInfo).success(function(data){
+			console.log('success');
+	}).error(function(data, status, headers, config) {
+		console.log('ERROR');
+	});
 	}
 	
 
