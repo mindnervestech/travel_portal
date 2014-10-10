@@ -1,7 +1,7 @@
 
 <form method="post" ng-submit="Savebillinginfo()" role="form" class="form-horizontal">
 <fieldset class="billBorder">
-  <legend style="width: 70%">Company/Management/ Supplier Information</legend>
+  <legend style="width: 70%;border-bottom: none;">Company/Management/ Supplier Information</legend>
 	<div class="row">
 		<div class="col-md-12">
 			
@@ -29,64 +29,64 @@
 			</div>		
 			<div>
 			<fieldset class="billinside">
-  			<legend style="width: 35%">Accounting Contact:</legend>
+  			<legend style="width: 35%;border-bottom: none;">Accounting Contact:</legend>
 				<div class="row">
 					<div class="col-md-10">
 			
 					<div class="form-group">
 						<label class="col-md-5 control-label">*First Name:</label>
 						<div class="col-md-7">
-						<input type="text" name="firstName" data-ng-model="bill.firstName" class="form-control">
+						<input type="text" name="firstName" data-ng-model="bill.firstName" class="form-control" required>
 					</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="col-md-5 control-label">*Last Name:</label>
 						<div class="col-md-7">
-						<input type="text" name="lastname" data-ng-model="bill.lastName" class="form-control">
+						<input type="text" name="lastname" data-ng-model="bill.lastName" class="form-control" required>
 					</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="col-md-5 control-label">*Title:</label>
 						<div class="col-md-7">
-						<input type="text" name="title" data-ng-model="bill.title" class="form-control">
+						<input type="text" name="title" data-ng-model="bill.title" class="form-control" required>
 					</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="col-md-5 control-label">*Direct E-mail:</label>
 						<div class="col-md-7">
-						<input type="text" name="firstName" data-ng-model="bill.email" class="form-control">
+						<input type="text" name="firstName" data-ng-model="bill.email" class="form-control" required>
 					</div>
 					</div>
 					
 					<div class="form-group">
 				<label class="col-md-5 control-label">*Direct Telephone:</label>
 				<div class="col-md-2" style="width: 16%;">
-					<input type="text" name="telephcode" data-ng-model="bill.telephcode" class="form-control">
+					<input type="text" name="telephcode" data-ng-model="bill.telephcode" class="form-control" required>
 				</div>
 				<p style="float: left;">-</p>
 					<div class="col-md-4">
-					<input type="text" name="telenumber" data-ng-model="bill.teleNumber" class="form-control">
+					<input type="text" name="telenumber" data-ng-model="bill.teleNumber" class="form-control" required>
 				</div>
 			</div>
 			
 				<div class="form-group">
 				<label class="col-md-5 control-label">*Direct Fax:</label>
 				<div class="col-md-2" style="width: 16%;">
-					<input type="text" name="dirFaxcode" data-ng-model="bill.dirFaxcode" class="form-control">
+					<input type="text" name="dirFaxcode" data-ng-model="bill.dirFaxcode" class="form-control" required>
 				</div>
 				<p style="float: left;">-</p>
 					<div class="col-md-4">
-					<input type="text" name="dirFaxnumber" data-ng-model="bill.dirFaxNumber" class="form-control">
+					<input type="text" name="dirFaxnumber" data-ng-model="bill.dirFaxNumber" class="form-control" required>
 				</div>
 			</div>
 					
 				<div class="form-group">
 						<label class="col-md-5 control-label">Extension:</label>
 						<div class="col-md-7">
-						<input type="text" name="Extenion" data-ng-model="bill.Extension" class="form-control">
+						<input type="text" name="Extenion" data-ng-model="bill.Extension" class="form-control" required>
 					</div>
 					</div>	
 					
@@ -98,7 +98,7 @@
 			</div>			
 			
 			<fieldset class="billinside">
-  			<legend style="width: 50%">Bank-to-Bank Wire Servicess</legend>
+  			<legend style="width: 50%;border-bottom: none;">Bank-to-Bank Wire Servicess</legend>
 				<div class="row">
 					<div class="col-md-10">
 					<div class="col-md-12">

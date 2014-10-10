@@ -6,14 +6,14 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Main Contact Name:</label>
 				<div class="col-md-9">
-					<input type="text" name="contactName" data-ng-model="contactInfo.contactName" class="form-control">
+					<input type="text" name="contactName" data-ng-model="contactInfo.contactName" class="form-control" required>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Title:</label>
 				<div class="col-md-9">
-					<input type="text" name="title" data-ng-model="contactInfo.title" class="form-control">
+					<input type="text" name="title" data-ng-model="contactInfo.title" class="form-control" required>
 				</div>
 			</div>
 			
@@ -22,7 +22,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Salutation :</label>
 				<div class="col-md-9">
-					<select class="form-control" name="salutation" data-ng-model="contactInfo.salutation" data-ng-options="salut.salutationId as salut.salutationValue for salut in salutation">
+					<select class="form-control" name="salutation" data-ng-model="contactInfo.salutation" data-ng-options="salut.salutationId as salut.salutationValue for salut in salutation" required>
 							<option>--choose one--</option>
 							
 					</select>
@@ -33,27 +33,27 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Telephone:</label>
 				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="teleCode" data-ng-model="contactInfo.teleCode" class="form-control">
+					<input type="text" name="teleCode" data-ng-model="contactInfo.teleCode" class="form-control" required>
 				</div>
 				
 					<div class="col-md-3">
-					<input type="text" name="telenumber" data-ng-model="contactInfo.teleNumber" class="form-control">
+					<input type="text" name="telenumber" data-ng-model="contactInfo.teleNumber" class="form-control" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Fax :</label>
 				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="DirectFaxCode" data-ng-model="contactInfo.DirectFaxCode" class="form-control">
+					<input type="text" name="DirectFaxCode" data-ng-model="contactInfo.DirectFaxCode" class="form-control" required>
 				</div>
 				<div class="col-md-3">
-					<input type="text" name="DirectFaxNuber" data-ng-model="contactInfo.DirectFaxNumber" class="form-control">
+					<input type="text" name="DirectFaxNuber" data-ng-model="contactInfo.DirectFaxNumber" class="form-control" required>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Extension: :</label>
 				<div class="col-md-9">
-					<input type="text" name="Extension" data-ng-model="contactInfo.Extension" class="form-control">
+					<input type="text" name="Extension" data-ng-model="contactInfo.Extension" class="form-control" required>
 				</div>
 			</div>
 			
@@ -62,7 +62,7 @@
 				<div class="col-md-9">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-						<input type="email" data-ng-model="contactInfo.emailAddr" class="form-control">
+						<input type="email" data-ng-model="contactInfo.emailAddr" class="form-control" required>
 					</div>
 				</div>
 			</div>
@@ -70,7 +70,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Toll Free Tel:</label>
 				<div class="col-md-9">
-					<input type="text" name="tollfreeTel" data-ng-model="contactInfo.TollfreeTel" class="form-control">
+					<input type="text" name="tollfreeTel" data-ng-model="contactInfo.TollfreeTel" class="form-control" required>
 				</div>
 			</div>
 			
@@ -85,14 +85,14 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Contact Name:</label>
 				<div class="col-md-9">
-					<input type="text" name="contactName" data-ng-model="contactInfo.RcontactName" class="form-control">
+					<input type="text" name="contactName" data-ng-model="contactInfo.RcontactName" class="form-control" required>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Title:</label>
 				<div class="col-md-9">
-					<input type="text" name="title" data-ng-model="contactInfo.Rtitle" class="form-control">
+					<input type="text" name="title" data-ng-model="contactInfo.Rtitle" class="form-control" required>
 				</div>
 			</div>
 			
@@ -100,11 +100,11 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Telephone:</label>
 				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="teleCode" data-ng-model="contactInfo.RteleCode" class="form-control">
+					<input type="text" name="teleCode" data-ng-model="contactInfo.RteleCode" class="form-control" required>
 				</div>
 				
 					<div class="col-md-3">
-					<input type="text" name="telenumber" data-ng-model="contactInfo.RteleNumber" class="form-control">
+					<input type="text" name="telenumber" data-ng-model="contactInfo.RteleNumber" class="form-control" required>
 				</div>
 			</div>
 			
@@ -113,7 +113,7 @@
 				<div class="col-md-9">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-						<input type="email" data-ng-model="contactInfo.RemailAddr" class="form-control">
+						<input type="email" data-ng-model="contactInfo.RemailAddr" class="form-control" required>
 					</div>
 				</div>
 			</div>
@@ -123,34 +123,34 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Extension :</label>
 				<div class="col-md-9">
-					<input type="text" name="Extension" data-ng-model="contactInfo.RExtension" class="form-control">
+					<input type="text" name="Extension" data-ng-model="contactInfo.RExtension" class="form-control" required>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Department Telephone:</label>
 				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="RDirecttelCode" data-ng-model="contactInfo.RDirecttelCode" class="form-control">
+					<input type="text" name="RDirecttelCode" data-ng-model="contactInfo.RDirecttelCode" class="form-control" required>
 				</div>
 				<div class="col-md-3">
-					<input type="text" name="RDirecttelNuber" data-ng-model="contactInfo.RDirecttelNumber" class="form-control">
+					<input type="text" name="RDirecttelNuber" data-ng-model="contactInfo.RDirecttelNumber" class="form-control" required>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Department Fax:	</label>
 				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="RDirectFaxCode" data-ng-model="contactInfo.RDirectFaxCode" class="form-control">
+					<input type="text" name="RDirectFaxCode" data-ng-model="contactInfo.RDirectFaxCode" class="form-control" required>
 				</div>
 				<div class="col-md-3">
-					<input type="text" name="RDirectFaxNuber" data-ng-model="contactInfo.RDirectFaxNumber" class="form-control">
+					<input type="text" name="RDirectFaxNuber" data-ng-model="contactInfo.RDirectFaxNumber" class="form-control" required>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Extension :</label>
 				<div class="col-md-9">
-					<input type="text" name="Extension2" data-ng-model="contactInfo.RExtension2" class="form-control">
+					<input type="text" name="Extension2" data-ng-model="contactInfo.RExtension2" class="form-control" required>
 				</div>
 			</div>
 			

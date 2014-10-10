@@ -1,6 +1,7 @@
 package com.travelportal.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import play.db.jpa.JPA;
 
 @Entity
 @Table(name="hotel_meal_plan")
@@ -133,5 +136,7 @@ public class HotelMealPlan { //supplier specific records...
 	public void setMealType(MealType mealType) {
 		this.mealType = mealType;
 	}
-	
+	public static List<HotelMealPlan> getmealtype() {
+		return JPA.em().createQuery("select c from HotelMealPlan c").getResultList();
+	}
 }

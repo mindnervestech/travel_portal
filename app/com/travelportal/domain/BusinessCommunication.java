@@ -25,7 +25,18 @@ public class BusinessCommunication {
 	private String primaryEmailAddr;
 	@Column(name="cc_email_addr")
 	private String ccEmailAddr;
+	private String booking;
 	
+	
+	public String getbooking() {
+		return booking;
+	}
+	/**
+	 * @param primaryEmailAddr the primaryEmailAddr to set
+	 */
+	public void setbooking(String booking) {
+		this.booking = booking;
+	}
 	/**
 	 * @return the primaryEmailAddr
 	 */

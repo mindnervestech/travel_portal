@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,12 +22,14 @@ import play.mvc.Result;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.travelportal.domain.AmenitiesType;
 import com.travelportal.domain.BillingInformation;
+import com.travelportal.domain.BusinessCommunication;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelBrands;
 import com.travelportal.domain.HotelChain;
+import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.HotelPrivateContacts;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
@@ -34,6 +37,7 @@ import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.InternalContacts;
 import com.travelportal.domain.Location;
 import com.travelportal.domain.MarketPolicyTypes;
+import com.travelportal.domain.MealType;
 import com.travelportal.domain.NightLife;
 import com.travelportal.domain.Salutation;
 import com.travelportal.domain.ShoppingFacility;
@@ -156,6 +160,22 @@ public class TravelPortalUtilsController extends Controller {
 		return ok(Json.toJson(marketpolicytypes));
 	}
 	
+	
+	@Transactional
+	public static Result getMealtypeplan() {
+		List<HotelMealPlan> mealtype = HotelMealPlan.getmealtype();
+		System.out.println(mealtype.get(0).getFromPeriod());
+		return ok(Json.toJson(mealtype));
+	}
+	
+	@Transactional
+	public static Result getMealtype() {
+		List<MealType> mealtypes = MealType.getmealtypes();
+		return ok(Json.toJson(mealtypes));
+	}
+	
+	
+	
 	@Transactional
 	public static Result saveGeneralInfo() {
 
@@ -166,6 +186,7 @@ public class TravelPortalUtilsController extends Controller {
 	  
 		HotelProfile hotelprofile = new HotelProfile();
 		//hotelprofile.setSupplier_code(form.get("supplierCode"));
+		
 		
 		hotelprofile.setHotelName(form.get("companyName"));
 		hotelprofile.setAddress(form.get("hotelAddress"));
@@ -220,7 +241,10 @@ public class TravelPortalUtilsController extends Controller {
 		hotelprofile.setShoppingFacility(ShoppingFacility.getShoppingFacilityByCode(hoteldescription.getShoppingFacilityCode()));
 		hotelprofile.setNightLife(NightLife.getNightLifeByCode(hoteldescription.getNightLifeCode()));
 		hotelprofile.setServices(HotelServices.getallhotelservice(hoteldescription.getServices()));
-			
+		hotelprofile.setlocation1(hoteldescription.getlocation1());
+		hotelprofile.setlocation2(hoteldescription.getlocation2());
+		hotelprofile.setlocation3(hoteldescription.getlocation3());
+		
 		
 		hotelprofile.merge();
 		return ok();
@@ -256,7 +280,7 @@ public class TravelPortalUtilsController extends Controller {
 		internalcontact.setDirectTelValue(Integer.parseInt(form.get("Directnumber")));
 		internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("dirFaxCode")));
 		internalcontact.setDirectFaxValue(Integer.parseInt(form.get("dirFaxnumber")));
-		internalcontact.setSupplierCode(SupplierCode.getsupplierIdByCode(Long.parseLong(form.get("code"))));
+		//internalcontact.setSupplierCode(SupplierCode.getsupplierIdByCode(Long.parseLong(form.get("code"))));
 		
 		internalcontact.save();
 		
@@ -324,23 +348,20 @@ public class TravelPortalUtilsController extends Controller {
 	
 	@Transactional
 	public static Result getupdateComunication() {
-
-				   
+		
+				
 	    DynamicForm form = DynamicForm.form().bindFromRequest();
-		System.out.println(form.get("code"));
-	    
-		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("code")));
+		//System.out.println(form.get("code"));
+	   
         		
-		/*hotelprofile.setHotelGeneralManager(form.get("DirectFaxNumber"));
-		hotelprofile.setGeneralMgrEmail(form.get("email"));
-		hotelprofile.setHotelWebSite(form.get("RDirectFaxNumber"));
-	
-		hotelprofile.setZipCode(form.get("RemailAddr"));
-		hotelprofile.setHotelWebSite(form.get("TollfreeTel"));
-		hotelprofile.setHotelGeneralManager(form.get("contactName"));*/
+		BusinessCommunication businesscommunication=new BusinessCommunication(); 
+		businesscommunication.setPrimaryEmailAddr(form.get("email"));
+		businesscommunication.setCcEmailAddr(form.get("ccmail"));
+		businesscommunication.setbooking(form.get("booking"));
 		
 		
-		hotelprofile.merge();
+		
+		businesscommunication.save();
 		return ok();
 	}
 	

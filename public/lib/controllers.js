@@ -27,7 +27,7 @@ angular.module('travel_portal').
 
 
 angular.module('travel_portal').
-	controller("hoteProfileController",['$scope', '$http', '$rootScope',function($scope, $http, $rootScope){
+	controller("hoteProfileController",['$scope', '$http', '$rootScope','ngDialog',function($scope, $http, $rootScope,ngDialog){
 	
 	$scope.generalInfo = {};
 	$scope.countries = [];
@@ -63,7 +63,7 @@ angular.module('travel_portal').
 	});
 	
 	$http.get("/countries").success(function(response) {
-		console.log("getting countries...");
+		
 		$scope.countries = response;
 	}); 
 	
@@ -89,13 +89,12 @@ angular.module('travel_portal').
 		
 	}); 
 	
-	
-		//$scope.amenitiescode="1";
+		
 	$http.get("/amenities").success(function(response){
 		$scope.amenities=response;
 	});
 	
-	//$scope.businesscode="2";
+	
 	$http.get("/business").success(function(response){
 		$scope.business=response;
 	});
@@ -103,6 +102,37 @@ angular.module('travel_portal').
 	$http.get("/leisureSport").success(function(response){
 		$scope.leisureSport=response;
 	});
+	
+	$http.get("/MealTypeplan").success(function(response){
+		console.log();
+		$scope.MealType=response;
+		console.log($scope.MealType);
+		
+	});	
+	
+	$http.get("/MealType").success(function(response){
+		$scope.MealTypes=response;
+			
+	});	
+	
+	$scope.addnew = function(){
+		ngDialog.open({
+	        template: 'manage',
+	        scope : $scope,
+	        className: 'ngdialog-theme-default'
+	      });
+	};
+	
+	
+	$scope.editdata = function(){
+		
+		ngDialog.open({
+	        template: 'editing',
+	        scope : $scope,
+	        className: 'ngdialog-theme-default'
+	      });
+	};
+	
 	
 	$http.get("/salutation").success(function(response){
 		console.log("getting salutation");
@@ -378,6 +408,7 @@ angular.forEach($scope.business_check, function(obj, index){
 		});
 
 	}
+
 
 
 }]);

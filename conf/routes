@@ -25,14 +25,17 @@ GET   /shoppingfacility                com.travelportal.controllers.TravelPortal
 GET   /nightlife                com.travelportal.controllers.TravelPortalUtilsController.getnightlife()
 GET   /services                com.travelportal.controllers.TravelPortalUtilsController.getservices()
 GET   /amenities              com.travelportal.controllers.TravelPortalUtilsController.getamenities()
-POST  /saveamenities           com.travelportal.controllers.TravelPortalUtilsController.getsaveamenities()
+GET   /MealTypeplan             com.travelportal.controllers.TravelPortalUtilsController.getMealtypeplan()
+GET   /MealType               com.travelportal.controllers.TravelPortalUtilsController.getMealtype()
+POST  /saveamenities           com.travelportal.controllers.TravelPortalUtilsController.getMealtype()
 GET  /business              com.travelportal.controllers.TravelPortalUtilsController.getbusiness()
 GET  /salutation           com.travelportal.controllers.TravelPortalUtilsController.getsalutation()
 GET  /leisureSport          com.travelportal.controllers.TravelPortalUtilsController.getleisureSport()
 POST  /updateInternalInfo         com.travelportal.controllers.TravelPortalUtilsController.getupdateInternalInfo()
 POST  /updateContactInfo         com.travelportal.controllers.TravelPortalUtilsController.getupdateContactInfo()
 POST  /updateComunication         com.travelportal.controllers.TravelPortalUtilsController.getupdateComunication()
-POST  /updatebillingInfo         com.travelportal.controllers.TravelPortalUtilsController.getupdatebillingInfo()  
+POST  /updatebillingInfo         com.travelportal.controllers.TravelPortalUtilsController.getupdatebillingInfo()
+  
 
 
 

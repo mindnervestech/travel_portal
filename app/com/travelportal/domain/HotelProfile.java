@@ -24,10 +24,13 @@ import play.db.jpa.Transactional;
 @Table(name="hotel_profile")
 public class HotelProfile {
 	
-	@JoinColumn(name="supplier_code")
+	/*@JoinColumn(name="supplier_code")
 	@OneToOne
-	private SupplierCode supplier_code;
-	 
+	private SupplierCode supplier_code;*/
+	
+	@Column(name="supplier_code")
+	private Long supplier_code;
+	
 	@Column(name="id", unique=true)
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -145,6 +148,10 @@ public class HotelProfile {
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<HotelAmenities> amenities;
 	
+	private String location1;
+	private String location2;
+	private String location3;
+	
 	/**
 	 * @return the supplierName
 	 */
@@ -157,6 +164,31 @@ public class HotelProfile {
 	public void setSupplierName(String supplierName) {
 		this.supplierName = supplierName;
 	}
+	
+	public String getlocation1() {
+		return location1;
+	}
+	
+	public void setlocation1(String location1) {
+		this.location1 = location1;
+	}
+	
+	public String getlocation2() {
+		return location2;
+	}
+	
+	public void setlocation2(String location2) {
+		this.location2 = location2;
+	}
+	
+	public String getlocation3() {
+		return location3;
+	}
+	
+	public void setlocation3(String location3) {
+		this.location3 = location3;
+	}
+	
 	/**
 	 * @return the hotelName
 	 */
@@ -617,13 +649,13 @@ public class HotelProfile {
 	/**
 	 * @return the supplier_code
 	 */
-	public SupplierCode getSupplier_code() {
+	public Long getSupplier_code() {
 		return supplier_code;
 	}
 	/**
 	 * @param supplier_code the supplier_code to set
 	 */
-	public void setSupplier_code(SupplierCode supplier_code) {
+	public void setSupplier_code(Long supplier_code) {
 		this.supplier_code = supplier_code;
 	}
 	/**
