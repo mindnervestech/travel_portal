@@ -49,4 +49,8 @@ public class MealType {
 		return JPA.em().createQuery("select c from MealType c").getResultList();
 	}
 	
+	public static MealType getMealTypeIdByCode(int code) {
+		return (MealType) JPA.em().createQuery("select c from MealType c where mealTypeId = ?1").setParameter(1, code).getSingleResult();
+	}
+	
 }

@@ -27,12 +27,27 @@ angular.module('travel_portal').
 
 
 angular.module('travel_portal').
-	controller("hoteProfileController",['$scope', '$http', '$rootScope','ngDialog',function($scope, $http, $rootScope,ngDialog){
+	controller("hoteProfileController",['$scope', '$http', '$rootScope','$filter','ngDialog',function($scope, $http, $rootScope,$filter,ngDialog){
 	
 	$scope.generalInfo = {};
 	$scope.countries = [];
 	$scope.cities = [];
 	
+	 $scope.name = '';
+	  
+	    $scope.contacts = [];
+	    
+	    
+			
+	    $scope.newContact = function($event){
+	        $scope.contacts.push( {  } );
+	        $event.preventDefault();
+	    };
+	    
+	    $scope.submitSearch1 = function (set) {
+			  $scope.setText = set;
+			};
+
 	
 	$http.get("/hotelchains").success(function(response) {
 		$scope.hotelchain = response;
@@ -106,6 +121,8 @@ angular.module('travel_portal').
 	$http.get("/MealTypeplan").success(function(response){
 		console.log();
 		$scope.MealType=response;
+		$scope.MealType[0].fromPeriod = $filter('date')($scope.MealType[0].fromPeriod, "dd/MM/yyyy");
+		$scope.MealType[0].toPeriod = $filter('date')($scope.MealType[0].toPeriod, "dd/MM/yyyy");
 		console.log($scope.MealType);
 		
 	});	
@@ -123,6 +140,13 @@ angular.module('travel_portal').
 	      });
 	};
 	
+	
+	
+	$scope.ShowTax = function(){
+		$scope.taxQTY=false;
+		$scope.taxQTY=$scope.mealpolicy.taxIncluded;
+		/*alert($scope.taxQTY);*/
+	}
 	
 	$scope.editdata = function(){
 		
@@ -263,7 +287,22 @@ angular.forEach($scope.business_check, function(obj, index){
 			console.log('ERROR');
 		});
 	};
+	$scope.mealpolicy={};
 	
+	$scope.savemealplan = function(){
+		
+		$scope.mealpolicy.supplierCode = $rootScope.supplierCode ;
+		
+		$scope.mealpolicy.child=$scope.contacts;
+		console.log($scope.mealpolicy);
+		$http.post('/savemealpolicy',$scope.mealpolicy).success(function(data){
+			console.log('success');
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+		
+		
+	};
 
 	$scope.saveInternalInfo = function() {
 			$scope.internalInfo.code = $rootScope.supplierCode ;

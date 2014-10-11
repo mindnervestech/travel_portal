@@ -15,14 +15,15 @@ import play.db.jpa.Transactional;
 @Entity
 @Table(name="billing_information")
 public class BillingInformation {
-	@JoinColumn(name="supplier_code")
-	@OneToOne
-	private SupplierCode supplier_code;
+	
 	@Column(name="id")
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@Column(name="invoice_to_hotel")
 	private boolean invoiceToHotel;
+	
+	private boolean bankservice;
+	
 	@Column(name="first_name")
 	private String firstName;
 	@Column(name="last_name")
@@ -37,9 +38,20 @@ public class BillingInformation {
 	private int faxNo;
 	@Column(name="ext")
 	private int ext;
+	
+	private long supplier_code;
 	/**
 	 * @return the invoiceToHotel
 	 */
+	
+	public long getSupplierCode() {
+		return supplier_code;
+	}
+	
+	public void setSupplierCode(long supplier_code) {
+		this.supplier_code = supplier_code;
+	}
+	
 	public boolean isInvoiceToHotel() {
 		return invoiceToHotel;
 	}
@@ -49,6 +61,18 @@ public class BillingInformation {
 	public void setInvoiceToHotel(boolean invoiceToHotel) {
 		this.invoiceToHotel = invoiceToHotel;
 	}
+	
+		
+	public boolean isbankservice() {
+		return bankservice;
+	}
+	/**
+	 * @param invoiceToHotel the invoiceToHotel to set
+	 */
+	public void setbankservice(boolean bankservice) {
+		this.bankservice = bankservice;
+	}
+
 	/**
 	 * @return the firstName
 	 */

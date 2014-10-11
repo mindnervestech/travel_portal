@@ -41,12 +41,16 @@ import com.travelportal.domain.MealType;
 import com.travelportal.domain.NightLife;
 import com.travelportal.domain.Salutation;
 import com.travelportal.domain.ShoppingFacility;
-import com.travelportal.domain.SupplierCode;
+import com.travelportal.domain.rooms.ChildPolicies;
+/*import com.travelportal.domain.SupplierCode;*/
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.views.html.billing_information;
+import com.travelportal.vm.ChildpoliciVM;
 import com.travelportal.vm.HotelDescription;
 import com.travelportal.vm.HotelGeneralInfoVM;
 import com.travelportal.vm.HotelamenitiesVM;
+import com.travelportal.vm.HotelmealVM;
+
 
 public class TravelPortalUtilsController extends Controller {
 
@@ -189,6 +193,7 @@ public class TravelPortalUtilsController extends Controller {
 		
 		
 		hotelprofile.setHotelName(form.get("companyName"));
+		hotelprofile.setSupplierName(form.get("companyName"));
 		hotelprofile.setAddress(form.get("hotelAddress"));
 		hotelprofile.setCountry(Country.getCountryByCode(Integer.parseInt(form.get("countryCode"))));
 		hotelprofile.setCity(City.getCityByCode(Integer.parseInt(form.get("cityCode"))));
@@ -225,6 +230,47 @@ public class TravelPortalUtilsController extends Controller {
 	}
 	
 	
+	
+	@Transactional
+	public static Result getsavemealpolicy() {
+	
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelmealVM.class);
+		HotelmealVM hotelmealvm = Json.fromJson(json, HotelmealVM.class);
+		
+		HotelMealPlan hotelmealplan = new HotelMealPlan();
+		hotelmealplan.setFromPeriod(hotelmealvm.getFromPeriod());
+		hotelmealplan.setToPeriod(hotelmealvm.getToPeriod());
+		hotelmealplan.setMealPlanNm(hotelmealvm.getMealPlanNm());
+		hotelmealplan.setRate(hotelmealvm.getRate());
+		hotelmealplan.setSupplierCode(hotelmealvm.getsupplierCode());
+		hotelmealplan.setTaxIncluded(hotelmealvm.gettaxIncluded());
+		hotelmealplan.setTaxvalue(hotelmealvm.getTaxvalue());
+		hotelmealplan.setTaxtype(hotelmealvm.getTaxtype());
+		hotelmealplan.setMealType(MealType.getMealTypeIdByCode(hotelmealvm.getMealType()));
+		
+		hotelmealplan.save();
+		
+		
+		for(ChildpoliciVM vm : hotelmealvm.getchild()){
+			ChildPolicies childPolicies = new ChildPolicies();
+			childPolicies.setAllowedChildAgeFrom(vm.getAllowedChildAgeFrom());
+			childPolicies.setAllowedChildAgeTo(vm.getAllowedChildAgeTo());
+			childPolicies.setCharge(vm.getCharge());
+			childPolicies.setChargeType(vm.getChargeType());
+		
+			childPolicies.setMeal_plan_id(HotelMealPlan.getHotelMealPlanIdByCode(hotelmealplan.getId()));
+			childPolicies.save();
+		//	hotelmealplan.addChild(childPolicies);
+			
+		}
+		
+	//	hotelmealplan.merge();
+	
+		return ok();
+	}
+	
 	@Transactional
 	public static Result getupdateDescription() {
 
@@ -244,6 +290,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelprofile.setlocation1(hoteldescription.getlocation1());
 		hotelprofile.setlocation2(hoteldescription.getlocation2());
 		hotelprofile.setlocation3(hoteldescription.getlocation3());
+		hotelprofile.setSupplier_code(Long.parseLong(form.get("supplierCode")));
 		
 		
 		hotelprofile.merge();
@@ -280,7 +327,7 @@ public class TravelPortalUtilsController extends Controller {
 		internalcontact.setDirectTelValue(Integer.parseInt(form.get("Directnumber")));
 		internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("dirFaxCode")));
 		internalcontact.setDirectFaxValue(Integer.parseInt(form.get("dirFaxnumber")));
-		//internalcontact.setSupplierCode(SupplierCode.getsupplierIdByCode(Long.parseLong(form.get("code"))));
+		internalcontact.setSupplierCode(Long.parseLong(form.get("code")));
 		
 		internalcontact.save();
 		
@@ -291,8 +338,6 @@ public class TravelPortalUtilsController extends Controller {
 	
 	@Transactional
 	public static Result getupdateContactInfo() {
-
-	
 		
 	    DynamicForm form = DynamicForm.form().bindFromRequest();
 		
@@ -318,7 +363,6 @@ public class TravelPortalUtilsController extends Controller {
 	 
 	
 		
-		
 		hotelprivatecontacts.save();
 		return ok();
 	}
@@ -332,15 +376,17 @@ public class TravelPortalUtilsController extends Controller {
 		//System.out.println(form.get("Name"));
 	    
 		BillingInformation billinginfo= new BillingInformation();
-		//billinginfo.setInvoiceToHotel(form.get("Invoices"));
+		billinginfo.setInvoiceToHotel(Boolean.parseBoolean(form.get("Invoices")));
 		billinginfo.setFirstName(form.get("Name"));
 		billinginfo.setLastName(form.get("lastName"));
 		billinginfo.setTitle(form.get("title"));
 	
 		billinginfo.setEmailAddr(form.get("email"));
-		/*billinginfo.setTelNo(Integer.parseInt(form.get("telephcode"))+Integer.parseInt(form.get("teleNumber")));
-		billinginfo.setFaxNo(Integer.parseInt(form.get("dirFaxcode"))+Integer.parseInt(form.get("dirFaxNumber")));*/
-		
+		billinginfo.setTelNo(Integer.parseInt(form.get("telephcode")+form.get("teleNumber")));
+		billinginfo.setFaxNo(Integer.parseInt(form.get("dirFaxcode")+form.get("dirFaxNumber")));
+		billinginfo.setSupplierCode(Long.parseLong(form.get("code")));
+		billinginfo.setExt(Integer.parseInt(form.get("Extension")));
+		billinginfo.setbankservice(Boolean.parseBoolean(form.get("service")));
 		
         billinginfo.save();
 		return ok();
@@ -352,13 +398,12 @@ public class TravelPortalUtilsController extends Controller {
 				
 	    DynamicForm form = DynamicForm.form().bindFromRequest();
 		//System.out.println(form.get("code"));
-	   
-        		
+	           		
 		BusinessCommunication businesscommunication=new BusinessCommunication(); 
 		businesscommunication.setPrimaryEmailAddr(form.get("email"));
 		businesscommunication.setCcEmailAddr(form.get("ccmail"));
 		businesscommunication.setbooking(form.get("booking"));
-		
+		businesscommunication.setSupplierCode(Long.parseLong(form.get("code")));
 		
 		
 		businesscommunication.save();

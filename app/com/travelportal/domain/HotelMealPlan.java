@@ -10,21 +10,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.travelportal.domain.rooms.ChildPolicies;
+
 import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
 
 @Entity
 @Table(name="hotel_meal_plan")
 public class HotelMealPlan { //supplier specific records...
-	@JoinColumn(name="supplier_code")
+	/*@JoinColumn(name="supplier_code")
 	@OneToOne
-	private SupplierCode supplier_code;
+	private SupplierCode supplier_code;*/
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@ManyToOne
 	private MealType mealType;
+	@OneToMany
+	private List<ChildPolicies> child;
 	@Column(name="meal_plan_nm")
 	private String mealPlanNm;
 	@Column(name="from_period")
@@ -39,6 +45,12 @@ public class HotelMealPlan { //supplier specific records...
 	private boolean taxIncluded; //flag to show whether the taz is included or not in rate given.
 	@Column(name="age_criteria")
 	private String ageCriteria;
+	private long SupplierCode;
+	@Column(name="taxvalue")
+	private Double taxvalue;
+	@Column(name="taxtype")
+	private String taxtype;
+	
 	/**
 	 * @return the id
 	 */
@@ -52,6 +64,15 @@ public class HotelMealPlan { //supplier specific records...
 		this.id = id;
 	}
 	
+	public long getSupplierCode() {
+		return SupplierCode;
+	}
+	/**
+	 * @param mealPlanNm the mealPlanNm to set
+	 */
+	public void setSupplierCode(long SupplierCode) {
+		this.SupplierCode = SupplierCode;
+	}
 	/**
 	 * @return the mealPlanNm
 	 */
@@ -63,6 +84,26 @@ public class HotelMealPlan { //supplier specific records...
 	 */
 	public void setMealPlanNm(String mealPlanNm) {
 		this.mealPlanNm = mealPlanNm;
+	}
+	public Double getTaxvalue() {
+		return taxvalue;
+	}
+	public void setTaxvalue(Double taxvalue) {
+		this.taxvalue = taxvalue;
+	}
+	
+	
+	public String getTaxtype() {
+		return taxtype;
+	}
+	public void setTaxtype(String taxtype) {
+		this.taxtype = taxtype;
+	}
+	public boolean isTaxIncluded() {
+		return taxIncluded;
+	}
+	public void setTaxIncluded(boolean taxIncluded) {
+		this.taxIncluded = taxIncluded;
 	}
 	/**
 	 * @return the fromPeriod
@@ -133,10 +174,50 @@ public class HotelMealPlan { //supplier specific records...
 	/**
 	 * @param mealType the mealType to set
 	 */
+	
+	public List<ChildPolicies> getChild() {
+		return child;
+	}
+	public void setChild(List<ChildPolicies> child) {
+		this.child = child;
+	}
+	public void addChild(ChildPolicies child) {
+		this.child.add(child);
+	}
 	public void setMealType(MealType mealType) {
 		this.mealType = mealType;
 	}
 	public static List<HotelMealPlan> getmealtype() {
 		return JPA.em().createQuery("select c from HotelMealPlan c").getResultList();
 	}
+	
+	public static HotelMealPlan getHotelMealPlanIdByCode(int code) {
+		System.out.println("???????????");
+		System.out.println(code);
+		System.out.println("???????????");
+		return (HotelMealPlan) JPA.em().createQuery("select c from HotelMealPlan c where id = ?1").setParameter(1, code).getSingleResult();
+	}
+		
+	
+	
+	@Transactional
+    public void save() {
+		JPA.em().persist(this);
+        JPA.em().flush();     
+    }
+      
+    @Transactional
+    public void delete() {
+        JPA.em().remove(this);
+    }
+    
+    @Transactional
+    public void merge() {
+        JPA.em().merge(this);
+    }
+    
+    @Transactional
+    public void refresh() {
+        JPA.em().refresh(this);
+    }
 }

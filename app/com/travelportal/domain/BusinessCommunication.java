@@ -15,9 +15,7 @@ import play.db.jpa.Transactional;
 @Entity
 @Table(name="business_communication")
 public class BusinessCommunication {
-	@JoinColumn(name="supplier_code")
-	@OneToOne
-	private SupplierCode supplier_code;
+	
 	@Column(name="id")
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -26,7 +24,16 @@ public class BusinessCommunication {
 	@Column(name="cc_email_addr")
 	private String ccEmailAddr;
 	private String booking;
+	private long supplier_code;
 	
+	
+	public long getSupplierCode() {
+		return supplier_code;
+	}
+	
+	public void setSupplierCode(long supplier_code) {
+		this.supplier_code = supplier_code;
+	}
 	
 	public String getbooking() {
 		return booking;

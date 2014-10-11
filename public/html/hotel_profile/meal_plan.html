@@ -93,25 +93,69 @@
                 <!-- <input type="text" name="FromDate" data-ng-model="meal.fromPeriod" class="form-control"> -->
 	</div>
 	</fieldset>
+
+
+ 
+
 </form>
 
-<!-- 	private MealType mealType;
-	@Column(name="meal_plan_nm")
-	private String mealPlanNm;
-	@Column(name="from_period")
-	private Date fromPeriod;
-	@Column(name="to_period")
-	private Date toPeriod;
-	@Column(name="rate")
-	private Double rate;
-	@Column(name="guest_type")
-	private String guestType; //adult or child...
-	@Column(name="tax_included")
-	private boolean taxIncluded; //flag to show whether the taz is included or not in rate given.
-	@Column(name="age_criteria")
-	private String ageCriteria; -->
+
 	
+	<!--
+	 <div>
+			<div class="form-group">
+				<label class="col-md-1 control-label">*Tax:</label>
+				<div class="col-md-2">
+					<input type="text" name="Tax" data-ng-model="meal.Tax" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="meal.type" data-ng-options="meal.mealTypeId as meal.mealTypeNm for meal in MealTypes">
+						<option>Select Country...</option>
+					</select>
+				</div>
+			</div>
+
+		
+		</div>
+		
+	 <div>
+			<div class="form-group">
+				<label class="col-md-1 control-label">*Tax:</label>
+				<div class="col-md-2">
+					<input type="text" name="Tax" data-ng-model="meal.Tax" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="meal.type" data-ng-options="meal.mealTypeId as meal.mealTypeNm for meal in MealTypes">
+						<option>Select Country...</option>
+					</select>
+				</div>
+			</div>
+
+		
+        </div>
+	
+	
+	 <div class="form-group">
+				<label class="col-md-1 control-label">*Discount:</label>
+				<div class="col-md-2">
+					<input type="text" name="Tax" data-ng-model="meal.Tax" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-3">
+					<select class="form-control" data-ng-model="meal.Discount" data-ng-options="meal.mealTypeId as meal.mealTypeNm for meal in MealTypes">
+						<option>Select Country...</option>
+					</select>
+				</div>
+			</div> -->
+	
+		
 <script type="text/ng-template" id="manage">
+<form method="post" data-ng-submit="savemealplan()" role="form" class="form-horizontal">
 <div style="text-align: center;font-size: x-large;">Add New Meal Plan<br><br></div>
 <div class="row">
 		<div class="col-md-12">
@@ -120,15 +164,16 @@
  <div>*Please define the period of time:<br></div>
 		<div class="form-group">
 				<label class="col-md-1 control-label">From:</label>
-				<div class="col-md-3">
-                   <input id = "date" name="fromPeriod" data-ng-model="meal.fromPeriod" class="input-filter form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
+				<div class="col-md-2">
+                   <input id = "date" name="fromPeriod" data-ng-model="mealpolicy.fromPeriod" class="input-filter form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd" style="height: 25px;font-size: 11px;" required>
 					
 				</div>
 			</div>
+
 		<div class="form-group">
 				<label class="col-md-2 control-label">to and include:</label>
-				<div class="col-md-3">
-					<input id = "date" name="toPeriod" data-ng-model="meal.toPeriod" class="input-filter form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
+				<div class="col-md-2">
+					<input id = "date" name="toPeriod" data-ng-model="mealpolicy.toPeriod" class="input-filter form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd" style="height: 25px;font-size: 11px;" required>
 					
 				</div>
 <br>
@@ -136,8 +181,8 @@
 
 		<div class="form-group">
 				<label class="col-md-2 control-label">*Meal Type :</label>
-				<div class="col-md-3">
-					<select class="form-control" data-ng-model="meal.mealType" data-ng-options="meal.mealTypeId as meal.mealTypeNm for meal in MealTypes" required>
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="mealpolicy.mealType" data-ng-options="meal.mealTypeId as meal.mealTypeNm for meal in MealTypes" style="height: 25px;font-size: 11px;" required>
 						<option>Select Country...</option>
 					</select>
 				</div>
@@ -147,7 +192,7 @@
 		<div class="form-group">
 				<label class="col-md-2 control-label">*Meal Name :</label>
 				<div class="col-md-3">
-					<input type="text" name="FromDate" data-ng-model="meal.mealPlanNm" class="form-control" required>
+					<input type="text" name="mealPlanNm" data-ng-model="mealpolicy.mealPlanNm" class="form-control" style="height: 25px;font-size: 11px;" required>
 				</div>
 <br>
 			</div>
@@ -156,9 +201,9 @@
 		<fieldset class="billBorder">
   			<legend style="width: 20%;border-bottom: none;">ADULT RATE</legend>
                <div class="form-group">
-				<label class="col-md-3 control-label">* ADULT RATE:</label>
-				<div class="col-md-3">
-					<input type="text" name="FromDate" data-ng-model="meal.fromdate" class="form-control" required>
+				<label class="col-md-3 control-label">* Adult Rate:</label>
+				<div class="col-md-2">
+					<input type="text" name="rate" data-ng-model="mealpolicy.rate" class="form-control" style="height: 25px;font-size: 11px;" required>
 				</div>THB
 <br><br>
 			</div>
@@ -168,55 +213,52 @@
 				<div class="col-md-3">
 				
 				<div style="float: left;margin-right: 5%;">
-						<input type="radio" name="val" data-ng-model="meal.includetax" value="true">
+						<input type="radio" name="val" ng-click="ShowTax()" data-ng-model="mealpolicy.taxIncluded" value="true">
 						&nbsp; Yes
 					</div>
 					<div>
-						<input type="radio" name="val" data-ng-model="meal.includetax" value="false">
+						<input type="radio" name="val" ng-click="ShowTax()" data-ng-model="mealpolicy.taxIncluded" value="false">
 						&nbsp; No
 					</div> 
-				
+				     <br>
 					</div>
-					<br>
-			</div>	
-          <div>
+					
+                 <div ng-show="taxQTY">
 			<div class="form-group">
 				<label class="col-md-1 control-label">*Tax:</label>
 				<div class="col-md-2">
-					<input type="text" name="Tax" data-ng-model="meal.Tax" class="form-control">
+					<input type="text" name="taxvalue" data-ng-model="mealpolicy.taxvalue" class="form-control" style="height: 25px;font-size: 11px;">
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-md-2">
-					<select class="form-control" data-ng-model="meal.Discount" data-ng-options="meal.mealTypeId as meal.mealTypeNm for meal in MealTypes">
-						<option>Select Country...</option>
+					<select class="form-control" data-ng-model="mealpolicy.taxtype" style="height: 25px;font-size: 11px;">
+						<option>%</option>
+						<option>THB</option>
 					</select>
 				</div>
 			</div>
 
-		<div class="form-group">
-				<label class="col-md-1 control-label">*Discount:</label>
-				<div class="col-md-2">
-					<input type="text" name="Tax" data-ng-model="meal.Tax" class="form-control">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-md-3">
-					<select class="form-control" data-ng-model="meal.Discount" data-ng-options="meal.mealTypeId as meal.mealTypeNm for meal in MealTypes">
-						<option>Select Country...</option>
-					</select>
-				</div>
-			</div>
-		</div>
+		
+        </div>
+			</div>	
+         
 		</fieldset>
 
-         <fieldset class="billBorder">
+      <fieldset class="billBorder">
   			<legend style="width: 20%;border-bottom: none;">CHILD RATES</legend>
-    	 
-				<div class="form-group">
+ 
+         <div style="width: 100%;" >
+      <div ng-app=''>
+		
+		
+			<div class="billBorder" ng-repeat="cont in contacts">
+				
+			    	 
+				  <div class="form-group">
 				<label class="col-md-2 control-label">From Age:	</label>
-				<div class="col-md-3">
-					<select class="form-control" data-ng-model="meal.mealtype">
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="cont.allowedChildAgeFrom" style="height: 25px;font-size: 11px;">
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
@@ -239,12 +281,12 @@
 
 					</select>
 				</div>
-			</div>
+			
 
-		<div class="form-group">
+	
 				<label class="col-md-2 control-label">To Age:	</label>
-				<div class="col-md-3">
-					<select class="form-control" data-ng-model="meal.mealtype">
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="cont.allowedChildAgeTo" style="height: 25px;font-size: 11px;">
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
@@ -266,72 +308,69 @@
 
 
 					</select>
+
 				</div>
 <br>
 			</div>
 
 
  				  <div class="form-group">
-				<label class="col-md-2 control-label">* RATE:</label>
-				<div class="col-md-5">
-					<input type="text" name="FromDate" data-ng-model="meal.fromdate" class="form-control">
-				</div>THB
-<br><br>
-			</div>
-        
-			<div class="form-group">
-				<label class="col-md-3 control-label" style="text-align: left;margin-left: 4%;">Include Tax?  </label>
+				<div>
+				<label class="col-md-2 control-label">* Rate:</label>
 				<div class="col-md-3">
+					<input type="text" name="charge" data-ng-model="cont.charge" class="form-control" style="height: 25px;font-size: 11px;">
+				</div><div><label class="col-md-2 control-label">THB</label></div>
+			</div>
+<br><br>
+			<div>
+				<label class="col-md-2 control-label" style="text-align: left;margin-left: 4%;">Include Tax?  </label>
+				<div class="col-md-2">
 				
 				<div style="float: left;margin-right: 5%;">
-						<input type="radio" name="val" data-ng-model="meal.includetax" value="true">
+						<input type="radio" name="chargeType" data-ng-model="cont.chargeType" value="true">
 						&nbsp; Yes
 					</div>
 					<div>
-						<input type="radio" name="val" data-ng-model="meal.includetax" value="false">
+						<input type="radio" name="chargeType" data-ng-model="cont.chargeType" value="false">
 						&nbsp; No
 					</div> 
 				
 					</div>
-					<br>
+			     </div>	
+				<br>
 			</div>
-          <div>
-			<div class="form-group">
-				<label class="col-md-1 control-label">*Tax:</label>
-				<div class="col-md-2">
-					<input type="text" name="Tax" data-ng-model="meal.Tax" class="form-control">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-md-2">
-					<select class="form-control" data-ng-model="meal.Discount" data-ng-options="meal.mealTypeId as meal.mealTypeNm for meal in MealTypes">
-						<option>Select Country...</option>
-					</select>
-				</div>
-			</div>
-
-		<div class="form-group">
-				<label class="col-md-1 control-label">*Discount:</label>
-				<div class="col-md-2">
-					<input type="text" name="Tax" data-ng-model="meal.Tax" class="form-control">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-md-2">
-					<select class="form-control" data-ng-model="meal.Discount" data-ng-options="meal.mealTypeId as meal.mealTypeNm for meal in MealTypes">
-						<option>Select Country...</option>
-					</select>
-				</div>
-			</div>	
-        </div>
-
-		</fieldset>
-</div>
-</div>	
-   			<button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+         
 
 		
-    
+           		
+			<br>
+			
+			
+		</div>
+                		<button class="btn btn-default" ng-click="newContact($event)">+ Add Child Rate</button>
+           			<span ng-show="contacts.length > 0">
+                        <button class="btn btn-default" ng-click="contacts.splice(contacts.length-1, 1)">remove</button>
+                    </span> 
+ 
+	</div>
+ 
+</fieldset>
+	<br>
+	 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+</div>
+      		
+
+
+</div>
+
+</div>
+
+
+</div>	
+   			
+
+		
+    </form>
 
 </script>
  
@@ -345,13 +384,13 @@
 		<div class="form-group">
 				<label class="col-md-1 control-label">From:</label>
 				<div class="col-md-3">
-					 <input id = "date" name="fromPeriod" data-ng-model="meal.fromPeriod" class="input-filter form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+					 <input id = "date" name="fromPeriod" data-ng-model="MealType.fromPeriod" class="input-filter form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd">
 				</div>
 			</div>
 		<div class="form-group">
 				<label class="col-md-2 control-label">to and include:</label>
 				<div class="col-md-3">
-					 <input id = "date" name="toPeriod" data-ng-model="meal.toPeriod" class="input-filter form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+					 <input id = "date" name="toPeriod" data-ng-model="MealType.toPeriod" class="input-filter form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd">
 				</div>
 <br>
 			</div>
@@ -359,7 +398,7 @@
 		<div class="form-group">
 				<label class="col-md-2 control-label">*Meal Type :</label>
 				<div class="col-md-3">
-					<select class="form-control" data-ng-model="meal.mealtype" data-ng-options="meal.mealTypeId as meal.mealTypeNm for meal in MealTypes">
+					<select class="form-control" data-ng-model="meal.mealtype" data-ng-options="MealType.mealTypeId as meal.mealTypeNm for meal in MealTypes">
 						<option>Select Country...</option>
 					</select>
 				</div>

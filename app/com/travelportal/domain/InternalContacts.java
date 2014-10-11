@@ -14,9 +14,9 @@ import play.db.jpa.Transactional;
 @Entity
 @Table(name="internal_contacts")
 public class InternalContacts {
-	@JoinColumn(name="supplier_code")
+	/*@JoinColumn(name="supplier_code")
 	@OneToOne
-	private SupplierCode supplier_code;
+	private SupplierCode supplier_code;*/
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private int guestTelCityCode;
@@ -27,15 +27,13 @@ public class InternalContacts {
 	private int directTelValue;
 	private int directFaxCityCode;
 	private int directFaxValue;
+	private long supplier_code;
 	
-	
-	public SupplierCode getSupplierCode() {
+	public long getSupplierCode() {
 		return supplier_code;
 	}
-	/**
-	 * @param location the location to set
-	 */
-	public void setSupplierCode(SupplierCode supplier_code) {
+	
+	public void setSupplierCode(long supplier_code) {
 		this.supplier_code = supplier_code;
 	}
 	

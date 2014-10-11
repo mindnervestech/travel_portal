@@ -28,6 +28,7 @@ GET   /amenities              com.travelportal.controllers.TravelPortalUtilsCont
 GET   /MealTypeplan             com.travelportal.controllers.TravelPortalUtilsController.getMealtypeplan()
 GET   /MealType               com.travelportal.controllers.TravelPortalUtilsController.getMealtype()
 POST  /saveamenities           com.travelportal.controllers.TravelPortalUtilsController.getMealtype()
+POST  /savemealpolicy           com.travelportal.controllers.TravelPortalUtilsController.getsavemealpolicy()
 GET  /business              com.travelportal.controllers.TravelPortalUtilsController.getbusiness()
 GET  /salutation           com.travelportal.controllers.TravelPortalUtilsController.getsalutation()
 GET  /leisureSport          com.travelportal.controllers.TravelPortalUtilsController.getleisureSport()

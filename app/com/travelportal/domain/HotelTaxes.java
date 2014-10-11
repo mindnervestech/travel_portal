@@ -12,9 +12,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name="supplier_hotel_taxes")
 public class HotelTaxes {
-	@JoinColumn(name="supplier_code")
+	/*@JoinColumn(name="supplier_code")
 	@OneToOne
-	private SupplierCode supplier_code;
+	private SupplierCode supplier_code;*/
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String taxStartPeriod;

@@ -24,9 +24,6 @@ import play.db.jpa.Transactional;
 @Table(name="hotel_profile")
 public class HotelProfile {
 	
-	/*@JoinColumn(name="supplier_code")
-	@OneToOne
-	private SupplierCode supplier_code;*/
 	
 	@Column(name="supplier_code")
 	private Long supplier_code;
