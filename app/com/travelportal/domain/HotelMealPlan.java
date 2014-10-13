@@ -1,5 +1,6 @@
 package com.travelportal.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 import com.travelportal.domain.rooms.ChildPolicies;
@@ -174,6 +176,10 @@ public class HotelMealPlan { //supplier specific records...
 	/**
 	 * @param mealType the mealType to set
 	 */
+	public void setMealType(MealType mealType) {
+		this.mealType = mealType;
+	}
+
 	
 	public List<ChildPolicies> getChild() {
 		return child;
@@ -182,19 +188,24 @@ public class HotelMealPlan { //supplier specific records...
 		this.child = child;
 	}
 	public void addChild(ChildPolicies child) {
+		if(this.child == null){
+			this.child = new ArrayList<>();
+		}
+		if(!this.child.contains(child))
 		this.child.add(child);
-	}
-	public void setMealType(MealType mealType) {
-		this.mealType = mealType;
 	}
 	public static List<HotelMealPlan> getmealtype() {
 		return JPA.em().createQuery("select c from HotelMealPlan c").getResultList();
 	}
 	
+	//findById
+	 public static HotelMealPlan findById(int id) {
+	    	Query query = JPA.em().createQuery("Select a from HotelMealPlan a where a.id = ?1");
+			query.setParameter(1, id);
+	    	return (HotelMealPlan) query.getSingleResult();
+	    }
+	
 	public static HotelMealPlan getHotelMealPlanIdByCode(int code) {
-		System.out.println("???????????");
-		System.out.println(code);
-		System.out.println("???????????");
 		return (HotelMealPlan) JPA.em().createQuery("select c from HotelMealPlan c where id = ?1").setParameter(1, code).getSingleResult();
 	}
 		

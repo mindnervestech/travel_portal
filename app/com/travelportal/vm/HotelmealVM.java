@@ -7,16 +7,18 @@ import javax.persistence.Column;
 
 public class HotelmealVM {
 	
-	
+	private int id;
 	private int mealType;
 	private String mealPlanNm;
 	private Date fromPeriod;
 	private Date toPeriod;
+	private String guestType;
 	private Double rate;
 	private long supplierCode;
 	private Double taxvalue;
 	private String taxtype;
 	private boolean taxIncluded;
+	private String ageCriteria;
 	private List<ChildpoliciVM> child;
 	
 	
@@ -36,12 +38,20 @@ public class HotelmealVM {
 	private String chargeType;
 	*/
 	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	/**
 	 * @return the mealPlanNm
 	 */
 	public String getMealPlanNm() {
 		return mealPlanNm;
 	}
+	
 	/**
 	 * @param mealPlanNm the mealPlanNm to set
 	 */
@@ -69,6 +79,14 @@ public class HotelmealVM {
 	 */
 	public void settaxIncluded(boolean taxIncluded) {
 		this.taxIncluded = taxIncluded;
+	}
+	
+	
+	public String getGuestType() {
+		return guestType;
+	}
+	public void setGuestType(String guestType) {
+		this.guestType = guestType;
 	}
 	/**
 	 * @return the toPeriod
@@ -114,6 +132,14 @@ public class HotelmealVM {
 	}
 	public void setTaxtype(String taxtype) {
 		this.taxtype = taxtype;
+	}
+	
+	
+	public String getAgeCriteria() {
+		return ageCriteria;
+	}
+	public void setAgeCriteria(String ageCriteria) {
+		this.ageCriteria = ageCriteria;
 	}
 	public List<ChildpoliciVM> getchild() {
 		return child;

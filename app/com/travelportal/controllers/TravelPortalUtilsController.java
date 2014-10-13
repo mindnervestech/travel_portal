@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 
-
 import play.data.DynamicForm;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -168,7 +167,9 @@ public class TravelPortalUtilsController extends Controller {
 	@Transactional
 	public static Result getMealtypeplan() {
 		List<HotelMealPlan> mealtype = HotelMealPlan.getmealtype();
-		System.out.println(mealtype.get(0).getFromPeriod());
+		System.out.println("/////////////////////");
+		//System.out.println(mealtype.get(11).get());
+		
 		return ok(Json.toJson(mealtype));
 	}
 	
@@ -182,12 +183,9 @@ public class TravelPortalUtilsController extends Controller {
 	
 	@Transactional
 	public static Result saveGeneralInfo() {
-
-
-	   
+   
 	    DynamicForm form = DynamicForm.form().bindFromRequest();
-		
-	  
+  
 		HotelProfile hotelprofile = new HotelProfile();
 		//hotelprofile.setSupplier_code(form.get("supplierCode"));
 		
@@ -230,6 +228,49 @@ public class TravelPortalUtilsController extends Controller {
 	}
 	
 	
+	@Transactional
+	public static Result getupdatemealpolicy() {
+		
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelmealVM.class);
+		HotelmealVM hotelmealvm = Json.fromJson(json, HotelmealVM.class);
+		
+		HotelMealPlan hotelmealplan = HotelMealPlan.findById(Integer.parseInt(form.get("id")));
+		hotelmealplan.setFromPeriod(hotelmealvm.getFromPeriod());
+		hotelmealplan.setToPeriod(hotelmealvm.getToPeriod());
+		hotelmealplan.setMealPlanNm(hotelmealvm.getMealPlanNm());
+		hotelmealplan.setRate(hotelmealvm.getRate());
+		hotelmealplan.setSupplierCode(hotelmealvm.getsupplierCode());
+		hotelmealplan.setTaxIncluded(hotelmealvm.gettaxIncluded());
+		hotelmealplan.setTaxvalue(hotelmealvm.getTaxvalue());
+		hotelmealplan.setTaxtype(hotelmealvm.getTaxtype());
+		hotelmealplan.setMealType(MealType.getMealTypeIdByCode(hotelmealvm.getMealType()));
+		
+		//hotelmealplan.merge();
+		
+		
+		for(ChildpoliciVM vm : hotelmealvm.getchild()){
+			ChildPolicies childPolicies = ChildPolicies.findById(vm.getChildPolicyId());
+			childPolicies.setAllowedChildAgeFrom(vm.getAllowedChildAgeFrom());
+			childPolicies.setAllowedChildAgeTo(vm.getAllowedChildAgeTo());
+			childPolicies.setCharge(vm.getCharge());
+			childPolicies.setChargeType(vm.getChargeType());
+			childPolicies.setChildtaxvalue(vm.getChildtaxvalue());
+			childPolicies.setChildtaxtype(vm.getChildtaxtype());
+			
+			//childPolicies.setMeal_plan_id(HotelMealPlan.getHotelMealPlanIdByCode(hotelmealplan.getId()));
+			childPolicies.merge();
+			hotelmealplan.addChild(childPolicies);
+		//	hotelmealplan.addChild(childPolicies);
+			
+		}
+		
+		hotelmealplan.merge();
+	
+		return ok();
+	}
+	
 	
 	@Transactional
 	public static Result getsavemealpolicy() {
@@ -250,26 +291,47 @@ public class TravelPortalUtilsController extends Controller {
 		hotelmealplan.setTaxtype(hotelmealvm.getTaxtype());
 		hotelmealplan.setMealType(MealType.getMealTypeIdByCode(hotelmealvm.getMealType()));
 		
-		hotelmealplan.save();
-		
-		
 		for(ChildpoliciVM vm : hotelmealvm.getchild()){
 			ChildPolicies childPolicies = new ChildPolicies();
 			childPolicies.setAllowedChildAgeFrom(vm.getAllowedChildAgeFrom());
 			childPolicies.setAllowedChildAgeTo(vm.getAllowedChildAgeTo());
 			childPolicies.setCharge(vm.getCharge());
 			childPolicies.setChargeType(vm.getChargeType());
-		
-			childPolicies.setMeal_plan_id(HotelMealPlan.getHotelMealPlanIdByCode(hotelmealplan.getId()));
+			childPolicies.setChildtaxvalue(vm.getChildtaxvalue());
+			childPolicies.setChildtaxtype(vm.getChildtaxtype());
+//			childPolicies.setMeal_plan_id(HotelMealPlan.getHotelMealPlanIdByCode(hotelmealplan.getId()));
 			childPolicies.save();
-		//	hotelmealplan.addChild(childPolicies);
+			hotelmealplan.addChild(childPolicies);
 			
 		}
+		hotelmealplan.save();
 		
-	//	hotelmealplan.merge();
+		//hotelmealplan.merge();
 	
 		return ok();
 	}
+	
+	
+	@Transactional
+	public static Result getdeletemealpolicy(int id) {
+		
+		/*JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelmealVM.class);
+		HotelmealVM hotelmealvm = Json.fromJson(json, HotelmealVM.class);*/
+		System.out.println("??????????");
+		System.out.println(id);
+		System.out.println("??????????");
+		
+		HotelMealPlan hotelmealplan = HotelMealPlan.findById(id);
+		for(ChildPolicies policies : hotelmealplan.getChild()){
+			policies.delete();
+		}
+		
+		hotelmealplan.delete();
+		return ok();
+	}
+	
 	
 	@Transactional
 	public static Result getupdateDescription() {
@@ -360,9 +422,7 @@ public class TravelPortalUtilsController extends Controller {
 	    hotelprivatecontacts.setReservationContactExt(Integer.parseInt(form.get("RExtension2")));
 	    hotelprivatecontacts.setReservationContactEmailAddr(form.get("RemailAddr"));
 	    hotelprivatecontacts.setSalutation_salutation_id(Salutation.getsalutationIdIdByCode(Integer.parseInt(form.get("salutation"))));
-	 
-	
-		
+	 	
 		hotelprivatecontacts.save();
 		return ok();
 	}

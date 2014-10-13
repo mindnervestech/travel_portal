@@ -41,7 +41,10 @@ angular.module('travel_portal').
 			
 	    $scope.newContact = function($event){
 	        $scope.contacts.push( {  } );
+	       // $scope.mealdata.child.push( { } );
 	        $event.preventDefault();
+	        
+	       
 	    };
 	    
 	    $scope.submitSearch1 = function (set) {
@@ -120,9 +123,20 @@ angular.module('travel_portal').
 	
 	$http.get("/MealTypeplan").success(function(response){
 		console.log();
+		
 		$scope.MealType=response;
-		$scope.MealType[0].fromPeriod = $filter('date')($scope.MealType[0].fromPeriod, "dd/MM/yyyy");
-		$scope.MealType[0].toPeriod = $filter('date')($scope.MealType[0].toPeriod, "dd/MM/yyyy");
+		
+		angular.forEach($scope.MealType, function(obj, index){
+			
+			$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
+			$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
+		    
+		       	return;
+		    });
+		
+		
+		/*$scope.MealType[0].fromPeriod = $filter('date')($scope.MealType[0].fromPeriod, "yyyy-MM-dd");
+		$scope.MealType[0].toPeriod = $filter('date')($scope.MealType[0].toPeriod, "yyyy-MM-dd");*/
 		console.log($scope.MealType);
 		
 	});	
@@ -143,18 +157,44 @@ angular.module('travel_portal').
 	
 	
 	$scope.ShowTax = function(){
+	//	alert($scope.cont[0].chargeType);
+		
 		$scope.taxQTY=false;
+		//$scope.changetax=false;
 		$scope.taxQTY=$scope.mealpolicy.taxIncluded;
+		//$scope.taxQTY=$scope.mealdata.taxIncluded;	
+		//$scope.changetax=$scope.cont.chargeType;
 		/*alert($scope.taxQTY);*/
 	}
 	
-	$scope.editdata = function(){
+	$scope.editdata = function(meal){
+		
+		$scope.mealdata = meal;
+		console.log($scope.mealdata);
 		
 		ngDialog.open({
 	        template: 'editing',
 	        scope : $scope,
 	        className: 'ngdialog-theme-default'
 	      });
+	};
+	
+	
+    $scope.setDeleteId = function(meal){
+		console.log(meal.id);
+		
+				
+		$http.get('/deletemealpolicy/'+meal.id)
+		.success(function(){
+			angular.forEach($scope.MealType, function(obj, index){
+				if(obj.id == meal.id){
+					$scope.MealType.splice(index,1);
+				}
+				
+			    });
+			console.log('success');
+		});
+		
 	};
 	
 	
@@ -181,7 +221,6 @@ $scope.leisureClicked = function(e, leisure) {
 		}
 	}
 	
-DeleteleisureItem = function(leisure){
 
 angular.forEach($scope.leisure_sport_check, function(obj, index){
 	
@@ -303,6 +342,26 @@ angular.forEach($scope.business_check, function(obj, index){
 		
 		
 	};
+	
+	
+$scope.updatemealplan = function(){
+		
+		alert("hii..update");
+		console.log($scope.mealdata);
+		$http.post('/updatemealpolicy',$scope.mealdata).success(function(data){
+			console.log('success');
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+		
+		
+	};
+	
+	
+	$scope.saveAreainfo = function() {
+		
+		//console.log($scope.areaInfo);
+	}
 
 	$scope.saveInternalInfo = function() {
 			$scope.internalInfo.code = $rootScope.supplierCode ;

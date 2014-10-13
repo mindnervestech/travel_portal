@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 import com.travelportal.domain.HotelMealPlan;
@@ -31,16 +33,12 @@ public class ChildPolicies {
 	private Long charge; //if chargeType is % then consider this as % of net else fixed amount set to net on per day basis.
 	@Column(name="charge_type")
 	private String chargeType;  //in % or fixed charge.
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private HotelMealPlan meal_plan_id;
+	@Column(name="childtaxvalue")
+	private Double childtaxvalue;
+	@Column(name="childtaxtype")
+	private String childtaxtype;
 	
 	
-	public HotelMealPlan getMeal_plan_id() {
-		return meal_plan_id;
-	}
-	public void setMeal_plan_id(HotelMealPlan meal_plan_id) {
-		this.meal_plan_id = meal_plan_id;
-	}
 	/**
 	 * @return the allowedChildAgeFrom
 	 */
@@ -52,6 +50,20 @@ public class ChildPolicies {
 	 */
 	public void setAllowedChildAgeFrom(int allowedChildAgeFrom) {
 		this.allowedChildAgeFrom = allowedChildAgeFrom;
+	}
+	
+	
+	public Double getChildtaxvalue() {
+		return childtaxvalue;
+	}
+	public void setChildtaxvalue(Double childtaxvalue) {
+		this.childtaxvalue = childtaxvalue;
+	}
+	public String getChildtaxtype() {
+		return childtaxtype;
+	}
+	public void setChildtaxtype(String childtaxtype) {
+		this.childtaxtype = childtaxtype;
 	}
 	/**
 	 * @return the allowedChildAgeTo
@@ -101,7 +113,17 @@ public class ChildPolicies {
 	public void setChildPolicyId(int childPolicyId) {
 		this.childPolicyId = childPolicyId;
 	}
-	
+	 public static ChildPolicies findById(int id) {
+		 try{
+	    	Query query = JPA.em().createQuery("Select a from ChildPolicies a where a.childPolicyId = ?1");
+			query.setParameter(1, id);
+	    	return (ChildPolicies) query.getSingleResult();
+		 } catch(NoResultException e){
+			 ChildPolicies childPolicies = new ChildPolicies();
+			 childPolicies.save();
+			return childPolicies;
+		 }
+	    }
 	
 	/*public static ChildPolicies getChildPoliciesIdByCode(int code) {
 		return (ChildPolicies) JPA.em().createQuery("select c from ChildPolicies c where childPolicyId = ?1").setParameter(1, code).getSingleResult();
