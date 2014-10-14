@@ -37,11 +37,73 @@ angular.module('travel_portal').
 	  
 	    $scope.contacts = [];
 	    
+	  $scope.area={
+			  areaInfo:[],
+			  supplierCode:''
+	  }; 
+	  
+	  $scope.formArr = [];
+	  for(var i=0;i<10;i++) {
+		  var j = {name:'',distance:'',km:'',minutes:''};
+		  $scope.formArr[i] = j;
+	  }
+    
+	    $scope.area1={
+				name:'',
+				distance:'',
+				km:'',
+				minutes:''
+			
+		};
 	    
+	    for(var i=0;i<10;i++) {
+	    	 $scope.area.areaInfo.push($scope.area1);
+	    }
+	    	    
+	    /*---------------transportation---------------*/
+       $scope.transport={
+    		   
+    		   transportInfo:[],
+    		   supplierCode:''
+       };
+       
+       $scope.transportformArr = [];
+       for(var i=0;i<2;i++){
+    	   var x={airportName:'',airportdirections:'',airportdistance:'',airportkm:'',airportminutes:'',railName:'',raildirections:'',raildistance:'',railkm:'',railminutes:'',subwayName:'',subwaydirections:'',subwaydistance:'',subwaykm:'',subwayminutes:'',cruiseName:'',cruisedirections:'',cruisedistance:'',cruisekm:''}; 
+    	   $scope.transportformArr[i] = x;
+       }
+       
+       $scope.transport1={
+    		   airportName:'',
+    		   airportdirections:'',
+    		   airportdistance:'',
+    		   airportkm:'',
+    		   airportminutes:'',
+    		   railName:'',
+    		   raildirections:'',
+    		   raildistance:'',
+    		   railkm:'',
+    		   railminutes:'',
+    		   subwayName:'',
+    		   subwaydirections:'',
+    		   subwaydistance:'',
+    		   subwaykm:'',
+    		   subwayminutes:'',
+    		   cruiseName:'',
+    		   cruisedirections:'',
+    		   cruisedistance:'',
+    		   cruisekm:''
+			
+		};
+	    
+	    for(var i=0;i<2;i++) {
+	    	 $scope.transport.transportInfo.push($scope.transport1);
+	    }
+       
 			
 	    $scope.newContact = function($event){
 	        $scope.contacts.push( {  } );
-	       // $scope.mealdata.child.push( { } );
+	        $scope.mealdata.child.push( { } );
 	        $event.preventDefault();
 	        
 	       
@@ -160,8 +222,11 @@ angular.module('travel_portal').
 	//	alert($scope.cont[0].chargeType);
 		
 		$scope.taxQTY=false;
+		$scope.taxQTY1=false;
 		//$scope.changetax=false;
 		$scope.taxQTY=$scope.mealpolicy.taxIncluded;
+		
+		$scope.taxQTY1=$scope.mealdata.taxIncluded;
 		//$scope.taxQTY=$scope.mealdata.taxIncluded;	
 		//$scope.changetax=$scope.cont.chargeType;
 		/*alert($scope.taxQTY);*/
@@ -231,7 +296,6 @@ angular.forEach($scope.leisure_sport_check, function(obj, index){
     };
   });
 	  
-}
 
 		
 	$scope.businessClicked = function(e, businessInfo) {
@@ -360,8 +424,35 @@ $scope.updatemealplan = function(){
 	
 	$scope.saveAreainfo = function() {
 		
-		//console.log($scope.areaInfo);
+		
+		$scope.area.supplierCode =$rootScope.supplierCode ;
+		console.log($scope.formArr);
+		console.log("//////////");
+		$scope.area.areaInfo = $scope.formArr;
+		console.log($scope.area);
+		$http.post('/saveattraction',$scope.area).success(function(data){
+			console.log('success');
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
 	}
+	
+	
+$scope.savetranspotDire = function() {
+		
+		
+		$scope.transport.supplierCode ="7"//$rootScope.supplierCode ;
+		console.log($scope.transportformArr);
+		console.log("//////////");
+		$scope.transport.transportInfo = $scope.transportformArr;
+		console.log($scope.transport);
+		$http.post('/savetransportDir',$scope.transport).success(function(data){
+			console.log('success');
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+	}
+	
 
 	$scope.saveInternalInfo = function() {
 			$scope.internalInfo.code = $rootScope.supplierCode ;

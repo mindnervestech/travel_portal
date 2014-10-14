@@ -1,11 +1,16 @@
 package com.travelportal.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
 
 @Entity
 @Table(name="hotel_attractions")
@@ -98,5 +103,27 @@ public class HotelAttractions {
 	public void setDistanceType(String distanceType) {
 		this.distanceType = distanceType;
 	}
+	
+	
+	@Transactional
+    public void save() {
+		JPA.em().persist(this);
+        JPA.em().flush();     
+    }
+      
+    @Transactional
+    public void delete() {
+        JPA.em().remove(this);
+    }
+    
+    @Transactional
+    public void merge() {
+        JPA.em().merge(this);
+    }
+    
+    @Transactional
+    public void refresh() {
+        JPA.em().refresh(this);
+    }
 	
 }

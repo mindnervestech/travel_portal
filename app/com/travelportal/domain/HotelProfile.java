@@ -1,5 +1,6 @@
 package com.travelportal.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -91,6 +92,7 @@ public class HotelProfile {
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private NightLife nightLife;
 	
+	
 	@Column(name="hotel_built_year")
 	private int hotelBuiltYear;
 	
@@ -145,10 +147,30 @@ public class HotelProfile {
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<HotelAmenities> amenities;
 	
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<HotelAttractions> hotelareaattraction;
+	
+	
 	private String location1;
 	private String location2;
 	private String location3;
 	
+	
+	
+	public List<HotelAttractions> getHotelareaattraction() {
+		return hotelareaattraction;
+	}
+	
+	public void setHotelareaattraction(List<HotelAttractions> hotelareaattraction) {
+		this.hotelareaattraction = hotelareaattraction;
+	}
+	
+	public void addHotelareaattraction(HotelAttractions hotelareaattraction) {
+		if(this.hotelareaattraction == null){
+			this.hotelareaattraction = new ArrayList<>();
+		}
+		this.hotelareaattraction.add(hotelareaattraction);
+	}
 	/**
 	 * @return the supplierName
 	 */

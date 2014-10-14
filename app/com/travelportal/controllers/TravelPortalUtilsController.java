@@ -26,6 +26,7 @@ import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelAmenities;
+import com.travelportal.domain.HotelAttractions;
 import com.travelportal.domain.HotelBrands;
 import com.travelportal.domain.HotelChain;
 import com.travelportal.domain.HotelMealPlan;
@@ -40,15 +41,20 @@ import com.travelportal.domain.MealType;
 import com.travelportal.domain.NightLife;
 import com.travelportal.domain.Salutation;
 import com.travelportal.domain.ShoppingFacility;
+import com.travelportal.domain.TransportationDirection;
 import com.travelportal.domain.rooms.ChildPolicies;
 /*import com.travelportal.domain.SupplierCode;*/
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.views.html.billing_information;
+import com.travelportal.vm.AreaAttractionsSuppVM;
+import com.travelportal.vm.AreaAttractionsVM;
 import com.travelportal.vm.ChildpoliciVM;
 import com.travelportal.vm.HotelDescription;
 import com.travelportal.vm.HotelGeneralInfoVM;
 import com.travelportal.vm.HotelamenitiesVM;
 import com.travelportal.vm.HotelmealVM;
+import com.travelportal.vm.TransportationDirectionsSuppVM;
+import com.travelportal.vm.TransportationDirectionsVM;
 
 
 public class TravelPortalUtilsController extends Controller {
@@ -219,7 +225,9 @@ public class TravelPortalUtilsController extends Controller {
 		Json.fromJson(json, HotelamenitiesVM.class);
 		HotelamenitiesVM hotelamenitiesVM = Json.fromJson(json, HotelamenitiesVM.class);
 		
+		System.out.println("////////////@@@@@//////////");
 		System.out.println(form.get("supplierCode"));
+		System.out.println("//////////@@@@@////////////");
 		
 		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
 		hotelprofile.setAmenities(HotelAmenities.getallhotelamenities(hotelamenitiesVM.getamenities()));
@@ -315,20 +323,96 @@ public class TravelPortalUtilsController extends Controller {
 	@Transactional
 	public static Result getdeletemealpolicy(int id) {
 		
-		/*JsonNode json = request().body().asJson();
-		DynamicForm form = DynamicForm.form().bindFromRequest();
-		Json.fromJson(json, HotelmealVM.class);
-		HotelmealVM hotelmealvm = Json.fromJson(json, HotelmealVM.class);*/
-		System.out.println("??????????");
-		System.out.println(id);
-		System.out.println("??????????");
-		
+				
 		HotelMealPlan hotelmealplan = HotelMealPlan.findById(id);
 		for(ChildPolicies policies : hotelmealplan.getChild()){
 			policies.delete();
 		}
 		
 		hotelmealplan.delete();
+		return ok();
+	}
+	
+		
+	@Transactional
+	public static Result getsaveattraction() {
+
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, AreaAttractionsSuppVM.class);
+		AreaAttractionsSuppVM areaattractionssuppVM = Json.fromJson(json, AreaAttractionsSuppVM.class);
+				
+		
+		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
+		
+	
+		for(AreaAttractionsVM vm : areaattractionssuppVM.getAreaInfo()){
+		 if(vm.getname() != "")
+		 {
+			HotelAttractions hotelattractions = new HotelAttractions();
+			
+			hotelattractions.setDistanceType(vm.getKm());
+			hotelattractions.setDistance(vm.getDistance());
+			hotelattractions.setTimeRequireInMinutes(vm.getMinutes());
+			hotelattractions.setAttractionNm(vm.getname());
+		
+			
+			hotelattractions.save();
+			hotelprofile.addHotelareaattraction(hotelattractions);
+			}
+					
+		}
+		
+		
+		return ok();
+	}
+	
+	
+	@Transactional
+	public static Result getsavetransportDir() {
+
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, TransportationDirectionsSuppVM.class);
+		TransportationDirectionsSuppVM transportationdirectionsSuppVM = Json.fromJson(json, TransportationDirectionsSuppVM.class);
+		
+		//HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
+		
+	
+		for(TransportationDirectionsVM vm : transportationdirectionsSuppVM.getTransportInfo()){
+		// if(vm.getname() != "")
+		// {
+			
+			TransportationDirection transportationDirection=new  TransportationDirection();
+			transportationDirection.setAirportNm(vm.getAirportName());
+			transportationDirection.setAirportdirections(vm.getAirportdirections());
+			transportationDirection.setAirportdistance(vm.getAirportdistance());
+			transportationDirection.setAirportdistanceType(vm.getAirportkm());
+			transportationDirection.setAirporttimeRequireInMinutes(vm.getAirportminutes());
+			
+			transportationDirection.setRailStationNm(vm.getRailName());
+			transportationDirection.setRailStationdistance(vm.getRaildistance());
+			transportationDirection.setRailStationdirections(vm.getRaildirections());
+			transportationDirection.setRailStationdistanceType(vm.getRailkm());
+			transportationDirection.setRailStationtimeRequireInMinutes(vm.getRailminutes());
+			
+			transportationDirection.setSubwayNm(vm.getSubwayName());
+			transportationDirection.setSubwaydirections(vm.getSubwaydirections());
+			transportationDirection.setSubwaydistance(vm.getSubwaydistance());
+			transportationDirection.setSubwaydistanceType(vm.getSubwaykm());
+			transportationDirection.setSubwaytimeRequireInMinutes(vm.getSubwayminutes());
+			
+			transportationDirection.setCruiseNm(vm.getCruiseName());
+			transportationDirection.setCruisedirections(vm.getCruisedirections());
+			transportationDirection.setCruisedistance(vm.getCruisedistance());
+			transportationDirection.setCruisedistanceType(vm.getCruisekm());
+			transportationDirection.setCruisetimeRequireInMinutes(vm.getCruiseminutes());
+			
+			transportationDirection.save();
+					
+		}
+		
+		
 		return ok();
 	}
 	
@@ -362,11 +446,8 @@ public class TravelPortalUtilsController extends Controller {
 	
 	@Transactional
 	public static Result getupdateInternalInfo() {
-
 				   
 	    DynamicForm form = DynamicForm.form().bindFromRequest();
-		
-	  
 	    HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("code")));
         		
 		hotelprofile.setHotelGeneralManager(form.get("generalManager"));

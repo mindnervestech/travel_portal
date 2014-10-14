@@ -55,7 +55,7 @@ angular.module('travel_portal',['ngRoute','ngDialog']).config(function ($routePr
 		controller: 'hoteProfileController'
 	})
 	.when('/profile12', {
-		templateUrl: '/assets/html/hotel_profile/hotel_description.html',
+		templateUrl: '/assets/html/hotel_profile/transportation_directions.html',
 		controller: 'hoteProfileController'
 	})
 	.when('/profile13', {

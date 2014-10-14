@@ -65,8 +65,6 @@ public class HotelAmenities {
 	}*/
 	
 	public static List<HotelAmenities> getamenities(AmenitiesType amenitiescode) {
-		System.out.println("///////////////////");
-		System.out.println(amenitiescode);
 		
 		return JPA.em().createQuery("select c from HotelAmenities c where amenitiesType = ?1"). setParameter(1,amenitiescode).getResultList();
 	}

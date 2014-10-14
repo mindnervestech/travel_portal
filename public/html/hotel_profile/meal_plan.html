@@ -370,11 +370,13 @@
 				<label class="col-md-2 control-label">*Meal Type :</label>
 				<div class="col-md-2">
 					<select class="form-control" data-ng-model="mealdata.mealType" data-ng-options="meal.mealTypeId as meal.mealTypeNm for meal in MealTypes" style="height: 25px;font-size: 11px;" required>
+						<option ng-selected="mealdata.mealType" value="{{meal.mealTypeId}}">{{meal.mealTypeNm}}</option>
 						<option>Select Country...</option>
 					</select>
 				</div>
 <br>
 			</div>
+
 
 		<div class="form-group">
 				<label class="col-md-2 control-label">*Meal Name :</label>
@@ -413,7 +415,7 @@
 			     </div>	
 							
           
-			<div  ng-show="taxQTY">
+			<div  ng-show="taxQTY1">
 				<label class="col-md-1 control-label">*Tax:</label>
 				<div class="col-md-2">
 					<input type="text" name="taxvalue" data-ng-model="mealdata.taxvalue" class="form-control" style="height: 25px;font-size: 11px;">

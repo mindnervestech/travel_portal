@@ -1,0 +1,334 @@
+
+<form method="post" ng-submit="savetranspotDire()" role="form" class="form-horizontal">
+	<div class="row">
+		<div class="col-md-12">
+					
+			<div>
+		<label>Please use this example when filling the Directions fields: North I-95 Road Exit 12. 
+When using the Distance Km/Miles area and you need to use Decimal like 0.5 use Point/Period.</label><br>
+		<br> 
+		</div>
+		
+		<div>
+		<label><b>Nearest Airport Name</b></label><br>
+		<br> 
+		</div>
+		
+		<div class="form-group">
+				<div>
+				<label style="margin-left: 6%;">Airport Name</label>
+				<label style="margin-left: 12%;">Directions</label>
+				<label style="margin-left: 15%;">Distance</label>
+				<label style="margin-left: 6%;">Km/miles</label>
+				<label style="margin-left: 7%;">minutes</label>
+				</div>
+				</div>
+		
+			
+			<div class="form-group">
+			<div style="float: left;">
+			<label>*1</label>
+			</div>
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[0].airportName" class="form-control">
+				</div>
+				
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[0].airportdirections" class="form-control">
+				</div>
+				
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="Distance" data-ng-model="transportformArr[0].airportdistance" class="form-control">
+				</div>
+				
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="transportformArr[0].airportkm">
+							<option>Km</option>
+							<option>Miles</option>
+							
+					</select>
+				</div>
+			
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="minutes" data-ng-model="transportformArr[0].airportminutes" class="form-control">
+				</div>
+				<br>
+				</div>
+				
+				
+				<div class="form-group">
+			<div style="float: left;">
+			<label>.2</label>
+			</div>
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[1].airportName" class="form-control">
+				</div>
+				
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[1].airportdirections" class="form-control">
+				</div>
+				
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="Distance" data-ng-model="transportformArr[1].airportdistance" class="form-control">
+				</div>
+				
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="transportformArr[1].airportkm">
+							<option>Km</option>
+							<option>Miles</option>
+							
+					</select>
+				</div>
+			
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="minutes" data-ng-model="transportformArr[1].airportminutes" class="form-control">
+				</div>
+				
+				<br>
+		 </div>
+			
+			<div>
+		<label><b>Nearest Rail Stations Name</b></label><br>
+		<br> 
+		</div>
+		
+		<div class="form-group">
+				<div>
+				<label style="margin-left: 6%;">Rail Station Name</label>
+				<label style="margin-left: 12%;">Directions</label>
+				<label style="margin-left: 11%;">Distance</label>
+				<label style="margin-left: 6%;">Km/miles</label>
+				<label style="margin-left: 7%;">minutes</label>
+				</div>
+				</div>
+		
+			
+			<div class="form-group">
+			<div style="float: left;">
+			<label>.1</label>
+			</div>
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[0].railName" class="form-control">
+				</div>
+				
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[0].raildirections" class="form-control">
+				</div>
+				
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="Distance" data-ng-model="transportformArr[0].raildistance" class="form-control">
+				</div>
+				
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="transportformArr[0].railkm">
+							<option>Km</option>
+							<option>Miles</option>
+							
+					</select>
+				</div>
+			
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="minutes" data-ng-model="transportformArr[0].railminutes" class="form-control">
+				</div>
+				<br>
+				</div>
+				
+				
+				<div class="form-group">
+			<div style="float: left;">
+			<label>.2</label>
+			</div>
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[1].railName" class="form-control">
+				</div>
+				
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[1].raildirections" class="form-control">
+				</div>
+				
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="Distance" data-ng-model="transportformArr[1].raildistance" class="form-control">
+				</div>
+				
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="transportformArr[1].railkm">
+							<option>Km</option>
+							<option>Miles</option>
+							
+					</select>
+				</div>
+			
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="minutes" data-ng-model="transportformArr[1].railminutes" class="form-control">
+				</div>
+				
+				<br>
+		 </div>
+		 
+		 
+		 <div>
+		<label><b>Nearest Subway/Tube Name</b></label><br>
+		<br> 
+		</div>
+		
+		<div class="form-group">
+				<div>
+				<label style="margin-left: 6%;">Subway/Tube Name</label>
+				<label style="margin-left: 12%;">Directions</label>
+				<label style="margin-left: 11%;">Distance</label>
+				<label style="margin-left: 6%;">Km/miles</label>
+				<label style="margin-left: 7%;">minutes</label>
+				</div>
+				</div>
+		
+			
+			<div class="form-group">
+			<div style="float: left;">
+			<label>.1</label>
+			</div>
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[0].SubwayName" class="form-control">
+				</div>
+				
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[0].Subwaydirections" class="form-control">
+				</div>
+				
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="Distance" data-ng-model="transportformArr[0].Subwaydistance" class="form-control">
+				</div>
+				
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="transportformArr[0].Subwaykm">
+							<option>Km</option>
+							<option>Miles</option>
+							
+					</select>
+				</div>
+			
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="minutes" data-ng-model="transportformArr[0].Subwayminutes" class="form-control">
+				</div>
+				<br>
+				</div>
+				
+				
+				<div class="form-group">
+			<div style="float: left;">
+			<label>.2</label>
+			</div>
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[1].SubwayName" class="form-control">
+				</div>
+				
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[1].Subwaydirections" class="form-control">
+				</div>
+				
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="Distance" data-ng-model="transportformArr[1].Subwaydistance" class="form-control">
+				</div>
+				
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="transportformArr[1].Subwaykm">
+							<option>Km</option>
+							<option>Miles</option>
+							
+					</select>
+				</div>
+			
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="minutes" data-ng-model="transportformArr[1].Subwayminutes" class="form-control">
+				</div>
+				
+				<br>
+		 </div>
+		 
+		 
+		 <div>
+		<label><b>Nearest Cruise Port Name</b></label><br>
+		<br> 
+		</div>
+		
+		<div class="form-group">
+				<div>
+				<label style="margin-left: 6%;">Cruise Port Name</label>
+				<label style="margin-left: 12%;">Directions</label>
+				<label style="margin-left: 11%;">Distance</label>
+				<label style="margin-left: 6%;">Km/miles</label>
+				<label style="margin-left: 7%;">minutes</label>
+				</div>
+				</div>
+		
+			
+			<div class="form-group">
+			<div style="float: left;">
+			<label>.1</label>
+			</div>
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[0].CruiseName" class="form-control">
+				</div>
+				
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[0].Cruisedirections" class="form-control">
+				</div>
+				
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="Distance" data-ng-model="transportformArr[0].Cruisedistance" class="form-control">
+				</div>
+				
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="transportformArr[0].Cruisekm">
+							<option>Km</option>
+							<option>Miles</option>
+							
+					</select>
+				</div>
+			
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="minutes" data-ng-model="transportformArr[0].Cruiseminutes" class="form-control">
+				</div>
+				<br>
+				</div>
+				
+				
+				<div class="form-group">
+			<div style="float: left;">
+			<label>.2</label>
+			</div>
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[1].CruiseName" class="form-control">
+				</div>
+				
+				<div class="col-md-3">
+					<input type="text" name="Name" data-ng-model="transportformArr[1].Cruisedirections" class="form-control">
+				</div>
+				
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="Distance" data-ng-model="transportformArr[1].Cruisedistance" class="form-control">
+				</div>
+				
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="transportformArr[1].Cruisekm">
+							<option>Km</option>
+							<option>Miles</option>
+							
+					</select>
+				</div>
+			
+				<div class="col-md-2" style="width: 13%;">
+					<input type="text" name="minutes" data-ng-model="transportformArr[1].Cruiseminutes" class="form-control">
+				</div>
+				
+				<br>
+		 </div>
+			
+				
+		<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+		
+		
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+	</div>
+</form>
+
