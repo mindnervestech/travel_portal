@@ -35,6 +35,9 @@ POST  /savetransportDir      com.travelportal.controllers.TravelPortalUtilsContr
 
 #POST  /deletemealpolicy       com.travelportal.controllers.TravelPortalUtilsController.getdeletemealpolicy()
 GET	/deletemealpolicy/:id       com.travelportal.controllers.TravelPortalUtilsController.getdeletemealpolicy(id:Integer)
+GET	/deletechile/:id       com.travelportal.controllers.TravelPortalUtilsController.getdeletechile(id:Integer)
+
+
 GET  /business              com.travelportal.controllers.TravelPortalUtilsController.getbusiness()
 GET  /salutation           com.travelportal.controllers.TravelPortalUtilsController.getsalutation()
 GET  /leisureSport          com.travelportal.controllers.TravelPortalUtilsController.getleisureSport()

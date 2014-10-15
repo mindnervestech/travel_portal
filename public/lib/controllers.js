@@ -36,6 +36,7 @@ angular.module('travel_portal').
 	 $scope.name = '';
 	  
 	    $scope.contacts = [];
+	    $scope.mealdata = [];
 	    
 	  $scope.area={
 			  areaInfo:[],
@@ -60,46 +61,7 @@ angular.module('travel_portal').
 	    	 $scope.area.areaInfo.push($scope.area1);
 	    }
 	    	    
-	    /*---------------transportation---------------*/
-       $scope.transport={
-    		   
-    		   transportInfo:[],
-    		   supplierCode:''
-       };
-       
-       $scope.transportformArr = [];
-       for(var i=0;i<2;i++){
-    	   var x={airportName:'',airportdirections:'',airportdistance:'',airportkm:'',airportminutes:'',railName:'',raildirections:'',raildistance:'',railkm:'',railminutes:'',subwayName:'',subwaydirections:'',subwaydistance:'',subwaykm:'',subwayminutes:'',cruiseName:'',cruisedirections:'',cruisedistance:'',cruisekm:''}; 
-    	   $scope.transportformArr[i] = x;
-       }
-       
-       $scope.transport1={
-    		   airportName:'',
-    		   airportdirections:'',
-    		   airportdistance:'',
-    		   airportkm:'',
-    		   airportminutes:'',
-    		   railName:'',
-    		   raildirections:'',
-    		   raildistance:'',
-    		   railkm:'',
-    		   railminutes:'',
-    		   subwayName:'',
-    		   subwaydirections:'',
-    		   subwaydistance:'',
-    		   subwaykm:'',
-    		   subwayminutes:'',
-    		   cruiseName:'',
-    		   cruisedirections:'',
-    		   cruisedistance:'',
-    		   cruisekm:''
-			
-		};
-	    
-	    for(var i=0;i<2;i++) {
-	    	 $scope.transport.transportInfo.push($scope.transport1);
-	    }
-       
+	   
 			
 	    $scope.newContact = function($event){
 	        $scope.contacts.push( {  } );
@@ -109,11 +71,24 @@ angular.module('travel_portal').
 	       
 	    };
 	    
+	    $scope.locationsearch={
+	    		   
+	    		findLocation:[],
+	    		   supplierCode:''
+	       };
+	    $scope.locationsearch.findLocation = [];
+	    
+	    $scope.locationsearch.findLocation.push( {  } );
+	    $scope.newLocation = function($event){
+	        $scope.locationsearch.findLocation.push( {  } );
+	        $event.preventDefault();
+	    };
+	      
 	    $scope.submitSearch1 = function (set) {
 			  $scope.setText = set;
 			};
 
-	
+			
 	$http.get("/hotelchains").success(function(response) {
 		$scope.hotelchain = response;
 		
@@ -222,11 +197,11 @@ angular.module('travel_portal').
 	//	alert($scope.cont[0].chargeType);
 		
 		$scope.taxQTY=false;
-		$scope.taxQTY1=false;
+		//$scope.taxQTY1=false;
 		//$scope.changetax=false;
 		$scope.taxQTY=$scope.mealpolicy.taxIncluded;
 		
-		$scope.taxQTY1=$scope.mealdata.taxIncluded;
+		//$scope.taxQTY1=$scope.mealdata.taxIncluded;
 		//$scope.taxQTY=$scope.mealdata.taxIncluded;	
 		//$scope.changetax=$scope.cont.chargeType;
 		/*alert($scope.taxQTY);*/
@@ -234,6 +209,7 @@ angular.module('travel_portal').
 	
 	$scope.editdata = function(meal){
 		
+		$rootScope.mealIdData=meal;
 		$scope.mealdata = meal;
 		console.log($scope.mealdata);
 		
@@ -260,6 +236,24 @@ angular.module('travel_portal').
 			console.log('success');
 		});
 		
+	};
+	
+	$scope.childDeleteId = function(){
+		console.log("@#$%$%^&*(*&&^^#%%#%");
+			console.log($rootScope.mealIdData.id);
+			console.log("@#$%$%^&*(*&&^^#%%#%");
+			$http.get('/deletechile/'+$rootScope.mealIdData.id)
+			.success(function(){
+				/*angular.forEach($scope.mealIdData, function(obj, index){
+					if(obj.childPolicyId == mealIdData.child.childPolicyId){
+						$scope.MealType.child.splice(index,1);
+					}
+					
+				    });*/
+				console.log('success');
+			});
+			
+	
 	};
 	
 	
@@ -383,7 +377,8 @@ angular.forEach($scope.business_check, function(obj, index){
 			console.log(data);
 			$rootScope.supplierCode=data.ID;
 			$rootScope.supplierName=data.NAME;
-			
+			$rootScope.supplierAddr=data.ADDR;
+		
 			//$scope.saveDescription($scope.supp);
 			
 		}).error(function(data, status, headers, config) {
@@ -441,12 +436,10 @@ $scope.updatemealplan = function(){
 $scope.savetranspotDire = function() {
 		
 		
-		$scope.transport.supplierCode ="7"//$rootScope.supplierCode ;
-		console.log($scope.transportformArr);
-		console.log("//////////");
-		$scope.transport.transportInfo = $scope.transportformArr;
-		console.log($scope.transport);
-		$http.post('/savetransportDir',$scope.transport).success(function(data){
+		$scope.locationsearch.supplierCode = $rootScope.supplierCode ;
+		console.log($scope.locationsearch);
+		
+		$http.post('/savetransportDir',$scope.locationsearch).success(function(data){
 			console.log('success');
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');

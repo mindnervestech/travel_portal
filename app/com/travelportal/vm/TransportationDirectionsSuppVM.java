@@ -7,7 +7,7 @@ public class TransportationDirectionsSuppVM {
 	
 	
 	private long supplierCode;
-	private List<TransportationDirectionsVM> transportInfo;
+	private List<TransportationDirectionsVM> findLocation;
 	
 	
 	
@@ -17,12 +17,14 @@ public class TransportationDirectionsSuppVM {
 	public void setSupplierCode(long supplierCode) {
 		this.supplierCode = supplierCode;
 	}
-	public List<TransportationDirectionsVM> getTransportInfo() {
-		return transportInfo;
+	public List<TransportationDirectionsVM> getFindLocation() {
+		return findLocation;
 	}
-	public void setTransportInfo(List<TransportationDirectionsVM> transportInfo) {
-		this.transportInfo = transportInfo;
+	public void setFindLocation(List<TransportationDirectionsVM> findLocation) {
+		this.findLocation = findLocation;
 	}
+
+	
 	
 	
 	

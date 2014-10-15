@@ -213,6 +213,7 @@ public class TravelPortalUtilsController extends Controller {
     	Map<String,Object> map  = new HashMap<String,Object>();
     	map.put("ID", hotelprofile.getId());
     	map.put("NAME", hotelprofile.getHotelName());
+    	map.put("ADDR",hotelprofile.getAddress());
 		return ok(Json.toJson(map));
 	}
 	
@@ -321,6 +322,18 @@ public class TravelPortalUtilsController extends Controller {
 	
 	
 	@Transactional
+	public static Result getdeletechile(int id) {
+	
+		HotelMealPlan hotelmealplan = HotelMealPlan.findById(id);
+		for(ChildPolicies policies : hotelmealplan.getChild()){
+			policies.delete();
+		}
+		//hotelmealplan.delete();
+		
+		return ok();
+	}
+	
+	@Transactional
 	public static Result getdeletemealpolicy(int id) {
 		
 				
@@ -376,39 +389,16 @@ public class TravelPortalUtilsController extends Controller {
 		Json.fromJson(json, TransportationDirectionsSuppVM.class);
 		TransportationDirectionsSuppVM transportationdirectionsSuppVM = Json.fromJson(json, TransportationDirectionsSuppVM.class);
 		
-		//HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
-		
-	
-		for(TransportationDirectionsVM vm : transportationdirectionsSuppVM.getTransportInfo()){
-		// if(vm.getname() != "")
-		// {
+		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
 			
+		for(TransportationDirectionsVM vm : transportationdirectionsSuppVM.getFindLocation()){
+					
 			TransportationDirection transportationDirection=new  TransportationDirection();
-			transportationDirection.setAirportNm(vm.getAirportName());
-			transportationDirection.setAirportdirections(vm.getAirportdirections());
-			transportationDirection.setAirportdistance(vm.getAirportdistance());
-			transportationDirection.setAirportdistanceType(vm.getAirportkm());
-			transportationDirection.setAirporttimeRequireInMinutes(vm.getAirportminutes());
-			
-			transportationDirection.setRailStationNm(vm.getRailName());
-			transportationDirection.setRailStationdistance(vm.getRaildistance());
-			transportationDirection.setRailStationdirections(vm.getRaildirections());
-			transportationDirection.setRailStationdistanceType(vm.getRailkm());
-			transportationDirection.setRailStationtimeRequireInMinutes(vm.getRailminutes());
-			
-			transportationDirection.setSubwayNm(vm.getSubwayName());
-			transportationDirection.setSubwaydirections(vm.getSubwaydirections());
-			transportationDirection.setSubwaydistance(vm.getSubwaydistance());
-			transportationDirection.setSubwaydistanceType(vm.getSubwaykm());
-			transportationDirection.setSubwaytimeRequireInMinutes(vm.getSubwayminutes());
-			
-			transportationDirection.setCruiseNm(vm.getCruiseName());
-			transportationDirection.setCruisedirections(vm.getCruisedirections());
-			transportationDirection.setCruisedistance(vm.getCruisedistance());
-			transportationDirection.setCruisedistanceType(vm.getCruisekm());
-			transportationDirection.setCruisetimeRequireInMinutes(vm.getCruiseminutes());
+			transportationDirection.setLocationName(vm.getLocationName());
+			transportationDirection.setLocationAddr(vm.getLocationAddr());
 			
 			transportationDirection.save();
+			hotelprofile.addTransportCode(transportationDirection);
 					
 		}
 		

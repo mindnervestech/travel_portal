@@ -502,13 +502,57 @@
         </div>
         <!--END FOOTER--><!--END PAGE WRAPPER--></div>
 </div>
-	<script src='@routes.Assets.at("app/js/jquery-1.10.2.min.js")'></script>
+	 <script src='@routes.Assets.at("app/js/jquery-1.10.2.min.js")'></script> 
 	<script src='@routes.Assets.at("app/js/jquery-migrate-1.2.1.min.js")'></script>
 	<script src='@routes.Assets.at("app/js/jquery-ui.js")'></script>
 	<!--loading bootstrap js-->
 	<script src='@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")'></script>
 	<script src='@routes.Assets.at("bower_components/angular/angular.min.js")'></script>
 	<script src='@routes.Assets.at("bower_components/angular-route/angular-route.min.js")'></script>
+	
+	   
+	
+	
+     <!--   <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
+    </script>   
+        -->
+  <!--  <   <script>
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+var map;
+
+function initialize() {
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+  var mapOptions = {
+    zoom:7,
+    center: chicago
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  directionsDisplay.setMap(map);
+}
+
+function findmap() {
+  var start = document.getElementById('start').value;
+  var end = document.getElementById('end').value;
+  var request = {
+      origin:start,
+      destination:end,
+      travelMode: google.maps.TravelMode.DRIVING
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+    }
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script> -->
+   
+	
 	<script
 		src='@routes.Assets.at("app/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js")'></script>
 	<script src='@routes.Assets.at("app/js/html5shiv.js")'></script>

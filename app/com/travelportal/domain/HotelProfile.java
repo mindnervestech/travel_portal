@@ -151,12 +151,33 @@ public class HotelProfile {
 	private List<HotelAttractions> hotelareaattraction;
 	
 	
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<TransportationDirection> transportCode;
+	
+	
 	private String location1;
 	private String location2;
 	private String location3;
 	
 	
 	
+	
+	public List<TransportationDirection> getTransportCode() {
+		return transportCode;
+	}
+
+	public void setTransportCode(List<TransportationDirection> transportCode) {
+		this.transportCode = transportCode;
+	}
+	public void addTransportCode(TransportationDirection transportCode) {
+		if(this.transportCode == null){
+			this.transportCode = new ArrayList<>();
+		}
+		this.transportCode.add(transportCode);
+	}
+	
+	
+
 	public List<HotelAttractions> getHotelareaattraction() {
 		return hotelareaattraction;
 	}
@@ -164,7 +185,7 @@ public class HotelProfile {
 	public void setHotelareaattraction(List<HotelAttractions> hotelareaattraction) {
 		this.hotelareaattraction = hotelareaattraction;
 	}
-	
+
 	public void addHotelareaattraction(HotelAttractions hotelareaattraction) {
 		if(this.hotelareaattraction == null){
 			this.hotelareaattraction = new ArrayList<>();
@@ -179,7 +200,7 @@ public class HotelProfile {
 	}
 	/**
 	 * @param supplierName the supplierName to set
-	 */
+	 */	
 	public void setSupplierName(String supplierName) {
 		this.supplierName = supplierName;
 	}

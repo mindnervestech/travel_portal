@@ -77,9 +77,7 @@
                             <td>
                             <a ng-click="editdata(meal)" style="cursor: pointer; margin-left: 31%;"  data-toggle="modal"><img src="assets/images/editico.gif"></a><br><br>
                             <a ng-click="setDeleteId(meal)" style="cursor: pointer; margin-left: 31%;" data-toggle="modal"><img src="assets/images/delete1.gif"></a>
-                            <!-- <a><input name="" type="button"  style="background-image: url(assets/images/editico.gif);" value="" ng-click="editdata(meal)" data-toggle="modal"  /><br>
-                            <input name="" type="button" style="background-image: url(assets/images/delete1.gif);" value="" ng-click="setDeleteId(meal)" data-toggle="modal" /> </td> -->
-                                                   
+                                             
                             </tr>
                            
                     	</tbody>
@@ -98,8 +96,7 @@
 			
 		</div>
 		<input name="" type="button" class="btn btn-primary" style="margin-left: 84%;" value="Create" ng-click="addnew()" class="btnblue"  data-toggle="modal"  />
-		<!--  <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button> -->
-                <!-- <input type="text" name="FromDate" data-ng-model="meal.fromPeriod" class="form-control"> -->
+		
 	</div>
 	</fieldset>
 
@@ -316,9 +313,9 @@
 			
 			
 		</div>
-                		<button class="btn btn-default" ng-click="newContact($event)">+ Add Child Rate</button>
+                		<button type="button" class="btn btn-default" ng-click="newContact($event)">+ Add Child Rate</button>
            			<span ng-show="contacts.length > 0">
-                        <button class="btn btn-default" ng-click="contacts.splice(contacts.length-1, 1)">remove</button>
+                        <button type="button" class="btn btn-default" ng-click="contacts.splice(contacts.length-1, 1)">remove</button>
                     </span> 
  
 	</div>
@@ -553,10 +550,10 @@
 			
 			
 		</div>
-                		<button class="btn btn-default" ng-click="newContact($event)">+ Add Child Rate</button>
-           			<span ng-show="contacts.length > 0">
-                        <button class="btn btn-default" ng-click="mealdata.child.splice(mealdata.child.length-1, 1)">remove</button>
-                    </span> 
+                		<button type="button" class="btn btn-default" ng-click="newContact($event)">+ Add Child Rate</button>
+           			
+                        <button type="button" class="btn btn-default" ng-click="childDeleteId()">remove</button>
+                     
  
 	</div>
  
