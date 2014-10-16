@@ -8,7 +8,7 @@
 		<div class="form-group">
 				<label class="col-md-3 control-label">Year Hotel Was Built:</label>
 				<div class="col-md-3">
-					<input type="text" name="hotelbuilt" data-ng-model="internalInfo.Built" class="form-control" required>
+					<input type="text" name="hotelbuilt" id="hotelbuilt" data-ng-model="internalInfo.Built" class="form-control" required>
 				</div>
 				
 				<label class="col-md-3 control-label">Last Renovated:</label>
@@ -128,7 +128,9 @@
 		 
 		</div>
 		<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+		<div>
+		<span ng-show="InternalInfoSuccess" style="color: green;margin-left: 3%;">Internal Information Save Successfully</span>
 		 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-                
+             </div>   
 	</div>
 </form>

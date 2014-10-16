@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NoResultException;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
@@ -47,6 +48,17 @@ public class TransportationDirection {
 
 	public void setLocationAddr(String locationAddr) {
 		this.locationAddr = locationAddr;
+	}
+	
+	//checklocationexe
+	public static TransportationDirection checklocationexe(String location) {
+		try
+		{
+		return (TransportationDirection) JPA.em().createQuery("select c from TransportationDirection c where locationName = ?1").setParameter(1, location).getSingleResult();
+		}
+		catch(NoResultException ex){
+			return null;
+		}
 	}
 
 	@Transactional

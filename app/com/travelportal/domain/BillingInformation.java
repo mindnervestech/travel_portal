@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
@@ -20,9 +18,10 @@ public class BillingInformation {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@Column(name="invoice_to_hotel")
-	private boolean invoiceToHotel;
+	private String invoiceToHotel;
 	
-	private boolean bankservice;
+	@Column(name="Bankservice")
+	private String bankservice;
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -52,24 +51,20 @@ public class BillingInformation {
 		this.supplier_code = supplier_code;
 	}
 	
-	public boolean isInvoiceToHotel() {
+
+	public String getInvoiceToHotel() {
 		return invoiceToHotel;
 	}
-	/**
-	 * @param invoiceToHotel the invoiceToHotel to set
-	 */
-	public void setInvoiceToHotel(boolean invoiceToHotel) {
+
+	public void setInvoiceToHotel(String invoiceToHotel) {
 		this.invoiceToHotel = invoiceToHotel;
 	}
-	
-		
-	public boolean isbankservice() {
+
+	public String getBankservice() {
 		return bankservice;
 	}
-	/**
-	 * @param invoiceToHotel the invoiceToHotel to set
-	 */
-	public void setbankservice(boolean bankservice) {
+
+	public void setBankservice(String bankservice) {
 		this.bankservice = bankservice;
 	}
 
@@ -148,6 +143,7 @@ public class BillingInformation {
 	/**
 	 * @return the ext
 	 */
+	
 	public int getExt() {
 		return ext;
 	}

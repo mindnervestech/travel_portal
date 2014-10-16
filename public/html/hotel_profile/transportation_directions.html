@@ -112,6 +112,7 @@ When using the Distance Km/Miles area and you need to use Decimal like 0.5 use P
 				<a ng-click="findmap()" style="cursor: pointer;"  data-toggle="modal"><img src="assets/images/map.jpg" style="width: 100%;float: left;"></a><br><br>
 				</div>
 				
+			
 				
 				<div>
 				   <button class="btn btn-default" ng-click="newLocation($event)">+</button>
@@ -121,6 +122,12 @@ When using the Distance Km/Miles area and you need to use Decimal like 0.5 use P
 				</div>
 				
 				<br>
+					
+					</div>
+					<br>
+					<span ng-show="locationfind" style="color: green;">Location Save successfully</span>
+					<span ng-show="locationnotfind" style="color: red;">Any one Location allready exists</span>
+					<br>
 		 </div>
 			
 		 
@@ -133,7 +140,7 @@ When using the Distance Km/Miles area and you need to use Decimal like 0.5 use P
 	</div>
 </form>
 
-
+<!-- 
 <style>
       html, body, #map-canvas {
         height: 100%;
@@ -151,4 +158,4 @@ When using the Distance Km/Miles area and you need to use Decimal like 0.5 use P
         border: 1px solid #999;
       }
     </style>
-   
+    -->

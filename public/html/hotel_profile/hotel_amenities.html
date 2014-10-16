@@ -11,7 +11,7 @@
 			<br>
 				
 				<div>
-				<label ng-repeat="amenitiesInfo in amenities" style="padding-right: 30px;width: 24%;">
+				<label ng-repeat="amenitiesInfo in amenities" style="padding-right: 30px;width: 38%;">
 				
 				  <input
   				  type="checkbox"
@@ -30,8 +30,10 @@
 		<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
 		
 		
-		     
+		     <div>
+		        <span ng-show="amenitiesSuccess" style="color: green;margin-left: 3%;">Successfully Add Hotel Amenities</span>
                  <button type="submit" ng-init="amenitiesInfo.supplierCode = supplierCode" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+                 </div>
 	</div>
 </form>
 

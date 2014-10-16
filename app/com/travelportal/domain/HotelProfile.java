@@ -52,7 +52,7 @@ public class HotelProfile {
 	private String zipCode;
 	
 	@Column(name="hotel_part_of_chain")
-	private boolean partOfChain;
+	private String partOfChain;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelBrands hoteBrands;
@@ -100,7 +100,7 @@ public class HotelProfile {
 	private int hotelRenovationYear;
 	
 	@Column(name="fire_safety_compliance")
-	private boolean fireSafetyCompliance;
+	private String fireSafetyCompliance;
 	
 	@Column(name="no_of_floors")
 	private int noOfFloors;
@@ -344,13 +344,13 @@ public class HotelProfile {
 	/**
 	 * @return the partOfChain
 	 */
-	public boolean isPartOfChain() {
+	public String isPartOfChain() {
 		return partOfChain;
 	}
 	/**
 	 * @param partOfChain the partOfChain to set
 	 */
-	public void setPartOfChain(boolean partOfChain) {
+	public void setPartOfChain(String partOfChain) {
 		this.partOfChain = partOfChain;
 	}
 	/**
@@ -428,8 +428,6 @@ public class HotelProfile {
 	}
 	
 	
-	
-	
 	/**
 	 * @return the nightLife
 	 */
@@ -469,13 +467,13 @@ public class HotelProfile {
 	/**
 	 * @return the fireSafetyCompliance
 	 */
-	public boolean isFireSafetyCompliance() {
+	public String isFireSafetyCompliance() {
 		return fireSafetyCompliance;
 	}
 	/**
 	 * @param fireSafetyCompliance the fireSafetyCompliance to set
 	 */
-	public void setFireSafetyCompliance(boolean fireSafetyCompliance) {
+	public void setFireSafetyCompliance(String fireSafetyCompliance) {
 		this.fireSafetyCompliance = fireSafetyCompliance;
 	}
 	/**
@@ -637,6 +635,15 @@ public class HotelProfile {
 	public void setPrivateContacts(HotelPrivateContacts privateContacts) {
 		this.privateContacts = privateContacts;
 	}
+	
+	
+	public void addPrivateContacts(HotelPrivateContacts privateContacts) {
+		/*if(this.privateContacts == null){
+			this.privateContacts = new ArrayList<>();
+		}*/
+		//this.privateContacts.(privateContacts);
+	}
+	
 	/**
 	 * @return the hotelTaxes
 	 */

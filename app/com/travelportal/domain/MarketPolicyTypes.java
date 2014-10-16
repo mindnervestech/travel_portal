@@ -63,4 +63,8 @@ public class MarketPolicyTypes { //Seed table.
 		return JPA.em().createQuery("select c from MarketPolicyTypes c ").getResultList();
 	}
 	
+	public static MarketPolicyTypes getMarketPolicyTypesIdByCode(int code) {
+		return (MarketPolicyTypes) JPA.em().createQuery("select c from MarketPolicyTypes c where marketPolicyTypeId = ?1").setParameter(1, code).getSingleResult();
+	}
+	
 }

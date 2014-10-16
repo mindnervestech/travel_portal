@@ -38,6 +38,18 @@ public class HotelPrivateContacts {
 	private String reservationContactEmailAddr;
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Salutation salutation_salutation_id;
+    private long supplier_code;
+    
+    
+	
+	public long getSupplierCode() {
+		return supplier_code;
+	}
+	
+	public void setSupplierCode(long supplier_code) {
+		this.supplier_code = supplier_code;
+	}
+	
 	
 	/**
 	 * @return the contactId

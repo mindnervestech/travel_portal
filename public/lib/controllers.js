@@ -71,6 +71,14 @@ angular.module('travel_portal').
 	       
 	    };
 	    
+	  /*  $scope.newContactchild = function($event){
+	      
+	        $scope.mealdata.child.push( { } );
+	        $event.preventDefault();
+	        
+	       
+	    };*/
+	   	    
 	    $scope.locationsearch={
 	    		   
 	    		findLocation:[],
@@ -193,19 +201,37 @@ angular.module('travel_portal').
 	
 	
 	
-	$scope.ShowTax = function(){
+	$scope.ShowTax = function(tax){
 	//	alert($scope.cont[0].chargeType);
-		
+		alert(tax);
 		$scope.taxQTY=false;
 		//$scope.taxQTY1=false;
 		//$scope.changetax=false;
-		$scope.taxQTY=$scope.mealpolicy.taxIncluded;
+		if(tax==true)
+		{
+			$scope.taxQTY= false;
+		}
+		else{
+			$scope.taxQTY= true;
+		}
+			
 		
 		//$scope.taxQTY1=$scope.mealdata.taxIncluded;
 		//$scope.taxQTY=$scope.mealdata.taxIncluded;	
 		//$scope.changetax=$scope.cont.chargeType;
 		/*alert($scope.taxQTY);*/
 	}
+	
+	$scope.showMeal = function(mealRate) {
+		$scope.mealRate=mealRate;
+	   // alert($scope.mealRate);	
+	}
+	
+	$scope.closeNewmeal = function (){
+		
+		alert("llllllllllllll");
+	}
+	
 	
 	$scope.editdata = function(meal){
 		
@@ -244,12 +270,9 @@ angular.module('travel_portal').
 			console.log("@#$%$%^&*(*&&^^#%%#%");
 			$http.get('/deletechile/'+$rootScope.mealIdData.id)
 			.success(function(){
-				/*angular.forEach($scope.mealIdData, function(obj, index){
-					if(obj.childPolicyId == mealIdData.child.childPolicyId){
-						$scope.MealType.child.splice(index,1);
-					}
-					
-				    });*/
+				$scope.MealType.child = [];
+				$scope.mealdata.child = $scope.MealType.child = [];
+				
 				console.log('success');
 			});
 			
@@ -316,7 +339,6 @@ angular.forEach($scope.business_check, function(obj, index){
 }
 
 
-
 	$scope.amenitiesClicked = function(e, amenitiesInfo) {
 		
 		if($(e.target).is(":checked")) {
@@ -368,13 +390,15 @@ angular.forEach($scope.business_check, function(obj, index){
 	
 	
 	$scope.radioValue;
-	
+	$scope.generalInfoMsg = false;
 	$scope.savegeneralinfo = function() {
 		console.log($scope.generalInfo);
 		
 		$http.post('/saveGeneralInfo', $scope.generalInfo).success(function(data){
 			console.log('success');
 			console.log(data);
+			$scope.generalInfoMsg = true;
+			//$scope.MealType = data;			
 			$rootScope.supplierCode=data.ID;
 			$rootScope.supplierName=data.NAME;
 			$rootScope.supplierAddr=data.ADDR;
@@ -435,23 +459,36 @@ $scope.updatemealplan = function(){
 	
 $scope.savetranspotDire = function() {
 		
-		
+	$scope.locationfind=false;	
+	$scope.locationnotfind = false;
+	
 		$scope.locationsearch.supplierCode = $rootScope.supplierCode ;
 		console.log($scope.locationsearch);
 		
 		$http.post('/savetransportDir',$scope.locationsearch).success(function(data){
 			console.log('success');
+			if(data == "yes")
+				{
+				$scope.locationfind = "true";
+				}
+			else
+				{
+				$scope.locationnotfind = "true";
+				}
+			//$scope.locationfind; 
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
 	}
 	
-
+   $scope.InternalInfoSuccess = false;
+	
 	$scope.saveInternalInfo = function() {
 			$scope.internalInfo.code = $rootScope.supplierCode ;
 			console.log($scope.internalInfo);
 			$http.post('/updateInternalInfo',$scope.internalInfo).success(function(data){
 				console.log('success');
+				$scope.InternalInfoSuccess = true;
 			}).error(function(data, status, headers, config) {
 				console.log('ERROR');
 			});
@@ -483,26 +520,31 @@ $scope.savetranspotDire = function() {
 		}
 	}
 	
+	$scope.Contactinfosuccess = false;
 	$scope.SaveContactinfo = function() {
 		
-		$scope.contactInfo.code = $rootScope.supplierCode;
-				
+		$scope.contactInfo.supplierCode = $rootScope.supplierCode;
+				console.log($scope.contactInfo);
 		$http.post('/updateContactInfo',$scope.contactInfo).success(function(data){
 			console.log('success');
+			$scope.Contactinfosuccess = true;
+			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
 		
 	}
 	
-	
+	$scope.BillinfoSucccess = false;
 	$scope.Savebillinginfo=function()
 	{
-		$scope.bill.code=$rootScope.supplierCode;
+		$scope.bill.code= $rootScope.supplierCode;
 	
 		console.log($scope.bill);
 		$http.post('/updatebillingInfo',$scope.bill).success(function(data){
 			console.log('success');
+			$scope.BillinfoSucccess = true;
+			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
@@ -510,60 +552,64 @@ $scope.savetranspotDire = function() {
 	}
 	
 	
-	
+	$scope.communciatsuccess = false;
 	$scope.savecommunciat=function()
 	{
 		$scope.comunicationhotel.code=$rootScope.supplierCode;
 		console.log($scope.comunicationhotel);
 		$http.post('/updateComunication',$scope.comunicationhotel).success(function(data){
 			console.log('success');
+			$scope.communciatsuccess = true;
+			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
 		
 	}
-	
+	$scope.Descriptinsuccess = false;
 	$scope.saveDescription=function(){
 		
 			$scope.descrip.supplierCode = $rootScope.supplierCode;
 		
 				$scope.descrip.services = $scope.service_check;
-			
-			/*console.log($scope.service_check);
-			console.log("//////////////////");
-			console.log($scope.descrip.service);
-			console.log("//////////////////");*/
+						
 			console.log($scope.descrip);
 			console.log("//////////////////");
 			$http.post('/updateDescription',$scope.descrip).success(function(data){
 					console.log('success');
+					$scope.Descriptinsuccess = true;
 			}).error(function(data, status, headers, config) {
 				console.log('ERROR');
 			});
 	}
 	
+	$scope.leisuresucess = false;
 	$scope.saveleisure_sport = function(){
 	//	$scope.leisure.supplierCode=$rootScope.supplierCode;
 		$scope.leisure.amenities=$scope.leisure_sport_check;
 		console.log($scope.leisure);
 		$http.post('/saveamenities',$scope.leisure).success(function(data){
 			console.log('success');
+			$scope.leisuresucess = true;
 	}).error(function(data, status, headers, config) {
 		console.log('ERROR');
 	});
 	}
 	
+	$scope.businessSucess = false;
 	$scope.savebusiness = function(){
 		//$scope.businessInfo.supplierCode=$rootScope.supplierCode;
 		$scope.businessInfo.amenities=$scope.business_check;
 		console.log($scope.businessInfo);
 		$http.post('/saveamenities',$scope.businessInfo).success(function(data){
 			console.log('success');
+			$scope.businessSucess = true;
 	}).error(function(data, status, headers, config) {
 		console.log('ERROR');
 	});
 	}
 	
+	$scope.amenitiesSuccess = false;
 	$scope.saveAmenities = function(){
 		//console.log($scope.amenitiesInfo.supplierCode);
 	//$scope.amenitiesInfo.supplierCode=$scope.amenitiesInfo.supplierCode;
@@ -571,6 +617,7 @@ $scope.savetranspotDire = function() {
 		console.log($scope.amenitiesInfo);
 		$http.post('/saveamenities',$scope.amenitiesInfo).success(function(data){
 			console.log('success');
+			$scope.amenitiesSuccess = true;
 	}).error(function(data, status, headers, config) {
 		console.log('ERROR');
 	});

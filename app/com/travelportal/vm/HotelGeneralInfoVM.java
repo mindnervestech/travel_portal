@@ -9,7 +9,7 @@ public class HotelGeneralInfoVM {
 	private int countryCode;
 	private int cityCode;
 	private String zipCode;
-	private boolean isHotelPartOfChain;
+	private String isHotelPartOfChain;
 	private int chainHotelCode;
 	private int BrandHotelCode;
 	private boolean isHealthSafetyCompliance;
@@ -106,13 +106,13 @@ public class HotelGeneralInfoVM {
 	/**
 	 * @return the isHotelPartOfChain
 	 */
-	public boolean isHotelPartOfChain() {
+	public String isHotelPartOfChain() {
 		return isHotelPartOfChain;
 	}
 	/**
 	 * @param isHotelPartOfChain the isHotelPartOfChain to set
 	 */
-	public void setHotelPartOfChain(boolean isHotelPartOfChain) {
+	public void setHotelPartOfChain(String isHotelPartOfChain) {
 		this.isHotelPartOfChain = isHotelPartOfChain;
 	}
 	/**

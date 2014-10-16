@@ -14,11 +14,11 @@
 				<div class="col-md-5">
 				
 				<div style="float: left;margin-right: 5%;">
-						<input type="radio" name="val" data-ng-model="bill.Invoices" value="true">
+						<input type="radio" name="val" ng-click="showMeal(true)" value="true">
 						&nbsp; Yes
 					</div>
 					<div>
-						<input type="radio" name="val" data-ng-model="bill.Invoices" value="false">
+						<input type="radio" name="val" ng-click="showMeal(false)" value="false">
 						&nbsp; No
 					</div> 
 				
@@ -31,7 +31,7 @@
 			<label>The Payable Rates for this Meals will apply in THB - Thai Baht. </label>
 			<br>
 			</div>
-			<div>
+			<div ng-show="mealRate">
 			 <table ng-table="tableParams" border="1" style="width: 100%;">
                 	<thead style="background-color: #488c6c;>
                     	<tr>
@@ -162,11 +162,11 @@
 				<div class="col-md-2">
 				
 				<div style="float: left;margin-right: 5%;">
-						<input type="radio" name="val" ng-click="ShowTax()" data-ng-model="mealpolicy.taxIncluded" value="true">
+						<input type="radio" name="val" ng-click="ShowTax(true)" data-ng-model="mealpolicy.taxIncluded" value="true">
 						&nbsp; Yes
 					</div>
 					<div>
-						<input type="radio" name="val" ng-click="ShowTax()" data-ng-model="mealpolicy.taxIncluded" value="false">
+						<input type="radio" name="val" ng-click="ShowTax(false)" data-ng-model="mealpolicy.taxIncluded" value="false">
 						&nbsp; No
 					</div> 
 				
@@ -208,7 +208,7 @@
 				  <div class="form-group">
 				<label class="col-md-2 control-label">From Age:	</label>
 				<div class="col-md-2">
-					<select class="form-control" data-ng-model="cont.allowedChildAgeFrom" style="height: 25px;font-size: 11px;">
+					<select class="form-control" data-ng-model="cont.allowedChildAgeFrom" style="height: 25px;font-size: 11px;" required>
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
@@ -236,7 +236,7 @@
 	
 				<label class="col-md-2 control-label">To Age:	</label>
 				<div class="col-md-2">
-					<select class="form-control" data-ng-model="cont.allowedChildAgeTo" style="height: 25px;font-size: 11px;">
+					<select class="form-control" data-ng-model="cont.allowedChildAgeTo" style="height: 25px;font-size: 11px;" required>
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
@@ -268,7 +268,7 @@
 				<div>
 				<label class="col-md-2 control-label">* Rate:</label>
 				<div class="col-md-3">
-					<input type="text" name="charge" data-ng-model="cont.charge" class="form-control" style="height: 25px;font-size: 11px;">
+					<input type="text" name="charge" data-ng-model="cont.charge" class="form-control" style="height: 25px;font-size: 11px;" required>
 				</div><div><label>THB</label></div>
 			</div>
 <br><br>
@@ -321,8 +321,13 @@
 	</div>
  
 </fieldset>
-	<br>
-	 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+	
+<br>
+<div style="float: right; margin-right: 2%;">
+	 <button type="button" ng-click=" closeThisDialog()" class="btn btn-primary">Close</button>
+
+	 <button type="submit" class="btn btn-primary">Save</button>
+</div>
 </div>
       		
 
@@ -400,11 +405,11 @@
 				<div class="col-md-2">
 				
 				<div style="float: left;margin-right: 5%;">
-						<input type="radio" name="val" ng-click="ShowTax()" data-ng-model="mealdata.taxIncluded" value="true">
+						<input type="radio" name="val" ng-click="ShowTax(true)" data-ng-model="mealdata.taxIncluded" value="true">
 						&nbsp; Yes
 					</div>
 					<div>
-						<input type="radio" name="val" ng-click="ShowTax()" data-ng-model="mealdata.taxIncluded" value="false">
+						<input type="radio" name="val" ng-click="ShowTax(false)" data-ng-model="mealdata.taxIncluded" value="false">
 						&nbsp; No
 					</div> 
 				
@@ -412,7 +417,7 @@
 			     </div>	
 							
           
-			<div  ng-show="taxQTY1">
+			<div  ng-show="taxQTY">
 				<label class="col-md-1 control-label">*Tax:</label>
 				<div class="col-md-2">
 					<input type="text" name="taxvalue" data-ng-model="mealdata.taxvalue" class="form-control" style="height: 25px;font-size: 11px;">
@@ -446,7 +451,7 @@
 				  <div class="form-group">
 				<label class="col-md-2 control-label">From Age:	</label>
 				<div class="col-md-2">
-					<select class="form-control" data-ng-model="cont.allowedChildAgeFrom" style="height: 25px;font-size: 11px;">
+					<select class="form-control" data-ng-model="cont.allowedChildAgeFrom" style="height: 25px;font-size: 11px;" required>
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
@@ -474,7 +479,7 @@
 	
 				<label class="col-md-2 control-label">To Age:	</label>
 				<div class="col-md-2">
-					<select class="form-control" data-ng-model="cont.allowedChildAgeTo" style="height: 25px;font-size: 11px;">
+					<select class="form-control" data-ng-model="cont.allowedChildAgeTo" style="height: 25px;font-size: 11px;" required>
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
@@ -506,7 +511,7 @@
 				<div>
 				<label class="col-md-2 control-label">* Rate:</label>
 				<div class="col-md-3">
-					<input type="text" name="charge" data-ng-model="cont.charge" class="form-control" style="height: 25px;font-size: 11px;">
+					<input type="text" name="charge" data-ng-model="cont.charge" class="form-control" style="height: 25px;font-size: 11px;" required>
 				</div><div><label>THB</label></div>
 			</div>
 <br><br>
@@ -516,11 +521,11 @@
 				<div class="col-md-2">
 				
 				<div style="float: left;margin-right: 5%;">
-						<input type="radio" name="chargeType" ng-click="ShowTax()" data-ng-model="cont.chargeType" value="true">
+						<input type="radio" name="chargeType" ng-click="ShowTaxchild()" data-ng-model="cont.chargeType" value="true">
 						&nbsp; Yes
 					</div>
 					<div>
-						<input type="radio" name="chargeType" ng-click="ShowTax()" data-ng-model="cont.chargeType" value="false">
+						<input type="radio" name="chargeType" ng-click="ShowTaxchild()" data-ng-model="cont.chargeType" value="false">
 						&nbsp; No
 					</div> 
 				
@@ -559,7 +564,12 @@
  
 </fieldset>
 	<br>
-	 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Update</button>
+	<div style="float: right; margin-right: 2%;">
+	 <button type="button" ng-click=" closeThisDialog()" class="btn btn-primary">Close</button>
+
+
+	 <button type="submit" class="btn btn-primary">Update</button>
+   </div>
 </div>
       		
 

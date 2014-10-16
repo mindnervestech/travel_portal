@@ -2,7 +2,7 @@ package com.travelportal.vm;
 
 public class HotelBillingInformation {
 	private Long supplierCode;
-	private boolean isInvoiceToHotel;
+	private String isInvoiceToHotel;
 	private String aFirstName;
 	private String aLastName;
 	private String title;
@@ -10,7 +10,7 @@ public class HotelBillingInformation {
 	private String dTelNo;
 	private String dFaxNo;
 	private String dExtNo;
-	private boolean isBankToBankTransfer;
+	private String isBankToBankTransfer;
 	/**
 	 * @return the supplierCode
 	 */
@@ -26,13 +26,13 @@ public class HotelBillingInformation {
 	/**
 	 * @return the isInvoiceToHotel
 	 */
-	public boolean isInvoiceToHotel() {
+	public String isInvoiceToHotel() {
 		return isInvoiceToHotel;
 	}
 	/**
 	 * @param isInvoiceToHotel the isInvoiceToHotel to set
 	 */
-	public void setInvoiceToHotel(boolean isInvoiceToHotel) {
+	public void setInvoiceToHotel(String isInvoiceToHotel) {
 		this.isInvoiceToHotel = isInvoiceToHotel;
 	}
 	/**
@@ -122,13 +122,13 @@ public class HotelBillingInformation {
 	/**
 	 * @return the isBankToBankTransfer
 	 */
-	public boolean isBankToBankTransfer() {
+	public String isBankToBankTransfer() {
 		return isBankToBankTransfer;
 	}
 	/**
 	 * @param isBankToBankTransfer the isBankToBankTransfer to set
 	 */
-	public void setBankToBankTransfer(boolean isBankToBankTransfer) {
+	public void setBankToBankTransfer(String isBankToBankTransfer) {
 		this.isBankToBankTransfer = isBankToBankTransfer;
 	}
 	

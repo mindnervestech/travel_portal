@@ -4,7 +4,7 @@ public class HotelInternalInformation {
 	private Long supplierCode;
 	private int builtYear;
 	private int renovationYear;
-	private boolean safetyCompliance;
+	private String safetyCompliance;
 	private int noOffloor;
 	private int noOfRoom;
 	private String guestTel;
@@ -54,13 +54,13 @@ public class HotelInternalInformation {
 	/**
 	 * @return the safetyCompliance
 	 */
-	public boolean isSafetyCompliance() {
+	public String isSafetyCompliance() {
 		return safetyCompliance;
 	}
 	/**
 	 * @param safetyCompliance the safetyCompliance to set
 	 */
-	public void setSafetyCompliance(boolean safetyCompliance) {
+	public void setSafetyCompliance(String safetyCompliance) {
 		this.safetyCompliance = safetyCompliance;
 	}
 	/**
