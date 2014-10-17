@@ -1,6 +1,6 @@
 angular.module('travel_portal').
-	controller("hoteRoomController",['$scope', '$http',function($scope, $http){
-		
+	controller("hoteRoomController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
+	
 			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10];
 			$scope.supplierCode = 12345;
 			console.log("hoteRoomController successfully initialized.");
@@ -202,11 +202,9 @@ angular.module('travel_portal').
 	
 	
 	$scope.ShowTax = function(tax){
-	//	alert($scope.cont[0].chargeType);
-		alert(tax);
+	
 		$scope.taxQTY=false;
-		//$scope.taxQTY1=false;
-		//$scope.changetax=false;
+		
 		if(tax==true)
 		{
 			$scope.taxQTY= false;
@@ -214,13 +212,10 @@ angular.module('travel_portal').
 		else{
 			$scope.taxQTY= true;
 		}
-			
-		
-		//$scope.taxQTY1=$scope.mealdata.taxIncluded;
-		//$scope.taxQTY=$scope.mealdata.taxIncluded;	
-		//$scope.changetax=$scope.cont.chargeType;
-		/*alert($scope.taxQTY);*/
+	
 	}
+	
+	
 	
 	$scope.showMeal = function(mealRate) {
 		$scope.mealRate=mealRate;
@@ -392,6 +387,7 @@ angular.forEach($scope.business_check, function(obj, index){
 	$scope.radioValue;
 	$scope.generalInfoMsg = false;
 	$scope.savegeneralinfo = function() {
+		$scope.generalInfo.supplierCode = "";
 		console.log($scope.generalInfo);
 		
 		$http.post('/saveGeneralInfo', $scope.generalInfo).success(function(data){
@@ -411,6 +407,7 @@ angular.forEach($scope.business_check, function(obj, index){
 	};
 	$scope.mealpolicy={};
 	
+	$scope.mealPlanSuccessMsg = false;
 	$scope.savemealplan = function(){
 		
 		$scope.mealpolicy.supplierCode = $rootScope.supplierCode ;
@@ -419,6 +416,7 @@ angular.forEach($scope.business_check, function(obj, index){
 		console.log($scope.mealpolicy);
 		$http.post('/savemealpolicy',$scope.mealpolicy).success(function(data){
 			console.log('success');
+			$scope.mealPlanSuccessMsg = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
@@ -426,13 +424,15 @@ angular.forEach($scope.business_check, function(obj, index){
 		
 	};
 	
-	
+	$scope.mealPlanUpdateSuccessMsg = false;
 $scope.updatemealplan = function(){
 		
 		alert("hii..update");
 		console.log($scope.mealdata);
 		$http.post('/updatemealpolicy',$scope.mealdata).success(function(data){
 			console.log('success');
+			$scope.mealPlanUpdateSuccessMsg = true;
+			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
@@ -451,6 +451,16 @@ $scope.updatemealplan = function(){
 		console.log($scope.area);
 		$http.post('/saveattraction',$scope.area).success(function(data){
 			console.log('success');
+			if(data == "yes")
+			{
+			$scope.attractionfind = "true";
+			$scope.attractionnotfind = "false"
+			}
+		else
+			{
+			$scope.attractionfind = "false";
+			$scope.attractionnotfind = "true";
+			}
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
@@ -470,10 +480,12 @@ $scope.savetranspotDire = function() {
 			if(data == "yes")
 				{
 				$scope.locationfind = "true";
+				$scope.locationnotfind = "false";
 				}
 			else
 				{
 				$scope.locationnotfind = "true";
+				$scope.locationfind = "false";
 				}
 			//$scope.locationfind; 
 		}).error(function(data, status, headers, config) {
@@ -484,7 +496,7 @@ $scope.savetranspotDire = function() {
    $scope.InternalInfoSuccess = false;
 	
 	$scope.saveInternalInfo = function() {
-			$scope.internalInfo.code = $rootScope.supplierCode ;
+			$scope.internalInfo.supplierCode = $rootScope.supplierCode ;
 			console.log($scope.internalInfo);
 			$http.post('/updateInternalInfo',$scope.internalInfo).success(function(data){
 				console.log('success');

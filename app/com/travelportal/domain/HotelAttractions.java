@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NoResultException;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
@@ -104,6 +105,15 @@ public class HotelAttractions {
 		this.distanceType = distanceType;
 	}
 	
+	public static HotelAttractions attractionrepeat(String attraction) {
+		try
+		{
+		return (HotelAttractions) JPA.em().createQuery("select c from HotelAttractions c where attractionNm = ?1").setParameter(1, attraction).getSingleResult();
+		}
+		catch(NoResultException ex){
+			return null;
+		}
+	}
 	
 	@Transactional
     public void save() {

@@ -1,5 +1,5 @@
 
-<form method="post" ng-submit="saveInternalInfo()" role="form" class="form-horizontal">
+<form method="post" name="myForm" ng-submit="saveInternalInfo()" role="form" class="form-horizontal">
 	<div class="row">
 	<div>
 				<div class="col-md-12">
@@ -8,13 +8,16 @@
 		<div class="form-group">
 				<label class="col-md-3 control-label">Year Hotel Was Built:</label>
 				<div class="col-md-3">
-					<input type="text" name="hotelbuilt" id="hotelbuilt" data-ng-model="internalInfo.Built" class="form-control" required>
+					<input type="number" name="hotelbuilt" id="hotelbuilt" min="0" max="99" data-ng-model="internalInfo.Built" class="form-control" required>
+					 <span class="error" ng-show="myForm.hotelbuilt.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				
 				<label class="col-md-3 control-label">Last Renovated:</label>
 				<div class="col-md-3">
-					<input type="text" name="lastRenov" data-ng-model="internalInfo.lastRenov" class="form-control" required>
+					<input type="number" name="lastRenov" data-ng-model="internalInfo.lastRenov" class="form-control" required>
+					 <span class="error" ng-show="myForm.lastRenov.$error.number" style="color: red;">Not valid number!</span>
 					<p>(year, e.g. 2001)</p>
+					
 				</div>
 			</div>
 		
@@ -38,13 +41,14 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Number of Floors:</label>
 				<div class="col-md-3">
-					<input type="text" name="floors" data-ng-model="internalInfo.noFloors" class="form-control" required>
+					<input type="number" name="floors" data-ng-model="internalInfo.noFloors" class="form-control" required>
+					 <span class="error" ng-show="myForm.floors.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				
 				<label class="col-md-3 control-label">*Number of Rooms:</label>
 				<div class="col-md-3">
-					<input type="text" name="noroom" data-ng-model="internalInfo.room" class="form-control" required>
-					
+					<input type="number" name="noroom" data-ng-model="internalInfo.room" class="form-control" required>
+					 <span class="error" ng-show="myForm.noroom.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 			
@@ -52,11 +56,13 @@
 	      <div class="form-group">
 				<label class="col-md-3 control-label">*Guest Telephone:</label>
 				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="citycode" data-ng-model="internalInfo.GuestTele" class="form-control" required>
+					<input type="number" name="GuestTele" data-ng-model="internalInfo.GuestTele" class="form-control" required>
+					 <span class="error" ng-show="myForm.GuestTele.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				<p style="float: left;">-</p>
 				<div class="col-md-3">
-					<input type="text" name="number" data-ng-model="internalInfo.GuestTelenumber" class="form-control" required>
+					<input type="number" name="GuestTelenum" data-ng-model="internalInfo.GuestTelenumber" class="form-control" required>
+					 <span class="error" ng-show="myForm.GuestTelenum.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 			
@@ -65,11 +71,13 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Guest Fax:</label>
 				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="citycode" data-ng-model="internalInfo.GuestfaxCode" class="form-control" required>
+					<input type="number" name="guestfaxcode" data-ng-model="internalInfo.GuestfaxCode" class="form-control" required>
+					 <span class="error" ng-show="myForm.guestfaxcode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				<p style="float: left;">-</p>
 				<div class="col-md-3">
-					<input type="text" name="number" data-ng-model="internalInfo.Guestfaxnumber" class="form-control" required>
+					<input type="number" name="Guestfaxnumber" data-ng-model="internalInfo.Guestfaxnumber" class="form-control" required>
+					<span class="error" ng-show="myForm.Guestfaxnumber.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>	
          
@@ -91,22 +99,26 @@
 			 <div class="form-group">
 				<label class="col-md-3 control-label">*Direct Telephone:</label>
 				<div class="col-md-2" style="width: 13%">
-					<input type="text" name="citycode" data-ng-model="internalInfo.DirectteleCode" class="form-control" required>
+					<input type="number" name="DirectteleCode" data-ng-model="internalInfo.DirectteleCode" class="form-control" required>
+					<span class="error" ng-show="myForm.DirectteleCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				<p style="float: left;">-</p>
 				<div class="col-md-3">
-					<input type="text" name="number" data-ng-model="internalInfo.Directnumber" class="form-control" required>
+					<input type="number" name="Directnumber" data-ng-model="internalInfo.Directnumber" class="form-control" required>
+					<span class="error" ng-show="myForm.Directnumber.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>	
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Direct Fax:</label>
 				<div class="col-md-2" style="width: 13%">
-					<input type="text" name="citycode" data-ng-model="internalInfo.dirFaxCode" class="form-control" required>
+					<input type="number" name="dirFaxCode" data-ng-model="internalInfo.dirFaxCode" class="form-control" required>
+					<span class="error" ng-show="myForm.dirFaxCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				<p style="float: left;">-</p>
 				<div class="col-md-3">
-					<input type="text" name="number" data-ng-model="internalInfo.dirFaxnumber" class="form-control" required>
+					<input type="number" name="dirFaxnumber" data-ng-model="internalInfo.dirFaxnumber" class="form-control" required>
+					<span class="error" ng-show="myForm.dirFaxnumber.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>	
 						

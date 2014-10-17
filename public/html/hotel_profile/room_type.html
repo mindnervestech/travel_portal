@@ -1,0 +1,135 @@
+
+<div id="page-wrapper" data-ng-init="initRoomTypePage()">
+	<!--BEGIN CONTENT-->
+	<div class="page-content">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-green">
+					<div class="panel-heading clearfix">
+						<span class="mts pull-left"> {{"Add / Edit Room Type" |  uppercase}}</span>
+					</div> 
+					<div class="panel-body">
+						<div class="col-lg-12">
+							<div class="row">
+								<div class="form-group">
+									<label class="col-md-3 control-label">Choose Room Type</label>
+									<div class="col-md-9">
+									<select class="form-control" data-ng-model="sel_room_type"
+										data-ng-options="roomType.roomId as roomType.roomType for roomType in hotelRoomTypes track by roomType.roomId">
+										<option>Select Room Type...</option>
+									</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-12 control-label">Room Type: {{sel_room_type}}</label>
+								</div>
+								<div class="form-group">
+									<label class="col-md-12 control-label">Please enter all details that apply to this room type</label>
+								</div>
+								<!-- Add / Edit Room Type section -->
+								<div class="form-group">
+									<label class="col-md-3 control-label">Room Name</label>
+									<div class="col-md-9">
+										<input type="text" placeholder="Room Name" class="form-control"
+											data-ng-model="roomTypeIns.roomName">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-6 control-label">What is the maximum occupancy level for this room?</label>
+									<div class="col-md-6">
+										<select class="form-control" data-ng-model="roomTypeIns.maxOccupancy">
+										<option data-ng-repeat="counter in counterArray">{{counter}}</option>
+										
+									</select>	
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-6 control-label">What is the maximum Adult occupancy for this room?</label>
+									<div class="col-md-6">
+										<select class="form-control" data-ng-model="roomTypeIns.maxAdultsOccupancy">
+										<option data-ng-repeat="counter in counterArray">{{counter}}</option>
+									</select>	
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-6 control-label">What is the maximum Adult occupancy if sharing with children in this room?</label>
+									<div class="col-md-6">
+										<select class="form-control" data-ng-model="roomTypeIns.maxAdultsWithChildren">
+										<option value="0" selected>No Child Allowed</option>
+										<option data-ng-repeat="counter in counterArray">{{counter}}</option>
+									</select>	
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-6 control-label">How many free children sharing with Adults are allowed for this room?</label>
+									<div class="col-md-6">
+										<select class="form-control" data-ng-model="roomTypeIns.freeChildOccuWithAdults">
+										<option value="0" selected>Please Select</option>
+										<option data-ng-repeat="counter in counterArray">{{counter}}</option>
+										</select>	
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-6 control-label">Does your hotel charge for children?</label>
+									<div class="col-md-3">
+										<div class="iradio_minimal checked" style="position: relative;"><input id="minimal-radio-1" tabindex="7" type="radio" name="minimal-radio" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
+										&nbsp;&nbsp;<label for="minimal-radio-1" class="">Yes</label>
+										<div class="iradio_minimal" style="position: relative;"><input id="minimal-radio-1" tabindex="7" type="radio" name="minimal-radio" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
+										&nbsp;&nbsp;<label for="minimal-radio-1" class="">No</label>	
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-12 control-label">Please define your child policy:</label>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Does your hotel charge for children?</label>
+									<div class="col-md-9">
+										<select class="form-control" data-ng-model="roomTypeIns.fromChildAge">
+											<option data-ng-repeat="counter in counterArray">{{counter}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label">Can you fit an extra BED to this room type?</label>
+									<div class="col-md-8">
+										<div class="iradio_minimal checked" style="position: relative;"><input id="minimal-radio-1" tabindex="7" type="radio" name="minimal-radio" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
+										&nbsp;&nbsp;<label for="minimal-radio-1" class="">Yes</label>
+										<div class="iradio_minimal" style="position: relative;"><input id="minimal-radio-1" tabindex="7" type="radio" name="minimal-radio" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
+										&nbsp;&nbsp;<label for="minimal-radio-1" class="">No</label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Is this room a suite?</label>
+									<div class="col-md-9">
+										<div class="iradio_minimal checked" style="position: relative;"><input id="minimal-radio-1" tabindex="7" type="radio" name="minimal-radio" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
+										&nbsp;&nbsp;<label for="minimal-radio-1" class="">Yes</label>
+										<div class="iradio_minimal" style="position: relative;"><input id="minimal-radio-1" tabindex="7" type="radio" name="minimal-radio" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
+										&nbsp;&nbsp;<label for="minimal-radio-1" class="">No</label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-12 control-label">In room amenities: (Please tick the boxes that are applicable)</label>
+									<div class="col-md-9">
+										<div data-ng-repeat="amenity in roomAmenities">
+											<div class="iradio_minimal checked" style="position: relative;">
+													<div class="icheckbox_flat-red checked" style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
+													<!-- <label for="flat-checkbox-2" class="">{{amenity.amenityNm}}</label> -->
+											</div>
+											&nbsp;&nbsp;<label for="minimal-checkbox-1" class="">{{amenity.amenityNm}}</label>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	<!--END CONTENT-->
+</div>
+
+}

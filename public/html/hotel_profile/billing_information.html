@@ -1,5 +1,5 @@
 
-<form method="post" ng-submit="Savebillinginfo()" role="form" class="form-horizontal">
+<form method="post" name="billinfo" ng-submit="Savebillinginfo()" role="form" class="form-horizontal">
 <fieldset class="billBorder">
   <legend style="width: 70%;border-bottom: none;">Company/Management/ Supplier Information</legend>
 	<div class="row">
@@ -64,29 +64,34 @@
 					<div class="form-group">
 				<label class="col-md-5 control-label">*Direct Telephone:</label>
 				<div class="col-md-2" style="width: 16%;">
-					<input type="text" name="telephcode" data-ng-model="bill.telephcode" class="form-control" required>
+					<input type="number" name="telephcode" data-ng-model="bill.telephcode" class="form-control" required>
+					<span class="error" ng-show="billinfo.telephcode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				<p style="float: left;">-</p>
 					<div class="col-md-4">
-					<input type="text" name="telenumber" data-ng-model="bill.teleNumber" class="form-control" required>
+					<input type="number" name="telenumber" data-ng-model="bill.teleNumber" class="form-control" required>
+					<span class="error" ng-show="billinfo.telenumber.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 			
 				<div class="form-group">
 				<label class="col-md-5 control-label">*Direct Fax:</label>
 				<div class="col-md-2" style="width: 16%;">
-					<input type="text" name="dirFaxcode" data-ng-model="bill.dirFaxcode" class="form-control" required>
+					<input type="number" name="dirFaxcode" data-ng-model="bill.dirFaxcode" class="form-control" required>
+					<span class="error" ng-show="billinfo.dirFaxcode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				<p style="float: left;">-</p>
 					<div class="col-md-4">
-					<input type="text" name="dirFaxnumber" data-ng-model="bill.dirFaxNumber" class="form-control" required>
+					<input type="number" name="dirFaxnumber" data-ng-model="bill.dirFaxNumber" class="form-control" required>
+					<span class="error" ng-show="billinfo.dirFaxnumber.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 					
 				<div class="form-group">
 						<label class="col-md-5 control-label">Extension:</label>
 						<div class="col-md-7">
-						<input type="text" name="Extenion" data-ng-model="bill.Extension" class="form-control" required>
+						<input type="number" name="extenion" data-ng-model="bill.Extension" class="form-control" required>
+						<span class="error" ng-show="billinfo.extenion.$error.number" style="color: red;">Not valid number!</span>
 					</div>
 					</div>	
 					

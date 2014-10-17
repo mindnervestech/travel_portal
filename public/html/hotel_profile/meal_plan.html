@@ -1,9 +1,9 @@
 
 
 
-<form method="post" ng-submit="Savebillinginfo()" role="form" class="form-horizontal">
+<form method="post"  ng-submit="Savebillinginfo()" role="form" class="form-horizontal">
 <fieldset class="billBorder">
-  <legend style="width: 40%;border-bottom: none;">Meal</legend>
+  <legend style="width: 8%;border-bottom: none;">Meal</legend>
 	<div class="row">
 		<div class="col-md-12">
 			
@@ -105,7 +105,7 @@
 		
 		
 <script type="text/ng-template" id="manage">
-<form method="post" data-ng-submit="savemealplan()" role="form" class="form-horizontal">
+<form method="post" name="mealinfoform" data-ng-submit="savemealplan()" role="form" class="form-horizontal">
 <div style="text-align: center;font-size: x-large;">Add New Meal Plan<br><br></div>
 <div class="row">
 		<div class="col-md-12">
@@ -151,7 +151,8 @@
                <div class="form-group">
 				<label class="col-md-3 control-label">* Adult Rate:</label>
 				<div class="col-md-2">
-					<input type="text" name="rate" data-ng-model="mealpolicy.rate" class="form-control" style="height: 25px;font-size: 11px;" required>
+					<input type="number" name="rate" data-ng-model="mealpolicy.rate" class="form-control" style="height: 25px;font-size: 11px;" required>
+					
 				</div>THB
 <br><br>
 			</div>
@@ -178,6 +179,7 @@
 				<label class="col-md-1 control-label">*Tax:</label>
 				<div class="col-md-2">
 					<input type="text" name="taxvalue" data-ng-model="mealpolicy.taxvalue" class="form-control" style="height: 25px;font-size: 11px;">
+					<span class="error" ng-show="mealinfoform.taxvalues.$error.float" style="color: red;font-size: small;">Not valid number!</span>
 				</div>
 			
 				<div class="col-md-2">
@@ -278,11 +280,11 @@
 				<div class="col-md-2">
 				
 				<div style="float: left;margin-right: 5%;">
-						<input type="radio" name="chargeType" ng-click="ShowTax()" data-ng-model="cont.chargeType" value="true">
+						<input type="radio" data-ng-model="cont.chargeType" value="true">
 						&nbsp; Yes
 					</div>
 					<div>
-						<input type="radio" name="chargeType" ng-click="ShowTax()" data-ng-model="cont.chargeType" value="false">
+						<input type="radio" data-ng-model="cont.chargeType" value="false">
 						&nbsp; No
 					</div> 
 				
@@ -290,7 +292,7 @@
 			     </div>	
 							
           
-			<div>
+			<div ng-show="cont.chargeType == 'false'">
 				<label class="col-md-1 control-label">*Tax:</label>
 				<div class="col-md-2">
 					<input type="text" name="taxvalue" data-ng-model="cont.childtaxvalue" class="form-control" style="height: 25px;font-size: 11px;">
@@ -323,10 +325,14 @@
 </fieldset>
 	
 <br>
-<div style="float: right; margin-right: 2%;">
+<div style="float: right; margin-right: 8%;">
+ 
+     <span ng-show="mealPlanSuccessMsg" style="color: green;margin-left: 2%;"> Save Successfully</span>   
+	
+	 <button type="submit" class="btn btn-primary">Save</button>
 	 <button type="button" ng-click=" closeThisDialog()" class="btn btn-primary">Close</button>
 
-	 <button type="submit" class="btn btn-primary">Save</button>
+	
 </div>
 </div>
       		
@@ -564,11 +570,14 @@
  
 </fieldset>
 	<br>
-	<div style="float: right; margin-right: 2%;">
-	 <button type="button" ng-click=" closeThisDialog()" class="btn btn-primary">Close</button>
+	<div style="float: right; margin-right: 8%;">
+
+	<span ng-show="mealPlanUpdateSuccessMsg" style="color: green;margin-left: 2%;">Update Successfully</span>
+	<button type="submit" class="btn btn-primary">Update</button> 
+	<button type="button" ng-click=" closeThisDialog()" class="btn btn-primary">Close</button>
 
 
-	 <button type="submit" class="btn btn-primary">Update</button>
+	 
    </div>
 </div>
       		

@@ -1,13 +1,13 @@
 
-<div id="page-wrapper" data-ng-init="initRoomTypePage()">
-	<!--BEGIN CONTENT-->
+<!-- <div id="page-wrapper" data-ng-init="initRoomTypePage()">
+	BEGIN CONTENT
 	<div class="page-content">
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="panel panel-green">
-					<div class="panel-heading clearfix">
+				<div class="panel panel-green"> -->
+					<!-- <div class="panel-heading clearfix">
 						<span class="mts pull-left"> {{"Add / Edit Room Type" |  uppercase}}</span>
-					</div>
+					</div> -->
 					<div class="panel-body">
 						<div class="col-lg-12">
 							<div class="row">
@@ -32,104 +32,171 @@
 									<div class="col-md-9">
 										<input type="text" placeholder="Room Name" class="form-control"
 											data-ng-model="roomTypeIns.roomName">
+									<br>
 									</div>
+									
 								</div>
 								<div class="form-group">
-									<label class="col-md-6 control-label">What is the maximum occupancy level for this room?</label>
-									<div class="col-md-6">
+									<label class="col-md-7 control-label">*What is the maximum occupancy level for this room?</label>
+									<div class="col-md-3">
 										<select class="form-control" data-ng-model="roomTypeIns.maxOccupancy">
 										<option data-ng-repeat="counter in counterArray">{{counter}}</option>
 										
-									</select>	
+									</select>
+									<br>	
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-6 control-label">What is the maximum Adult occupancy for this room?</label>
-									<div class="col-md-6">
+									<label class="col-md-7 control-label">*What is the maximum Adult occupancy for this room?</label>
+									<div class="col-md-3">
 										<select class="form-control" data-ng-model="roomTypeIns.maxAdultsOccupancy">
 										<option data-ng-repeat="counter in counterArray">{{counter}}</option>
-									</select>	
+									</select>
+									<br>	
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-6 control-label">What is the maximum Adult occupancy if sharing with children in this room?</label>
-									<div class="col-md-6">
+									<label class="col-md-7 control-label">*What is the maximum Adult occupancy if sharing with children in this room?</label>
+									<div class="col-md-3">
 										<select class="form-control" data-ng-model="roomTypeIns.maxAdultsWithChildren">
 										<option value="0" selected>No Child Allowed</option>
 										<option data-ng-repeat="counter in counterArray">{{counter}}</option>
-									</select>	
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-6 control-label">How many free children sharing with Adults are allowed for this room?</label>
-									<div class="col-md-6">
-										<select class="form-control" data-ng-model="roomTypeIns.freeChildOccuWithAdults">
-										<option value="0" selected>Please Select</option>
-										<option data-ng-repeat="counter in counterArray">{{counter}}</option>
-										</select>	
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-6 control-label">Does your hotel charge for children?</label>
-									<div class="col-md-3">
-										<div class="iradio_minimal checked" style="position: relative;"><input id="minimal-radio-1" tabindex="7" type="radio" name="minimal-radio" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
-										&nbsp;&nbsp;<label for="minimal-radio-1" class="">Yes</label>
-										<div class="iradio_minimal" style="position: relative;"><input id="minimal-radio-1" tabindex="7" type="radio" name="minimal-radio" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
-										&nbsp;&nbsp;<label for="minimal-radio-1" class="">No</label>	
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-12 control-label">Please define your child policy:</label>
-								</div>
-								<div class="form-group">
-									<label class="col-md-3 control-label">Does your hotel charge for children?</label>
-									<div class="col-md-9">
-										<select class="form-control" data-ng-model="roomTypeIns.fromChildAge">
-											<option data-ng-repeat="counter in counterArray">{{counter}}</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-4 control-label">Can you fit an extra BED to this room type?</label>
-									<div class="col-md-8">
-										<div class="iradio_minimal checked" style="position: relative;"><input id="minimal-radio-1" tabindex="7" type="radio" name="minimal-radio" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
-										&nbsp;&nbsp;<label for="minimal-radio-1" class="">Yes</label>
-										<div class="iradio_minimal" style="position: relative;"><input id="minimal-radio-1" tabindex="7" type="radio" name="minimal-radio" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
-										&nbsp;&nbsp;<label for="minimal-radio-1" class="">No</label>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-3 control-label">Is this room a suite?</label>
-									<div class="col-md-9">
-										<div class="iradio_minimal checked" style="position: relative;"><input id="minimal-radio-1" tabindex="7" type="radio" name="minimal-radio" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
-										&nbsp;&nbsp;<label for="minimal-radio-1" class="">Yes</label>
-										<div class="iradio_minimal" style="position: relative;"><input id="minimal-radio-1" tabindex="7" type="radio" name="minimal-radio" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
-										&nbsp;&nbsp;<label for="minimal-radio-1" class="">No</label>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-12 control-label">In room amenities: (Please tick the boxes that are applicable)</label>
-									<div class="col-md-9">
-										<div data-ng-repeat="amenity in roomAmenities">
-											<div class="iradio_minimal checked" style="position: relative;">
-													<div class="icheckbox_flat-red checked" style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
-													<!-- <label for="flat-checkbox-2" class="">{{amenity.amenityNm}}</label> -->
-											</div>
-											&nbsp;&nbsp;<label for="minimal-checkbox-1" class="">{{amenity.amenityNm}}</label>
-										</div>
+									</select>
+									<br>	
 									</div>
 								</div>
 								
+								
+								
 							</div>
+							<fieldset class="billinside">
+  									<legend style="width: 35%;border-bottom: none;">Child Policy</legend>
+  										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="col-md-7 control-label">How many free children sharing with Adults are allowed for this room?</label>
+														<div class="col-md-3">
+															<select class="form-control" data-ng-model="roomTypeIns.freeChildOccuWithAdults">
+															<option value="0" selected>Please Select</option>
+															<option data-ng-repeat="counter in counterArray">{{counter}}</option>
+															</select>	
+														</div>
+												</div>
+												
+												<div class="form-group">
+												<label class="col-md-6 control-label" style="text-align: left;margin-left: 4%;">*Does your hotel charge for children?</label>
+													<div class="col-md-3">
+				
+														<div style="float: left;margin-right: 5%;">
+															<input type="radio" name="val" data-ng-model="internalInfo.safety" value="Yes">
+																&nbsp; Yes
+													</div>
+													<div>
+													<input type="radio" name="val" data-ng-model="internalInfo.safety" value="No">
+													&nbsp; No
+													</div> 
+													<br>
+												</div>
+												</div>
+												
+													
+												<div>
+												<div>
+												<label class="col-md-6 control-label" style="text-align: left;margin-left: 4%;">Please define your children policy:</label><br>
+												 </div>
+												 <div class="form-group">
+				<label class="col-md-2 control-label">From:	</label>
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="From" style="height: 25px;font-size: 11px;" required>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+						<option>9</option>
+						<option>10</option>
+						<option>11</option>
+						<option>12</option>
+						<option>13</option>
+						<option>14</option>
+						<option>15</option>
+						<option>16</option>
+						<option>17</option>
+						<option>18</option>
+
+
+					</select>
+				</div>
+			
+
+	
+				<label class="col-md-2 control-label">To:	</label>
+				<div class="col-md-2">
+					<select class="form-control" data-ng-model="To" style="height: 25px;font-size: 11px;" required>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+						<option>9</option>
+						<option>10</option>
+						<option>11</option>
+						<option>12</option>
+						<option>13</option>
+						<option>14</option>
+						<option>15</option>
+						<option>16</option>
+						<option>17</option>
+						<option>18</option>
+
+
+					</select>
+
+				</div>
+<br>
+			</div>
+												
+												
+												
+												</div>
+												
+											</div>
+										</div>
+								</fieldset>
 						</div>
 					</div>
-				</div>
+					
+<style>
+
+ .billinside{
+    padding: .35em .625em .75em;
+     margin: 0 2px;
+   border: 1px solid silver;
+}
+ 
+ 
+ .billBorder {
+    padding: .35em .625em .75em;
+margin: 0 2px;
+border: 1px solid;
+}
+
+</style>
+					
+				<!-- </div>
 			</div>
 
 		</div>
 
 	</div>
-	<!--END CONTENT-->
+	END CONTENT
 </div>
 
 }
+ -->

@@ -5,7 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NoResultException;
 import javax.persistence.OneToOne;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
@@ -145,6 +147,17 @@ public class InternalContacts {
 	public void setDirectFaxValue(int directFaxValue) {
 		this.directFaxValue = directFaxValue;
 	}
+	
+	/*public static InternalContacts findById(Long id) {
+    	
+    	try
+		{
+		return (InternalContacts) JPA.em().createQuery("select c from InternalContacts c where id = ?1").setParameter(1, id).getSingleResult();
+		}
+		catch(NoResultException ex){
+			return null;
+		}
+    }*/
 	
 		
 	
