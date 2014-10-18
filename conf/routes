@@ -36,7 +36,7 @@ POST  /savetransportDir      com.travelportal.controllers.TravelPortalUtilsContr
 #POST  /deletemealpolicy       com.travelportal.controllers.TravelPortalUtilsController.getdeletemealpolicy()
 GET	/deletemealpolicy/:id       com.travelportal.controllers.TravelPortalUtilsController.getdeletemealpolicy(id:Integer)
 GET	/deletechile/:id       com.travelportal.controllers.TravelPortalUtilsController.getdeletechile(id:Integer)
-
+GET /findAllData/:supplierCode  com.travelportal.controllers.TravelPortalUtilsController.getAllData(supplierCode:Long)
 
 GET  /business              com.travelportal.controllers.TravelPortalUtilsController.getbusiness()
 GET  /salutation           com.travelportal.controllers.TravelPortalUtilsController.getsalutation()
@@ -56,6 +56,6 @@ GET /home	com.travelportal.controllers.HotelProfileController.home()
 
 GET /hotel/roomtypes		com.travelportal.controllers.HotelRoomController.fetchAllRoomTypesForEdit()
 GET /hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.fetchToEditHotelDetails(roomId: Long)
-POST /hotel/roomtypes			com.travelportal.controllers.HotelRoomController.saveOrUpdateHotelRoom()
+POST /hotel/saveUpdateRoomType			com.travelportal.controllers.HotelRoomController.saveOrUpdateHotelRoom()
 #POST /hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.editHotelRoom(roomId: Long)
 GET /room/amenities				com.travelportal.controllers.HotelRoomController.getAvailableRoomAmenities()

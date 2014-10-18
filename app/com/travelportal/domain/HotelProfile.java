@@ -2,7 +2,6 @@ package com.travelportal.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,18 +10,20 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Query;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 @Entity
 @Table(name="hotel_profile")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE) 
+
 public class HotelProfile {
 	
 	
@@ -724,6 +725,13 @@ public class HotelProfile {
 		query.setParameter(1, id);
     	return (HotelProfile) query.getSingleResult();
     }
+	
+	/*findAllData*/
+	public static HotelProfile findAllData(Long supplierCode) {
+		
+		return (HotelProfile) JPA.em().createQuery("select c from HotelProfile c where id = ?1"). setParameter(1,supplierCode).getSingleResult();
+	}
+	
 	
 	@Transactional
     public void save() {

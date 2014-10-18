@@ -277,6 +277,17 @@ public class HotelPrivateContacts {
 		this.salutation_salutation_id = salutation_salutation_id;
 	}
 	
+public static HotelPrivateContacts findById(long id) {
+    	
+    	try
+		{
+		return (HotelPrivateContacts) JPA.em().createQuery("select c from HotelPrivateContacts c where c.supplier_code = ?1").setParameter(1, id).getSingleResult();
+		}
+		catch(Exception ex){
+			return null;
+		}
+    }
+	
 	
 	@Transactional
     public void save() {

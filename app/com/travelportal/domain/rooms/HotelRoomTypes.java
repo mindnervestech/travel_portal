@@ -16,6 +16,7 @@ import javax.persistence.Query;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
 
 import com.travelportal.vm.RoomType;
 
@@ -54,7 +55,7 @@ public class HotelRoomTypes {
 	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<RoomAmenities> amenities;
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private List<ChildPolicies> childPolicies;
+	private List<RoomChildPolicies> roomchildPolicies;
 	
 	/**
 	 * @return the roomId
@@ -166,27 +167,6 @@ public class HotelRoomTypes {
 		this.amenities = amenities;
 	}
 
-	public static List<RoomType> getAllRoomTypes(final Long supplierCode) {
-		Query q = JPA.em().createQuery("select r.roomId, r.roomType from HotelRoomTypes r where r.supplierCode = :supplierCode ");
-		q.setParameter("supplierCode", supplierCode);
-		List<Object[]> resultSet = q.getResultList();
-		List<RoomType> roomTypeList = new ArrayList<>();
-		
-		for (Object[] resultElement : resultSet) {
-			RoomType roomType = new RoomType();
-			roomType.setRoomId((Long) resultElement[0]);
-			roomType.setRoomType((String) resultElement[1]);
-			roomTypeList.add(roomType);
-		}
-		return roomTypeList;
-	}
-	
-	public static HotelRoomTypes getHotelRoomDetails(final Long roomId) {
-		Query q = JPA.em().createQuery("select r from HotelRoomTypes r where roomId = :roomId ");
-		q.setParameter("roomId", roomId);
-		return (HotelRoomTypes) q.getSingleResult();
-		
-	}
 	
 	public void saveOrUpdateHotelRoomDetails() {
 		JPA.em().persist(this);
@@ -263,17 +243,56 @@ public class HotelRoomTypes {
 	public void setTwinBeds(boolean twinBeds) {
 		this.twinBeds = twinBeds;
 	}
-	/**
-	 * @return the childPolicies
-	 */
-	public List<ChildPolicies> getChildPolicies() {
-		return childPolicies;
+	
+		
+	public List<RoomChildPolicies> getRoomchildPolicies() {
+		return roomchildPolicies;
 	}
-	/**
-	 * @param childPolicies the childPolicies to set
-	 */
-	public void setChildPolicies(List<ChildPolicies> childPolicies) {
-		this.childPolicies = childPolicies;
+	public void setRoomchildPolicies(List<RoomChildPolicies> roomchildPolicies) {
+		this.roomchildPolicies = roomchildPolicies;
 	}
+	
+	public static List<RoomType> getAllRoomTypes(final Long supplierCode) {
+		Query q = JPA.em().createQuery("select r.roomId, r.roomType from HotelRoomTypes r where r.supplierCode = :supplierCode ");
+		q.setParameter("supplierCode", supplierCode);
+		List<Object[]> resultSet = q.getResultList();
+		List<RoomType> roomTypeList = new ArrayList<>();
+		
+		for (Object[] resultElement : resultSet) {
+			RoomType roomType = new RoomType();
+			roomType.setRoomId((Long) resultElement[0]);
+			roomType.setRoomType((String) resultElement[1]);
+			roomTypeList.add(roomType);
+		}
+		return roomTypeList;
+	}
+	
+	public static HotelRoomTypes getHotelRoomDetails(final Long roomId) {
+		Query q = JPA.em().createQuery("select r from HotelRoomTypes r where roomId = :roomId ");
+		q.setParameter("roomId", roomId);
+		return (HotelRoomTypes) q.getSingleResult();
+		
+	}
+	
+	@Transactional
+    public void save() {
+		JPA.em().persist(this);
+        JPA.em().flush();     
+    }
+      
+    @Transactional
+    public void delete() {
+        JPA.em().remove(this);
+    }
+    
+    @Transactional
+    public void merge() {
+        JPA.em().merge(this);
+    }
+    
+    @Transactional
+    public void refresh() {
+        JPA.em().refresh(this);
+    }
 	
 }

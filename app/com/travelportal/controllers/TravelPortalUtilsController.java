@@ -185,6 +185,15 @@ public class TravelPortalUtilsController extends Controller {
 		return ok(Json.toJson(mealtypes));
 	}
 	
+
+	@Transactional
+	public static Result getAllData(long supplierCode)
+	{
+		HotelProfile hotelProfile = HotelProfile.findAllData(supplierCode);
+	
+		return ok(Json.toJson(hotelProfile));
+		
+	}
 	
 	
 	@Transactional
@@ -333,6 +342,8 @@ public class TravelPortalUtilsController extends Controller {
 	
 		return ok();
 	}
+	
+	
 	
 	
 	@Transactional
@@ -485,21 +496,27 @@ public class TravelPortalUtilsController extends Controller {
 		hotelprofile.setFireSafetyCompliance(form.get("safety"));
 		
 		hotelprofile.merge();
+				
+		InternalContacts internalcontact = InternalContacts.findById(Long.parseLong(form.get("supplierCode")));
 		
-		/*InternalContacts internalcontact;
-		    if(form.get("supplierCode") == null || form.get("supplierCode") == "")
-		    {
-		    	internalcontact=new InternalContacts();  	
-		    	
-	       }
-		    else
-		    {
-		    	internalcontact = InternalContacts.findById(Long.parseLong(form.get("supplierCode")));	    	 
-		    }*/
-		
-		
-		
-		InternalContacts internalcontact=new InternalContacts();
+		if(internalcontact == null)
+		{
+			 internalcontact=new InternalContacts();
+			 
+			 internalcontact.setGuestTelCityCode(Integer.parseInt(form.get("GuestTele")));
+				internalcontact.setGuestTelValue(Integer.parseInt(form.get("GuestTelenumber")));
+				internalcontact.setGuestFaxCityCode(Integer.parseInt(form.get("GuestfaxCode")));
+				internalcontact.setGuestFaxValue(Integer.parseInt(form.get("Guestfaxnumber")));
+				internalcontact.setDirectTelCityCode(Integer.parseInt(form.get("DirectteleCode")));
+				internalcontact.setDirectTelValue(Integer.parseInt(form.get("Directnumber")));
+				internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("dirFaxCode")));
+				internalcontact.setDirectFaxValue(Integer.parseInt(form.get("dirFaxnumber")));
+				internalcontact.setSupplierCode(Long.parseLong(form.get("supplierCode")));
+				
+				internalcontact.save();
+		}
+		else
+		{
 		
 		internalcontact.setGuestTelCityCode(Integer.parseInt(form.get("GuestTele")));
 		internalcontact.setGuestTelValue(Integer.parseInt(form.get("GuestTelenumber")));
@@ -509,10 +526,9 @@ public class TravelPortalUtilsController extends Controller {
 		internalcontact.setDirectTelValue(Integer.parseInt(form.get("Directnumber")));
 		internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("dirFaxCode")));
 		internalcontact.setDirectFaxValue(Integer.parseInt(form.get("dirFaxnumber")));
-		internalcontact.setSupplierCode(Long.parseLong(form.get("supplierCode")));
-		
-		internalcontact.save();
-		
+				
+		internalcontact.merge();
+		}
 		return ok();
 	}
 	
@@ -523,33 +539,61 @@ public class TravelPortalUtilsController extends Controller {
 		
 	    DynamicForm form = DynamicForm.form().bindFromRequest();
 		
-	    HotelPrivateContacts hotelprivatecontacts =new HotelPrivateContacts();
+	    //HotelPrivateContacts hotelprivatecontacts =new HotelPrivateContacts();
         
-	  //  HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
+	    HotelPrivateContacts hotelprivatecontacts = HotelPrivateContacts.findById(Long.parseLong(form.get("supplierCode")));
 	    
-	    hotelprivatecontacts.setSupplierCode(Long.parseLong(form.get("supplierCode")));
-	   hotelprivatecontacts.setMainContactPersonName(form.get("contactName"));
-	    hotelprivatecontacts.setMainContactPersonTitle(form.get("title"));
-	    hotelprivatecontacts.setMainContactTelNo(form.get("teleCode")+" "+form.get("teleNumber"));
-	    hotelprivatecontacts.setMainContactFaxNo(form.get("DirectFaxCode")+" "+form.get("DirectFaxNumber"));
-	    hotelprivatecontacts.setMainContactExt(Integer.parseInt(form.get("Extension")));
-	    hotelprivatecontacts.setMainContactEmailAddr(form.get("emailAddr"));
-	    hotelprivatecontacts.setTollFreeNo(form.get("TollfreeTel"));
-	    hotelprivatecontacts.setReservationSameAsMainContact(Boolean.parseBoolean(form.get("value1")));
-	    hotelprivatecontacts.setReservationContactPersonName(form.get("RcontactName"));
-	    hotelprivatecontacts.setReservationContactPersonTitle(form.get("Rtitle"));
-	    hotelprivatecontacts.setReservationContactTelNo(form.get("RteleCode")+" "+form.get("RteleNumber"));
-	    hotelprivatecontacts.setDeptTelNo(form.get("RDirecttelCode")+" "+form.get("RDirecttelNumber"));
-	    hotelprivatecontacts.setDeptFaxNo(form.get("RDirectFaxCode")+" "+form.get("RDirectFaxNumber"));
-	    hotelprivatecontacts.setDeptExtNo(form.get("RExtension"));
-	    hotelprivatecontacts.setReservationContactExt(Integer.parseInt(form.get("RExtension2")));
-	    hotelprivatecontacts.setReservationContactEmailAddr(form.get("RemailAddr"));
-	    hotelprivatecontacts.setSalutation_salutation_id(Salutation.getsalutationIdIdByCode(Integer.parseInt(form.get("salutation"))));
-	 	
-		hotelprivatecontacts.save();
-		
-		//hotelprofile.setPrivateContacts(hotelprivatecontacts);
-		
+	    if(hotelprivatecontacts == null)
+	    {
+	    	hotelprivatecontacts =new HotelPrivateContacts();
+	    	hotelprivatecontacts.setSupplierCode(Long.parseLong(form.get("supplierCode")));
+	 	   hotelprivatecontacts.setMainContactPersonName(form.get("contactName"));
+	 	    hotelprivatecontacts.setMainContactPersonTitle(form.get("title"));
+	 	    hotelprivatecontacts.setMainContactTelNo(form.get("teleCode")+" "+form.get("teleNumber"));
+	 	    hotelprivatecontacts.setMainContactFaxNo(form.get("DirectFaxCode")+" "+form.get("DirectFaxNumber"));
+	 	    hotelprivatecontacts.setMainContactExt(Integer.parseInt(form.get("Extension")));
+	 	    hotelprivatecontacts.setMainContactEmailAddr(form.get("emailAddr"));
+	 	    hotelprivatecontacts.setTollFreeNo(form.get("TollfreeTel"));
+	 	    hotelprivatecontacts.setReservationSameAsMainContact(Boolean.parseBoolean(form.get("value1")));
+	 	    hotelprivatecontacts.setReservationContactPersonName(form.get("RcontactName"));
+	 	    hotelprivatecontacts.setReservationContactPersonTitle(form.get("Rtitle"));
+	 	    hotelprivatecontacts.setReservationContactTelNo(form.get("RteleCode")+" "+form.get("RteleNumber"));
+	 	    hotelprivatecontacts.setDeptTelNo(form.get("RDirecttelCode")+" "+form.get("RDirecttelNumber"));
+	 	    hotelprivatecontacts.setDeptFaxNo(form.get("RDirectFaxCode")+" "+form.get("RDirectFaxNumber"));
+	 	    hotelprivatecontacts.setDeptExtNo(form.get("RExtension"));
+	 	    hotelprivatecontacts.setReservationContactExt(Integer.parseInt(form.get("RExtension2")));
+	 	    hotelprivatecontacts.setReservationContactEmailAddr(form.get("RemailAddr"));
+	 	    hotelprivatecontacts.setSalutation_salutation_id(Salutation.getsalutationIdIdByCode(Integer.parseInt(form.get("salutation"))));
+	 	 	
+	 		hotelprivatecontacts.save();
+	 		
+	    }
+	    else
+	    {
+	    	
+	 	   hotelprivatecontacts.setMainContactPersonName(form.get("contactName"));
+	 	    hotelprivatecontacts.setMainContactPersonTitle(form.get("title"));
+	 	    hotelprivatecontacts.setMainContactTelNo(form.get("teleCode")+" "+form.get("teleNumber"));
+	 	    hotelprivatecontacts.setMainContactFaxNo(form.get("DirectFaxCode")+" "+form.get("DirectFaxNumber"));
+	 	    hotelprivatecontacts.setMainContactExt(Integer.parseInt(form.get("Extension")));
+	 	    hotelprivatecontacts.setMainContactEmailAddr(form.get("emailAddr"));
+	 	    hotelprivatecontacts.setTollFreeNo(form.get("TollfreeTel"));
+	 	    hotelprivatecontacts.setReservationSameAsMainContact(Boolean.parseBoolean(form.get("value1")));
+	 	    hotelprivatecontacts.setReservationContactPersonName(form.get("RcontactName"));
+	 	    hotelprivatecontacts.setReservationContactPersonTitle(form.get("Rtitle"));
+	 	    hotelprivatecontacts.setReservationContactTelNo(form.get("RteleCode")+" "+form.get("RteleNumber"));
+	 	    hotelprivatecontacts.setDeptTelNo(form.get("RDirecttelCode")+" "+form.get("RDirecttelNumber"));
+	 	    hotelprivatecontacts.setDeptFaxNo(form.get("RDirectFaxCode")+" "+form.get("RDirectFaxNumber"));
+	 	    hotelprivatecontacts.setDeptExtNo(form.get("RExtension"));
+	 	    hotelprivatecontacts.setReservationContactExt(Integer.parseInt(form.get("RExtension2")));
+	 	    hotelprivatecontacts.setReservationContactEmailAddr(form.get("RemailAddr"));
+	 	    hotelprivatecontacts.setSalutation_salutation_id(Salutation.getsalutationIdIdByCode(Integer.parseInt(form.get("salutation"))));
+	 	 	
+	 		hotelprivatecontacts.merge();
+	 		
+	    	
+	    }
+	    	
 		return ok();
 	}
 	
@@ -561,7 +605,30 @@ public class TravelPortalUtilsController extends Controller {
 	    DynamicForm form = DynamicForm.form().bindFromRequest();
 		//System.out.println(form.get("Name"));
 	    
-		BillingInformation billinginfo= new BillingInformation();
+	    BillingInformation billinginfo = BillingInformation.findById(Long.parseLong(form.get("supplierCode")));
+	    
+	    if(billinginfo == null)
+	    {
+	    	billinginfo =new BillingInformation();
+	    	
+	    	billinginfo.setInvoiceToHotel(form.get("Invoices"));
+			billinginfo.setFirstName(form.get("Name"));
+			billinginfo.setLastName(form.get("lastName"));
+			billinginfo.setTitle(form.get("title"));
+				
+			billinginfo.setEmailAddr(form.get("email"));
+			billinginfo.setTelNo(Integer.parseInt(form.get("telephcode")+form.get("teleNumber")));
+			billinginfo.setFaxNo(Integer.parseInt(form.get("dirFaxcode")+form.get("dirFaxNumber")));
+			billinginfo.setSupplierCode(Long.parseLong(form.get("supplierCode")));
+			billinginfo.setExt(Integer.parseInt(form.get("Extension")));
+			billinginfo.setBankservice(form.get("service"));
+			
+	        billinginfo.save();
+	    	
+	    }
+	    else
+	    {
+	    
 		billinginfo.setInvoiceToHotel(form.get("Invoices"));
 		billinginfo.setFirstName(form.get("Name"));
 		billinginfo.setLastName(form.get("lastName"));
@@ -570,11 +637,11 @@ public class TravelPortalUtilsController extends Controller {
 		billinginfo.setEmailAddr(form.get("email"));
 		billinginfo.setTelNo(Integer.parseInt(form.get("telephcode")+form.get("teleNumber")));
 		billinginfo.setFaxNo(Integer.parseInt(form.get("dirFaxcode")+form.get("dirFaxNumber")));
-		billinginfo.setSupplierCode(Long.parseLong(form.get("code")));
 		billinginfo.setExt(Integer.parseInt(form.get("Extension")));
 		billinginfo.setBankservice(form.get("service"));
 		
-        billinginfo.save();
+        billinginfo.merge();
+	    }
 		return ok();
 	}
 	
@@ -584,15 +651,28 @@ public class TravelPortalUtilsController extends Controller {
 				
 	    DynamicForm form = DynamicForm.form().bindFromRequest();
 		//System.out.println(form.get("code"));
-	           		
-		BusinessCommunication businesscommunication=new BusinessCommunication(); 
+	     
+	    BusinessCommunication businesscommunication = BusinessCommunication.findById(Long.parseLong(form.get("supplierCode")));
+	    
+	    if(businesscommunication == null)
+	    {
+		businesscommunication=new BusinessCommunication(); 
 		businesscommunication.setPrimaryEmailAddr(form.get("email"));
 		businesscommunication.setCcEmailAddr(form.get("ccmail"));
 		businesscommunication.setbooking(form.get("booking"));
-		businesscommunication.setSupplierCode(Long.parseLong(form.get("code")));
-		
+		businesscommunication.setSupplierCode(Long.parseLong(form.get("supplierCode")));
 		
 		businesscommunication.save();
+	    }
+	    else
+	    {
+	    	businesscommunication.setPrimaryEmailAddr(form.get("email"));
+			businesscommunication.setCcEmailAddr(form.get("ccmail"));
+			businesscommunication.setbooking(form.get("booking"));
+			
+			businesscommunication.merge();
+	    	
+	    }
 		return ok();
 	}
 	

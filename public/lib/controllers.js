@@ -2,7 +2,7 @@ angular.module('travel_portal').
 	controller("hoteRoomController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
 	
 			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10];
-			$scope.supplierCode = 12345;
+			$scope.supplierCode = 1;
 			console.log("hoteRoomController successfully initialized.");
 
 			$scope.$watch("sel_room_type", function(selRoomType) {
@@ -21,6 +21,66 @@ angular.module('travel_portal').
 					$scope.roomAmenities = response;
 				});
 			}
+			
+			$scope.roomamenities = [];
+			 $scope.childpolicy = [];
+			  $scope.childpolicy.push( {  } );
+			 
+			 $scope.newchildpolicy = function($event){
+			        $scope.childpolicy.push( {  } );
+			        $event.preventDefault();
+			       // console.log($scope.childpolicy);
+			       
+			    };
+			    
+			    $scope.createroomtypeMsg = false;
+			    
+			    $scope.CreateRoomType =function(){
+			    	$scope.roomTypeIns.supplierCode = $scope.supplierCode; //$scope.roomTypeIns;
+			    	$scope.roomTypeIns.roomchildPolicies = $scope.childpolicy;
+			    	$scope.roomTypeIns.roomamenities = $scope.roomamenities;
+			    	console.log($scope.roomTypeIns);
+			    				    	
+			    	$http.post('/hotel/saveUpdateRoomType',$scope.roomTypeIns).success(function(data){
+						console.log('success');
+											
+					}).error(function(data, status, headers, config) {
+						console.log('ERROR');
+					});
+			    	
+			    	
+			    }
+			    
+			   
+				
+				
+			    
+			    
+			    
+			    
+			    $scope.serviceClicked = function(e, roomTypeIns) {
+					
+					if($(e.target).is(":checked")) {
+						$scope.roomamenities.push(roomTypeIns.amenityId);
+					} else {
+						DeleteItem(roomTypeIns);
+					}
+					
+				}
+			    /*|| (generalInfo.serviceId === obj.serviceId))*/
+				
+			    DeleteItem = function(roomTypeIns){
+			    	
+					angular.forEach($scope.roomamenities, function(obj, index){
+						 if ((roomTypeIns.amenityId === obj)) {
+					    	$scope.roomamenities.splice(index, 1);
+					    
+					       	return;
+					    };
+					  });
+						  
+					}
+				
 			
 		}]
 );
@@ -102,6 +162,7 @@ angular.module('travel_portal').
 		
 	}); 
 	
+	
 	$http.get("/currency").success(function(response) {
 		$scope.currency = response;
 		
@@ -165,6 +226,15 @@ angular.module('travel_portal').
 	$http.get("/leisureSport").success(function(response){
 		$scope.leisureSport=response;
 	});
+	/*$http.get('/deletemealpolicy/'+meal.id)*/
+	$rootScope.supplierCode = "187";
+	$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response){
+		$scope.getallData=response;
+		console.log("////////$$$///////////");
+		console.log(response);
+		console.log("////////$$$/////////");
+	});
+	
 	
 	$http.get("/MealTypeplan").success(function(response){
 		console.log();
@@ -550,7 +620,7 @@ $scope.savetranspotDire = function() {
 	$scope.BillinfoSucccess = false;
 	$scope.Savebillinginfo=function()
 	{
-		$scope.bill.code= $rootScope.supplierCode;
+		$scope.bill.supplierCode=$rootScope.supplierCode;
 	
 		console.log($scope.bill);
 		$http.post('/updatebillingInfo',$scope.bill).success(function(data){
@@ -567,7 +637,7 @@ $scope.savetranspotDire = function() {
 	$scope.communciatsuccess = false;
 	$scope.savecommunciat=function()
 	{
-		$scope.comunicationhotel.code=$rootScope.supplierCode;
+		$scope.comunicationhotel.supplierCode=$rootScope.supplierCode;
 		console.log($scope.comunicationhotel);
 		$http.post('/updateComunication',$scope.comunicationhotel).success(function(data){
 			console.log('success');

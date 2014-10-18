@@ -154,6 +154,17 @@ public class BillingInformation {
 		this.ext = ext;
 	}
 	
+    public static BillingInformation findById(long id) {
+    	
+    	try
+		{
+		return (BillingInformation) JPA.em().createQuery("select c from BillingInformation c where c.supplier_code = ?1").setParameter(1, id).getSingleResult();
+		}
+		catch(Exception ex){
+			return null;
+		}
+    }
+	
 	
 	@Transactional
     public void save() {

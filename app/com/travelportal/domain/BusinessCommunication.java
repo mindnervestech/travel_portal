@@ -81,6 +81,18 @@ public class BusinessCommunication {
 		this.id = id;
 	}
 	
+public static BusinessCommunication findById(long id) {
+    	
+    	try
+		{
+		return (BusinessCommunication) JPA.em().createQuery("select c from BusinessCommunication c where c.supplier_code = ?1").setParameter(1, id).getSingleResult();
+		}
+		catch(Exception ex){
+			return null;
+		}
+    }
+
+	
 	
 	@Transactional
     public void save() {

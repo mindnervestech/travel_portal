@@ -2,15 +2,24 @@ package com.travelportal.controllers;
 
 import java.util.List;
 
+import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.travelportal.domain.HotelMealPlan;
+import com.travelportal.domain.MealType;
+import com.travelportal.domain.rooms.ChildPolicies;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.RoomAmenities;
+import com.travelportal.vm.ChildpoliciVM;
+import com.travelportal.vm.HotelmealVM;
+import com.travelportal.vm.RoomChildpoliciVM;
 import com.travelportal.vm.RoomType;
+import com.travelportal.vm.RoomtypeVM;
 
 public class HotelRoomController extends Controller {
 	
@@ -23,9 +32,10 @@ public class HotelRoomController extends Controller {
     public static Result fetchAllRoomTypesForEdit() {
 		//this is used when user clicks on edit room type link.
 		//get the supplier code from Query param
-		Long supplierCode = Long.parseLong(request().getQueryString("supplierCode"));
+		/*Long supplierCode = Long.parseLong(request().getQueryString("supplierCode"));
 		List<RoomType> roomTypes = HotelRoomTypes.getAllRoomTypes(supplierCode);
-		return ok(Json.toJson(roomTypes));
+		return ok(Json.toJson(roomTypes));*/
+		return ok();
 	}
 	
 	@Transactional(readOnly=true)
@@ -43,10 +53,35 @@ public class HotelRoomController extends Controller {
 	
 	@Transactional(readOnly=false)
     public static Result saveOrUpdateHotelRoom() {
-		request().body().asJson();
+		/*request().body().asJson();
 		HotelRoomTypes roomType = request().body().as(HotelRoomTypes.class);
 		roomType.saveOrUpdateHotelRoomDetails();
+		return ok();*/
+		
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, RoomtypeVM.class);
+		RoomtypeVM roomtypeVM = Json.fromJson(json, RoomtypeVM.class);
+		
+		HotelRoomTypes hotelroomTypes = new HotelRoomTypes();
+		hotelroomTypes.setExtraBedAllowed(roomtypeVM.isExtraBed());
+		hotelroomTypes.setChargesForChildren(roomtypeVM.isChargesforChild());
+		hotelroomTypes.setChildAllowedFreeWithAdults(roomtypeVM.getFreeChildOccuWithAdults());
+		hotelroomTypes.setMaxAdultOccupancy(roomtypeVM.getMaxAdultsOccupancy());
+		hotelroomTypes.setMaxOccupancy(roomtypeVM.getMaxOccupancy());
+		hotelroomTypes.setMaxAdultOccSharingWithChildren(roomtypeVM.getMaxAdultsWithChildren());
+		hotelroomTypes.setSupplierCode(roomtypeVM.getSupplierCode());
+				
+		/*hotelroomTypes.save();
+		for(RoomChildpoliciVM childVM : roomtypeVM.getRoomchildPolicies())
+		{
+			
+		}*/
+		
 		return ok();
+		
+	
+	
 	}
 	
 	@Transactional(readOnly=true)

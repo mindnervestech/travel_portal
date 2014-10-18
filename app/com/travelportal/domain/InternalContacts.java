@@ -148,16 +148,16 @@ public class InternalContacts {
 		this.directFaxValue = directFaxValue;
 	}
 	
-	/*public static InternalContacts findById(Long id) {
+	public static InternalContacts findById(long id) {
     	
     	try
 		{
-		return (InternalContacts) JPA.em().createQuery("select c from InternalContacts c where id = ?1").setParameter(1, id).getSingleResult();
+		return (InternalContacts) JPA.em().createQuery("select c from InternalContacts c where c.supplier_code = ?1").setParameter(1, id).getSingleResult();
 		}
-		catch(NoResultException ex){
+		catch(Exception ex){
 			return null;
 		}
-    }*/
+    }
 	
 		
 	
