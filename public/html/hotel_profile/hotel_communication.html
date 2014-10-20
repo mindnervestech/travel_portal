@@ -7,20 +7,28 @@
 		<label>DOTW	will send all bookings, amendments and cancellation information<b> Via E-mail</b> as shown below:</label><br> 
 
 		</div>
+						
 			<div class="form-group">
-				<label class="col-md-3 control-label"><b>*E-mail:</b> </label>
+				<label class="col-md-3 control-label"><b>*E-mail:</b></label>
 				<div class="col-md-9">
-					<input type="text" name="email" data-ng-model="comunicationhotel.email" class="form-control" required>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						<input type="email" name="primaryEmailAddr" data-ng-model="comunicationhotel.primaryEmailAddr" class="form-control" required>
+					</div>
+				</div>
+			</div>
+					
+			<div class="form-group">
+				<label class="col-md-3 control-label"><b>*Reconfirm E-mail:</b></label>
+				<div class="col-md-9">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						<input type="email" name="Remail" data-ng-model="comunicationhotel.Remail" class="form-control" required>
+					</div>
 				</div>
 			</div>
 			
-		<div class="form-group">
-				<label class="col-md-3 control-label"><b>*Reconfirm E-mail:</b></label>
-				<div class="col-md-9">
-					<input type="text" name="Remail" data-ng-model="comunicationhotel.Remail" class="form-control" required>
-				</div>
-			</div>
-			<span ng-show="comunicationhotel.email !== comunicationhotel.Remail" style="margin-left: 28%;color: red;">E-mail have to match!</span>
+			<span ng-show="comunicationhotel.primaryEmailAddr !== comunicationhotel.Remail" style="margin-left: 28%;color: red;">E-mail have to match!</span>
 			
 			<div class="col-md-12">
 			<label style="float: left;"><b>*Do you need to copy anyone else on each booking?</b></label>
@@ -50,21 +58,29 @@
 			<br>
 			<label>Please provide the Copy-CC e-mail address to be used:</label>
 			</div>	
-															
+			
 			<div class="form-group">
 				<label class="col-md-3 control-label"><b>*CC-Email: </b></label>
 				<div class="col-md-9">
-					<input type="text" name="ccmail" data-ng-model="comunicationhotel.ccmail" class="form-control" required>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						<input type="email" name="ccEmailAddr" data-ng-model="comunicationhotel.ccEmailAddr" class="form-control" required>
+					</div>
+				</div>
+			</div>
+						
+				
+			<div class="form-group">
+				<label class="col-md-3 control-label"><b>*Reconfirm CC-Email: </b></label>
+				<div class="col-md-9">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						<input type="email" name="Rccmail" data-ng-model="comunicationhotel.Rccmail" class="form-control" required>
+					</div>
 				</div>
 			</div>
 			
-		<div class="form-group">
-				<label class="col-md-3 control-label"><b> *Reconfirm CC-Email: </b></label>
-				<div class="col-md-9">
-					<input type="text" name="Rccmail" data-ng-model="comunicationhotel.Rccmail" class="form-control" required>
-				</div>
-			</div>
-			<span ng-show="comunicationhotel.ccmail !== comunicationhotel.Rccmail" style="margin-left: 28%;color: red;">CC-Email have to match!</span>
+			<span ng-show="comunicationhotel.ccEmailAddr !== comunicationhotel.Rccmail" style="margin-left: 28%;color: red;">CC-Email have to match!</span>
 		    
 		     <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
 		     <div>

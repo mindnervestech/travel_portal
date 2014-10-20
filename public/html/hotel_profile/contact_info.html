@@ -6,14 +6,14 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Main Contact Name:</label>
 				<div class="col-md-9">
-					<input type="text" name="contactName" data-ng-model="contactInfo.contactName" class="form-control"  required>
+					<input type="text" name="cPersonName;" data-ng-model="contactInfo.cPersonName;" class="form-control"  required>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Title:</label>
 				<div class="col-md-9">
-					<input type="text" name="title" data-ng-model="contactInfo.title" class="form-control" required>
+					<input type="text" name="cTitle" data-ng-model="contactInfo.cTitle" class="form-control" required>
 				</div>
 			</div>
 			
@@ -22,7 +22,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Salutation :</label>
 				<div class="col-md-9">
-					<select class="form-control" name="salutation" data-ng-model="contactInfo.salutation" data-ng-options="salut.salutationId as salut.salutationValue for salut in salutation" required>
+					<select class="form-control" name="salutationCode" data-ng-model="contactInfo.salutationCode" data-ng-options="salut.salutationId as salut.salutationValue for salut in salutation" required>
 							<option>--choose one--</option>
 							
 					</select>
@@ -33,32 +33,32 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Telephone:</label>
 				<div class="col-md-2" style="width: 13%;">
-					<input  type="number" name="telecode" data-ng-model="contactInfo.teleCode" class="form-control" required>
-					<span class="error" ng-show="contact.telecode.$error.number" style="color: red;">Not valid number!</span>
+					<input  type="number" name="dTelCode" data-ng-model="contactInfo.dTelCode" class="form-control" required>
+					<span class="error" ng-show="contact.dTelCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				
 					<div class="col-md-3">
-					<input type="number" name="telenumber" data-ng-model="contactInfo.teleNumber" class="form-control" required>
-					<span class="error" ng-show="contact.telenumber.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="dTelNo" data-ng-model="contactInfo.dTelNo" class="form-control" required>
+					<span class="error" ng-show="contact.dTelNo.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Fax :</label>
 				<div class="col-md-2" style="width: 13%;">
-					<input type="number" name="directfaxcode" data-ng-model="contactInfo.DirectFaxCode" class="form-control" required>
-					<span class="error" ng-show="contact.directfaxcode.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="dFaxCode" data-ng-model="contactInfo.dFaxCode" class="form-control" required>
+					<span class="error" ng-show="contact.dFaxCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				<div class="col-md-3">
-					<input type="number" name="directfaxnumber" data-ng-model="contactInfo.DirectFaxNumber" class="form-control" required>
-					<span class="error" ng-show="contact.directfaxnumber.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="dFaxNo" data-ng-model="contactInfo.dFaxNo" class="form-control" required>
+					<span class="error" ng-show="contact.dFaxNo.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Extension: :</label>
 				<div class="col-md-9">
-					<input type="text" name="extension" data-ng-model="contactInfo.Extension" class="form-control" required>
-					<span class="error" ng-show="contact.extension.$error.number" style="color: red;">Not valid number!</span>
+					<input type="text" name="dExtNo" data-ng-model="contactInfo.dExtNo" class="form-control" required>
+					<span class="error" ng-show="contact.dExtNo.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 			
@@ -67,7 +67,7 @@
 				<div class="col-md-9">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-						<input type="email" data-ng-model="contactInfo.emailAddr" class="form-control" required>
+						<input type="email" data-ng-model="contactInfo.dEmailAddr" class="form-control" required>
 					</div>
 				</div>
 			</div>
@@ -75,7 +75,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Toll Free Tel:</label>
 				<div class="col-md-9">
-					<input type="text" name="tollfreeTel" data-ng-model="contactInfo.TollfreeTel" class="form-control" required>
+					<input type="text" name="dTollFreeTelNo" data-ng-model="contactInfo.dTollFreeTelNo" class="form-control" required>
 				</div>
 			</div>
 			
@@ -90,14 +90,14 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Contact Name:</label>
 				<div class="col-md-9">
-					<input type="text" name="contactName" data-ng-model="contactInfo.RcontactName" class="form-control" required>
+					<input type="text" name="rContactName" data-ng-model="contactInfo.rContactName" class="form-control" required>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Title:</label>
 				<div class="col-md-9">
-					<input type="text" name="title" data-ng-model="contactInfo.Rtitle" class="form-control" required>
+					<input type="text" name="rTitle" data-ng-model="contactInfo.rTitle" class="form-control" required>
 				</div>
 			</div>
 			
@@ -105,13 +105,13 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Telephone:</label>
 				<div class="col-md-2" style="width: 13%;">
-					<input type="number" name="rtelecode" data-ng-model="contactInfo.RteleCode" class="form-control" required>
-					<span class="error" ng-show="contact.rtelecode.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="rDirectTelCode" data-ng-model="contactInfo.rDirectTelCode" class="form-control" required>
+					<span class="error" ng-show="contact.rDirectTelCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				
 					<div class="col-md-3">
-					<input type="number" name="rtelenumber" data-ng-model="contactInfo.RteleNumber" class="form-control" required>
-					<span class="error" ng-show="contact.rtelenumber.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="rDirectTelNo" data-ng-model="contactInfo.rDirectTelNo" class="form-control" required>
+					<span class="error" ng-show="contact.rDirectTelNo.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 			
@@ -120,7 +120,7 @@
 				<div class="col-md-9">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-						<input type="email" data-ng-model="contactInfo.RemailAddr" class="form-control" required>
+						<input type="email" data-ng-model="contactInfo.rEmailAddr" class="form-control" required>
 					</div>
 				</div>
 			</div>
@@ -130,39 +130,39 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Extension :</label>
 				<div class="col-md-9">
-					<input type="text" name="Extension" data-ng-model="contactInfo.RExtension" class="form-control" required>
+					<input type="text" name="rExtNo" data-ng-model="contactInfo.rExtNo" class="form-control" required>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Department Telephone:</label>
 				<div class="col-md-2" style="width: 13%;">
-					<input type="number" name="rdirecttelcode" data-ng-model="contactInfo.RDirecttelCode" class="form-control" required>
-					<span class="error" ng-show="contact.rdirecttelcode.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="rDeptTelCode" data-ng-model="contactInfo.rDeptTelCode" class="form-control" required>
+					<span class="error" ng-show="contact.rDeptTelCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				<div class="col-md-3">
-					<input type="number" name="rdirecttelnumber" data-ng-model="contactInfo.RDirecttelNumber" class="form-control" required>
-					<span class="error" ng-show="contact.rdirecttelnumber.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="rDeptTelNo" data-ng-model="contactInfo.rDeptTelNo" class="form-control" required>
+					<span class="error" ng-show="contact.rDeptTelNo.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Department Fax:	</label>
 				<div class="col-md-2" style="width: 13%;">
-					<input type="number" name="rdirectfaxcode" data-ng-model="contactInfo.RDirectFaxCode" class="form-control" required>
-						<span class="error" ng-show="contact.rdirectfaxcode.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="rDeptFaxCode" data-ng-model="contactInfo.rDeptFaxCode" class="form-control" required>
+						<span class="error" ng-show="contact.rDeptFaxCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				<div class="col-md-3">
-					<input type="number" name="rdirectffaxnumber" data-ng-model="contactInfo.RDirectFaxNumber" class="form-control" required>
-					<span class="error" ng-show="contact.rdirectffaxnumber.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="rDeptFaxNo" data-ng-model="contactInfo.rDeptFaxNo" class="form-control" required>
+					<span class="error" ng-show="contact.rDeptFaxNo.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Extension :</label>
 				<div class="col-md-9">
-					<input type="number" name="extension2" data-ng-model="contactInfo.RExtension2" class="form-control" required>
-					<span class="error" ng-show="contact.extension2.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="deptExtNo" data-ng-model="contactInfo.deptExtNo" class="form-control" required>
+					<span class="error" ng-show="contact.deptExtNo.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 			

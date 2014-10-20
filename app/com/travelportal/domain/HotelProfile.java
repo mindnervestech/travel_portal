@@ -2,6 +2,7 @@ package com.travelportal.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -61,6 +62,7 @@ public class HotelProfile {
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelChain chainHotel;
 	
+	@Column(name="safetyMeasuresCompliance")
 	private boolean safetyMeasuresCompliance;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
@@ -146,7 +148,7 @@ public class HotelProfile {
 	private List<HotelMealPlan> meanPlans;
 	
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<HotelAmenities> amenities;
+	private Set<HotelAmenities> amenities;
 	
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<HotelAttractions> hotelareaattraction;
@@ -407,6 +409,13 @@ public class HotelProfile {
 	 */
 	public List<HotelServices> getServices() {
 		return services;
+	}
+	public List<Integer> getIntListServices() {
+		List<Integer> list = new ArrayList<>();
+		for(HotelServices service : this.services){
+			list.add(service.getServiceId());
+		}
+		return list;
 	}
 	/**
 	 * @param services the services to set
@@ -685,13 +694,16 @@ public class HotelProfile {
 	/**
 	 * @return the amenities
 	 */
-	public List<HotelAmenities> getAmenities() {
+	public Set<HotelAmenities> getAmenities() {
 		return amenities;
 	}
 	/**
 	 * @param amenities the amenities to set
 	 */
-	public void setAmenities(List<HotelAmenities> amenities) {
+	public void setAmenities(Set<HotelAmenities> amenities) {
+		this.amenities.addAll(amenities);
+	}
+	public void addAmenities(Set<HotelAmenities> amenities) {
 		this.amenities.addAll(amenities);
 	}
 	/**
@@ -729,7 +741,7 @@ public class HotelProfile {
 	/*findAllData*/
 	public static HotelProfile findAllData(Long supplierCode) {
 		
-		return (HotelProfile) JPA.em().createQuery("select c from HotelProfile c where id = ?1"). setParameter(1,supplierCode).getSingleResult();
+		return (HotelProfile) JPA.em().createQuery("select c from HotelProfile c where c.id = ?1").setParameter(1,supplierCode).getSingleResult();
 	}
 	
 	

@@ -33,8 +33,20 @@ public class RoomChildPolicies {
 	private int years; 
 	@Column(name="net_rate")
 	private String netRate;
+	/*@Column(name="supplierCode")
+	private long supplierCode;*/
+	
+	
 	
 		
+	/*public long getSupplierCode() {
+		return supplierCode;
+	}
+
+	public void setSupplierCode(long supplierCode) {
+		this.supplierCode = supplierCode;
+	}*/
+
 	public int getRoomchildPolicyId() {
 		return roomchildPolicyId;
 	}

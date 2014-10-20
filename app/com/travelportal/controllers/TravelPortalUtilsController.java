@@ -49,8 +49,12 @@ import com.travelportal.views.html.billing_information;
 import com.travelportal.vm.AreaAttractionsSuppVM;
 import com.travelportal.vm.AreaAttractionsVM;
 import com.travelportal.vm.ChildpoliciVM;
+import com.travelportal.vm.HotelBillingInformation;
+import com.travelportal.vm.HotelCommunication;
+import com.travelportal.vm.HotelContactInformation;
 import com.travelportal.vm.HotelDescription;
 import com.travelportal.vm.HotelGeneralInfoVM;
+import com.travelportal.vm.HotelInternalInformation;
 import com.travelportal.vm.HotelamenitiesVM;
 import com.travelportal.vm.HotelmealVM;
 import com.travelportal.vm.TransportationDirectionsSuppVM;
@@ -190,8 +194,115 @@ public class TravelPortalUtilsController extends Controller {
 	public static Result getAllData(long supplierCode)
 	{
 		HotelProfile hotelProfile = HotelProfile.findAllData(supplierCode);
-	
-		return ok(Json.toJson(hotelProfile));
+		
+		HotelGeneralInfoVM hotelgeneralinfoVM = new HotelGeneralInfoVM();
+		
+		hotelgeneralinfoVM.setHotelNm(hotelProfile.getHotelName());
+		hotelgeneralinfoVM.setHotelAddr(hotelProfile.getAddress());
+		hotelgeneralinfoVM.setCountryCode(hotelProfile.getCountry().getCountryCode());
+		hotelgeneralinfoVM.setHotelPartOfChain(hotelProfile.isPartOfChain());
+		hotelgeneralinfoVM.setEmail(hotelProfile.getHotelEmailAddr());
+		hotelgeneralinfoVM.setPrimaryPasswd(hotelProfile.getPassword());
+		hotelgeneralinfoVM.setVerifiedPasswd(hotelProfile.getVerifyPassword());
+		hotelgeneralinfoVM.setCityCode(hotelProfile.getCity().getCityCode());
+		hotelgeneralinfoVM.setMarketSpecificPolicyCode(hotelProfile.getMarketPolicyType().getMarketPolicyTypeId());
+		hotelgeneralinfoVM.setBrandHotelCode(hotelProfile.getHoteBrands().getBrandsCode());
+		hotelgeneralinfoVM.setStartRating(String.valueOf(hotelProfile.getStartRatings()));
+		hotelgeneralinfoVM.setSupplierCode(hotelProfile.getSupplier_code());
+		
+		HotelDescription hoteldescription = new HotelDescription();
+		hoteldescription.setDescription(hotelProfile.getHotelProfileDesc());
+		hoteldescription.setHotelLocation(hotelProfile.getLocation().getLocationId());
+		hoteldescription.setShoppingFacilityCode(hotelProfile.getShoppingFacility().getId());
+		hoteldescription.setNightLifeCode(hotelProfile.getNightLife().getNightLifeCode());
+		hoteldescription.setServices(hotelProfile.getIntListServices());
+		
+		hoteldescription.setlocation1(hotelProfile.getlocation1());
+		hoteldescription.setlocation2(hotelProfile.getlocation2());
+		hoteldescription.setlocation3(hotelProfile.getlocation3());
+		hoteldescription.setSupplierCode(hotelProfile.getSupplier_code());
+		
+		InternalContacts internalcontacts = InternalContacts.findById(supplierCode);
+		HotelInternalInformation hotelinternalinformation = new HotelInternalInformation();
+		
+		hotelinternalinformation.setGenMgrName(hotelProfile.getHotelGeneralManager());
+		hotelinternalinformation.setGenMgrEmail(hotelProfile.getGeneralMgrEmail());
+		hotelinternalinformation.setBuiltYear(hotelProfile.getHotelBuiltYear());
+		hotelinternalinformation.setRenovationYear(hotelProfile.getHotelRenovationYear());
+		hotelinternalinformation.setWebSiteUrl(hotelProfile.getHotelWebSite());
+		hotelinternalinformation.setNoOffloor(hotelProfile.getNoOfFloors());
+		hotelinternalinformation.setNoOfRoom(hotelProfile.getNoOfRooms());
+		hotelinternalinformation.setSafetyCompliance(hotelProfile.isFireSafetyCompliance());
+		hotelinternalinformation.setGuestTel(internalcontacts.getGuestTelValue());
+		hotelinternalinformation.setGuestTelCode(internalcontacts.getGuestTelCityCode());
+		hotelinternalinformation.setGuestFax(internalcontacts.getGuestFaxValue());
+		hotelinternalinformation.setGuestFaxCode(internalcontacts.getGuestFaxCityCode());
+		hotelinternalinformation.setDirectTelNo(internalcontacts.getDirectTelValue());
+		hotelinternalinformation.setDirectTelCode(internalcontacts.getDirectTelCityCode());
+		hotelinternalinformation.setDirectFaxNo(internalcontacts.getDirectFaxValue());
+		hotelinternalinformation.setDirectFaxCode(internalcontacts.getDirectFaxCityCode());
+		hotelinternalinformation.setSupplierCode(internalcontacts.getSupplierCode());
+		
+		HotelPrivateContacts hotelprivatecontacts = HotelPrivateContacts.findById(supplierCode);
+		HotelContactInformation hotelcontactinformation = new HotelContactInformation();
+		
+		hotelcontactinformation.setSupplierCode(hotelprivatecontacts.getSupplierCode());
+		hotelcontactinformation.setcPersonName(hotelprivatecontacts.getMainContactPersonName());
+		hotelcontactinformation.setcTitle(hotelprivatecontacts.getMainContactPersonTitle());
+		hotelcontactinformation.setdTelNo(hotelprivatecontacts.getMainContactTelNo());
+		hotelcontactinformation.setdTelCode(hotelprivatecontacts.getMainContactTelCode());
+		hotelcontactinformation.setdFaxNo(hotelprivatecontacts.getMainContactFaxNo());
+		hotelcontactinformation.setdFaxCode(hotelprivatecontacts.getMainContactFaxCode());
+		hotelcontactinformation.setDeptExtNo(hotelprivatecontacts.getMainContactExt());
+		hotelcontactinformation.setdEmailAddr(hotelprivatecontacts.getMainContactEmailAddr());
+		hotelcontactinformation.setdTollFreeTelNo(hotelprivatecontacts.getTollFreeNo());
+		hotelcontactinformation.setReservationDetailSame(hotelprivatecontacts.isReservationSameAsMainContact());
+		hotelcontactinformation.setrContactName(hotelprivatecontacts.getReservationContactPersonName());
+		hotelcontactinformation.setrTitle(hotelprivatecontacts.getReservationContactPersonTitle());
+		hotelcontactinformation.setrDeptTelNo(hotelprivatecontacts.getDeptTelNo());
+		hotelcontactinformation.setrEmailAddr(hotelprivatecontacts.getReservationContactEmailAddr());
+		hotelcontactinformation.setrDeptTelCode(hotelprivatecontacts.getReservationContactTelNo());
+		hotelcontactinformation.setrDeptFaxNo(hotelprivatecontacts.getDeptFaxNo());
+		hotelcontactinformation.setrDeptFaxCode(hotelprivatecontacts.getDeptFaxCode());
+		hotelcontactinformation.setrDirectTelCode(hotelprivatecontacts.getReservationContactTelNo());
+		hotelcontactinformation.setrDirectTelCode(hotelprivatecontacts.getReservationContactTelCode());
+		
+		BusinessCommunication businesscommunication = BusinessCommunication.findById(supplierCode);
+		HotelCommunication hotelcommuniction = new HotelCommunication();
+		hotelcommuniction.setPrimaryEmailAddr(businesscommunication.getPrimaryEmailAddr());
+		hotelcommuniction.setCcEmailAddr(businesscommunication.getCcEmailAddr());
+		hotelcommuniction.setSupplierCode(businesscommunication.getSupplierCode());
+		hotelcommuniction.setBooking(businesscommunication.getbooking());
+		
+	/*	System.out.println(supplierCode);
+		BillingInformation billinginformation = BillingInformation.findById(supplierCode);
+		System.out.println(billinginformation);
+		HotelBillingInformation hotelbillinginformation = new HotelBillingInformation();
+		
+		hotelbillinginformation.setInvoiceToHotel(billinginformation.getInvoiceToHotel());
+		hotelbillinginformation.setaFirstName(billinginformation.getFirstName());
+		hotelbillinginformation.setaLastName(billinginformation.getLastName());
+		hotelbillinginformation.setTitle(billinginformation.getTitle());
+		hotelbillinginformation.setdEmailAddr(billinginformation.getEmailAddr());
+		hotelbillinginformation.setdTelNo(billinginformation.getTelNo());
+		hotelbillinginformation.setdTelCode(billinginformation.getTelNoCode());
+		hotelbillinginformation.setdFaxNo(billinginformation.getFaxNo());
+		hotelbillinginformation.setdFaxCode(billinginformation.getFaxNoCode());
+		hotelbillinginformation.setSupplierCode(billinginformation.getSupplierCode());
+		hotelbillinginformation.setdExtNo(billinginformation.getExt());
+		hotelbillinginformation.setBankToBankTransfer(billinginformation.getBankservice());
+		*/
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("hotelgeneralinfo", hotelgeneralinfoVM);
+		map.put("hoteldescription", hoteldescription);
+		map.put("hotelinternalinformation", hotelinternalinformation);
+		map.put("hotelcontactinformation", hotelcontactinformation);
+		map.put("hotelcommuniction", hotelcommuniction);
+		//map.put("hotelbillinginformation", hotelbillinginformation);
+		
+		
+		return ok(Json.toJson(map));
 		
 	}
 	
@@ -211,18 +322,18 @@ public class TravelPortalUtilsController extends Controller {
 	    	 hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));	    	 
 	    }
 	    
-	    hotelprofile.setHotelName(form.get("companyName"));
-  		hotelprofile.setSupplierName(form.get("companyName"));
-  		hotelprofile.setAddress(form.get("hotelAddress"));
+	    hotelprofile.setHotelName(form.get("hotelNm"));
+  		hotelprofile.setSupplierName(form.get("hotelNm"));
+  		hotelprofile.setAddress(form.get("hotelAddr"));
   		hotelprofile.setCountry(Country.getCountryByCode(Integer.parseInt(form.get("countryCode"))));
   		hotelprofile.setCity(City.getCityByCode(Integer.parseInt(form.get("cityCode"))));
-  		hotelprofile.setPartOfChain(form.get("partOfchain"));
-  		hotelprofile.setHotelEmailAddr(form.get("emailAddr"));
-  		hotelprofile.setMarketPolicyType(MarketPolicyTypes.getMarketPolicyTypesIdByCode(Integer.parseInt(form.get("marketrate"))));
-  		hotelprofile.setHoteBrands(HotelBrands.getHotelBrandsbyCode(Integer.parseInt(form.get("brand"))));
-  		hotelprofile.setPassword(form.get("password"));
-  		hotelprofile.setStartRatings(Integer.parseInt(form.get("staterate")));
-  		hotelprofile.setVerifyPassword(form.get("verify"));
+  		hotelprofile.setPartOfChain(form.get("isHotelPartOfChain"));
+  		hotelprofile.setHotelEmailAddr(form.get("email"));
+  		hotelprofile.setMarketPolicyType(MarketPolicyTypes.getMarketPolicyTypesIdByCode(Integer.parseInt(form.get("marketSpecificPolicyCode"))));
+  		hotelprofile.setHoteBrands(HotelBrands.getHotelBrandsbyCode(Integer.parseInt(form.get("BrandHotelCode"))));
+  		hotelprofile.setPassword(form.get("primaryPasswd"));
+  		hotelprofile.setStartRatings(Integer.parseInt(form.get("startRating")));
+  		hotelprofile.setVerifyPassword(form.get("verifiedPasswd"));
   		
   		if(form.get("supplierCode") == null || form.get("supplierCode") == "")
 	    {
@@ -278,7 +389,6 @@ public class TravelPortalUtilsController extends Controller {
 		hotelmealplan.setTaxtype(hotelmealvm.getTaxtype());
 		hotelmealplan.setMealType(MealType.getMealTypeIdByCode(hotelmealvm.getMealType()));
 		
-		//hotelmealplan.merge();
 		
 		
 		for(ChildpoliciVM vm : hotelmealvm.getchild()){
@@ -290,11 +400,9 @@ public class TravelPortalUtilsController extends Controller {
 			childPolicies.setChildtaxvalue(vm.getChildtaxvalue());
 			childPolicies.setChildtaxtype(vm.getChildtaxtype());
 			
-			//childPolicies.setMeal_plan_id(HotelMealPlan.getHotelMealPlanIdByCode(hotelmealplan.getId()));
 			childPolicies.merge();
 			hotelmealplan.addChild(childPolicies);
-		//	hotelmealplan.addChild(childPolicies);
-			
+					
 		}
 		
 		hotelmealplan.merge();
@@ -330,7 +438,7 @@ public class TravelPortalUtilsController extends Controller {
 			childPolicies.setChargeType(vm.getChargeType());
 			childPolicies.setChildtaxvalue(vm.getChildtaxvalue());
 			childPolicies.setChildtaxtype(vm.getChildtaxtype());
-//			childPolicies.setMeal_plan_id(HotelMealPlan.getHotelMealPlanIdByCode(hotelmealplan.getId()));
+
 			childPolicies.save();
 			hotelmealplan.addChild(childPolicies);
 			
@@ -338,8 +446,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelmealplan.save();
 		
 		
-		//hotelmealplan.merge();
-	
+
 		return ok();
 	}
 	
@@ -486,14 +593,14 @@ public class TravelPortalUtilsController extends Controller {
 	    DynamicForm form = DynamicForm.form().bindFromRequest();
 	    HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
         		
-		hotelprofile.setHotelGeneralManager(form.get("generalManager"));
-		hotelprofile.setGeneralMgrEmail(form.get("GMemail"));
-		hotelprofile.setHotelBuiltYear(Integer.parseInt(form.get("Built")));
-		hotelprofile.setHotelRenovationYear(Integer.parseInt(form.get("lastRenov")));
-		hotelprofile.setHotelWebSite(form.get("websit"));
-		hotelprofile.setNoOfFloors(Integer.parseInt(form.get("noFloors")));
-		hotelprofile.setNoOfRooms(Integer.parseInt(form.get("room")));
-		hotelprofile.setFireSafetyCompliance(form.get("safety"));
+		hotelprofile.setHotelGeneralManager(form.get("genMgrName"));
+		hotelprofile.setGeneralMgrEmail(form.get("genMgrEmail"));
+		hotelprofile.setHotelBuiltYear(Integer.parseInt(form.get("builtYear")));
+		hotelprofile.setHotelRenovationYear(Integer.parseInt(form.get("renovationYear")));
+		hotelprofile.setHotelWebSite(form.get("webSiteUrl"));
+		hotelprofile.setNoOfFloors(Integer.parseInt(form.get("noOffloor")));
+		hotelprofile.setNoOfRooms(Integer.parseInt(form.get("noOfRoom")));
+		hotelprofile.setFireSafetyCompliance(form.get("safetyCompliance"));
 		
 		hotelprofile.merge();
 				
@@ -503,14 +610,14 @@ public class TravelPortalUtilsController extends Controller {
 		{
 			 internalcontact=new InternalContacts();
 			 
-			 internalcontact.setGuestTelCityCode(Integer.parseInt(form.get("GuestTele")));
-				internalcontact.setGuestTelValue(Integer.parseInt(form.get("GuestTelenumber")));
-				internalcontact.setGuestFaxCityCode(Integer.parseInt(form.get("GuestfaxCode")));
-				internalcontact.setGuestFaxValue(Integer.parseInt(form.get("Guestfaxnumber")));
-				internalcontact.setDirectTelCityCode(Integer.parseInt(form.get("DirectteleCode")));
-				internalcontact.setDirectTelValue(Integer.parseInt(form.get("Directnumber")));
-				internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("dirFaxCode")));
-				internalcontact.setDirectFaxValue(Integer.parseInt(form.get("dirFaxnumber")));
+			 internalcontact.setGuestTelCityCode(Integer.parseInt(form.get("guestTelCode")));
+				internalcontact.setGuestTelValue(Integer.parseInt(form.get("guestTel")));
+				internalcontact.setGuestFaxCityCode(Integer.parseInt(form.get("guestFaxCode")));
+				internalcontact.setGuestFaxValue(Integer.parseInt(form.get("guestFax")));
+				internalcontact.setDirectTelCityCode(Integer.parseInt(form.get("directTelCode")));
+				internalcontact.setDirectTelValue(Integer.parseInt(form.get("directTelNo")));
+				internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("directFaxCode")));
+				internalcontact.setDirectFaxValue(Integer.parseInt(form.get("directFaxNo")));
 				internalcontact.setSupplierCode(Long.parseLong(form.get("supplierCode")));
 				
 				internalcontact.save();
@@ -518,14 +625,14 @@ public class TravelPortalUtilsController extends Controller {
 		else
 		{
 		
-		internalcontact.setGuestTelCityCode(Integer.parseInt(form.get("GuestTele")));
-		internalcontact.setGuestTelValue(Integer.parseInt(form.get("GuestTelenumber")));
-		internalcontact.setGuestFaxCityCode(Integer.parseInt(form.get("GuestfaxCode")));
-		internalcontact.setGuestFaxValue(Integer.parseInt(form.get("Guestfaxnumber")));
-		internalcontact.setDirectTelCityCode(Integer.parseInt(form.get("DirectteleCode")));
-		internalcontact.setDirectTelValue(Integer.parseInt(form.get("Directnumber")));
-		internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("dirFaxCode")));
-		internalcontact.setDirectFaxValue(Integer.parseInt(form.get("dirFaxnumber")));
+				internalcontact.setGuestTelCityCode(Integer.parseInt(form.get("guestTelCode")));
+				internalcontact.setGuestTelValue(Integer.parseInt(form.get("guestTel")));
+				internalcontact.setGuestFaxCityCode(Integer.parseInt(form.get("guestFaxCode")));
+				internalcontact.setGuestFaxValue(Integer.parseInt(form.get("guestFax")));
+				internalcontact.setDirectTelCityCode(Integer.parseInt(form.get("directTelCode")));
+				internalcontact.setDirectTelValue(Integer.parseInt(form.get("directTelNo")));
+				internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("directFaxCode")));
+				internalcontact.setDirectFaxValue(Integer.parseInt(form.get("directFaxNo")));
 				
 		internalcontact.merge();
 		}
@@ -547,23 +654,28 @@ public class TravelPortalUtilsController extends Controller {
 	    {
 	    	hotelprivatecontacts =new HotelPrivateContacts();
 	    	hotelprivatecontacts.setSupplierCode(Long.parseLong(form.get("supplierCode")));
-	 	   hotelprivatecontacts.setMainContactPersonName(form.get("contactName"));
-	 	    hotelprivatecontacts.setMainContactPersonTitle(form.get("title"));
-	 	    hotelprivatecontacts.setMainContactTelNo(form.get("teleCode")+" "+form.get("teleNumber"));
-	 	    hotelprivatecontacts.setMainContactFaxNo(form.get("DirectFaxCode")+" "+form.get("DirectFaxNumber"));
-	 	    hotelprivatecontacts.setMainContactExt(Integer.parseInt(form.get("Extension")));
-	 	    hotelprivatecontacts.setMainContactEmailAddr(form.get("emailAddr"));
-	 	    hotelprivatecontacts.setTollFreeNo(form.get("TollfreeTel"));
+	 	   hotelprivatecontacts.setMainContactPersonName(form.get("cPersonName"));
+	 	    hotelprivatecontacts.setMainContactPersonTitle(form.get("cTitle"));
+	 	    hotelprivatecontacts.setMainContactTelNo(Integer.parseInt(form.get("dTelNo")));
+	 	    hotelprivatecontacts.setMainContactTelCode(Integer.parseInt(form.get("dTelCode")));
+	 	    hotelprivatecontacts.setMainContactFaxNo(Integer.parseInt(form.get("dFaxNo")));
+	 	    hotelprivatecontacts.setMainContactFaxCode(Integer.parseInt(form.get("dFaxCode")));
+	 	    hotelprivatecontacts.setMainContactExt(Integer.parseInt(form.get("dExtNo")));
+	 	    hotelprivatecontacts.setMainContactEmailAddr(form.get("dEmailAddr"));
+	 	    hotelprivatecontacts.setTollFreeNo(form.get("dTollFreeTelNo"));
 	 	    hotelprivatecontacts.setReservationSameAsMainContact(Boolean.parseBoolean(form.get("value1")));
-	 	    hotelprivatecontacts.setReservationContactPersonName(form.get("RcontactName"));
-	 	    hotelprivatecontacts.setReservationContactPersonTitle(form.get("Rtitle"));
-	 	    hotelprivatecontacts.setReservationContactTelNo(form.get("RteleCode")+" "+form.get("RteleNumber"));
-	 	    hotelprivatecontacts.setDeptTelNo(form.get("RDirecttelCode")+" "+form.get("RDirecttelNumber"));
-	 	    hotelprivatecontacts.setDeptFaxNo(form.get("RDirectFaxCode")+" "+form.get("RDirectFaxNumber"));
-	 	    hotelprivatecontacts.setDeptExtNo(form.get("RExtension"));
-	 	    hotelprivatecontacts.setReservationContactExt(Integer.parseInt(form.get("RExtension2")));
-	 	    hotelprivatecontacts.setReservationContactEmailAddr(form.get("RemailAddr"));
-	 	    hotelprivatecontacts.setSalutation_salutation_id(Salutation.getsalutationIdIdByCode(Integer.parseInt(form.get("salutation"))));
+	 	    hotelprivatecontacts.setReservationContactPersonName(form.get("rContactName"));
+	 	    hotelprivatecontacts.setReservationContactPersonTitle(form.get("rTitle"));
+	 	    hotelprivatecontacts.setReservationContactTelNo(Integer.parseInt(form.get("rDirectTelNo")));
+	 	    hotelprivatecontacts.setReservationContactTelCode(Integer.parseInt(form.get("rDirectTelCode")));
+	 	    hotelprivatecontacts.setDeptTelNo(Integer.parseInt(form.get("rDeptTelNo")));
+	 	    hotelprivatecontacts.setDeptTelCode(Integer.parseInt(form.get("rDeptTelCode")));
+	 	    hotelprivatecontacts.setDeptFaxNo(Integer.parseInt(form.get("rDeptFaxNo")));
+	 	    hotelprivatecontacts.setDeptFaxCode(Integer.parseInt(form.get("rDeptFaxCode")));
+	 	    hotelprivatecontacts.setDeptExtNo(Integer.parseInt(form.get("rExtNo")));
+	 	    hotelprivatecontacts.setReservationContactExt(Integer.parseInt(form.get("deptExtNo")));
+	 	    hotelprivatecontacts.setReservationContactEmailAddr(form.get("rEmailAddr"));
+	 	    hotelprivatecontacts.setSalutation_salutation_id(Salutation.getsalutationIdIdByCode(Integer.parseInt(form.get("salutationCode"))));
 	 	 	
 	 		hotelprivatecontacts.save();
 	 		
@@ -571,24 +683,28 @@ public class TravelPortalUtilsController extends Controller {
 	    else
 	    {
 	    	
-	 	   hotelprivatecontacts.setMainContactPersonName(form.get("contactName"));
-	 	    hotelprivatecontacts.setMainContactPersonTitle(form.get("title"));
-	 	    hotelprivatecontacts.setMainContactTelNo(form.get("teleCode")+" "+form.get("teleNumber"));
-	 	    hotelprivatecontacts.setMainContactFaxNo(form.get("DirectFaxCode")+" "+form.get("DirectFaxNumber"));
-	 	    hotelprivatecontacts.setMainContactExt(Integer.parseInt(form.get("Extension")));
-	 	    hotelprivatecontacts.setMainContactEmailAddr(form.get("emailAddr"));
-	 	    hotelprivatecontacts.setTollFreeNo(form.get("TollfreeTel"));
-	 	    hotelprivatecontacts.setReservationSameAsMainContact(Boolean.parseBoolean(form.get("value1")));
-	 	    hotelprivatecontacts.setReservationContactPersonName(form.get("RcontactName"));
-	 	    hotelprivatecontacts.setReservationContactPersonTitle(form.get("Rtitle"));
-	 	    hotelprivatecontacts.setReservationContactTelNo(form.get("RteleCode")+" "+form.get("RteleNumber"));
-	 	    hotelprivatecontacts.setDeptTelNo(form.get("RDirecttelCode")+" "+form.get("RDirecttelNumber"));
-	 	    hotelprivatecontacts.setDeptFaxNo(form.get("RDirectFaxCode")+" "+form.get("RDirectFaxNumber"));
-	 	    hotelprivatecontacts.setDeptExtNo(form.get("RExtension"));
-	 	    hotelprivatecontacts.setReservationContactExt(Integer.parseInt(form.get("RExtension2")));
-	 	    hotelprivatecontacts.setReservationContactEmailAddr(form.get("RemailAddr"));
-	 	    hotelprivatecontacts.setSalutation_salutation_id(Salutation.getsalutationIdIdByCode(Integer.parseInt(form.get("salutation"))));
-	 	 	
+	    	 hotelprivatecontacts.setMainContactPersonName(form.get("cPersonName"));
+		 	    hotelprivatecontacts.setMainContactPersonTitle(form.get("cTitle"));
+		 	    hotelprivatecontacts.setMainContactTelNo(Integer.parseInt(form.get("dTelNo")));
+		 	    hotelprivatecontacts.setMainContactTelCode(Integer.parseInt(form.get("dTelCode")));
+		 	    hotelprivatecontacts.setMainContactFaxNo(Integer.parseInt(form.get("dFaxNo")));
+		 	    hotelprivatecontacts.setMainContactFaxCode(Integer.parseInt(form.get("dFaxCode")));
+		 	    hotelprivatecontacts.setMainContactExt(Integer.parseInt(form.get("dExtNo")));
+		 	    hotelprivatecontacts.setMainContactEmailAddr(form.get("dEmailAddr"));
+		 	    hotelprivatecontacts.setTollFreeNo(form.get("dTollFreeTelNo"));
+		 	    hotelprivatecontacts.setReservationSameAsMainContact(Boolean.parseBoolean(form.get("value1")));
+		 	    hotelprivatecontacts.setReservationContactPersonName(form.get("rContactName"));
+		 	    hotelprivatecontacts.setReservationContactPersonTitle(form.get("rTitle"));
+		 	    hotelprivatecontacts.setReservationContactTelNo(Integer.parseInt(form.get("rDirectTelNo")));
+		 	    hotelprivatecontacts.setReservationContactTelCode(Integer.parseInt(form.get("rDirectTelCode")));
+		 	    hotelprivatecontacts.setDeptTelNo(Integer.parseInt(form.get("rDeptTelNo")));
+		 	    hotelprivatecontacts.setDeptTelCode(Integer.parseInt(form.get("rDeptTelCode")));
+		 	    hotelprivatecontacts.setDeptFaxNo(Integer.parseInt(form.get("rDeptFaxNo")));
+		 	    hotelprivatecontacts.setDeptFaxCode(Integer.parseInt(form.get("rDeptFaxCode")));
+		 	    hotelprivatecontacts.setDeptExtNo(Integer.parseInt(form.get("rExtNo")));
+		 	    hotelprivatecontacts.setReservationContactExt(Integer.parseInt(form.get("deptExtNo")));
+		 	    hotelprivatecontacts.setReservationContactEmailAddr(form.get("rEmailAddr"));
+		 	    hotelprivatecontacts.setSalutation_salutation_id(Salutation.getsalutationIdIdByCode(Integer.parseInt(form.get("salutationCode"))));
 	 		hotelprivatecontacts.merge();
 	 		
 	    	
@@ -612,13 +728,15 @@ public class TravelPortalUtilsController extends Controller {
 	    	billinginfo =new BillingInformation();
 	    	
 	    	billinginfo.setInvoiceToHotel(form.get("Invoices"));
-			billinginfo.setFirstName(form.get("Name"));
+			billinginfo.setFirstName(form.get("firstName"));
 			billinginfo.setLastName(form.get("lastName"));
 			billinginfo.setTitle(form.get("title"));
 				
 			billinginfo.setEmailAddr(form.get("email"));
-			billinginfo.setTelNo(Integer.parseInt(form.get("telephcode")+form.get("teleNumber")));
-			billinginfo.setFaxNo(Integer.parseInt(form.get("dirFaxcode")+form.get("dirFaxNumber")));
+			billinginfo.setTelNo(Integer.parseInt(form.get("teleNumber")));
+			billinginfo.setTelNoCode(Integer.parseInt(form.get("telephcode")));
+			billinginfo.setFaxNo(Integer.parseInt(form.get("dirFaxNumber")));
+			billinginfo.setFaxNoCode(Integer.parseInt(form.get("dirFaxcode")));
 			billinginfo.setSupplierCode(Long.parseLong(form.get("supplierCode")));
 			billinginfo.setExt(Integer.parseInt(form.get("Extension")));
 			billinginfo.setBankservice(form.get("service"));
@@ -630,7 +748,7 @@ public class TravelPortalUtilsController extends Controller {
 	    {
 	    
 		billinginfo.setInvoiceToHotel(form.get("Invoices"));
-		billinginfo.setFirstName(form.get("Name"));
+		billinginfo.setFirstName(form.get("firstName"));
 		billinginfo.setLastName(form.get("lastName"));
 		billinginfo.setTitle(form.get("title"));
 			

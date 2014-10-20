@@ -11,10 +11,12 @@ import views.html.index;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.travelportal.domain.HotelMealPlan;
+import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.MealType;
 import com.travelportal.domain.rooms.ChildPolicies;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.RoomAmenities;
+import com.travelportal.domain.rooms.RoomChildPolicies;
 import com.travelportal.vm.ChildpoliciVM;
 import com.travelportal.vm.HotelmealVM;
 import com.travelportal.vm.RoomChildpoliciVM;
@@ -53,11 +55,7 @@ public class HotelRoomController extends Controller {
 	
 	@Transactional(readOnly=false)
     public static Result saveOrUpdateHotelRoom() {
-		/*request().body().asJson();
-		HotelRoomTypes roomType = request().body().as(HotelRoomTypes.class);
-		roomType.saveOrUpdateHotelRoomDetails();
-		return ok();*/
-		
+			
 		JsonNode json = request().body().asJson();
 		DynamicForm form = DynamicForm.form().bindFromRequest();
 		Json.fromJson(json, RoomtypeVM.class);
@@ -71,17 +69,23 @@ public class HotelRoomController extends Controller {
 		hotelroomTypes.setMaxOccupancy(roomtypeVM.getMaxOccupancy());
 		hotelroomTypes.setMaxAdultOccSharingWithChildren(roomtypeVM.getMaxAdultsWithChildren());
 		hotelroomTypes.setSupplierCode(roomtypeVM.getSupplierCode());
-				
-		/*hotelroomTypes.save();
+		hotelroomTypes.setAmenities(RoomAmenities.getroomamenities(roomtypeVM.getRoomamenities()));
+		/*hotelprofile.setServices(HotelServices.getallhotelservice(hoteldescription.getServices()));*/
+		
 		for(RoomChildpoliciVM childVM : roomtypeVM.getRoomchildPolicies())
 		{
+			RoomChildPolicies roomchildPolicies = new RoomChildPolicies();
+			roomchildPolicies.setAllowedChildAgeFrom(childVM.getChildForm());
+			roomchildPolicies.setAllowedChildAgeTo(childVM.getChildTo());
+			roomchildPolicies.setYears(childVM.getChildYear());
+			roomchildPolicies.setNetRate(childVM.getChildFree());
+			roomchildPolicies.save();
+			hotelroomTypes.addchildPolicies(roomchildPolicies);
 			
-		}*/
-		
+		}
+		hotelroomTypes.save();
 		return ok();
-		
-	
-	
+
 	}
 	
 	@Transactional(readOnly=true)

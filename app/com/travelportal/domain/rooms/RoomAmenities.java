@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.travelportal.domain.HotelAmenities;
+
 import play.db.jpa.JPA;
 
 @Entity
@@ -49,5 +51,9 @@ public class RoomAmenities {
 	
 	public static List<RoomAmenities> getRoomAmenities() {
 		return JPA.em().createQuery("select ra from RoomAmenities ra").getResultList();
+	}
+	
+	public static List<RoomAmenities> getroomamenities(List<Integer> list) {
+		return JPA.em().createQuery("select c from RoomAmenities c where amenityId IN ?1").setParameter(1, list).getResultList();
 	}
 }

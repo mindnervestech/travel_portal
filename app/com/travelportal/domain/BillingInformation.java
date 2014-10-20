@@ -32,9 +32,13 @@ public class BillingInformation {
 	@Column(name="email_addr")
 	private String emailAddr;
 	@Column(name="tel_no")
-	private int telNo; //city code will be automatically available from city selected by user.
+	private int telNo;
+	@Column(name="tel_no_code")
+	private int telNoCode;
 	@Column(name="fax_no")
 	private int faxNo;
+	@Column(name="fax_no_code")
+	private int faxNoCode;
 	@Column(name="ext")
 	private int ext;
 	
@@ -140,6 +144,24 @@ public class BillingInformation {
 	public void setFaxNo(int faxNo) {
 		this.faxNo = faxNo;
 	}
+	
+	
+	public int getTelNoCode() {
+		return telNoCode;
+	}
+
+	public void setTelNoCode(int telNoCode) {
+		this.telNoCode = telNoCode;
+	}
+
+	public int getFaxNoCode() {
+		return faxNoCode;
+	}
+
+	public void setFaxNoCode(int faxNoCode) {
+		this.faxNoCode = faxNoCode;
+	}
+
 	/**
 	 * @return the ext
 	 */
@@ -158,6 +180,7 @@ public class BillingInformation {
     	
     	try
 		{
+    		System.out.println(id);
 		return (BillingInformation) JPA.em().createQuery("select c from BillingInformation c where c.supplier_code = ?1").setParameter(1, id).getSingleResult();
 		}
 		catch(Exception ex){

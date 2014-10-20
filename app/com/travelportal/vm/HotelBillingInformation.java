@@ -7,9 +7,11 @@ public class HotelBillingInformation {
 	private String aLastName;
 	private String title;
 	private String dEmailAddr;
-	private String dTelNo;
-	private String dFaxNo;
-	private String dExtNo;
+	private int dTelNo;
+	private int dTelCode;
+	private int dFaxNo;
+	private int dFaxCode;
+	private int dExtNo;
 	private String isBankToBankTransfer;
 	/**
 	 * @return the supplierCode
@@ -86,37 +88,43 @@ public class HotelBillingInformation {
 	/**
 	 * @return the dTelNo
 	 */
-	public String getdTelNo() {
+	public int getdTelNo() {
 		return dTelNo;
 	}
 	/**
 	 * @param dTelNo the dTelNo to set
 	 */
-	public void setdTelNo(String dTelNo) {
+	public void setdTelNo(int dTelNo) {
 		this.dTelNo = dTelNo;
 	}
-	/**
-	 * @return the dFaxNo
-	 */
-	public String getdFaxNo() {
+	public int getdTelCode() {
+		return dTelCode;
+	}
+	public void setdTelCode(int dTelCode) {
+		this.dTelCode = dTelCode;
+	}
+	public int getdFaxNo() {
 		return dFaxNo;
 	}
 	/**
 	 * @param dFaxNo the dFaxNo to set
 	 */
-	public void setdFaxNo(String dFaxNo) {
+	public void setdFaxNo(int dFaxNo) {
 		this.dFaxNo = dFaxNo;
 	}
-	/**
-	 * @return the dExtNo
-	 */
-	public String getdExtNo() {
+	public int getdFaxCode() {
+		return dFaxCode;
+	}
+	public void setdFaxCode(int dFaxCode) {
+		this.dFaxCode = dFaxCode;
+	}
+	public int getdExtNo() {
 		return dExtNo;
 	}
 	/**
 	 * @param dExtNo the dExtNo to set
 	 */
-	public void setdExtNo(String dExtNo) {
+	public void setdExtNo(int dExtNo) {
 		this.dExtNo = dExtNo;
 	}
 	/**

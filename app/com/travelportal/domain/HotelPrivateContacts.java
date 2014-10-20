@@ -21,8 +21,10 @@ public class HotelPrivateContacts {
 	private String mainContactPersonTitle;
 	@ManyToOne
 	private Salutation salutation;	
-	private String mainContactTelNo;
-	private String mainContactFaxNo; //no. will be stored in format of cityCode-no, at client side while displaying split by '-'
+	private int mainContactTelNo;
+	private int mainContactTelCode;
+	private int mainContactFaxNo;
+	private int mainContactFaxCode;
 	private int mainContactExt;
 	private String mainContactEmailAddr;
 	private String tollFreeNo;
@@ -30,10 +32,13 @@ public class HotelPrivateContacts {
 	
 	private String reservationContactPersonName;
 	private String reservationContactPersonTitle;
-	private String reservationContactTelNo;
-	private String deptTelNo; 
-	private String deptFaxNo; //no. will be stored in format of cityCode-no, at client side while displaying split by '-'
-	private String deptExtNo;
+	private int reservationContactTelNo;
+	private int reservationContactTelCode;
+	private int deptTelNo;
+	private int deptTelCode; 
+	private int deptFaxNo;
+	private int deptFaxCode;//no. will be stored in format of cityCode-no, at client side while displaying split by '-'
+	private int deptExtNo;
 	private int reservationContactExt;
 	private String reservationContactEmailAddr;
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
@@ -99,28 +104,58 @@ public class HotelPrivateContacts {
 	public void setSalutation(Salutation salutation) {
 		this.salutation = salutation;
 	}
+	public int getReservationContactTelCode() {
+		return reservationContactTelCode;
+	}
+	public void setReservationContactTelCode(int reservationContactTelCode) {
+		this.reservationContactTelCode = reservationContactTelCode;
+	}
+	public int getMainContactTelCode() {
+		return mainContactTelCode;
+	}
+	public void setMainContactTelCode(int mainContactTelCode) {
+		this.mainContactTelCode = mainContactTelCode;
+	}
+	public int getMainContactFaxCode() {
+		return mainContactFaxCode;
+	}
+	public void setMainContactFaxCode(int mainContactFaxCode) {
+		this.mainContactFaxCode = mainContactFaxCode;
+	}
+	public int getDeptTelCode() {
+		return deptTelCode;
+	}
+	public void setDeptTelCode(int deptTelCode) {
+		this.deptTelCode = deptTelCode;
+	}
+	public int getDeptFaxCode() {
+		return deptFaxCode;
+	}
+	public void setDeptFaxCode(int deptFaxCode) {
+		this.deptFaxCode = deptFaxCode;
+	}
 	/**
 	 * @return the mainContactTelNo
 	 */
-	public String getMainContactTelNo() {
+	public int getMainContactTelNo() {
 		return mainContactTelNo;
 	}
 	/**
 	 * @param mainContactTelNo the mainContactTelNo to set
 	 */
-	public void setMainContactTelNo(String mainContactTelNo) {
+	public void setMainContactTelNo(int mainContactTelNo) {
 		this.mainContactTelNo = mainContactTelNo;
 	}
 	/**
 	 * @return the mainContactFaxNo
 	 */
-	public String getMainContactFaxNo() {
+	public int getMainContactFaxNo() {
 		return mainContactFaxNo;
 	}
 	/**
 	 * @param mainContactFaxNo the mainContactFaxNo to set
 	 */
-	public void setMainContactFaxNo(String mainContactFaxNo) {
+	public void setMainContactFaxNo(int mainContactFaxNo) {
 		this.mainContactFaxNo = mainContactFaxNo;
 	}
 	/**
@@ -199,55 +234,55 @@ public class HotelPrivateContacts {
 	/**
 	 * @return the reservationContactTelNo
 	 */
-	public String getReservationContactTelNo() {
+	public int getReservationContactTelNo() {
 		return reservationContactTelNo;
 	}
 	/**
 	 * @param reservationContactTelNo the reservationContactTelNo to set
 	 */
-	public void setReservationContactTelNo(String reservationContactTelNo) {
+	public void setReservationContactTelNo(int reservationContactTelNo) {
 		this.reservationContactTelNo = reservationContactTelNo;
 	}
 	/**
 	 * @return the deptTelNo
 	 */
-	public String getDeptTelNo() {
+	public int getDeptTelNo() {
 		return deptTelNo;
 	}
 	/**
 	 * @param deptTelNo the deptTelNo to set
 	 */
-	public void setDeptTelNo(String deptTelNo) {
+	public void setDeptTelNo(int deptTelNo) {
 		this.deptTelNo = deptTelNo;
 	}
 	/**
 	 * @return the deptFaxNo
 	 */
-	public String getDeptFaxNo() {
+	public int getDeptFaxNo() {
 		return deptFaxNo;
 	}
 	/**
 	 * @param deptFaxNo the deptFaxNo to set
 	 */
-	public void setDeptFaxNo(String deptFaxNo) {
+	public void setDeptFaxNo(int deptFaxNo) {
 		this.deptFaxNo = deptFaxNo;
 	}
 	/**
 	 * @return the deptExtNo
 	 */
-	public String getDeptExtNo() {
+	public int getDeptExtNo() {
 		return deptExtNo;
 	}
 	/**
 	 * @param deptExtNo the deptExtNo to set
 	 */
-	public void setDeptExtNo(String deptExtNo) {
+	public void setDeptExtNo(int deptExtNo) {
 		this.deptExtNo = deptExtNo;
 	}
 	/**
 	 * @return the reservationContactExt
 	 */
-	public int getReservationContactExt() {
+	public int getReservationConstactExt() {
 		return reservationContactExt;
 	}
 	/**

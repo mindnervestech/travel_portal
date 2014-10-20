@@ -4,6 +4,7 @@ public class HotelCommunication {
 	private Long supplierCode;
 	private String primaryEmailAddr;
 	private String ccEmailAddr;
+	private String booking;
 	
 	/**
 	 * @return the supplierCode
@@ -40,6 +41,12 @@ public class HotelCommunication {
 	 */
 	public void setCcEmailAddr(String ccEmailAddr) {
 		this.ccEmailAddr = ccEmailAddr;
+	}
+	public String getBooking() {
+		return booking;
+	}
+	public void setBooking(String booking) {
+		this.booking = booking;
 	}
 	
 }

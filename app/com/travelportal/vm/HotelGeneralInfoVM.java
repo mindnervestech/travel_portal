@@ -7,6 +7,7 @@ public class HotelGeneralInfoVM {
 	private String supplierNm;
 	private String hotelAddr;
 	private int countryCode;
+	private String email;
 	private int cityCode;
 	private String zipCode;
 	private String isHotelPartOfChain;
@@ -30,6 +31,12 @@ public class HotelGeneralInfoVM {
 	 */
 	public void setSupplierCode(Long supplierCode) {
 		this.supplierCode = supplierCode;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	/**
 	 * @return the hotelNm

@@ -5,20 +5,25 @@ public class HotelContactInformation {
 	private String cPersonName;
 	private String cTitle;
 	private Integer salutationCode;
-	private String dTelNo;
-	private String dFaxNo;
-	private String dExtNo;
+	private int dTelNo;
+	private int dTelCode;
+	private int dFaxNo;
+	private int dFaxCode;
+	private int dExtNo;
 	private String dEmailAddr;
 	private String dTollFreeTelNo;
 	private boolean isReservationDetailSame;
 	private String rContactName;
 	private String rTitle;
-	private String rDirectTelNo;
+	private int rDirectTelNo;
+	private int rDirectTelCode;
 	private String rEmailAddr;
-	private String rExtNo;
-	private String rDeptTelNo;
-	private String rDeptFaxNo;
-	private String deptExtNo;
+	private int rExtNo;
+	private int rDeptTelNo;
+	private int rDeptTelCode;
+	private int rDeptFaxNo;
+	private int rDeptFaxCode;
+	private int deptExtNo;
 	/**
 	 * @return the supplierCode
 	 */
@@ -70,37 +75,26 @@ public class HotelContactInformation {
 	/**
 	 * @return the dTelNo
 	 */
-	public String getdTelNo() {
-		return dTelNo;
-	}
+	
 	/**
 	 * @param dTelNo the dTelNo to set
 	 */
-	public void setdTelNo(String dTelNo) {
-		this.dTelNo = dTelNo;
-	}
 	/**
 	 * @return the dFaxNo
 	 */
-	public String getdFaxNo() {
-		return dFaxNo;
-	}
 	/**
 	 * @param dFaxNo the dFaxNo to set
 	 */
-	public void setdFaxNo(String dFaxNo) {
-		this.dFaxNo = dFaxNo;
-	}
 	/**
 	 * @return the dExtNo
 	 */
-	public String getdExtNo() {
+	public int getdExtNo() {
 		return dExtNo;
 	}
 	/**
 	 * @param dExtNo the dExtNo to set
 	 */
-	public void setdExtNo(String dExtNo) {
+	public void setdExtNo(int dExtNo) {
 		this.dExtNo = dExtNo;
 	}
 	/**
@@ -166,15 +160,10 @@ public class HotelContactInformation {
 	/**
 	 * @return the rDirectTelNo
 	 */
-	public String getrDirectTelNo() {
-		return rDirectTelNo;
-	}
+
 	/**
 	 * @param rDirectTelNo the rDirectTelNo to set
 	 */
-	public void setrDirectTelNo(String rDirectTelNo) {
-		this.rDirectTelNo = rDirectTelNo;
-	}
 	/**
 	 * @return the rEmailAddr
 	 */
@@ -190,50 +179,95 @@ public class HotelContactInformation {
 	/**
 	 * @return the rExtNo
 	 */
-	public String getrExtNo() {
-		return rExtNo;
+	public int getDeptExtNo() {
+		return deptExtNo;
 	}
 	/**
 	 * @param rExtNo the rExtNo to set
 	 */
-	public void setrExtNo(String rExtNo) {
+	public void setDeptExtNo(int deptExtNo) {
+		this.deptExtNo = deptExtNo;
+	}
+	public int getdTelCode() {
+		return dTelCode;
+	}
+	public void setdTelCode(int dTelCode) {
+		this.dTelCode = dTelCode;
+	}
+	public int getdTelNo() {
+		return dTelNo;
+	}
+	public void setdTelNo(int dTelNo) {
+		this.dTelNo = dTelNo;
+	}
+	public int getdFaxNo() {
+		return dFaxNo;
+	}
+	public void setdFaxNo(int dFaxNo) {
+		this.dFaxNo = dFaxNo;
+	}
+	public int getdFaxCode() {
+		return dFaxCode;
+	}
+	public void setdFaxCode(int dFaxCode) {
+		this.dFaxCode = dFaxCode;
+	}
+	public int getrDirectTelNo() {
+		return rDirectTelNo;
+	}
+	public void setrDirectTelNo(int rDirectTelNo) {
+		this.rDirectTelNo = rDirectTelNo;
+	}
+	public int getrDirectTelCode() {
+		return rDirectTelCode;
+	}
+	public void setrDirectTelCode(int rDirectTelCode) {
+		this.rDirectTelCode = rDirectTelCode;
+	}
+	public int getrExtNo() {
+		return rExtNo;
+	}
+	public void setrExtNo(int rExtNo) {
 		this.rExtNo = rExtNo;
 	}
 	/**
 	 * @return the rDeptTelNo
 	 */
-	public String getrDeptTelNo() {
+	public int getrDeptTelNo() {
 		return rDeptTelNo;
 	}
 	/**
 	 * @param rDeptTelNo the rDeptTelNo to set
 	 */
-	public void setrDeptTelNo(String rDeptTelNo) {
+	public void setrDeptTelNo(int rDeptTelNo) {
 		this.rDeptTelNo = rDeptTelNo;
 	}
-	/**
-	 * @return the rDeptFaxNo
-	 */
-	public String getrDeptFaxNo() {
+	public int getrDeptTelCode() {
+		return rDeptTelCode;
+	}
+	public void setrDeptTelCode(int rDeptTelCode) {
+		this.rDeptTelCode = rDeptTelCode;
+	}
+	public int getrDeptFaxNo() {
 		return rDeptFaxNo;
 	}
 	/**
 	 * @param rDeptFaxNo the rDeptFaxNo to set
 	 */
-	public void setrDeptFaxNo(String rDeptFaxNo) {
+	public void setrDeptFaxNo(int rDeptFaxNo) {
 		this.rDeptFaxNo = rDeptFaxNo;
 	}
 	/**
 	 * @return the deptExtNo
 	 */
-	public String getDeptExtNo() {
-		return deptExtNo;
+	public int getrDeptFaxCode() {
+		return rDeptFaxCode;
 	}
 	/**
 	 * @param deptExtNo the deptExtNo to set
 	 */
-	public void setDeptExtNo(String deptExtNo) {
-		this.deptExtNo = deptExtNo;
+	public void setrDeptFaxCode(int rDeptFaxCode) {
+		this.rDeptFaxCode = rDeptFaxCode;
 	}
 	
 	

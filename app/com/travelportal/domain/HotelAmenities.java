@@ -1,6 +1,8 @@
 package com.travelportal.domain;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -69,8 +71,9 @@ public class HotelAmenities {
 		return JPA.em().createQuery("select c from HotelAmenities c where amenitiesType = ?1"). setParameter(1,amenitiescode).getResultList();
 	}
 	
-	public static List<HotelAmenities> getallhotelamenities(List<Integer> list) {
-		return JPA.em().createQuery("select c from HotelAmenities c where amenitiesCode IN ?1").setParameter(1, list).getResultList();
+	public static Set<HotelAmenities> getallhotelamenities(List<Integer> list) {
+		List<HotelAmenities> hotelcontactinformation =  JPA.em().createQuery("select c from HotelAmenities c where amenitiesCode IN ?1").setParameter(1, list).getResultList();
+		return new HashSet<>(hotelcontactinformation);
 	}
 	
 }

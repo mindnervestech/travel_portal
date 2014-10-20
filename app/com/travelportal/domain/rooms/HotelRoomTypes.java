@@ -252,6 +252,15 @@ public class HotelRoomTypes {
 		this.roomchildPolicies = roomchildPolicies;
 	}
 	
+	public void addchildPolicies(RoomChildPolicies roomchildPolicies) {
+		if(this.roomchildPolicies == null){
+			this.roomchildPolicies = new ArrayList<>();
+		}
+		if(!this.roomchildPolicies.contains(roomchildPolicies))
+		this.roomchildPolicies.add(roomchildPolicies);
+	}
+	
+	
 	public static List<RoomType> getAllRoomTypes(final Long supplierCode) {
 		Query q = JPA.em().createQuery("select r.roomId, r.roomType from HotelRoomTypes r where r.supplierCode = :supplierCode ");
 		q.setParameter("supplierCode", supplierCode);

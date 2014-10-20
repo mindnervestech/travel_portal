@@ -7,12 +7,16 @@ public class HotelInternalInformation {
 	private String safetyCompliance;
 	private int noOffloor;
 	private int noOfRoom;
-	private String guestTel;
-	private String guestFax;
+	private int guestTel;
+	private int guestTelCode;
+	private int guestFax;
+	private int guestFaxCode;
 	private String webSiteUrl;
 	private String emailAddr;
-	private String directTelNo;
-	private String directFaxNo;
+	private int directTelNo;
+	private int directTelCode;
+	private int directFaxNo;
+	private int directFaxCode;
 	private String genMgrName;
 	private String genMgrEmail;
 	/**
@@ -87,36 +91,7 @@ public class HotelInternalInformation {
 	public void setNoOfRoom(int noOfRoom) {
 		this.noOfRoom = noOfRoom;
 	}
-	/**
-	 * @return the guestTel
-	 */
-	public String getGuestTel() {
-		return guestTel;
-	}
-	/**
-	 * @param guestTel the guestTel to set
-	 */
-	public void setGuestTel(String guestTel) {
-		this.guestTel = guestTel;
-	}
-	/**
-	 * @return the guestFax
-	 */
-	public String getGuestFax() {
-		return guestFax;
-	}
-	/**
-	 * @param guestFax the guestFax to set
-	 */
-	public void setGuestFax(String guestFax) {
-		this.guestFax = guestFax;
-	}
-	/**
-	 * @return the webSiteUrl
-	 */
-	public String getWebSiteUrl() {
-		return webSiteUrl;
-	}
+	
 	/**
 	 * @param webSiteUrl the webSiteUrl to set
 	 */
@@ -135,29 +110,56 @@ public class HotelInternalInformation {
 	public void setEmailAddr(String emailAddr) {
 		this.emailAddr = emailAddr;
 	}
-	/**
-	 * @return the directTelNo
-	 */
-	public String getDirectTelNo() {
+	
+	public int getGuestTel() {
+		return guestTel;
+	}
+	public void setGuestTel(int guestTel) {
+		this.guestTel = guestTel;
+	}
+	public int getGuestFax() {
+		return guestFax;
+	}
+	public void setGuestFax(int guestFax) {
+		this.guestFax = guestFax;
+	}
+	public int getDirectTelNo() {
 		return directTelNo;
 	}
-	/**
-	 * @param directTelNo the directTelNo to set
-	 */
-	public void setDirectTelNo(String directTelNo) {
+	public void setDirectTelNo(int directTelNo) {
 		this.directTelNo = directTelNo;
 	}
-	/**
-	 * @return the directFaxNo
-	 */
-	public String getDirectFaxNo() {
+	public int getDirectFaxNo() {
 		return directFaxNo;
 	}
-	/**
-	 * @param directFaxNo the directFaxNo to set
-	 */
-	public void setDirectFaxNo(String directFaxNo) {
+	public void setDirectFaxNo(int directFaxNo) {
 		this.directFaxNo = directFaxNo;
+	}
+	
+	
+	public int getGuestTelCode() {
+		return guestTelCode;
+	}
+	public void setGuestTelCode(int guestTelCode) {
+		this.guestTelCode = guestTelCode;
+	}
+	public int getGuestFaxCode() {
+		return guestFaxCode;
+	}
+	public void setGuestFaxCode(int guestFaxCode) {
+		this.guestFaxCode = guestFaxCode;
+	}
+	public int getDirectTelCode() {
+		return directTelCode;
+	}
+	public void setDirectTelCode(int directTelCode) {
+		this.directTelCode = directTelCode;
+	}
+	public int getDirectFaxCode() {
+		return directFaxCode;
+	}
+	public void setDirectFaxCode(int directFaxCode) {
+		this.directFaxCode = directFaxCode;
 	}
 	/**
 	 * @return the genMgrName

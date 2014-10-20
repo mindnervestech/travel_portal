@@ -2,7 +2,7 @@ angular.module('travel_portal').
 	controller("hoteRoomController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
 	
 			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10];
-			$scope.supplierCode = 1;
+			$scope.supplierCode = 3;
 			console.log("hoteRoomController successfully initialized.");
 
 			$scope.$watch("sel_room_type", function(selRoomType) {
@@ -90,6 +90,7 @@ angular.module('travel_portal').
 	controller("hoteProfileController",['$scope', '$http', '$rootScope','$filter','ngDialog',function($scope, $http, $rootScope,$filter,ngDialog){
 	
 	$scope.generalInfo = {};
+	$scope.descrip = {};
 	$scope.countries = [];
 	$scope.cities = [];
 	
@@ -227,11 +228,46 @@ angular.module('travel_portal').
 		$scope.leisureSport=response;
 	});
 	/*$http.get('/deletemealpolicy/'+meal.id)*/
-	$rootScope.supplierCode = "187";
+	$rootScope.supplierCode = "206";
 	$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response){
 		$scope.getallData=response;
 		console.log("////////$$$///////////");
 		console.log(response);
+		$scope.generalInfo=response.hotelgeneralinfo;
+		/*$scope.generalInfo.companyName=response.hotelgeneralinfo.hotelNm;
+		$scope.generalInfo.countryCode=response.hotelgeneralinfo.countryCode;
+		$scope.generalInfo.emailAddr=response.hotelgeneralinfo.email;
+		$scope.generalInfo.currency=response.hotelgeneralinfo.currencyCode;
+		//$scope.generalInfo.=response.hotelgeneralinfo.healthSafetyCompliance;
+		$scope.generalInfo.partOfchain=response.hotelgeneralinfo.chainHotelCode;
+		$scope.generalInfo.brand=response.hotelgeneralinfo.brandHotelCode;
+		$scope.generalInfo.marketrate=response.hotelgeneralinfo.marketSpecificPolicyCode;
+		$scope.generalInfo.citycode=response.hotelgeneralinfo.cityCode;
+		$scope.generalInfo.password=response.hotelgeneralinfo.primaryPasswd;
+		$scope.generalInfo.staterate=response.hotelgeneralinfo.startRating;
+		$scope.generalInfo.verify=response.hotelgeneralinfo.verifiedPasswd;		
+		$scope.generalInfo.hotelAddress=response.hotelgeneralinfo.hotelAddr;*/
+		$scope.internalInfo = response.hotelinternalinformation;
+		$scope.contactInfo =  response.hotelcontactinformation;
+		$scope.comunicationhotel = response.hotelcommuniction;
+		$scope.descrip = response.hoteldescription;
+		$scope.service_check =response.hoteldescription.services;
+		//console.log($scope.services);
+		angular.forEach($scope.services, function(obj, index){
+			angular.forEach(response.hoteldescription.services, function(obj1, index){
+				 if ((obj.serviceId == obj1)) {
+					 obj.isSelected=true;
+			    };
+			});
+		});
+		/*$scope.descrip.description = response.hoteldescription.description;
+		$scope.descrip.hotelLocation = response.hoteldescription.hotelLocation;
+		$scope.descrip.location1 = response.hoteldescription.location1;
+		$scope.descrip.location2 = response.hoteldescription.location2;
+		$scope.descrip.location3 = response.hoteldescription.location3;
+		$scope.descrip.nightLifeCode = response.hoteldescription.nightLifeCode;
+		$scope.descrip.shoppingFacilityCode = response.hoteldescription.shoppingFacilityCode;*/
+		//$scope.descrip.description = response.hoteldescription.location3;
 		console.log("////////$$$/////////");
 	});
 	
@@ -366,9 +402,11 @@ $scope.leisureClicked = function(e, leisure) {
 		} else {
 			DeleteleisureItem(leisure);
 		}
+		console.log($scope.leisure_sport_check);
 	}
 	
 
+DeleteleisureItem = function(leisure){
 angular.forEach($scope.leisure_sport_check, function(obj, index){
 	
 	 if ((leisure.amenitiesCode == obj)) {
@@ -377,6 +415,7 @@ angular.forEach($scope.leisure_sport_check, function(obj, index){
        	return;
     };
   });
+}
 	  
 
 		
@@ -436,14 +475,14 @@ angular.forEach($scope.business_check, function(obj, index){
 		} else {
 			DeleteItem(generalInfo);
 		}
-		
+		console.log($scope.service_check);
 	}
 	
 	
 	DeleteItem = function(generalInfo){
 				    			    	
 		angular.forEach($scope.service_check, function(obj, index){
-			 if ((generalInfo.serviceId === obj.serviceId) || (generalInfo.serviceId === obj.serviceId)) {
+				 if ((generalInfo.serviceId === obj)) {
 		    	$scope.service_check.splice(index, 1);
 		    
 		       	return;
@@ -452,12 +491,13 @@ angular.forEach($scope.business_check, function(obj, index){
 			  
 		}
 	
-	
+	//$scope.generalInfo.supplierCode="1234";
 	
 	$scope.radioValue;
 	$scope.generalInfoMsg = false;
 	$scope.savegeneralinfo = function() {
-		$scope.generalInfo.supplierCode = "";
+		//$scope.generalInfo.supplierCode = "1234";
+		console.log($scope.generalInfo.supplierCode);
 		console.log($scope.generalInfo);
 		
 		$http.post('/saveGeneralInfo', $scope.generalInfo).success(function(data){
@@ -465,6 +505,7 @@ angular.forEach($scope.business_check, function(obj, index){
 			console.log(data);
 			$scope.generalInfoMsg = true;
 			//$scope.MealType = data;			
+			$scope.generalInfo.supplierCode=data.ID;
 			$rootScope.supplierCode=data.ID;
 			$rootScope.supplierName=data.NAME;
 			$rootScope.supplierAddr=data.ADDR;
@@ -656,6 +697,7 @@ $scope.savetranspotDire = function() {
 				$scope.descrip.services = $scope.service_check;
 						
 			console.log($scope.descrip);
+			console.log($scope.descrip.services);
 			console.log("//////////////////");
 			$http.post('/updateDescription',$scope.descrip).success(function(data){
 					console.log('success');
@@ -667,7 +709,7 @@ $scope.savetranspotDire = function() {
 	
 	$scope.leisuresucess = false;
 	$scope.saveleisure_sport = function(){
-	//	$scope.leisure.supplierCode=$rootScope.supplierCode;
+		$scope.leisure.supplierCode="206"; //$rootScope.supplierCode;
 		$scope.leisure.amenities=$scope.leisure_sport_check;
 		console.log($scope.leisure);
 		$http.post('/saveamenities',$scope.leisure).success(function(data){
@@ -680,7 +722,7 @@ $scope.savetranspotDire = function() {
 	
 	$scope.businessSucess = false;
 	$scope.savebusiness = function(){
-		//$scope.businessInfo.supplierCode=$rootScope.supplierCode;
+		$scope.businessInfo.supplierCode="206"; //$rootScope.supplierCode;
 		$scope.businessInfo.amenities=$scope.business_check;
 		console.log($scope.businessInfo);
 		$http.post('/saveamenities',$scope.businessInfo).success(function(data){
@@ -695,6 +737,7 @@ $scope.savetranspotDire = function() {
 	$scope.saveAmenities = function(){
 		//console.log($scope.amenitiesInfo.supplierCode);
 	//$scope.amenitiesInfo.supplierCode=$scope.amenitiesInfo.supplierCode;
+		$scope.amenitiesInfo.supplierCode= "206";//$rootScope.supplierCode;
 		$scope.amenitiesInfo.amenities =$scope.amenities_check;
 		console.log($scope.amenitiesInfo);
 		$http.post('/saveamenities',$scope.amenitiesInfo).success(function(data){
