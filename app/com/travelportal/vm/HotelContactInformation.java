@@ -72,19 +72,9 @@ public class HotelContactInformation {
 	public void setSalutationCode(Integer salutationCode) {
 		this.salutationCode = salutationCode;
 	}
-	/**
-	 * @return the dTelNo
-	 */
 	
-	/**
-	 * @param dTelNo the dTelNo to set
-	 */
-	/**
-	 * @return the dFaxNo
-	 */
-	/**
-	 * @param dFaxNo the dFaxNo to set
-	 */
+	
+	
 	/**
 	 * @return the dExtNo
 	 */
@@ -157,13 +147,7 @@ public class HotelContactInformation {
 	public void setrTitle(String rTitle) {
 		this.rTitle = rTitle;
 	}
-	/**
-	 * @return the rDirectTelNo
-	 */
 
-	/**
-	 * @param rDirectTelNo the rDirectTelNo to set
-	 */
 	/**
 	 * @return the rEmailAddr
 	 */
@@ -176,14 +160,16 @@ public class HotelContactInformation {
 	public void setrEmailAddr(String rEmailAddr) {
 		this.rEmailAddr = rEmailAddr;
 	}
+	
+	
 	/**
-	 * @return the rExtNo
+	 * @return the deptExtNo
 	 */
 	public int getDeptExtNo() {
 		return deptExtNo;
 	}
 	/**
-	 * @param rExtNo the rExtNo to set
+	 * @param deptExtNo the deptExtNo to set
 	 */
 	public void setDeptExtNo(int deptExtNo) {
 		this.deptExtNo = deptExtNo;
@@ -230,15 +216,9 @@ public class HotelContactInformation {
 	public void setrExtNo(int rExtNo) {
 		this.rExtNo = rExtNo;
 	}
-	/**
-	 * @return the rDeptTelNo
-	 */
 	public int getrDeptTelNo() {
 		return rDeptTelNo;
 	}
-	/**
-	 * @param rDeptTelNo the rDeptTelNo to set
-	 */
 	public void setrDeptTelNo(int rDeptTelNo) {
 		this.rDeptTelNo = rDeptTelNo;
 	}
@@ -251,24 +231,19 @@ public class HotelContactInformation {
 	public int getrDeptFaxNo() {
 		return rDeptFaxNo;
 	}
-	/**
-	 * @param rDeptFaxNo the rDeptFaxNo to set
-	 */
 	public void setrDeptFaxNo(int rDeptFaxNo) {
 		this.rDeptFaxNo = rDeptFaxNo;
 	}
-	/**
-	 * @return the deptExtNo
-	 */
 	public int getrDeptFaxCode() {
 		return rDeptFaxCode;
 	}
-	/**
-	 * @param deptExtNo the deptExtNo to set
-	 */
 	public void setrDeptFaxCode(int rDeptFaxCode) {
 		this.rDeptFaxCode = rDeptFaxCode;
 	}
+	
+	
+	
+	
 	
 	
 	

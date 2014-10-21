@@ -104,36 +104,49 @@ public class HotelPrivateContacts {
 	public void setSalutation(Salutation salutation) {
 		this.salutation = salutation;
 	}
+	
+	
+		
 	public int getReservationContactTelCode() {
 		return reservationContactTelCode;
 	}
+
 	public void setReservationContactTelCode(int reservationContactTelCode) {
 		this.reservationContactTelCode = reservationContactTelCode;
 	}
+
 	public int getMainContactTelCode() {
 		return mainContactTelCode;
 	}
+
 	public void setMainContactTelCode(int mainContactTelCode) {
 		this.mainContactTelCode = mainContactTelCode;
 	}
+
 	public int getMainContactFaxCode() {
 		return mainContactFaxCode;
 	}
+
 	public void setMainContactFaxCode(int mainContactFaxCode) {
 		this.mainContactFaxCode = mainContactFaxCode;
 	}
+
 	public int getDeptTelCode() {
 		return deptTelCode;
 	}
+
 	public void setDeptTelCode(int deptTelCode) {
 		this.deptTelCode = deptTelCode;
 	}
+
 	public int getDeptFaxCode() {
 		return deptFaxCode;
 	}
+
 	public void setDeptFaxCode(int deptFaxCode) {
 		this.deptFaxCode = deptFaxCode;
 	}
+
 	/**
 	 * @return the mainContactTelNo
 	 */
@@ -201,7 +214,7 @@ public class HotelPrivateContacts {
 		return reservationSameAsMainContact;
 	}
 	/**
-	 * @param reservationSameAsMainContact the reservationSameAsMainContact to set
+	 * @param reservationSameAsMainContact the 	 to set
 	 */
 	public void setReservationSameAsMainContact(boolean reservationSameAsMainContact) {
 		this.reservationSameAsMainContact = reservationSameAsMainContact;

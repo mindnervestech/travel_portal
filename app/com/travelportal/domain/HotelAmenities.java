@@ -18,6 +18,7 @@ import play.db.jpa.JPA;
 @Entity
 @Table(name="hotel_amenities")
 public class HotelAmenities {
+	
 	@Column(name="amenities_code")
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int amenitiesCode;

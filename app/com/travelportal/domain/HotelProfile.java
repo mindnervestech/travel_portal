@@ -54,7 +54,7 @@ public class HotelProfile {
 	private String zipCode;
 	
 	@Column(name="hotel_part_of_chain")
-	private String partOfChain;
+	private boolean partOfChain;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelBrands hoteBrands;
@@ -347,13 +347,13 @@ public class HotelProfile {
 	/**
 	 * @return the partOfChain
 	 */
-	public String isPartOfChain() {
+	public boolean isPartOfChain() {
 		return partOfChain;
 	}
 	/**
 	 * @param partOfChain the partOfChain to set
 	 */
-	public void setPartOfChain(String partOfChain) {
+	public void setPartOfChain(boolean partOfChain) {
 		this.partOfChain = partOfChain;
 	}
 	/**
@@ -410,6 +410,7 @@ public class HotelProfile {
 	public List<HotelServices> getServices() {
 		return services;
 	}
+	
 	public List<Integer> getIntListServices() {
 		List<Integer> list = new ArrayList<>();
 		for(HotelServices service : this.services){
@@ -477,21 +478,21 @@ public class HotelProfile {
 	/**
 	 * @return the fireSafetyCompliance
 	 */
-	public String isFireSafetyCompliance() {
-		return fireSafetyCompliance;
-	}
-	/**
-	 * @param fireSafetyCompliance the fireSafetyCompliance to set
-	 */
-	public void setFireSafetyCompliance(String fireSafetyCompliance) {
-		this.fireSafetyCompliance = fireSafetyCompliance;
-	}
+	
 	/**
 	 * @return the noOfFloors
 	 */
 	public int getNoOfFloors() {
 		return noOfFloors;
 	}
+	public String getFireSafetyCompliance() {
+		return fireSafetyCompliance;
+	}
+
+	public void setFireSafetyCompliance(String fireSafetyCompliance) {
+		this.fireSafetyCompliance = fireSafetyCompliance;
+	}
+
 	/**
 	 * @param noOfFloors the noOfFloors to set
 	 */
@@ -703,6 +704,8 @@ public class HotelProfile {
 	public void setAmenities(Set<HotelAmenities> amenities) {
 		this.amenities.addAll(amenities);
 	}
+	
+	
 	public void addAmenities(Set<HotelAmenities> amenities) {
 		this.amenities.addAll(amenities);
 	}

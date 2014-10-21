@@ -58,20 +58,18 @@ public class HotelInternalInformation {
 	/**
 	 * @return the safetyCompliance
 	 */
-	public String isSafetyCompliance() {
-		return safetyCompliance;
-	}
-	/**
-	 * @param safetyCompliance the safetyCompliance to set
-	 */
-	public void setSafetyCompliance(String safetyCompliance) {
-		this.safetyCompliance = safetyCompliance;
-	}
+
 	/**
 	 * @return the noOffloor
 	 */
 	public int getNoOffloor() {
 		return noOffloor;
+	}
+	public String getSafetyCompliance() {
+		return safetyCompliance;
+	}
+	public void setSafetyCompliance(String safetyCompliance) {
+		this.safetyCompliance = safetyCompliance;
 	}
 	/**
 	 * @param noOffloor the noOffloor to set
@@ -95,14 +93,18 @@ public class HotelInternalInformation {
 	/**
 	 * @param webSiteUrl the webSiteUrl to set
 	 */
-	public void setWebSiteUrl(String webSiteUrl) {
-		this.webSiteUrl = webSiteUrl;
-	}
+	
 	/**
 	 * @return the emailAddr
 	 */
 	public String getEmailAddr() {
 		return emailAddr;
+	}
+	public String getWebSiteUrl() {
+		return webSiteUrl;
+	}
+	public void setWebSiteUrl(String webSiteUrl) {
+		this.webSiteUrl = webSiteUrl;
 	}
 	/**
 	 * @param emailAddr the emailAddr to set

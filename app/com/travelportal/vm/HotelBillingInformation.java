@@ -85,15 +85,12 @@ public class HotelBillingInformation {
 	public void setdEmailAddr(String dEmailAddr) {
 		this.dEmailAddr = dEmailAddr;
 	}
-	/**
-	 * @return the dTelNo
-	 */
+	
+	
+	
 	public int getdTelNo() {
 		return dTelNo;
 	}
-	/**
-	 * @param dTelNo the dTelNo to set
-	 */
 	public void setdTelNo(int dTelNo) {
 		this.dTelNo = dTelNo;
 	}
@@ -106,9 +103,6 @@ public class HotelBillingInformation {
 	public int getdFaxNo() {
 		return dFaxNo;
 	}
-	/**
-	 * @param dFaxNo the dFaxNo to set
-	 */
 	public void setdFaxNo(int dFaxNo) {
 		this.dFaxNo = dFaxNo;
 	}
@@ -121,9 +115,6 @@ public class HotelBillingInformation {
 	public int getdExtNo() {
 		return dExtNo;
 	}
-	/**
-	 * @param dExtNo the dExtNo to set
-	 */
 	public void setdExtNo(int dExtNo) {
 		this.dExtNo = dExtNo;
 	}

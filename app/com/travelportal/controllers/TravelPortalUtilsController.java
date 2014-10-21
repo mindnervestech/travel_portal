@@ -1,8 +1,10 @@
 package com.travelportal.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -200,7 +202,9 @@ public class TravelPortalUtilsController extends Controller {
 		hotelgeneralinfoVM.setHotelNm(hotelProfile.getHotelName());
 		hotelgeneralinfoVM.setHotelAddr(hotelProfile.getAddress());
 		hotelgeneralinfoVM.setCountryCode(hotelProfile.getCountry().getCountryCode());
+		hotelgeneralinfoVM.setCurrencyCode(hotelProfile.getCurrency().getCurrencyCode());
 		hotelgeneralinfoVM.setHotelPartOfChain(hotelProfile.isPartOfChain());
+		hotelgeneralinfoVM.setChainHotelCode(hotelProfile.getChainHotel().getChainHotelCode());
 		hotelgeneralinfoVM.setEmail(hotelProfile.getHotelEmailAddr());
 		hotelgeneralinfoVM.setPrimaryPasswd(hotelProfile.getPassword());
 		hotelgeneralinfoVM.setVerifiedPasswd(hotelProfile.getVerifyPassword());
@@ -216,7 +220,6 @@ public class TravelPortalUtilsController extends Controller {
 		hoteldescription.setShoppingFacilityCode(hotelProfile.getShoppingFacility().getId());
 		hoteldescription.setNightLifeCode(hotelProfile.getNightLife().getNightLifeCode());
 		hoteldescription.setServices(hotelProfile.getIntListServices());
-		
 		hoteldescription.setlocation1(hotelProfile.getlocation1());
 		hoteldescription.setlocation2(hotelProfile.getlocation2());
 		hoteldescription.setlocation3(hotelProfile.getlocation3());
@@ -232,7 +235,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelinternalinformation.setWebSiteUrl(hotelProfile.getHotelWebSite());
 		hotelinternalinformation.setNoOffloor(hotelProfile.getNoOfFloors());
 		hotelinternalinformation.setNoOfRoom(hotelProfile.getNoOfRooms());
-		hotelinternalinformation.setSafetyCompliance(hotelProfile.isFireSafetyCompliance());
+		hotelinternalinformation.setSafetyCompliance(hotelProfile.getFireSafetyCompliance());
 		hotelinternalinformation.setGuestTel(internalcontacts.getGuestTelValue());
 		hotelinternalinformation.setGuestTelCode(internalcontacts.getGuestTelCityCode());
 		hotelinternalinformation.setGuestFax(internalcontacts.getGuestFaxValue());
@@ -256,6 +259,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelcontactinformation.setDeptExtNo(hotelprivatecontacts.getMainContactExt());
 		hotelcontactinformation.setdEmailAddr(hotelprivatecontacts.getMainContactEmailAddr());
 		hotelcontactinformation.setdTollFreeTelNo(hotelprivatecontacts.getTollFreeNo());
+		hotelcontactinformation.setSalutationCode(hotelprivatecontacts.getSalutation_salutation_id().getSalutationId());
 		hotelcontactinformation.setReservationDetailSame(hotelprivatecontacts.isReservationSameAsMainContact());
 		hotelcontactinformation.setrContactName(hotelprivatecontacts.getReservationContactPersonName());
 		hotelcontactinformation.setrTitle(hotelprivatecontacts.getReservationContactPersonTitle());
@@ -274,7 +278,47 @@ public class TravelPortalUtilsController extends Controller {
 		hotelcommuniction.setSupplierCode(businesscommunication.getSupplierCode());
 		hotelcommuniction.setBooking(businesscommunication.getbooking());
 		
-	/*	System.out.println(supplierCode);
+		List<HotelAttractions> attractions = hotelProfile.getHotelareaattraction();
+		
+		//AreaAttractionsSuppVM areaattractionssuppVM = new AreaAttractionsSuppVM();
+		List<AreaAttractionsVM> areaattractionsVM = new ArrayList<>();
+		
+		for(HotelAttractions hotelattractionvm : attractions)
+		{
+			AreaAttractionsVM vm = new AreaAttractionsVM();
+			vm.setAttraction_code(hotelattractionvm.getAttractionCode());
+			vm.setname(hotelattractionvm.getAttractionNm());
+			vm.setDistance(hotelattractionvm.getDistance());
+			vm.setKm(hotelattractionvm.getDistanceType());
+			vm.setMinutes(hotelattractionvm.getTimeRequireInMinutes());		
+			areaattractionsVM.add(vm);
+		}
+		
+		List<TransportationDirection> transportationdirections = hotelProfile.getTransportCode();
+		List<TransportationDirectionsVM> transportationdirectionsVM = new ArrayList<>();
+		
+		for(TransportationDirection transportationDirection: transportationdirections)
+		{
+			TransportationDirectionsVM vm = new TransportationDirectionsVM();
+			vm.setTransportCode(transportationDirection.getTransportCode());
+			vm.setLocationName(transportationDirection.getLocationName());
+			vm.setLocationAddr(transportationDirection.getLocationAddr());
+			transportationdirectionsVM.add(vm);
+			
+		}
+		
+		Set<HotelAmenities> hotelamenities = hotelProfile.getAmenities();
+	/*	List<Integer> hotelamenitiesVM = new ArrayList<Integer>();
+		for(HotelAmenities hAmenities : hotelamenities)
+		{
+			//hotelamenitiesVM.add();
+		    // vm.setSupplierCode(hAmenities.getAmenitiesNm());
+		}*/
+			
+		
+		
+		
+		System.out.println(supplierCode);
 		BillingInformation billinginformation = BillingInformation.findById(supplierCode);
 		System.out.println(billinginformation);
 		HotelBillingInformation hotelbillinginformation = new HotelBillingInformation();
@@ -291,7 +335,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelbillinginformation.setSupplierCode(billinginformation.getSupplierCode());
 		hotelbillinginformation.setdExtNo(billinginformation.getExt());
 		hotelbillinginformation.setBankToBankTransfer(billinginformation.getBankservice());
-		*/
+		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("hotelgeneralinfo", hotelgeneralinfoVM);
@@ -299,8 +343,10 @@ public class TravelPortalUtilsController extends Controller {
 		map.put("hotelinternalinformation", hotelinternalinformation);
 		map.put("hotelcontactinformation", hotelcontactinformation);
 		map.put("hotelcommuniction", hotelcommuniction);
-		//map.put("hotelbillinginformation", hotelbillinginformation);
-		
+		map.put("areaattractionsVM", areaattractionsVM);
+		map.put("hotelbillinginformation", hotelbillinginformation);
+		map.put("transportationdirectionsVM", transportationdirectionsVM);
+		map.put("hotelamenities", hotelamenities);
 		
 		return ok(Json.toJson(map));
 		
@@ -327,10 +373,10 @@ public class TravelPortalUtilsController extends Controller {
   		hotelprofile.setAddress(form.get("hotelAddr"));
   		hotelprofile.setCountry(Country.getCountryByCode(Integer.parseInt(form.get("countryCode"))));
   		hotelprofile.setCity(City.getCityByCode(Integer.parseInt(form.get("cityCode"))));
-  		hotelprofile.setPartOfChain(form.get("isHotelPartOfChain"));
+  		hotelprofile.setPartOfChain(Boolean.parseBoolean(form.get("isHotelPartOfChain")));
   		hotelprofile.setHotelEmailAddr(form.get("email"));
   		hotelprofile.setMarketPolicyType(MarketPolicyTypes.getMarketPolicyTypesIdByCode(Integer.parseInt(form.get("marketSpecificPolicyCode"))));
-  		hotelprofile.setHoteBrands(HotelBrands.getHotelBrandsbyCode(Integer.parseInt(form.get("BrandHotelCode"))));
+  		hotelprofile.setHoteBrands(HotelBrands.getHotelBrandsbyCode(Integer.parseInt(form.get("brandHotelCode"))));
   		hotelprofile.setPassword(form.get("primaryPasswd"));
   		hotelprofile.setStartRatings(Integer.parseInt(form.get("startRating")));
   		hotelprofile.setVerifyPassword(form.get("verifiedPasswd"));
@@ -468,8 +514,7 @@ public class TravelPortalUtilsController extends Controller {
 	
 	@Transactional
 	public static Result getdeletemealpolicy(int id) {
-		
-				
+						
 		HotelMealPlan hotelmealplan = HotelMealPlan.findById(id);
 		for(ChildPolicies policies : hotelmealplan.getChild()){
 			policies.delete();
@@ -491,6 +536,8 @@ public class TravelPortalUtilsController extends Controller {
 		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
 		
 		String attractionsuccess="";
+		//hotelprofile.setHotelareaattraction(null);
+		
 		for(AreaAttractionsVM vm : areaattractionssuppVM.getAreaInfo()){
 		 if(vm.getname() != "")
 		 {
@@ -513,6 +560,7 @@ public class TravelPortalUtilsController extends Controller {
 			}
 			  else
 			    {
+				 // hotelprofile.addHotelareaattraction(hotelattractions.attractionrepeat(vm.getname()));
 				  attractionsuccess = "no";
 			    }
 			}
@@ -531,27 +579,28 @@ public class TravelPortalUtilsController extends Controller {
 		Json.fromJson(json, TransportationDirectionsSuppVM.class);
 		TransportationDirectionsSuppVM transportationdirectionsSuppVM = Json.fromJson(json, TransportationDirectionsSuppVM.class);
 		
-		//HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
+		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
 		String successdata="";
 		
+		hotelprofile.setTransportCode(null);
+		
 		for(TransportationDirectionsVM vm : transportationdirectionsSuppVM.getFindLocation()){
-						
+			
 			TransportationDirection transportationDirection=new  TransportationDirection();
-			
-		    if(transportationDirection.checklocationexe(vm.getLocationName()) == null)
-		    {	
-		 
-			transportationDirection.setLocationName(vm.getLocationName());
-			transportationDirection.setLocationAddr(vm.getLocationAddr());
-			
-			transportationDirection.save();
-			//hotelprofile.addTransportCode(transportationDirection);
-			successdata="yes";
-		    }
-		    else
-		    {
-		    	successdata="no";
-		    }
+						
+		 	if(transportationDirection.checklocationexe(vm.getLocationName()) == null) {	
+    	
+		 		transportationDirection.setLocationName(vm.getLocationName());
+		 		transportationDirection.setLocationAddr(vm.getLocationAddr());
+	
+		 		transportationDirection.save();
+ 	    		    	 
+		 		hotelprofile.addTransportCode(transportationDirection);
+		 		successdata="yes";
+		 	} else {
+		 		hotelprofile.addTransportCode(transportationDirection.checklocationexe(vm.getLocationName()));
+		 		successdata="no";
+		 	}
 								
 		}
 		

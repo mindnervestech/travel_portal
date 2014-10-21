@@ -49,4 +49,8 @@ public class HotelCommunication {
 		this.booking = booking;
 	}
 	
+	
+	
+	
+	
 }

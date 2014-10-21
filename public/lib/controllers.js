@@ -94,6 +94,12 @@ angular.module('travel_portal').
 	$scope.countries = [];
 	$scope.cities = [];
 	
+
+	$scope.service_check = [];
+	$scope.amenities_check = [];
+	$scope.business_check = [];
+	$scope.leisure_sport_check = [];
+	
 	 $scope.name = '';
 	  
 	    $scope.contacts = [];
@@ -228,46 +234,73 @@ angular.module('travel_portal').
 		$scope.leisureSport=response;
 	});
 	/*$http.get('/deletemealpolicy/'+meal.id)*/
-	$rootScope.supplierCode = "206";
+	//$rootScope.supplierCode = "206";
 	$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response){
 		$scope.getallData=response;
 		console.log("////////$$$///////////");
 		console.log(response);
 		$scope.generalInfo=response.hotelgeneralinfo;
-		/*$scope.generalInfo.companyName=response.hotelgeneralinfo.hotelNm;
-		$scope.generalInfo.countryCode=response.hotelgeneralinfo.countryCode;
-		$scope.generalInfo.emailAddr=response.hotelgeneralinfo.email;
-		$scope.generalInfo.currency=response.hotelgeneralinfo.currencyCode;
-		//$scope.generalInfo.=response.hotelgeneralinfo.healthSafetyCompliance;
-		$scope.generalInfo.partOfchain=response.hotelgeneralinfo.chainHotelCode;
-		$scope.generalInfo.brand=response.hotelgeneralinfo.brandHotelCode;
-		$scope.generalInfo.marketrate=response.hotelgeneralinfo.marketSpecificPolicyCode;
-		$scope.generalInfo.citycode=response.hotelgeneralinfo.cityCode;
-		$scope.generalInfo.password=response.hotelgeneralinfo.primaryPasswd;
-		$scope.generalInfo.staterate=response.hotelgeneralinfo.startRating;
-		$scope.generalInfo.verify=response.hotelgeneralinfo.verifiedPasswd;		
-		$scope.generalInfo.hotelAddress=response.hotelgeneralinfo.hotelAddr;*/
+		
+		for(var i=0;i<response.areaattractionsVM.length;i++) {
+			$scope.formArr[i] = response.areaattractionsVM[i];	
+		  }
+		
+		
+		$scope.locationsearch.findLocation = response.transportationdirectionsVM;
+		 
+	
 		$scope.internalInfo = response.hotelinternalinformation;
 		$scope.contactInfo =  response.hotelcontactinformation;
 		$scope.comunicationhotel = response.hotelcommuniction;
 		$scope.descrip = response.hoteldescription;
 		$scope.service_check =response.hoteldescription.services;
-		//console.log($scope.services);
-		angular.forEach($scope.services, function(obj, index){
-			angular.forEach(response.hoteldescription.services, function(obj1, index){
-				 if ((obj.serviceId == obj1)) {
+		
+		
+		angular.forEach($scope.amenities, function(obj, index){
+			angular.forEach(response.hotelamenities, function(obj1, index){
+				
+				 if ((obj.amenitiesCode == obj1.amenitiesCode)) {				 
+					
+					 obj.isSelected=true;
+			    };
+			});
+			
+		});
+		
+		
+		
+		angular.forEach($scope.leisureSport, function(obj, index){
+			angular.forEach(response.hotelamenities, function(obj1, index){
+				
+				 if ((obj.amenitiesCode == obj1.amenitiesCode)) {
+					 $scope.leisure_sport_check.push(obj.amenitiesCode);
 					 obj.isSelected=true;
 			    };
 			});
 		});
-		/*$scope.descrip.description = response.hoteldescription.description;
-		$scope.descrip.hotelLocation = response.hoteldescription.hotelLocation;
-		$scope.descrip.location1 = response.hoteldescription.location1;
-		$scope.descrip.location2 = response.hoteldescription.location2;
-		$scope.descrip.location3 = response.hoteldescription.location3;
-		$scope.descrip.nightLifeCode = response.hoteldescription.nightLifeCode;
-		$scope.descrip.shoppingFacilityCode = response.hoteldescription.shoppingFacilityCode;*/
-		//$scope.descrip.description = response.hoteldescription.location3;
+		
+		
+		angular.forEach($scope.business, function(obj, index){
+			angular.forEach(response.hotelamenities, function(obj1, index){
+				
+				 if ((obj.amenitiesCode == obj1.amenitiesCode)) {
+					 $scope.business_check.push(obj.amenitiesCode);
+					 obj.isSelected=true;
+			    };
+			});
+		});
+		
+		angular.forEach($scope.services, function(obj, index){
+			angular.forEach(response.hoteldescription.services, function(obj1, index){
+				
+				 if ((obj.serviceId == obj1)) {
+					 $scope.amenities_check.push(obj.amenitiesCode);
+					 obj.isSelected=true;
+			    };
+			});
+		});
+				
+		
 		console.log("////////$$$/////////");
 	});
 	
@@ -388,10 +421,6 @@ angular.module('travel_portal').
 	});
 	
 	
-	$scope.service_check = [];
-	$scope.amenities_check = [];
-	$scope.business_check = [];
-	$scope.leisure_sport_check = [];
 	
 	
 	
@@ -404,18 +433,22 @@ $scope.leisureClicked = function(e, leisure) {
 		}
 		console.log($scope.leisure_sport_check);
 	}
-	
+
 
 DeleteleisureItem = function(leisure){
-angular.forEach($scope.leisure_sport_check, function(obj, index){
-	
-	 if ((leisure.amenitiesCode == obj)) {
-    	$scope.leisure_sport_check.splice(index, 1);
-    
-       	return;
-    };
-  });
+
+	angular.forEach($scope.leisure_sport_check, function(obj, index){
+		
+		 if ((leisure.amenitiesCode == obj)) {
+	    	$scope.leisure_sport_check.splice(index, 1);
+	    
+	       	return;
+	    };
+	  });
+	  
 }
+	
+
 	  
 
 		
@@ -478,21 +511,19 @@ angular.forEach($scope.business_check, function(obj, index){
 		console.log($scope.service_check);
 	}
 	
-	
-	DeleteItem = function(generalInfo){
-				    			    	
-		angular.forEach($scope.service_check, function(obj, index){
+	 DeleteItem = function(generalInfo){
+	    	
+			angular.forEach($scope.service_check, function(obj, index){
 				 if ((generalInfo.serviceId === obj)) {
-		    	$scope.service_check.splice(index, 1);
-		    
-		       	return;
-		    };
-		  });
-			  
-		}
+			    	$scope.service_check.splice(index, 1);
+			    
+			       	return;
+			    };
+			  });
+				  
+			}
 	
 	//$scope.generalInfo.supplierCode="1234";
-	
 	$scope.radioValue;
 	$scope.generalInfoMsg = false;
 	$scope.savegeneralinfo = function() {
@@ -504,7 +535,7 @@ angular.forEach($scope.business_check, function(obj, index){
 			console.log('success');
 			console.log(data);
 			$scope.generalInfoMsg = true;
-			//$scope.MealType = data;			
+			//$scope.MealType = data;		
 			$scope.generalInfo.supplierCode=data.ID;
 			$rootScope.supplierCode=data.ID;
 			$rootScope.supplierName=data.NAME;
@@ -709,7 +740,7 @@ $scope.savetranspotDire = function() {
 	
 	$scope.leisuresucess = false;
 	$scope.saveleisure_sport = function(){
-		$scope.leisure.supplierCode="206"; //$rootScope.supplierCode;
+		//$scope.leisure.supplierCode="206"; //$rootScope.supplierCode;
 		$scope.leisure.amenities=$scope.leisure_sport_check;
 		console.log($scope.leisure);
 		$http.post('/saveamenities',$scope.leisure).success(function(data){
@@ -738,6 +769,7 @@ $scope.savetranspotDire = function() {
 		//console.log($scope.amenitiesInfo.supplierCode);
 	//$scope.amenitiesInfo.supplierCode=$scope.amenitiesInfo.supplierCode;
 		$scope.amenitiesInfo.supplierCode= "206";//$rootScope.supplierCode;
+		
 		$scope.amenitiesInfo.amenities =$scope.amenities_check;
 		console.log($scope.amenitiesInfo);
 		$http.post('/saveamenities',$scope.amenitiesInfo).success(function(data){
