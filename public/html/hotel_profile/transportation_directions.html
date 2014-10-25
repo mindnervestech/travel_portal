@@ -1,42 +1,46 @@
- <!-- <script src="assets/app/js/googlemap.js"></script> -->
-  <!--  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqPKtW_XvpO0gKcuW-nOGd44O1RgM2j&sensor=false&v=3.exp"></script> --> 
- <!--  <script>
-var directionsDisplay;
-var directionsService = new google.maps.DirectionsService();
-var map;
-
-function initialize() {
-    var mapOptions = {
-      center: { lat: -34.397, lng: 150.644},
-      zoom: 8
-    };
-    var map = new google.maps.Map(document.getElementById('map-canvas'),
-        mapOptions);
-  }
-
-function findmap() {
-  var start = document.getElementById('start').value;
-  var end = document.getElementById('end').value;
-  var request = {
-      origin:start,
-      destination:end,
-      travelMode: google.maps.TravelMode.DRIVING
-  };
-  directionsService.route(request, function(response, status) {
-    if (status == google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(response);
-    }
-  });
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
-
-    </script>   -->
-    
- 
-
-
-<form method="post" ng-submit="savetranspotDire()" role="form" class="form-horizontal">
+<div class="panel panel-green">
+	<div class="panel-heading clearfix">
+		<span class="mts pull-left">HOTEL SUPPLIER PROFILE</span>
+	</div>
+	<div class="panel-body">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="tabbable tabs-left">
+						<ul id="myTab2" class="nav nav-tabs">
+							<li class="active"><a href="#profile0" data-toggle="tab">HOTEL
+									GENERAL INFORMATION</a></li>
+							<li><a href="#profile1" data-toggle="tab">HOTEL
+									DESCRIPTION</a></li>
+							<!-- <li><a href="#profile2" data-toggle="tab">HOTEL LOCATION</a></li> -->
+							<li><a href="#profile2" data-toggle="tab">HOTEL INTERNAL
+									INFORMATION</a></li>
+							<li><a href="#profile3" data-toggle="tab">HOTEL CONTACT
+									INFORMATION</a></li>
+							<li><a href="#profile4" data-toggle="tab">HOTEL
+									COMMUNICATION</a></li>
+							<li><a href="#profile5" data-toggle="tab">BILLING
+									INFORMATION</a></li>
+							<li><a href="#profile6" data-toggle="tab">TAXES, FEES,
+									SUPPLEMENTS</a></li>
+							<li><a href="#profile7" data-toggle="tab">MEAL PLAN AND
+									PRICES</a></li>
+							<li><a href="#profile8" data-toggle="tab">HOTEL
+									AMENITIES</a></li>
+							<li><a href="#profile9" data-toggle="tab">BUSINESS
+									FEATURES</a></li>
+							<li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
+									& SPORT</a></li>
+							<li><a href="#profile11" data-toggle="tab">AREA
+									ATTRACTIONS</a></li>
+							<li><a href="#profile12" data-toggle="tab">TRANSPORTATION
+									& DIRECTIONS</a></li>
+							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
+									SAFETY</a></li>
+						</ul>
+						<div id="myTabContent2" class="tab-content"
+							style="padding-top: 5px;">
+							<form method="post" ng-submit="savetranspotDire()" role="form" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
 					
@@ -62,42 +66,6 @@ When using the Distance Km/Miles area and you need to use Decimal like 0.5 use P
 		
 			
 			
-				 
-				 <!--  <div id="panel">
-    <b>Start: </b>
-    <select id="start" onchange="findmap();">
-      <option value="chicago, il">Chicago</option>
-      <option value="st louis, mo">St Louis</option>
-      <option value="joplin, mo">Joplin, MO</option>
-      <option value="oklahoma city, ok">Oklahoma City</option>
-      <option value="amarillo, tx">Amarillo</option>
-      <option value="gallup, nm">Gallup, NM</option>
-      <option value="flagstaff, az">Flagstaff, AZ</option>
-      <option value="winona, az">Winona</option>
-      <option value="kingman, az">Kingman</option>
-      <option value="barstow, ca">Barstow</option>
-      <option value="san bernardino, ca">San Bernardino</option>
-      <option value="los angeles, ca">Los Angeles</option>
-    </select>
-    <b>End: </b>
-    <select id="end" onchange="findmap();">
-      <option value="chicago, il">Chicago</option>
-      <option value="st louis, mo">St Louis</option>
-      <option value="joplin, mo">Joplin, MO</option>
-      <option value="oklahoma city, ok">Oklahoma City</option>
-      <option value="amarillo, tx">Amarillo</option>
-      <option value="gallup, nm">Gallup, NM</option>
-      <option value="flagstaff, az">Flagstaff, AZ</option>
-      <option value="winona, az">Winona</option>
-      <option value="kingman, az">Kingman</option>
-      <option value="barstow, ca">Barstow</option>
-      <option value="san bernardino, ca">San Bernardino</option>
-      <option value="los angeles, ca">Los Angeles</option>
-    </select>
-    </div>  -->
-				
-				 
-				
 				 <div class="form-group" ng-repeat="find in locationsearch.findLocation">
 			
 				<div class="col-md-3">
@@ -140,22 +108,12 @@ When using the Distance Km/Miles area and you need to use Decimal like 0.5 use P
 	</div>
 </form>
 
-<!-- 
-<style>
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
-      }
-      #panel {
-        position: absolute;
-        top: 5px;
-        left: 50%;
-        margin-left: -180px;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-      }
-    </style>
-    -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+

@@ -1,4 +1,46 @@
-<form method="post" data-ng-submit="savegeneralinfo()" role="form" class="form-horizontal">
+<div class="panel panel-green">
+	<div class="panel-heading clearfix">
+		<span class="mts pull-left">HOTEL SUPPLIER PROFILE</span>
+	</div>
+	<div class="panel-body">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="tabbable tabs-left">
+						<ul id="myTab2" class="nav nav-tabs">
+							<li class="active"><a href="#profile0" data-toggle="tab">HOTEL
+									GENERAL INFORMATION</a></li>
+							<li><a href="#profile1" data-toggle="tab">HOTEL
+									DESCRIPTION</a></li>
+							<!-- <li><a href="#profile2" data-toggle="tab">HOTEL LOCATION</a></li> -->
+							<li><a href="#profile2" data-toggle="tab">HOTEL INTERNAL
+									INFORMATION</a></li>
+							<li><a href="#profile3" data-toggle="tab">HOTEL CONTACT
+									INFORMATION</a></li>
+							<li><a href="#profile4" data-toggle="tab">HOTEL
+									COMMUNICATION</a></li>
+							<li><a href="#profile5" data-toggle="tab">BILLING
+									INFORMATION</a></li>
+							<li><a href="#profile6" data-toggle="tab">TAXES, FEES,
+									SUPPLEMENTS</a></li>
+							<li><a href="#profile7" data-toggle="tab">MEAL PLAN AND
+									PRICES</a></li>
+							<li><a href="#profile8" data-toggle="tab">HOTEL
+									AMENITIES</a></li>
+							<li><a href="#profile9" data-toggle="tab">BUSINESS
+									FEATURES</a></li>
+							<li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
+									& SPORT</a></li>
+							<li><a href="#profile11" data-toggle="tab">AREA
+									ATTRACTIONS</a></li>
+							<li><a href="#profile12" data-toggle="tab">TRANSPORTATION
+									& DIRECTIONS</a></li>
+							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
+									SAFETY</a></li>
+						</ul>
+						<div id="myTabContent2" class="tab-content"
+							style="padding-top: 5px;">
+							<form method="post" data-ng-submit="savegeneralinfo()" role="form" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="form-group">
@@ -117,8 +159,8 @@
 			<br>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Choose a Star Rating:</label>
-				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.startRating" data-ng-options="starrate.starRatingTxt as starrate.starRatingTxt for starrate in starrating" style="width: 70%;" required >
+				<div class="col-md-9">																	
+					<select class="form-control" data-ng-model="generalInfo.startRating" data-ng-options="starrate.id as starrate.starRatingTxt for starrate in starrating" style="width: 70%;" required >
 						<option>Select Star Rating...</option>
 					</select>
 				</div>
@@ -157,3 +199,15 @@ Note: Once you click update if you made changes here, the system will log you ou
                  </div>
 	</div>
 </form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+

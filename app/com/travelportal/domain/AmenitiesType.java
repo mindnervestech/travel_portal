@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.type.descriptor.ValueBinder;
+
 import play.db.jpa.JPA;
 
 @Entity
@@ -20,8 +22,6 @@ public class AmenitiesType {
 	private int amenitiesTypeCode;
 	@Column(name="amenities_type_nm")
 	private String amenitiesTypeNm;
-	@Column(name="display_order")
-	private int displayOrder;
 	
 	/**
 	 * @return the amenitiesTypeCode
@@ -47,21 +47,9 @@ public class AmenitiesType {
 	public void setAmenitiesTypeNm(String amenitiesTypeNm) {
 		this.amenitiesTypeNm = amenitiesTypeNm;
 	}
-	/**
-	 * @return the displayOrder
-	 */
-	public int getDisplayOrder() {
-		return displayOrder;
-	}
-	/**
-	 * @param displayOrder the displayOrder to set
-	 */
-	public void setDisplayOrder(int displayOrder) {
-		this.displayOrder = displayOrder;
-	}
-
+	
 	public static List<AmenitiesType> getamenities() {
-		return JPA.em().createQuery("select c from AmenitiesType c").getResultList();
+		return (List<AmenitiesType>) JPA.em().createQuery("select c from AmenitiesType c").getResultList();
 	}
 	
 	public static AmenitiesType getamenitiesIdByCode(int code) {

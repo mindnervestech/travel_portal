@@ -27,7 +27,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 public class HotelProfile {
 	
-	
 	@Column(name="supplier_code")
 	private Long supplier_code;
 	
@@ -721,19 +720,6 @@ public class HotelProfile {
 	public void setSupplier_code(Long supplier_code) {
 		this.supplier_code = supplier_code;
 	}
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
 	
 	public static HotelProfile findById(Long id) {
     	Query query = JPA.em().createQuery("Select a from HotelProfile a where a.id = ?1");
@@ -743,7 +729,6 @@ public class HotelProfile {
 	
 	/*findAllData*/
 	public static HotelProfile findAllData(Long supplierCode) {
-		
 		return (HotelProfile) JPA.em().createQuery("select c from HotelProfile c where c.id = ?1").setParameter(1,supplierCode).getSingleResult();
 	}
 	
@@ -768,6 +753,62 @@ public class HotelProfile {
     public void refresh() {
         JPA.em().refresh(this);
     }
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the location1
+	 */
+	public String getLocation1() {
+		return location1;
+	}
+
+	/**
+	 * @param location1 the location1 to set
+	 */
+	public void setLocation1(String location1) {
+		this.location1 = location1;
+	}
+
+	/**
+	 * @return the location2
+	 */
+	public String getLocation2() {
+		return location2;
+	}
+
+	/**
+	 * @param location2 the location2 to set
+	 */
+	public void setLocation2(String location2) {
+		this.location2 = location2;
+	}
+
+	/**
+	 * @return the location3
+	 */
+	public String getLocation3() {
+		return location3;
+	}
+
+	/**
+	 * @param location3 the location3 to set
+	 */
+	public void setLocation3(String location3) {
+		this.location3 = location3;
+	}
 	
 	
 }

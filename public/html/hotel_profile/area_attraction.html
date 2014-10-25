@@ -1,287 +1,380 @@
-
-<form method="post" ng-submit="saveAreainfo()" role="form" class="form-horizontal">
-	<div class="row">
-		<div class="col-md-12">
-					
-			<div>
-		<label>Please list Attractions <b>BY NAME</b> such as Landmarks, Museums, Nightlife, Shopping and Activities around your hotel. When using the Distance Km/Miles area and you need to use Decimal like 0.5 use Point/Period.</label><br>
-		<br> 
-		</div>
-		
-		<div class="form-group">
-				<div>
-				<label style="margin-left: 18%;">Name</label>
-				<label style="margin-left: 28%;">Distance</label>
-				<label style="margin-left: 7%;">Km/miles</label>
-				<label style="margin-left: 7%;">minutes</label>
-				</div>
-				</div>
-		
-			
-			<div class="form-group">
-			<div class="col-md-1">
-			<label>*1</label>
-			</div>
-				<div class="col-md-5">
-					<input type="text" name="Name" data-ng-model="formArr[0].name" class="form-control" required>
-				</div>
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="Distance" data-ng-model="formArr[0].distance" class="form-control" required>
-				</div>
-				
-				<div class="col-md-2">
-					<select class="form-control" data-ng-model="formArr[0].km" required>
-							<option>Km</option>
-							<option>Miles</option>
-							
-					</select>
-				</div>
-			
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="minutes" data-ng-model="formArr[0].minutes" class="form-control" required>
-				</div>
-				
-				
-			</div>
-			<div class="form-group"> 
-			<div class="col-md-1">
-			<label>2</label>
-			</div>
-			<div class="col-md-5">
-					<input type="text" name="Name" data-ng-model="formArr[1].name" class="form-control">
-				</div>
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="Distance" data-ng-model="formArr[1].distance" class="form-control">
-				</div>
-				
-				<div class="col-md-2">
-					<select class="form-control" data-ng-model="formArr[1].km">
-							<option>Km</option>
-							<option>Miles</option>
-							
-					</select>
-				</div>
-			
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="minutes" data-ng-model="formArr[1].minutes" class="form-control">
-				</div>
-			</div>
-			
-			<div class="form-group"> 
-			<div class="col-md-1">
-			<label>3</label>
-			</div>
-			<div class="col-md-5">
-					<input type="text" name="Name" data-ng-model="formArr[2].name" class="form-control">
-				</div>
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="Distance" data-ng-model="formArr[2].distance" class="form-control">
-				</div>
-				
-				<div class="col-md-2">
-					<select class="form-control" data-ng-model="formArr[2].km">
-							<option>Km</option>
-							<option>Miles</option>
-							
-					</select>
-				</div>
-			
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="minutes" data-ng-model="formArr[2].minutes" class="form-control">
-				</div>
-			</div>
-			
-			 <div class="form-group"> 
-			<div class="col-md-1">
-			<label>4</label>
-			</div>
-			<div class="col-md-5">
-					<input type="text" name="Name" data-ng-model="formArr[3].name" class="form-control">
-				</div>
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="Distance" data-ng-model="formArr[3].distance" class="form-control">
-				</div>
-				
-				<div class="col-md-2">
-					<select class="form-control" data-ng-model="formArr[3].km">
-							<option>Km</option>
-							<option>Miles</option>
-							
-					</select>
-				</div>
-			
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="minutes" data-ng-model="formArr[3].minutes" class="form-control">
-				</div>
-			</div>
-		
-		 <div>
-					
-			<div class="form-group"> 
-			<div class="col-md-1">
-			<label>5</label>
-			</div>
-			<div class="col-md-5">
-					<input type="text" name="Name" data-ng-model="formArr[4].name" class="form-control">
-				</div>
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="Distance" data-ng-model="formArr[4].distance" class="form-control">
-				</div>
-				
-				<div class="col-md-2">
-					<select class="form-control" data-ng-model="formArr[4].km">
-							<option>Km</option>
-							<option>Miles</option>
-							
-					</select>
-				</div>
-			
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="minutes" data-ng-model="formArr[4].minutes" class="form-control">
-				</div>
-			</div>
-			
-			
-			<div class="form-group"> 
-			<div class="col-md-1">
-			<label>6</label>
-			</div>
-			<div class="col-md-5">
-					<input type="text" name="Name" data-ng-model="formArr[5].name" class="form-control">
-				</div>
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="Distance" data-ng-model="formArr[5].distance" class="form-control">
-				</div>
-				
-				<div class="col-md-2">
-					<select class="form-control" data-ng-model="formArr[5].km">
-							<option>Km</option>
-							<option>Miles</option>
-							
-					</select>
-				</div>
-			
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="minutes" data-ng-model="formArr[5].minutes" class="form-control">
-				</div>
-			</div>
-			
-			
-			<div class="form-group"> 
-			<div class="col-md-1">
-			<label>7</label>
-			</div>
-			<div class="col-md-5">
-					<input type="text" name="Name" data-ng-model="formArr[6].name" class="form-control">
-				</div>
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="Distance" data-ng-model="formArr[6].distance" class="form-control">
-				</div>
-				
-				<div class="col-md-2">
-					<select class="form-control" data-ng-model="formArr[6].km">
-							<option>Km</option>
-							<option>Miles</option>
-							
-					</select>
-				</div>
-			
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="minutes" data-ng-model="formArr[6].minutes" class="form-control">
-				</div>
-			</div>
-			
-			
-			<div class="form-group"> 
-			<div class="col-md-1">
-			<label>8</label>
-			</div>
-			<div class="col-md-5">
-					<input type="text" name="Name" data-ng-model="formArr[7].name" class="form-control">
-				</div>
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="Distance" data-ng-model="formArr[7].distance" class="form-control">
-				</div>
-				
-				<div class="col-md-2">
-					<select class="form-control" data-ng-model="formArr[7].km">
-							<option>Km</option>
-							<option>Miles</option>
-							
-					</select>
-				</div>
-			
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="minutes" data-ng-model="formArr[7].minutes" class="form-control">
-				</div>
-			</div>
-			
-			
-			<div class="form-group"> 
-			<div class="col-md-1">
-			<label>9</label>
-			</div>
-			<div class="col-md-5">
-					<input type="text" name="Name" data-ng-model="formArr[8].name" class="form-control">
-				</div>
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="Distance" data-ng-model="formArr[8].distance" class="form-control">
-				</div>
-				
-				<div class="col-md-2">
-					<select class="form-control" data-ng-model="formArr[8].km">
-							<option>Km</option>
-							<option>Miles</option>
-							
-					</select>
-				</div>
-			
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="minutes" data-ng-model="formArr[8].minutes" class="form-control">
-				</div>
-			</div>
-			
-			
-			<div class="form-group"> 
-			<div class="col-md-1">
-			<label>10</label>
-			</div>
-			<div class="col-md-5">
-					<input type="text" name="Name" data-ng-model="formArr[9].name" class="form-control">
-				</div>
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="Distance" data-ng-model="formArr[9].distance" class="form-control">
-				</div>
-				
-				<div class="col-md-2">
-					<select class="form-control" data-ng-model="formArr[9].km">
-							<option>Km</option>
-							<option>Miles</option>
-							
-					</select>
-				</div>
-			
-				<div class="col-md-2" style="width: 13%;">
-					<input type="text" name="minutes" data-ng-model="formArr[9].minutes" class="form-control">
-				</div>
-			</div>
- 				
-		</div>		 
-		
-			<br>
-																
-			
-		</div> 
-				
-		<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
-		
-		
-		     <div>
-                 <span ng-show="attractionfind" style="color: green;margin-left: 3%;">Area Attraction Save successfully</span>
-					<span ng-show="attractionnotfind" style="color: red;margin-left: 3%;">Any one Area allready exists</span>
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-                 </div>
-                 
+<div class="panel panel-green">
+	<div class="panel-heading clearfix">
+		<span class="mts pull-left">HOTEL SUPPLIER PROFILE</span>
 	</div>
-</form>
+	<div class="panel-body">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="tabbable tabs-left">
+						<ul id="myTab2" class="nav nav-tabs">
+							<li><a href="#profile0" data-toggle="tab">HOTEL
+									GENERAL INFORMATION</a></li>
+							<li><a href="#profile1" data-toggle="tab">HOTEL
+									DESCRIPTION</a></li>
+							<!-- <li><a href="#profile2" data-toggle="tab">HOTEL LOCATION</a></li> -->
+							<li><a href="#profile2" data-toggle="tab">HOTEL INTERNAL
+									INFORMATION</a></li>
+							<li><a href="#profile3" data-toggle="tab">HOTEL CONTACT
+									INFORMATION</a></li>
+							<li><a href="#profile4" data-toggle="tab">HOTEL
+									COMMUNICATION</a></li>
+							<li><a href="#profile5" data-toggle="tab">BILLING
+									INFORMATION</a></li>
+							<li><a href="#profile6" data-toggle="tab">TAXES, FEES,
+									SUPPLEMENTS</a></li>
+							<li><a href="#profile7" data-toggle="tab">MEAL PLAN AND
+									PRICES</a></li>
+							<li><a href="#profile8" data-toggle="tab">HOTEL
+									AMENITIES</a></li>
+							<li><a href="#profile9" data-toggle="tab">BUSINESS
+									FEATURES</a></li>
+							<li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
+									& SPORT</a></li>
+							<li class="active"><a href="#profile11" data-toggle="tab">AREA
+									ATTRACTIONS</a></li>
+							<li><a href="#profile12" data-toggle="tab">TRANSPORTATION
+									& DIRECTIONS</a></li>
+							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
+									SAFETY</a></li>
+						</ul>
+						<div id="myTabContent2" class="tab-content"
+							style="padding-top: 5px;">
+							<form method="post" ng-submit="saveAreainfo()" role="form"
+								class="form-horizontal">
+								<div class="row">
+									<div class="col-md-12">
 
+										<div>
+											<label>Please list Attractions <b>BY NAME</b> such as
+												Landmarks, Museums, Nightlife, Shopping and Activities
+												around your hotel. When using the Distance Km/Miles area and
+												you need to use Decimal like 0.5 use Point/Period.
+											</label><br> <br>
+										</div>
+
+										<div class="form-group">
+											<div>
+												<label style="margin-left: 18%;">Name</label> <label
+													style="margin-left: 28%;">Distance</label> <label
+													style="margin-left: 7%;">Km/miles</label> <label
+													style="margin-left: 7%;">minutes</label>
+											</div>
+										</div>
+
+
+										<div class="form-group">
+											<div class="col-md-1">
+												<label>*1</label>
+											</div>
+											<div class="col-md-5">
+												<input type="text" name="Name"
+													data-ng-model="formArr[0].name" class="form-control"
+													required>
+											</div>
+											<div class="col-md-2" style="width: 13%;">
+												<input type="text" name="Distance"
+													data-ng-model="formArr[0].distance" class="form-control"
+													required>
+											</div>
+
+											<div class="col-md-2">
+												<select class="form-control" data-ng-model="formArr[0].km"
+													required>
+													<option>Km</option>
+													<option>Miles</option>
+
+												</select>
+											</div>
+
+											<div class="col-md-2" style="width: 13%;">
+												<input type="text" name="minutes"
+													data-ng-model="formArr[0].minutes" class="form-control"
+													required>
+											</div>
+
+
+										</div>
+										<div class="form-group">
+											<div class="col-md-1">
+												<label>2</label>
+											</div>
+											<div class="col-md-5">
+												<input type="text" name="Name"
+													data-ng-model="formArr[1].name" class="form-control">
+											</div>
+											<div class="col-md-2" style="width: 13%;">
+												<input type="text" name="Distance"
+													data-ng-model="formArr[1].distance" class="form-control">
+											</div>
+
+											<div class="col-md-2">
+												<select class="form-control" data-ng-model="formArr[1].km">
+													<option>Km</option>
+													<option>Miles</option>
+
+												</select>
+											</div>
+
+											<div class="col-md-2" style="width: 13%;">
+												<input type="text" name="minutes"
+													data-ng-model="formArr[1].minutes" class="form-control">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-md-1">
+												<label>3</label>
+											</div>
+											<div class="col-md-5">
+												<input type="text" name="Name"
+													data-ng-model="formArr[2].name" class="form-control">
+											</div>
+											<div class="col-md-2" style="width: 13%;">
+												<input type="text" name="Distance"
+													data-ng-model="formArr[2].distance" class="form-control">
+											</div>
+
+											<div class="col-md-2">
+												<select class="form-control" data-ng-model="formArr[2].km">
+													<option>Km</option>
+													<option>Miles</option>
+
+												</select>
+											</div>
+
+											<div class="col-md-2" style="width: 13%;">
+												<input type="text" name="minutes"
+													data-ng-model="formArr[2].minutes" class="form-control">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-md-1">
+												<label>4</label>
+											</div>
+											<div class="col-md-5">
+												<input type="text" name="Name"
+													data-ng-model="formArr[3].name" class="form-control">
+											</div>
+											<div class="col-md-2" style="width: 13%;">
+												<input type="text" name="Distance"
+													data-ng-model="formArr[3].distance" class="form-control">
+											</div>
+
+											<div class="col-md-2">
+												<select class="form-control" data-ng-model="formArr[3].km">
+													<option>Km</option>
+													<option>Miles</option>
+
+												</select>
+											</div>
+
+											<div class="col-md-2" style="width: 13%;">
+												<input type="text" name="minutes"
+													data-ng-model="formArr[3].minutes" class="form-control">
+											</div>
+										</div>
+
+										<div>
+
+											<div class="form-group">
+												<div class="col-md-1">
+													<label>5</label>
+												</div>
+												<div class="col-md-5">
+													<input type="text" name="Name"
+														data-ng-model="formArr[4].name" class="form-control">
+												</div>
+												<div class="col-md-2" style="width: 13%;">
+													<input type="text" name="Distance"
+														data-ng-model="formArr[4].distance" class="form-control">
+												</div>
+
+												<div class="col-md-2">
+													<select class="form-control" data-ng-model="formArr[4].km">
+														<option>Km</option>
+														<option>Miles</option>
+
+													</select>
+												</div>
+
+												<div class="col-md-2" style="width: 13%;">
+													<input type="text" name="minutes"
+														data-ng-model="formArr[4].minutes" class="form-control">
+												</div>
+											</div>
+
+
+											<div class="form-group">
+												<div class="col-md-1">
+													<label>6</label>
+												</div>
+												<div class="col-md-5">
+													<input type="text" name="Name"
+														data-ng-model="formArr[5].name" class="form-control">
+												</div>
+												<div class="col-md-2" style="width: 13%;">
+													<input type="text" name="Distance"
+														data-ng-model="formArr[5].distance" class="form-control">
+												</div>
+
+												<div class="col-md-2">
+													<select class="form-control" data-ng-model="formArr[5].km">
+														<option>Km</option>
+														<option>Miles</option>
+
+													</select>
+												</div>
+
+												<div class="col-md-2" style="width: 13%;">
+													<input type="text" name="minutes"
+														data-ng-model="formArr[5].minutes" class="form-control">
+												</div>
+											</div>
+
+
+											<div class="form-group">
+												<div class="col-md-1">
+													<label>7</label>
+												</div>
+												<div class="col-md-5">
+													<input type="text" name="Name"
+														data-ng-model="formArr[6].name" class="form-control">
+												</div>
+												<div class="col-md-2" style="width: 13%;">
+													<input type="text" name="Distance"
+														data-ng-model="formArr[6].distance" class="form-control">
+												</div>
+
+												<div class="col-md-2">
+													<select class="form-control" data-ng-model="formArr[6].km">
+														<option>Km</option>
+														<option>Miles</option>
+
+													</select>
+												</div>
+
+												<div class="col-md-2" style="width: 13%;">
+													<input type="text" name="minutes"
+														data-ng-model="formArr[6].minutes" class="form-control">
+												</div>
+											</div>
+
+
+											<div class="form-group">
+												<div class="col-md-1">
+													<label>8</label>
+												</div>
+												<div class="col-md-5">
+													<input type="text" name="Name"
+														data-ng-model="formArr[7].name" class="form-control">
+												</div>
+												<div class="col-md-2" style="width: 13%;">
+													<input type="text" name="Distance"
+														data-ng-model="formArr[7].distance" class="form-control">
+												</div>
+
+												<div class="col-md-2">
+													<select class="form-control" data-ng-model="formArr[7].km">
+														<option>Km</option>
+														<option>Miles</option>
+
+													</select>
+												</div>
+
+												<div class="col-md-2" style="width: 13%;">
+													<input type="text" name="minutes"
+														data-ng-model="formArr[7].minutes" class="form-control">
+												</div>
+											</div>
+
+
+											<div class="form-group">
+												<div class="col-md-1">
+													<label>9</label>
+												</div>
+												<div class="col-md-5">
+													<input type="text" name="Name"
+														data-ng-model="formArr[8].name" class="form-control">
+												</div>
+												<div class="col-md-2" style="width: 13%;">
+													<input type="text" name="Distance"
+														data-ng-model="formArr[8].distance" class="form-control">
+												</div>
+
+												<div class="col-md-2">
+													<select class="form-control" data-ng-model="formArr[8].km">
+														<option>Km</option>
+														<option>Miles</option>
+
+													</select>
+												</div>
+
+												<div class="col-md-2" style="width: 13%;">
+													<input type="text" name="minutes"
+														data-ng-model="formArr[8].minutes" class="form-control">
+												</div>
+											</div>
+
+
+											<div class="form-group">
+												<div class="col-md-1">
+													<label>10</label>
+												</div>
+												<div class="col-md-5">
+													<input type="text" name="Name"
+														data-ng-model="formArr[9].name" class="form-control">
+												</div>
+												<div class="col-md-2" style="width: 13%;">
+													<input type="text" name="Distance"
+														data-ng-model="formArr[9].distance" class="form-control">
+												</div>
+
+												<div class="col-md-2">
+													<select class="form-control" data-ng-model="formArr[9].km">
+														<option>Km</option>
+														<option>Miles</option>
+
+													</select>
+												</div>
+
+												<div class="col-md-2" style="width: 13%;">
+													<input type="text" name="minutes"
+														data-ng-model="formArr[9].minutes" class="form-control">
+												</div>
+											</div>
+
+										</div>
+
+										<br>
+
+
+									</div>
+
+									<hr class="mtxxl mbxxl"
+										style="border-color: black; float: left; width: 99%;">
+
+
+									<div>
+										<span ng-show="attractionfind"
+											style="color: green; margin-left: 3%;">Area Attraction
+											Save successfully</span> <span ng-show="attractionnotfind"
+											style="color: red; margin-left: 3%;">Any one Area
+											allready exists</span>
+										<button type="submit" class="btn btn-primary"
+											style="margin-left: 84%;">Save</button>
+									</div>
+
+								</div>
+							</form>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

@@ -1,6 +1,5 @@
 package com.travelportal.vm;
 
-import java.util.List;
 
 public class AreaAttractionsVM {
 	private int attraction_code;

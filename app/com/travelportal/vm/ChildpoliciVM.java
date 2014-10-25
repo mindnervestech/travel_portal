@@ -1,6 +1,5 @@
 package com.travelportal.vm;
 
-import java.util.List;
 
 public class ChildpoliciVM {
 	private int childPolicyId;

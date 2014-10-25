@@ -50,6 +50,10 @@ public class Currency {
 		return JPA.em().createQuery("select c from Currency c ").getResultList();
 	}
 	
+	public static Currency getCurrencyByCode(int code) {
+		return (Currency) JPA.em().createQuery("select c from Currency c where id = ?1").setParameter(1, code).getSingleResult();
+	}
+	
 	
 	
 }

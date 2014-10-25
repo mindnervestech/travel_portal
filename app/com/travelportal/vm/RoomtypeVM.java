@@ -1,9 +1,6 @@
 package com.travelportal.vm;
 
-import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Column;
 
 public class RoomtypeVM {
 	

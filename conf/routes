@@ -2,60 +2,55 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                           controllers.Application.index()
-
-#GET    /hotel_profile               com.travelportal.controllers.TravelPortalUtilsController.hotel_profile()
-
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
-GET /hotel_profile/:profileId 		com.travelportal.controllers.HotelProfileController.hotelProfile(profileId: Integer)
-GET /countries						com.travelportal.controllers.TravelPortalUtilsController.getCountries()
-GET   /cities/:countryCode				com.travelportal.controllers.TravelPortalUtilsController.getCities(countryCode: Integer)
-POST  /saveGeneralInfo                com.travelportal.controllers.TravelPortalUtilsController.saveGeneralInfo()
-POST  /updateDescription         com.travelportal.controllers.TravelPortalUtilsController.getupdateDescription()
-GET   /hotelchains                    com.travelportal.controllers.TravelPortalUtilsController.getChainHotels()
-GET   /currency                    com.travelportal.controllers.TravelPortalUtilsController.getcurrency()
-GET   /hotelbrands                com.travelportal.controllers.TravelPortalUtilsController.gethotelbrand()
-GET   /starrating                com.travelportal.controllers.TravelPortalUtilsController.getstarrating()
-GET   /marketrate                com.travelportal.controllers.TravelPortalUtilsController.getmarketrate()
-GET   /location                com.travelportal.controllers.TravelPortalUtilsController.getlocations()
-GET   /shoppingfacility                com.travelportal.controllers.TravelPortalUtilsController.getshoppingfacility()
-GET   /nightlife                com.travelportal.controllers.TravelPortalUtilsController.getnightlife()
-GET   /services                com.travelportal.controllers.TravelPortalUtilsController.getservices()
-GET   /amenities              com.travelportal.controllers.TravelPortalUtilsController.getamenities()
-GET   /MealTypeplan             com.travelportal.controllers.TravelPortalUtilsController.getMealtypeplan()
-GET   /MealType               com.travelportal.controllers.TravelPortalUtilsController.getMealtype()
-POST  /saveamenities           com.travelportal.controllers.TravelPortalUtilsController.getsaveamenities()
-POST  /savemealpolicy           com.travelportal.controllers.TravelPortalUtilsController.getsavemealpolicy()
-POST  /updatemealpolicy         com.travelportal.controllers.TravelPortalUtilsController.getupdatemealpolicy()
-POST  /saveattraction         com.travelportal.controllers.TravelPortalUtilsController.getsaveattraction()
-POST  /savetransportDir      com.travelportal.controllers.TravelPortalUtilsController.getsavetransportDir()
+#Supplier Home Page
+#GET /home	com.travelportal.controllers.HotelProfileController.home()
+GET /hotel_profile/:profileId 		com.travelportal.controllers.HotelProfileController.viewSupplierProfile(profileId: Long)
 
-#POST  /deletemealpolicy       com.travelportal.controllers.TravelPortalUtilsController.getdeletemealpolicy()
-GET	/deletemealpolicy/:id       com.travelportal.controllers.TravelPortalUtilsController.getdeletemealpolicy(id:Integer)
-GET	/deletechile/:id       com.travelportal.controllers.TravelPortalUtilsController.getdeletechile(id:Integer)
-GET /findAllData/:supplierCode  com.travelportal.controllers.TravelPortalUtilsController.getAllData(supplierCode:Long)
+#APIs for fetching seed data 
+GET 	/countries					com.travelportal.controllers.TravelPortalUtilsController.getCountries()
+GET 	/cities/:countryCode		com.travelportal.controllers.TravelPortalUtilsController.getCities(countryCode: Integer)
+GET 	/hotelchains              	com.travelportal.controllers.TravelPortalUtilsController.getChainHotels()
+GET 	/currency                 	com.travelportal.controllers.TravelPortalUtilsController.getCurrency()
+GET 	/hotelbrands                com.travelportal.controllers.TravelPortalUtilsController.getHotelBrand()
+GET 	/starrating                	com.travelportal.controllers.TravelPortalUtilsController.getStarRatings()
+GET 	/marketrate                	com.travelportal.controllers.TravelPortalUtilsController.getMarketRate()
+GET 	/location                	com.travelportal.controllers.TravelPortalUtilsController.getLocations()
+GET 	/shoppingfacility           com.travelportal.controllers.TravelPortalUtilsController.getShoppingFacility()
+GET 	/nightlife                	com.travelportal.controllers.TravelPortalUtilsController.getNightLife()
+GET 	/services                	com.travelportal.controllers.TravelPortalUtilsController.getServices()
+GET 	/amenities              	com.travelportal.controllers.TravelPortalUtilsController.getAmenities()
+GET 	/MealTypeplan             	com.travelportal.controllers.TravelPortalUtilsController.getMealTypePlan()
+GET 	/MealType               	com.travelportal.controllers.TravelPortalUtilsController.getMealType()
+GET 	/findAllData/:supplierCode  com.travelportal.controllers.TravelPortalUtilsController.getAllData(supplierCode:Long)
+GET  	/business              		com.travelportal.controllers.TravelPortalUtilsController.getBusiness()
+GET  	/salutation           		com.travelportal.controllers.TravelPortalUtilsController.getSalutation()
+GET  	/leisureSport          		com.travelportal.controllers.TravelPortalUtilsController.getLeisureSport()
 
-GET  /business              com.travelportal.controllers.TravelPortalUtilsController.getbusiness()
-GET  /salutation           com.travelportal.controllers.TravelPortalUtilsController.getsalutation()
-GET  /leisureSport          com.travelportal.controllers.TravelPortalUtilsController.getleisureSport()
-POST  /updateInternalInfo         com.travelportal.controllers.TravelPortalUtilsController.getupdateInternalInfo()
-POST  /updateContactInfo         com.travelportal.controllers.TravelPortalUtilsController.getupdateContactInfo()
-POST  /updateComunication         com.travelportal.controllers.TravelPortalUtilsController.getupdateComunication()
-POST  /updatebillingInfo         com.travelportal.controllers.TravelPortalUtilsController.getupdatebillingInfo()
+GET		/deletemealpolicy/:id       com.travelportal.controllers.HotelProfileController.deleteMealPolicy(id:Integer)
+GET		/deletechile/:id       		com.travelportal.controllers.HotelProfileController.deleteChile(id:Integer)
+
+POST  	/saveGeneralInfo            com.travelportal.controllers.HotelProfileController.saveGeneralInfo()
+POST  	/updateDescription         	com.travelportal.controllers.HotelProfileController.updateDescription()
+POST  	/saveamenities           	com.travelportal.controllers.HotelProfileController.saveAmenities()
+POST  	/savemealpolicy           	com.travelportal.controllers.HotelProfileController.saveMealPolicy()
+POST  	/updatemealpolicy         	com.travelportal.controllers.HotelProfileController.updateMealPolicy()
+POST  	/saveattraction         	com.travelportal.controllers.HotelProfileController.saveAttraction()
+POST  	/savetransportDir      		com.travelportal.controllers.HotelProfileController.saveTransportDir()
+
+#POST  	/deletemealpolicy       	com.travelportal.controllers.HotelProfileController.deleteMealPolicy()
+POST  	/updateInternalInfo         com.travelportal.controllers.HotelProfileController.updateInternalInfo()
+POST  	/updateContactInfo         	com.travelportal.controllers.HotelProfileController.updateContactInfo()
+POST  	/updateComunication         com.travelportal.controllers.HotelProfileController.updateComunication()
+POST  	/updatebillingInfo         	com.travelportal.controllers.HotelProfileController.updateBillingInfo()
   
-
-
-
 #following routes are used for fetch room details, Add Room Type and Edit Room Type
 #home screen for edit
 
-GET /home	com.travelportal.controllers.HotelProfileController.home()
-
-GET /hotel/roomtypes		com.travelportal.controllers.HotelRoomController.fetchAllRoomTypesForEdit()
-GET /hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.fetchToEditHotelDetails(roomId: Long)
-POST /hotel/saveUpdateRoomType			com.travelportal.controllers.HotelRoomController.saveOrUpdateHotelRoom()
-#POST /hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.editHotelRoom(roomId: Long)
-GET /room/amenities				com.travelportal.controllers.HotelRoomController.getAvailableRoomAmenities()
+GET 	/hotel/roomtypes			com.travelportal.controllers.HotelRoomController.fetchAllRoomTypesForEdit()
+GET 	/hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.fetchToEditHotelDetails(roomId: Long)
+POST 	/hotel/saveUpdateRoomType	com.travelportal.controllers.HotelRoomController.saveOrUpdateHotelRoom()
+#POST 	/hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.editHotelRoom(roomId: Long)
+GET 	/room/amenities				com.travelportal.controllers.HotelRoomController.getAvailableRoomAmenities()

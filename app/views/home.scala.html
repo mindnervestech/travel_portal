@@ -1,4 +1,8 @@
-@(message: String)
+@(message: String, supplierCode: Long)
+<script>
+	console.log(">>>>" + @supplierCode);
+	var supplierCode = @supplierCode;
+</script>
 @layout(message) {
 
 }
