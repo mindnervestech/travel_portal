@@ -1,0 +1,1672 @@
+<div class="panel panel-green">
+	<div class="panel-heading clearfix">
+		<span class="mts pull-left">HOTEL SUPPLIER PROFILE</span>
+	</div>
+	<div class="panel-body">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="tabbable tabs-left">
+						<ul id="myTab2" class="nav nav-tabs">
+							<li class="active"><a href="#profile0" data-toggle="tab">HOTEL
+									GENERAL INFORMATION</a></li>
+							<li><a href="#profile1" data-toggle="tab">HOTEL
+									DESCRIPTION</a></li>
+							<!-- <li><a href="#profile2" data-toggle="tab">HOTEL LOCATION</a></li> -->
+							<li><a href="#profile2" data-toggle="tab">HOTEL INTERNAL
+									INFORMATION</a></li>
+							<li><a href="#profile3" data-toggle="tab">HOTEL CONTACT
+									INFORMATION</a></li>
+							<li><a href="#profile4" data-toggle="tab">HOTEL
+									COMMUNICATION</a></li>
+							<li><a href="#profile5" data-toggle="tab">BILLING
+									INFORMATION</a></li>
+							<li><a href="#profile6" data-toggle="tab">TAXES, FEES,
+									SUPPLEMENTS</a></li>
+							<li><a href="#profile7" data-toggle="tab">MEAL PLAN AND
+									PRICES</a></li>
+							<li><a href="#profile8" data-toggle="tab">HOTEL
+									AMENITIES</a></li>
+							<li><a href="#profile9" data-toggle="tab">BUSINESS
+									FEATURES</a></li>
+							<li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
+									& SPORT</a></li>
+							<li><a href="#profile11" data-toggle="tab">AREA
+									ATTRACTIONS</a></li>
+							<li><a href="#profile12" data-toggle="tab">TRANSPORTATION
+									& DIRECTIONS</a></li>
+							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
+									SAFETY</a></li>
+						</ul>
+						<div id="myTabContent2" class="tab-content"
+							style="padding-top: 5px;">
+							<!-- <form method="post" ng-submit="saveHealthSafety()" role="form" class="form-horizontal"> -->
+	<div class="row">
+		<div class="col-md-12">
+		<script type="text/javascript">
+		$('#myTab a').click(function (e) {
+			  e.preventDefault();
+			  $(this).tab('show');
+			})
+		</script>
+		<div class="tabbable">
+			
+            <ul class="nav nav-pills" id="myTab" style="font-size: smaller;">
+              <li class="active"><a href="#documentation" data-toggle="tab" style="padding: 9px 5px;">Documentation</a></li>
+              <li><a href="#Step1" data-toggle="tab" style="padding: 9px 5px;">Fire Precautions</a></li>
+              <li><a href="#Step2" data-toggle="tab" style="padding: 9px 5px;">Exits and Corridors</a></li>
+              <li><a href="#Step3" data-toggle="tab" style="padding: 9px 5px;">Air Conditioning / Heating</a></li>
+              <li><a href="#Step4" data-toggle="tab" style="padding: 9px 5px;">Lifts</a></li>
+              <li><a href="#Step5" data-toggle="tab" style="padding: 9px 5px;">Bedrooms and Balconies</a></li>
+              <li><a href="#Step6" data-toggle="tab" style="padding: 9px 5px;">Kitchen's and Hygiene</a></li>
+              <li><a href="#Step7" data-toggle="tab" style="padding: 9px 5px;">Children's Facilities</a></li>
+              <li><a href="#Step8" data-toggle="tab" style="padding: 9px 5px;">Swimming Pool</a></li>
+              <li><a href="#Step9" data-toggle="tab" style="padding: 9px 5px;">Gas Water Heaters</a></li>
+              <li><a href="#Step10" data-toggle="tab" style="padding: 9px 5px;">CCTV Status</a></li>
+              <li><a href="#Step11" data-toggle="tab" style="padding: 9px 5px;">Additional information</a></li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane active" id="documentation">
+                
+                
+                 <form method="post" ng-submit="saveDocumentation()" role="form" class="form-horizontal">
+  			<legend style="width: 33%;">DOCUMENTATION</legend>
+				<div class="row">
+					<div class="col-md-12">
+					
+		                <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Public Liability or indemnity insurance:</label>
+								<div class="col-md-3">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="publicLiability" data-ng-model="HealthSafety.publicLiability" value="true">
+									&nbsp; Yes
+									</div>
+									<div>
+									<input type="radio" name="publicLiability" data-ng-model="HealthSafety.publicLiability" value="false">
+									&nbsp; No
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Fire Risk Assessment / Certificate:</label>
+								<div class="col-md-3">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="fireRisk" data-ng-model="HealthSafety.fireRisk" value="true">
+									&nbsp; Yes
+									</div>
+									<div>
+									<input type="radio" name="fireRisk" data-ng-model="HealthSafety.fireRisk" value="false">
+									&nbsp; No
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Local Tourist authority license:</label>
+								<div class="col-md-3">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="localTourist" data-ng-model="HealthSafety.localTourist" value="true">
+									&nbsp; Yes
+									</div>
+									<div>
+									<input type="radio" name="localTourist" data-ng-model="HealthSafety.localTourist" value="false">
+									&nbsp; No
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Internal fire alarm testing logs:</label>
+								<div class="col-md-3">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="internalFire" data-ng-model="HealthSafety.internalFire" value="true">
+									&nbsp; Yes
+									</div>
+									<div>
+									<input type="radio" name="internalFire" data-ng-model="HealthSafety.internalFire" value="false">
+									&nbsp; No
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">HACCP certificate:</label>
+								<div class="col-md-3">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="haccpCertify" data-ng-model="HealthSafety.haccpCertify" value="true">
+									&nbsp; Yes
+									</div>
+									<div>
+									<input type="radio" name="haccpCertify" data-ng-model="HealthSafety.haccpCertify" value="false">
+									&nbsp; No
+									</div> 
+								</div>
+			             </div>		
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Staff training records for fire evacuation procedures:</label>
+								<div class="col-md-3">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="recordsForFire" data-ng-model="HealthSafety.recordsForFire" value="true">
+									&nbsp; Yes
+									</div>
+									<div>
+									<input type="radio" name="recordsForFire" data-ng-model="HealthSafety.recordsForFire" value="false">
+									&nbsp; No
+									</div> 
+								</div>
+			             </div>		
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Staff training records for health & hygiene:</label>
+								<div class="col-md-3">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="recordsForHealth" data-ng-model="HealthSafety.recordsForHealth" value="true">
+									&nbsp; Yes
+									</div>
+									<div>
+									<input type="radio" name="recordsForHealth" data-ng-model="HealthSafety.recordsForHealth" value="false">
+									&nbsp; No
+									</div> 
+								</div>
+			             </div>		
+			             
+			             <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+			             
+			             <div class="form-group">
+							<label class="col-md-3 control-label"> Expiry Date:</label>
+								<div class="col-md-4">
+                   					<input id = "date" name="expiryDate" data-ng-model="HealthSafety.expiryDate" class="input-filter form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd" style="height: 25px;font-size: 11px;" required>
+					
+								</div>
+						 </div>
+						 
+						 <div class="form-group">
+							<label class="col-md-3 control-label"> Expiry Date:</label>
+								<div class="col-md-4">
+                   					<input id = "date" name="expiryDate1" data-ng-model="HealthSafety.expiryDate1" class="input-filter form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd" style="height: 25px;font-size: 11px;" required>
+					
+								</div>
+						 </div>
+						 
+						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+		
+		
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		    
+		    	    </div>
+			    </div>
+			
+			</form>
+                </div>
+                <div class="tab-pane" id="Step1">
+                  
+                  <legend style="width: 58%;">Fire Precautions and Procedures</legend>
+				<div class="row">
+					<div class="col-md-12">
+					
+		                <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Does the hotel have a working fire alarm:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="workingFireAlarm" data-ng-model="bill.workingFireAlarm" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="workingFireAlarm" data-ng-model="bill.workingFireAlarm" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="workingFireAlarm" data-ng-model="bill.workingFireAlarm" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are there smoke detectors in public areas:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="smokeDetectorsInPublicArea" data-ng-model="bill.smokeDetectorsInPublicArea" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="smokeDetectorsInPublicArea" data-ng-model="bill.smokeDetectorsInPublicArea" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="smokeDetectorsInPublicArea" data-ng-model="bill.smokeDetectorsInPublicArea" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are there smoke detectors in guest bedrooms:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="smokeDetectorsInGuestBedroom" data-ng-model="bill.smokeDetectorsInGuestBedroom" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="smokeDetectorsInGuestBedroom" data-ng-model="bill.smokeDetectorsInGuestBedroom" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="smokeDetectorsInGuestBedroom" data-ng-model="bill.smokeDetectorsInGuestBedroom" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are there smoke detectors in apartments (where applicable):</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="smokeDetectorsInApartment" data-ng-model="bill.smokeDetectorsInApartment" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="smokeDetectorsInApartment" data-ng-model="bill.smokeDetectorsInApartment" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="smokeDetectorsInApartment" data-ng-model="bill.smokeDetectorsInApartment" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Does the supplier service the system at least annually:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="systemAtLeastAnnually" data-ng-model="bill.systemAtLeastAnnually" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="systemAtLeastAnnually" data-ng-model="bill.systemAtLeastAnnually" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="systemAtLeastAnnually" data-ng-model="bill.systemAtLeastAnnually" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>		
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do you carry out regular internal fire alarm tests:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="internalFireAlarmTest" data-ng-model="bill.internalFireAlarmTest" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="internalFireAlarmTest" data-ng-model="bill.internalFireAlarmTest" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="internalFireAlarmTest" data-ng-model="bill.internalFireAlarmTest" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>		
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are there fire extinguishers in all public areas:</label>
+							<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="extinguishersInAllArea" data-ng-model="bill.extinguishersInAllArea" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="extinguishersInAllArea" data-ng-model="bill.extinguishersInAllArea" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="extinguishersInAllArea" data-ng-model="bill.extinguishersInAllArea" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is emergency lighting installed in the property:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="emergencyLightingInstall" data-ng-model="bill.emergencyLightingInstall" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="emergencyLightingInstall" data-ng-model="bill.emergencyLightingInstall" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="emergencyLightingInstall" data-ng-model="bill.emergencyLightingInstall" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>		
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Can a person of limited walking abilities access the hotel and grounds:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="limitedWalkingAbilities" data-ng-model="bill.limitedWalkingAbilities" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="limitedWalkingAbilities" data-ng-model="bill.limitedWalkingAbilities" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="limitedWalkingAbilities" data-ng-model="bill.limitedWalkingAbilities" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>			
+			             
+			           
+						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+				
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		    
+		    	    </div>
+			    </div>
+			
+                  
+                </div>
+                <div class="tab-pane" id="Step2">
+                  
+                    <legend style="width: 35%;">Exits and Corridors</legend>
+				<div class="row">
+					<div class="col-md-12">
+					
+						 <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">
+							How many exits does the property have? (Including the main door and emergency exits):	
+							</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="text" name="HowManyExits" data-ng-model="bill.HowManyExits">
+									</div>
+									
+								</div>
+			             </div>	
+					
+					
+		                <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are these exits unlocked at all times:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="unlockedAtAllTime" data-ng-model="bill.unlockedAtAllTime" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="unlockedAtAllTime" data-ng-model="bill.unlockedAtAllTime" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="unlockedAtAllTime" data-ng-model="bill.unlockedAtAllTime" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are exits clearly signed as such? I.e. FIRE EXIT:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="exitsClearlySigned" data-ng-model="bill.exitsClearlySigned" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="exitsClearlySigned" data-ng-model="bill.exitsClearlySigned" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="exitsClearlySigned" data-ng-model="bill.exitsClearlySigned" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are exit routes illuminated by emergency lighting:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="routesIlluminated" data-ng-model="bill.routesIlluminated" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="routesIlluminated" data-ng-model="bill.routesIlluminated" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="routesIlluminated" data-ng-model="bill.routesIlluminated" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there more than one usable staircase from all floors:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="usableStaircaseFromAllFloors" data-ng-model="bill.usableStaircaseFromAllFloors" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="usableStaircaseFromAllFloors" data-ng-model="bill.usableStaircaseFromAllFloors" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="usableStaircaseFromAllFloors" data-ng-model="bill.usableStaircaseFromAllFloors" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			           
+						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+				
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		    
+		    	    </div>
+			    </div>
+                  
+                </div>
+                
+                 <div class="tab-pane" id="Step3">
+                   
+                     <legend style="width: 66%;">Air Conditioning / Heating (if applicable)</legend>
+				<div class="row">
+					<div class="col-md-12">
+					
+						 <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;">							
+								What type of air conditioning does the property have?	
+							</label>
+								
+			             </div>	
+					              
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> Central:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="central" data-ng-model="bill.central" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="central" data-ng-model="bill.central" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="central" data-ng-model="bill.central" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> Independent units:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="independentUnits" data-ng-model="bill.independentUnits" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="independentUnits" data-ng-model="bill.independentUnits" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="independentUnits" data-ng-model="bill.independentUnits" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			           
+						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+				
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		    
+		    	    </div>
+			    </div>
+                   
+                </div>
+                
+                <div class="tab-pane" id="Step4">
+                 
+                  <legend style="width: 33%;">Lifts (if applicable)</legend>
+				<div class="row">
+					<div class="col-md-12">
+					
+											              
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are ALL floors accessible via lift:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="floorsAccessible" data-ng-model="bill.floorsAccessible" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="floorsAccessible" data-ng-model="bill.floorsAccessible" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="floorsAccessible" data-ng-model="bill.floorsAccessible" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do all lifts have internal closing doors:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="internalClosingDoor" data-ng-model="bill.internalClosingDoor" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="internalClosingDoor" data-ng-model="bill.internalClosingDoor" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="internalClosingDoor" data-ng-model="bill.internalClosingDoor" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			             <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> If NO, is there relevant signage displayed to warn guests:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="relevantSignageDisplay" data-ng-model="bill.relevantSignageDisplay" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="relevantSignageDisplay" data-ng-model="bill.relevantSignageDisplay" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="relevantSignageDisplay" data-ng-model="bill.relevantSignageDisplay" value="none">
+									&nbsp; N/A 
+									</div> 
+								</div>
+								
+			             </div>	
+			             	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;">							
+								Do all lifts display the following signage:	
+							</label>
+								
+			             </div>	
+			             
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">  No Smoking:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="noSmoking" data-ng-model="bill.noSmoking" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="noSmoking" data-ng-model="bill.noSmoking" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">   No Unaccompanied Children:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="bill.noUnaccompaniedChildren" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="bill.noUnaccompaniedChildren" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="bill.noUnaccompaniedChildren" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> Do Not Use In The Event of Fire:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="eventOfFire" data-ng-model="bill.eventOfFire" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="eventOfFire" data-ng-model="bill.eventOfFire" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="eventOfFire" data-ng-model="bill.eventOfFire" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			           
+						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+				
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		    
+		    	    </div>
+			    </div>
+                 
+                </div>
+                
+                <div class="tab-pane" id="Step5">
+                  
+                   <legend style="width: 45%;">Bedrooms and Balconies</legend>
+				<div class="row">
+					<div class="col-md-12">
+					
+											              
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are there fire safety instructions posted in guest rooms:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="fireSafetyInstructionsPosted" data-ng-model="bill.fireSafetyInstructionsPosted" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="fireSafetyInstructionsPosted" data-ng-model="bill.fireSafetyInstructionsPosted" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="fireSafetyInstructionsPosted" data-ng-model="bill.fireSafetyInstructionsPosted" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do electrics automatically disconnect when guests leave the room:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="electricsAutomaticallyDisconnect" data-ng-model="bill.electricsAutomaticallyDisconnect" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="electricsAutomaticallyDisconnect" data-ng-model="bill.electricsAutomaticallyDisconnect" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="electricsAutomaticallyDisconnect" data-ng-model="bill.electricsAutomaticallyDisconnect" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			             <div class="form-group">
+						<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do any rooms have balconies?:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="roomsHaveBalconies" data-ng-model="bill.roomsHaveBalconies" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="roomsHaveBalconies" data-ng-model="bill.roomsHaveBalconies" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="roomsHaveBalconies" data-ng-model="bill.roomsHaveBalconies" value="none">
+									&nbsp; N/A 
+									</div> 
+								</div>
+								
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> If YES, are all balconies at least 1m in height:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="balconiesAtLeast1m" data-ng-model="bill.balconiesAtLeast1m" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="balconiesAtLeast1m" data-ng-model="bill.balconiesAtLeast1m" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="balconiesAtLeast1m" data-ng-model="bill.balconiesAtLeast1m" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> Are any gaps greater than 10cm:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="gapsGreaterThan10cm" data-ng-model="bill.gapsGreaterThan10cm" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="gapsGreaterThan10cm" data-ng-model="bill.gapsGreaterThan10cm" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="gapsGreaterThan10cm" data-ng-model="bill.gapsGreaterThan10cm" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Does the hotel have any adjoining rooms:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="anyAdjoiningRooms" data-ng-model="bill.anyAdjoiningRooms" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="anyAdjoiningRooms" data-ng-model="bill.anyAdjoiningRooms" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="anyAdjoiningRooms" data-ng-model="bill.anyAdjoiningRooms" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">
+							If YES, how many:	
+							</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="text" name="howMany" data-ng-model="bill.howMany">
+									</div>
+									
+								</div>
+			             </div>	
+			             
+			           
+						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+				
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		    
+		    	    </div>
+			    </div>
+                  
+                </div>
+                
+                <div class="tab-pane" id="Step6">
+                
+				  <legend style="width: 40%;">Kitchen's and Hygiene</legend>
+				<div class="row">
+					<div class="col-md-12">
+					
+											              
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Self-Catering Accommodation:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="selfCateringAccommodation" data-ng-model="bill.selfCateringAccommodation" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="selfCateringAccommodation" data-ng-model="bill.selfCateringAccommodation" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="selfCateringAccommodation" data-ng-model="bill.selfCateringAccommodation" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Where self-catering is available, are all kitchen appliances regularly serviced:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="allKitchenAppliancesRegularly" data-ng-model="bill.allKitchenAppliancesRegularly" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="allKitchenAppliancesRegularly" data-ng-model="bill.allKitchenAppliancesRegularly" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="allKitchenAppliancesRegularly" data-ng-model="bill.allKitchenAppliancesRegularly" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			             <div class="form-group">
+						<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do ALL appliances in self-catering accommodation have full usage instructions:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="selfCateringAccommodation" data-ng-model="bill.selfCateringAccommodation" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="selfCateringAccommodation" data-ng-model="bill.selfCateringAccommodation" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="selfCateringAccommodation" data-ng-model="bill.selfCateringAccommodation" value="none">
+									&nbsp; N/A 
+									</div> 
+								</div>
+								
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Main Kitchen:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="mainKitchen" data-ng-model="bill.mainKitchen" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="mainKitchen" data-ng-model="bill.mainKitchen" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="mainKitchen" data-ng-model="bill.mainKitchen" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do kitchen staff carry out temperature checks during all stages of food preparation:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="stagesOfFoodPreparation" data-ng-model="bill.stagesOfFoodPreparation" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="stagesOfFoodPreparation" data-ng-model="bill.stagesOfFoodPreparation" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="stagesOfFoodPreparation" data-ng-model="bill.stagesOfFoodPreparation" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are premises adequately proofed against pests:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="premisesAdequatelyProofed" data-ng-model="bill.premisesAdequatelyProofed" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="premisesAdequatelyProofed" data-ng-model="bill.premisesAdequatelyProofed" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="premisesAdequatelyProofed" data-ng-model="bill.premisesAdequatelyProofed" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			             
+						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+				
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		    
+		    	    </div>
+			    </div>
+	
+                </div>
+                
+                 <div class="tab-pane" id="Step7">
+                  
+                   <legend style="width: 57%;">Children's Facilities (if applicable)</legend>
+				<div class="row">
+					<div class="col-md-12">
+					
+											              
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there an internal children's play area:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="internalChildrenPlayArea" data-ng-model="bill.internalChildrenPlayArea" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="internalChildrenPlayArea" data-ng-model="bill.internalChildrenPlayArea" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="internalChildrenPlayArea" data-ng-model="bill.internalChildrenPlayArea" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there an external children's play area:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="externalChildrenPlayArea" data-ng-model="bill.externalChildrenPlayArea" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="externalChildrenPlayArea" data-ng-model="bill.externalChildrenPlayArea" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="externalChildrenPlayArea" data-ng-model="bill.externalChildrenPlayArea" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			             <div class="form-group">
+						<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Does a fully qualified person supervise the kid's club:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="superviseTheKidClub" data-ng-model="bill.superviseTheKidClub" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="superviseTheKidClub" data-ng-model="bill.superviseTheKidClub" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="superviseTheKidClub" data-ng-model="bill.superviseTheKidClub" value="none">
+									&nbsp; N/A 
+									</div> 
+								</div>
+								
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are regular quality checks of all equipment and furniture carried out:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="qualityChecksOfEquipmentAndFurniture" data-ng-model="bill.qualityChecksOfEquipmentAndFurniture" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="qualityChecksOfEquipmentAndFurniture" data-ng-model="bill.qualityChecksOfEquipmentAndFurniture" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="qualityChecksOfEquipmentAndFurniture" data-ng-model="bill.qualityChecksOfEquipmentAndFurniture" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">During which months is the kid's club fully operational:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 10%;">
+									<input type="checkbox" name="monthsIsTheKidClub" data-ng-model="bill.noSmoking" value="true">
+									&nbsp; 	January
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="false">
+									&nbsp; February
+									</div> 
+									<div style="float: left;margin-right: 16%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; March
+									</div> 
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; April
+									</div> 
+									<div style="float: left;margin-right: 23%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; 	May
+									</div> 
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; June
+									</div> 
+									<div style="float: left;margin-right: 24%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="true">
+									&nbsp; 	July
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="false">
+									&nbsp; August
+									</div> 
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; September
+									</div> 
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; October
+									</div> 
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; 	November
+									</div> 
+									<div style="float: left;margin-right: 1%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; December
+									</div> 
+								</div>
+			             </div>
+			             
+						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+				
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		    
+		    	    </div>
+			    </div>
+			    
+                </div>
+                
+                 <div class="tab-pane" id="Step8">
+                 
+                  <legend style="width: 50%;">Swimming Pool (if applicable)</legend>
+				<div class="row">
+					<div class="col-md-12">
+					
+											              
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there a pool rules & regulations notice board clearly visible in the pool area:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="poolRulesAndRegulation" data-ng-model="bill.poolRulesAndRegulation" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="poolRulesAndRegulation" data-ng-model="bill.poolRulesAndRegulation" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="poolRulesAndRegulation" data-ng-model="bill.poolRulesAndRegulation" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> Opening / closing times:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="OpeningClosingTimes" data-ng-model="bill.OpeningClosingTimes" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="OpeningClosingTimes" data-ng-model="bill.OpeningClosingTimes" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="OpeningClosingTimes" data-ng-model="bill.OpeningClosingTimes" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			             <div class="form-group">
+						<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Depth information:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="depthInformation" data-ng-model="bill.depthInformation" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="depthInformation" data-ng-model="bill.depthInformation" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="depthInformation" data-ng-model="bill.depthInformation" value="none">
+									&nbsp; N/A 
+									</div> 
+								</div>
+								
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">No diving:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="noDiving" data-ng-model="bill.noDiving" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="noDiving" data-ng-model="bill.noDiving" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="noDiving" data-ng-model="bill.noDiving" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			             <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> No unaccompanied children:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="bill.noUnaccompaniedChildren" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="bill.noUnaccompaniedChildren" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="bill.noUnaccompaniedChildren" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			             <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Location of visible lifesaving equipment / lifeguard information:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="lifesavingEquipment" data-ng-model="bill.lifesavingEquipment" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="lifesavingEquipment" data-ng-model="bill.lifesavingEquipment" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="lifesavingEquipment" data-ng-model="bill.lifesavingEquipment" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			             <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">No glass around the pool area:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="glassAroundThePoolArea" data-ng-model="bill.glassAroundThePoolArea" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="glassAroundThePoolArea" data-ng-model="bill.glassAroundThePoolArea" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="glassAroundThePoolArea" data-ng-model="bill.glassAroundThePoolArea" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			             <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there a lifeguard or qualified person around the pool area during opening times:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="lifeguardOrQualifiedPerson" data-ng-model="bill.lifeguardOrQualifiedPerson" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="lifeguardOrQualifiedPerson" data-ng-model="bill.lifeguardOrQualifiedPerson" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="lifeguardOrQualifiedPerson" data-ng-model="bill.lifeguardOrQualifiedPerson" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			             <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there a children's pool:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="ThereChildrenPool" data-ng-model="bill.ThereChildrenPool" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="ThereChildrenPool" data-ng-model="bill.ThereChildrenPool" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="ThereChildrenPool" data-ng-model="bill.ThereChildrenPool" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			             <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> If YES, is this separated from the adult pool, away from the deep end:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="separatedFromTheAdultPool" data-ng-model="bill.separatedFromTheAdultPool" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="separatedFromTheAdultPool" data-ng-model="bill.separatedFromTheAdultPool" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="separatedFromTheAdultPool" data-ng-model="bill.separatedFromTheAdultPool" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are there sufficient depth markings around the pool:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="sufficientDepthMarkings" data-ng-model="bill.sufficientDepthMarkings" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="sufficientDepthMarkings" data-ng-model="bill.sufficientDepthMarkings" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="sufficientDepthMarkings" data-ng-model="bill.sufficientDepthMarkings" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> Is the pool cleaned daily:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="isThePoolCleanedDaily" data-ng-model="bill.isThePoolCleanedDaily" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="isThePoolCleanedDaily" data-ng-model="bill.isThePoolCleanedDaily" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="isThePoolCleanedDaily" data-ng-model="bill.isThePoolCleanedDaily" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> If YES, are records kept:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="recordsKept" data-ng-model="bill.recordsKept" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="recordsKept" data-ng-model="bill.recordsKept" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="recordsKept" data-ng-model="bill.recordsKept" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there a heated pool in the property:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="heatedPoolInTheProperty" data-ng-model="bill.heatedPoolInTheProperty" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="heatedPoolInTheProperty" data-ng-model="bill.heatedPoolInTheProperty" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="heatedPoolInTheProperty" data-ng-model="bill.heatedPoolInTheProperty" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+								
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> If YES, during which months is this operational:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 10%;">
+									<input type="checkbox" name="monthsIsThisOperational" data-ng-model="bill.noSmoking" value="true">
+									&nbsp; 	January
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="false">
+									&nbsp; February
+									</div> 
+									<div style="float: left;margin-right: 16%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; March
+									</div> 
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; April
+									</div> 
+									<div style="float: left;margin-right: 23%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; 	May
+									</div> 
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; June
+									</div> 
+									<div style="float: left;margin-right: 24%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="true">
+									&nbsp; 	July
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="false">
+									&nbsp; August
+									</div> 
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; September
+									</div> 
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; October
+									</div> 
+									<div style="float: left;margin-right: 3%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; 	November
+									</div> 
+									<div style="float: left;margin-right: 1%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; December
+									</div> 
+								</div>
+			             </div>
+			             
+						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+				
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		    
+		    	    </div>
+			    </div>
+                 
+                 
+                </div>
+                
+                 <div class="tab-pane" id="Step9">
+                 
+                  <legend style="width: 65%;">Internal / External Gas Water Heaters</legend>
+				<div class="row">
+					<div class="col-md-12">
+					
+											              
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do you have any Gas Water Heaters in your property:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="gasWaterHeaters" data-ng-model="bill.gasWaterHeaters" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="gasWaterHeaters" data-ng-model="bill.gasWaterHeaters" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="gasWaterHeaters" data-ng-model="bill.gasWaterHeaters" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			             <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;">							
+								If YES, are they:
+							</label>
+								
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-5 control-label" style="text-align: left;margin-left: 21%;"> Internal:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="internal" data-ng-model="bill.internal" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="internal" data-ng-model="bill.internal" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="internal" data-ng-model="bill.internal" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>	
+			             
+			             <div class="form-group">
+						<label class="col-md-5 control-label" style="text-align: left;margin-left: 21%;">External:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="External" data-ng-model="bill.External" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="External" data-ng-model="bill.External" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="External" data-ng-model="bill.External" value="none">
+									&nbsp; N/A 
+									</div> 
+								</div>
+								
+			             </div>	
+			             
+			             <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;">							
+								Do you have all relevant documentation on file regarding:	
+							</label>
+								
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-5 control-label" style="text-align: left;margin-left: 21%;">Servicing:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="Servicing" data-ng-model="bill.Servicing" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="Servicing" data-ng-model="bill.Servicing" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="Servicing" data-ng-model="bill.Servicing" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+			              <div class="form-group">
+							<label class="col-md-5 control-label" style="text-align: left;margin-left: 21%;">  Maintenance:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="Maintenance" data-ng-model="bill.Maintenance" value="true">
+									&nbsp; Yes
+									</div>
+									<div style="float: left;margin-right: 3%;">
+									<input type="radio" name="Maintenance" data-ng-model="bill.Maintenance" value="false">
+									&nbsp; No
+									</div> 
+									<div>
+									<input type="radio" name="Maintenance" data-ng-model="bill.Maintenance" value="none">
+									&nbsp; N/A
+									</div> 
+								</div>
+			             </div>
+			             
+						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+				
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		    
+		    	    </div>
+			    </div>
+                  
+                </div>
+                
+                 <div class="tab-pane" id="Step10">
+                   <legend style="width: 27%;">CCTV Status</legend>
+				<div class="row">
+					<div class="col-md-12">
+                  <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> CCTV is used on a 24 hour basis in the following areas of the hotel:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 20%;">
+									<input type="checkbox" name="cctvIsUsedOna24Hour" data-ng-model="bill.noSmoking" value="true">
+									&nbsp; 	Entrance
+									</div>
+									<div style="float: left;margin-right: 20%;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="false">
+									&nbsp; Lobby
+									</div> 
+									<div style="float: left;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; Corridors
+									</div> 
+									<div style="float: left;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; Fitness Centre
+									</div> 
+									<div style="float: left;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; 	Indoor Pools
+									</div> 
+									<div style="float: left;">
+									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									&nbsp; Outdoor Pools
+									
+									</div> 
+									
+									
+									
+								</div>
+			             </div>
+			              <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+				
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+                  </div>
+                  </div>
+                </div>
+                
+                <div class="tab-pane" id="Step11">
+                  <p>What up girl,88888 this is Section D.</p>
+                </div>
+                
+              </div>
+          </div>
+		 </div>
+			
+		 
+				
+		
+	</div>
+<!-- </form> -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+

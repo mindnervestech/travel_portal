@@ -22,6 +22,7 @@ import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelAttractions;
 import com.travelportal.domain.HotelBrands;
+import com.travelportal.domain.HotelHealthAndSafety;
 import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.HotelPrivateContacts;
 import com.travelportal.domain.HotelProfile;
@@ -39,6 +40,7 @@ import com.travelportal.vm.AreaAttractionsSuppVM;
 import com.travelportal.vm.AreaAttractionsVM;
 import com.travelportal.vm.ChildpoliciVM;
 import com.travelportal.vm.HotelDescription;
+import com.travelportal.vm.HotelHealthAndSafetyVM;
 import com.travelportal.vm.HotelamenitiesVM;
 import com.travelportal.vm.HotelmealVM;
 import com.travelportal.vm.TransportationDirectionsSuppVM;
@@ -84,7 +86,7 @@ public class HotelProfileController extends Controller {
 		System.out.print("-- " + Currency.getCurrencyByCode(Integer.parseInt(form.get("currencyCode"))));
 		hotelprofile.setCurrency(Currency.getCurrencyByCode(Integer.parseInt(form.get("currencyCode"))));
 		hotelprofile.setCity(City.getCityByCode(Integer.parseInt(form.get("cityCode"))));
-		hotelprofile.setPartOfChain(Boolean.parseBoolean(form.get("isHotelPartOfChain")));
+		hotelprofile.setPartOfChain(form.get("hotelPartOfChain"));
 		hotelprofile.setHotelEmailAddr(form.get("email"));
 		hotelprofile.setMarketPolicyType(MarketPolicyTypes.getMarketPolicyTypesIdByCode(Integer.parseInt(form.get("marketSpecificPolicyCode"))));
 		hotelprofile.setHoteBrands(HotelBrands.getHotelBrandsbyCode(Integer.parseInt(form.get("brandHotelCode"))));
@@ -121,11 +123,57 @@ public class HotelProfileController extends Controller {
 
 
 		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
-		hotelprofile.setAmenities(HotelAmenities.getallhotelamenities(hotelamenitiesVM.getamenities()));
+		hotelprofile.setAmenities(HotelAmenities.getallhotelamenities(hotelamenitiesVM.getAmenities()));
 
 		return ok();
+				
 	}
-
+	
+	
+	@Transactional(readOnly=false)
+	public static Result saveUpdateHealthSafety() {
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
+		
+		if(hAndSafety == null)
+		{
+			
+			hAndSafety=new HotelHealthAndSafety();
+		
+			hAndSafety.setFireRisk(healthAndSafetyVM.getFireRisk());
+			hAndSafety.setHaccpCertify(healthAndSafetyVM.getHaccpCertify());
+			hAndSafety.setInternalFire(healthAndSafetyVM.getInternalFire());
+			hAndSafety.setLocalTourist(healthAndSafetyVM.getLocalTourist());
+			hAndSafety.setPublicLiability(healthAndSafetyVM.getPublicLiability());
+			hAndSafety.setRecordsForFire(healthAndSafetyVM.getRecordsForFire());
+			hAndSafety.setRecordsForHealth(healthAndSafetyVM.getRecordsForHealth());
+			hAndSafety.setExpiryDate(healthAndSafetyVM.getExpiryDate());
+			hAndSafety.setExpiryDate1(healthAndSafetyVM.getExpiryDate1());
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+		
+			hAndSafety.save();
+		}
+		else
+		{
+			hAndSafety.setFireRisk(healthAndSafetyVM.getFireRisk());
+			hAndSafety.setHaccpCertify(healthAndSafetyVM.getHaccpCertify());
+			hAndSafety.setInternalFire(healthAndSafetyVM.getInternalFire());
+			hAndSafety.setLocalTourist(healthAndSafetyVM.getLocalTourist());
+			hAndSafety.setPublicLiability(healthAndSafetyVM.getPublicLiability());
+			hAndSafety.setRecordsForFire(healthAndSafetyVM.getRecordsForFire());
+			hAndSafety.setRecordsForHealth(healthAndSafetyVM.getRecordsForHealth());
+			hAndSafety.setExpiryDate(healthAndSafetyVM.getExpiryDate());
+			hAndSafety.setExpiryDate1(healthAndSafetyVM.getExpiryDate1());
+			
+			hAndSafety.merge();
+		}
+		
+		return ok();
+	}
 
 	@Transactional(readOnly=false)
 	public static Result updateMealPolicy() {
@@ -405,8 +453,6 @@ public class HotelProfileController extends Controller {
 
 		DynamicForm form = DynamicForm.form().bindFromRequest();
 
-		//HotelPrivateContacts hotelprivatecontacts =new HotelPrivateContacts();
-
 		HotelPrivateContacts hotelprivatecontacts = HotelPrivateContacts.findById(Long.parseLong(form.get("supplierCode")));
 
 		if(hotelprivatecontacts == null)
@@ -476,50 +522,51 @@ public class HotelProfileController extends Controller {
 	@Transactional(readOnly=false)
 	public static Result updateBillingInfo() {
 
-
-		DynamicForm form = DynamicForm.form().bindFromRequest();
-		//System.out.println(form.get("Name"));
-
-		BillingInformation billinginfo = BillingInformation.findById(Long.parseLong(form.get("supplierCode")));
-
-		if(billinginfo == null)
-		{
-			billinginfo =new BillingInformation();
-
-			billinginfo.setInvoiceToHotel(form.get("Invoices"));
-			billinginfo.setFirstName(form.get("firstName"));
-			billinginfo.setLastName(form.get("lastName"));
-			billinginfo.setTitle(form.get("title"));
-
-			billinginfo.setEmailAddr(form.get("email"));
-			billinginfo.setTelNo(Integer.parseInt(form.get("teleNumber")));
-			billinginfo.setTelNoCode(Integer.parseInt(form.get("telephcode")));
-			billinginfo.setFaxNo(Integer.parseInt(form.get("dirFaxNumber")));
-			billinginfo.setFaxNoCode(Integer.parseInt(form.get("dirFaxcode")));
-			billinginfo.setSupplierCode(Long.parseLong(form.get("supplierCode")));
-			billinginfo.setExt(Integer.parseInt(form.get("Extension")));
-			billinginfo.setBankservice(form.get("service"));
-
-			billinginfo.save();
-
-		}
-		else
-		{
-
-			billinginfo.setInvoiceToHotel(form.get("Invoices"));
-			billinginfo.setFirstName(form.get("firstName"));
-			billinginfo.setLastName(form.get("lastName"));
-			billinginfo.setTitle(form.get("title"));
-
-			billinginfo.setEmailAddr(form.get("email"));
-			billinginfo.setTelNo(Integer.parseInt(form.get("telephcode")+form.get("teleNumber")));
-			billinginfo.setFaxNo(Integer.parseInt(form.get("dirFaxcode")+form.get("dirFaxNumber")));
-			billinginfo.setExt(Integer.parseInt(form.get("Extension")));
-			billinginfo.setBankservice(form.get("service"));
-
-			billinginfo.merge();
-		}
-		return ok();
+		 DynamicForm form = DynamicForm.form().bindFromRequest();
+			//System.out.println(form.get("Name"));
+		    
+		    BillingInformation billinginfo = BillingInformation.findById(Long.parseLong(form.get("supplierCode")));
+		    
+		    if(billinginfo == null)
+		    {
+		    	billinginfo =new BillingInformation();
+		    	
+		    	billinginfo.setInvoiceToHotel(form.get("invoiceToHotel"));
+				billinginfo.setFirstName(form.get("aFirstName"));
+				billinginfo.setLastName(form.get("aLastName"));
+				billinginfo.setTitle(form.get("title"));
+					
+				billinginfo.setEmailAddr(form.get("dEmailAddr"));
+				billinginfo.setTelNo(Integer.parseInt(form.get("dTelNo")));
+				billinginfo.setTelNoCode(Integer.parseInt(form.get("dTelCode")));
+				billinginfo.setFaxNo(Integer.parseInt(form.get("dFaxNo")));
+				billinginfo.setFaxNoCode(Integer.parseInt(form.get("dFaxCode")));
+				billinginfo.setExt(Integer.parseInt(form.get("dExtNo")));;
+				billinginfo.setSupplierCode(Long.parseLong(form.get("supplierCode")));
+				billinginfo.setBankservice(form.get("bankToBankTransfer"));
+				
+		        billinginfo.save();
+		    	
+		    }
+		    else
+		    {
+		    
+		    	billinginfo.setInvoiceToHotel(form.get("invoiceToHotel"));
+				billinginfo.setFirstName(form.get("aFirstName"));
+				billinginfo.setLastName(form.get("aLastName"));
+				billinginfo.setTitle(form.get("title"));
+					
+				billinginfo.setEmailAddr(form.get("dEmailAddr"));
+				billinginfo.setTelNo(Integer.parseInt(form.get("dTelNo")));
+				billinginfo.setTelNoCode(Integer.parseInt(form.get("dTelCode")));
+				billinginfo.setFaxNo(Integer.parseInt(form.get("dFaxNo")));
+				billinginfo.setFaxNoCode(Integer.parseInt(form.get("dFaxCode")));
+				billinginfo.setExt(Integer.parseInt(form.get("dExtNo")));
+				billinginfo.setBankservice(form.get("bankToBankTransfer"));
+			
+	        billinginfo.merge();
+		    }
+			return ok();
 	}
 
 	@Transactional(readOnly=false)
@@ -534,17 +581,17 @@ public class HotelProfileController extends Controller {
 		if(businesscommunication == null)
 		{
 			businesscommunication=new BusinessCommunication(); 
-			businesscommunication.setPrimaryEmailAddr(form.get("email"));
-			businesscommunication.setCcEmailAddr(form.get("ccmail"));
+			businesscommunication.setPrimaryEmailAddr(form.get("primaryEmailAddr"));
+			businesscommunication.setCcEmailAddr(form.get("ccEmailAddr"));
 			businesscommunication.setbooking(form.get("booking"));
 			businesscommunication.setSupplierCode(Long.parseLong(form.get("supplierCode")));
 
 			businesscommunication.save();
 		}
 		else
-		{
-			businesscommunication.setPrimaryEmailAddr(form.get("email"));
-			businesscommunication.setCcEmailAddr(form.get("ccmail"));
+		{			
+			businesscommunication.setPrimaryEmailAddr(form.get("primaryEmailAddr"));
+			businesscommunication.setCcEmailAddr(form.get("ccEmailAddr"));
 			businesscommunication.setbooking(form.get("booking"));
 
 			businesscommunication.merge();

@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
+import com.travelportal.domain.Country;
+import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.vm.RoomType;
 
 @Entity
@@ -39,9 +41,9 @@ public class HotelRoomTypes {
 	@Column(name="child_allowed_with_adults")
 	private int childAllowedFreeWithAdults;
 	@Column(name="children_charges")
-	private boolean chargesForChildren;
+	private String chargesForChildren;
 	@Column(name="extra_bed_allowed")
-	private boolean extraBedAllowed;
+	private String extraBedAllowed;
 	@Column(name="extra_bed_chargable")
 	private boolean extraBedChargable;
 	@Column(name="extra_bed_charge_value")
@@ -49,7 +51,7 @@ public class HotelRoomTypes {
 	@Column(name="extra_bed_charge_type")
 	private String extraBedChargeType;
 	@Column(name="room_suite_type")
-	private boolean roomSuiteType;
+	private String roomSuiteType;
 	@Column(name="twin_beds_flag")
 	private boolean twinBeds;
 	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
@@ -141,18 +143,6 @@ public class HotelRoomTypes {
 	public void setChildAllowedFreeWithAdults(int childAllowedFreeWithAdults) {
 		this.childAllowedFreeWithAdults = childAllowedFreeWithAdults;
 	}
-	/**
-	 * @return the chargesForChildren
-	 */
-	public boolean isChargesForChildren() {
-		return chargesForChildren;
-	}
-	/**
-	 * @param chargesForChildren the chargesForChildren to set
-	 */
-	public void setChargesForChildren(boolean chargesForChildren) {
-		this.chargesForChildren = chargesForChildren;
-	}
 	
 	/**
 	 * @return the amenities
@@ -171,18 +161,7 @@ public class HotelRoomTypes {
 	public void saveOrUpdateHotelRoomDetails() {
 		JPA.em().persist(this);
 	}
-	/**
-	 * @return the extraBedAllowed
-	 */
-	public boolean isExtraBedAllowed() {
-		return extraBedAllowed;
-	}
-	/**
-	 * @param extraBedAllowed the extraBedAllowed to set
-	 */
-	public void setExtraBedAllowed(boolean extraBedAllowed) {
-		this.extraBedAllowed = extraBedAllowed;
-	}
+	
 	/**
 	 * @return the extraBedChargable
 	 */
@@ -219,18 +198,7 @@ public class HotelRoomTypes {
 	public void setExtraBedChargeType(String extraBedChargeType) {
 		this.extraBedChargeType = extraBedChargeType;
 	}
-	/**
-	 * @return the roomSuiteType
-	 */
-	public boolean isRoomSuiteType() {
-		return roomSuiteType;
-	}
-	/**
-	 * @param roomSuiteType the roomSuiteType to set
-	 */
-	public void setRoomSuiteType(boolean roomSuiteType) {
-		this.roomSuiteType = roomSuiteType;
-	}
+	
 	/**
 	 * @return the twinBeds
 	 */
@@ -244,7 +212,26 @@ public class HotelRoomTypes {
 		this.twinBeds = twinBeds;
 	}
 	
+	
 		
+	public String getChargesForChildren() {
+		return chargesForChildren;
+	}
+	public void setChargesForChildren(String chargesForChildren) {
+		this.chargesForChildren = chargesForChildren;
+	}
+	public String getExtraBedAllowed() {
+		return extraBedAllowed;
+	}
+	public void setExtraBedAllowed(String extraBedAllowed) {
+		this.extraBedAllowed = extraBedAllowed;
+	}
+	public String getRoomSuiteType() {
+		return roomSuiteType;
+	}
+	public void setRoomSuiteType(String roomSuiteType) {
+		this.roomSuiteType = roomSuiteType;
+	}
 	public List<RoomChildPolicies> getRoomchildPolicies() {
 		return roomchildPolicies;
 	}
@@ -276,11 +263,22 @@ public class HotelRoomTypes {
 		return roomTypeList;
 	}
 	
-	public static HotelRoomTypes getHotelRoomDetails(final Long roomId) {
-		Query q = JPA.em().createQuery("select r from HotelRoomTypes r where roomId = :roomId ");
-		q.setParameter("roomId", roomId);
+	public static HotelRoomTypes getHotelRoomDetailsInfo(Long RoomId) {
+		Query q = JPA.em().createQuery("select r from HotelRoomTypes r where r.roomId = ?1");
+		q.setParameter(1, RoomId);
 		return (HotelRoomTypes) q.getSingleResult();
 		
+	}
+	
+
+	 public static HotelRoomTypes findById(long id) {
+	    	Query query = JPA.em().createQuery("Select a from HotelRoomTypes a where a.roomId = ?1");
+			query.setParameter(1, id);
+	    	return (HotelRoomTypes) query.getSingleResult();
+	    }
+	
+	public static List<HotelRoomTypes> getHotelRoomDetails(long supplierCode) {
+		return JPA.em().createQuery("select r from HotelRoomTypes r where r.supplierCode = ?1").setParameter(1, supplierCode).getResultList();
 	}
 	
 	@Transactional

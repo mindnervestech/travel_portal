@@ -51,7 +51,7 @@ public class Currency {
 	}
 	
 	public static Currency getCurrencyByCode(int code) {
-		return (Currency) JPA.em().createQuery("select c from Currency c where id = ?1").setParameter(1, code).getSingleResult();
+		return (Currency) JPA.em().createQuery("select c from Currency c where c.currencyCode = ?1").setParameter(1, code).getSingleResult();
 	}
 	
 	

@@ -145,8 +145,8 @@ public class TravelPortalUtilsController extends Controller {
 	}
 
 	@Transactional(readOnly=true)
-	public static Result getMealTypePlan() {
-		List<HotelMealPlan> mealtype = HotelMealPlan.getmealtype();
+	public static Result getMealTypePlan(long supplierCode) {
+		List<HotelMealPlan> mealtype = HotelMealPlan.getmealtype(supplierCode);
 		return ok(Json.toJson(mealtype));
 	}
 
@@ -168,7 +168,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelgeneralinfoVM.setHotelAddr(hotelProfile.getAddress());
 		hotelgeneralinfoVM.setCountryCode(hotelProfile.getCountry().getCountryCode());
 		hotelgeneralinfoVM.setCurrencyCode(hotelProfile.getCurrency().getCurrencyCode());
-		hotelgeneralinfoVM.setHotelPartOfChain(hotelProfile.isPartOfChain());
+		hotelgeneralinfoVM.setHotelPartOfChain(hotelProfile.getPartOfChain());
 		hotelgeneralinfoVM.setChainHotelCode(hotelProfile.getChainHotel().getChainHotelCode());
 		hotelgeneralinfoVM.setEmail(hotelProfile.getHotelEmailAddr());
 		hotelgeneralinfoVM.setPrimaryPasswd(hotelProfile.getPassword());
@@ -210,10 +210,11 @@ public class TravelPortalUtilsController extends Controller {
 		hotelinternalinformation.setDirectFaxNo(internalcontacts.getDirectFaxValue());
 		hotelinternalinformation.setDirectFaxCode(internalcontacts.getDirectFaxCityCode());
 		hotelinternalinformation.setSupplierCode(internalcontacts.getSupplierCode());
-
+		
+		
 		HotelPrivateContacts hotelprivatecontacts = HotelPrivateContacts.findById(supplierCode);
 		HotelContactInformation hotelcontactinformation = new HotelContactInformation();
-
+			
 		hotelcontactinformation.setSupplierCode(hotelprivatecontacts.getSupplierCode());
 		hotelcontactinformation.setcPersonName(hotelprivatecontacts.getMainContactPersonName());
 		hotelcontactinformation.setcTitle(hotelprivatecontacts.getMainContactPersonTitle());

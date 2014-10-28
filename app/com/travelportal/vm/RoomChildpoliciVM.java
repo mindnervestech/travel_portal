@@ -1,38 +1,49 @@
 package com.travelportal.vm;
 
+import java.util.List;
 
 public class RoomChildpoliciVM {
 	
-	private int childForm;
-	private int childTo;
-	private int childYear;
-	private String childFree;
+	private int roomchildPolicyId;
+	private int allowedChildAgeFrom;
+	private int allowedChildAgeTo;
+	private int years;
+	private String netRate;
 	
 	
-	public int getChildForm() {
-		return childForm;
+	
+	public int getRoomchildPolicyId() {
+		return roomchildPolicyId;
 	}
-	public void setChildForm(int childForm) {
-		this.childForm = childForm;
+	public void setRoomchildPolicyId(int roomchildPolicyId) {
+		this.roomchildPolicyId = roomchildPolicyId;
 	}
-	public int getChildTo() {
-		return childTo;
+	public int getAllowedChildAgeFrom() {
+		return allowedChildAgeFrom;
 	}
-	public void setChildTo(int childTo) {
-		this.childTo = childTo;
+	public void setAllowedChildAgeFrom(int allowedChildAgeFrom) {
+		this.allowedChildAgeFrom = allowedChildAgeFrom;
 	}
-	public int getChildYear() {
-		return childYear;
+	public int getAllowedChildAgeTo() {
+		return allowedChildAgeTo;
 	}
-	public void setChildYear(int childYear) {
-		this.childYear = childYear;
+	public void setAllowedChildAgeTo(int allowedChildAgeTo) {
+		this.allowedChildAgeTo = allowedChildAgeTo;
 	}
-	public String getChildFree() {
-		return childFree;
+	public int getYears() {
+		return years;
 	}
-	public void setChildFree(String childFree) {
-		this.childFree = childFree;
+	public void setYears(int years) {
+		this.years = years;
 	}
+	public String getNetRate() {
+		return netRate;
+	}
+	public void setNetRate(String netRate) {
+		this.netRate = netRate;
+	}
+	
+	
 	
 	
 	

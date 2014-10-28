@@ -194,8 +194,8 @@ public class HotelMealPlan { //supplier specific records...
 		if(!this.child.contains(child))
 		this.child.add(child);
 	}
-	public static List<HotelMealPlan> getmealtype() {
-		return JPA.em().createQuery("select c from HotelMealPlan c").getResultList();
+	public static List<HotelMealPlan> getmealtype(long supplierCode) {
+		return JPA.em().createQuery("select c from HotelMealPlan c where c.SupplierCode = ?1").setParameter(1, supplierCode).getResultList();
 	}
 	
 	//findById

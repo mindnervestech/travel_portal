@@ -94,11 +94,11 @@
 				<label class="col-md-3 control-label">Is hotel part of Chain</label>
 				<div class="col-md-9">
 					<div style="position: relative;">
-						<input type="radio" name="val" data-ng-model="generalInfo.isHotelPartOfChain" value="yes">
+						<input type="radio" name="hotelPartOfChain" data-ng-model="generalInfo.hotelPartOfChain" value=true>
 						&nbsp; Yes
 					</div>
 					<div style="position: relative;">
-						<input type="radio" name="val" data-ng-model="generalInfo.isHotelPartOfChain" value="no">
+						<input type="radio" name="hotelPartOfChain" data-ng-model="generalInfo.hotelPartOfChain" value=false>
 						&nbsp; No
 					</div> 
 				</div>
@@ -159,8 +159,8 @@
 			<br>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Choose a Star Rating:</label>
-				<div class="col-md-9">																	
-					<select class="form-control" data-ng-model="generalInfo.startRating" data-ng-options="starrate.id as starrate.starRatingTxt for starrate in starrating" style="width: 70%;" required >
+				<div class="col-md-9">
+					<select class="form-control" data-ng-model="generalInfo.startRating" data-ng-options="starrate.starRatingTxt as starrate.starRatingTxt for starrate in starrating" style="width: 70%;" required >
 						<option>Select Star Rating...</option>
 					</select>
 				</div>

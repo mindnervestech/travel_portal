@@ -59,7 +59,7 @@ angular.module('travel_portal',['ngRoute','ngDialog']).config(function ($routePr
 		controller: 'hoteProfileController'
 	})
 	.when('/profile13', {
-		templateUrl: '/assets/html/hotel_profile/room_type.html',
+		templateUrl: '/assets/html/hotel_profile/health_and_safety.html',
 		controller: 'hoteProfileController'
 	})
 	.when('/addHotelRoomType', {

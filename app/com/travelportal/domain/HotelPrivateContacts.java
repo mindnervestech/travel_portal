@@ -329,9 +329,11 @@ public static HotelPrivateContacts findById(long id) {
     	
     	try
 		{
-		return (HotelPrivateContacts) JPA.em().createQuery("select c from HotelPrivateContacts c where c.supplier_code = ?1").setParameter(1, id).getSingleResult();
+    		 		return (HotelPrivateContacts) JPA.em().createQuery("select c from HotelPrivateContacts c where c.supplier_code = ?1").setParameter(1, id).getSingleResult();
+		
 		}
 		catch(Exception ex){
+		System.out.println("()()()()()ERORO()()()()()(");
 			return null;
 		}
     }

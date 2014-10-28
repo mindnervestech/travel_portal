@@ -22,7 +22,7 @@ GET 	/shoppingfacility           com.travelportal.controllers.TravelPortalUtilsC
 GET 	/nightlife                	com.travelportal.controllers.TravelPortalUtilsController.getNightLife()
 GET 	/services                	com.travelportal.controllers.TravelPortalUtilsController.getServices()
 GET 	/amenities              	com.travelportal.controllers.TravelPortalUtilsController.getAmenities()
-GET 	/MealTypeplan             	com.travelportal.controllers.TravelPortalUtilsController.getMealTypePlan()
+GET 	/MealTypeplan/:supplierCode             	com.travelportal.controllers.TravelPortalUtilsController.getMealTypePlan(supplierCode:Long)
 GET 	/MealType               	com.travelportal.controllers.TravelPortalUtilsController.getMealType()
 GET 	/findAllData/:supplierCode  com.travelportal.controllers.TravelPortalUtilsController.getAllData(supplierCode:Long)
 GET  	/business              		com.travelportal.controllers.TravelPortalUtilsController.getBusiness()
@@ -45,12 +45,17 @@ POST  	/updateInternalInfo         com.travelportal.controllers.HotelProfileCont
 POST  	/updateContactInfo         	com.travelportal.controllers.HotelProfileController.updateContactInfo()
 POST  	/updateComunication         com.travelportal.controllers.HotelProfileController.updateComunication()
 POST  	/updatebillingInfo         	com.travelportal.controllers.HotelProfileController.updateBillingInfo()
+POST    /saveUpdateHealthSafety     com.travelportal.controllers.HotelProfileController.saveUpdateHealthSafety()
+  
   
 #following routes are used for fetch room details, Add Room Type and Edit Room Type
 #home screen for edit
 
-GET 	/hotel/roomtypes			com.travelportal.controllers.HotelRoomController.fetchAllRoomTypesForEdit()
-GET 	/hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.fetchToEditHotelDetails(roomId: Long)
-POST 	/hotel/saveUpdateRoomType	com.travelportal.controllers.HotelRoomController.saveOrUpdateHotelRoom()
-#POST 	/hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.editHotelRoom(roomId: Long)
-GET 	/room/amenities				com.travelportal.controllers.HotelRoomController.getAvailableRoomAmenities()
+
+
+GET /hotel/roomtypes		com.travelportal.controllers.HotelRoomController.fetchAllRoomTypesForEdit()
+GET /roomtypes/:supplierCode  	com.travelportal.controllers.HotelRoomController.fetchToEditHotelDetails(supplierCode:Long)
+POST /hotel/saveUpdateRoomType			com.travelportal.controllers.HotelRoomController.saveOrUpdateHotelRoom()
+#POST /hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.editHotelRoom(roomId: Long)
+GET /room/amenities				com.travelportal.controllers.HotelRoomController.getAvailableRoomAmenities()
+GET /roomtypesInfo/:roomId  	com.travelportal.controllers.HotelRoomController.getroomtypesInfo(roomId:Long)

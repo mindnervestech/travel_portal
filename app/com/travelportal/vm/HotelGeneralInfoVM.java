@@ -10,7 +10,7 @@ public class HotelGeneralInfoVM {
 	private String email;
 	private int cityCode;
 	private String zipCode;
-	private boolean isHotelPartOfChain;
+	private String HotelPartOfChain;
 	private int chainHotelCode;
 	private int BrandHotelCode;
 	private boolean isHealthSafetyCompliance;
@@ -111,17 +111,14 @@ public class HotelGeneralInfoVM {
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
-	/**
-	 * @return the isHotelPartOfChain
-	 */
-	public boolean isHotelPartOfChain() {
-		return isHotelPartOfChain;
+	
+	
+	
+	public String getHotelPartOfChain() {
+		return HotelPartOfChain;
 	}
-	/**
-	 * @param isHotelPartOfChain the isHotelPartOfChain to set
-	 */
-	public void setHotelPartOfChain(boolean isHotelPartOfChain) {
-		this.isHotelPartOfChain = isHotelPartOfChain;
+	public void setHotelPartOfChain(String hotelPartOfChain) {
+		HotelPartOfChain = hotelPartOfChain;
 	}
 	/**
 	 * @return the chainHotelCode

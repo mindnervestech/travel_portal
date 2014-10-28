@@ -16,8 +16,8 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Choose Room Type</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="sel_room_type"
-						data-ng-options="roomType.roomId as roomType.roomType for roomType in hotelRoomTypes track by roomType.roomId">
+					<select class="form-control" data-ng-model="roomTypeIns.roomId" ng-change="selectType()"
+						data-ng-options="hotelRoomTypes.roomId as hotelRoomTypes.roomType for hotelRoomTypes in hotelRoomTypes">
 						<option>Select Room Type...</option>
 					</select>
 				</div>
@@ -55,7 +55,7 @@
 					Adult occupancy for this room?</label>
 				<div class="col-md-3">
 					<select class="form-control"
-						data-ng-model="roomTypeIns.maxAdultsOccupancy">
+						data-ng-model="roomTypeIns.maxAdultOccupancy">
 						<option data-ng-repeat="counter in counterArray">{{counter}}</option>
 					</select> <br>
 				</div>
@@ -65,7 +65,7 @@
 					Adult occupancy if sharing with children in this room?</label>
 				<div class="col-md-3">
 					<select class="form-control"
-						data-ng-model="roomTypeIns.maxAdultsWithChildren">
+						data-ng-model="roomTypeIns.maxAdultOccSharingWithChildren">
 						<option value="0" selected>No Child Allowed</option>
 						<option data-ng-repeat="counter in counterArray">{{counter}}</option>
 					</select> <br>
@@ -85,7 +85,7 @@
 							children sharing with Adults are allowed for this room?</label>
 						<div class="col-md-3">
 							<select class="form-control"
-								data-ng-model="roomTypeIns.freeChildOccuWithAdults">
+								data-ng-model="roomTypeIns.childAllowedFreeWithAdults">
 								<option value="0" selected>Please Select</option>
 								<option>1</option>
 									<option>2</option>
@@ -105,12 +105,12 @@
 
 							<div style="float: left; margin-right: 5%;">
 								<input type="radio" name="chargesforChild"
-									data-ng-model="roomTypeIns.chargesforChild" value="true"> &nbsp;
+									data-ng-model="roomTypeIns.chargesForChildren" value="true"> &nbsp;
 								Yes
 							</div>
 							<div>
 								<input type="radio" name="chargesforChild"
-									data-ng-model="roomTypeIns.chargesforChild" value="false"> &nbsp;
+									data-ng-model="roomTypeIns.chargesForChildren" value="false"> &nbsp;
 								No
 							</div>
 							<br>
@@ -128,7 +128,7 @@
 						<div class="form-group" style="float: left;width: 100%;">
 							<label class="col-md-1 control-label">From: </label>
 							<div class="col-md-2">
-								<select class="form-control" data-ng-model="child.childForm" required>
+								<select class="form-control" data-ng-model="child.allowedChildAgeFrom" required>
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
@@ -156,7 +156,7 @@
 
 							<label class="col-md-1 control-label">To: </label>
 							<div class="col-md-2">
-								<select class="form-control" data-ng-model="child.childTo" required>
+								<select class="form-control" data-ng-model="child.allowedChildAgeTo" required>
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
@@ -186,7 +186,7 @@
 							<label class="col-md-1 control-label">year</label>
 							<div class="col-md-2">
 								<input type="text" placeholder="year" class="form-control"
-									data-ng-model="child.childYear"> <br>
+									data-ng-model="child.years"> <br>
 							</div>
 
 						</div>
@@ -195,7 +195,7 @@
 							<label class="col-md-3 control-label">enter zero if free:
 							</label>
 							<div class="col-md-3">
-								<select class="form-control" data-ng-model="child.childFree" required>
+								<select class="form-control" data-ng-model="child.netRate" required>
 									<option>% of</option>
 									<option>add to</option>
 
@@ -223,12 +223,12 @@
 
 							<div style="float: left; margin-right: 5%;">
 								<input type="radio" name="extraBed"
-									data-ng-model="roomTypeIns.extraBed" value="true"> &nbsp;
+									data-ng-model="roomTypeIns.extraBedAllowed" value="true"> &nbsp;
 								Yes
 							</div>
 							<div>
 								<input type="radio" name="extraBed"
-									data-ng-model="roomTypeIns.extraBed" value="false"> &nbsp;
+									data-ng-model="roomTypeIns.extraBedAllowed" value="false"> &nbsp;
 								No
 							</div>
 							<br>
@@ -242,12 +242,12 @@
 
 							<div style="float: left; margin-right: 5%;">
 								<input type="radio" name="roomSuite"
-									data-ng-model="roomTypeIns.roomSuite" value="true"> &nbsp;
+									data-ng-model="roomTypeIns.roomSuiteType" value="true"> &nbsp;
 								Yes
 							</div>
 							<div>
 								<input type="radio" name="val"
-									data-ng-model="roomTypeIns.roomSuite" value="false"> &nbsp;
+									data-ng-model="roomTypeIns.roomSuiteType" value="false"> &nbsp;
 								No
 							</div>
 							<br>

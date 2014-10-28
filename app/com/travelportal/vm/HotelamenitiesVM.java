@@ -21,19 +21,27 @@ public class HotelamenitiesVM {
 	public void setSupplierCode(Long supplierCode) {
 		this.supplierCode = supplierCode;
 	}
+	public List<Integer> getAmenities() {
+		return amenities;
+	}
+	public void setAmenities(List<Integer> amenities) {
+		this.amenities = amenities;
+	}
 	
 	/**
 	 * @return the services
 	 */
-	public List<Integer> getamenities() {
+/*	public List<Integer> getamenities() {
 		return amenities;
 	}
-	/**
+	*//**
 	 * @param services the services to set
-	 */
+	 *//*
 	public void setServices(List<Integer> amenities) {
 		this.amenities = amenities;
-	}
+	}*/
+	
+	
 	
 	
 }

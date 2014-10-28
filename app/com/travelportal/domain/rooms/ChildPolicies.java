@@ -113,8 +113,9 @@ public class ChildPolicies {
 			query.setParameter(1, id);
 	    	return (ChildPolicies) query.getSingleResult();
 		 } catch(NoResultException e){
+			 
 			 ChildPolicies childPolicies = new ChildPolicies();
-			 childPolicies.save();
+			  childPolicies.save();
 			return childPolicies;
 		 }
 	    }

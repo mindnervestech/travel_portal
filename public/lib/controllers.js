@@ -1,79 +1,132 @@
 
 angular.module('travel_portal').
-controller("hoteRoomController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
+	controller("hoteRoomController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
+	
+			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10];
+		//	$scope.supplierCode = 3;
+			console.log("hoteRoomController successfully initialized."+supplierCode);
 
-	$scope.counterArray = [1,2,3,4,5,6,7,8,9,10];
-	$scope.supplierCode = 3;
-
-	$scope.$watch("sel_room_type", function(selRoomType) {
-		console.log("room type changed...  " + selRoomType);
-		//call service to get the details of the selected room type..
-	});
-
-	$scope.initRoomTypePage = function() {
-		//call the all room type service to get all the room types stored in db for supplier.
-		$http.get("/hotel/roomtypes?supplierCode="+$scope.supplierCode).success(function(response) {
-			$scope.hotelRoomTypes = response;
-		});
-
-		//call the all room type service to get all the room types stored in db for supplier.
-		$http.get("/room/amenities").success(function(response) {
-			$scope.roomAmenities = response;
-		});
-	}
-
-	$scope.roomamenities = [];
-	$scope.childpolicy = [];
-	$scope.childpolicy.push( {  } );
-
-	$scope.newchildpolicy = function($event){
-		$scope.childpolicy.push( {  } );
-		$event.preventDefault();
-		// console.log($scope.childpolicy);
-
-	};
-
-	$scope.createroomtypeMsg = false;
-
-	$scope.CreateRoomType =function(){
-		$scope.roomTypeIns.supplierCode = $scope.supplierCode; //$scope.roomTypeIns;
-		$scope.roomTypeIns.roomchildPolicies = $scope.childpolicy;
-		$scope.roomTypeIns.roomamenities = $scope.roomamenities;
-		console.log($scope.roomTypeIns);
-
-		$http.post('/hotel/saveUpdateRoomType',$scope.roomTypeIns).success(function(data){
-			console.log('success');
-
-		}).error(function(data, status, headers, config) {
-			console.log('ERROR');
-		});
-	}
-
-	$scope.serviceClicked = function(e, roomTypeIns) {
-
-		if($(e.target).is(":checked")) {
-			$scope.roomamenities.push(roomTypeIns.amenityId);
-		} else {
-			DeleteItem(roomTypeIns);
-		}
-
-	}
-	/*|| (generalInfo.serviceId === obj.serviceId))*/
-
-	DeleteItem = function(roomTypeIns){
-
-		angular.forEach($scope.roomamenities, function(obj, index){
-			if ((roomTypeIns.amenityId === obj)) {
-				$scope.roomamenities.splice(index, 1);
-
-				return;
-			};
-		});
-
-	}
-
-
-}]
+			$scope.$watch("sel_room_type", function(selRoomType) {
+				console.log("room type changed...  " + selRoomType);
+				//call service to get the details of the selected room type..
+			});
+			
+			$http.get("/roomtypes/"+supplierCode).success(function(response){
+				console.log('success');
+				$scope.hotelRoomTypes = response;
+			});
+			
+			$scope.selectType = function(){
+				alert($scope.roomTypeIns.roomId);
+				$http.get('/roomtypesInfo/'+$scope.roomTypeIns.roomId).success(function(response){
+					console.log(response);
+					$scope.roomTypeIns.childAllowedFreeWithAdults = response.childAllowedFreeWithAdults; 
+					$scope.roomTypeIns.roomname = response.roomType;
+					$scope.roomTypeIns.extraBedAllowed = response.extraBedAllowed; 
+					$scope.roomTypeIns.maxAdultOccSharingWithChildren = response.maxAdultOccSharingWithChildren;
+					$scope.roomTypeIns.maxAdultOccupancy = response.maxAdultOccupancy; 
+					$scope.roomTypeIns.roomType = response.roomType;
+					$scope.roomTypeIns.maxOccupancy = response.maxOccupancy; 
+					$scope.roomTypeIns.roomSuiteType = response.roomSuiteType;
+					$scope.roomTypeIns.chargesForChildren = response.chargesForChildren;
+					 $scope.childpolicy = response.roomchildPolicies;
+					 
+					 $scope.roomamenities =[];
+					 
+					 angular.forEach($scope.roomAmenities, function(obj, index){
+						 obj.isSelected=false;
+							angular.forEach(response.amenities, function(obj1, index){
+								if ((obj.amenityId == obj1.amenityId)) {				 
+									
+									 obj.isSelected=true;
+							    };
+							});
+							
+						});
+					 
+					 for(var i=0;i<response.amenities.length;i++)
+						 {
+					 $scope.roomamenities.push(response.amenities[i].amenityId);
+						 }
+					 console.log($scope.roomamenities);
+				});
+			}
+			
+			
+			$scope.initRoomTypePage = function() {
+				//call the all room type service to get all the room types stored in db for supplier.
+				
+				
+				/*$http.get("/hotel/roomtypes?supplierCode="+$scope.supplierCode).success(function(response) {
+					$scope.hotelRoomTypes = response;
+					console.log("###########");
+					console.log(response);
+				});*/
+				
+				//call the all room type service to get all the room types stored in db for supplier.
+				$http.get("/room/amenities").success(function(response) {
+					$scope.roomAmenities = response;
+				});
+			}
+			
+			$scope.roomamenities = [];
+			 $scope.childpolicy = [];
+			  $scope.childpolicy.push( {  } );
+			 
+			 $scope.newchildpolicy = function($event){
+			        $scope.childpolicy.push( {  } );
+			        $event.preventDefault();
+			       // console.log($scope.childpolicy);
+			       
+			    };
+			    
+			    $scope.createroomtypeMsg = false;
+			    
+			    $scope.CreateRoomType =function(){
+			    	$scope.roomTypeIns.supplierCode = $scope.supplierCode; //$scope.roomTypeIns;
+			    	$scope.roomTypeIns.roomchildPolicies = $scope.childpolicy;
+			    	$scope.roomTypeIns.roomamenities = $scope.roomamenities;
+			    	
+			    	console.log($scope.roomTypeIns);
+			    				    	
+			    	$http.post('/hotel/saveUpdateRoomType',$scope.roomTypeIns).success(function(data){
+						console.log('success');
+											
+					}).error(function(data, status, headers, config) {
+						console.log('ERROR');
+					});
+			    	
+			    	
+			    }
+			    
+			   
+				
+			    
+			    $scope.serviceClicked = function(e, roomTypeIns) {
+					
+					if($(e.target).is(":checked")) {
+						$scope.roomamenities.push(roomTypeIns.amenityId);
+					} else {
+						DeleteItem(roomTypeIns);
+					}
+					
+				}
+			    /*|| (generalInfo.serviceId === obj.serviceId))*/
+				
+			    DeleteItem = function(roomTypeIns){
+			    	
+					angular.forEach($scope.roomamenities, function(obj, index){
+						 if ((roomTypeIns.amenityId === obj)) {
+					    	$scope.roomamenities.splice(index, 1);
+					    
+					       	return;
+					    };
+					  });
+						  
+					}
+				
+			
+		}]
 );
 
 
@@ -216,6 +269,18 @@ angular.module('travel_portal').
 	
 	$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
 		$scope.getallData=response;
+		console.log(response);
+		
+		
+		$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
+		.success(function(data){
+			if(data) {
+				$scope.cities = data;
+			} else {
+				$scope.cities = [];
+			}
+		});
+		
 		$scope.generalInfo=response.hotelgeneralinfo;
 		if (response.areaattractionsVM != undefined) {
 			for(var i=0;i<response.areaattractionsVM.length;i++) {
@@ -226,13 +291,19 @@ angular.module('travel_portal').
 		$scope.locationsearch.findLocation = response.transportationdirectionsVM;
 		$scope.internalInfo = response.hotelinternalinformation;
 		$scope.contactInfo =  response.hotelcontactinformation;
+		
 		$scope.comunicationhotel = response.hotelcommuniction;
+		$scope.comunicationhotel.Remail =response.hotelcommuniction.primaryEmailAddr;
+		$scope.comunicationhotel.Rccmail =response.hotelcommuniction.ccEmailAddr;
+		
 		$scope.descrip = response.hoteldescription;
-		$scope.service_check =response.hoteldescription.services;
 
+		$scope.bill = response.hotelbillinginformation;
+		
 		angular.forEach($scope.amenities, function(obj, index){
 			angular.forEach(response.hotelamenities, function(obj1, index){
-				if ((obj.amenitiesCode == obj1.amenitiesCode)) {				 
+				if ((obj.amenitiesCode == obj1.amenitiesCode)) {
+					$scope.amenities_check.push(obj.amenitiesCode);
 					obj.isSelected=true;
 				};
 			});
@@ -262,14 +333,14 @@ angular.module('travel_portal').
 			angular.forEach(response.hoteldescription.services, function(obj1, index){
 
 				if ((obj.serviceId == obj1)) {
-					$scope.amenities_check.push(obj.amenitiesCode);
+					$scope.service_check.push(obj.serviceId);
 					obj.isSelected=true;
 				};
 			});
 		});
 	});
 
-	$http.get("/MealTypeplan").success(function(response){
+	$http.get("/MealTypeplan/"+$rootScope.supplierCode).success(function(response){
 		$scope.MealType=response;
 		angular.forEach($scope.MealType, function(obj, index){
 			$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
@@ -453,6 +524,20 @@ angular.module('travel_portal').
 	}
 
 	//$scope.generalInfo.supplierCode="1234";
+	
+	$scope.saveDocumentation = function(){
+	
+		$scope.HealthSafety.supplierCode = $rootScope.supplierCode; 
+		console.log($scope.HealthSafety);
+		$http.post('/saveUpdateHealthSafety', $scope.HealthSafety).success(function(data){
+			console.log('success');
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+		
+	}
+	
 	$scope.radioValue;
 	$scope.generalInfoMsg = false;
 	$scope.savegeneralinfo = function() {
@@ -498,7 +583,7 @@ angular.module('travel_portal').
 	$scope.mealPlanUpdateSuccessMsg = false;
 	$scope.updatemealplan = function(){
 
-		alert("hii..update");
+		
 		console.log($scope.mealdata);
 		$http.post('/updatemealpolicy',$scope.mealdata).success(function(data){
 			console.log('success');
@@ -669,7 +754,7 @@ angular.module('travel_portal').
 
 	$scope.leisuresucess = false;
 	$scope.saveleisure_sport = function(){
-		//$scope.leisure.supplierCode="206"; //$rootScope.supplierCode;
+		$scope.leisure.supplierCode= $rootScope.supplierCode;
 		$scope.leisure.amenities=$scope.leisure_sport_check;
 		console.log($scope.leisure);
 		$http.post('/saveamenities',$scope.leisure).success(function(data){
@@ -682,7 +767,7 @@ angular.module('travel_portal').
 
 	$scope.businessSucess = false;
 	$scope.savebusiness = function(){
-		$scope.businessInfo.supplierCode="206"; //$rootScope.supplierCode;
+		$scope.businessInfo.supplierCode=$rootScope.supplierCode;
 		$scope.businessInfo.amenities=$scope.business_check;
 		console.log($scope.businessInfo);
 		$http.post('/saveamenities',$scope.businessInfo).success(function(data){
@@ -697,7 +782,7 @@ angular.module('travel_portal').
 	$scope.saveAmenities = function(){
 		//console.log($scope.amenitiesInfo.supplierCode);
 		//$scope.amenitiesInfo.supplierCode=$scope.amenitiesInfo.supplierCode;
-		$scope.amenitiesInfo.supplierCode= "206";//$rootScope.supplierCode;
+		$scope.amenitiesInfo.supplierCode= $rootScope.supplierCode;
 
 		$scope.amenitiesInfo.amenities =$scope.amenities_check;
 		console.log($scope.amenitiesInfo);

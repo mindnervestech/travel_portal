@@ -1,11 +1,19 @@
 package com.travelportal.domain.rooms;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.Table;
+
+import com.travelportal.domain.HotelMealPlan;
+import com.travelportal.domain.Location;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -78,6 +86,20 @@ public class RoomChildPolicies {
 	public void setNetRate(String netRate) {
 		this.netRate = netRate;
 	}
+	public static RoomChildPolicies findById(int id) {
+		try
+		{
+    	Query query = JPA.em().createQuery("Select a from RoomChildPolicies a where a.roomchildPolicyId = ?1");
+		query.setParameter(1, id);
+    	return (RoomChildPolicies) query.getSingleResult();
+		} catch(NoResultException e){
+			 
+			RoomChildPolicies roomchildPolicies = new RoomChildPolicies();
+			roomchildPolicies.save();
+			return roomchildPolicies;
+		 }
+    }
+	
 
 	@Transactional
     public void save() {

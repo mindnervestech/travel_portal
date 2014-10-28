@@ -49,7 +49,7 @@
 			<div class="form-group">
 				<label class="col-md-5 control-label">Company / Management / Supplier Name:	</label>
 				<div class="col-md-7">
-					<input type="text" name="Name" data-ng-model="bill.Name" value={{supplierName}} class="form-control" disabled="disabled">
+					<input type="text" name="Name" data-ng-model="generalInfo.hotelNm" value={{supplierName}} class="form-control" disabled="disabled">
 				</div>
 			</div>
 			
@@ -58,11 +58,11 @@
 				<div class="col-md-5">
 				
 				<div style="float: left;margin-right: 5%;">
-						<input type="radio" name="val" data-ng-model="bill.Invoices" value="true">
+						<input type="radio" name="InvoiceToHotel" data-ng-model="bill.invoiceToHotel" value="true">
 						&nbsp; Yes
 					</div>
 					<div>
-						<input type="radio" name="val" data-ng-model="bill.Invoices" value="false">
+						<input type="radio" name="InvoiceToHotel" data-ng-model="bill.invoiceToHotel" value="false">
 						&nbsp; No
 					</div> 
 				
@@ -77,14 +77,14 @@
 					<div class="form-group">
 						<label class="col-md-5 control-label">*First Name:</label>
 						<div class="col-md-7">
-						<input type="text" name="firstName" data-ng-model="bill.firstName" class="form-control" required>
+						<input type="text" name="firstName" data-ng-model="bill.aFirstName" class="form-control" required>
 					</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="col-md-5 control-label">*Last Name:</label>
 						<div class="col-md-7">
-						<input type="text" name="lastname" data-ng-model="bill.lastName" class="form-control" required>
+						<input type="text" name="lastname" data-ng-model="bill.aLastName" class="form-control" required>
 					</div>
 					</div>
 					
@@ -101,7 +101,7 @@
 				<div class="col-md-7">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-						<input type="email" name="Email" data-ng-model="bill.email" class="form-control" required>
+						<input type="email" name="Email" data-ng-model="bill.dEmailAddr" class="form-control" required>
 					</div>
 				</div>
 			</div>
@@ -110,34 +110,34 @@
 					<div class="form-group">
 				<label class="col-md-5 control-label">*Direct Telephone:</label>
 				<div class="col-md-2" style="width: 16%;">
-					<input type="number" name="telephcode" data-ng-model="bill.telephcode" class="form-control" required>
-					<span class="error" ng-show="billinfo.telephcode.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="dTelCode" data-ng-model="bill.dTelCode" class="form-control" required>
+					<span class="error" ng-show="billinfo.dTelCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				<p style="float: left;">-</p>
 					<div class="col-md-4">
-					<input type="number" name="telenumber" data-ng-model="bill.teleNumber" class="form-control" required>
-					<span class="error" ng-show="billinfo.telenumber.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="dTelNo" data-ng-model="bill.dTelNo" class="form-control" required>
+					<span class="error" ng-show="billinfo.dTelNo.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 			
 				<div class="form-group">
 				<label class="col-md-5 control-label">*Direct Fax:</label>
 				<div class="col-md-2" style="width: 16%;">
-					<input type="number" name="dirFaxcode" data-ng-model="bill.dirFaxcode" class="form-control" required>
-					<span class="error" ng-show="billinfo.dirFaxcode.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="dFaxCode" data-ng-model="bill.dFaxCode" class="form-control" required>
+					<span class="error" ng-show="billinfo.dFaxCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 				<p style="float: left;">-</p>
 					<div class="col-md-4">
-					<input type="number" name="dirFaxnumber" data-ng-model="bill.dirFaxNumber" class="form-control" required>
-					<span class="error" ng-show="billinfo.dirFaxnumber.$error.number" style="color: red;">Not valid number!</span>
+					<input type="number" name="dFaxNo" data-ng-model="bill.dFaxNo" class="form-control" required>
+					<span class="error" ng-show="billinfo.dFaxNo.$error.number" style="color: red;">Not valid number!</span>
 				</div>
 			</div>
 					
 				<div class="form-group">
 						<label class="col-md-5 control-label">Extension:</label>
 						<div class="col-md-7">
-						<input type="number" name="extenion" data-ng-model="bill.Extension" class="form-control" required>
-						<span class="error" ng-show="billinfo.extenion.$error.number" style="color: red;">Not valid number!</span>
+						<input type="number" name="dExtNo" data-ng-model="bill.dExtNo" class="form-control" required>
+						<span class="error" ng-show="billinfo.dExtNo.$error.number" style="color: red;">Not valid number!</span>
 					</div>
 					</div>	
 					
@@ -160,11 +160,11 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 4%;">
-									<input type="radio" name="bank" data-ng-model="bill.service" value="true">
+									<input type="radio" name="bank" data-ng-model="bill.bankToBankTransfer" value="true">
 									&nbsp; Yes
 									</div>
 									<div>
-									<input type="radio" name="bank" data-ng-model="bill.service" value="false">
+									<input type="radio" name="bank" data-ng-model="bill.bankToBankTransfer" value="false">
 									&nbsp; No
 									</div> 
 				

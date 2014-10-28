@@ -2,7 +2,7 @@ package com.travelportal.vm;
 
 public class HotelBillingInformation {
 	private Long supplierCode;
-	private String isInvoiceToHotel;
+	private String InvoiceToHotel;
 	private String aFirstName;
 	private String aLastName;
 	private String title;
@@ -12,7 +12,7 @@ public class HotelBillingInformation {
 	private int dFaxNo;
 	private int dFaxCode;
 	private int dExtNo;
-	private String isBankToBankTransfer;
+	private String BankToBankTransfer;
 	/**
 	 * @return the supplierCode
 	 */
@@ -25,17 +25,20 @@ public class HotelBillingInformation {
 	public void setSupplierCode(Long supplierCode) {
 		this.supplierCode = supplierCode;
 	}
-	/**
-	 * @return the isInvoiceToHotel
-	 */
-	public String isInvoiceToHotel() {
-		return isInvoiceToHotel;
+	
+	
+	
+	public String getInvoiceToHotel() {
+		return InvoiceToHotel;
 	}
-	/**
-	 * @param isInvoiceToHotel the isInvoiceToHotel to set
-	 */
-	public void setInvoiceToHotel(String isInvoiceToHotel) {
-		this.isInvoiceToHotel = isInvoiceToHotel;
+	public void setInvoiceToHotel(String invoiceToHotel) {
+		InvoiceToHotel = invoiceToHotel;
+	}
+	public String getBankToBankTransfer() {
+		return BankToBankTransfer;
+	}
+	public void setBankToBankTransfer(String bankToBankTransfer) {
+		BankToBankTransfer = bankToBankTransfer;
 	}
 	/**
 	 * @return the aFirstName
@@ -118,17 +121,6 @@ public class HotelBillingInformation {
 	public void setdExtNo(int dExtNo) {
 		this.dExtNo = dExtNo;
 	}
-	/**
-	 * @return the isBankToBankTransfer
-	 */
-	public String isBankToBankTransfer() {
-		return isBankToBankTransfer;
-	}
-	/**
-	 * @param isBankToBankTransfer the isBankToBankTransfer to set
-	 */
-	public void setBankToBankTransfer(String isBankToBankTransfer) {
-		this.isBankToBankTransfer = isBankToBankTransfer;
-	}
+
 	
 }
