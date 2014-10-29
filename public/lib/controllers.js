@@ -287,7 +287,13 @@ angular.module('travel_portal').
 				$scope.formArr[i] = response.areaattractionsVM[i];	
 			}
 		}
-
+       $scope.HealthSafety = response.healthAndSafetyVM;
+       $scope.FirePrecaution = response.healthAndSafetyVM;
+       $scope.ExitsAndCorridor = response.healthAndSafetyVM;
+       $scope.AirCondition = response.healthAndSafetyVM;
+       $scope.Lifts = response.healthAndSafetyVM;
+       $scope.Bedrooms = response.healthAndSafetyVM;
+       $scope.KitchenAndHygiene = response.healthAndSafetyVM;
 		$scope.locationsearch.findLocation = response.transportationdirectionsVM;
 		$scope.internalInfo = response.hotelinternalinformation;
 		$scope.contactInfo =  response.hotelcontactinformation;
@@ -423,7 +429,20 @@ angular.module('travel_portal').
 
 
 	};
-
+	$scope.kidClub = ['January','February','May'];
+	$scope.ChildrenkidClub=[];
+	/*$scope.ChildrenF = {isSelected : false};*/
+	
+	$scope.kidClubClicked = function(e, ChildrenF){
+		
+		/*if($(e.target).is(":checked")) {
+			$scope.ChildrenkidClub.push(ChildrenF);
+		} else {
+			//DeleteleisureItem(ChildrenF);
+		}
+		console.log($scope.ChildrenkidClub);*/
+	}
+	
 	$scope.leisureClicked = function(e, leisure) {
 
 		if($(e.target).is(":checked")) {
@@ -523,10 +542,23 @@ angular.module('travel_portal').
 
 	}
 
-	//$scope.generalInfo.supplierCode="1234";
+		
+	
+	
+	$scope.saveFirePrecaution = function(){
+		
+		$scope.FirePrecaution.supplierCode = $rootScope.supplierCode;
+		console.log($scope.FirePrecaution);
+		$http.post('/saveUpdateFirePrecaution', $scope.FirePrecaution).success(function(data){
+			console.log('success');
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+	}
 	
 	$scope.saveDocumentation = function(){
-	
+		
 		$scope.HealthSafety.supplierCode = $rootScope.supplierCode; 
 		console.log($scope.HealthSafety);
 		$http.post('/saveUpdateHealthSafety', $scope.HealthSafety).success(function(data){
@@ -537,6 +569,86 @@ angular.module('travel_portal').
 		});
 		
 	}
+	
+	$scope.saveExitsAndCorridors = function(){
+		
+		$scope.ExitsAndCorridor.supplierCode = $rootScope.supplierCode; 
+		console.log($scope.ExitsAndCorridor);
+		$http.post('/saveUpdateExitsAndCorridor', $scope.ExitsAndCorridor).success(function(data){
+			console.log('success');
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+		
+	}
+	
+	$scope.saveAirCondition = function(){
+		
+		$scope.AirCondition.supplierCode = $rootScope.supplierCode; 
+		console.log($scope.AirCondition);
+		$http.post('/saveUpdateAirCondition', $scope.AirCondition).success(function(data){
+			console.log('success');
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+		
+	}
+	
+	$scope.saveLifts = function(){
+		
+		$scope.Lifts.supplierCode = $rootScope.supplierCode; 
+		console.log($scope.Lifts);
+		$http.post('/saveUpdateLifts', $scope.Lifts).success(function(data){
+			console.log('success');
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+		
+	}
+	
+	$scope.saveBedroomsAsndBalconies = function(){
+		
+		$scope.Bedrooms.supplierCode = $rootScope.supplierCode; 
+		console.log($scope.Bedrooms);
+		$http.post('/saveUpdateBedroomsAsndBalconies', $scope.Bedrooms).success(function(data){
+			console.log('success');
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+		
+	}
+	
+	
+	$scope.saveKitchenAndHygiene = function(){
+		
+		$scope.KitchenAndHygiene.supplierCode = $rootScope.supplierCode; 
+		console.log($scope.KitchenAndHygiene);
+		$http.post('/saveUpdateKitchenAndHygiene', $scope.KitchenAndHygiene).success(function(data){
+			console.log('success');
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+		
+	}
+	
+     $scope.saveChildrenFaciliti = function(){
+		
+		$scope.ChildrenFaciliti.supplierCode = $rootScope.supplierCode; 
+		console.log($scope.ChildrenFaciliti);
+		/*$http.post('/saveUpdateKitchenAndHygiene', $scope.KitchenAndHygiene).success(function(data){
+			console.log('success');
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});*/
+		
+	}
+	
 	
 	$scope.radioValue;
 	$scope.generalInfoMsg = false;
@@ -665,24 +777,24 @@ angular.module('travel_portal').
 	//$scope.value1=false;
 	$scope.sameadd=function()
 	{
-
-		if($scope.contactInfo.value1==true)
+     
+		if($scope.contactInfo.reservationDetailSame == true)
 		{
-			$scope.contactInfo.RcontactName=$scope.contactInfo.contactName;
-			$scope.contactInfo.RemailAddr=$scope.contactInfo.emailAddr;
-			$scope.contactInfo.Rtitle=$scope.contactInfo.title;
-			$scope.contactInfo.RteleCode=$scope.contactInfo.teleCode;
-			$scope.contactInfo.RteleNumber=$scope.contactInfo.teleNumber;
-			$scope.contactInfo.RExtension=$scope.contactInfo.Extension;
+			$scope.contactInfo.rContactName=$scope.contactInfo.cPersonName;
+			$scope.contactInfo.rEmailAddr=$scope.contactInfo.dEmailAddr;
+			$scope.contactInfo.rTitle=$scope.contactInfo.cTitle;
+			$scope.contactInfo.rDirectTelCode=$scope.contactInfo.dTelCode;
+			$scope.contactInfo.rDirectTelNo=$scope.contactInfo.dTelNo;
+			$scope.contactInfo.rExtNo=$scope.contactInfo.dExtNo;
 		}
 		else
 		{
-			$scope.contactInfo.RcontactName="";
-			$scope.contactInfo.RemailAddr="";
-			$scope.contactInfo.Rtitle="";
-			$scope.contactInfo.RteleCode="";
-			$scope.contactInfo.RteleNumber="";
-			$scope.contactInfo.RExtension="";
+			$scope.contactInfo.rContactName="";
+			$scope.contactInfo.rEmailAddr="";
+			$scope.contactInfo.rTitle="";
+			$scope.contactInfo.rDirectTelCode="";
+			$scope.contactInfo.rDirectTelNo="";
+			$scope.contactInfo.rExtNo="";
 
 
 		}
@@ -770,7 +882,7 @@ angular.module('travel_portal').
 		$scope.businessInfo.supplierCode=$rootScope.supplierCode;
 		$scope.businessInfo.amenities=$scope.business_check;
 		console.log($scope.businessInfo);
-		$http.post('/saveamenities',$scope.businessInfo).success(function(data){
+		$http.post('/savebusinessamenities',$scope.businessInfo).success(function(data){
 			console.log('success');
 			$scope.businessSucess = true;
 		}).error(function(data, status, headers, config) {

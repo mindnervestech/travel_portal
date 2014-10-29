@@ -73,7 +73,7 @@
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Telephone:</label>
-				<div class="col-md-2" style="width: 13%;">
+				<div class="col-md-2" style="width: 14%;">
 					<input  type="number" name="dTelCode" data-ng-model="contactInfo.dTelCode" class="form-control" required>
 					<span class="error" ng-show="contact.dTelCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
@@ -85,7 +85,7 @@
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Fax :</label>
-				<div class="col-md-2" style="width: 13%;">
+				<div class="col-md-2" style="width: 14%;">
 					<input type="number" name="dFaxCode" data-ng-model="contactInfo.dFaxCode" class="form-control" required>
 					<span class="error" ng-show="contact.dFaxCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
@@ -127,7 +127,7 @@
 		
 		<div class="col-md-12">
 			<label>If the reservation contact is the same as main contact check here: </label>
-			<input type="checkbox" ng-model="contactInfo.reservationDetailSame" ng-change="sameadd()">
+			<input type="checkbox" ng-model="contactInfo.reservationDetailSame" ng-checked="contactInfo.reservationDetailSame" ng-change="sameadd()">
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Contact Name:</label>
 				<div class="col-md-9">
@@ -145,7 +145,7 @@
 				
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Telephone:</label>
-				<div class="col-md-2" style="width: 13%;">
+				<div class="col-md-2" style="width: 14%;">
 					<input type="number" name="rDirectTelCode" data-ng-model="contactInfo.rDirectTelCode" class="form-control" required>
 					<span class="error" ng-show="contact.rDirectTelCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
@@ -177,7 +177,7 @@
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Department Telephone:</label>
-				<div class="col-md-2" style="width: 13%;">
+				<div class="col-md-2" style="width: 14%;">
 					<input type="number" name="rDeptTelCode" data-ng-model="contactInfo.rDeptTelCode" class="form-control" required>
 					<span class="error" ng-show="contact.rDeptTelCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
@@ -189,7 +189,7 @@
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Department Fax:	</label>
-				<div class="col-md-2" style="width: 13%;">
+				<div class="col-md-2" style="width: 14%;">
 					<input type="number" name="rDeptFaxCode" data-ng-model="contactInfo.rDeptFaxCode" class="form-control" required>
 						<span class="error" ng-show="contact.rDeptFaxCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>

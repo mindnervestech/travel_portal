@@ -28,7 +28,7 @@ public class HotelPrivateContacts {
 	private int mainContactExt;
 	private String mainContactEmailAddr;
 	private String tollFreeNo;
-	private boolean reservationSameAsMainContact; //this flag is for whether the main contact and reservation contact are same
+	private String reservationSameAsMainContact; //this flag is for whether the main contact and reservation contact are same
 	
 	private String reservationContactPersonName;
 	private String reservationContactPersonTitle;
@@ -207,18 +207,16 @@ public class HotelPrivateContacts {
 	public void setTollFreeNo(String tollFreeNo) {
 		this.tollFreeNo = tollFreeNo;
 	}
-	/**
-	 * @return the reservationSameAsMainContact
-	 */
-	public boolean isReservationSameAsMainContact() {
+	
+	
+	public String getReservationSameAsMainContact() {
 		return reservationSameAsMainContact;
 	}
-	/**
-	 * @param reservationSameAsMainContact the 	 to set
-	 */
-	public void setReservationSameAsMainContact(boolean reservationSameAsMainContact) {
+
+	public void setReservationSameAsMainContact(String reservationSameAsMainContact) {
 		this.reservationSameAsMainContact = reservationSameAsMainContact;
 	}
+
 	/**
 	 * @return the reservationContactPersonName
 	 */

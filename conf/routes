@@ -35,6 +35,7 @@ GET		/deletechile/:id       		com.travelportal.controllers.HotelProfileControlle
 POST  	/saveGeneralInfo            com.travelportal.controllers.HotelProfileController.saveGeneralInfo()
 POST  	/updateDescription         	com.travelportal.controllers.HotelProfileController.updateDescription()
 POST  	/saveamenities           	com.travelportal.controllers.HotelProfileController.saveAmenities()
+POST    /savebusinessamenities    	com.travelportal.controllers.HotelProfileController.savebusinessamenities()
 POST  	/savemealpolicy           	com.travelportal.controllers.HotelProfileController.saveMealPolicy()
 POST  	/updatemealpolicy         	com.travelportal.controllers.HotelProfileController.updateMealPolicy()
 POST  	/saveattraction         	com.travelportal.controllers.HotelProfileController.saveAttraction()
@@ -46,8 +47,15 @@ POST  	/updateContactInfo         	com.travelportal.controllers.HotelProfileCont
 POST  	/updateComunication         com.travelportal.controllers.HotelProfileController.updateComunication()
 POST  	/updatebillingInfo         	com.travelportal.controllers.HotelProfileController.updateBillingInfo()
 POST    /saveUpdateHealthSafety     com.travelportal.controllers.HotelProfileController.saveUpdateHealthSafety()
-  
-  
+POST    /saveUpdateFirePrecaution     com.travelportal.controllers.HotelProfileController.saveUpdateFirePrecaution()
+POST    /saveUpdateExitsAndCorridor   com.travelportal.controllers.HotelProfileController.saveUpdateExitsAndCorridor()
+POST    /saveUpdateAirCondition       com.travelportal.controllers.HotelProfileController.saveUpdateAirCondition()
+POST    /saveUpdateLifts    com.travelportal.controllers.HotelProfileController.saveUpdateLifts()
+POST    /saveUpdateBedroomsAsndBalconies  com.travelportal.controllers.HotelProfileController.saveUpdateBedroomsAsndBalconies()
+POST    /saveUpdateKitchenAndHygiene    com.travelportal.controllers.HotelProfileController.saveUpdateKitchenAndHygiene()
+
+
+
 #following routes are used for fetch room details, Add Room Type and Edit Room Type
 #home screen for edit
 

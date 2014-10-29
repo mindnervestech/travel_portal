@@ -12,7 +12,7 @@ public class HotelContactInformation {
 	private int dExtNo;
 	private String dEmailAddr;
 	private String dTollFreeTelNo;
-	private boolean isReservationDetailSame;
+	private String ReservationDetailSame;
 	private String rContactName;
 	private String rTitle;
 	private int rDirectTelNo;
@@ -111,17 +111,13 @@ public class HotelContactInformation {
 	public void setdTollFreeTelNo(String dTollFreeTelNo) {
 		this.dTollFreeTelNo = dTollFreeTelNo;
 	}
-	/**
-	 * @return the isReservationDetailSame
-	 */
-	public boolean isReservationDetailSame() {
-		return isReservationDetailSame;
+	
+	
+	public String getReservationDetailSame() {
+		return ReservationDetailSame;
 	}
-	/**
-	 * @param isReservationDetailSame the isReservationDetailSame to set
-	 */
-	public void setReservationDetailSame(boolean isReservationDetailSame) {
-		this.isReservationDetailSame = isReservationDetailSame;
+	public void setReservationDetailSame(String reservationDetailSame) {
+		ReservationDetailSame = reservationDetailSame;
 	}
 	/**
 	 * @return the rContactName

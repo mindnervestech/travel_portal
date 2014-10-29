@@ -8,6 +8,7 @@
 				<div class="col-lg-12">
 					<div class="tabbable tabs-left">
 						<ul id="myTab2" class="nav nav-tabs">
+						
 							<li class="active"><a href="#profile0" data-toggle="tab">HOTEL
 									GENERAL INFORMATION</a></li>
 							<li><a href="#profile1" data-toggle="tab">HOTEL
@@ -51,19 +52,20 @@
 		</script>
 		<div class="tabbable">
 			
-            <ul class="nav nav-pills" id="myTab" style="font-size: smaller;">
-              <li class="active"><a href="#documentation" data-toggle="tab" style="padding: 9px 5px;">Documentation</a></li>
-              <li><a href="#Step1" data-toggle="tab" style="padding: 9px 5px;">Fire Precautions</a></li>
-              <li><a href="#Step2" data-toggle="tab" style="padding: 9px 5px;">Exits and Corridors</a></li>
-              <li><a href="#Step3" data-toggle="tab" style="padding: 9px 5px;">Air Conditioning / Heating</a></li>
-              <li><a href="#Step4" data-toggle="tab" style="padding: 9px 5px;">Lifts</a></li>
-              <li><a href="#Step5" data-toggle="tab" style="padding: 9px 5px;">Bedrooms and Balconies</a></li>
-              <li><a href="#Step6" data-toggle="tab" style="padding: 9px 5px;">Kitchen's and Hygiene</a></li>
-              <li><a href="#Step7" data-toggle="tab" style="padding: 9px 5px;">Children's Facilities</a></li>
-              <li><a href="#Step8" data-toggle="tab" style="padding: 9px 5px;">Swimming Pool</a></li>
-              <li><a href="#Step9" data-toggle="tab" style="padding: 9px 5px;">Gas Water Heaters</a></li>
-              <li><a href="#Step10" data-toggle="tab" style="padding: 9px 5px;">CCTV Status</a></li>
-              <li><a href="#Step11" data-toggle="tab" style="padding: 9px 5px;">Additional information</a></li>
+            <ul class="nav nav-pills" id="myTab" style="font-size: small;">
+              <li class="active" style="height: 34px;border-right: 1px solid black;"><a href="#documentation" data-toggle="tab" style="padding: 7px 5px;">Documentation</a></li>
+              <li style="height: 34px;"><a href="#Step1" data-toggle="tab" style="padding: 7px 5px;">Fire Precautions</a></li>
+              <li style="height: 34px;"><a href="#Step2" data-toggle="tab" style="padding: 7px 5px;">Exits and Corridors</a></li>
+              <li style="height: 34px;"><a href="#Step3" data-toggle="tab" style="padding: 7px 5px;">Air Conditioning / Heating</a></li>
+              <li style="height: 34px;"><a href="#Step4" data-toggle="tab" style="padding: 7px 5px;">Lifts</a></li>
+              <li style="height: 34px;"><a href="#Step5" data-toggle="tab" style="padding: 7px 5px;">Bedrooms and Balconies</a></li>
+              <li style="height: 34px;"><a href="#Step6" data-toggle="tab" style="padding: 7px 5px;">Kitchen's and Hygiene</a></li>
+              <li style="height: 34px;"><a href="#Step7" data-toggle="tab" style="padding: 7px 5px;">Children's Facilities</a></li>
+              <li style="height: 34px;"><a href="#Step8" data-toggle="tab" style="padding: 7px 5px;">Swimming Pool</a></li>
+              <li style="height: 34px;"><a href="#Step9" data-toggle="tab" style="padding: 7px 5px;">Gas Water Heaters</a></li>
+              <li style="height: 34px;"><a href="#Step10" data-toggle="tab" style="padding: 7px 5px;">CCTV Status</a></li>
+              <li style="height: 34px;"><a href="#Step11" data-toggle="tab" style="padding: 7px 5px;">Additional information</a></li>
+              <li style="height: 34px;"><a href="#Step12" data-toggle="tab" style="padding: 7px 5px;">Documents</a></li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane active" id="documentation">
@@ -189,13 +191,13 @@
 								</div>
 						 </div>
 						 
-						 <div class="form-group">
+						  <div class="form-group">
 							<label class="col-md-3 control-label"> Expiry Date:</label>
 								<div class="col-md-4">
                    					<input id = "date" name="expiryDate1" data-ng-model="HealthSafety.expiryDate1" class="input-filter form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd" style="height: 25px;font-size: 11px;" required>
 					
 								</div>
-						 </div>
+						 </div> 
 						 
 						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
 		
@@ -210,6 +212,7 @@
                 </div>
                 <div class="tab-pane" id="Step1">
                   
+                   <form method="post" ng-submit="saveFirePrecaution()" role="form" class="form-horizontal">
                   <legend style="width: 58%;">Fire Precautions and Procedures</legend>
 				<div class="row">
 					<div class="col-md-12">
@@ -219,15 +222,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="workingFireAlarm" data-ng-model="bill.workingFireAlarm" value="true">
+									<input type="radio" name="workingFireAlarm" data-ng-model="FirePrecaution.workingFireAlarm" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="workingFireAlarm" data-ng-model="bill.workingFireAlarm" value="false">
+									<input type="radio" name="workingFireAlarm" data-ng-model="FirePrecaution.workingFireAlarm" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="workingFireAlarm" data-ng-model="bill.workingFireAlarm" value="none">
+									<input type="radio" name="workingFireAlarm" data-ng-model="FirePrecaution.workingFireAlarm" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -238,15 +241,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="smokeDetectorsInPublicArea" data-ng-model="bill.smokeDetectorsInPublicArea" value="true">
+									<input type="radio" name="smokeDetectorsInPublicArea" data-ng-model="FirePrecaution.smokeDetectorsInPublicArea" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="smokeDetectorsInPublicArea" data-ng-model="bill.smokeDetectorsInPublicArea" value="false">
+									<input type="radio" name="smokeDetectorsInPublicArea" data-ng-model="FirePrecaution.smokeDetectorsInPublicArea" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="smokeDetectorsInPublicArea" data-ng-model="bill.smokeDetectorsInPublicArea" value="none">
+									<input type="radio" name="smokeDetectorsInPublicArea" data-ng-model="FirePrecaution.smokeDetectorsInPublicArea" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -257,15 +260,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="smokeDetectorsInGuestBedroom" data-ng-model="bill.smokeDetectorsInGuestBedroom" value="true">
+									<input type="radio" name="smokeDetectorsInGuestBedroom" data-ng-model="FirePrecaution.smokeDetectorsInGuestBedroom" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="smokeDetectorsInGuestBedroom" data-ng-model="bill.smokeDetectorsInGuestBedroom" value="false">
+									<input type="radio" name="smokeDetectorsInGuestBedroom" data-ng-model="FirePrecaution.smokeDetectorsInGuestBedroom" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="smokeDetectorsInGuestBedroom" data-ng-model="bill.smokeDetectorsInGuestBedroom" value="none">
+									<input type="radio" name="smokeDetectorsInGuestBedroom" data-ng-model="FirePrecaution.smokeDetectorsInGuestBedroom" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -276,15 +279,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="smokeDetectorsInApartment" data-ng-model="bill.smokeDetectorsInApartment" value="true">
+									<input type="radio" name="smokeDetectorsInApartment" data-ng-model="FirePrecaution.smokeDetectorsInApartment" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="smokeDetectorsInApartment" data-ng-model="bill.smokeDetectorsInApartment" value="false">
+									<input type="radio" name="smokeDetectorsInApartment" data-ng-model="FirePrecaution.smokeDetectorsInApartment" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="smokeDetectorsInApartment" data-ng-model="bill.smokeDetectorsInApartment" value="none">
+									<input type="radio" name="smokeDetectorsInApartment" data-ng-model="FirePrecaution.smokeDetectorsInApartment" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -295,15 +298,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="systemAtLeastAnnually" data-ng-model="bill.systemAtLeastAnnually" value="true">
+									<input type="radio" name="systemAtLeastAnnually" data-ng-model="FirePrecaution.systemAtLeastAnnually" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="systemAtLeastAnnually" data-ng-model="bill.systemAtLeastAnnually" value="false">
+									<input type="radio" name="systemAtLeastAnnually" data-ng-model="FirePrecaution.systemAtLeastAnnually" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="systemAtLeastAnnually" data-ng-model="bill.systemAtLeastAnnually" value="none">
+									<input type="radio" name="systemAtLeastAnnually" data-ng-model="FirePrecaution.systemAtLeastAnnually" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -314,15 +317,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="internalFireAlarmTest" data-ng-model="bill.internalFireAlarmTest" value="true">
+									<input type="radio" name="internalFireAlarmTest" data-ng-model="FirePrecaution.internalFireAlarmTest" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="internalFireAlarmTest" data-ng-model="bill.internalFireAlarmTest" value="false">
+									<input type="radio" name="internalFireAlarmTest" data-ng-model="FirePrecaution.internalFireAlarmTest" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="internalFireAlarmTest" data-ng-model="bill.internalFireAlarmTest" value="none">
+									<input type="radio" name="internalFireAlarmTest" data-ng-model="FirePrecaution.internalFireAlarmTest" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -333,15 +336,15 @@
 							<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="extinguishersInAllArea" data-ng-model="bill.extinguishersInAllArea" value="true">
+									<input type="radio" name="extinguishersInAllArea" data-ng-model="FirePrecaution.extinguishersInAllArea" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="extinguishersInAllArea" data-ng-model="bill.extinguishersInAllArea" value="false">
+									<input type="radio" name="extinguishersInAllArea" data-ng-model="FirePrecaution.extinguishersInAllArea" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="extinguishersInAllArea" data-ng-model="bill.extinguishersInAllArea" value="none">
+									<input type="radio" name="extinguishersInAllArea" data-ng-model="FirePrecaution.extinguishersInAllArea" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -351,15 +354,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="emergencyLightingInstall" data-ng-model="bill.emergencyLightingInstall" value="true">
+									<input type="radio" name="emergencyLightingInstall" data-ng-model="FirePrecaution.emergencyLightingInstall" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="emergencyLightingInstall" data-ng-model="bill.emergencyLightingInstall" value="false">
+									<input type="radio" name="emergencyLightingInstall" data-ng-model="FirePrecaution.emergencyLightingInstall" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="emergencyLightingInstall" data-ng-model="bill.emergencyLightingInstall" value="none">
+									<input type="radio" name="emergencyLightingInstall" data-ng-model="FirePrecaution.emergencyLightingInstall" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -369,15 +372,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="limitedWalkingAbilities" data-ng-model="bill.limitedWalkingAbilities" value="true">
+									<input type="radio" name="limitedWalkingAbilities" data-ng-model="FirePrecaution.limitedWalkingAbilities" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="limitedWalkingAbilities" data-ng-model="bill.limitedWalkingAbilities" value="false">
+									<input type="radio" name="limitedWalkingAbilities" data-ng-model="FirePrecaution.limitedWalkingAbilities" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="limitedWalkingAbilities" data-ng-model="bill.limitedWalkingAbilities" value="none">
+									<input type="radio" name="limitedWalkingAbilities" data-ng-model="FirePrecaution.limitedWalkingAbilities" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -392,10 +395,11 @@
 		    	    </div>
 			    </div>
 			
-                  
+                  </form>
                 </div>
                 <div class="tab-pane" id="Step2">
                   
+                  <form method="post" ng-submit="saveExitsAndCorridors()" role="form" class="form-horizontal">
                     <legend style="width: 35%;">Exits and Corridors</legend>
 				<div class="row">
 					<div class="col-md-12">
@@ -407,7 +411,7 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="text" name="HowManyExits" data-ng-model="bill.HowManyExits">
+									<input type="text" name="HowManyExits" data-ng-model="ExitsAndCorridor.howManyExits">
 									</div>
 									
 								</div>
@@ -419,15 +423,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="unlockedAtAllTime" data-ng-model="bill.unlockedAtAllTime" value="true">
+									<input type="radio" name="unlockedAtAllTime" data-ng-model="ExitsAndCorridor.unlockedAtAllTime" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="unlockedAtAllTime" data-ng-model="bill.unlockedAtAllTime" value="false">
+									<input type="radio" name="unlockedAtAllTime" data-ng-model="ExitsAndCorridor.unlockedAtAllTime" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="unlockedAtAllTime" data-ng-model="bill.unlockedAtAllTime" value="none">
+									<input type="radio" name="unlockedAtAllTime" data-ng-model="ExitsAndCorridor.unlockedAtAllTime" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -438,15 +442,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="exitsClearlySigned" data-ng-model="bill.exitsClearlySigned" value="true">
+									<input type="radio" name="exitsClearlySigned" data-ng-model="ExitsAndCorridor.exitsClearlySigned" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="exitsClearlySigned" data-ng-model="bill.exitsClearlySigned" value="false">
+									<input type="radio" name="exitsClearlySigned" data-ng-model="ExitsAndCorridor.exitsClearlySigned" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="exitsClearlySigned" data-ng-model="bill.exitsClearlySigned" value="none">
+									<input type="radio" name="exitsClearlySigned" data-ng-model="ExitsAndCorridor.exitsClearlySigned" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -457,15 +461,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="routesIlluminated" data-ng-model="bill.routesIlluminated" value="true">
+									<input type="radio" name="routesIlluminated" data-ng-model="ExitsAndCorridor.routesIlluminated" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="routesIlluminated" data-ng-model="bill.routesIlluminated" value="false">
+									<input type="radio" name="routesIlluminated" data-ng-model="ExitsAndCorridor.routesIlluminated" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="routesIlluminated" data-ng-model="bill.routesIlluminated" value="none">
+									<input type="radio" name="routesIlluminated" data-ng-model="ExitsAndCorridor.routesIlluminated" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -476,15 +480,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="usableStaircaseFromAllFloors" data-ng-model="bill.usableStaircaseFromAllFloors" value="true">
+									<input type="radio" name="usableStaircaseFromAllFloors" data-ng-model="ExitsAndCorridor.usableStaircaseFromAllFloors" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="usableStaircaseFromAllFloors" data-ng-model="bill.usableStaircaseFromAllFloors" value="false">
+									<input type="radio" name="usableStaircaseFromAllFloors" data-ng-model="ExitsAndCorridor.usableStaircaseFromAllFloors" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="usableStaircaseFromAllFloors" data-ng-model="bill.usableStaircaseFromAllFloors" value="none">
+									<input type="radio" name="usableStaircaseFromAllFloors" data-ng-model="ExitsAndCorridor.usableStaircaseFromAllFloors" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -498,11 +502,12 @@
 		    
 		    	    </div>
 			    </div>
-                  
+                  </form>
                 </div>
                 
                  <div class="tab-pane" id="Step3">
                    
+                   <form method="post" ng-submit="saveAirCondition()" role="form" class="form-horizontal">
                      <legend style="width: 66%;">Air Conditioning / Heating (if applicable)</legend>
 				<div class="row">
 					<div class="col-md-12">
@@ -519,15 +524,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="central" data-ng-model="bill.central" value="true">
+									<input type="radio" name="central" data-ng-model="AirCondition.central" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="central" data-ng-model="bill.central" value="false">
+									<input type="radio" name="central" data-ng-model="AirCondition.central" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="central" data-ng-model="bill.central" value="none">
+									<input type="radio" name="central" data-ng-model="AirCondition.central" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -538,15 +543,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="independentUnits" data-ng-model="bill.independentUnits" value="true">
+									<input type="radio" name="independentUnits" data-ng-model="AirCondition.independentUnits" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="independentUnits" data-ng-model="bill.independentUnits" value="false">
+									<input type="radio" name="independentUnits" data-ng-model="AirCondition.independentUnits" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="independentUnits" data-ng-model="bill.independentUnits" value="none">
+									<input type="radio" name="independentUnits" data-ng-model="AirCondition.independentUnits" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -560,11 +565,12 @@
 		    
 		    	    </div>
 			    </div>
-                   
+                   </form>
                 </div>
                 
                 <div class="tab-pane" id="Step4">
                  
+                 <form method="post" ng-submit="saveLifts()" role="form" class="form-horizontal">
                   <legend style="width: 33%;">Lifts (if applicable)</legend>
 				<div class="row">
 					<div class="col-md-12">
@@ -575,15 +581,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="floorsAccessible" data-ng-model="bill.floorsAccessible" value="true">
+									<input type="radio" name="floorsAccessible" data-ng-model="Lifts.floorsAccessible" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="floorsAccessible" data-ng-model="bill.floorsAccessible" value="false">
+									<input type="radio" name="floorsAccessible" data-ng-model="Lifts.floorsAccessible" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="floorsAccessible" data-ng-model="bill.floorsAccessible" value="none">
+									<input type="radio" name="floorsAccessible" data-ng-model="Lifts.floorsAccessible" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -594,15 +600,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="internalClosingDoor" data-ng-model="bill.internalClosingDoor" value="true">
+									<input type="radio" name="internalClosingDoor" data-ng-model="Lifts.internalClosingDoor" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="internalClosingDoor" data-ng-model="bill.internalClosingDoor" value="false">
+									<input type="radio" name="internalClosingDoor" data-ng-model="Lifts.internalClosingDoor" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="internalClosingDoor" data-ng-model="bill.internalClosingDoor" value="none">
+									<input type="radio" name="internalClosingDoor" data-ng-model="Lifts.internalClosingDoor" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -613,15 +619,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="relevantSignageDisplay" data-ng-model="bill.relevantSignageDisplay" value="true">
+									<input type="radio" name="relevantSignageDisplay" data-ng-model="Lifts.relevantSignageDisplay" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="relevantSignageDisplay" data-ng-model="bill.relevantSignageDisplay" value="false">
+									<input type="radio" name="relevantSignageDisplay" data-ng-model="Lifts.relevantSignageDisplay" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="relevantSignageDisplay" data-ng-model="bill.relevantSignageDisplay" value="none">
+									<input type="radio" name="relevantSignageDisplay" data-ng-model="Lifts.relevantSignageDisplay" value="none">
 									&nbsp; N/A 
 									</div> 
 								</div>
@@ -642,15 +648,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="noSmoking" data-ng-model="bill.noSmoking" value="true">
+									<input type="radio" name="noSmoking" data-ng-model="Lifts.noSmoking" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="noSmoking" data-ng-model="bill.noSmoking" value="false">
+									<input type="radio" name="noSmoking" data-ng-model="Lifts.noSmoking" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="radio" name="noSmoking" data-ng-model="Lifts.noSmoking" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -661,15 +667,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="bill.noUnaccompaniedChildren" value="true">
+									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="Lifts.noUnaccompaniedChildren" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="bill.noUnaccompaniedChildren" value="false">
+									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="Lifts.noUnaccompaniedChildren" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="bill.noUnaccompaniedChildren" value="none">
+									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="Lifts.noUnaccompaniedChildren" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -680,15 +686,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="eventOfFire" data-ng-model="bill.eventOfFire" value="true">
+									<input type="radio" name="eventOfFire" data-ng-model="Lifts.eventOfFire" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="eventOfFire" data-ng-model="bill.eventOfFire" value="false">
+									<input type="radio" name="eventOfFire" data-ng-model="Lifts.eventOfFire" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="eventOfFire" data-ng-model="bill.eventOfFire" value="none">
+									<input type="radio" name="eventOfFire" data-ng-model="Lifts.eventOfFire" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -702,11 +708,11 @@
 		    
 		    	    </div>
 			    </div>
-                 
+                 </form>
                 </div>
                 
                 <div class="tab-pane" id="Step5">
-                  
+                  <form method="post" ng-submit="saveBedroomsAsndBalconies()" role="form" class="form-horizontal">
                    <legend style="width: 45%;">Bedrooms and Balconies</legend>
 				<div class="row">
 					<div class="col-md-12">
@@ -717,15 +723,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="fireSafetyInstructionsPosted" data-ng-model="bill.fireSafetyInstructionsPosted" value="true">
+									<input type="radio" name="fireSafetyInstructionsPosted" data-ng-model="Bedrooms.fireSafetyInstructionsPosted" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="fireSafetyInstructionsPosted" data-ng-model="bill.fireSafetyInstructionsPosted" value="false">
+									<input type="radio" name="fireSafetyInstructionsPosted" data-ng-model="Bedrooms.fireSafetyInstructionsPosted" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="fireSafetyInstructionsPosted" data-ng-model="bill.fireSafetyInstructionsPosted" value="none">
+									<input type="radio" name="fireSafetyInstructionsPosted" data-ng-model="Bedrooms.fireSafetyInstructionsPosted" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -736,15 +742,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="electricsAutomaticallyDisconnect" data-ng-model="bill.electricsAutomaticallyDisconnect" value="true">
+									<input type="radio" name="electricsAutomaticallyDisconnect" data-ng-model="Bedrooms.electricsAutomaticallyDisconnect" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="electricsAutomaticallyDisconnect" data-ng-model="bill.electricsAutomaticallyDisconnect" value="false">
+									<input type="radio" name="electricsAutomaticallyDisconnect" data-ng-model="Bedrooms.electricsAutomaticallyDisconnect" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="electricsAutomaticallyDisconnect" data-ng-model="bill.electricsAutomaticallyDisconnect" value="none">
+									<input type="radio" name="electricsAutomaticallyDisconnect" data-ng-model="Bedrooms.electricsAutomaticallyDisconnect" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -755,15 +761,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="roomsHaveBalconies" data-ng-model="bill.roomsHaveBalconies" value="true">
+									<input type="radio" name="roomsHaveBalconies" data-ng-model="Bedrooms.roomsHaveBalconies" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="roomsHaveBalconies" data-ng-model="bill.roomsHaveBalconies" value="false">
+									<input type="radio" name="roomsHaveBalconies" data-ng-model="Bedrooms.roomsHaveBalconies" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="roomsHaveBalconies" data-ng-model="bill.roomsHaveBalconies" value="none">
+									<input type="radio" name="roomsHaveBalconies" data-ng-model="Bedrooms.roomsHaveBalconies" value="none">
 									&nbsp; N/A 
 									</div> 
 								</div>
@@ -775,15 +781,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="balconiesAtLeast1m" data-ng-model="bill.balconiesAtLeast1m" value="true">
+									<input type="radio" name="balconiesAtLeast1m" data-ng-model="Bedrooms.balconiesAtLeast1m" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="balconiesAtLeast1m" data-ng-model="bill.balconiesAtLeast1m" value="false">
+									<input type="radio" name="balconiesAtLeast1m" data-ng-model="Bedrooms.balconiesAtLeast1m" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="balconiesAtLeast1m" data-ng-model="bill.balconiesAtLeast1m" value="none">
+									<input type="radio" name="balconiesAtLeast1m" data-ng-model="Bedrooms.balconiesAtLeast1m" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -794,15 +800,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="gapsGreaterThan10cm" data-ng-model="bill.gapsGreaterThan10cm" value="true">
+									<input type="radio" name="gapsGreaterThan10cm" data-ng-model="Bedrooms.gapsGreaterThan10cm" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="gapsGreaterThan10cm" data-ng-model="bill.gapsGreaterThan10cm" value="false">
+									<input type="radio" name="gapsGreaterThan10cm" data-ng-model="Bedrooms.gapsGreaterThan10cm" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="gapsGreaterThan10cm" data-ng-model="bill.gapsGreaterThan10cm" value="none">
+									<input type="radio" name="gapsGreaterThan10cm" data-ng-model="Bedrooms.gapsGreaterThan10cm" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -813,15 +819,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="anyAdjoiningRooms" data-ng-model="bill.anyAdjoiningRooms" value="true">
+									<input type="radio" name="anyAdjoiningRooms" data-ng-model="Bedrooms.anyAdjoiningRooms" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="anyAdjoiningRooms" data-ng-model="bill.anyAdjoiningRooms" value="false">
+									<input type="radio" name="anyAdjoiningRooms" data-ng-model="Bedrooms.anyAdjoiningRooms" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="anyAdjoiningRooms" data-ng-model="bill.anyAdjoiningRooms" value="none">
+									<input type="radio" name="anyAdjoiningRooms" data-ng-model="Bedrooms.anyAdjoiningRooms" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -834,7 +840,7 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="text" name="howMany" data-ng-model="bill.howMany">
+									<input type="text" name="howMany" data-ng-model="Bedrooms.howMany">
 									</div>
 									
 								</div>
@@ -848,11 +854,12 @@
 		    
 		    	    </div>
 			    </div>
-                  
+                  </form>
                 </div>
                 
                 <div class="tab-pane" id="Step6">
                 
+                <form method="post" ng-submit="saveKitchenAndHygiene()" role="form" class="form-horizontal">
 				  <legend style="width: 40%;">Kitchen's and Hygiene</legend>
 				<div class="row">
 					<div class="col-md-12">
@@ -863,15 +870,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="selfCateringAccommodation" data-ng-model="bill.selfCateringAccommodation" value="true">
+									<input type="radio" name="selfCateringAccommodation" data-ng-model="KitchenAndHygiene.selfCateringAccommodation" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="selfCateringAccommodation" data-ng-model="bill.selfCateringAccommodation" value="false">
+									<input type="radio" name="selfCateringAccommodation" data-ng-model="KitchenAndHygiene.selfCateringAccommodation" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="selfCateringAccommodation" data-ng-model="bill.selfCateringAccommodation" value="none">
+									<input type="radio" name="selfCateringAccommodation" data-ng-model="KitchenAndHygiene.selfCateringAccommodation" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -882,15 +889,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="allKitchenAppliancesRegularly" data-ng-model="bill.allKitchenAppliancesRegularly" value="true">
+									<input type="radio" name="allKitchenAppliancesRegularly" data-ng-model="KitchenAndHygiene.allKitchenAppliancesRegularly" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="allKitchenAppliancesRegularly" data-ng-model="bill.allKitchenAppliancesRegularly" value="false">
+									<input type="radio" name="allKitchenAppliancesRegularly" data-ng-model="KitchenAndHygiene.allKitchenAppliancesRegularly" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="allKitchenAppliancesRegularly" data-ng-model="bill.allKitchenAppliancesRegularly" value="none">
+									<input type="radio" name="allKitchenAppliancesRegularly" data-ng-model="KitchenAndHygiene.allKitchenAppliancesRegularly" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -901,15 +908,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="selfCateringAccommodation" data-ng-model="bill.selfCateringAccommodation" value="true">
+									<input type="radio" name="selfCateringAccommodationHaveFull" data-ng-model="KitchenAndHygiene.selfCateringAccommodationHaveFull" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="selfCateringAccommodation" data-ng-model="bill.selfCateringAccommodation" value="false">
+									<input type="radio" name="selfCateringAccommodationHaveFull" data-ng-model="KitchenAndHygiene.selfCateringAccommodationHaveFull" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="selfCateringAccommodation" data-ng-model="bill.selfCateringAccommodation" value="none">
+									<input type="radio" name="selfCateringAccommodationHaveFull" data-ng-model="KitchenAndHygiene.selfCateringAccommodationHaveFull" value="none">
 									&nbsp; N/A 
 									</div> 
 								</div>
@@ -921,15 +928,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="mainKitchen" data-ng-model="bill.mainKitchen" value="true">
+									<input type="radio" name="mainKitchen" data-ng-model="KitchenAndHygiene.mainKitchen" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="mainKitchen" data-ng-model="bill.mainKitchen" value="false">
+									<input type="radio" name="mainKitchen" data-ng-model="KitchenAndHygiene.mainKitchen" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="mainKitchen" data-ng-model="bill.mainKitchen" value="none">
+									<input type="radio" name="mainKitchen" data-ng-model="KitchenAndHygiene.mainKitchen" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -940,15 +947,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="stagesOfFoodPreparation" data-ng-model="bill.stagesOfFoodPreparation" value="true">
+									<input type="radio" name="stagesOfFoodPreparation" data-ng-model="KitchenAndHygiene.stagesOfFoodPreparation" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="stagesOfFoodPreparation" data-ng-model="bill.stagesOfFoodPreparation" value="false">
+									<input type="radio" name="stagesOfFoodPreparation" data-ng-model="KitchenAndHygiene.stagesOfFoodPreparation" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="stagesOfFoodPreparation" data-ng-model="bill.stagesOfFoodPreparation" value="none">
+									<input type="radio" name="stagesOfFoodPreparation" data-ng-model="KitchenAndHygiene.stagesOfFoodPreparation" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -959,15 +966,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="premisesAdequatelyProofed" data-ng-model="bill.premisesAdequatelyProofed" value="true">
+									<input type="radio" name="premisesAdequatelyProofed" data-ng-model="KitchenAndHygiene.premisesAdequatelyProofed" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="premisesAdequatelyProofed" data-ng-model="bill.premisesAdequatelyProofed" value="false">
+									<input type="radio" name="premisesAdequatelyProofed" data-ng-model="KitchenAndHygiene.premisesAdequatelyProofed" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="premisesAdequatelyProofed" data-ng-model="bill.premisesAdequatelyProofed" value="none">
+									<input type="radio" name="premisesAdequatelyProofed" data-ng-model="KitchenAndHygiene.premisesAdequatelyProofed" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -981,11 +988,11 @@
 		    
 		    	    </div>
 			    </div>
-	
+				</form>
                 </div>
                 
                  <div class="tab-pane" id="Step7">
-                  
+                  <form method="post" ng-submit="saveChildrenFaciliti()" role="form" class="form-horizontal">
                    <legend style="width: 57%;">Children's Facilities (if applicable)</legend>
 				<div class="row">
 					<div class="col-md-12">
@@ -996,15 +1003,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="internalChildrenPlayArea" data-ng-model="bill.internalChildrenPlayArea" value="true">
+									<input type="radio" name="internalChildrenPlayArea" data-ng-model="ChildrenFaciliti.internalChildrenPlayArea" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="internalChildrenPlayArea" data-ng-model="bill.internalChildrenPlayArea" value="false">
+									<input type="radio" name="internalChildrenPlayArea" data-ng-model="ChildrenFaciliti.internalChildrenPlayArea" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="internalChildrenPlayArea" data-ng-model="bill.internalChildrenPlayArea" value="none">
+									<input type="radio" name="internalChildrenPlayArea" data-ng-model="ChildrenFaciliti.internalChildrenPlayArea" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1015,15 +1022,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="externalChildrenPlayArea" data-ng-model="bill.externalChildrenPlayArea" value="true">
+									<input type="radio" name="externalChildrenPlayArea" data-ng-model="ChildrenFaciliti.externalChildrenPlayArea" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="externalChildrenPlayArea" data-ng-model="bill.externalChildrenPlayArea" value="false">
+									<input type="radio" name="externalChildrenPlayArea" data-ng-model="ChildrenFaciliti.externalChildrenPlayArea" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="externalChildrenPlayArea" data-ng-model="bill.externalChildrenPlayArea" value="none">
+									<input type="radio" name="externalChildrenPlayArea" data-ng-model="ChildrenFaciliti.externalChildrenPlayArea" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1034,15 +1041,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="superviseTheKidClub" data-ng-model="bill.superviseTheKidClub" value="true">
+									<input type="radio" name="superviseTheKidClub" data-ng-model="ChildrenFaciliti.superviseTheKidClub" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="superviseTheKidClub" data-ng-model="bill.superviseTheKidClub" value="false">
+									<input type="radio" name="superviseTheKidClub" data-ng-model="ChildrenFaciliti.superviseTheKidClub" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="superviseTheKidClub" data-ng-model="bill.superviseTheKidClub" value="none">
+									<input type="radio" name="superviseTheKidClub" data-ng-model="ChildrenFaciliti.superviseTheKidClub" value="none">
 									&nbsp; N/A 
 									</div> 
 								</div>
@@ -1054,15 +1061,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="qualityChecksOfEquipmentAndFurniture" data-ng-model="bill.qualityChecksOfEquipmentAndFurniture" value="true">
+									<input type="radio" name="qualityChecksOfEquipmentAndFurniture" data-ng-model="ChildrenFaciliti.qualityChecksOfEquipmentAndFurniture" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="qualityChecksOfEquipmentAndFurniture" data-ng-model="bill.qualityChecksOfEquipmentAndFurniture" value="false">
+									<input type="radio" name="qualityChecksOfEquipmentAndFurniture" data-ng-model="ChildrenFaciliti.qualityChecksOfEquipmentAndFurniture" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="qualityChecksOfEquipmentAndFurniture" data-ng-model="bill.qualityChecksOfEquipmentAndFurniture" value="none">
+									<input type="radio" name="qualityChecksOfEquipmentAndFurniture" data-ng-model="ChildrenFaciliti.qualityChecksOfEquipmentAndFurniture" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1070,59 +1077,78 @@
 			             
 			              <div class="form-group">
 							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">During which months is the kid's club fully operational:</label>
-								<div class="col-md-4">
+								<!-- <div class="col-md-4">
 				
 									<div style="float: left;margin-right: 10%;">
-									<input type="checkbox" name="monthsIsTheKidClub" data-ng-model="bill.noSmoking" value="true">
+									<input type="checkbox" name="January" data-ng-model="ChildrenFaciliti.kidClub" value="January">
 									&nbsp; 	January
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="false">
+									<input type="checkbox" name="February" data-ng-model="ChildrenFaciliti.kidClub" value="February">
 									&nbsp; February
 									</div> 
 									<div style="float: left;margin-right: 16%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="March" data-ng-model="ChildrenFaciliti.kidClub" value="March">
 									&nbsp; March
 									</div> 
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="April" data-ng-model="ChildrenFaciliti.kidClub" value="April">
 									&nbsp; April
 									</div> 
 									<div style="float: left;margin-right: 23%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="ChildrenFaciliti.kidClub" value="May">
 									&nbsp; 	May
 									</div> 
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="May" data-ng-model="ChildrenFaciliti.kidClub" value="June">
 									&nbsp; June
 									</div> 
 									<div style="float: left;margin-right: 24%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="true">
+									<input type="checkbox" name="July" data-ng-model="ChildrenFaciliti.kidClub" value="July">
 									&nbsp; 	July
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="false">
+									<input type="checkbox" name="August" data-ng-model="ChildrenFaciliti.kidClub" value="August">
 									&nbsp; August
 									</div> 
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="kidClub" data-ng-model="ChildrenFaciliti.kidClub" value="September">
 									&nbsp; September
-									</div> 
+									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="kidClub" ng-click="kidClubClicked(October)" data-ng-model="ChildrenFaciliti.isSelected" value="October">
 									&nbsp; October
 									</div> 
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox"  checklist-model="ChildrenFaciliti.isSelected" checklist-value="November">
 									&nbsp; 	November
 									</div> 
 									<div style="float: left;margin-right: 1%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox"  checklist-model="ChildrenFaciliti.isSelected" checklist-value="December">
 									&nbsp; December
 									</div> 
-								</div>
+								</div> -->
+								   <div>
+				<label ng-repeat="ChildrenF in kidClub" style="padding-right: 30px;width: 24%;">
+				
+				  <input
+  				  type="checkbox" name="child"
+  				    ng-click="kidClubClicked($event,ChildrenF)"
+  				   	ng-model="ChildrenF.isSelected">					
+   					 {{ChildrenF}}</label>
+    			</div> 
 			             </div>
 			             
+			           <!--   <div>
+				<label ng-repeat="generalInfo in services" style="padding-right: 30px;width: 24%;">
+				
+				  <input
+  				  type="checkbox" name="services"
+  				    ng-click="serviceClicked($event,generalInfo)"
+  				   	ng-model="generalInfo.isSelected">					
+   					 {{generalInfo.serviceName}}</label>
+    			</div> -->
+			           
 						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
 				
 		     
@@ -1130,7 +1156,7 @@
 		    
 		    	    </div>
 			    </div>
-			    
+			    </form>
                 </div>
                 
                  <div class="tab-pane" id="Step8">
@@ -1145,15 +1171,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="poolRulesAndRegulation" data-ng-model="bill.poolRulesAndRegulation" value="true">
+									<input type="radio" name="poolRulesAndRegulation" data-ng-model="HealthSafety.poolRulesAndRegulation" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="poolRulesAndRegulation" data-ng-model="bill.poolRulesAndRegulation" value="false">
+									<input type="radio" name="poolRulesAndRegulation" data-ng-model="HealthSafety.poolRulesAndRegulation" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="poolRulesAndRegulation" data-ng-model="bill.poolRulesAndRegulation" value="none">
+									<input type="radio" name="poolRulesAndRegulation" data-ng-model="HealthSafety.poolRulesAndRegulation" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1164,15 +1190,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="OpeningClosingTimes" data-ng-model="bill.OpeningClosingTimes" value="true">
+									<input type="radio" name="OpeningClosingTimes" data-ng-model="HealthSafety.OpeningClosingTimes" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="OpeningClosingTimes" data-ng-model="bill.OpeningClosingTimes" value="false">
+									<input type="radio" name="OpeningClosingTimes" data-ng-model="HealthSafety.OpeningClosingTimes" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="OpeningClosingTimes" data-ng-model="bill.OpeningClosingTimes" value="none">
+									<input type="radio" name="OpeningClosingTimes" data-ng-model="HealthSafety.OpeningClosingTimes" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1183,15 +1209,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="depthInformation" data-ng-model="bill.depthInformation" value="true">
+									<input type="radio" name="depthInformation" data-ng-model="HealthSafety.depthInformation" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="depthInformation" data-ng-model="bill.depthInformation" value="false">
+									<input type="radio" name="depthInformation" data-ng-model="HealthSafety.depthInformation" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="depthInformation" data-ng-model="bill.depthInformation" value="none">
+									<input type="radio" name="depthInformation" data-ng-model="HealthSafety.depthInformation" value="none">
 									&nbsp; N/A 
 									</div> 
 								</div>
@@ -1203,15 +1229,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="noDiving" data-ng-model="bill.noDiving" value="true">
+									<input type="radio" name="noDiving" data-ng-model="HealthSafety.noDiving" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="noDiving" data-ng-model="bill.noDiving" value="false">
+									<input type="radio" name="noDiving" data-ng-model="HealthSafety.noDiving" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="noDiving" data-ng-model="bill.noDiving" value="none">
+									<input type="radio" name="noDiving" data-ng-model="HealthSafety.noDiving" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1222,15 +1248,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="bill.noUnaccompaniedChildren" value="true">
+									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="HealthSafety.noUnaccompaniedChildren" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="bill.noUnaccompaniedChildren" value="false">
+									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="HealthSafety.noUnaccompaniedChildren" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="bill.noUnaccompaniedChildren" value="none">
+									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="HealthSafety.noUnaccompaniedChildren" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1241,15 +1267,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="lifesavingEquipment" data-ng-model="bill.lifesavingEquipment" value="true">
+									<input type="radio" name="lifesavingEquipment" data-ng-model="HealthSafety.lifesavingEquipment" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="lifesavingEquipment" data-ng-model="bill.lifesavingEquipment" value="false">
+									<input type="radio" name="lifesavingEquipment" data-ng-model="HealthSafety.lifesavingEquipment" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="lifesavingEquipment" data-ng-model="bill.lifesavingEquipment" value="none">
+									<input type="radio" name="lifesavingEquipment" data-ng-model="HealthSafety.lifesavingEquipment" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1260,15 +1286,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="glassAroundThePoolArea" data-ng-model="bill.glassAroundThePoolArea" value="true">
+									<input type="radio" name="glassAroundThePoolArea" data-ng-model="HealthSafety.glassAroundThePoolArea" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="glassAroundThePoolArea" data-ng-model="bill.glassAroundThePoolArea" value="false">
+									<input type="radio" name="glassAroundThePoolArea" data-ng-model="HealthSafety.glassAroundThePoolArea" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="glassAroundThePoolArea" data-ng-model="bill.glassAroundThePoolArea" value="none">
+									<input type="radio" name="glassAroundThePoolArea" data-ng-model="HealthSafety.glassAroundThePoolArea" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1279,15 +1305,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="lifeguardOrQualifiedPerson" data-ng-model="bill.lifeguardOrQualifiedPerson" value="true">
+									<input type="radio" name="lifeguardOrQualifiedPerson" data-ng-model="HealthSafety.lifeguardOrQualifiedPerson" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="lifeguardOrQualifiedPerson" data-ng-model="bill.lifeguardOrQualifiedPerson" value="false">
+									<input type="radio" name="lifeguardOrQualifiedPerson" data-ng-model="HealthSafety.lifeguardOrQualifiedPerson" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="lifeguardOrQualifiedPerson" data-ng-model="bill.lifeguardOrQualifiedPerson" value="none">
+									<input type="radio" name="lifeguardOrQualifiedPerson" data-ng-model="HealthSafety.lifeguardOrQualifiedPerson" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1298,15 +1324,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="ThereChildrenPool" data-ng-model="bill.ThereChildrenPool" value="true">
+									<input type="radio" name="ThereChildrenPool" data-ng-model="HealthSafety.ThereChildrenPool" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="ThereChildrenPool" data-ng-model="bill.ThereChildrenPool" value="false">
+									<input type="radio" name="ThereChildrenPool" data-ng-model="HealthSafety.ThereChildrenPool" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="ThereChildrenPool" data-ng-model="bill.ThereChildrenPool" value="none">
+									<input type="radio" name="ThereChildrenPool" data-ng-model="HealthSafety.ThereChildrenPool" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1317,15 +1343,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="separatedFromTheAdultPool" data-ng-model="bill.separatedFromTheAdultPool" value="true">
+									<input type="radio" name="separatedFromTheAdultPool" data-ng-model="HealthSafety.separatedFromTheAdultPool" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="separatedFromTheAdultPool" data-ng-model="bill.separatedFromTheAdultPool" value="false">
+									<input type="radio" name="separatedFromTheAdultPool" data-ng-model="HealthSafety.separatedFromTheAdultPool" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="separatedFromTheAdultPool" data-ng-model="bill.separatedFromTheAdultPool" value="none">
+									<input type="radio" name="separatedFromTheAdultPool" data-ng-model="HealthSafety.separatedFromTheAdultPool" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1336,15 +1362,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="sufficientDepthMarkings" data-ng-model="bill.sufficientDepthMarkings" value="true">
+									<input type="radio" name="sufficientDepthMarkings" data-ng-model="HealthSafety.sufficientDepthMarkings" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="sufficientDepthMarkings" data-ng-model="bill.sufficientDepthMarkings" value="false">
+									<input type="radio" name="sufficientDepthMarkings" data-ng-model="HealthSafety.sufficientDepthMarkings" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="sufficientDepthMarkings" data-ng-model="bill.sufficientDepthMarkings" value="none">
+									<input type="radio" name="sufficientDepthMarkings" data-ng-model="HealthSafety.sufficientDepthMarkings" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1355,15 +1381,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="isThePoolCleanedDaily" data-ng-model="bill.isThePoolCleanedDaily" value="true">
+									<input type="radio" name="isThePoolCleanedDaily" data-ng-model="HealthSafety.isThePoolCleanedDaily" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="isThePoolCleanedDaily" data-ng-model="bill.isThePoolCleanedDaily" value="false">
+									<input type="radio" name="isThePoolCleanedDaily" data-ng-model="HealthSafety.isThePoolCleanedDaily" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="isThePoolCleanedDaily" data-ng-model="bill.isThePoolCleanedDaily" value="none">
+									<input type="radio" name="isThePoolCleanedDaily" data-ng-model="HealthSafety.isThePoolCleanedDaily" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1374,15 +1400,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="recordsKept" data-ng-model="bill.recordsKept" value="true">
+									<input type="radio" name="recordsKept" data-ng-model="HealthSafety.recordsKept" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="recordsKept" data-ng-model="bill.recordsKept" value="false">
+									<input type="radio" name="recordsKept" data-ng-model="HealthSafety.recordsKept" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="recordsKept" data-ng-model="bill.recordsKept" value="none">
+									<input type="radio" name="recordsKept" data-ng-model="HealthSafety.recordsKept" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1393,15 +1419,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="heatedPoolInTheProperty" data-ng-model="bill.heatedPoolInTheProperty" value="true">
+									<input type="radio" name="heatedPoolInTheProperty" data-ng-model="HealthSafety.heatedPoolInTheProperty" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="heatedPoolInTheProperty" data-ng-model="bill.heatedPoolInTheProperty" value="false">
+									<input type="radio" name="heatedPoolInTheProperty" data-ng-model="HealthSafety.heatedPoolInTheProperty" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="heatedPoolInTheProperty" data-ng-model="bill.heatedPoolInTheProperty" value="none">
+									<input type="radio" name="heatedPoolInTheProperty" data-ng-model="HealthSafety.heatedPoolInTheProperty" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1413,51 +1439,51 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 10%;">
-									<input type="checkbox" name="monthsIsThisOperational" data-ng-model="bill.noSmoking" value="true">
+									<input type="checkbox" name="monthsIsThisOperational" data-ng-model="HealthSafety.noSmoking" value="true">
 									&nbsp; 	January
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="false">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="false">
 									&nbsp; February
 									</div> 
 									<div style="float: left;margin-right: 16%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="none">
 									&nbsp; March
 									</div> 
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="none">
 									&nbsp; April
 									</div> 
 									<div style="float: left;margin-right: 23%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="none">
 									&nbsp; 	May
 									</div> 
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="none">
 									&nbsp; June
 									</div> 
 									<div style="float: left;margin-right: 24%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="true">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="true">
 									&nbsp; 	July
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="false">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="false">
 									&nbsp; August
 									</div> 
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="none">
 									&nbsp; September
 									</div> 
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="none">
 									&nbsp; October
 									</div> 
 									<div style="float: left;margin-right: 3%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="none">
 									&nbsp; 	November
 									</div> 
 									<div style="float: left;margin-right: 1%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="none">
 									&nbsp; December
 									</div> 
 								</div>
@@ -1486,15 +1512,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="gasWaterHeaters" data-ng-model="bill.gasWaterHeaters" value="true">
+									<input type="radio" name="gasWaterHeaters" data-ng-model="HealthSafety.gasWaterHeaters" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="gasWaterHeaters" data-ng-model="bill.gasWaterHeaters" value="false">
+									<input type="radio" name="gasWaterHeaters" data-ng-model="HealthSafety.gasWaterHeaters" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="gasWaterHeaters" data-ng-model="bill.gasWaterHeaters" value="none">
+									<input type="radio" name="gasWaterHeaters" data-ng-model="HealthSafety.gasWaterHeaters" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1512,15 +1538,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="internal" data-ng-model="bill.internal" value="true">
+									<input type="radio" name="internal" data-ng-model="HealthSafety.internal" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="internal" data-ng-model="bill.internal" value="false">
+									<input type="radio" name="internal" data-ng-model="HealthSafety.internal" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="internal" data-ng-model="bill.internal" value="none">
+									<input type="radio" name="internal" data-ng-model="HealthSafety.internal" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1531,15 +1557,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="External" data-ng-model="bill.External" value="true">
+									<input type="radio" name="External" data-ng-model="HealthSafety.External" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="External" data-ng-model="bill.External" value="false">
+									<input type="radio" name="External" data-ng-model="HealthSafety.External" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="External" data-ng-model="bill.External" value="none">
+									<input type="radio" name="External" data-ng-model="HealthSafety.External" value="none">
 									&nbsp; N/A 
 									</div> 
 								</div>
@@ -1558,15 +1584,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="Servicing" data-ng-model="bill.Servicing" value="true">
+									<input type="radio" name="Servicing" data-ng-model="HealthSafety.Servicing" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="Servicing" data-ng-model="bill.Servicing" value="false">
+									<input type="radio" name="Servicing" data-ng-model="HealthSafety.Servicing" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="Servicing" data-ng-model="bill.Servicing" value="none">
+									<input type="radio" name="Servicing" data-ng-model="HealthSafety.Servicing" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1577,15 +1603,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="Maintenance" data-ng-model="bill.Maintenance" value="true">
+									<input type="radio" name="Maintenance" data-ng-model="HealthSafety.Maintenance" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="Maintenance" data-ng-model="bill.Maintenance" value="false">
+									<input type="radio" name="Maintenance" data-ng-model="HealthSafety.Maintenance" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="Maintenance" data-ng-model="bill.Maintenance" value="none">
+									<input type="radio" name="Maintenance" data-ng-model="HealthSafety.Maintenance" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1610,27 +1636,27 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 20%;">
-									<input type="checkbox" name="cctvIsUsedOna24Hour" data-ng-model="bill.noSmoking" value="true">
+									<input type="checkbox" name="cctvIsUsedOna24Hour" data-ng-model="HealthSafety.noSmoking" value="true">
 									&nbsp; 	Entrance
 									</div>
 									<div style="float: left;margin-right: 20%;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="false">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="false">
 									&nbsp; Lobby
 									</div> 
 									<div style="float: left;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="none">
 									&nbsp; Corridors
 									</div> 
 									<div style="float: left;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="none">
 									&nbsp; Fitness Centre
 									</div> 
 									<div style="float: left;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="none">
 									&nbsp; 	Indoor Pools
 									</div> 
 									<div style="float: left;">
-									<input type="checkbox" name="noSmoking" data-ng-model="bill.noSmoking" value="none">
+									<input type="checkbox" name="noSmoking" data-ng-model="HealthSafety.noSmoking" value="none">
 									&nbsp; Outdoor Pools
 									
 									</div> 
@@ -1648,7 +1674,74 @@
                 </div>
                 
                 <div class="tab-pane" id="Step11">
-                  <p>What up girl,88888 this is Section D.</p>
+                 
+                 <legend style="width: 79%;">Additional information, your name and designation</legend>
+				<div class="row">
+					<div class="col-md-12">
+					
+						 <div class="form-group">
+							<label class="col-md-5 control-label" style="text-align: left;">
+							Please use this space to provide any additional information or comments you may have. Please make clear which question(s) your comment is related to:	
+							</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-bottom: 11%;">
+									<textarea name="additionalInformationOrComments" rows="8" cols="45" data-ng-model="HealthSafety.additionalInformationOrComments"></textarea>
+									</div>
+									
+								</div>
+								
+			             </div>	
+			            
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">NAME:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-bottom: 10%;">
+									<input type="text" name="name" data-ng-model="HealthSafety.name">
+									</div>
+									
+								</div>
+			             </div>	
+			             
+			              <div class="form-group">
+							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> DESIGNATION:</label>
+								<div class="col-md-4">
+				
+									<div style="float: left;margin-right: 3%;">
+									<input type="text" name="designation" data-ng-model="HealthSafety.designation">
+									</div>
+									
+								</div>
+			             </div>	
+			             
+			         </div>
+			      </div>
+                 
+                </div>
+                
+                 <div class="tab-pane" id="Step12">
+                  
+                  
+                   <legend style="width: 73%;">Health & Safety Compliance Documents</legend>
+				<div class="row">
+					<div class="col-md-12">
+					 <div class="form-group">
+					 
+					   <div class="col-md-12" style="margin-bottom: 2%;">
+					   <label> To add a new document record please select the file and click the Upload Document button.</label>
+					 </div>
+					</div>
+					  <div class="form-group">
+					   <label class="col-md-1 control-label" style="text-align: left;"> File:</label>
+						<div class="col-md-4">
+			             <input type="file" name="documents"/>			            
+			             
+			             </div>		
+			           </div>	             
+			         </div>
+			      </div>
+                  
                 </div>
                 
               </div>

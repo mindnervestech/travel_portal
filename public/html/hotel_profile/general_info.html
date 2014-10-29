@@ -54,20 +54,20 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Company Name</label>
 				<div class="col-md-9">
-					<input type="text" id="companyName" name="hotelNm" data-ng-model="generalInfo.hotelNm" placeholder="Hotel Name" class="form-control" required>
+					<input type="text" id="companyName" name="hotelNm" data-ng-model="generalInfo.hotelNm" placeholder="Hotel Name" class="form-control" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Hotel Address</label>
 				<div class="col-md-9">
 					<textarea  id="hotelAddr" data-ng-model="generalInfo.hotelAddr" name="address" rows="6"
-						class="form-control" required></textarea>
+						class="form-control" disabled="disabled" required></textarea>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Country</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.countryCode" ng-change="onCountryChange()" data-ng-options="country.countryCode as country.countryName for country in countries" required>
+					<select class="form-control" data-ng-model="generalInfo.countryCode" ng-change="onCountryChange()" data-ng-options="country.countryCode as country.countryName for country in countries" disabled="disabled" required>
 						<option>Select Country...</option>
 					</select>
 				</div>
@@ -75,7 +75,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">City</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.cityCode" data-ng-options="city.cityCode as city.cityName for  city in cities" required>
+					<select class="form-control" data-ng-model="generalInfo.cityCode" data-ng-options="city.cityCode as city.cityName for  city in cities" disabled="disabled" required>
 							<option>Select City...</option>
 					</select>
 				</div>
@@ -86,7 +86,7 @@
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 						<input type="email" data-ng-model="generalInfo.email" placeholder="Email Address"
-							class="form-control" required>
+							class="form-control" disabled="disabled" required>
 					</div>
 				</div>
 			</div>
@@ -94,11 +94,11 @@
 				<label class="col-md-3 control-label">Is hotel part of Chain</label>
 				<div class="col-md-9">
 					<div style="position: relative;">
-						<input type="radio" name="hotelPartOfChain" data-ng-model="generalInfo.hotelPartOfChain" value=true>
+						<input type="radio" name="hotelPartOfChain" data-ng-model="generalInfo.hotelPartOfChain" value=true disabled="disabled">
 						&nbsp; Yes
 					</div>
 					<div style="position: relative;">
-						<input type="radio" name="hotelPartOfChain" data-ng-model="generalInfo.hotelPartOfChain" value=false>
+						<input type="radio" name="hotelPartOfChain" data-ng-model="generalInfo.hotelPartOfChain" value=false disabled="disabled">
 						&nbsp; No
 					</div> 
 				</div>
@@ -107,7 +107,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Hotel affiliate to</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.chainHotelCode" data-ng-options="hotelchainname.chainHotelCode as hotelchainname.chainHotelName for hotelchainname in hotelchain" required>
+					<select class="form-control" data-ng-model="generalInfo.chainHotelCode" data-ng-options="hotelchainname.chainHotelCode as hotelchainname.chainHotelName for hotelchainname in hotelchain" disabled="disabled" required>
 						<option>Select Hotel affiliate...</option>
 					</select>
 				</div>
@@ -115,7 +115,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Please choose your hotel brand :</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.brandHotelCode" data-ng-options="hotelbrandname.brandsCode as hotelbrandname.brandName for hotelbrandname in hotelbrand" required>
+					<select class="form-control" data-ng-model="generalInfo.brandHotelCode" data-ng-options="hotelbrandname.brandsCode as hotelbrandname.brandName for hotelbrandname in hotelbrand" disabled="disabled" required>
 						<option>Select Hotel Brand...</option>
 					</select>
 				</div>
@@ -129,7 +129,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Choose Currency</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.currencyCode" data-ng-options="currencyname.currencyCode as currencyname.currencyName for currencyname in currency" required>
+					<select class="form-control" data-ng-model="generalInfo.currencyCode" data-ng-options="currencyname.currencyCode as currencyname.currencyName for currencyname in currency" disabled="disabled" required>
 						<option>Select Currency...</option>
 					</select>
 				</div>
@@ -145,7 +145,7 @@
 							 <div style="position: relative;">
 									
 									<input  type="radio" name="optionsRadios" ng-model="generalInfo.marketSpecificPolicyCode"
-										ng-value="markettype.marketPolicyTypeId">
+										ng-value="markettype.marketPolicyTypeId" disabled="disabled">
 									
 								</div>&nbsp; {{markettype.marketPolicyTypeNm}}</label> 
 						</div>
@@ -160,7 +160,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Choose a Star Rating:</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.startRating" data-ng-options="starrate.starRatingTxt as starrate.starRatingTxt for starrate in starrating" style="width: 70%;" required >
+					<select class="form-control" data-ng-model="generalInfo.startRating" data-ng-options="starrate.starRatingTxt as starrate.starRatingTxt for starrate in starrating" style="width: 70%;" disabled="disabled" required >
 						<option>Select Star Rating...</option>
 					</select>
 				</div>
@@ -178,14 +178,14 @@ Note: Once you click update if you made changes here, the system will log you ou
 			<div class="form-group">
 				<label class="col-md-3 control-label">Password :</label>
 				<div class="col-md-9">
-					<input type="password" data-ng-model="generalInfo.primaryPasswd" class="form-control" style="width: 70%;" required>
+					<input type="password" name="primaryPasswd" data-ng-model="generalInfo.primaryPasswd" class="form-control" style="width: 70%;" disabled="disabled" required>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Verify :</label>
 				<div class="col-md-9">
-					<input type="password" data-ng-model="generalInfo.verifiedPasswd" class="form-control" style="width: 70%;" required>
+					<input type="password" name="verifiedPasswd" data-ng-model="generalInfo.verifiedPasswd" class="form-control" style="width: 70%;" disabled="disabled" required>
 				</div>
 			</div>
 			<span ng-show="generalInfo.primaryPasswd !== generalInfo.verifiedPasswd" style="margin-left: 28%;color: red;">Password have to match!</span>

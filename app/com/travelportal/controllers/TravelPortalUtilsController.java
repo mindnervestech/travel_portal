@@ -23,6 +23,7 @@ import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelAttractions;
 import com.travelportal.domain.HotelBrands;
 import com.travelportal.domain.HotelChain;
+import com.travelportal.domain.HotelHealthAndSafety;
 import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.HotelPrivateContacts;
 import com.travelportal.domain.HotelProfile;
@@ -46,6 +47,7 @@ import com.travelportal.vm.HotelCommunication;
 import com.travelportal.vm.HotelContactInformation;
 import com.travelportal.vm.HotelDescription;
 import com.travelportal.vm.HotelGeneralInfoVM;
+import com.travelportal.vm.HotelHealthAndSafetyVM;
 import com.travelportal.vm.HotelInternalInformation;
 import com.travelportal.vm.HotelamenitiesVM;
 import com.travelportal.vm.HotelmealVM;
@@ -211,10 +213,68 @@ public class TravelPortalUtilsController extends Controller {
 		hotelinternalinformation.setDirectFaxCode(internalcontacts.getDirectFaxCityCode());
 		hotelinternalinformation.setSupplierCode(internalcontacts.getSupplierCode());
 		
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(supplierCode);
+		HotelHealthAndSafetyVM healthAndSafetyVM = new HotelHealthAndSafetyVM();
+		
+		healthAndSafetyVM.setSupplierCode(hAndSafety.getSupplierCode());
+		healthAndSafetyVM.setFireRisk(hAndSafety.getFireRisk());
+		healthAndSafetyVM.setHaccpCertify(hAndSafety.getHaccpCertify());
+		healthAndSafetyVM.setInternalFire(hAndSafety.getInternalFire());
+		healthAndSafetyVM.setLocalTourist(hAndSafety.getLocalTourist());
+		healthAndSafetyVM.setPublicLiability(hAndSafety.getPublicLiability());
+		healthAndSafetyVM.setRecordsForFire(hAndSafety.getRecordsForFire());
+		healthAndSafetyVM.setRecordsForHealth(hAndSafety.getRecordsForHealth());
+		healthAndSafetyVM.setExpiryDate(hAndSafety.getExpiryDate());
+		healthAndSafetyVM.setExpiryDate1(hAndSafety.getExpiryDate1());
+		/*------------------1.FirePrecaution--------------------*/
+		healthAndSafetyVM.setWorkingFireAlarm(hAndSafety.getWorkingFireAlarm());
+		healthAndSafetyVM.setSmokeDetectorsInPublicArea(hAndSafety.getSmokeDetectorsInPublicArea());
+		healthAndSafetyVM.setSmokeDetectorsInApartment(hAndSafety.getSmokeDetectorsInApartment());
+		healthAndSafetyVM.setSmokeDetectorsInGuestBedroom(hAndSafety.getSmokeDetectorsInGuestBedroom());
+		healthAndSafetyVM.setSystemAtLeastAnnually(hAndSafety.getSystemAtLeastAnnually());
+		healthAndSafetyVM.setInternalFireAlarmTest(hAndSafety.getInternalFireAlarmTest());
+		healthAndSafetyVM.setExtinguishersInAllArea(hAndSafety.getExtinguishersInAllArea());
+		healthAndSafetyVM.setEmergencyLightingInstall(hAndSafety.getEmergencyLightingInstall());
+		healthAndSafetyVM.setLimitedWalkingAbilities(hAndSafety.getLimitedWalkingAbilities());
+		/*-----------------------2.Exits and Corridors-----------------------*/
+		healthAndSafetyVM.setHowManyExits(hAndSafety.getHowManyExits());
+		healthAndSafetyVM.setUnlockedAtAllTime(hAndSafety.getUnlockedAtAllTime());
+		healthAndSafetyVM.setExitsClearlySigned(hAndSafety.getExitsClearlySigned());
+		healthAndSafetyVM.setRoutesIlluminated(hAndSafety.getRoutesIlluminated());
+		healthAndSafetyVM.setSupplierCode(hAndSafety.getSupplierCode());
+		healthAndSafetyVM.setUsableStaircaseFromAllFloors(hAndSafety.getUsableStaircaseFromAllFloors());
+		/*-----------------------3.Air Conditioning------------------------*/
+		healthAndSafetyVM.setCentral(hAndSafety.getCentral());
+		healthAndSafetyVM.setIndependentUnits(hAndSafety.getIndependentUnits());		
+		/*-------------------------4.Lifts---------------------------------*/
+		healthAndSafetyVM.setFloorsAccessible(hAndSafety.getFloorsAccessible());
+		healthAndSafetyVM.setInternalClosingDoor(hAndSafety.getInternalClosingDoor());
+		healthAndSafetyVM.setRelevantSignageDisplay(hAndSafety.getRelevantSignageDisplay());
+		healthAndSafetyVM.setNoSmoking(hAndSafety.getNoSmoking());
+		healthAndSafetyVM.setNoUnaccompaniedChildren(hAndSafety.getNoUnaccompaniedChildren());
+		healthAndSafetyVM.setEventOfFire(hAndSafety.getEventOfFire());		
+		/*-----------------------5.Bedrooms and Balconies--------------------------*/
+		healthAndSafetyVM.setFireSafetyInstructionsPosted(hAndSafety.getFireSafetyInstructionsPosted());
+		healthAndSafetyVM.setElectricsAutomaticallyDisconnect(hAndSafety.getElectricsAutomaticallyDisconnect());
+		healthAndSafetyVM.setRoomsHaveBalconies(hAndSafety.getRoomsHaveBalconies());
+		healthAndSafetyVM.setBalconiesAtLeast1m(hAndSafety.getBalconiesAtLeast1m());
+		healthAndSafetyVM.setGapsGreaterThan10cm(hAndSafety.getGapsGreaterThan10cm());
+		healthAndSafetyVM.setAnyAdjoiningRooms(hAndSafety.getAnyAdjoiningRooms());
+		healthAndSafetyVM.setHowMany(hAndSafety.getHowMany());
+		/*-------------------------6.Kitchen's and Hygiene---------------------------*/
+		healthAndSafetyVM.setSelfCateringAccommodation(hAndSafety.getSelfCateringAccommodation());
+		healthAndSafetyVM.setSelfCateringAccommodationHaveFull(hAndSafety.getSelfCateringAccommodationHaveFull());
+		healthAndSafetyVM.setAllKitchenAppliancesRegularly(hAndSafety.getAllKitchenAppliancesRegularly());
+		healthAndSafetyVM.setMainKitchen(hAndSafety.getMainKitchen());
+		healthAndSafetyVM.setStagesOfFoodPreparation(hAndSafety.getStagesOfFoodPreparation());
+		healthAndSafetyVM.setPremisesAdequatelyProofed(hAndSafety.getPremisesAdequatelyProofed());
+		
+		
 		
 		HotelPrivateContacts hotelprivatecontacts = HotelPrivateContacts.findById(supplierCode);
 		HotelContactInformation hotelcontactinformation = new HotelContactInformation();
-			
+		
+		
 		hotelcontactinformation.setSupplierCode(hotelprivatecontacts.getSupplierCode());
 		hotelcontactinformation.setcPersonName(hotelprivatecontacts.getMainContactPersonName());
 		hotelcontactinformation.setcTitle(hotelprivatecontacts.getMainContactPersonTitle());
@@ -226,7 +286,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelcontactinformation.setdEmailAddr(hotelprivatecontacts.getMainContactEmailAddr());
 		hotelcontactinformation.setdTollFreeTelNo(hotelprivatecontacts.getTollFreeNo());
 		hotelcontactinformation.setSalutationCode(hotelprivatecontacts.getSalutation_salutation_id().getSalutationId());
-		hotelcontactinformation.setReservationDetailSame(hotelprivatecontacts.isReservationSameAsMainContact());
+		hotelcontactinformation.setReservationDetailSame(hotelprivatecontacts.getReservationSameAsMainContact());
 		hotelcontactinformation.setrContactName(hotelprivatecontacts.getReservationContactPersonName());
 		hotelcontactinformation.setrTitle(hotelprivatecontacts.getReservationContactPersonTitle());
 		hotelcontactinformation.setrDeptTelNo(hotelprivatecontacts.getDeptTelNo());
@@ -313,6 +373,7 @@ public class TravelPortalUtilsController extends Controller {
 		map.put("hotelbillinginformation", hotelbillinginformation);
 		map.put("transportationdirectionsVM", transportationdirectionsVM);
 		map.put("hotelamenities", hotelamenities);
+		map.put("healthAndSafetyVM", healthAndSafetyVM);
 
 		return ok(Json.toJson(map));
 

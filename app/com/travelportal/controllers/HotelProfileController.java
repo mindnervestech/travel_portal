@@ -121,15 +121,33 @@ public class HotelProfileController extends Controller {
 		Json.fromJson(json, HotelamenitiesVM.class);
 		HotelamenitiesVM hotelamenitiesVM = Json.fromJson(json, HotelamenitiesVM.class);
 
-
 		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
 		hotelprofile.setAmenities(HotelAmenities.getallhotelamenities(hotelamenitiesVM.getAmenities()));
-
+		
+		//hotelprofile.merge();
+		
 		return ok();
 				
 	}
 	
+	@Transactional(readOnly=false)
+	public static Result savebusinessamenities() {
+
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelamenitiesVM.class);
+		HotelamenitiesVM hotelamenitiesVM = Json.fromJson(json, HotelamenitiesVM.class);
+
+		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
+		hotelprofile.setAmenities(HotelAmenities.getallhotelamenities(hotelamenitiesVM.getAmenities()));
+		
+		//hotelprofile.merge();
+		
+		return ok();
+				
+	}
 	
+		
 	@Transactional(readOnly=false)
 	public static Result saveUpdateHealthSafety() {
 		JsonNode json = request().body().asJson();
@@ -174,7 +192,250 @@ public class HotelProfileController extends Controller {
 		
 		return ok();
 	}
+	
 
+	
+	@Transactional(readOnly=false)
+	public static Result saveUpdateFirePrecaution() {
+	
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
+		
+		if(hAndSafety == null)
+		{
+			
+			hAndSafety=new HotelHealthAndSafety();
+		
+			hAndSafety.setWorkingFireAlarm(healthAndSafetyVM.getWorkingFireAlarm());
+			hAndSafety.setSmokeDetectorsInPublicArea(healthAndSafetyVM.getSmokeDetectorsInPublicArea());
+			hAndSafety.setSmokeDetectorsInApartment(healthAndSafetyVM.getSmokeDetectorsInApartment());
+			hAndSafety.setSmokeDetectorsInGuestBedroom(healthAndSafetyVM.getSmokeDetectorsInGuestBedroom());
+			hAndSafety.setSystemAtLeastAnnually(healthAndSafetyVM.getSystemAtLeastAnnually());
+			hAndSafety.setInternalFireAlarmTest(healthAndSafetyVM.getInternalFireAlarmTest());
+			hAndSafety.setExtinguishersInAllArea(healthAndSafetyVM.getExtinguishersInAllArea());
+			hAndSafety.setEmergencyLightingInstall(healthAndSafetyVM.getEmergencyLightingInstall());
+			hAndSafety.setLimitedWalkingAbilities(healthAndSafetyVM.getLimitedWalkingAbilities());
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+		
+			hAndSafety.save();
+		}
+		else
+		{
+			hAndSafety.setWorkingFireAlarm(healthAndSafetyVM.getWorkingFireAlarm());
+			hAndSafety.setSmokeDetectorsInPublicArea(healthAndSafetyVM.getSmokeDetectorsInPublicArea());
+			hAndSafety.setSmokeDetectorsInApartment(healthAndSafetyVM.getSmokeDetectorsInApartment());
+			hAndSafety.setSmokeDetectorsInGuestBedroom(healthAndSafetyVM.getSmokeDetectorsInGuestBedroom());
+			hAndSafety.setSystemAtLeastAnnually(healthAndSafetyVM.getSystemAtLeastAnnually());
+			hAndSafety.setInternalFireAlarmTest(healthAndSafetyVM.getInternalFireAlarmTest());
+			hAndSafety.setExtinguishersInAllArea(healthAndSafetyVM.getExtinguishersInAllArea());
+			hAndSafety.setEmergencyLightingInstall(healthAndSafetyVM.getEmergencyLightingInstall());
+			hAndSafety.setLimitedWalkingAbilities(healthAndSafetyVM.getLimitedWalkingAbilities());
+			
+			hAndSafety.merge();
+		}
+		
+		return ok();
+	}
+	
+		
+	@Transactional(readOnly=false)
+	public static Result saveUpdateExitsAndCorridor() {
+	
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
+		
+		if(hAndSafety == null)
+		{
+			
+			hAndSafety=new HotelHealthAndSafety();
+		
+			hAndSafety.setHowManyExits(healthAndSafetyVM.getHowManyExits());
+			hAndSafety.setUnlockedAtAllTime(healthAndSafetyVM.getUnlockedAtAllTime());
+			hAndSafety.setExitsClearlySigned(healthAndSafetyVM.getExitsClearlySigned());
+			hAndSafety.setRoutesIlluminated(healthAndSafetyVM.getRoutesIlluminated());
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+			hAndSafety.setUsableStaircaseFromAllFloors(healthAndSafetyVM.getUsableStaircaseFromAllFloors());
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+		
+			hAndSafety.save();
+		}
+		else
+		{
+			hAndSafety.setHowManyExits(healthAndSafetyVM.getHowManyExits());
+			hAndSafety.setUnlockedAtAllTime(healthAndSafetyVM.getUnlockedAtAllTime());
+			hAndSafety.setExitsClearlySigned(healthAndSafetyVM.getExitsClearlySigned());
+			hAndSafety.setRoutesIlluminated(healthAndSafetyVM.getRoutesIlluminated());
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+			hAndSafety.setUsableStaircaseFromAllFloors(healthAndSafetyVM.getUsableStaircaseFromAllFloors());
+			
+			hAndSafety.merge();
+		}
+		
+		return ok();
+		
+	}
+	
+	@Transactional(readOnly=false)
+	public static Result saveUpdateAirCondition() {
+	
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
+		
+		if(hAndSafety == null)
+		{
+			
+			hAndSafety=new HotelHealthAndSafety();
+		
+			hAndSafety.setCentral(healthAndSafetyVM.getCentral());
+			hAndSafety.setIndependentUnits(healthAndSafetyVM.getIndependentUnits());			
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+		
+			hAndSafety.save();
+		}
+		else
+		{
+			hAndSafety.setCentral(healthAndSafetyVM.getCentral());
+			hAndSafety.setIndependentUnits(healthAndSafetyVM.getIndependentUnits());
+			
+			hAndSafety.merge();
+		}
+		
+		return ok();
+	}
+	
+	@Transactional(readOnly=false)
+	public static Result saveUpdateLifts() {
+	
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
+			
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
+		
+		if(hAndSafety == null)
+		{
+			
+			hAndSafety=new HotelHealthAndSafety();
+		
+			hAndSafety.setFloorsAccessible(healthAndSafetyVM.getFloorsAccessible());
+			hAndSafety.setInternalClosingDoor(healthAndSafetyVM.getInternalClosingDoor());
+			hAndSafety.setRelevantSignageDisplay(healthAndSafetyVM.getRelevantSignageDisplay());
+			hAndSafety.setNoSmoking(healthAndSafetyVM.getNoSmoking());
+			hAndSafety.setNoUnaccompaniedChildren(healthAndSafetyVM.getNoUnaccompaniedChildren());
+			hAndSafety.setEventOfFire(healthAndSafetyVM.getEventOfFire());						
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+		
+			hAndSafety.save();
+		}
+		else
+		{
+			hAndSafety.setFloorsAccessible(healthAndSafetyVM.getFloorsAccessible());
+			hAndSafety.setInternalClosingDoor(healthAndSafetyVM.getInternalClosingDoor());
+			hAndSafety.setRelevantSignageDisplay(healthAndSafetyVM.getRelevantSignageDisplay());
+			hAndSafety.setNoSmoking(healthAndSafetyVM.getNoSmoking());
+			hAndSafety.setNoUnaccompaniedChildren(healthAndSafetyVM.getNoUnaccompaniedChildren());
+			hAndSafety.setEventOfFire(healthAndSafetyVM.getEventOfFire());	
+			
+			hAndSafety.merge();
+		}
+		
+		return ok();
+	}
+	
+	@Transactional(readOnly=false)
+	public static Result saveUpdateBedroomsAsndBalconies() {
+	
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
+			
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
+		
+		if(hAndSafety == null)
+		{
+			
+			hAndSafety=new HotelHealthAndSafety();
+			
+			hAndSafety.setFireSafetyInstructionsPosted(healthAndSafetyVM.getFireSafetyInstructionsPosted());
+			hAndSafety.setElectricsAutomaticallyDisconnect(healthAndSafetyVM.getElectricsAutomaticallyDisconnect());
+			hAndSafety.setRoomsHaveBalconies(healthAndSafetyVM.getRoomsHaveBalconies());
+			hAndSafety.setBalconiesAtLeast1m(healthAndSafetyVM.getBalconiesAtLeast1m());
+			hAndSafety.setGapsGreaterThan10cm(healthAndSafetyVM.getGapsGreaterThan10cm());
+			hAndSafety.setAnyAdjoiningRooms(healthAndSafetyVM.getAnyAdjoiningRooms());
+			hAndSafety.setHowMany(healthAndSafetyVM.getHowMany());
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+		
+			hAndSafety.save();
+		}
+		else
+		{
+			hAndSafety.setFireSafetyInstructionsPosted(healthAndSafetyVM.getFireSafetyInstructionsPosted());
+			hAndSafety.setElectricsAutomaticallyDisconnect(healthAndSafetyVM.getElectricsAutomaticallyDisconnect());
+			hAndSafety.setRoomsHaveBalconies(healthAndSafetyVM.getRoomsHaveBalconies());
+			hAndSafety.setBalconiesAtLeast1m(healthAndSafetyVM.getBalconiesAtLeast1m());
+			hAndSafety.setGapsGreaterThan10cm(healthAndSafetyVM.getGapsGreaterThan10cm());
+			hAndSafety.setAnyAdjoiningRooms(healthAndSafetyVM.getAnyAdjoiningRooms());
+			hAndSafety.setHowMany(healthAndSafetyVM.getHowMany());			
+			hAndSafety.merge();
+		}
+		
+		return ok();
+	}
+	
+	@Transactional(readOnly=false)
+	public static Result saveUpdateKitchenAndHygiene() {
+	
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
+			
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
+		
+		if(hAndSafety == null)
+		{
+			
+			hAndSafety=new HotelHealthAndSafety();
+						
+			hAndSafety.setSelfCateringAccommodation(healthAndSafetyVM.getSelfCateringAccommodation());
+			hAndSafety.setSelfCateringAccommodationHaveFull(healthAndSafetyVM.getSelfCateringAccommodationHaveFull());
+			hAndSafety.setAllKitchenAppliancesRegularly(healthAndSafetyVM.getAllKitchenAppliancesRegularly());
+			hAndSafety.setMainKitchen(healthAndSafetyVM.getMainKitchen());
+			hAndSafety.setStagesOfFoodPreparation(healthAndSafetyVM.getStagesOfFoodPreparation());
+			hAndSafety.setPremisesAdequatelyProofed(healthAndSafetyVM.getPremisesAdequatelyProofed());
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+		
+			hAndSafety.save();
+		}
+		else
+		{
+			hAndSafety.setSelfCateringAccommodation(healthAndSafetyVM.getSelfCateringAccommodation());
+			hAndSafety.setSelfCateringAccommodationHaveFull(healthAndSafetyVM.getSelfCateringAccommodationHaveFull());
+			hAndSafety.setAllKitchenAppliancesRegularly(healthAndSafetyVM.getAllKitchenAppliancesRegularly());
+			hAndSafety.setMainKitchen(healthAndSafetyVM.getMainKitchen());
+			hAndSafety.setStagesOfFoodPreparation(healthAndSafetyVM.getStagesOfFoodPreparation());
+			hAndSafety.setPremisesAdequatelyProofed(healthAndSafetyVM.getPremisesAdequatelyProofed());
+			hAndSafety.merge();
+		}
+		
+		return ok();
+	}
+	
+	
 	@Transactional(readOnly=false)
 	public static Result updateMealPolicy() {
 
@@ -468,7 +729,7 @@ public class HotelProfileController extends Controller {
 			hotelprivatecontacts.setMainContactExt(Integer.parseInt(form.get("dExtNo")));
 			hotelprivatecontacts.setMainContactEmailAddr(form.get("dEmailAddr"));
 			hotelprivatecontacts.setTollFreeNo(form.get("dTollFreeTelNo"));
-			hotelprivatecontacts.setReservationSameAsMainContact(Boolean.parseBoolean(form.get("value1")));
+			hotelprivatecontacts.setReservationSameAsMainContact(form.get("reservationDetailSame"));
 			hotelprivatecontacts.setReservationContactPersonName(form.get("rContactName"));
 			hotelprivatecontacts.setReservationContactPersonTitle(form.get("rTitle"));
 			hotelprivatecontacts.setReservationContactTelNo(Integer.parseInt(form.get("rDirectTelNo")));
@@ -497,7 +758,7 @@ public class HotelProfileController extends Controller {
 			hotelprivatecontacts.setMainContactExt(Integer.parseInt(form.get("dExtNo")));
 			hotelprivatecontacts.setMainContactEmailAddr(form.get("dEmailAddr"));
 			hotelprivatecontacts.setTollFreeNo(form.get("dTollFreeTelNo"));
-			hotelprivatecontacts.setReservationSameAsMainContact(Boolean.parseBoolean(form.get("value1")));
+			hotelprivatecontacts.setReservationSameAsMainContact(form.get("reservationDetailSame"));
 			hotelprivatecontacts.setReservationContactPersonName(form.get("rContactName"));
 			hotelprivatecontacts.setReservationContactPersonTitle(form.get("rTitle"));
 			hotelprivatecontacts.setReservationContactTelNo(Integer.parseInt(form.get("rDirectTelNo")));
