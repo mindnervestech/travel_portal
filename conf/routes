@@ -35,7 +35,7 @@ GET		/deletechile/:id       		com.travelportal.controllers.HotelProfileControlle
 POST  	/saveGeneralInfo            com.travelportal.controllers.HotelProfileController.saveGeneralInfo()
 POST  	/updateDescription         	com.travelportal.controllers.HotelProfileController.updateDescription()
 POST  	/saveamenities           	com.travelportal.controllers.HotelProfileController.saveAmenities()
-POST    /savebusinessamenities    	com.travelportal.controllers.HotelProfileController.savebusinessamenities()
+
 POST  	/savemealpolicy           	com.travelportal.controllers.HotelProfileController.saveMealPolicy()
 POST  	/updatemealpolicy         	com.travelportal.controllers.HotelProfileController.updateMealPolicy()
 POST  	/saveattraction         	com.travelportal.controllers.HotelProfileController.saveAttraction()
@@ -53,8 +53,8 @@ POST    /saveUpdateAirCondition       com.travelportal.controllers.HotelProfileC
 POST    /saveUpdateLifts    com.travelportal.controllers.HotelProfileController.saveUpdateLifts()
 POST    /saveUpdateBedroomsAsndBalconies  com.travelportal.controllers.HotelProfileController.saveUpdateBedroomsAsndBalconies()
 POST    /saveUpdateKitchenAndHygiene    com.travelportal.controllers.HotelProfileController.saveUpdateKitchenAndHygiene()
-
-
+POST    /saveUpdateAdditionalInfo    com.travelportal.controllers.HotelProfileController.saveUpdateAdditionalInfo()
+POST    /saveUpdateGaswaterHeaters   com.travelportal.controllers.HotelProfileController.saveUpdateGaswaterHeaters()
 
 #following routes are used for fetch room details, Add Room Type and Edit Room Type
 #home screen for edit

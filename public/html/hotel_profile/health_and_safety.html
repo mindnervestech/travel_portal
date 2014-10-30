@@ -1501,7 +1501,7 @@
                 </div>
                 
                  <div class="tab-pane" id="Step9">
-                 
+                 <form method="post" ng-submit="saveGaswaterHeaters()" role="form" class="form-horizontal">
                   <legend style="width: 65%;">Internal / External Gas Water Heaters</legend>
 				<div class="row">
 					<div class="col-md-12">
@@ -1512,15 +1512,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="gasWaterHeaters" data-ng-model="HealthSafety.gasWaterHeaters" value="true">
+									<input type="radio" name="gasWaterHeaters" data-ng-model="GaswaterHeaters.gasWaterHeaters" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="gasWaterHeaters" data-ng-model="HealthSafety.gasWaterHeaters" value="false">
+									<input type="radio" name="gasWaterHeaters" data-ng-model="GaswaterHeaters.gasWaterHeaters" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="gasWaterHeaters" data-ng-model="HealthSafety.gasWaterHeaters" value="none">
+									<input type="radio" name="gasWaterHeaters" data-ng-model="GaswaterHeaters.gasWaterHeaters" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1538,15 +1538,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="internal" data-ng-model="HealthSafety.internal" value="true">
+									<input type="radio" name="internal" data-ng-model="GaswaterHeaters.internal" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="internal" data-ng-model="HealthSafety.internal" value="false">
+									<input type="radio" name="internal" data-ng-model="GaswaterHeaters.internal" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="internal" data-ng-model="HealthSafety.internal" value="none">
+									<input type="radio" name="internal" data-ng-model="GaswaterHeaters.internal" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1557,15 +1557,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="External" data-ng-model="HealthSafety.External" value="true">
+									<input type="radio" name="External" data-ng-model="GaswaterHeaters.external" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="External" data-ng-model="HealthSafety.External" value="false">
+									<input type="radio" name="External" data-ng-model="GaswaterHeaters.external" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="External" data-ng-model="HealthSafety.External" value="none">
+									<input type="radio" name="External" data-ng-model="GaswaterHeaters.external" value="none">
 									&nbsp; N/A 
 									</div> 
 								</div>
@@ -1584,15 +1584,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="Servicing" data-ng-model="HealthSafety.Servicing" value="true">
+									<input type="radio" name="Servicing" data-ng-model="GaswaterHeaters.servicing" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="Servicing" data-ng-model="HealthSafety.Servicing" value="false">
+									<input type="radio" name="Servicing" data-ng-model="GaswaterHeaters.servicing" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="Servicing" data-ng-model="HealthSafety.Servicing" value="none">
+									<input type="radio" name="Servicing" data-ng-model="GaswaterHeaters.servicing" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1603,15 +1603,15 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="Maintenance" data-ng-model="HealthSafety.Maintenance" value="true">
+									<input type="radio" name="Maintenance" data-ng-model="GaswaterHeaters.maintenance" value="true">
 									&nbsp; Yes
 									</div>
 									<div style="float: left;margin-right: 3%;">
-									<input type="radio" name="Maintenance" data-ng-model="HealthSafety.Maintenance" value="false">
+									<input type="radio" name="Maintenance" data-ng-model="GaswaterHeaters.maintenance" value="false">
 									&nbsp; No
 									</div> 
 									<div>
-									<input type="radio" name="Maintenance" data-ng-model="HealthSafety.Maintenance" value="none">
+									<input type="radio" name="Maintenance" data-ng-model="GaswaterHeaters.maintenance" value="none">
 									&nbsp; N/A
 									</div> 
 								</div>
@@ -1624,6 +1624,7 @@
 		    
 		    	    </div>
 			    </div>
+			    </form>
                   
                 </div>
                 
@@ -1674,7 +1675,7 @@
                 </div>
                 
                 <div class="tab-pane" id="Step11">
-                 
+                 <form method="post" ng-submit="saveAdditionalInfo()" role="form" class="form-horizontal">
                  <legend style="width: 79%;">Additional information, your name and designation</legend>
 				<div class="row">
 					<div class="col-md-12">
@@ -1686,7 +1687,7 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-bottom: 11%;">
-									<textarea name="additionalInformationOrComments" rows="8" cols="45" data-ng-model="HealthSafety.additionalInformationOrComments"></textarea>
+									<textarea name="additionalInformationOrComments" rows="8" cols="45" data-ng-model="additionalInfo.additionalInformationOrComments"></textarea>
 									</div>
 									
 								</div>
@@ -1698,7 +1699,7 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-bottom: 10%;">
-									<input type="text" name="name" data-ng-model="HealthSafety.name">
+									<input type="text" name="name" data-ng-model="additionalInfo.name">
 									</div>
 									
 								</div>
@@ -1709,14 +1710,19 @@
 								<div class="col-md-4">
 				
 									<div style="float: left;margin-right: 3%;">
-									<input type="text" name="designation" data-ng-model="HealthSafety.designation">
+									<input type="text" name="designation" data-ng-model="additionalInfo.designation">
 									</div>
 									
 								</div>
 			             </div>	
+			             <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+				
+		     
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
 			             
 			         </div>
 			      </div>
+			      </form>
                  
                 </div>
                 

@@ -288,12 +288,16 @@ angular.module('travel_portal').
 			}
 		}
        $scope.HealthSafety = response.healthAndSafetyVM;
+       $scope.HealthSafety.expiryDate = $filter('date')(response.healthAndSafetyVM.expiryDate, "yyyy-MM-dd");
+       $scope.HealthSafety.expiryDate1 = $filter('date')(response.healthAndSafetyVM.expiryDate1, "yyyy-MM-dd");
        $scope.FirePrecaution = response.healthAndSafetyVM;
        $scope.ExitsAndCorridor = response.healthAndSafetyVM;
        $scope.AirCondition = response.healthAndSafetyVM;
        $scope.Lifts = response.healthAndSafetyVM;
        $scope.Bedrooms = response.healthAndSafetyVM;
        $scope.KitchenAndHygiene = response.healthAndSafetyVM;
+       $scope.additionalInfo = response.healthAndSafetyVM;
+       $scope.GaswaterHeaters = response.healthAndSafetyVM;
 		$scope.locationsearch.findLocation = response.transportationdirectionsVM;
 		$scope.internalInfo = response.hotelinternalinformation;
 		$scope.contactInfo =  response.hotelcontactinformation;
@@ -362,6 +366,17 @@ angular.module('travel_portal').
 			className: 'ngdialog-theme-default'
 		});
 	};
+	
+	$scope.findmap = function(find,scope){
+		console.log(find);
+		$scope.loactionAddr = find.locationAddr;
+		ngDialog.open({
+			template: '/assets/html/hotel_profile/showMap.html',
+			scope : $scope,
+			className: 'ngdialog-theme-default'				
+		});
+		
+	}
 
 	$scope.ShowTax = function(tax){
 		$scope.taxQTY=false;
@@ -443,83 +458,7 @@ angular.module('travel_portal').
 		console.log($scope.ChildrenkidClub);*/
 	}
 	
-	$scope.leisureClicked = function(e, leisure) {
-
-		if($(e.target).is(":checked")) {
-			$scope.leisure_sport_check.push(leisure.amenitiesCode);
-		} else {
-			DeleteleisureItem(leisure);
-		}
-		console.log($scope.leisure_sport_check);
-	}
-
-
-	DeleteleisureItem = function(leisure){
-
-		angular.forEach($scope.leisure_sport_check, function(obj, index){
-
-			if ((leisure.amenitiesCode == obj)) {
-				$scope.leisure_sport_check.splice(index, 1);
-
-				return;
-			};
-		});
-
-	}
-
-
-
-
-
-	$scope.businessClicked = function(e, businessInfo) {
-
-		if($(e.target).is(":checked")) {
-			$scope.business_check.push(businessInfo.amenitiesCode);
-		} else {
-			DeletebusinessItem(businessInfo);
-		}
-
-	}
-
-	DeletebusinessItem = function(businessInfo){
-
-		angular.forEach($scope.business_check, function(obj, index){
-
-			if ((businessInfo.amenitiesCode == obj)) {
-				$scope.business_check.splice(index, 1);
-
-				return;
-			};
-		});
-
-	}
-
-
-	$scope.amenitiesClicked = function(e, amenitiesInfo) {
-
-		if($(e.target).is(":checked")) {
-			$scope.amenities_check.push(amenitiesInfo.amenitiesCode);
-		} else {
-			DeleteamenitiesItem(amenitiesInfo);
-		}
-		console.log("//////////");
-		console.log($scope.amenities_check);
-	}
-
-	DeleteamenitiesItem = function(amenitiesInfo){
-
-		angular.forEach($scope.amenities_check, function(obj, index){
-
-			if ((amenitiesInfo.amenitiesCode == obj)) {
-				$scope.amenities_check.splice(index, 1);
-
-				return;
-			};
-		});
-
-	}
-
-
+	
 	$scope.serviceClicked = function(e, generalInfo) {
 
 		if($(e.target).is(":checked")) {
@@ -648,6 +587,32 @@ angular.module('travel_portal').
 		});*/
 		
 	}
+     
+     $scope.saveAdditionalInfo = function(){
+ 		
+ 		$scope.additionalInfo.supplierCode = $rootScope.supplierCode; 
+ 		console.log($scope.additionalInfo);
+ 		$http.post('/saveUpdateAdditionalInfo', $scope.additionalInfo).success(function(data){
+ 			console.log('success');
+ 			
+ 		}).error(function(data, status, headers, config) {
+ 			console.log('ERROR');
+ 		});
+ 		
+ 	}
+     
+     $scope.saveGaswaterHeaters = function(){
+  		
+  		$scope.GaswaterHeaters.supplierCode = $rootScope.supplierCode; 
+  		console.log($scope.GaswaterHeaters);
+  		$http.post('/saveUpdateGaswaterHeaters', $scope.GaswaterHeaters).success(function(data){
+  			console.log('success');
+  			
+  		}).error(function(data, status, headers, config) {
+  			console.log('ERROR');
+  		});
+  		
+  	}
 	
 	
 	$scope.radioValue;
@@ -876,18 +841,60 @@ angular.module('travel_portal').
 			console.log('ERROR');
 		});
 	}
+	
+	$scope.leisureClicked = function(e, leisure) {
+		if($(e.target).is(":checked")) {
+			$scope.leisure_sport_check.push(leisure.amenitiesCode);
+		} else {
+			DeleteleisureItem(leisure);
+		}
+		console.log($scope.leisure_sport_check);
+	}
+
+
+	DeleteleisureItem = function(leisure){
+		angular.forEach($scope.leisure_sport_check, function(obj, index){
+			if ((leisure.amenitiesCode == obj)) {
+				$scope.leisure_sport_check.splice(index, 1);
+				return;
+			};
+		});
+	}
 
 	$scope.businessSucess = false;
 	$scope.savebusiness = function(){
 		$scope.businessInfo.supplierCode=$rootScope.supplierCode;
 		$scope.businessInfo.amenities=$scope.business_check;
 		console.log($scope.businessInfo);
-		$http.post('/savebusinessamenities',$scope.businessInfo).success(function(data){
+		$http.post('/saveamenities',$scope.businessInfo).success(function(data){
 			console.log('success');
 			$scope.businessSucess = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
+	}
+	
+	$scope.businessClicked = function(e, businessInfo) {
+
+		if($(e.target).is(":checked")) {
+			$scope.business_check.push(businessInfo.amenitiesCode);
+		} else {
+			DeletebusinessItem(businessInfo);
+		}
+
+	}
+
+	DeletebusinessItem = function(businessInfo){
+
+		angular.forEach($scope.business_check, function(obj, index){
+
+			if ((businessInfo.amenitiesCode == obj)) {
+				$scope.business_check.splice(index, 1);
+
+				return;
+			};
+		});
+
 	}
 
 	$scope.amenitiesSuccess = false;
@@ -905,10 +912,26 @@ angular.module('travel_portal').
 			console.log('ERROR');
 		});
 	}
-
-
 	
+	$scope.amenitiesClicked = function(e, amenitiesInfo) {
 
+		if($(e.target).is(":checked")) {
+			$scope.amenities_check.push(amenitiesInfo.amenitiesCode);
+		} else {
+			DeleteamenitiesItem(amenitiesInfo);
+		}
+		console.log("//////////");
+		console.log($scope.amenities_check);
+	}
 
+	DeleteamenitiesItem = function(amenitiesInfo){
+		angular.forEach($scope.amenities_check, function(obj, index){
+			if ((amenitiesInfo.amenitiesCode == obj)) {
+				$scope.amenities_check.splice(index, 1);
+				return;
+			};
+		});
+
+	}
 
 }]);

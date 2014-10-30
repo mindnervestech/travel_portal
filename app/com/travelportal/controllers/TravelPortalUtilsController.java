@@ -268,6 +268,16 @@ public class TravelPortalUtilsController extends Controller {
 		healthAndSafetyVM.setMainKitchen(hAndSafety.getMainKitchen());
 		healthAndSafetyVM.setStagesOfFoodPreparation(hAndSafety.getStagesOfFoodPreparation());
 		healthAndSafetyVM.setPremisesAdequatelyProofed(hAndSafety.getPremisesAdequatelyProofed());
+		/*------------------------9.Gas Water Heaters--------------------------------------------*/
+		healthAndSafetyVM.setGasWaterHeaters(hAndSafety.getGasWaterHeaters());
+		healthAndSafetyVM.setInternal(hAndSafety.getInternal());
+		healthAndSafetyVM.setExternal(hAndSafety.getExternal());
+		healthAndSafetyVM.setServicing(hAndSafety.getServicing());
+		healthAndSafetyVM.setMaintenance(hAndSafety.getMaintenance());
+		/*-------------------------11. Additional info---------------------------*/
+		healthAndSafetyVM.setAdditionalInformationOrComments(hAndSafety.getAdditionalInformationOrComments());
+		healthAndSafetyVM.setName(hAndSafety.getName());
+		healthAndSafetyVM.setDesignation(hAndSafety.getDesignation());
 		
 		
 		

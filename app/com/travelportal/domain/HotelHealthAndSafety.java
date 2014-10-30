@@ -117,6 +117,25 @@ public class HotelHealthAndSafety {
 	private String stagesOfFoodPreparation;
 	@Column(name="premises_Adequately_Proofed")
 	private String premisesAdequatelyProofed;
+	/*--------------------------9.Gas Water Heaters---------------------------------*/
+	@Column(name="gas_WaterHeaters")
+	private String gasWaterHeaters;
+	@Column(name="internal")
+	private String internal;
+	@Column(name="external")
+	private String external;
+	@Column(name="servicing")
+	private String servicing;
+	@Column(name="maintenance")
+	private String maintenance;
+	
+	/*--------------------------11.Additional Info---------------------------------*/
+	@Column(name="additional_InformationOrComments")
+	private String additionalInformationOrComments;
+	@Column(name="name")
+	private String name;
+	@Column(name="designation")
+	private String designation;
 	
 	
 	public int getId() {
@@ -412,6 +431,62 @@ public class HotelHealthAndSafety {
 	public void setPremisesAdequatelyProofed(String premisesAdequatelyProofed) {
 		this.premisesAdequatelyProofed = premisesAdequatelyProofed;
 	}
+	
+	
+	
+	public String getGasWaterHeaters() {
+		return gasWaterHeaters;
+	}
+	public void setGasWaterHeaters(String gasWaterHeaters) {
+		this.gasWaterHeaters = gasWaterHeaters;
+	}
+	public String getInternal() {
+		return internal;
+	}
+	public void setInternal(String internal) {
+		this.internal = internal;
+	}
+	
+	
+	public String getExternal() {
+		return external;
+	}
+	public void setExternal(String external) {
+		this.external = external;
+	}
+	public String getServicing() {
+		return servicing;
+	}
+	public void setServicing(String servicing) {
+		this.servicing = servicing;
+	}
+	public String getMaintenance() {
+		return maintenance;
+	}
+	public void setMaintenance(String maintenance) {
+		this.maintenance = maintenance;
+	}
+	public String getAdditionalInformationOrComments() {
+		return additionalInformationOrComments;
+	}
+	public void setAdditionalInformationOrComments(
+			String additionalInformationOrComments) {
+		this.additionalInformationOrComments = additionalInformationOrComments;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDesignation() {
+		return designation;
+	}
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+	
+	
 	public static HotelHealthAndSafety findById(Long supplierCode) {
 		try
 		{

@@ -65,10 +65,10 @@ angular.module('travel_portal',['ngRoute','ngDialog']).config(function ($routePr
 	.when('/addHotelRoomType', {
 		templateUrl: '/assets/html/room_profile/hotel_room_info.html',
 		controller: 'hoteRoomController'
-	})/*
-	.when('/editHotelRoomType', {
-		templateUrl: '/assets/html/hotel_room_info.html',
+	})
+	.when('/manageHotelImages.html', {
+		templateUrl: '/assets/html/manage_hotel_images/manage_hotel_img.html',
 		controller: 'hoteRoomController'
-	})*/
+	})
 
 });

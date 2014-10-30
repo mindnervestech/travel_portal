@@ -56,6 +56,19 @@ public class HotelHealthAndSafetyVM {
 	private String stagesOfFoodPreparation;
 	private String premisesAdequatelyProofed;
 	/*--------------------------7.Children's Facilities---------------------------------*/
+	/*--------------------------9.Gas Water Heaters---------------------------------*/
+	private String gasWaterHeaters;
+	private String internal;
+	private String external;
+	private String servicing;
+	private String maintenance;
+	
+	/*--------------------------11.Additional Info---------------------------------*/
+	private String additionalInformationOrComments;
+	private String name;
+	private String designation;
+
+	
 	
 	public String getPublicLiability() {
 		return publicLiability;
@@ -333,7 +346,61 @@ public class HotelHealthAndSafetyVM {
 		this.premisesAdequatelyProofed = premisesAdequatelyProofed;
 	}
 	
+		
+	public String getGasWaterHeaters() {
+		return gasWaterHeaters;
+	}
+	public void setGasWaterHeaters(String gasWaterHeaters) {
+		this.gasWaterHeaters = gasWaterHeaters;
+	}
+	public String getInternal() {
+		return internal;
+	}
+	public void setInternal(String internal) {
+		this.internal = internal;
+	}
 	
+	
+	
+	public String getExternal() {
+		return external;
+	}
+	public void setExternal(String external) {
+		this.external = external;
+	}
+	public String getServicing() {
+		return servicing;
+	}
+	public void setServicing(String servicing) {
+		this.servicing = servicing;
+	}
+	public String getMaintenance() {
+		return maintenance;
+	}
+	public void setMaintenance(String maintenance) {
+		this.maintenance = maintenance;
+	}
+	public String getAdditionalInformationOrComments() {
+		return additionalInformationOrComments;
+	}
+	public void setAdditionalInformationOrComments(
+			String additionalInformationOrComments) {
+		this.additionalInformationOrComments = additionalInformationOrComments;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDesignation() {
+		return designation;
+	}
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+	
+		
 	
 	
 	

@@ -14,6 +14,7 @@ import play.mvc.Result;
 import views.html.home;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.travelportal.domain.AmenitiesType;
 import com.travelportal.domain.BillingInformation;
 import com.travelportal.domain.BusinessCommunication;
 import com.travelportal.domain.City;
@@ -124,30 +125,10 @@ public class HotelProfileController extends Controller {
 		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
 		hotelprofile.setAmenities(HotelAmenities.getallhotelamenities(hotelamenitiesVM.getAmenities()));
 		
-		//hotelprofile.merge();
-		
 		return ok();
 				
 	}
-	
-	@Transactional(readOnly=false)
-	public static Result savebusinessamenities() {
-
-		JsonNode json = request().body().asJson();
-		DynamicForm form = DynamicForm.form().bindFromRequest();
-		Json.fromJson(json, HotelamenitiesVM.class);
-		HotelamenitiesVM hotelamenitiesVM = Json.fromJson(json, HotelamenitiesVM.class);
-
-		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
-		hotelprofile.setAmenities(HotelAmenities.getallhotelamenities(hotelamenitiesVM.getAmenities()));
-		
-		//hotelprofile.merge();
-		
-		return ok();
-				
-	}
-	
-		
+			
 	@Transactional(readOnly=false)
 	public static Result saveUpdateHealthSafety() {
 		JsonNode json = request().body().asJson();
@@ -435,6 +416,75 @@ public class HotelProfileController extends Controller {
 		return ok();
 	}
 	
+	@Transactional(readOnly=false)
+	public static Result saveUpdateAdditionalInfo() {
+	
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
+			
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
+		
+		if(hAndSafety == null)
+		{
+			
+			hAndSafety=new HotelHealthAndSafety();
+
+			hAndSafety.setAdditionalInformationOrComments(healthAndSafetyVM.getAdditionalInformationOrComments());
+			hAndSafety.setName(healthAndSafetyVM.getName());
+			hAndSafety.setDesignation(healthAndSafetyVM.getDesignation());
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+		
+			hAndSafety.save();
+		}
+		else
+		{
+			hAndSafety.setAdditionalInformationOrComments(healthAndSafetyVM.getAdditionalInformationOrComments());
+			hAndSafety.setName(healthAndSafetyVM.getName());
+			hAndSafety.setDesignation(healthAndSafetyVM.getDesignation());
+			hAndSafety.merge();
+		}
+		
+		return ok();
+	}
+	
+	@Transactional(readOnly=false)
+	public static Result saveUpdateGaswaterHeaters() {
+	
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
+			
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
+		
+		if(hAndSafety == null)
+		{
+			
+			hAndSafety=new HotelHealthAndSafety();
+			
+			hAndSafety.setGasWaterHeaters(healthAndSafetyVM.getGasWaterHeaters());
+			hAndSafety.setInternal(healthAndSafetyVM.getInternal());
+			hAndSafety.setExternal(healthAndSafetyVM.getExternal());
+			hAndSafety.setServicing(healthAndSafetyVM.getServicing());
+			hAndSafety.setMaintenance(healthAndSafetyVM.getMaintenance());			
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+		
+			hAndSafety.save();
+		}
+		else
+		{
+			hAndSafety.setGasWaterHeaters(healthAndSafetyVM.getGasWaterHeaters());
+			hAndSafety.setInternal(healthAndSafetyVM.getInternal());
+			hAndSafety.setExternal(healthAndSafetyVM.getExternal());
+			hAndSafety.setServicing(healthAndSafetyVM.getServicing());
+			hAndSafety.setMaintenance(healthAndSafetyVM.getMaintenance());
+			hAndSafety.merge();
+		}
+		
+		return ok();
+	}
 	
 	@Transactional(readOnly=false)
 	public static Result updateMealPolicy() {

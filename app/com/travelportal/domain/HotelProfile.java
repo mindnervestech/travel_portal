@@ -1,6 +1,7 @@
 package com.travelportal.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -699,6 +700,13 @@ public class HotelProfile {
 	 * @param amenities the amenities to set
 	 */
 	public void setAmenities(Set<HotelAmenities> amenities) {
+		Set<HotelAmenities> removeAmenities = new HashSet<>(); 
+		for(HotelAmenities amenitie : this.amenities){
+			if(amenitie.getAmenitiesType() == amenities.iterator().next().getAmenitiesType()){
+				removeAmenities.add(amenitie);
+			}
+		}
+		this.amenities.removeAll(removeAmenities);
 		this.amenities.addAll(amenities);
 	}
 	

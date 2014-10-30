@@ -1,0 +1,83 @@
+<div class="row">
+		<div class="col-md-12">
+					
+		
+  
+  
+	<script type="text/javascript">
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+var map;
+
+function initialize() {
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+  var mapOptions = {
+    zoom:7,
+    center: chicago
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  directionsDisplay.setMap(map);
+  
+}
+
+function calcRoute() {
+	
+  var start = document.getElementById('start').value;
+  var end = document.getElementById('end').value;
+  var request = {
+      origin:start,
+      destination:end,
+      travelMode: google.maps.TravelMode.DRIVING
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+    }
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize());
+
+    </script>
+    
+     <input type="text" id="start" ng-model="generalInfo.hotelAddr" disabled="disabled" required>
+		 <input type="text" id="end" ng-model="loactionAddr" disabled="disabled" required>
+		   <button onclick="calcRoute()" class="btn btn-primary">Show me Direction</button> 
+     <div id="map-canvas" style="height: 450px;"></div>		
+		
+		 <!-- 
+																					
+			{{generalInfo.hotelAddr}}
+			--------------------
+			{{loactionAddr}} --> -->
+			
+		</div>
+				
+		
+	</div>
+	<style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+      #panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+       .ngdialog-content{
+		width: 861px !important;
+		top: 8%;
+		left: 17%;
+		position: absolute !important;
+		}
+      
+    </style>
+     

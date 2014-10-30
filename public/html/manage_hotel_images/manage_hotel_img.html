@@ -1,0 +1,256 @@
+
+<!-- <div id="page-wrapper" data-ng-init="initRoomTypePage()">
+	BEGIN CONTENT
+	<div class="page-content">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-green"> -->
+<!-- <div class="panel-heading clearfix">
+						<span class="mts pull-left"> {{"Add / Edit Room Type" |  uppercase}}</span>
+					</div> -->
+<form method="post" ng-submit="CreateRoomType()" role="form" class="form-horizontal">
+<div data-ng-init="initRoomTypePage()">					
+<div class="panel-body">
+	<div class="col-lg-12">
+		<div class="row">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Choose Room Type</label>
+				<div class="col-md-9">
+					<select class="form-control" data-ng-model="roomTypeIns.roomId" ng-change="selectType()"
+						data-ng-options="hotelRoomTypes.roomId as hotelRoomTypes.roomType for hotelRoomTypes in hotelRoomTypes">
+						<option>Select Room Type...</option>
+					</select>
+				</div>
+			</div>
+			
+			
+
+		</div>
+		<fieldset class="billinside">
+			<legend style="width: 35%; border-bottom: none;">Child
+				Policy</legend>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-7 control-label">How many free
+							children sharing with Adults are allowed for this room?</label>
+						<div class="col-md-3">
+							<select class="form-control"
+								data-ng-model="roomTypeIns.childAllowedFreeWithAdults">
+								<option value="0" selected>Please Select</option>
+								<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-6 control-label"
+							style="text-align: left; margin-left: 4%;">*Does your
+							hotel charge for children?</label>
+						<div class="col-md-3">
+
+							<div style="float: left; margin-right: 5%;">
+								<input type="radio" name="chargesforChild"
+									data-ng-model="roomTypeIns.chargesForChildren" value="true"> &nbsp;
+								Yes
+							</div>
+							<div>
+								<input type="radio" name="chargesforChild"
+									data-ng-model="roomTypeIns.chargesForChildren" value="false"> &nbsp;
+								No
+							</div>
+							<br>
+						</div>
+
+					</div>
+
+
+					<div style="border: 1px solid;float: left;width: 100%;" ng-repeat="child in childpolicy">
+						<div>
+							<label class="col-md-6 control-label"
+								style="text-align: left; margin-left: 4%;">Please define
+								your children policy:</label><br>
+						</div>
+						<div class="form-group" style="float: left;width: 100%;">
+							<label class="col-md-1 control-label">From: </label>
+							<div class="col-md-2">
+								<select class="form-control" data-ng-model="child.allowedChildAgeFrom" required>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+									<option>11</option>
+									<option>12</option>
+									<option>13</option>
+									<option>14</option>
+									<option>15</option>
+									<option>16</option>
+									<option>17</option>
+									<option>18</option>
+
+
+								</select>
+							</div>
+
+
+
+							<label class="col-md-1 control-label">To: </label>
+							<div class="col-md-2">
+								<select class="form-control" data-ng-model="child.allowedChildAgeTo" required>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+									<option>11</option>
+									<option>12</option>
+									<option>13</option>
+									<option>14</option>
+									<option>15</option>
+									<option>16</option>
+									<option>17</option>
+									<option>18</option>
+
+
+								</select>
+
+							</div>
+							<br>
+						</div>
+						<div class="form-group">
+							<label class="col-md-1 control-label">year</label>
+							<div class="col-md-2">
+								<input type="text" placeholder="year" class="form-control"
+									data-ng-model="child.years"> <br>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 control-label">enter zero if free:
+							</label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="child.netRate" required>
+									<option>% of</option>
+									<option>add to</option>
+
+								</select>
+							</div>
+							<br>
+						</div>
+
+						<span ng-show="childpolicy.length > 1">
+                        <button class="btn btn-default" ng-click="childpolicy.splice($index, 1)">Remove</button>
+					</span>
+
+					</div>
+					<button class="btn btn-default" ng-click="newchildpolicy($event)" style="float: left;margin-top: 5%;margin-left: 36%;">Add New Child Age Interval</button>
+				
+				</div>
+			</div>
+			
+		</fieldset>
+		<br>
+			<div class="form-group">
+						<label class="col-md-7 control-label"
+							style="text-align: left; margin-left: 4%;">*Can you fit an EXTRA BED to this room type?</label>
+						<div class="col-md-3">
+
+							<div style="float: left; margin-right: 5%;">
+								<input type="radio" name="extraBed"
+									data-ng-model="roomTypeIns.extraBedAllowed" value="true"> &nbsp;
+								Yes
+							</div>
+							<div>
+								<input type="radio" name="extraBed"
+									data-ng-model="roomTypeIns.extraBedAllowed" value="false"> &nbsp;
+								No
+							</div>
+							<br>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<label class="col-md-7 control-label"
+							style="text-align: left; margin-left: 4%;">*Is this room a suite?</label>
+						<div class="col-md-3">
+
+							<div style="float: left; margin-right: 5%;">
+								<input type="radio" name="roomSuite"
+									data-ng-model="roomTypeIns.roomSuiteType" value="true"> &nbsp;
+								Yes
+							</div>
+							<div>
+								<input type="radio" name="val"
+									data-ng-model="roomTypeIns.roomSuiteType" value="false"> &nbsp;
+								No
+							</div>
+							<br>
+						</div>
+
+					</div>
+				
+					
+					
+			 	<label style="margin-left: 7%;">*In Room Amenities: (please tick the boxes that are applicable)</label>
+					
+				 <div>
+				<label ng-repeat="amenity in roomAmenities" style="padding-right: 30px;width: 24%;">
+				
+				  <input
+  				  type="checkbox" name="services"
+  				    ng-click="serviceClicked($event,amenity)"
+  				   	ng-model="amenity.isSelected">					
+   					 {{amenity.amenityNm}}</label>
+    			</div>  
+    			</div>
+    			<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+    			
+</div>
+<div>	
+    			<span  style="color: green;margin-left: 3%;">Genral Information Save Successfully</span>
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+                 </div>
+</div>
+</form>
+<style>
+.billinside {
+	padding: .35em .625em .75em;
+	margin: 0 2px;
+	border: 1px solid silver;
+}
+
+.billBorder {
+	padding: .35em .625em .75em;
+	margin: 0 2px;
+	border: 1px solid;
+}
+</style>
+
+<!-- </div>
+			</div>
+
+		</div>
+
+	</div>
+	END CONTENT
+</div>
+
+}
+ -->
