@@ -117,6 +117,49 @@ public class HotelHealthAndSafety {
 	private String stagesOfFoodPreparation;
 	@Column(name="premises_Adequately_Proofed")
 	private String premisesAdequatelyProofed;
+	/*--------------------------7.Children's Facilities---------------------------------*/
+	@Column(name="internal_ChildrenPlayArea")
+	private String internalChildrenPlayArea;
+	@Column(name="external_ChildrenPlayArea")
+	private String externalChildrenPlayArea;
+	@Column(name="supervise_TheKidClub")
+	private String superviseTheKidClub;
+	@Column(name="quality_ChecksOf_EquipmentAndFurniture")
+	private String qualityChecksOfEquipmentAndFurniture;
+	@Column(name="month_kid")
+	public String monthkid;
+	
+	/*-------------------------8.Swimming Pool -------------------------------------------*/
+	@Column(name="pool_RulesAndRegulation")
+	private String poolRulesAndRegulation;
+	@Column(name="openingClosing_Times")
+	private String openingClosingTimes;
+	@Column(name="depth_Information")
+	private String depthInformation;
+	@Column(name="noDiving")
+	private String noDiving;
+	@Column(name="no_Unaccompanied_ChildrenPool")
+	private String noUnaccompaniedChildrenPool;
+	@Column(name="life_savingEquipment")
+	private String lifesavingEquipment;
+	@Column(name="glass_AroundThePoolArea")
+	private String glassAroundThePoolArea;
+	@Column(name="life_guardOrQualifiedPerson")
+	private String lifeguardOrQualifiedPerson;
+	@Column(name="there_ChildrenPool")
+	private String thereChildrenPool;
+	@Column(name="separated_FromTheAdultPool")
+	private String separatedFromTheAdultPool;
+	@Column(name="sufficient_DepthMarkings")
+	private String sufficientDepthMarkings;
+	@Column(name="thePool_CleanedDaily")
+	private String thePoolCleanedDaily;
+	@Column(name="records_Kept")
+	private String recordsKept;
+	@Column(name="heated_PoolInTheProperty")
+	private String heatedPoolInTheProperty;
+	@Column(name="month_Operational")
+	public String monthOperational;
 	/*--------------------------9.Gas Water Heaters---------------------------------*/
 	@Column(name="gas_WaterHeaters")
 	private String gasWaterHeaters;
@@ -129,6 +172,9 @@ public class HotelHealthAndSafety {
 	@Column(name="maintenance")
 	private String maintenance;
 	
+	/*---------------------------10.CCTV Status----------------------------------------*/
+	@Column(name="cctv_Area")
+	public String cctvArea;	
 	/*--------------------------11.Additional Info---------------------------------*/
 	@Column(name="additional_InformationOrComments")
 	private String additionalInformationOrComments;
@@ -433,7 +479,130 @@ public class HotelHealthAndSafety {
 	}
 	
 	
+	public String getInternalChildrenPlayArea() {
+		return internalChildrenPlayArea;
+	}
+	public void setInternalChildrenPlayArea(String internalChildrenPlayArea) {
+		this.internalChildrenPlayArea = internalChildrenPlayArea;
+	}
+	public String getExternalChildrenPlayArea() {
+		return externalChildrenPlayArea;
+	}
+	public void setExternalChildrenPlayArea(String externalChildrenPlayArea) {
+		this.externalChildrenPlayArea = externalChildrenPlayArea;
+	}
+	public String getSuperviseTheKidClub() {
+		return superviseTheKidClub;
+	}
+	public void setSuperviseTheKidClub(String superviseTheKidClub) {
+		this.superviseTheKidClub = superviseTheKidClub;
+	}
+	public String getQualityChecksOfEquipmentAndFurniture() {
+		return qualityChecksOfEquipmentAndFurniture;
+	}
+	public void setQualityChecksOfEquipmentAndFurniture(String qualityChecksOfEquipmentAndFurniture) 
+	{
+		this.qualityChecksOfEquipmentAndFurniture = qualityChecksOfEquipmentAndFurniture;
+	}
 	
+	public String getMonthkid() {
+		return monthkid;
+	}
+	public void setMonthkid(String monthkid) {
+		this.monthkid = monthkid;
+	}
+	
+		
+	public String getPoolRulesAndRegulation() {
+		return poolRulesAndRegulation;
+	}
+	public void setPoolRulesAndRegulation(String poolRulesAndRegulation) {
+		this.poolRulesAndRegulation = poolRulesAndRegulation;
+	}
+	public String getOpeningClosingTimes() {
+		return openingClosingTimes;
+	}
+	public void setOpeningClosingTimes(String openingClosingTimes) {
+		this.openingClosingTimes = openingClosingTimes;
+	}
+	public String getDepthInformation() {
+		return depthInformation;
+	}
+	public void setDepthInformation(String depthInformation) {
+		this.depthInformation = depthInformation;
+	}
+	public String getNoDiving() {
+		return noDiving;
+	}
+	public void setNoDiving(String noDiving) {
+		this.noDiving = noDiving;
+	}
+	public String getNoUnaccompaniedChildrenPool() {
+		return noUnaccompaniedChildrenPool;
+	}
+	public void setNoUnaccompaniedChildrenPool(String noUnaccompaniedChildrenPool) {
+		this.noUnaccompaniedChildrenPool = noUnaccompaniedChildrenPool;
+	}
+	public String getLifesavingEquipment() {
+		return lifesavingEquipment;
+	}
+	public void setLifesavingEquipment(String lifesavingEquipment) {
+		this.lifesavingEquipment = lifesavingEquipment;
+	}
+	public String getGlassAroundThePoolArea() {
+		return glassAroundThePoolArea;
+	}
+	public void setGlassAroundThePoolArea(String glassAroundThePoolArea) {
+		this.glassAroundThePoolArea = glassAroundThePoolArea;
+	}
+	public String getLifeguardOrQualifiedPerson() {
+		return lifeguardOrQualifiedPerson;
+	}
+	public void setLifeguardOrQualifiedPerson(String lifeguardOrQualifiedPerson) {
+		this.lifeguardOrQualifiedPerson = lifeguardOrQualifiedPerson;
+	}
+	public String getThereChildrenPool() {
+		return thereChildrenPool;
+	}
+	public void setThereChildrenPool(String thereChildrenPool) {
+		this.thereChildrenPool = thereChildrenPool;
+	}
+	public String getSeparatedFromTheAdultPool() {
+		return separatedFromTheAdultPool;
+	}
+	public void setSeparatedFromTheAdultPool(String separatedFromTheAdultPool) {
+		this.separatedFromTheAdultPool = separatedFromTheAdultPool;
+	}
+	public String getSufficientDepthMarkings() {
+		return sufficientDepthMarkings;
+	}
+	public void setSufficientDepthMarkings(String sufficientDepthMarkings) {
+		this.sufficientDepthMarkings = sufficientDepthMarkings;
+	}
+	public String getThePoolCleanedDaily() {
+		return thePoolCleanedDaily;
+	}
+	public void setThePoolCleanedDaily(String thePoolCleanedDaily) {
+		this.thePoolCleanedDaily = thePoolCleanedDaily;
+	}
+	public String getRecordsKept() {
+		return recordsKept;
+	}
+	public void setRecordsKept(String recordsKept) {
+		this.recordsKept = recordsKept;
+	}
+	public String getHeatedPoolInTheProperty() {
+		return heatedPoolInTheProperty;
+	}
+	public void setHeatedPoolInTheProperty(String heatedPoolInTheProperty) {
+		this.heatedPoolInTheProperty = heatedPoolInTheProperty;
+	}
+	public String getMonthOperational() {
+		return monthOperational;
+	}
+	public void setMonthOperational(String monthOperational) {
+		this.monthOperational = monthOperational;
+	}
 	public String getGasWaterHeaters() {
 		return gasWaterHeaters;
 	}
@@ -465,6 +634,14 @@ public class HotelHealthAndSafety {
 	}
 	public void setMaintenance(String maintenance) {
 		this.maintenance = maintenance;
+	}
+	
+		
+	public String getCctvArea() {
+		return cctvArea;
+	}
+	public void setCctvArea(String cctvArea) {
+		this.cctvArea = cctvArea;
 	}
 	public String getAdditionalInformationOrComments() {
 		return additionalInformationOrComments;

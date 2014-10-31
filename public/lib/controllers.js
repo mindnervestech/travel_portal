@@ -98,7 +98,22 @@ angular.module('travel_portal').
 			    	
 			    	
 			    }
-			    
+			  
+			    $scope.roomChildDeleteId = function(){
+					console.log("@#$%$%^&*(*&&^^#%%#%");
+					console.log($scope.roomTypeIns.roomId);
+					console.log($scope.roomTypeIns.roomchildPolicies);
+					console.log("@#$%$%^&*(*&&^^#%%#%");
+					$http.get('/deleteRoomchild/'+$scope.roomTypeIns.roomId)
+					.success(function(){
+						$scope.roomTypeIns.roomchildPolicies = [];
+						$scope.childpolicy = [];//$scope.roomTypeIns.roomchildPolicies = [];
+
+						console.log('success');
+					});
+
+
+				};
 			   
 				
 			    
@@ -131,8 +146,8 @@ angular.module('travel_portal').
 
 
 angular.module('travel_portal').
-	controller("hoteProfileController",['$scope', '$http', '$rootScope','$filter','ngDialog',
-    function($scope, $http, $rootScope, $filter, ngDialog) {
+	controller("hoteProfileController",['$scope', '$http', '$rootScope','$filter','$upload','ngDialog',
+    function($scope, $http, $rootScope,  $filter, $upload, ngDialog) {
 
 	$rootScope.supplierCode = supplierCode;
 		
@@ -298,9 +313,13 @@ angular.module('travel_portal').
        $scope.KitchenAndHygiene = response.healthAndSafetyVM;
        $scope.additionalInfo = response.healthAndSafetyVM;
        $scope.GaswaterHeaters = response.healthAndSafetyVM;
-		$scope.locationsearch.findLocation = response.transportationdirectionsVM;
+       $scope.ChildrenFaciliti = response.healthAndSafetyVM;
+       $scope.SwimmingPool = response.healthAndSafetyVM;    
+       
+       $scope.locationsearch.findLocation = response.transportationdirectionsVM;
 		$scope.internalInfo = response.hotelinternalinformation;
 		$scope.contactInfo =  response.hotelcontactinformation;
+		
 		
 		$scope.comunicationhotel = response.hotelcommuniction;
 		$scope.comunicationhotel.Remail =response.hotelcommuniction.primaryEmailAddr;
@@ -348,13 +367,44 @@ angular.module('travel_portal').
 				};
 			});
 		});
+		
+		 
+	       angular.forEach($scope.kidClub, function(obj, index){
+				angular.forEach(response.healthAndSafetyVM.monthkid, function(obj1, index){
+
+					if ((obj.name == obj1)) {
+						$scope.ChildrenkidClub.push(obj.name);
+						obj.isSelected=true;
+					};
+				});
+			});
+	       
+	       angular.forEach($scope.operational, function(obj, index){
+				angular.forEach(response.healthAndSafetyVM.monthOperational, function(obj1, index){
+
+					if ((obj.name == obj1)) {
+						$scope.swimmingpoolOperation.push(obj.name);
+						obj.isSelected=true;
+					};
+				});
+			});
+	       
+	       angular.forEach($scope.cctv, function(obj, index){
+				angular.forEach(response.healthAndSafetyVM.cctvArea, function(obj1, index){
+
+					if ((obj.name == obj1)) {
+						$scope.CCTVStatusArray.push(obj.name);
+						obj.isSelected=true;
+					};
+				});
+			});
 	});
 
 	$http.get("/MealTypeplan/"+$rootScope.supplierCode).success(function(response){
 		$scope.MealType=response;
 		angular.forEach($scope.MealType, function(obj, index){
-			$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
-			$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
+			//$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
+			//$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
 			return;
 		});
 	});	
@@ -444,18 +494,123 @@ angular.module('travel_portal').
 
 
 	};
-	$scope.kidClub = ['January','February','May'];
-	$scope.ChildrenkidClub=[];
-	/*$scope.ChildrenF = {isSelected : false};*/
 	
+	$scope.cctv =[{
+		name:'Entrance',
+		isSelected:false
+	},
+	{name:'Lobby',isSelected:false},
+	{name:'Corridors',isSelected:false},
+	{name:'Fitness Centre',isSelected:false},
+	{name:'Indoor Pools',isSelected:false},
+	{name:'Indoor Pools',isSelected:false}];
+	
+	$scope.CCTVStatusArray=[];
+	//cctvClicked($event,TVstatus)
+	 $scope.cctvClicked = function(e, TVstatus){
+			
+			if($(e.target).is(":checked")) {
+				$scope.CCTVStatusArray.push(TVstatus.name);
+			} else {
+				DeleteCCTVStatus(TVstatus);
+			}
+			console.log($scope.CCTVStatusArray);
+		}
+		
+	 DeleteCCTVStatus = function(TVstatus){
+
+			angular.forEach($scope.CCTVStatusArray, function(obj, index){
+				if ((TVstatus.name === obj)) {
+					$scope.CCTVStatusArray.splice(index, 1);
+
+					return;
+				};
+			});
+
+		}
+	
+	
+	
+	
+	$scope.operational = [{
+		name:'January',
+		isSelected:false
+	},
+	{name:'February',isSelected:false},
+	{name:'March',isSelected:false},
+	{name:'April',isSelected:false},
+	{name:'May',isSelected:false},
+	{name:'June',isSelected:false},
+	{name:'July',isSelected:false},
+	{name:'August',isSelected:false},
+	{name:'September',isSelected:false},
+	{name:'October',isSelected:false},
+	{name:'November',isSelected:false},
+	{name:'December',isSelected:false}];
+	
+		
+	$scope.swimmingpoolOperation=[];
+    $scope.operationalClicked = function(e, SwimmingP){
+		
+		if($(e.target).is(":checked")) {
+			$scope.swimmingpoolOperation.push(SwimmingP.name);
+		} else {
+			DeleteswimmingpoolOperation(SwimmingP);
+		}
+		console.log($scope.swimmingpoolOperation);
+	}
+	
+    DeleteswimmingpoolOperation = function(SwimmingP){
+
+		angular.forEach($scope.swimmingpoolOperation, function(obj, index){
+			if ((SwimmingP.name === obj)) {
+				$scope.swimmingpoolOperation.splice(index, 1);
+
+				return;
+			};
+		});
+
+	}
+    
+    
+    $scope.kidClub = [{
+		name:'January',
+		isSelected:false
+	},
+	{name:'February',isSelected:false},
+	{name:'March',isSelected:false},
+	{name:'April',isSelected:false},
+	{name:'May',isSelected:false},
+	{name:'June',isSelected:false},
+	{name:'July',isSelected:false},
+	{name:'August',isSelected:false},
+	{name:'September',isSelected:false},
+	{name:'October',isSelected:false},
+	{name:'November',isSelected:false},
+	{name:'December',isSelected:false}];
+    
+	$scope.ChildrenkidClub=[];
+		
 	$scope.kidClubClicked = function(e, ChildrenF){
 		
-		/*if($(e.target).is(":checked")) {
-			$scope.ChildrenkidClub.push(ChildrenF);
+		if($(e.target).is(":checked")) {
+			$scope.ChildrenkidClub.push(ChildrenF.name);
 		} else {
-			//DeleteleisureItem(ChildrenF);
+			DeleteChildrenkidClub(ChildrenF);
 		}
-		console.log($scope.ChildrenkidClub);*/
+		console.log($scope.ChildrenkidClub);
+	}
+	
+	DeleteChildrenkidClub = function(ChildrenF){
+
+		angular.forEach($scope.ChildrenkidClub, function(obj, index){
+			if ((ChildrenF.name === obj)) {
+				$scope.ChildrenkidClub.splice(index, 1);
+
+				return;
+			};
+		});
+
 	}
 	
 	
@@ -578,15 +733,44 @@ angular.module('travel_portal').
      $scope.saveChildrenFaciliti = function(){
 		
 		$scope.ChildrenFaciliti.supplierCode = $rootScope.supplierCode; 
+		$scope.ChildrenFaciliti.monthkid = $scope.ChildrenkidClub;
 		console.log($scope.ChildrenFaciliti);
-		/*$http.post('/saveUpdateKitchenAndHygiene', $scope.KitchenAndHygiene).success(function(data){
+		$http.post('/saveUpdateChildrenFaciliti', $scope.ChildrenFaciliti).success(function(data){
 			console.log('success');
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
-		});*/
+		});
 		
 	}
+     
+     $scope.saveSwimmingPool = function(){
+ 		
+ 		$scope.SwimmingPool.supplierCode = $rootScope.supplierCode; 
+ 		$scope.SwimmingPool.monthOperational = $scope.swimmingpoolOperation;
+ 		console.log($scope.SwimmingPool);
+ 		$http.post('/saveUpdateSwimmingPool', $scope.SwimmingPool).success(function(data){
+ 			console.log('success');
+ 			
+ 		}).error(function(data, status, headers, config) {
+ 			console.log('ERROR');
+ 		});
+ 		
+ 	}
+     $scope.CCTVStatus={};
+     $scope.saveCCTVstatus = function(){
+  		
+  		$scope.CCTVStatus.supplierCode = $rootScope.supplierCode; 
+  		$scope.CCTVStatus.cctvArea = $scope.CCTVStatusArray;
+  		console.log($scope.CCTVStatus);
+  		$http.post('/saveUpdateCCTVstatus', $scope.CCTVStatus).success(function(data){
+  			console.log('success');
+  			
+  		}).error(function(data, status, headers, config) {
+  			console.log('ERROR');
+  		});
+  		
+  	}
      
      $scope.saveAdditionalInfo = function(){
  		
@@ -613,7 +797,30 @@ angular.module('travel_portal').
   		});
   		
   	}
-	
+    var files = null;
+   $scope.selectProfileImage = function($files)
+   {
+		
+		files = $files[0]; 
+		/**/
+   }
+   
+   $scope.saveDocumens = function(){
+	 
+	   $scope.upload = $upload.upload({
+           url: '/savefiles', 
+           method:'post',
+           fileFormDataName: 'file1',
+           file:files,
+          
+   }).progress(function(evt) {
+           console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+   }).success(function(data, status, headers, config) {
+          /* notificationService.success("Doctor added successfully.");
+           $scope.logo = $scope.logo + 1;*/
+           console.log("saved!");
+   }); 
+   }
 	
 	$scope.radioValue;
 	$scope.generalInfoMsg = false;

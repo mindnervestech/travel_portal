@@ -148,4 +148,34 @@ public class HotelRoomController extends Controller {
 		System.out.println("getAvailableRoomAmenities");
 		return ok(Json.toJson(RoomAmenities.getRoomAmenities()));
 	}
+	
+	@Transactional(readOnly=false)
+	public static Result deleteRoomchild(int id) {
+
+		HotelRoomTypes hotelroomtypes = HotelRoomTypes.findById(id);
+		
+		for(RoomChildPolicies childPolicies: hotelroomtypes.getRoomchildPolicies()){
+			childPolicies.delete();
+			System.out.println("hii");
+		}
+		hotelroomtypes.setRoomchildPolicies(null);
+		hotelroomtypes.merge();
+
+		return ok();
+	}
+	
+	/*@Transactional(readOnly=false)
+	public static Result deleteChile(int id) {
+
+		HotelMealPlan hotelmealplan = HotelMealPlan.findById(id);
+		for(ChildPolicies policies : hotelmealplan.getChild()){
+			policies.delete();
+		}
+		hotelmealplan.setChild(null);
+		hotelmealplan.merge();
+
+		return ok();
+	}*/
+	
+	
 }

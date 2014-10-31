@@ -8,7 +8,8 @@ libraryDependencies ++= Seq(
   	cache,
 	javaJpa,
 	"org.hibernate" % "hibernate-entitymanager" % "3.6.9.Final", 
-	"org.json"%"org.json"%"chargebee-1.0"
+	"org.json"%"org.json"%"chargebee-1.0",
+	"commons-io" % "commons-io" % "2.1"
 )     
 
 play.Project.playJavaSettings

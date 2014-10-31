@@ -1,6 +1,6 @@
 'use strict';
 /*angular.module('travel_portal',['ngRoute','rcWizard', 'rcForm', 'rcDisabledBootstrap']).config(function ($routeProvider) {*/
-angular.module('travel_portal',['ngRoute','ngDialog']).config(function ($routeProvider) {
+angular.module('travel_portal',['ngRoute','ngDialog','angularFileUpload']).config(function ($routeProvider) {
 	$routeProvider
 	.when('/', {
 		templateUrl: '/assets/html/hotel_profile/general_info.html',
@@ -66,7 +66,7 @@ angular.module('travel_portal',['ngRoute','ngDialog']).config(function ($routePr
 		templateUrl: '/assets/html/room_profile/hotel_room_info.html',
 		controller: 'hoteRoomController'
 	})
-	.when('/manageHotelImages.html', {
+	.when('/manageHotelImages', {
 		templateUrl: '/assets/html/manage_hotel_images/manage_hotel_img.html',
 		controller: 'hoteRoomController'
 	})

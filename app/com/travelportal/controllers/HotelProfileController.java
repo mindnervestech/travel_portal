@@ -3,18 +3,22 @@
  */
 package com.travelportal.controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
 
 import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import views.html.home;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.travelportal.domain.AmenitiesType;
 import com.travelportal.domain.BillingInformation;
 import com.travelportal.domain.BusinessCommunication;
 import com.travelportal.domain.City;
@@ -483,6 +487,257 @@ public class HotelProfileController extends Controller {
 			hAndSafety.merge();
 		}
 		
+		return ok();
+	}
+	
+	@Transactional(readOnly=false)
+	public static Result saveUpdateChildrenFaciliti() {
+	
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		
+			
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
+		
+		if(hAndSafety == null)
+		{
+			
+			hAndSafety=new HotelHealthAndSafety();
+				
+			hAndSafety.setInternalChildrenPlayArea(healthAndSafetyVM.getInternalChildrenPlayArea());
+			hAndSafety.setExternalChildrenPlayArea(healthAndSafetyVM.getExternalChildrenPlayArea());
+			hAndSafety.setSuperviseTheKidClub(healthAndSafetyVM.getSuperviseTheKidClub());
+			hAndSafety.setQualityChecksOfEquipmentAndFurniture(healthAndSafetyVM.getQualityChecksOfEquipmentAndFurniture());
+			if(!healthAndSafetyVM.getMonthkid().isEmpty())
+			{
+				int i=0;
+				for(String month : healthAndSafetyVM.getMonthkid()){
+					if(i==0){
+						hAndSafety.setMonthkid(month);
+					} else {
+						hAndSafety.setMonthkid(hAndSafety.getMonthkid()+","+month);
+					}
+					i++;
+				}
+			}
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+		
+			hAndSafety.save();
+		}
+		else
+		{
+			
+			hAndSafety.setInternalChildrenPlayArea(healthAndSafetyVM.getInternalChildrenPlayArea());
+			hAndSafety.setExternalChildrenPlayArea(healthAndSafetyVM.getExternalChildrenPlayArea());
+			hAndSafety.setSuperviseTheKidClub(healthAndSafetyVM.getSuperviseTheKidClub());
+			hAndSafety.setQualityChecksOfEquipmentAndFurniture(healthAndSafetyVM.getQualityChecksOfEquipmentAndFurniture());
+						
+			if(!healthAndSafetyVM.getMonthkid().isEmpty())
+			{
+				int i=0;
+				for(String month : healthAndSafetyVM.getMonthkid()){
+					if(i==0){
+						hAndSafety.setMonthkid(month);
+					} else {
+						hAndSafety.setMonthkid(hAndSafety.getMonthkid()+","+month);
+					}
+					i++;
+				}
+			}
+			
+			hAndSafety.merge();
+		}
+		
+		return ok();
+	}
+	
+	
+	@Transactional(readOnly=false)
+	public static Result saveUpdateSwimmingPool() {
+	
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		
+			
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
+		
+		if(hAndSafety == null)
+		{
+			
+			hAndSafety=new HotelHealthAndSafety();
+			
+			hAndSafety.setPoolRulesAndRegulation(healthAndSafetyVM.getPoolRulesAndRegulation());
+			hAndSafety.setOpeningClosingTimes(healthAndSafetyVM.getOpeningClosingTimes());
+			hAndSafety.setDepthInformation(healthAndSafetyVM.getDepthInformation());
+			hAndSafety.setNoDiving(healthAndSafetyVM.getNoDiving());
+			hAndSafety.setNoUnaccompaniedChildrenPool(healthAndSafetyVM.getNoUnaccompaniedChildrenPool());
+			hAndSafety.setLifesavingEquipment(healthAndSafetyVM.getLifesavingEquipment());
+			hAndSafety.setGlassAroundThePoolArea(healthAndSafetyVM.getGlassAroundThePoolArea());
+			hAndSafety.setLifeguardOrQualifiedPerson(healthAndSafetyVM.getLifeguardOrQualifiedPerson());
+			hAndSafety.setThereChildrenPool(healthAndSafetyVM.getThereChildrenPool());
+			hAndSafety.setSeparatedFromTheAdultPool(healthAndSafetyVM.getSeparatedFromTheAdultPool());
+			hAndSafety.setSufficientDepthMarkings(healthAndSafetyVM.getSufficientDepthMarkings());
+			hAndSafety.setThePoolCleanedDaily(healthAndSafetyVM.getThePoolCleanedDaily());
+			hAndSafety.setRecordsKept(healthAndSafetyVM.getRecordsKept());
+			hAndSafety.setHeatedPoolInTheProperty(healthAndSafetyVM.getHeatedPoolInTheProperty());
+						
+			if(!healthAndSafetyVM.getMonthOperational() .isEmpty())
+			{
+				int i=0;
+				for(String month : healthAndSafetyVM.getMonthOperational()){
+					if(i==0){
+						hAndSafety.setMonthOperational(month);
+					} else {
+						hAndSafety.setMonthOperational(hAndSafety.getMonthOperational()+","+month);
+					}
+					i++;
+				}
+			}
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+		
+			hAndSafety.save();
+		}
+		else
+		{			
+			
+			hAndSafety.setPoolRulesAndRegulation(healthAndSafetyVM.getPoolRulesAndRegulation());
+			hAndSafety.setOpeningClosingTimes(healthAndSafetyVM.getOpeningClosingTimes());
+			hAndSafety.setDepthInformation(healthAndSafetyVM.getDepthInformation());
+			hAndSafety.setNoDiving(healthAndSafetyVM.getNoDiving());
+			hAndSafety.setNoUnaccompaniedChildrenPool(healthAndSafetyVM.getNoUnaccompaniedChildrenPool());
+			hAndSafety.setLifesavingEquipment(healthAndSafetyVM.getLifesavingEquipment());
+			hAndSafety.setGlassAroundThePoolArea(healthAndSafetyVM.getGlassAroundThePoolArea());
+			hAndSafety.setLifeguardOrQualifiedPerson(healthAndSafetyVM.getLifeguardOrQualifiedPerson());
+			hAndSafety.setThereChildrenPool(healthAndSafetyVM.getThereChildrenPool());
+			hAndSafety.setSeparatedFromTheAdultPool(healthAndSafetyVM.getSeparatedFromTheAdultPool());
+			hAndSafety.setSufficientDepthMarkings(healthAndSafetyVM.getSufficientDepthMarkings());
+			hAndSafety.setThePoolCleanedDaily(healthAndSafetyVM.getThePoolCleanedDaily());
+			hAndSafety.setRecordsKept(healthAndSafetyVM.getRecordsKept());
+			hAndSafety.setHeatedPoolInTheProperty(healthAndSafetyVM.getHeatedPoolInTheProperty());
+			
+			if(!healthAndSafetyVM.getMonthOperational() .isEmpty())
+			{
+				int i=0;
+				for(String month : healthAndSafetyVM.getMonthOperational()){
+					if(i==0){
+						hAndSafety.setMonthOperational(month);
+					} else {
+						hAndSafety.setMonthOperational(hAndSafety.getMonthOperational()+","+month);
+					}
+					i++;
+				}
+			}
+			
+			hAndSafety.merge();
+		}
+		
+		return ok();
+	}
+	
+	@Transactional(readOnly=false)
+	public static Result saveUpdateCCTVstatus() {
+	
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
+		
+			
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
+		
+		if(hAndSafety == null)
+		{
+			
+			hAndSafety=new HotelHealthAndSafety();
+							
+			if(!healthAndSafetyVM.getCctvArea() .isEmpty())
+			{
+				int i=0;
+				for(String month : healthAndSafetyVM.getCctvArea()){
+					if(i==0){
+						hAndSafety.setCctvArea(month);
+					} else {
+						hAndSafety.setCctvArea(hAndSafety.getCctvArea()+","+month);
+					}
+					i++;
+				}
+			}
+			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
+		
+			hAndSafety.save();
+		}
+		else
+		{			
+					
+			if(!healthAndSafetyVM.getCctvArea() .isEmpty())
+			{
+				int i=0;
+				for(String month : healthAndSafetyVM.getCctvArea()){
+					if(i==0){
+						hAndSafety.setCctvArea(month);
+					} else {
+						hAndSafety.setCctvArea(hAndSafety.getCctvArea()+","+month);
+					}
+					i++;
+				}
+			}
+			
+			hAndSafety.merge();
+		}
+		
+		return ok();
+	}
+	
+	@Transactional(readOnly=false)
+	public static Result savefiles() {
+
+		FilePart picture = request().body().asMultipartFormData().getFile("file1");
+		String sourceFilePath = "D:/Mindnerves";
+		 File sourceFilePathObject = new File(sourceFilePath);
+       String fileName = picture.getFilename();
+       System.out.println("Name :: "+fileName);
+       File file = picture.getFile();
+        System.out.println("Name :: "+file);
+      File statusFileNameObject = new File(file+fileName);
+      System.out.println("Old file :: "+statusFileNameObject);
+      System.out.println("New file :: "+sourceFilePathObject);
+      try{
+          FileUtils.copyFile(sourceFilePathObject,statusFileNameObject);
+  	  }
+  	  catch(Exception ee)
+  	  {
+  		  System.out.println(ee);
+  	  }
+      
+     /* String path = calendar.get(Calendar.HOUR_OF_DAY) +""+ calendar.get(Calendar.MINUTE) + "" + calendar.get(Calendar.SECOND) ;
+
+                    String s = rootDir.replace("\\LOGO", "");
+                    createDayDir(s, "SITE");
+                    createDayDir(s + File.separator + "site", path);
+                    String imgPath = s + File.separator + "SITE" + File.separator + path + File.separator + "logo.jpg";
+                    String impath = path + File.separator + "logo.jpg";
+                    File src = picture.getFile();
+                    OutputStream out = null;
+                    BufferedImage image = null;
+                    try {
+                            image = ImageIO.read(src);
+                            ImageIO.write(image, "jpg",new File(imgPath));
+                    } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                    } catch (IOException e) {
+                            e.printStackTrace();
+                    } finally {
+                            try {
+                                    if(out != null) out.close();
+                            } catch (IOException e) {
+                                    e.printStackTrace();
+                            }
+                    }*/
+      
 		return ok();
 	}
 	

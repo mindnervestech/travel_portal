@@ -248,6 +248,8 @@ public class HotelRoomTypes {
 	}
 	
 	
+	
+	
 	public static List<RoomType> getAllRoomTypes(final Long supplierCode) {
 		Query q = JPA.em().createQuery("select r.roomId, r.roomType from HotelRoomTypes r where r.supplierCode = :supplierCode ");
 		q.setParameter("supplierCode", supplierCode);

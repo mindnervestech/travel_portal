@@ -1,6 +1,7 @@
 package com.travelportal.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -262,18 +263,58 @@ public class TravelPortalUtilsController extends Controller {
 		healthAndSafetyVM.setAnyAdjoiningRooms(hAndSafety.getAnyAdjoiningRooms());
 		healthAndSafetyVM.setHowMany(hAndSafety.getHowMany());
 		/*-------------------------6.Kitchen's and Hygiene---------------------------*/
+				
 		healthAndSafetyVM.setSelfCateringAccommodation(hAndSafety.getSelfCateringAccommodation());
 		healthAndSafetyVM.setSelfCateringAccommodationHaveFull(hAndSafety.getSelfCateringAccommodationHaveFull());
 		healthAndSafetyVM.setAllKitchenAppliancesRegularly(hAndSafety.getAllKitchenAppliancesRegularly());
 		healthAndSafetyVM.setMainKitchen(hAndSafety.getMainKitchen());
 		healthAndSafetyVM.setStagesOfFoodPreparation(hAndSafety.getStagesOfFoodPreparation());
 		healthAndSafetyVM.setPremisesAdequatelyProofed(hAndSafety.getPremisesAdequatelyProofed());
+	
+    //	 --------------------------7.Children's Facilitie--------------------------------------------	
+		
+		healthAndSafetyVM.setInternalChildrenPlayArea(hAndSafety.getInternalChildrenPlayArea());
+		healthAndSafetyVM.setExternalChildrenPlayArea(hAndSafety.getExternalChildrenPlayArea());
+		healthAndSafetyVM.setSuperviseTheKidClub(hAndSafety.getSuperviseTheKidClub());
+		healthAndSafetyVM.setQualityChecksOfEquipmentAndFurniture(hAndSafety.getQualityChecksOfEquipmentAndFurniture());
+		
+		String[] monthchild = hAndSafety.getMonthkid().split(",");
+		List lchild = Arrays.asList(monthchild);
+		healthAndSafetyVM.setMonthkid(lchild);
+		
+		/*----------------------------------8.Swimming Pool --------------------------------------------*/
+		
+		healthAndSafetyVM.setPoolRulesAndRegulation(hAndSafety.getPoolRulesAndRegulation());
+		healthAndSafetyVM.setOpeningClosingTimes(hAndSafety.getOpeningClosingTimes());
+		healthAndSafetyVM.setDepthInformation(hAndSafety.getDepthInformation());
+		healthAndSafetyVM.setNoDiving(hAndSafety.getNoDiving());
+		healthAndSafetyVM.setNoUnaccompaniedChildrenPool(hAndSafety.getNoUnaccompaniedChildrenPool());
+		healthAndSafetyVM.setLifesavingEquipment(hAndSafety.getLifesavingEquipment());
+		healthAndSafetyVM.setGlassAroundThePoolArea(hAndSafety.getGlassAroundThePoolArea());
+		healthAndSafetyVM.setLifeguardOrQualifiedPerson(hAndSafety.getLifeguardOrQualifiedPerson());
+		healthAndSafetyVM.setThereChildrenPool(hAndSafety.getThereChildrenPool());
+		healthAndSafetyVM.setSeparatedFromTheAdultPool(hAndSafety.getSeparatedFromTheAdultPool());
+		healthAndSafetyVM.setSufficientDepthMarkings(hAndSafety.getSufficientDepthMarkings());
+		healthAndSafetyVM.setThePoolCleanedDaily(hAndSafety.getThePoolCleanedDaily());
+		healthAndSafetyVM.setRecordsKept(hAndSafety.getRecordsKept());
+		healthAndSafetyVM.setHeatedPoolInTheProperty(hAndSafety.getHeatedPoolInTheProperty());
+		
+		String[] monthOperation = hAndSafety.getMonthOperational().split(",");
+		List loperation = Arrays.asList(monthOperation);
+		healthAndSafetyVM.setMonthOperational(loperation);
+		
+		
 		/*------------------------9.Gas Water Heaters--------------------------------------------*/
 		healthAndSafetyVM.setGasWaterHeaters(hAndSafety.getGasWaterHeaters());
 		healthAndSafetyVM.setInternal(hAndSafety.getInternal());
 		healthAndSafetyVM.setExternal(hAndSafety.getExternal());
 		healthAndSafetyVM.setServicing(hAndSafety.getServicing());
 		healthAndSafetyVM.setMaintenance(hAndSafety.getMaintenance());
+		/*-------------------------------------------------------------------*/
+		
+		String[] area = hAndSafety.getCctvArea().split(",");
+		List larea = Arrays.asList(area);
+		healthAndSafetyVM.setCctvArea(larea);
 		/*-------------------------11. Additional info---------------------------*/
 		healthAndSafetyVM.setAdditionalInformationOrComments(hAndSafety.getAdditionalInformationOrComments());
 		healthAndSafetyVM.setName(hAndSafety.getName());

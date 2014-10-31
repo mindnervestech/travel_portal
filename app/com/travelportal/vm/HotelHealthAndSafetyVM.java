@@ -1,6 +1,7 @@
 package com.travelportal.vm;
 
 import java.util.Date;
+import java.util.List;
 
 public class HotelHealthAndSafetyVM {
 	
@@ -56,13 +57,37 @@ public class HotelHealthAndSafetyVM {
 	private String stagesOfFoodPreparation;
 	private String premisesAdequatelyProofed;
 	/*--------------------------7.Children's Facilities---------------------------------*/
+	private String internalChildrenPlayArea;
+	private String externalChildrenPlayArea;
+	private String superviseTheKidClub;
+	private String qualityChecksOfEquipmentAndFurniture;
+	public List<String> monthkid;
+	/*-------------------------8.Swimming Pool -------------------------------------------*/
+
+	private String poolRulesAndRegulation;
+	private String openingClosingTimes;
+	private String depthInformation;
+	private String noDiving;
+	private String noUnaccompaniedChildrenPool;
+	private String lifesavingEquipment;
+	private String glassAroundThePoolArea;
+	private String lifeguardOrQualifiedPerson;
+	private String thereChildrenPool;
+	private String separatedFromTheAdultPool;
+	private String sufficientDepthMarkings;
+	private String thePoolCleanedDaily;
+	private String recordsKept;
+	private String heatedPoolInTheProperty;
+	public List<String> monthOperational;
+	
 	/*--------------------------9.Gas Water Heaters---------------------------------*/
 	private String gasWaterHeaters;
 	private String internal;
 	private String external;
 	private String servicing;
 	private String maintenance;
-	
+	/*---------------------------10.CCTV Status----------------------------------------*/
+	public List<String> cctvArea;
 	/*--------------------------11.Additional Info---------------------------------*/
 	private String additionalInformationOrComments;
 	private String name;
@@ -346,7 +371,137 @@ public class HotelHealthAndSafetyVM {
 		this.premisesAdequatelyProofed = premisesAdequatelyProofed;
 	}
 	
+	
+	
 		
+	public String getInternalChildrenPlayArea() {
+		return internalChildrenPlayArea;
+	}
+	public void setInternalChildrenPlayArea(String internalChildrenPlayArea) {
+		this.internalChildrenPlayArea = internalChildrenPlayArea;
+	}
+	public String getExternalChildrenPlayArea() {
+		return externalChildrenPlayArea;
+	}
+	public void setExternalChildrenPlayArea(String externalChildrenPlayArea) {
+		this.externalChildrenPlayArea = externalChildrenPlayArea;
+	}
+	public String getSuperviseTheKidClub() {
+		return superviseTheKidClub;
+	}
+	public void setSuperviseTheKidClub(String superviseTheKidClub) {
+		this.superviseTheKidClub = superviseTheKidClub;
+	}
+	public String getQualityChecksOfEquipmentAndFurniture() {
+		return qualityChecksOfEquipmentAndFurniture;
+	}
+	public void setQualityChecksOfEquipmentAndFurniture(
+			String qualityChecksOfEquipmentAndFurniture) {
+		this.qualityChecksOfEquipmentAndFurniture = qualityChecksOfEquipmentAndFurniture;
+	}
+	public List<String> getMonthkid() {
+		return monthkid;
+	}
+	public void setMonthkid(List<String> monthkid) {
+		this.monthkid = monthkid;
+	}
+	
+	
+	
+	
+	
+	public String getPoolRulesAndRegulation() {
+		return poolRulesAndRegulation;
+	}
+	public void setPoolRulesAndRegulation(String poolRulesAndRegulation) {
+		this.poolRulesAndRegulation = poolRulesAndRegulation;
+	}
+	public String getDepthInformation() {
+		return depthInformation;
+	}
+	public void setDepthInformation(String depthInformation) {
+		this.depthInformation = depthInformation;
+	}
+	public String getNoDiving() {
+		return noDiving;
+	}
+	public void setNoDiving(String noDiving) {
+		this.noDiving = noDiving;
+	}
+	public String getNoUnaccompaniedChildrenPool() {
+		return noUnaccompaniedChildrenPool;
+	}
+	public void setNoUnaccompaniedChildrenPool(String noUnaccompaniedChildrenPool) {
+		this.noUnaccompaniedChildrenPool = noUnaccompaniedChildrenPool;
+	}
+	public String getLifesavingEquipment() {
+		return lifesavingEquipment;
+	}
+	public void setLifesavingEquipment(String lifesavingEquipment) {
+		this.lifesavingEquipment = lifesavingEquipment;
+	}
+	public String getGlassAroundThePoolArea() {
+		return glassAroundThePoolArea;
+	}
+	public void setGlassAroundThePoolArea(String glassAroundThePoolArea) {
+		this.glassAroundThePoolArea = glassAroundThePoolArea;
+	}
+	public String getLifeguardOrQualifiedPerson() {
+		return lifeguardOrQualifiedPerson;
+	}
+	public void setLifeguardOrQualifiedPerson(String lifeguardOrQualifiedPerson) {
+		this.lifeguardOrQualifiedPerson = lifeguardOrQualifiedPerson;
+	}
+	
+	public String getSeparatedFromTheAdultPool() {
+		return separatedFromTheAdultPool;
+	}
+	public void setSeparatedFromTheAdultPool(String separatedFromTheAdultPool) {
+		this.separatedFromTheAdultPool = separatedFromTheAdultPool;
+	}
+	public String getSufficientDepthMarkings() {
+		return sufficientDepthMarkings;
+	}
+	public void setSufficientDepthMarkings(String sufficientDepthMarkings) {
+		this.sufficientDepthMarkings = sufficientDepthMarkings;
+	}
+	
+	public String getOpeningClosingTimes() {
+		return openingClosingTimes;
+	}
+	public void setOpeningClosingTimes(String openingClosingTimes) {
+		this.openingClosingTimes = openingClosingTimes;
+	}
+	public String getThereChildrenPool() {
+		return thereChildrenPool;
+	}
+	public void setThereChildrenPool(String thereChildrenPool) {
+		this.thereChildrenPool = thereChildrenPool;
+	}
+	public String getThePoolCleanedDaily() {
+		return thePoolCleanedDaily;
+	}
+	public void setThePoolCleanedDaily(String thePoolCleanedDaily) {
+		this.thePoolCleanedDaily = thePoolCleanedDaily;
+	}
+	public String getRecordsKept() {
+		return recordsKept;
+	}
+	public void setRecordsKept(String recordsKept) {
+		this.recordsKept = recordsKept;
+	}
+	public String getHeatedPoolInTheProperty() {
+		return heatedPoolInTheProperty;
+	}
+	public void setHeatedPoolInTheProperty(String heatedPoolInTheProperty) {
+		this.heatedPoolInTheProperty = heatedPoolInTheProperty;
+	}
+	public List<String> getMonthOperational() {
+		return monthOperational;
+	}
+	public void setMonthOperational(List<String> monthOperational) {
+		this.monthOperational = monthOperational;
+	}
 	public String getGasWaterHeaters() {
 		return gasWaterHeaters;
 	}
@@ -379,6 +534,14 @@ public class HotelHealthAndSafetyVM {
 	}
 	public void setMaintenance(String maintenance) {
 		this.maintenance = maintenance;
+	}
+	
+	
+	public List<String> getCctvArea() {
+		return cctvArea;
+	}
+	public void setCctvArea(List<String> cctvArea) {
+		this.cctvArea = cctvArea;
 	}
 	public String getAdditionalInformationOrComments() {
 		return additionalInformationOrComments;

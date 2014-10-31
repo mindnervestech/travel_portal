@@ -55,6 +55,10 @@ POST    /saveUpdateBedroomsAsndBalconies  com.travelportal.controllers.HotelProf
 POST    /saveUpdateKitchenAndHygiene    com.travelportal.controllers.HotelProfileController.saveUpdateKitchenAndHygiene()
 POST    /saveUpdateAdditionalInfo    com.travelportal.controllers.HotelProfileController.saveUpdateAdditionalInfo()
 POST    /saveUpdateGaswaterHeaters   com.travelportal.controllers.HotelProfileController.saveUpdateGaswaterHeaters()
+POST   /saveUpdateChildrenFaciliti   com.travelportal.controllers.HotelProfileController.saveUpdateChildrenFaciliti()
+POST   /saveUpdateSwimmingPool	 com.travelportal.controllers.HotelProfileController.saveUpdateSwimmingPool()
+POST   /saveUpdateCCTVstatus	 com.travelportal.controllers.HotelProfileController.saveUpdateCCTVstatus()
+POST   /savefiles       com.travelportal.controllers.HotelProfileController.savefiles()
 
 #following routes are used for fetch room details, Add Room Type and Edit Room Type
 #home screen for edit
@@ -63,6 +67,7 @@ POST    /saveUpdateGaswaterHeaters   com.travelportal.controllers.HotelProfileCo
 
 GET /hotel/roomtypes		com.travelportal.controllers.HotelRoomController.fetchAllRoomTypesForEdit()
 GET /roomtypes/:supplierCode  	com.travelportal.controllers.HotelRoomController.fetchToEditHotelDetails(supplierCode:Long)
+GET /deleteRoomchild/:id   		com.travelportal.controllers.HotelRoomController.deleteRoomchild(id:Integer)
 POST /hotel/saveUpdateRoomType			com.travelportal.controllers.HotelRoomController.saveOrUpdateHotelRoom()
 #POST /hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.editHotelRoom(roomId: Long)
 GET /room/amenities				com.travelportal.controllers.HotelRoomController.getAvailableRoomAmenities()
