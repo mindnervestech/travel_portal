@@ -1,17 +1,36 @@
 package com.travelportal.controllers;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.sql.Timestamp;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
+import net.coobird.thumbnailator.Thumbnails;
+
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.core.io.FileSystemResource;
+
+import play.Play;
 import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Http.MultipartFormData.FilePart;
 import views.html.index;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.travelportal.domain.HotelHealthAndSafety;
 import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.HotelServices;
+import com.travelportal.domain.ImgPath;
+import com.travelportal.domain.InfoWiseImagesPath;
 import com.travelportal.domain.MealType;
 import com.travelportal.domain.rooms.ChildPolicies;
 import com.travelportal.domain.rooms.HotelRoomTypes;
@@ -24,6 +43,20 @@ import com.travelportal.vm.RoomType;
 import com.travelportal.vm.RoomtypeVM;
 
 public class HotelRoomController extends Controller {
+	
+	final static String rootDir = Play.application().configuration().getString("mail.storage.path");
+	
+	  static {
+        createRootDir();
+  }
+
+public static void createRootDir() {
+        File file = new File(rootDir);
+        if (!file.exists()) {
+                file.mkdir();
+        }
+        
+}
 	
 	@Transactional(readOnly=true)
     public static Result hotelRoomHome() {
@@ -164,18 +197,87 @@ public class HotelRoomController extends Controller {
 		return ok();
 	}
 	
-	/*@Transactional(readOnly=false)
-	public static Result deleteChile(int id) {
 
-		HotelMealPlan hotelmealplan = HotelMealPlan.findById(id);
-		for(ChildPolicies policies : hotelmealplan.getChild()){
-			policies.delete();
-		}
-		hotelmealplan.setChild(null);
-		hotelmealplan.merge();
+	//savegeneralImg
+	@Transactional(readOnly=false)
+	public static Result savegeneralImg() {
+		
 
-		return ok();
-	}*/
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		
+		FilePart picture = request().body().asMultipartFormData().getFile("generalImg");
+		
+		System.out.println(form.get("supplierCode"));
+		
+		createDir(rootDir,Long.parseLong(form.get("supplierCode")));
+		 String fileName = picture.getFilename();
+		
+		 String ThumbnailImage = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator+"GeneralPic"+ File.separator+"Logo_thumbnail."+FilenameUtils.getExtension(fileName);
+         String originalFileName = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator +"GeneralPic"+File.separator+"Original_image."+FilenameUtils.getExtension(fileName);
+		 
+		 
+         File src = picture.getFile();
+         OutputStream out = null;
+         BufferedImage image = null;
+         File f = new File(ThumbnailImage);
+         System.out.println(originalFileName);
+         try {
+        	   
+                  BufferedImage originalImage = ImageIO.read(src);
+                        Thumbnails.of(originalImage)
+                            .size(124, 124)
+                            .toFile(f);
+                            File _f = new File(originalFileName);
+                            Thumbnails.of(originalImage).scale(1.0).
+                            toFile(_f);
+           
+        	 
+         } catch (FileNotFoundException e) {
+                 e.printStackTrace();
+         } catch (IOException e) {
+                 e.printStackTrace();
+         } finally {
+                 try {
+                         if(out != null) out.close();
+                 } catch (IOException e) {
+                         e.printStackTrace();
+                 }
+         }
+           
+ 		 System.out.println(fileName);
+ 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(Long.parseLong(form.get("supplierCode")));
+ 		 if(infowiseimagesPath == null)
+ 		 {
+ 		infowiseimagesPath = new InfoWiseImagesPath();
+ 		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
+ 		infowiseimagesPath.setGeneralPicture(ThumbnailImage);
+ 		infowiseimagesPath.save();
+ 		 }
+ 		 else
+ 		 {
+ 			infowiseimagesPath.setGeneralPicture(ThumbnailImage);
+ 	 		infowiseimagesPath.merge();
+ 		 }
+ 		
+		return ok(Json.toJson(infowiseimagesPath));
+ 		//return ok();
+		
+	}
+	public static void createDir(String rootDir, long supplierCode) {
+        File file3 = new File(rootDir + File.separator+supplierCode +File.separator+ "ManageHotelImages"+File.separator+"GeneralPic");
+        if (!file3.exists()) {
+                file3.mkdirs();
+        }
+	}
+	@Transactional(readOnly=false)
+	public static Result getImagePath(long supplierCode) {
+		
+		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
+		File f = new File( infowiseimagesPath.getGeneralPicture());
+        return ok(f);
+		
+		
+	}
 	
 	
 }

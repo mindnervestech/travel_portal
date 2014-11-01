@@ -3,13 +3,19 @@
  */
 package com.travelportal.controllers;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
-
+import play.Play;
 import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
@@ -32,6 +38,7 @@ import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.HotelPrivateContacts;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
+import com.travelportal.domain.ImgPath;
 import com.travelportal.domain.InternalContacts;
 import com.travelportal.domain.Location;
 import com.travelportal.domain.MarketPolicyTypes;
@@ -56,6 +63,19 @@ import com.travelportal.vm.TransportationDirectionsVM;
  *
  */
 public class HotelProfileController extends Controller {
+	final static String rootDir = Play.application().configuration().getString("mail.storage.path");
+	
+	  static {
+          createRootDir();
+    }
+
+  public static void createRootDir() {
+          File file = new File(rootDir);
+          if (!file.exists()) {
+                  file.mkdir();
+          }
+          
+  }
 
 /*	public static Result home() {
 		//Accept the supplier code as parameter... 
@@ -694,51 +714,61 @@ public class HotelProfileController extends Controller {
 	
 	@Transactional(readOnly=false)
 	public static Result savefiles() {
+		
 
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+
+		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(Long.parseLong(form.get("supplierCode")));
+		
 		FilePart picture = request().body().asMultipartFormData().getFile("file1");
-		String sourceFilePath = "D:/Mindnerves";
-		 File sourceFilePathObject = new File(sourceFilePath);
-       String fileName = picture.getFilename();
-       System.out.println("Name :: "+fileName);
-       File file = picture.getFile();
-        System.out.println("Name :: "+file);
-      File statusFileNameObject = new File(file+fileName);
-      System.out.println("Old file :: "+statusFileNameObject);
-      System.out.println("New file :: "+sourceFilePathObject);
-      try{
-          FileUtils.copyFile(sourceFilePathObject,statusFileNameObject);
-  	  }
-  	  catch(Exception ee)
-  	  {
-  		  System.out.println(ee);
-  	  }
-      
-     /* String path = calendar.get(Calendar.HOUR_OF_DAY) +""+ calendar.get(Calendar.MINUTE) + "" + calendar.get(Calendar.SECOND) ;
-
-                    String s = rootDir.replace("\\LOGO", "");
-                    createDayDir(s, "SITE");
-                    createDayDir(s + File.separator + "site", path);
-                    String imgPath = s + File.separator + "SITE" + File.separator + path + File.separator + "logo.jpg";
-                    String impath = path + File.separator + "logo.jpg";
-                    File src = picture.getFile();
-                    OutputStream out = null;
-                    BufferedImage image = null;
-                    try {
-                            image = ImageIO.read(src);
-                            ImageIO.write(image, "jpg",new File(imgPath));
-                    } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                    } catch (IOException e) {
-                            e.printStackTrace();
-                    } finally {
-                            try {
-                                    if(out != null) out.close();
-                            } catch (IOException e) {
-                                    e.printStackTrace();
-                            }
-                    }*/
-      
-		return ok();
+		
+		createDir(rootDir,hAndSafety.getSupplierCode(), hAndSafety.getId());
+		 String fileName = picture.getFilename();
+		 String imgPath = rootDir + File.separator +Long.parseLong(form.get("supplierCode"))+File.separator+ "HealthSafety"+ File.separator + +hAndSafety.getId()+ File.separator+fileName;
+		
+         File src = picture.getFile();
+         OutputStream out = null;
+         BufferedImage image = null;
+         File f = new File(imgPath);
+         System.out.println(imgPath);
+         try {
+        	 Files.copy(src.toPath(),f.toPath(),java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        	
+         } catch (FileNotFoundException e) {
+                 e.printStackTrace();
+         } catch (IOException e) {
+                 e.printStackTrace();
+         } finally {
+                 try {
+                         if(out != null) out.close();
+                 } catch (IOException e) {
+                         e.printStackTrace();
+                 }
+         }
+           
+ 		 System.out.println(fileName);
+ 		ImgPath path = new ImgPath();
+ 		path.setImgpath(imgPath);
+ 		path.setDocname(fileName);
+ 		path.setDatetime(new Timestamp(System.currentTimeMillis()));
+ 		path.save();
+ 		hAndSafety.addImgpath(path);
+ 		hAndSafety.save();
+ 		
+ 		//getdocument
+ 		
+ 		List<HotelHealthAndSafety> docInfo = HotelHealthAndSafety.getdocument(hAndSafety.getId());
+		return ok(Json.toJson(docInfo));
+ 		 
+		
+		
+	}
+	
+	public static void createDir(String rootDir, long supplierCode, int subID) {
+        File file3 = new File(rootDir + File.separator+supplierCode +File.separator+ "HealthSafety"+File.separator+subID);
+        if (!file3.exists()) {
+                file3.mkdirs();
+        }
 	}
 	
 	@Transactional(readOnly=false)

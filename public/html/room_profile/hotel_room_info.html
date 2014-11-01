@@ -13,33 +13,33 @@
 	<div class="col-lg-12">
 		<div class="row">
 			<div class="form-group">
-				<label class="col-md-3 control-label">Choose Room Type</label>
-				<div class="col-md-9">
+				<label class="col-md-4 control-label">Choose Room Type</label>
+				<div class="col-md-7">
 					<select class="form-control" data-ng-model="roomTypeIns.roomId" ng-change="selectType()"
 						data-ng-options="hotelRoomTypes.roomId as hotelRoomTypes.roomType for hotelRoomTypes in hotelRoomTypes">
 						<option>Select Room Type...</option>
 					</select>
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="col-md-12 control-label">Room Type:
+			<!-- <div class="form-group">
+				<label class="col-md-6 control-label">Room Type:
 					{{sel_room_type}}</label>
-			</div>
+			</div> -->
 			<div class="form-group">
-				<label class="col-md-12 control-label">Please enter all
+				<label class="col-md-6 control-label">Please enter all
 					details that apply to this room type</label>
 			</div>
 			<!-- Add / Edit Room Type section -->
 			<div class="form-group">
-				<label class="col-md-3 control-label">Room Name</label>
-				<div class="col-md-9">
+				<label class="col-md-4 control-label">Room Name</label>
+				<div class="col-md-7">
 					<input type="text" placeholder="Room Name" class="form-control"
 						data-ng-model="roomTypeIns.roomname"> <br>
 				</div>
 
 			</div>
 			<div class="form-group">
-				<label class="col-md-7 control-label">*What is the maximum
+				<label class="col-md-4 control-label">*What is the maximum
 					occupancy level for this room?</label>
 				<div class="col-md-3">
 					<select class="form-control"
@@ -50,7 +50,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-md-7 control-label">*What is the maximum
+				<label class="col-md-4 control-label">*What is the maximum
 					Adult occupancy for this room?</label>
 				<div class="col-md-3">
 					<select class="form-control"
@@ -60,7 +60,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-md-7 control-label">*What is the maximum
+				<label class="col-md-4 control-label">*What is the maximum
 					Adult occupancy if sharing with children in this room?</label>
 				<div class="col-md-3">
 					<select class="form-control"
@@ -97,8 +97,8 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-md-6 control-label"
-							style="text-align: left; margin-left: 4%;">*Does your
+						<label class="col-md-4 control-label"
+							style="text-align: left; margin-left: 30%;">*Does your
 							hotel charge for children?</label>
 						<div class="col-md-3">
 
@@ -121,11 +121,11 @@
 					<div style="border: 1px solid;float: left;width: 100%;" ng-repeat="child in childpolicy">
 						<div>
 							<label class="col-md-6 control-label"
-								style="text-align: left; margin-left: 4%;">Please define
+								style="text-align: left; margin-left: 15s%;margin-bottom: 3%;">Please define
 								your children policy:</label><br>
 						</div>
 						<div class="form-group" style="float: left;width: 100%;">
-							<label class="col-md-1 control-label">From: </label>
+							<label class="col-md-2 control-label">From: </label>
 							<div class="col-md-2">
 								<select class="form-control" data-ng-model="child.allowedChildAgeFrom" required>
 									<option>1</option>
@@ -182,7 +182,7 @@
 							<br>
 						</div>
 						<div class="form-group">
-							<label class="col-md-1 control-label">year</label>
+							<label class="col-md-2 control-label">year:</label>
 							<div class="col-md-2">
 								<input type="text" placeholder="year" class="form-control"
 									data-ng-model="child.years"> <br>
@@ -259,10 +259,10 @@
 				
 					
 					
-			 	<label style="margin-left: 7%;">*In Room Amenities: (please tick the boxes that are applicable)</label>
+			 	<label style="margin-left: 4%;">*In Room Amenities: (please tick the boxes that are applicable)</label>
 					
 				 <div>
-				<label ng-repeat="amenity in roomAmenities" style="padding-right: 30px;width: 24%;">
+				<label ng-repeat="amenity in roomAmenities" style="padding-right: 30px;width: 33%;">
 				
 				  <input
   				  type="checkbox" name="services"

@@ -3,6 +3,7 @@ name := "travel_portal"
 version := "1.0-SNAPSHOT"
 
 libraryDependencies ++= Seq(
+"net.coobird" % "thumbnailator" % "0.4.3",
     "mysql" % "mysql-connector-java" % "5.1.6",	
     javaJdbc,
   	cache,

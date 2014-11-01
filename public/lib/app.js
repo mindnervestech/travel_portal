@@ -68,7 +68,7 @@ angular.module('travel_portal',['ngRoute','ngDialog','angularFileUpload']).confi
 	})
 	.when('/manageHotelImages', {
 		templateUrl: '/assets/html/manage_hotel_images/manage_hotel_img.html',
-		controller: 'hoteRoomController'
+		controller: 'ManageHotelImageController'
 	})
 
 });

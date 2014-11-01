@@ -1076,10 +1076,10 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">During which months is the kid's club fully operational:</label>
+							<label class="col-md-9 control-label" style="text-align: left;margin-left: 4%;margin-bottom: 3%;">During which months is the kid's club fully operational:</label>
 								 <div>
 								
-				<label ng-repeat="ChildrenF in kidClub" style="padding-right: 30px;width: 24%;">
+				<label ng-repeat="ChildrenF in kidClub" style="padding-right: 30px;width: 24%;margin-left: 9%;">
 				
 				  <input
   				  type="checkbox" name="child"
@@ -1375,10 +1375,10 @@
 			             </div>
 			             
 			              <div class="form-group" style="float: left;">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> If YES, during which months is this operational:</label>
+							<label class="col-md-9 control-label" style="text-align: left;margin-left: 4%;margin-bottom: 3%;"> If YES, during which months is this operational:</label>
 								<div>
 								
-				<label ng-repeat="SwimmingP in operational" style="padding-right: 30px;width: 24%;">
+				<label ng-repeat="SwimmingP in operational" style="padding-right: 30px;width: 24%;margin-left: 9%;">
 				
 				  <input
   				  type="checkbox" name="Swimming"
@@ -1533,10 +1533,10 @@
 				<div class="row">
 					<div class="col-md-12">
                   <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> CCTV is used on a 24 hour basis in the following areas of the hotel:</label>
+							<label class="col-md-9 control-label" style="text-align: left;margin-left: 4%;margin-bottom: 4%;"> CCTV is used on a 24 hour basis in the following areas of the hotel:</label>
 								<div>
 								
-							<label ng-repeat="TVstatus in cctv" style="padding-right: 30px;width: 24%;">
+							<label ng-repeat="TVstatus in cctv" style="padding-right: 30px;width: 24%;margin-left: 4%;">
 				
 				 				 <input
   				 				 type="checkbox" name="Swimming"
@@ -1618,10 +1618,37 @@
 					   <label> To add a new document record please select the file and click the Upload Document button.</label>
 					 </div>
 					</div>
+					
+					<table ng-table="tableParams" border="1" style="width: 100%;font-size: small;margin-bottom: 11%;">
+                	<thead style="background-color: #488c6c;">
+                    	<tr>
+                           <th><a style="color: white;">Sr.No</a></th>
+                            <th><a style="color: white;">DateTime</a></th>
+                            <th><a style="color: white;">Documents</a></th>
+                           
+                            
+                        </tr>
+                    </thead>
+                	<tbody>
+                	
+                    	<tr ng-repeat="doc in document">
+          					<td>{{$index+1}}</td>
+          					 <td>{{doc.datetime}}</td>
+                           <td>{{doc.docname}}</td>
+                            
+                            
+                                             
+                            </tr>
+                           
+                    	</tbody>
+                </table>		
+					
+					
+					
 					  <div class="form-group">
 					   <label class="col-md-1 control-label" style="text-align: left;"> File:</label>
 						<div class="col-md-4">
-					 <input ng-file-select="selectProfileImage($files)" name="" type="file" />Add Images
+					 <input ng-file-select="selectProfileImage($files)" name="" type="file" />
 			             
 			             </div>		
 			           </div>	             

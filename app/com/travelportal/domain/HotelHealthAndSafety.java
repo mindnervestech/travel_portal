@@ -3,11 +3,15 @@ package com.travelportal.domain;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Query;
 import javax.persistence.Table;
 
@@ -182,7 +186,10 @@ public class HotelHealthAndSafety {
 	private String name;
 	@Column(name="designation")
 	private String designation;
+	/*------------------------------12.doc-------------------------------*/
 	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<ImgPath> imgpath;
 	
 	public int getId() {
 		return id;
@@ -663,6 +670,21 @@ public class HotelHealthAndSafety {
 		this.designation = designation;
 	}
 	
+	
+	public List<ImgPath> getImgpath() {
+		return imgpath;
+	}
+	public void setImgpath(List<ImgPath> imgpath) {
+		this.imgpath = imgpath;
+	}
+	
+	public void addImgpath(ImgPath imgpath) {
+		this.imgpath.add(imgpath);
+	}
+	
+	public static List<HotelHealthAndSafety> getdocument(int id) {
+		return JPA.em().createQuery("select c from HotelHealthAndSafety c where c.id = ?1").setParameter(1, id).getResultList();
+	}
 	
 	public static HotelHealthAndSafety findById(Long supplierCode) {
 		try

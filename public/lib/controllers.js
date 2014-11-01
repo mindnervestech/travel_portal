@@ -1,5 +1,43 @@
 
 angular.module('travel_portal').
+	controller("ManageHotelImageController",['$scope', '$http', '$rootScope','$filter','$upload','ngDialog',
+	                                         function($scope, $http, $rootScope,  $filter, $upload, ngDialog) {
+		
+		 var generalPic =null;
+		 console.log(supplierCode);
+	     $scope.selectGeneralPicImage = function($generalPic)
+	     {
+	    	
+	    	 generalPic = $generalPic[0]; 
+	    	    	 
+	     }
+	     $scope.img = "getImagePath/"+supplierCode+"?d="+new Date().getTime();
+	     $scope.savegeneral = {};
+	     $scope.savegeneralPic = function(){
+	     
+	    	
+	    	$scope.savegeneral.supplierCode = supplierCode;
+	  	   $scope.upload = $upload.upload({
+	             url: '/savegeneralImg', 
+	             method:'post',
+	             data:$scope.savegeneral,
+	             fileFormDataName: 'generalImg',
+	             file:generalPic,
+	            
+	     }).progress(function(evt) {
+	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+	     }).success(function(data, status, headers, config) {
+	    	 console.log(data);   
+	    	 console.log(data.generalPicture);
+	            $scope.img = "getImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	            //$scope.document = data[0].imgpath;
+	     }); 
+	     }
+	     
+		}]
+);
+
+angular.module('travel_portal').
 	controller("hoteRoomController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
 	
 			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10];
@@ -50,6 +88,7 @@ angular.module('travel_portal').
 						 }
 					 console.log($scope.roomamenities);
 				});
+				
 			}
 			
 			
@@ -108,7 +147,6 @@ angular.module('travel_portal').
 					.success(function(){
 						$scope.roomTypeIns.roomchildPolicies = [];
 						$scope.childpolicy = [];//$scope.roomTypeIns.roomchildPolicies = [];
-
 						console.log('success');
 					});
 
@@ -402,9 +440,14 @@ angular.module('travel_portal').
 
 	$http.get("/MealTypeplan/"+$rootScope.supplierCode).success(function(response){
 		$scope.MealType=response;
+		if($scope.MealType != null )
+			{
+			$scope.mealRate = true;
+			}
+		
 		angular.forEach($scope.MealType, function(obj, index){
-			//$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
-			//$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
+			$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
+			$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
 			return;
 		});
 	});	
@@ -797,28 +840,30 @@ angular.module('travel_portal').
   		});
   		
   	}
+    
+     
     var files = null;
    $scope.selectProfileImage = function($files)
-   {
-		
-		files = $files[0]; 
-		/**/
+   {		
+		files = $files[0]; 		/**/
    }
    
+   $scope.savedoc = {};
    $scope.saveDocumens = function(){
-	 
+	   $scope.savedoc.supplierCode = $rootScope.supplierCode;
 	   $scope.upload = $upload.upload({
            url: '/savefiles', 
            method:'post',
+           data:$scope.savedoc,
            fileFormDataName: 'file1',
            file:files,
           
    }).progress(function(evt) {
            console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
    }).success(function(data, status, headers, config) {
-          /* notificationService.success("Doctor added successfully.");
-           $scope.logo = $scope.logo + 1;*/
-           console.log("saved!");
+          console.log(data[0].imgpath);
+          /*$scope.HealthSafety.expiryDate = $filter('date')(response.healthAndSafetyVM.expiryDate, "yyyy-MM-dd");*/
+          $scope.document = data[0].imgpath;
    }); 
    }
 	
