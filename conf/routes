@@ -30,6 +30,7 @@ GET  	/salutation           		com.travelportal.controllers.TravelPortalUtilsCont
 GET  	/leisureSport          		com.travelportal.controllers.TravelPortalUtilsController.getLeisureSport()
 
 GET		/deletemealpolicy/:id       com.travelportal.controllers.HotelProfileController.deleteMealPolicy(id:Integer)
+GET     /deleteDocument/:docId/:id		com.travelportal.controllers.HotelProfileController.deleteDocument(docId:Integer,id:Integer)
 GET		/deletechile/:id       		com.travelportal.controllers.HotelProfileController.deleteChile(id:Integer)
 
 POST  	/saveGeneralInfo            com.travelportal.controllers.HotelProfileController.saveGeneralInfo()
@@ -60,8 +61,22 @@ POST   /saveUpdateSwimmingPool	 com.travelportal.controllers.HotelProfileControl
 POST   /saveUpdateCCTVstatus	 com.travelportal.controllers.HotelProfileController.saveUpdateCCTVstatus()
 POST   /savefiles       com.travelportal.controllers.HotelProfileController.savefiles()
 
-POST   /savegeneralImg   com.travelportal.controllers.HotelRoomController.savegeneralImg()
-GET	  /hotel_profile/getImagePath/:supplierCode			com.travelportal.controllers.HotelRoomController.getImagePath(supplierCode:Long)
+#following routes are used for fetch manage hotel images, 
+
+POST   /savegeneralImg   com.travelportal.controllers.ManageHotelImagesController.savegeneralImg()
+POST   /saveLobbyImg      com.travelportal.controllers.ManageHotelImagesController.saveLobbyImg()
+POST   /saveRoomImg      com.travelportal.controllers.ManageHotelImagesController.saveRoomImg()
+POST   /saveAmenitiesServicesImg      com.travelportal.controllers.ManageHotelImagesController.saveAmenitiesServicesImg()
+POST   /saveLeisureorSportsImg      com.travelportal.controllers.ManageHotelImagesController.saveLeisureorSportsImg()
+POST   /saveMapImg      com.travelportal.controllers.ManageHotelImagesController.saveMapImg()
+
+GET	  /hotel_profile/getImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getImagePath(supplierCode:Long)
+GET	  /hotel_profile/getLobbyImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getLobbyImagePath(supplierCode:Long)
+GET	  /hotel_profile/getRoomImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getRoomImagePath(supplierCode:Long)
+GET	  /hotel_profile/getAmenitiesServicesImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getAmenitiesServicesImagePath(supplierCode:Long)
+GET	  /hotel_profile/getLeisureorSportsImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getLeisureorSportsImagePath(supplierCode:Long)
+GET	  /hotel_profile/getMapImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getMapImagePath(supplierCode:Long)
+ 
 #following routes are used for fetch room details, Add Room Type and Edit Room Type
 #home screen for edit
 

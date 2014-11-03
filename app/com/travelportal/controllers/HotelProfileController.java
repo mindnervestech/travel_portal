@@ -771,6 +771,28 @@ public class HotelProfileController extends Controller {
         }
 	}
 	
+	
+	@Transactional(readOnly=false)
+	public static Result deleteDocument(int docId,int id) {
+
+		System.out.println(docId);
+		System.out.println(id);
+		HotelHealthAndSafety healthAndSafety =HotelHealthAndSafety.HealthSafetyfindById(docId);
+		ImgPath deletePath = null;
+		for(ImgPath path : healthAndSafety.getImgpath()){
+			if(path.getImgpathId() == id);
+			deletePath = path;
+		}
+		healthAndSafety.getImgpath().remove(deletePath);
+		File currentFile = new File(deletePath.getImgpath());
+		currentFile.delete();
+		deletePath.delete();
+		
+		//healthAndSafety.setImgpath(null);
+		healthAndSafety.merge();
+		return ok();
+	}
+	
 	@Transactional(readOnly=false)
 	public static Result updateMealPolicy() {
 
@@ -851,8 +873,6 @@ public class HotelProfileController extends Controller {
 	}
 
 
-
-
 	@Transactional(readOnly=false)
 	public static Result deleteChile(int id) {
 
@@ -876,6 +896,8 @@ public class HotelProfileController extends Controller {
 		hotelmealplan.delete();
 		return ok();
 	}
+	
+	
 
 
 	@Transactional(readOnly=false)

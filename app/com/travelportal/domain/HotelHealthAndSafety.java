@@ -686,6 +686,10 @@ public class HotelHealthAndSafety {
 		return JPA.em().createQuery("select c from HotelHealthAndSafety c where c.id = ?1").setParameter(1, id).getResultList();
 	}
 	
+	public static List<HotelHealthAndSafety> getdocumentList(long supplierCode) {
+		return JPA.em().createQuery("select c from HotelHealthAndSafety c where c.supplierCode = ?1").setParameter(1, supplierCode).getResultList();
+	}
+	
 	public static HotelHealthAndSafety findById(Long supplierCode) {
 		try
 		{
@@ -695,6 +699,12 @@ public class HotelHealthAndSafety {
 			return null;
 		}
     }
+	
+	 public static HotelHealthAndSafety HealthSafetyfindById(int id) {
+	    	Query query = JPA.em().createQuery("Select a from HotelHealthAndSafety a where a.id = ?1");
+			query.setParameter(1, id);
+	    	return (HotelHealthAndSafety) query.getSingleResult();
+	    }
 	
 	@Transactional
     public void save() {

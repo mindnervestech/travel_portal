@@ -320,6 +320,10 @@ public class TravelPortalUtilsController extends Controller {
 		healthAndSafetyVM.setName(hAndSafety.getName());
 		healthAndSafetyVM.setDesignation(hAndSafety.getDesignation());
 		
+		List<HotelHealthAndSafety> docInfo = HotelHealthAndSafety.getdocumentList(supplierCode);
+		
+		//return ok(Json.toJson(docInfo));
+		
 		
 		
 		HotelPrivateContacts hotelprivatecontacts = HotelPrivateContacts.findById(supplierCode);
@@ -425,7 +429,7 @@ public class TravelPortalUtilsController extends Controller {
 		map.put("transportationdirectionsVM", transportationdirectionsVM);
 		map.put("hotelamenities", hotelamenities);
 		map.put("healthAndSafetyVM", healthAndSafetyVM);
-
+		map.put("docInfo", docInfo);
 		return ok(Json.toJson(map));
 
 	}

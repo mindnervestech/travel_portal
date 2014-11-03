@@ -4,6 +4,9 @@ angular.module('travel_portal').
 	                                         function($scope, $http, $rootScope,  $filter, $upload, ngDialog) {
 		
 		 var generalPic =null;
+		 $scope.opengeneralPic = false;
+		 $scope.opengeneralPic1 = true;
+		 
 		 console.log(supplierCode);
 	     $scope.selectGeneralPicImage = function($generalPic)
 	     {
@@ -13,9 +16,7 @@ angular.module('travel_portal').
 	     }
 	     $scope.img = "getImagePath/"+supplierCode+"?d="+new Date().getTime();
 	     $scope.savegeneral = {};
-	     $scope.savegeneralPic = function(){
-	     
-	    	
+	     $scope.savegeneralPic = function(){	     
 	    	$scope.savegeneral.supplierCode = supplierCode;
 	  	   $scope.upload = $upload.upload({
 	             url: '/savegeneralImg', 
@@ -30,9 +31,309 @@ angular.module('travel_portal').
 	    	 console.log(data);   
 	    	 console.log(data.generalPicture);
 	            $scope.img = "getImagePath/"+data.supplierCode+"?d="+new Date().getTime();
-	            //$scope.document = data[0].imgpath;
+	            $scope.opengeneralPic = false;	
+		    	 $scope.opengeneralPic1 = true;
+	     }); 
+	  	 
+	     }
+	     	    //
+	     $scope.opengeneralpic1 = function()
+	     {
+	    	 $scope.opengeneralPic = false;	
+	    	 $scope.opengeneralPic1 = true;
+	     }
+	     $scope.opengeneralImg = function()
+	     {
+	    	 $scope.opengeneralPic = true;	
+	    	 $scope.opengeneralPic1 = false;
+	     }
+	     
+	     /*------------------------------------------------------------*/
+	     
+	     var Lobbypic =null;
+	     $scope.openLobbyPic = false;
+		 $scope.openLobbyPic1 = true;
+			 
+	     $scope.selectHotelLobbyImage = function($Lobbypic)
+	     {
+	    	
+	    	 Lobbypic = $Lobbypic[0]; 
+	    	    	 
+	     }
+	     $scope.imgLobby = "getLobbyImagePath/"+supplierCode+"?d="+new Date().getTime();
+	     $scope.saveLobbyImage = {};
+	     $scope.saveHotelLobbyImage = function(){	     
+	    	
+	    	$scope.saveLobbyImage.supplierCode = supplierCode;
+	  	   $scope.upload = $upload.upload({
+	             url: '/saveLobbyImg', 
+	             method:'post',
+	             data:$scope.saveLobbyImage,
+	             fileFormDataName: 'LobbyImage',
+	             file:Lobbypic,
+	            
+	     }).progress(function(evt) {
+	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+	     }).success(function(data, status, headers, config) {
+	    	 console.log(data);   
+	    	 console.log(data.hotel_Lobby);
+	          $scope.imgLobby = "getLobbyImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	            $scope.openLobbyPic = false;	
+		    	 $scope.openLobbyPic1 = true;
+	          
 	     }); 
 	     }
+	     //
+	     $scope.openLobbyspic1 = function()
+	     {
+	    	 $scope.openLobbyPic = false;	
+	    	 $scope.openLobbyPic1 = true;
+	     }
+	     $scope.openLobbyImg = function()
+	     {
+	    	 $scope.openLobbyPic = true;	
+	    	 $scope.openLobbyPic1 = false;
+	     }
+	     /*------------------------------------------------*/
+	     var Roompic =null;
+	     $scope.openRoomPic = false;
+		 $scope.openRoomPic1 = true;
+		 
+		 $scope.selectHotelRoomImage = function($Roompic)
+	     {
+	    	
+			 Roompic = $Roompic[0]; 
+	    	    	 
+	     }
+		
+		 $scope.imgRoom = "getRoomImagePath/"+supplierCode+"?d="+new Date().getTime();
+	     $scope.saveRoomImage = {};
+	     $scope.saveHotelRoomImage = function(){	     
+	    	
+	    	$scope.saveRoomImage.supplierCode = supplierCode;
+	  	   $scope.upload = $upload.upload({
+	             url: '/saveRoomImg', 
+	             method:'post',
+	             data:$scope.saveRoomImage,
+	             fileFormDataName: 'RoomImage',
+	             file:Roompic,
+	            
+	     }).progress(function(evt) {
+	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+	     }).success(function(data, status, headers, config) {
+	    	 console.log(data);   
+	          $scope.imgRoom = "getRoomImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	            $scope.openRoomPic = false;	
+		    	 $scope.openRoomPic1 = true;
+	          
+	     }); 
+	     }
+		
+		 //
+	     $scope.openRoompic1 = function()
+	     {
+	    	 $scope.openRoomPic = false;	
+	    	 $scope.openRoomPic1 = true;
+	     }
+		  $scope.openRoomImg = function()
+	     {
+	    	 $scope.openRoomPic = true;	
+	    	 $scope.openRoomPic1 = false;
+	     }
+		 /*------------------------------------------------*/
+	     var AmenitiesServicespic =null;
+	     $scope.openAmenitiesServices = false;
+		 $scope.openAmenitiesServices1 = true;
+		 
+		 $scope.selectAmenitiesServicesImage = function($AmenitiesServicespic)
+	     {
+	    	
+			 AmenitiesServicespic = $AmenitiesServicespic[0]; 
+	    	    	 
+	     }
+		
+		 $scope.imgAmenitiesServices = "getAmenitiesServicesImagePath/"+supplierCode+"?d="+new Date().getTime();
+	     $scope.saveAmenitiesServicesImage = {};
+	     $scope.saveHotelAmenitiesServices = function(){	     
+	    	
+	    	$scope.saveAmenitiesServicesImage.supplierCode = supplierCode;
+	  	   $scope.upload = $upload.upload({
+	             url: '/saveAmenitiesServicesImg', 
+	             method:'post',
+	             data:$scope.saveAmenitiesServicesImage,
+	             fileFormDataName: 'AmenitiesServicesImage',
+	             file:AmenitiesServicespic,
+	            
+	     }).progress(function(evt) {
+	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+	     }).success(function(data, status, headers, config) {
+	    	 console.log(data);   
+	          $scope.imgAmenitiesServices = "getAmenitiesServicesImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	            $scope.openAmenitiesServices = false;	
+		    	 $scope.openAmenitiesServices1 = true;
+	          
+	     }); 
+	     }
+		 
+	     $scope.openAmenitiespic1 = function()
+	     {
+	    	 $scope.openAmenitiesServices = false;	
+	    	 $scope.openAmenitiesServices1 = true;
+	     }
+		 $scope.openAmenitiesServicesImg = function()
+	     {
+	    	 $scope.openAmenitiesServices = true;	
+	    	 $scope.openAmenitiesServices1 = false;
+	     }
+		 /*------------------------------------------------*/
+	     var LeisureorSportspic =null;
+	     $scope.openLeisureorSports = false;
+		 $scope.openLeisureorSports1 = true;
+		 
+		 $scope.selectLeisureorSportsImage = function($LeisureorSportspic)
+	     {
+	    	
+			 LeisureorSportspic = $LeisureorSportspic[0]; 
+	    	    	 
+	     }
+		
+		 $scope.imgLeisureorSports = "getLeisureorSportsImagePath/"+supplierCode+"?d="+new Date().getTime();
+	     $scope.saveLeisureorSportsImage = {};
+	     $scope.saveHotelLeisureorSports = function(){	     
+	    	
+	    	$scope.saveLeisureorSportsImage.supplierCode = supplierCode;
+	  	   $scope.upload = $upload.upload({
+	             url: '/saveLeisureorSportsImg', 
+	             method:'post',
+	             data:$scope.saveLeisureorSportsImage,
+	             fileFormDataName: 'LeisureorSportsImage',
+	             file:LeisureorSportspic,
+	            
+	     }).progress(function(evt) {
+	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+	     }).success(function(data, status, headers, config) {
+	    	 console.log(data);   
+	          $scope.imgLeisureorSports = "getLeisureorSportsImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	            $scope.openLeisureorSports = false;	
+		    	 $scope.openLeisureorSports1 = true;
+	          
+	     }); 
+	     }
+	     //
+	     $scope.openLeisurepic1 = function()
+	     {
+	    	 
+	    	 $scope.openLeisureorSports = false;	
+	    	 $scope.openLeisureorSports1 = true;
+	     }
+	     
+		 $scope.openLeisureorSportsImg = function()
+	     {
+	    	 $scope.openLeisureorSports = true;	
+	    	 $scope.openLeisureorSports1 = false;
+	     }
+		 /*------------------------------------------------*/
+	     var Mappic =null;
+	     $scope.openMapPic = false;
+		 $scope.openMapPic1 = true;
+		
+		 $scope.selectHotelMapImage = function($selectHotelMapImage)
+	     {
+	    	
+			 selectHotelMapImage = $selectHotelMapImage[0]; 
+	    	    	 
+	     }
+		
+		 $scope.imgMap = "getMapImagePath/"+supplierCode+"?d="+new Date().getTime();
+	     $scope.saveMapImage = {};
+	     $scope.saveHotelMapImage = function(){	     
+	    	
+	    	$scope.saveMapImage.supplierCode = supplierCode;
+	  	   $scope.upload = $upload.upload({
+	             url: '/saveMapImg', 
+	             method:'post',
+	             data:$scope.saveMapImage,
+	             fileFormDataName: 'MapImage',
+	             file:selectHotelMapImage,
+	            
+	     }).progress(function(evt) {
+	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+	     }).success(function(data, status, headers, config) {
+	    	 console.log(data);   
+	          $scope.imgMap = "getMapImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	            $scope.openMapPic = false;	
+		    	 $scope.openMapPic1 = true;
+	          
+	     }); 
+	     }
+	     
+	     $scope.opeMappic1 = function()
+	     {
+	    	 $scope.openMapPic = false;	
+	    	 $scope.openMapPic1 = true;
+	     }
+		 
+		 $scope.opeMapImg = function()
+	     {
+	    	 $scope.openMapPic = true;	
+	    	 $scope.openMapPic1 = false;
+	     }
+		 
+		 
+		 /*------------------------View Web Page------------------------------*/
+		 $scope.amenities_check = [];
+		 $scope.leisure_sport_check = [];
+		 $scope.business_check = [];
+		 
+			$http.get('/findAllData/'+supplierCode).success(function(response) {
+			//	$scope.getallData=response;
+				console.log(response);
+				$scope.description = response.hoteldescription.description; 
+				$scope.areaAtt = response.areaattractionsVM;
+				console.log(response.hotelamenities);
+				
+				angular.forEach($scope.amenities, function(obj, index){
+					angular.forEach(response.hotelamenities, function(obj1, index){
+						if ((obj.amenitiesCode == obj1.amenitiesCode)) {
+							$scope.amenities_check.push(obj);
+							
+						};
+					});
+				});		
+								
+				angular.forEach($scope.leisureSport, function(obj, index){
+					angular.forEach(response.hotelamenities, function(obj1, index){
+						if ((obj.amenitiesCode == obj1.amenitiesCode)) {
+							$scope.leisure_sport_check.push(obj);
+							
+						};
+					});
+				});
+					
+					angular.forEach($scope.business, function(obj, index){
+						angular.forEach(response.hotelamenities, function(obj1, index){
+
+							if ((obj.amenitiesCode == obj1.amenitiesCode)) {
+								$scope.business_check.push(obj);
+								
+							};
+						});
+					});
+			});
+			
+			
+			$http.get("/amenities").success(function(response){
+				$scope.amenities=response;
+			});
+
+			$http.get("/business").success(function(response){
+				$scope.business=response;
+			});
+
+			$http.get("/leisureSport").success(function(response){
+				$scope.leisureSport=response;
+			});
+			
 	     
 		}]
 );
@@ -93,16 +394,7 @@ angular.module('travel_portal').
 			
 			
 			$scope.initRoomTypePage = function() {
-				//call the all room type service to get all the room types stored in db for supplier.
 				
-				
-				/*$http.get("/hotel/roomtypes?supplierCode="+$scope.supplierCode).success(function(response) {
-					$scope.hotelRoomTypes = response;
-					console.log("###########");
-					console.log(response);
-				});*/
-				
-				//call the all room type service to get all the room types stored in db for supplier.
 				$http.get("/room/amenities").success(function(response) {
 					$scope.roomAmenities = response;
 				});
@@ -148,6 +440,7 @@ angular.module('travel_portal').
 						$scope.roomTypeIns.roomchildPolicies = [];
 						$scope.childpolicy = [];//$scope.roomTypeIns.roomchildPolicies = [];
 						console.log('success');
+						//$scope.childpolicy.push( {  } );
 					});
 
 
@@ -322,7 +615,7 @@ angular.module('travel_portal').
 	
 	$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
 		$scope.getallData=response;
-		console.log(response);
+		//console.log(response);
 		
 		
 		$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
@@ -353,6 +646,18 @@ angular.module('travel_portal').
        $scope.GaswaterHeaters = response.healthAndSafetyVM;
        $scope.ChildrenFaciliti = response.healthAndSafetyVM;
        $scope.SwimmingPool = response.healthAndSafetyVM;    
+      
+       
+      
+       
+       angular.forEach(response.docInfo[0].imgpath, function(obj, index){
+			response.docInfo[0].imgpath[index].datetime = $filter('date')(response.docInfo[0].imgpath[index].datetime, "yyyy-MM-dd");
+			return;
+		});
+       
+       $scope.document = response.docInfo[0].imgpath;
+       $scope.docId = response.docInfo[0].id;
+       console.log(response.docInfo);
        
        $scope.locationsearch.findLocation = response.transportationdirectionsVM;
 		$scope.internalInfo = response.hotelinternalinformation;
@@ -504,7 +809,18 @@ angular.module('travel_portal').
 			className: 'ngdialog-theme-default'
 		});
 	};
+	
+	
+	$scope.DeleteDocId = function(doc){
+		console.log(doc.imgpathId);
 
+
+		$http.get('/deleteDocument/'+$scope.docId+'/'+doc.imgpathId)
+		.success(function(){
+			
+			console.log('success');
+		});
+		};
 
 	$scope.setDeleteId = function(meal){
 		console.log(meal.id);
@@ -866,6 +1182,7 @@ angular.module('travel_portal').
           $scope.document = data[0].imgpath;
    }); 
    }
+  
 	
 	$scope.radioValue;
 	$scope.generalInfoMsg = false;
@@ -901,6 +1218,20 @@ angular.module('travel_portal').
 		console.log($scope.mealpolicy);
 		$http.post('/savemealpolicy',$scope.mealpolicy).success(function(data){
 			console.log('success');
+			$http.get("/MealTypeplan/"+$rootScope.supplierCode).success(function(response){
+				$scope.MealType=response;
+				if($scope.MealType != null )
+					{
+					$scope.mealRate = true;
+					}
+				
+				angular.forEach($scope.MealType, function(obj, index){
+					$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
+					$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
+					return;
+				});
+			});	
+			
 			$scope.mealPlanSuccessMsg = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');

@@ -18,26 +18,36 @@
 		<form method="post" ng-submit="savegeneralPic()" role="form" class="form-horizontal">
 		<fieldset class="billBorder">
 		 
-  			<legend style="width: 33%;border-bottom: none;">GeneralPicImage</legend>
+  			<legend style="width: 18%;border-bottom: none;">General Image</legend>
 				<div class="row">
 					<div class="col-md-10">
 					<div class="col-md-12">
 						<label>Hotel General Picture, please choose an exterior picture.</label>		    	
 		               </div>
 		               
-		               <button>Replace Picture</button>
-		               <div class="form-group">
-					   <label class="col-md-1 control-label" style="text-align: left;"> File:</label>
-						<div class="col-md-4">
-					 <input ng-file-select="selectGeneralPicImage($files)" name="" type="file" />
+		                <div class="form-group">
+		                <div class="col-md-4">
+		                     <img data-ng-src="{{img}}" alt=""> 
+		                </div>
+		                <div  ng-show="opengeneralPic1" class="col-md-4" style="float: left;margin-top: 9%;margin-left: 29%;">
+		                <input type="button" class="btn btn-primary" value="Replace Picture" ng-click="opengeneralImg()">
+		               
+		               </div>
+		               <div ng-show="opengeneralPic" style="margin-top: 9%;margin-left: 29%;">
+					   <label class="col-md-1 control-label" style="text-align: left;margin-left: 9%;"> File:</label>
+						<div class="col-md-4" style="margin-top: 1%;">
+					       <input ng-file-select="selectGeneralPicImage($files)" name="" type="file" />
 			             
-			             </div>		
-			             
+			             </div>	
+			              <div>
+			             <button type="submit" class="btn btn-primary" style="margin-left: 12%;">Show</button>
+			                <input type="button" class="btn btn-primary" value="Reset" ng-click="opengeneralpic1()">
+			             </div>	
+			             </div>
 			           </div>	
-			            <img data-ng-src="{{img}}" alt=""> 
+			           
 		    
 		    	    </div>
-		    	    <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Show</button>
 			    </div>
 			    
 			</fieldset>	
@@ -45,26 +55,186 @@
 			
 			<form method="post" ng-submit="saveHotelLobbyImage()" role="form" class="form-horizontal">
 			<fieldset class="billBorder">
-  			<legend style="width: 16%;border-bottom: none;">Hotel Lobby</legend>
+  			<legend style="width: 14%;border-bottom: none;">Hotel Lobby</legend>
 				<div class="row">
 					<div class="col-md-10">
 					<div class="col-md-12">
 						<label>Please choose the BEST image of your hotel Lobby. This will be displayed next to your hotel text description.</label>		    	
 		               </div>
-		                   <button>Replace Picture</button>
+		                   
 		               <div class="form-group">
+		               <div class="col-md-4">
+		                  <img data-ng-src="{{imgLobby}}" alt=""> 
+		               </div>
+		               <div ng-show="openLobbyPic1" style="float: left;margin-top: 9%;margin-left: 29%;">
+		               <input type="button" class="btn btn-primary" value="Replace Picture" ng-click="openLobbyImg()">
+		               </div>
+		                <div ng-show="openLobbyPic" style="margin-top: 12%;">
 					   <label class="col-md-1 control-label" style="text-align: left;"> File:</label>
-						<div class="col-md-4">
+						<div class="col-md-4" style="margin-top: 1%;">
 					 <input ng-file-select="selectHotelLobbyImage($files)" name="" type="file" />
 			             
-			             </div>		
+			             </div>	
+			             <div>
+			             <button type="submit" class="btn btn-primary" style="margin-left: 3%;">Show</button>
+			                <input type="button" class="btn btn-primary" value="Reset" ng-click="openLobbyspic1()">
+			             </div>
+			             </div>	
 			             
 			           </div>	
-			            <img data-ng-src="{{img}}" alt=""> 
+			            
 		                
 		    
 		    	    </div>
-		    	    <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Show</button>
+		    	    
+			    </div>
+			</fieldset>								
+			</form>
+			<form method="post" ng-submit="saveHotelRoomImage()" role="form" class="form-horizontal">
+			<fieldset class="billBorder">
+  			<legend style="width: 14%;border-bottom: none;">Hotel Room</legend>
+				<div class="row">
+					<div class="col-md-10">
+					<div class="col-md-12">
+						<label>Please choose the BEST image of your hotel room. This will be an additional image to be displayed next to your hotel text description.</label>		    	
+		               </div>
+		                   
+		               <div class="form-group">
+		               <div class="col-md-4">
+		                  <img data-ng-src="{{imgRoom}}" alt=""> 
+		               </div>
+		               <div ng-show="openRoomPic1" style="float: left;margin-top: 9%;margin-left: 29%;">
+		               <input type="button" class="btn btn-primary" value="Replace Picture" ng-click="openRoomImg()">
+		               </div>
+		                <div ng-show="openRoomPic" style="margin-top: 14%;">
+					   <label class="col-md-1 control-label" style="text-align: left;"> File:</label>
+						<div class="col-md-4" style="margin-top: 1%;">
+					 <input ng-file-select="selectHotelRoomImage($files)" name="" type="file" />
+			             
+			             </div>	
+			             <div>
+			             <button type="submit" class="btn btn-primary" style="margin-left: 3%;">Show</button>
+			                <input type="button" class="btn btn-primary" value="Reset" ng-click="openRoompic1()">
+			             </div>
+			             </div>	
+			             
+			           </div>	
+			            
+		                
+		    
+		    	    </div>
+		    	    
+			    </div>
+			</fieldset>								
+			</form>
+			<form method="post" ng-submit="saveHotelAmenitiesServices()" role="form" class="form-horizontal">
+			<fieldset class="billBorder">
+  			<legend style="width: 26%;border-bottom: none;">Amenities And Services</legend>
+				<div class="row">
+					<div class="col-md-10">
+					<div class="col-md-12">
+						<label>Please choose an image that shows amenities and services offered by your hotel. This can include room service, F&B, SPA, e.g.</label>		    	
+		               </div>
+		                   
+		               <div class="form-group">
+		               <div class="col-md-4">
+		                  <img data-ng-src="{{imgAmenitiesServices}}" alt=""> 
+		               </div>
+		               <div ng-show="openAmenitiesServices1" style="float: left;margin-top: 9%;margin-left: 29%;">
+		               <input type="button" class="btn btn-primary" value="Replace Picture" ng-click="openAmenitiesServicesImg()">
+		               </div>
+		                <div ng-show="openAmenitiesServices" style="margin-top: 14%;">
+					   <label class="col-md-1 control-label" style="text-align: left;"> File:</label>
+						<div class="col-md-4" style="margin-top: 1%;">
+					 <input ng-file-select="selectAmenitiesServicesImage($files)" name="" type="file" />
+			             
+			             </div>	
+			             <div>
+			             <button type="submit" class="btn btn-primary" style="margin-left: 3%;">Show</button>
+			                <input type="button" class="btn btn-primary" value="Reset" ng-click = "openAmenitiespic1()">
+			             </div>
+			             </div>	
+			             
+			           </div>	
+			            
+		                
+		    
+		    	    </div>
+		    	    
+			    </div>
+			</fieldset>								
+			</form>
+			<form method="post" ng-submit="saveHotelLeisureorSports()" role="form" class="form-horizontal">
+			<fieldset class="billBorder">
+  			<legend style="width: 29%;border-bottom: none;">Leisure Or Sports Facility</legend>
+				<div class="row">
+					<div class="col-md-10">
+					<div class="col-md-12">
+						<label>Please choose an image of a leisure or sports facility.</label>		    	
+		               </div>
+		                   
+		               <div class="form-group">
+		               <div class="col-md-4">
+		                  <img data-ng-src="{{imgLeisureorSports}}" alt=""> 
+		               </div>
+		               <div ng-show="openLeisureorSports1" style="float: left;margin-top: 9%;margin-left: 29%;">
+		               <input type="button" class="btn btn-primary" value="Replace Picture" ng-click="openLeisureorSportsImg()">
+		               </div>
+		                <div ng-show="openLeisureorSports" style="margin-top: 12%;">
+					   <label class="col-md-1 control-label" style="text-align: left;"> File:</label>
+						<div class="col-md-4" style="margin-top: 1%;">
+					 <input ng-file-select="selectLeisureorSportsImage($files)" name="" type="file" />
+			             
+			             </div>	
+			             <div>
+			             <button type="submit" class="btn btn-primary" style="margin-left: 3%;">Show</button>
+			              <input type="button" class="btn btn-primary" value="Reset" ng-click="openLeisurepic1()">
+			             </div>
+			             </div>	
+			             
+			           </div>	
+			            
+		                
+		    
+		    	    </div>
+		    	    
+			    </div>
+			</fieldset>								
+			</form>
+			<form method="post" ng-submit="saveHotelMapImage()" role="form" class="form-horizontal">
+			<fieldset class="billBorder">
+  			<legend style="width: 19%;border-bottom: none;">Hotel Map Image</legend>
+				<div class="row">
+					<div class="col-md-10">
+					<div class="col-md-12">
+						<label>Please upload your hotel Map image in JPG file.</label>		    	
+		               </div>
+		                   
+		               <div class="form-group">
+		               <div class="col-md-4">
+		                  <img data-ng-src="{{imgMap}}" alt=""> 
+		               </div>
+		               <div ng-show="openMapPic1" style="float: left;margin-top: 9%;margin-left: 29%;">
+		               <input type="button" class="btn btn-primary" value="Replace Picture" ng-click="opeMapImg()">
+		               </div>
+		                <div ng-show="openMapPic" style="margin-top: 9%;">
+					   <label class="col-md-1 control-label" style="text-align: left;"> File:</label>
+						<div class="col-md-4" style="margin-top: 1%;">
+					 <input ng-file-select="selectHotelMapImage($files)" name="" type="file" />
+			             
+			             </div>	
+			             <div>
+			             <button type="submit" class="btn btn-primary" style="margin-left: 3%;">Show</button>
+			             <input type="button" class="btn btn-primary" value="Reset" ng-click="opeMappic1()">
+			             </div>
+			             </div>	
+			             
+			           </div>	
+			            
+		                
+		    
+		    	    </div>
+		    	    
 			    </div>
 			</fieldset>								
 			</form>
@@ -73,10 +243,7 @@
 				
 		
 	</div>
-<!-- 3..Please choose the BEST image of your hotel room. This will be an additional image to be displayed next to your hotel text description.
-4..Please choose an image that shows amenities and services offered by your hotel. This can include room service, F&B, SPA, e.g.
-5..Please choose an image of a leisure or sports facility.
-6..Please upload your hotel Map image in JPG file. -->
+
 			<style>
 
  .billinside{

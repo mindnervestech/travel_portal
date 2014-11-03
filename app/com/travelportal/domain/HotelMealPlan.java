@@ -204,6 +204,8 @@ public class HotelMealPlan { //supplier specific records...
 			query.setParameter(1, id);
 	    	return (HotelMealPlan) query.getSingleResult();
 	    }
+	 
+	 
 	
 	public static HotelMealPlan getHotelMealPlanIdByCode(int code) {
 		return (HotelMealPlan) JPA.em().createQuery("select c from HotelMealPlan c where id = ?1").setParameter(1, code).getSingleResult();

@@ -189,7 +189,7 @@ public static void createRootDir() {
 		
 		for(RoomChildPolicies childPolicies: hotelroomtypes.getRoomchildPolicies()){
 			childPolicies.delete();
-			System.out.println("hii");
+			System.out.println("hii111111");
 		}
 		hotelroomtypes.setRoomchildPolicies(null);
 		hotelroomtypes.merge();
@@ -197,8 +197,6 @@ public static void createRootDir() {
 		return ok();
 	}
 	
-
-	//savegeneralImg
 	@Transactional(readOnly=false)
 	public static Result savegeneralImg() {
 		
@@ -225,7 +223,7 @@ public static void createRootDir() {
         	   
                   BufferedImage originalImage = ImageIO.read(src);
                         Thumbnails.of(originalImage)
-                            .size(124, 124)
+                            .size(220, 220)
                             .toFile(f);
                             File _f = new File(originalFileName);
                             Thumbnails.of(originalImage).scale(1.0).

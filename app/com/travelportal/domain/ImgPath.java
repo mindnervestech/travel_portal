@@ -27,6 +27,15 @@ public class ImgPath { //Seed table.
 	private Date datetime;
 	
 	
+	
+	public int getImgpathId() {
+		return imgpathId;
+	}
+
+	public void setImgpathId(int imgpathId) {
+		this.imgpathId = imgpathId;
+	}
+
 	public String getImgpath() {
 		return imgpath;
 	}
