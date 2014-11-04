@@ -24,7 +24,7 @@ public class ChildPolicies {
 	@Column(name="child_age_allowed_to")
 	private int allowedChildAgeTo;
 	@Column(name="charge")
-	private Long charge; //if chargeType is % then consider this as % of net else fixed amount set to net on per day basis.
+	private Double charge; //if chargeType is % then consider this as % of net else fixed amount set to net on per day basis.
 	@Column(name="charge_type")
 	private String chargeType;  //in % or fixed charge.
 	@Column(name="childtaxvalue")
@@ -74,13 +74,13 @@ public class ChildPolicies {
 	/**
 	 * @return the charge
 	 */
-	public Long getCharge() {
+	public Double getCharge() {
 		return charge;
 	}
 	/**
 	 * @param charge the charge to set
 	 */
-	public void setCharge(Long charge) {
+	public void setCharge(Double charge) {
 		this.charge = charge;
 	}
 	/**

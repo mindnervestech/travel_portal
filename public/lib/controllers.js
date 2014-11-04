@@ -1,3 +1,121 @@
+angular.module('travel_portal').
+	controller("allotmentController",['$scope', '$http','$filter','$upload','ngDialog',
+	                                         function($scope, $http, $filter, $upload, ngDialog) {
+		
+		/*$scope.showContract = true;
+		$scope.showPeriod = false;*/
+		
+		$http.get("/currency").success(function(response) {
+			$scope.currency = response;
+		});
+		console.log(supplierCode);
+		$http.get("/roomtypes/"+supplierCode).success(function(response){
+			console.log('success');
+			$scope.hotelRoomTypes = response;
+		});
+		
+		$scope.selectType = function()
+		{
+			
+		}
+		
+		$scope.onCurrencyChange = function(){
+			
+		console.log($scope.allotmentMarket.roomId); 
+		console.log($scope.allotmentMarket.currencyId);
+		
+		
+		$http.get('/getDates/'+$scope.allotmentMarket.roomId+"/"+$scope.allotmentMarket.currencyId)
+		.success(function(data){
+			if(data) {
+				console.log(data);
+				$scope.allotmentMarket1 =data;
+				 angular.forEach($scope.allotmentMarket1, function(obj, index){
+						$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[0].fromPeriod, "yyyy-MM-dd");
+						$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[0].toPeriod, "yyyy-MM-dd");
+						return;
+					});
+						
+				console.log($scope.allotmentMarket1);
+			       
+			} 
+		});
+		
+		}
+		
+		$scope.onDateChoose = function(Id)
+		{
+			//alert("byyyy");
+			console.log(Id);
+			
+			$http.get('/getRates/'+Id)
+			.success(function(data){
+				if(data) {
+					console.log(data.rate);		
+					$scope.rate = data.rate;
+				       
+				} else {
+					
+				}
+			});
+		}
+		
+		$scope.sallperiod = false;
+		$scope.showRequest = false;
+		$scope.showperiodforsall = function()
+		{
+			$scope.sallperiod = true;
+			$scope.showRequest = false;
+			
+		}
+		
+		$scope.showspecifyAllot = function(specityallot)
+		{
+			alert(specityallot);
+			
+		}
+		$scope.showStopsall = function()
+		{
+			$scope.sallperiod = false;
+			$scope.showRequest = false;
+			$scope.allotmentMarket.choose = null;
+			$scope.allotmentMarket.period = null;
+		}
+		
+		$scope.showperiodforRequest = function()
+		{
+			$scope.showRequest = true;
+			$scope.sallperiod = false;
+		}
+		
+		$scope.saveallotment = function()
+		{
+			console.log($scope.allotmentMarket);
+		}
+		
+		/*$scope.showData = function(){
+		    $scope.showContract = false;
+			$scope.showPeriod = true;
+		}
+		
+		$scope.showContractPage = function(){
+			 $scope.showContract = true;
+				$scope.showPeriod = false;			
+		}*/
+		
+		 $scope.allotmentM = [];
+		  $scope.allotmentM.push( {  } );
+		 
+		 $scope.newallotmentM = function($event){
+		        $scope.allotmentM.push( {  } );
+		        $event.preventDefault();
+		     
+		       
+		    };
+	     
+		}]
+);
+
 
 angular.module('travel_portal').
 	controller("ManageHotelImageController",['$scope', '$http', '$rootScope','$filter','$upload','ngDialog',
@@ -756,8 +874,9 @@ angular.module('travel_portal').
 			return;
 		});
 	});	
-
+	$scope.mealpolicy= {};
 	$scope.addnew = function(){
+		$scope.mealpolicy= {};
 		ngDialog.open({
 			template: 'manage',
 			scope : $scope,
@@ -1233,6 +1352,7 @@ angular.module('travel_portal').
 			});	
 			
 			$scope.mealPlanSuccessMsg = true;
+			//$scope.mealpolicy = [];
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});

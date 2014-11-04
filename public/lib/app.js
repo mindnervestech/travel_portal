@@ -75,5 +75,10 @@ angular.module('travel_portal',['ngRoute','ngDialog','angularFileUpload']).confi
 		templateUrl: '/assets/html/view_your_web_page/view_web_page.html',
 		controller: 'ManageHotelImageController'
 	})
+	
+	.when('/Allotment', {
+		templateUrl: '/assets/html/allotment_page/allotment.html',
+		controller: 'allotmentController'
+	})
 
 });

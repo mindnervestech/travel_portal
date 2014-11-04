@@ -61,6 +61,12 @@ POST   /saveUpdateSwimmingPool	 com.travelportal.controllers.HotelProfileControl
 POST   /saveUpdateCCTVstatus	 com.travelportal.controllers.HotelProfileController.saveUpdateCCTVstatus()
 POST   /savefiles       com.travelportal.controllers.HotelProfileController.savefiles()
 
+#following routes are used for fetch Allotment, 
+
+GET     /getDates/:roomId/:currencyId  com.travelportal.controllers.AllotmentController.getDates(roomId:Long,currencyId:Integer)
+GET     /getRates/:Id         com.travelportal.controllers.AllotmentController.getRates(Id:Integer)
+
+
 #following routes are used for fetch manage hotel images, 
 
 POST   /savegeneralImg   com.travelportal.controllers.ManageHotelImagesController.savegeneralImg()

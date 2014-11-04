@@ -21,12 +21,26 @@ public class Currency {
 	private int currencyCode;
 	@Column(name="currency_nm")
 	private String currencyName;
+	
+	
+	
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	/**
 	 * @return the currencyCode
 	 */
+	
+	
 	public int getCurrencyCode() {
 		return currencyCode;
 	}
+	
 	/**
 	 * @param currencyCode the currencyCode to set
 	 */

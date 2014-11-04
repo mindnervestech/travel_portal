@@ -5,7 +5,7 @@ public class ChildpoliciVM {
 	private int childPolicyId;
 	private int allowedChildAgeFrom;
 	private int allowedChildAgeTo;
-	private Long charge;
+	private Double charge;
 	private String chargeType;
 	private int meal_plan_id;
 	private Double childtaxvalue;
@@ -43,11 +43,11 @@ public class ChildpoliciVM {
 		this.allowedChildAgeTo = allowedChildAgeTo;
 	}
 	
-	public Long getCharge() {
+	public Double getCharge() {
 		return charge;
 	}
 	
-	public void setCharge(Long charge) {
+	public void setCharge(Double charge) {
 		this.charge = charge;
 	}
 	

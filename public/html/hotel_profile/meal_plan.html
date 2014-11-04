@@ -191,7 +191,7 @@
                <div class="form-group">
 				<label class="col-md-3 control-label">* Adult Rate:</label>
 				<div class="col-md-2">
-					<input type="number" name="rate" data-ng-model="mealpolicy.rate" class="form-control" style="height: 25px;font-size: 11px;" required>
+					<input ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" name="rate" data-ng-model="mealpolicy.rate" class="form-control" style="height: 25px;font-size: 11px;" required>
 					
 				</div>THB
 <br><br>
