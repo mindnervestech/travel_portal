@@ -17,3 +17,27 @@
 	color: blue;
 	font-size: 14px;
 }
+.billinside {
+	padding: .35em .625em .75em;
+	margin: 0 2px;
+	border: 1px solid silver;
+}
+
+.billBorder {
+	padding: .35em .625em .75em;
+	margin: 0 2px;
+	border: 1px solid;
+}
+.allot-firldset{
+	 width: 190px;
+	 border-bottom: none;
+}
+.descr-fieldset{
+	 width: 106px;
+	 border-bottom: none;
+}
+
+.specify-allotment-radio{
+    float: left;
+    margin-left: 15px;
+}

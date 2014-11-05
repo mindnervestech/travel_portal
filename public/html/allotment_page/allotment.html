@@ -11,8 +11,7 @@
 				<div class="col-lg-12">
 					<div class="tabbable tabs-left">
 						
-						<div id="myTabContent2" class="tab-content"
-							style="padding-top: 5px;">
+						<div id="myTabContent2" class="tab-content">
 							
 	<div class="row">
 		<div class="col-md-12"> 
@@ -22,13 +21,11 @@
 	<div class="panel-body">   <!-- ng-show="showContract" -->  
 		 
 		
-		<div class="row" style="margin-top: 3%;">
-		<!-- <div class="form-group"> -->
-		<!-- <div class="col-lg-12"> -->
+		<div class="row">
 		 <div class="col-md-6">
 		  <div class="form-group">
-			<label class="col-md-8 control-label"><b>Please Choose Room Type:</b></label>
-				<div class="col-md-6 col-md-offset-2">
+			<label class="col-md-7 col-md-offset-1"><b>Please Choose Room Type:</b></label>
+				<div class="col-md-9 col-md-offset-1">
 					<select class="form-control" data-ng-model="allotmentMarket.roomId" ng-change="selectType()"
 						data-ng-options="hotelRoomTypes.roomId as hotelRoomTypes.roomType for hotelRoomTypes in hotelRoomTypes">
 						<option>Select Room Type...</option>
@@ -38,78 +35,86 @@
 			</div>
 			<div class="col-md-6">
 			  <div class="form-group">
-				<label class="col-md-8 control-label"><b>Please Choose Currency:</b></label>
-				<div class="col-md-6 col-md-offset-2">
+				<label class="col-md-7 col-md-offset-1"><b>Please Choose Currency:</b></label>
+				<div class="col-md-8 col-md-offset-1">
 					<select class="form-control" ng-change="onCurrencyChange()" data-ng-model="allotmentMarket.currencyId" data-ng-options="currencyname.id as currencyname.currencyName for currencyname in currency" required>
 						<option>Select Currency...</option>
 					</select>
 				</div>
 				</div>
 			</div>
-			<!-- </div> -->
-		<!-- </div> -->
 		</div>
 		
 		
 		
 		
-		<div class="row" style="margin-top: 3%;">
+		<div class="row">
+		 <div class="col-md-6">
 		<div class="form-group">
-			<label class="col-md-3 control-label"><b>Please Choose Period:</b></label>
-				<div class="col-md-6">
+			<label class="col-md-7 col-md-offset-1"><b>Please Choose Period:</b></label>
+				<div class="col-md-9 col-md-offset-1">
 			
-					<select class="form-control" ng-model="allotmentMarket.datePeriodId" ng-change="onDateChoose(allotmentMarket.datePeriodId)" style="margin-top: 1%;">
+					<select class="form-control" ng-model="allotmentMarket.datePeriodId" ng-change="onDateChoose(allotmentMarket.datePeriodId)">
 			    		 <option ng-repeat=" allotM in allotmentMarket1" value="{{allotM.id}}">From : {{allotM.fromPeriod}} - To : {{allotM.toPeriod}}</option>
 			    		
 			    	</select>
 			    	</div>
 		</div>
 		</div>
-		
-		
-	 	<div class="row" style="margin-top: 3%;">
+		 <div class="col-md-6">
 		<div class="form-group">
-			<label class="col-md-3 control-label"><b>Please Select Rate:</b></label>
-				<div class="col-md-3">
+			<label class="col-md-7 col-md-offset-1"><b>Please Select Rate:</b></label>
+				<div class="col-md-8 col-md-offset-1">
 					<select class="form-control" data-ng-model="allotmentMarket.rate" data-ng-options="rates.id as rates.name for rates in rate" multiple required>
 						<option>Select Rate.</option>
 					</select>
 				</div>
 		</div>
 		</div>
+		
+		</div>
+		
+		
+	 	
+		
+		
 	 	
 	 	
 	 	
 	 	
 	</div>
 	
-	<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 95%;margin-left: 2%;">
+	<hr class="mtxxl mbxxl" style="border-color: black;">
 	
-	<div class="panel-body" >  <!-- ng-show="showPeriod" -->
+	<div class="panel-body" > 
 		
-		<div style="margin-bottom: 2%;" ng-repeat="allot in allotmentM">
+		<div ng-repeat="allot in allotmentM">
 		<fieldset class="billinside">
-		
-			<legend style="width: 20%; border-bottom: none;">Allotment Market</legend>
+	
+			<legend class="allot-firldset">Allotment Market {{$index}}</legend>
 			
-						
-			<div class="form-group" style="margin-bottom: 6%;">
-				<label class="col-md-4 control-label">How do you want to specify allotment?:  </label>
+				<div class="row">			
+			<div class="form-group">
+			<div class="col-md-12">
+			 <div class="col-md-4">
+				<label>How do you want to specify allotment?:  </label>
+				</div>
 				<div class="col-md-5">
 				
-				<div style="float: left;margin-right: 5%;">
+				<div class="specify-allotment-radio">
 						<input type="radio" name="specifyAllot" ng-click="showspecifyAllot(true)" data-ng-model="allot.specifyAllot" value="parRoomtype">
 						&nbsp; Per Room Type
 					</div>
-					<div>
+					<div class="specify-allotment-radio">
 						<input type="radio" name="specifyAllot" ng-click="showspecifyAllot(false)" data-ng-model="allot.specifyAllot" value="perOccupancy">
 						&nbsp; Per Occupancy
 					</div> 
 				
 					</div>
+					</div>
 			</div>	
-			 
-						<div class="form-group" style="margin: 0 auto;overflow: auto;">	
+			</div>
+						<div class="form-group col-md-12">	
 						
 						<div class="col-md-12">
 				
@@ -151,22 +156,20 @@
 						
 						</div>						
 						<br>
-						<div class="form-group" style="margin: 0 auto;overflow: auto;">	
+						<div class="form-group col-md-12"">	
 						
 						<div class="col-md-3">
 				
-						<div style="float: left;margin-right: 5%;">
 						<input type="radio" data-ng-model="allot.allocation" value="2">
 						&nbsp; Stop Sell
-						</div>
-						
+												
 				
 					</div>
 													
 						
 						</div>
 						
-						<div class="form-group" style="margin: 0 auto;overflow: auto;">	
+						<div class="form-group col-md-12"">	
 						
 						<div class="col-md-12">
 				
@@ -236,22 +239,23 @@
 						
 						
 
-						<div style="float: left;">
-					<button class="btn btn-default col-md-offset-1" ng-click="allotmentMDeleteId()">Remove this Allotment Market</button> 
+						<div>
+					<button class="btn btn-default col-md-offset-8" ng-click="allotmentM.splice($index,1)">Remove this Allotment Market</button>   <!-- allotmentMDeleteId(allot) --> 
 					</div>
 						
 			
 		</fieldset>		
 		</div>
+		<hr>
 		     <div class="form-group">
 		        <div class="col-md-6 col-md-offset-4">
 					<button class="btn btn-default" ng-click="newallotmentM($event)">Add Additional Allotment Market</button>
 				</div>
 				</div>
-		<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 95%;margin-left: 2%;">
+		<hr class="mtxxl mbxxl" style="border-color: black;">
 		
-				<div class="col-md-3" style="margin-top: 2%;margin-left: 37%;">
-					<input type="button" class="btn btn-primary" value="GO BACK" ng-click="showContractPage()">
+				<div class="col-md-3 col-md-offset-5">
+					<input type="button" class="btn btn-primary" value="Go Back" ng-click="showContractPage()">
 					<button type="submit" class="btn btn-primary">Save</button>
 				</div>
 		
@@ -264,21 +268,6 @@
 	</div>
 	</div>
 	</div>
-	</div>
+</div>
 	
 </div>
-
-
-<style>
-.billinside {
-	padding: .35em .625em .75em;
-	margin: 0 2px;
-	border: 1px solid silver;
-}
-
-.billBorder {
-	padding: .35em .625em .75em;
-	margin: 0 2px;
-	border: 1px solid;
-}
-</style>

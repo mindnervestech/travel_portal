@@ -12,6 +12,10 @@ angular.module('travel_portal').
 			$scope.hotelRoomTypes = response;
 		});
 		
+		$http.get('/allotmentAllData/'+supplierCode).success(function(response) {
+			
+		});
+		
 		$scope.selectType = function()
 		{
 			
@@ -90,9 +94,18 @@ angular.module('travel_portal').
 			
 		}
 		
-		$scope.allotmentMDeleteId = function()
+		$scope.allotmentMDeleteId = function(allot)
 		{
-			
+			//console.log(allot);
+			//$scope.allot.splice(index, 1);
+			/*console.log(doc.imgpathId);
+
+
+			$http.get('/deleteDocument/'+$scope.docId+'/'+doc.imgpathId)
+			.success(function(){
+				
+				console.log('success');
+			});*/
 		}
 		
 		

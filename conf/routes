@@ -65,6 +65,7 @@ POST   /savefiles       com.travelportal.controllers.HotelProfileController.save
 
 GET     /getDates/:roomId/:currencyId  com.travelportal.controllers.AllotmentController.getDates(roomId:Long,currencyId:Integer)
 GET     /getRates/:Id         com.travelportal.controllers.AllotmentController.getRates(Id:Integer)
+GET     /allotmentAllData/:supplierCode   com.travelportal.controllers.AllotmentController.getallotmentAllData(supplierCode:Long)
 POST    /saveAllotment		com.travelportal.controllers.AllotmentController.saveAllotment()
 
 #following routes are used for fetch manage hotel images, 

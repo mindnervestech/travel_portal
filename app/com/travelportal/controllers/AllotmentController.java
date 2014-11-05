@@ -112,5 +112,11 @@ public class AllotmentController extends Controller {
 		return ok();
 	}
 	
+	//getallotmentAllData
+	@Transactional(readOnly=true)
+	public static Result getallotmentAllData(long supplierCode) {
+		
+		return ok();
+	}
 	
 }
