@@ -19,6 +19,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 import com.travelportal.domain.Country;
+import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.vm.RoomType;
 
@@ -283,6 +284,7 @@ public class HotelRoomTypes {
 		return JPA.em().createQuery("select r from HotelRoomTypes r where r.supplierCode = ?1").setParameter(1, supplierCode).getResultList();
 	}
 	
+		
 	@Transactional
     public void save() {
 		JPA.em().persist(this);

@@ -2,9 +2,7 @@ angular.module('travel_portal').
 	controller("allotmentController",['$scope', '$http','$filter','$upload','ngDialog',
 	                                         function($scope, $http, $filter, $upload, ngDialog) {
 		
-		/*$scope.showContract = true;
-		$scope.showPeriod = false;*/
-		
+				
 		$http.get("/currency").success(function(response) {
 			$scope.currency = response;
 		});
@@ -17,6 +15,25 @@ angular.module('travel_portal').
 		$scope.selectType = function()
 		{
 			
+
+			if($scope.allotmentMarket.roomId != null && $scope.allotmentMarket.currencyId != null)
+				{
+			$http.get('/getDates/'+$scope.allotmentMarket.roomId+"/"+$scope.allotmentMarket.currencyId)
+			.success(function(data){
+				if(data) {
+					console.log(data);
+					$scope.allotmentMarket1 =data;
+					 angular.forEach($scope.allotmentMarket1, function(obj, index){
+							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[0].fromPeriod, "yyyy-MM-dd");
+							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[0].toPeriod, "yyyy-MM-dd");
+							return;
+						});
+							
+					console.log($scope.allotmentMarket1);
+				       
+				} 
+			});
+				}
 		}
 		
 		$scope.onCurrencyChange = function(){
@@ -24,22 +41,26 @@ angular.module('travel_portal').
 		console.log($scope.allotmentMarket.roomId); 
 		console.log($scope.allotmentMarket.currencyId);
 		
+		if($scope.allotmentMarket.roomId != null && $scope.allotmentMarket.currencyId != null)
+			{
+			$http.get('/getDates/'+$scope.allotmentMarket.roomId+"/"+$scope.allotmentMarket.currencyId)
+			.success(function(data){
+				if(data) {
+					console.log(data);
+					$scope.allotmentMarket1 =data;
+					 angular.forEach($scope.allotmentMarket1, function(obj, index){
+							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[0].fromPeriod, "yyyy-MM-dd");
+							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[0].toPeriod, "yyyy-MM-dd");
+							return;
+						});
+							
+					console.log($scope.allotmentMarket1);
+				       
+				} 
+			});
+			}
+				
 		
-		$http.get('/getDates/'+$scope.allotmentMarket.roomId+"/"+$scope.allotmentMarket.currencyId)
-		.success(function(data){
-			if(data) {
-				console.log(data);
-				$scope.allotmentMarket1 =data;
-				 angular.forEach($scope.allotmentMarket1, function(obj, index){
-						$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[0].fromPeriod, "yyyy-MM-dd");
-						$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[0].toPeriod, "yyyy-MM-dd");
-						return;
-					});
-						
-				console.log($scope.allotmentMarket1);
-			       
-			} 
-		});
 		
 		}
 		
@@ -60,48 +81,36 @@ angular.module('travel_portal').
 			});
 		}
 		
-		$scope.sallperiod = false;
-		$scope.showRequest = false;
-		$scope.showperiodforsall = function()
-		{
-			$scope.sallperiod = true;
-			$scope.showRequest = false;
-			
-		}
+		
+		
 		
 		$scope.showspecifyAllot = function(specityallot)
 		{
-			alert(specityallot);
+			//alert(specityallot);
 			
 		}
-		$scope.showStopsall = function()
+		
+		$scope.allotmentMDeleteId = function()
 		{
-			$scope.sallperiod = false;
-			$scope.showRequest = false;
-			$scope.allotmentMarket.choose = null;
-			$scope.allotmentMarket.period = null;
+			
 		}
 		
-		$scope.showperiodforRequest = function()
-		{
-			$scope.showRequest = true;
-			$scope.sallperiod = false;
-		}
 		
 		$scope.saveallotment = function()
 		{
+			$scope.allotmentMarket.allotmentmarket = $scope.allotmentM;
+			$scope.allotmentMarket.supplierCode = supplierCode; 
 			console.log($scope.allotmentMarket);
-		}
+			
+			$http.post('/saveAllotment',$scope.allotmentMarket).success(function(data){
+				console.log('success');
+									
+			}).error(function(data, status, headers, config) {
+				console.log('ERROR');
+			});
 		
-		/*$scope.showData = function(){
-		    $scope.showContract = false;
-			$scope.showPeriod = true;
 		}
-		
-		$scope.showContractPage = function(){
-			 $scope.showContract = true;
-				$scope.showPeriod = false;			
-		}*/
+	
 		
 		 $scope.allotmentM = [];
 		  $scope.allotmentM.push( {  } );

@@ -23,9 +23,10 @@
 		 
 		
 		<div class="row" style="margin-top: 3%;">
-		<div class="form-group">
-		<div class="col-lg-12">
+		<!-- <div class="form-group"> -->
+		<!-- <div class="col-lg-12"> -->
 		 <div class="col-md-6">
+		  <div class="form-group">
 			<label class="col-md-8 control-label"><b>Please Choose Room Type:</b></label>
 				<div class="col-md-6 col-md-offset-2">
 					<select class="form-control" data-ng-model="allotmentMarket.roomId" ng-change="selectType()"
@@ -33,28 +34,22 @@
 						<option>Select Room Type...</option>
 					</select>
 				</div>
+				</div>
 			</div>
 			<div class="col-md-6">
+			  <div class="form-group">
 				<label class="col-md-8 control-label"><b>Please Choose Currency:</b></label>
 				<div class="col-md-6 col-md-offset-2">
 					<select class="form-control" ng-change="onCurrencyChange()" data-ng-model="allotmentMarket.currencyId" data-ng-options="currencyname.id as currencyname.currencyName for currencyname in currency" required>
 						<option>Select Currency...</option>
 					</select>
 				</div>
-			</div>
-			</div>
-		</div>
-		</div>
-		<!-- <div class="row" style="margin-top: 3%;">
-		<div class="form-group">
-			<label class="col-md-3 control-label"><b>Please Choose Currency:</b></label>
-				<div class="col-md-3">
-					<select class="form-control" ng-change="onCurrencyChange()" data-ng-model="allotmentMarket.currencyId" data-ng-options="currencyname.id as currencyname.currencyName for currencyname in currency" required>
-						<option>Select Currency...</option>
-					</select>
 				</div>
+			</div>
+			<!-- </div> -->
+		<!-- </div> -->
 		</div>
-		</div> -->
+		
 		
 		
 		
@@ -63,7 +58,7 @@
 			<label class="col-md-3 control-label"><b>Please Choose Period:</b></label>
 				<div class="col-md-6">
 			
-					<select class="form-control" ng-model="allotmentMarket.id" ng-change="onDateChoose(allotmentMarket.id)" style="margin-top: 1%;">
+					<select class="form-control" ng-model="allotmentMarket.datePeriodId" ng-change="onDateChoose(allotmentMarket.datePeriodId)" style="margin-top: 1%;">
 			    		 <option ng-repeat=" allotM in allotmentMarket1" value="{{allotM.id}}">From : {{allotM.fromPeriod}} - To : {{allotM.toPeriod}}</option>
 			    		
 			    	</select>
@@ -76,7 +71,7 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label"><b>Please Select Rate:</b></label>
 				<div class="col-md-3">
-					<select class="form-control" data-ng-model="allotmentMarket.id" data-ng-options="rates.id as rates.name for rates in rate" multiple required>
+					<select class="form-control" data-ng-model="allotmentMarket.rate" data-ng-options="rates.id as rates.name for rates in rate" multiple required>
 						<option>Select Rate.</option>
 					</select>
 				</div>
@@ -95,7 +90,7 @@
 		<div style="margin-bottom: 2%;" ng-repeat="allot in allotmentM">
 		<fieldset class="billinside">
 		
-			<legend style="width: 18%; border-bottom: none;">Allotment Market</legend>
+			<legend style="width: 20%; border-bottom: none;">Allotment Market</legend>
 			
 						
 			<div class="form-group" style="margin-bottom: 6%;">
@@ -103,11 +98,11 @@
 				<div class="col-md-5">
 				
 				<div style="float: left;margin-right: 5%;">
-						<input type="radio" name="parRoomtype" ng-click="showspecifyAllot(true)" data-ng-model="allotmentMarket.parRoomtype" value="parRoomtype">
+						<input type="radio" name="specifyAllot" ng-click="showspecifyAllot(true)" data-ng-model="allot.specifyAllot" value="parRoomtype">
 						&nbsp; Per Room Type
 					</div>
 					<div>
-						<input type="radio" name="perOccupancy" ng-click="showspecifyAllot(false)" data-ng-model="allotmentMarket.perOccupancy" value="perOccupancy">
+						<input type="radio" name="specifyAllot" ng-click="showspecifyAllot(false)" data-ng-model="allot.specifyAllot" value="perOccupancy">
 						&nbsp; Per Occupancy
 					</div> 
 				
@@ -119,16 +114,16 @@
 						<div class="col-md-12">
 				
 						<div>
-						<input type="radio" name="Allocation" ng-click="showperiodforsall()" data-ng-model="allotmentMarket.Allocation" value="1">
+						<input type="radio" data-ng-model="allot.allocation" value="1">
 						&nbsp; Free Sall
 						</div>
 						
 				
 					</div>
-						<div ng-show="sallperiod">
+						<div ng-show="allot.allocation == 1">
 							<label class="col-md-2 control-label">Release Period </label>
 							<div class="col-md-3">
-								<select class="form-control" data-ng-model="allotmentMarket.period" required>
+								<select class="form-control" data-ng-model="allot.period" required>
 									<option>-- Choose One --</option>
 									<option>Same day up to check-in</option>
 									<option>Same day up to 8 PM</option>
@@ -161,14 +156,13 @@
 						<div class="col-md-3">
 				
 						<div style="float: left;margin-right: 5%;">
-						<input type="radio" name="Allocation" ng-click="showStopsall()" data-ng-model="allotmentMarket.Allocation" value="2">
+						<input type="radio" data-ng-model="allot.allocation" value="2">
 						&nbsp; Stop Sell
 						</div>
 						
 				
 					</div>
-						
-														
+													
 						
 						</div>
 						
@@ -177,16 +171,16 @@
 						<div class="col-md-12">
 				
 						<div>
-						<input type="radio" name="Allocation" ng-click="showperiodforRequest()" data-ng-model="allotmentMarket.Allocation" value="3">
+						<input type="radio" data-ng-model="allot.allocation" value="3">
 						&nbsp; On request
 						</div>
 						
 				
 					</div>
-						<div ng-show="showRequest">
+						<div ng-show="allot.allocation == 3">
 						<label class="col-md-2 control-label">Please choose: </label>
 							<div class="col-md-3">
-								<select class="form-control" data-ng-model="allotmentMarket.choose" required>
+								<select class="form-control" data-ng-model="allot.choose" required>
 									<option>-- Choose One --</option>
 									<option>1</option>
 									<option>2</option>
@@ -212,7 +206,7 @@
 							</div>
 							<label class="col-md-2 control-label">Release Period </label>
 							<div class="col-md-3">
-								<select class="form-control" data-ng-model="allotmentMarket.period" required>
+								<select class="form-control" data-ng-model="allot.period" required>
 									<option>-- Choose One --</option>
 									<option>Same day up to check-in</option>
 									<option>Same day up to 8 PM</option>
@@ -243,7 +237,7 @@
 						
 
 						<div style="float: left;">
-					<!-- <button class="btn btn-default col-md-offset-1" ng-click="allotmentMDeleteId()">Remove this Allotment Market</button> -->
+					<button class="btn btn-default col-md-offset-1" ng-click="allotmentMDeleteId()">Remove this Allotment Market</button> 
 					</div>
 						
 			

@@ -20,6 +20,7 @@ import javax.persistence.Table;
 
 import com.travelportal.domain.rooms.ChildPolicies;
 import com.travelportal.domain.rooms.HotelRoomTypes;
+import com.travelportal.domain.rooms.RoomAmenities;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -39,27 +40,6 @@ public class Rate { //supplier specific records...
 	
 	
 	
-	
-	
-	/*public static List<HotelMealPlan> getmealtype(long supplierCode) {
-		return JPA.em().createQuery("select c from HotelMealPlan c where c.SupplierCode = ?1").setParameter(1, supplierCode).getResultList();
-	}
-	
-	//findById
-	 public static HotelMealPlan findById(int id) {
-	    	Query query = JPA.em().createQuery("Select a from HotelMealPlan a where a.id = ?1");
-			query.setParameter(1, id);
-	    	return (HotelMealPlan) query.getSingleResult();
-	    }
-	 
-	 
-	
-	public static HotelMealPlan getHotelMealPlanIdByCode(int code) {
-		return (HotelMealPlan) JPA.em().createQuery("select c from HotelMealPlan c where id = ?1").setParameter(1, code).getSingleResult();
-	}
-		
-	*/
-	
 	public int getId() {
 		return id;
 	}
@@ -74,6 +54,10 @@ public class Rate { //supplier specific records...
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public static List<Rate> getrateId(List<Integer> rateid) {
+		return JPA.em().createQuery("select c from Rate c where id IN ?1").setParameter(1, rateid).getResultList();
 	}
 
 	@Transactional

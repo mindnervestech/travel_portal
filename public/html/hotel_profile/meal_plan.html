@@ -567,19 +567,18 @@
 				<div class="col-md-2">
 				
 				<div style="float: left;margin-right: 5%;">
-						<input type="radio" name="chargeType" ng-click="ShowTaxchild()" data-ng-model="cont.chargeType" value="true">
+						<input type="radio" name="chargeType" data-ng-model="cont.chargeType" value="true">
 						&nbsp; Yes
 					</div>
 					<div>
-						<input type="radio" name="chargeType" ng-click="ShowTaxchild()" data-ng-model="cont.chargeType" value="false">
+						<input type="radio" name="chargeType" data-ng-model="cont.chargeType" value="false">
 						&nbsp; No
 					</div> 
 				
 					</div>
 			     </div>	
 							
-          
-			<div>
+           <div ng-show="cont.chargeType == 'false'">
 				<label class="col-md-1 control-label">*Tax:</label>
 				<div class="col-md-2">
 					<input type="text" name="taxvalue" data-ng-model="cont.childtaxvalue" class="form-control" style="height: 25px;font-size: 11px;">

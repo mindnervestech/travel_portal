@@ -107,8 +107,6 @@ public class HotelProfileController extends Controller {
 		hotelprofile.setSupplierName(form.get("hotelNm"));
 		hotelprofile.setAddress(form.get("hotelAddr"));
 		hotelprofile.setCountry(Country.getCountryByCode(Integer.parseInt(form.get("countryCode"))));
-		System.out.println(form.get("currencyCode"));
-		System.out.print("-- " + Currency.getCurrencyByCode(Integer.parseInt(form.get("currencyCode"))));
 		hotelprofile.setCurrency(Currency.getCurrencyByCode(Integer.parseInt(form.get("currencyCode"))));
 		hotelprofile.setCity(City.getCityByCode(Integer.parseInt(form.get("cityCode"))));
 		hotelprofile.setPartOfChain(form.get("hotelPartOfChain"));
