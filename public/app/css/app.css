@@ -1,0 +1,19 @@
+@CHARSET "ISO-8859-1";
+.hotel-profile-tab-content
+{
+	padding: 5px 15px 20px;
+}
+.hotel-profile-def-policy label
+{
+	padding-left:25px;
+}
+.hotel-profile-def-policy input
+{
+	margin-left:10px !important;
+}
+.desc-con-label
+{
+	text-align: left !important;
+	color: blue;
+	font-size: 14px;
+}
