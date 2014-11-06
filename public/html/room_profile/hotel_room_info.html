@@ -75,7 +75,7 @@
 
 		</div>
 		<fieldset class="billinside">
-			<legend style="width: 15%; border-bottom: none;">Child
+			<legend class="lobby-room-img">Child
 				Policy</legend>
 			<div class="row">
 				<div class="col-md-12">
@@ -97,12 +97,11 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-md-4 control-label"
-							style="text-align: left; margin-left: 30%;">*Does your
+						<label class="col-md-4 col-md-offset-3 control-label">*Does your
 							hotel charge for children?</label>
 						<div class="col-md-3">
 
-							<div style="float: left; margin-right: 5%;">
+							<div class="chargechild">
 								<input type="radio" name="chargesforChild"
 									data-ng-model="roomTypeIns.chargesForChildren" value="true"> &nbsp;
 								Yes
@@ -118,13 +117,19 @@
 					</div>
 
 
-					<div style="border: 1px solid;float: left;width: 100%;margin-bottom: 2%;" ng-repeat="child in childpolicy">
-						<div>
-							<label class="col-md-6 control-label"
-								style="text-align: left; margin-left: 15s%;margin-bottom: 3%;">Please define
+					<div class="childDiv" ng-repeat="child in childpolicy">
+						
+		         <div class="row">
+		            <div class="col-lg-12">
+						<div class="form-group">
+							<label class="col-md-6 control-label">Please define
 								your children policy:</label><br>
 						</div>
-						<div class="form-group" style="float: left;width: 100%;">
+					</div>
+				 </div>
+				    <div class="row">
+		              <div class="col-lg-12">
+						<div class="form-group">
 							<label class="col-md-2 control-label">From: </label>
 							<div class="col-md-2">
 								<select class="form-control" data-ng-model="child.allowedChildAgeFrom" required>
@@ -181,6 +186,8 @@
 							</div>
 							<br>
 						</div>
+						</div>
+						</div>
 						<div class="form-group">
 							<label class="col-md-2 control-label">year:</label>
 							<div class="col-md-2">
@@ -210,7 +217,7 @@
 					<div>
 					
                         <button class="btn btn-default col-md-offset-1" ng-click="roomChildDeleteId()">Remove</button>
-					<button class="btn btn-default" ng-click="newchildpolicy($event)" style="float: left;margin-left: 36%;">Add New Child Age Interval</button>
+					<button class="btn btn-default" ng-click="newchildpolicy($event)">Add New Child Age Interval</button>
 				
 				</div>
 				</div>
@@ -219,11 +226,10 @@
 		</fieldset>
 		<br>
 			<div class="form-group">
-						<label class="col-md-7 control-label"
-							style="text-align: left; margin-left: 4%;">*Can you fit an EXTRA BED to this room type?</label>
+						<label class="col-md-7">*Can you fit an EXTRA BED to this room type?</label>
 						<div class="col-md-3">
 
-							<div style="float: left; margin-right: 5%;">
+							<div class="chargechild">
 								<input type="radio" name="extraBed"
 									data-ng-model="roomTypeIns.extraBedAllowed" value="true"> &nbsp;
 								Yes
@@ -238,11 +244,10 @@
 
 					</div>
 					<div class="form-group">
-						<label class="col-md-7 control-label"
-							style="text-align: left; margin-left: 4%;">*Is this room a suite?</label>
+						<label class="col-md-7">*Is this room a suite?</label>
 						<div class="col-md-3">
 
-							<div style="float: left; margin-right: 5%;">
+							<div class="chargechild">
 								<input type="radio" name="roomSuite"
 									data-ng-model="roomTypeIns.roomSuiteType" value="true"> &nbsp;
 								Yes
@@ -257,12 +262,16 @@
 
 					</div>
 				
-					
-					
-			 	<label style="margin-left: 4%;">*In Room Amenities: (please tick the boxes that are applicable)</label>
-					
-				 <div>
-				<label ng-repeat="amenity in roomAmenities" style="padding-right: 30px;width: 33%;">
+					<!-- <div class="form-group">
+				<label class="col-md-12 control-label desc-con-label">The {{generalInfo.hotelNm}} is a(Please tick the boxes that are applicable):</label>
+				</div>
+				
+			<div class="col-md-12"> -->
+					<div class="form-group">
+			 	<label>*In Room Amenities: (please tick the boxes that are applicable)</label>
+					</div>
+				 <div class="col-md-12">
+				<label ng-repeat="amenity in roomAmenities" class="col-lg-4 col-md-6 col-sm-12 col-xs-12" style="padding:0px;">
 				
 				  <input
   				  type="checkbox" name="services"
@@ -271,11 +280,14 @@
    					 {{amenity.amenityNm}}</label>
     			</div>  
     			</div>
-    			<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
     			
 </div>
+		<hr class="mtxxl mbxxl" style="border-color: black;">
 <div>	
-    			<span  style="color: green;margin-left: 3%;">Genral Information Save Successfully</span>
+    			<span  style="color: green;">Room Information Save Successfully</span>
+    			
+                 </div>
+                 <div class="col-md-3 col-md-offset-5">
                  <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
                  </div>
 </div>
@@ -286,30 +298,3 @@
 </div>
 </div>
 </div>
-
-
-<style>
-.billinside {
-	padding: .35em .625em .75em;
-	margin: 0 2px;
-	border: 1px solid silver;
-}
-
-.billBorder {
-	padding: .35em .625em .75em;
-	margin: 0 2px;
-	border: 1px solid;
-}
-</style>
-
-<!-- </div>
-			</div>
-
-		</div>
-
-	</div>
-	END CONTENT
-</div>
-
-}
- -->

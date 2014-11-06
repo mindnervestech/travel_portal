@@ -14,6 +14,40 @@ angular.module('travel_portal').
 		
 		$http.get('/allotmentAllData/'+supplierCode).success(function(response) {
 			
+			console.log(response);
+			
+			
+			$http.get('/getDates/'+response.roomId+"/"+response.currencyId)
+			.success(function(data){
+				if(data) {
+					console.log(data);
+					$scope.allotmentMarket1 =data;
+					 angular.forEach($scope.allotmentMarket1, function(obj, index){
+							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[0].fromPeriod, "yyyy-MM-dd");
+							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[0].toPeriod, "yyyy-MM-dd");
+							return;
+						});
+							
+					console.log($scope.allotmentMarket1);
+				       
+				} 
+			});
+			
+			$http.get('/getRates/'+response.datePeriodId)
+			.success(function(data){
+				if(data) {
+					console.log(data.rate);		
+					$scope.rate = data.rate;
+				       
+				} else {
+					
+				}
+			});
+			
+			$scope.allotmentMarket = response;
+			$scope.allotmentM.allotmentId = response.allotmentId;
+			$scope.allotmentM = response.allotmentmarket;
+		    $scope.allotmentId = response.allotmentId;
 		});
 		
 		$scope.selectType = function()
@@ -70,7 +104,6 @@ angular.module('travel_portal').
 		
 		$scope.onDateChoose = function(Id)
 		{
-			//alert("byyyy");
 			console.log(Id);
 			
 			$http.get('/getRates/'+Id)
@@ -94,18 +127,15 @@ angular.module('travel_portal').
 			
 		}
 		
-		$scope.allotmentMDeleteId = function(allot)
+		$scope.allotmentMDeleteId = function(allot,index)
 		{
-			//console.log(allot);
-			//$scope.allot.splice(index, 1);
-			/*console.log(doc.imgpathId);
-
-
-			$http.get('/deleteDocument/'+$scope.docId+'/'+doc.imgpathId)
+			console.log( $scope.allotmentId);
+			
+			$http.get('/deleteAllotmentMarket/'+allot.allotmentMarketId+'/'+ $scope.allotmentId)
 			.success(function(){
-				
+				$scope.allotmentM.splice(index, 1);
 				console.log('success');
-			});*/
+			});
 		}
 		
 		

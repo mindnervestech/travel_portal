@@ -8,11 +8,19 @@ import javax.persistence.Column;
 public class AllotmentMarketVM {
 	
 	
-	
+	private int allotmentMarketId;
 	private String period;
 	private String specifyAllot;
 	private int allocation;
 	private int choose;
+	
+	
+	public int getAllotmentMarketId() {
+		return allotmentMarketId;
+	}
+	public void setAllotmentMarketId(int allotmentMarketId) {
+		this.allotmentMarketId = allotmentMarketId;
+	}
 	public String getPeriod() {
 		return period;
 	}

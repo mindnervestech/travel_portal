@@ -67,6 +67,7 @@ GET     /getDates/:roomId/:currencyId  com.travelportal.controllers.AllotmentCon
 GET     /getRates/:Id         com.travelportal.controllers.AllotmentController.getRates(Id:Integer)
 GET     /allotmentAllData/:supplierCode   com.travelportal.controllers.AllotmentController.getallotmentAllData(supplierCode:Long)
 POST    /saveAllotment		com.travelportal.controllers.AllotmentController.saveAllotment()
+GET     /deleteAllotmentMarket/:allotMarkid/:allotid    com.travelportal.controllers.AllotmentController.deleteAllotmentMarket(allotMarkid:Integer,allotid:Integer)
 
 #following routes are used for fetch manage hotel images, 
 

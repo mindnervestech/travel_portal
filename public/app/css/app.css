@@ -37,7 +37,49 @@
 	 border-bottom: none;
 }
 
+.gen-img{
+	 width: 142px;
+	 border-bottom: none;
+}
+.lobby-room-img{
+	 width: 117px;
+	 border-bottom: none;
+}
+.ameniti-img{
+	 width: 232px;
+	 border-bottom: none;
+}
+.map-img{
+	 width: 163px;
+	 border-bottom: none;
+}
+.leisure-img{
+	 width: 240px;
+	 border-bottom: none;
+}
+
 .specify-allotment-radio{
     float: left;
     margin-left: 15px;
+}
+.chargechild{
+	float: left; 
+	margin-right: 5%; 
+}
+.childDiv{
+	border: 1px solid;
+	float: left;
+	width: 100%;
+	margin-bottom: 2%;
+}
+.manageGenButton{
+	margin-top: 10%;
+}
+.manageImgButton{
+	margin-top: 14%;
+}
+.manageButton{
+	float: left;
+	margin-top: 9%;
+	margin-left: 29%;
 }

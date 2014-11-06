@@ -7,13 +7,23 @@ import javax.persistence.Column;
 
 public class AllotmentVM {
 	
-	
+	private int allotmentId;
 	private Long supplierCode;
 	private long roomId;
 	private int datePeriodId;
 	private int currencyId;
 	private List<Integer> rate;
 	private List<AllotmentMarketVM> allotmentmarket;
+	
+	
+	
+	
+	public int getAllotmentId() {
+		return allotmentId;
+	}
+	public void setAllotmentId(int allotmentId) {
+		this.allotmentId = allotmentId;
+	}
 	public Long getSupplierCode() {
 		return supplierCode;
 	}

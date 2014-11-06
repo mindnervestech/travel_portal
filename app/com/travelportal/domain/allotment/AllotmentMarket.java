@@ -74,6 +74,16 @@ public class AllotmentMarket {
 	public void setChoose(int choose) {
 		this.choose = choose;
 	}
+	
+	public static AllotmentMarket findById(int Code) {
+		try
+		{
+		return (AllotmentMarket) JPA.em().createQuery("select c from AllotmentMarket c where c.allotmentMarketId = ?1").setParameter(1, Code).getSingleResult();
+		}
+		catch(Exception ex){
+			return null;
+		}
+    }
 
 	@Transactional
     public void save() {

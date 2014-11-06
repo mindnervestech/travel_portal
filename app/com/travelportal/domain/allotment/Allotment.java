@@ -126,6 +126,16 @@ public class Allotment {
 		}
     }
 	
+	public static Allotment allotmentfindById(int Code) {
+		try
+		{
+		return (Allotment) JPA.em().createQuery("select c from Allotment c where c.allotmentId = ?1").setParameter(1, Code).getSingleResult();
+		}
+		catch(Exception ex){
+			return null;
+		}
+    }
+	
 	
 	@Transactional
     public void save() {
