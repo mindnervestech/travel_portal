@@ -1,5 +1,10 @@
 package com.travelportal.controllers;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,29 +23,42 @@ import org.springframework.core.io.FileSystemResource;
 
 import play.Play;
 import play.data.DynamicForm;
+import play.data.Form;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http.RequestBody;
 import play.mvc.Result;
 import play.mvc.Http.MultipartFormData.FilePart;
 import views.html.index;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelHealthAndSafety;
 import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.ImgPath;
 import com.travelportal.domain.InfoWiseImagesPath;
 import com.travelportal.domain.MealType;
+import com.travelportal.domain.rooms.CancellationPolicy;
 import com.travelportal.domain.rooms.ChildPolicies;
 import com.travelportal.domain.rooms.HotelRoomTypes;
+import com.travelportal.domain.rooms.PersonRate;
+import com.travelportal.domain.rooms.RateDetails;
+import com.travelportal.domain.rooms.RateMeta;
+import com.travelportal.domain.rooms.RateWrapper;
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.RoomChildPolicies;
+import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.ChildpoliciVM;
 import com.travelportal.vm.HotelmealVM;
+import com.travelportal.vm.NormalRateVM;
+import com.travelportal.vm.RateDetailsVM;
+import com.travelportal.vm.RateVM;
 import com.travelportal.vm.RoomChildpoliciVM;
 import com.travelportal.vm.RoomType;
 import com.travelportal.vm.RoomtypeVM;
+import com.travelportal.vm.SpecialRateVM;
 
 public class HotelRoomController extends Controller {
 	
@@ -72,6 +90,160 @@ public static void createRootDir() {
 		return ok(Json.toJson(roomTypes));*/
 		return ok();
 	}
+	
+	@Transactional(readOnly=true)
+    public static Result getAllRoomTypes() {
+		List<Object[]> types = HotelRoomTypes.getRoomTypes();
+		return ok(Json.toJson(types));
+	}
+	
+	@Transactional(readOnly=true)
+    public static Result getCurrency() {
+		List<Currency> list = Currency.getCurrency();
+		return ok(Json.toJson(list));
+	}
+	
+	@Transactional(readOnly=true)
+    public static Result getMealTypes() {
+		List<MealType> list = MealType.getmealtypes();
+		return ok(Json.toJson(list));
+	}
+	
+	@Transactional(readOnly=true)
+    public static Result getRateObject(String roomType) {
+		
+		int maxAdults = HotelRoomTypes.getHotelRoomMaxAdultOccupancy(roomType);
+		
+		NormalRateVM normal = new NormalRateVM();
+		SpecialRateVM special = new SpecialRateVM();
+		for(int i=1;i<=maxAdults;i++) {
+			RateDetailsVM rateDetail = new RateDetailsVM();
+			if(i != 1) {
+				rateDetail.name = i+" Adults";
+			} else {
+				rateDetail.name = "1 Adult";
+			}
+			
+			rateDetail.includeMeals = false;
+			normal.rateDetails.add(rateDetail);
+			special.rateDetails.add(rateDetail);
+		}
+		
+		
+		CancellationPolicyVM cancel = new CancellationPolicyVM();
+		
+		cancel.penaltyCharge = true;
+		
+		special.cancellation.add(cancel);
+		
+		RateVM rateVM = new RateVM();
+		rateVM.normalRate = normal;
+		rateVM.isSpecialRate = false;
+		rateVM.special = special;
+		rateVM.cancellation.add(cancel);
+		return ok(Json.toJson(rateVM));
+	}
+	
+	
+	@Transactional(readOnly=false)
+    public static Result saveRate() throws ParseException {
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Form<RateWrapper> rateWrapperForm = Form.form(RateWrapper.class).bindFromRequest();
+		List<RateVM> list = rateWrapperForm.get().rateObject;
+		
+		for(RateVM rate : list) {
+			System.out.println("RATE ........"+rate.currency+rate.fromDate+rate.toDate+rate.rateName+rate.isSpecialRate);
+
+				RateMeta rateMeta = new RateMeta();
+				rateMeta.setCurrency(rate.currency);
+				rateMeta.setRateName(rate.rateName);
+				rateMeta.setFromDate(format.parse(rate.fromDate));
+				rateMeta.setToDate(format.parse(rate.toDate));
+				rateMeta.setRoomType(HotelRoomTypes.findByName(rate.roomType));
+				rateMeta.save();
+				
+				RateDetails rateDetails = new RateDetails();
+				if(rate.isSpecialRate == true) {
+					rateDetails.setSpecialRate(rate.isSpecialRate);
+					rateDetails.setSpecialDays(rate.special.weekDays.toString());
+				} else {
+					rateDetails.setSpecialRate(rate.isSpecialRate);
+				}
+				rateDetails.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
+				rateDetails.save();
+				
+				
+				for(RateDetailsVM rateDetailsVM : rate.normalRate.rateDetails) {
+					PersonRate personRate = new PersonRate();
+					personRate.setNumberOfPersons(rateDetailsVM.name);
+					personRate.setRateValue(rateDetailsVM.rateValue);
+						if(rateDetailsVM.includeMeals == true) {
+							personRate.setMeal(rateDetailsVM.includeMeals);
+							personRate.setMealType(MealType.getmealTypeByName(rateDetailsVM.meals));
+						} else {
+							personRate.setMeal(rateDetailsVM.includeMeals);
+						}
+					personRate.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
+					personRate.save();
+					
+				}
+				
+				if(rate.isSpecialRate == true) {
+					for(RateDetailsVM rateDetailsVM : rate.special.rateDetails) {
+						PersonRate personRate2 = new PersonRate();
+						personRate2.setNumberOfPersons(rateDetailsVM.name);
+						personRate2.setRateValue(rateDetailsVM.rateValue);
+							if(rateDetailsVM.includeMeals == true) {
+								personRate2.setMeal(rateDetailsVM.includeMeals);
+								personRate2.setMealType(MealType.getmealTypeByName(rateDetailsVM.meals));
+							} else {
+								personRate2.setMeal(rateDetailsVM.includeMeals);
+							}
+						personRate2.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
+						personRate2.save();
+						
+					}
+				}
+				
+				for(CancellationPolicyVM vm : rate.cancellation) {
+					CancellationPolicy cancellation = new CancellationPolicy();
+					if(vm.days != null) {
+						cancellation.setCancellationDays(vm.days);
+							if(vm.penaltyCharge == true) {
+								cancellation.setPenalty(vm.penaltyCharge);
+								cancellation.setNights(vm.nights);
+							} else {
+								cancellation.setPenalty(vm.penaltyCharge);
+								cancellation.setPercentage(vm.percentage);
+							}
+						cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
+						cancellation.save();
+					}
+				}
+				
+				if(rate.isSpecialRate == true) {
+					for(CancellationPolicyVM vm : rate.special.cancellation) {
+						CancellationPolicy cancellation = new CancellationPolicy();
+						if(vm.days != null) {
+							cancellation.setCancellationDays(vm.days);
+								if(vm.penaltyCharge == true) {
+									cancellation.setPenalty(vm.penaltyCharge);
+									cancellation.setNights(vm.nights);
+								} else {
+									cancellation.setPenalty(vm.penaltyCharge);
+									cancellation.setPercentage(vm.percentage);
+								}
+							cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
+							cancellation.save();
+						}
+					}
+				}
+				
+		}
+		
+		return ok();
+	}
+	
 	
 	@Transactional(readOnly=true)
     public static Result fetchToEditHotelDetails(long supplierCode) {

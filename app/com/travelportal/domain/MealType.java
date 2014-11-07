@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
@@ -51,6 +52,12 @@ public class MealType {
 	
 	public static MealType getMealTypeIdByCode(int code) {
 		return (MealType) JPA.em().createQuery("select c from MealType c where mealTypeId = ?1").setParameter(1, code).getSingleResult();
+	}
+	
+	public static MealType getmealTypeByName(String meal) {
+		Query query = JPA.em().createQuery("select c from MealType c where c.mealTypeNm = ?1");
+		query.setParameter(1, meal);
+		return (MealType) query.getSingleResult();
 	}
 	
 }

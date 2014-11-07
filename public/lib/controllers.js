@@ -1690,3 +1690,137 @@ angular.module('travel_portal').
 	}
 
 }]);
+
+angular.module('travel_portal').
+controller("manageContractsController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
+	
+	$scope.showMeals = false;
+	$scope.addMeal1 = 'no';
+	$scope.showContract = true;
+	$scope.showPeriod = false;
+	$scope.diffRate = 'no';
+	$scope.showRemoveRate = false;
+	$scope.rateObject = [];
+	
+	
+	$http.get('/getRoomTypes').success(function(response){
+		console.log(response);
+		$scope.roomTypes = response;
+	});
+	
+	$http.get('/getCurrency').success(function(response){
+		console.log(response);
+		$scope.currencies = response;
+	});
+	
+	$http.get('/getMealTypes').success(function(response){
+		console.log(response);
+		$scope.mealTypes = response;
+	});
+	
+	$scope.showData = function() {
+		console.log($scope.formData.room);
+		console.log($scope.formData.fromDate);
+		console.log($scope.formData.toDate);
+		console.log($scope.formData.currencyType);
+		
+		$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
+			console.log(response);
+			$scope.rateObject.push(response);
+			console.log($scope.rateObject[0].special.cancellation[0].days);
+		});
+		
+		$scope.showContract = false;
+		$scope.showPeriod = true;
+	};
+	
+	$scope.showContractPage = function() {
+		$scope.showContract = true;
+		$scope.showPeriod = false;
+	};
+	
+	$scope.isChecked = function(value,index) {
+		if(value == 'yes') {
+			$scope.rateObject.normalRate.rateDetails[index].includeMeals = true;
+		} else {
+			$scope.rateObject.normalRate.rateDetails[index].includeMeals = false;
+		}
+		
+	};
+	
+	
+	$scope.isDiffRate = function(value,index) {
+		if(value == 'yes') {
+			$scope.rateObject[index].isSpecialRate = true;
+		} else {
+			$scope.rateObject[index].isSpecialRate = false;
+		}
+		
+	};
+	
+	$scope.setWeekDay = function(value,flag,index) {
+		if(flag == true) {
+			$scope.rateObject[index].special.weekDays.push(value);
+		} else {
+			$scope.rateObject[index].special.weekDays.splice($scope.rateObject[index].special.weekDays.indexOf(value),1);
+		}
+		console.log($scope.rateObject[index].special.weekDays);
+	};
+	
+		
+	$scope.addNewRuleforRate = function(index) {
+		$scope.rateObject[index].cancellation.push({});
+		
+	};
+	
+	$scope.removeRuleOfRate = function(index,parentIndex) {
+		$scope.rateObject[parentIndex].cancellation.splice(index,1);
+	};
+	
+	$scope.removeRuleOfSpecialRate = function(index,parentIndex) {
+		$scope.rateObject[parentIndex].special.cancellation.splice(index,1);
+	};
+	
+	$scope.addNewRuleforSpecialRate = function(index) {
+		$scope.rateObject[index].special.cancellation.push({});
+	};
+	
+	$scope.addNewRate = function() {
+		$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
+			$scope.rateObject.push(response);
+		});
+		
+			if($scope.rateObject.length > 0) {
+				$scope.showRemoveRate = true;
+			}
+			
+	};
+	
+	$scope.removeRate = function(index) {
+		$scope.rateObject.splice(index,1);
+		
+		if($scope.rateObject.length == 0) {
+			$scope.showRemoveRate = false;
+		}
+	};
+	
+	$scope.saveRate = function() {
+		console.log($scope.rateObject.length);
+		for(var i=0;i<$scope.rateObject.length;i++) {
+			console.log(i);
+			$scope.rateObject[i].roomType = $scope.formData.room;
+			$scope.rateObject[i].fromDate = $scope.formData.fromDate;
+			$scope.rateObject[i].toDate = $scope.formData.toDate;
+			$scope.rateObject[i].currency = $scope.formData.currencyType;
+		}
+		
+		$http.post('/saveRate', {"rateObject":$scope.rateObject}).success(function(data){
+			console.log('success');
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+	};
+	
+	
+}]);

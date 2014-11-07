@@ -266,6 +266,11 @@ public class HotelRoomTypes {
 		return roomTypeList;
 	}
 	
+	public static List<Object[]> getRoomTypes() {
+		Query q = JPA.em().createNativeQuery("select distinct hotel_room_types.room_type from hotel_room_types");
+		return (List<Object[]>) q.getResultList();
+	}
+	
 	public static HotelRoomTypes getHotelRoomDetailsInfo(Long RoomId) {
 		Query q = JPA.em().createQuery("select r from HotelRoomTypes r where r.roomId = ?1");
 		q.setParameter(1, RoomId);
@@ -280,11 +285,20 @@ public class HotelRoomTypes {
 	    	return (HotelRoomTypes) query.getSingleResult();
 	    }
 	
+	 public static HotelRoomTypes findByName(String type) {
+	    	Query query = JPA.em().createQuery("Select a from HotelRoomTypes a where a.roomType = ?1");
+			query.setParameter(1, type);
+	    	return (HotelRoomTypes) query.getSingleResult();
+	    }
+	 
 	public static List<HotelRoomTypes> getHotelRoomDetails(long supplierCode) {
 		return JPA.em().createQuery("select r from HotelRoomTypes r where r.supplierCode = ?1").setParameter(1, supplierCode).getResultList();
 	}
 	
-		
+	public static int getHotelRoomMaxAdultOccupancy(String roomType) {
+		return (int) JPA.em().createQuery("select r.maxAdultOccupancy from HotelRoomTypes r where r.roomType = ?1").setParameter(1, roomType).getSingleResult();
+	}
+	
 	@Transactional
     public void save() {
 		JPA.em().persist(this);

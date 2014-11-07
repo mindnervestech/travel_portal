@@ -70,8 +70,11 @@ angular.module('travel_portal',['ngRoute','ngDialog','angularFileUpload']).confi
 		templateUrl: '/assets/html/manage_hotel_images/manage_hotel_img.html',
 		controller: 'ManageHotelImageController'
 	})
-	
-	.when('/viewWebPage', {
+	.when('/manageContracts', {
+		templateUrl: '/assets/html/manage_contracts/manageContracts.html',
+		controller: 'manageContractsController'
+	})
+		.when('/viewWebPage', {
 		templateUrl: '/assets/html/view_your_web_page/view_web_page.html',
 		controller: 'ManageHotelImageController'
 	})
@@ -80,5 +83,4 @@ angular.module('travel_portal',['ngRoute','ngDialog','angularFileUpload']).confi
 		templateUrl: '/assets/html/allotment_page/allotment.html',
 		controller: 'allotmentController'
 	})
-
 });

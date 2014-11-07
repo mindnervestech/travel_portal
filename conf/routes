@@ -89,8 +89,12 @@ GET	  /hotel_profile/getMapImagePath/:supplierCode			com.travelportal.controller
 #home screen for edit
 
 
-
-GET /hotel/roomtypes		com.travelportal.controllers.HotelRoomController.fetchAllRoomTypesForEdit()
+GET		/getRateObject/:room			com.travelportal.controllers.HotelRoomController.getRateObject(room:String)
+GET		/getMealTypes			com.travelportal.controllers.HotelRoomController.getMealTypes
+GET		/getCurrency			com.travelportal.controllers.HotelRoomController.getCurrency
+GET		/getRoomTypes			com.travelportal.controllers.HotelRoomController.getAllRoomTypes
+POST	/saveRate				com.travelportal.controllers.HotelRoomController.saveRate
+GET /hotel/roomtypes			com.travelportal.controllers.HotelRoomController.fetchAllRoomTypesForEdit()
 GET /roomtypes/:supplierCode  	com.travelportal.controllers.HotelRoomController.fetchToEditHotelDetails(supplierCode:Long)
 GET /deleteRoomchild/:id   		com.travelportal.controllers.HotelRoomController.deleteRoomchild(id:Integer)
 POST /hotel/saveUpdateRoomType			com.travelportal.controllers.HotelRoomController.saveOrUpdateHotelRoom()
