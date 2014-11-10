@@ -96,6 +96,10 @@ width: 861px !important;
 	height: 25px;
 	font-size: 11px;
 }
+.main-text{
+	text-align: center;
+	font-size: x-large;
+}
 
 .manageImgButton{
 	margin-top: 14%;

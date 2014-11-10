@@ -77,7 +77,7 @@
 	
 		<div class="form-group">
 			 <div class="col-md-6 col-md-offset-9">
-		<input type="button" class="btn btn-primary" value="search" ng-click="searchAllotment()">
+		<input type="button" class="btn btn-primary" value="Search" ng-click="searchAllotment()">
 	 	</div>
 	 	</div>
 	 	
@@ -96,7 +96,7 @@
 		<div ng-repeat="allot in allotmentM">
 		<fieldset class="billinside">
 	
-			<legend class="allot-firldset">Allotment Market {{$index}}</legend>
+			<legend class="allot-firldset">Allotment Market {{$index+1}}</legend>
 			
 				<!-- <div class="row">			
 			<div class="form-group">
@@ -242,8 +242,9 @@
 						
 						</div>		
 						
-						 <div class="col-md-6">
-					<div class="form-group">
+						<div class="row">
+		                 <div class="col-md-6">
+		                 <div class="form-group">
 						<label class="col-md-7 col-md-offset-1"><b>Please Select Rate:</b></label>
 							<div class="col-md-8 col-md-offset-1">
 							<select class="form-control" data-ng-model="allot.rate" multiple required>
@@ -252,11 +253,19 @@
 							</div>
 					</div>
 						</div>
-						
-
 						<div>
-					<input type="button" class="btn btn-default col-md-offset-8" value="Remove this Allotment Market" ng-click="allotmentMDeleteId(allot,$index)">   <!--  allotmentM.splice($index,1)--> 
+						
+						</div>
+						</div>
+						
+					<div class="row">
+		            <div class="col-md-6">
+		            <div class="form-group">
+					      <input type="button" class="btn btn-default col-md-offset-1" value="Remove this Allotment Market" ng-click="allotmentMDeleteId(allot,$index)">   <!--  allotmentM.splice($index,1)--> 
 					</div>
+					</div>
+					</div>
+					
 						
 			
 		</fieldset>		

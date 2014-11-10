@@ -65,7 +65,7 @@ POST   /savefiles       com.travelportal.controllers.HotelProfileController.save
 POST      /getallmentMarket   com.travelportal.controllers.AllotmentController.getallmentMarket()
 GET     /getDates/:roomId/:currencyId  com.travelportal.controllers.AllotmentController.getDates(roomId:Long,currencyId:Integer)
 GET     /getRates/:Id         com.travelportal.controllers.AllotmentController.getRates(Id:Integer)
-GET     /allotmentAllData/:supplierCode   com.travelportal.controllers.AllotmentController.getallotmentAllData(supplierCode:Long)
+#GET     /allotmentAllData/:supplierCode   com.travelportal.controllers.AllotmentController.getallotmentAllData(supplierCode:Long)
 POST    /saveAllotment		com.travelportal.controllers.AllotmentController.saveAllotment()
 GET     /deleteAllotmentMarket/:allotMarkid/:allotid    com.travelportal.controllers.AllotmentController.deleteAllotmentMarket(allotMarkid:Integer,allotid:Integer)
 
