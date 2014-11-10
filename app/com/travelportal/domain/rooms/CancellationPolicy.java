@@ -1,11 +1,14 @@
 package com.travelportal.domain.rooms;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
@@ -28,6 +31,14 @@ public class CancellationPolicy {
 	private String percentage;
 	@OneToOne
 	private RateMeta rate;
+	private boolean isNormal;
+	
+	public boolean isNormal() {
+		return isNormal;
+	}
+	public void setNormal(boolean isNormal) {
+		this.isNormal = isNormal;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -64,6 +75,25 @@ public class CancellationPolicy {
 	public void setRate(RateMeta rate) {
 		this.rate = rate;
 	}
+	
+	public static List<CancellationPolicy> findByRateMetaId(Long id) {
+    	Query query = JPA.em().createQuery("Select c from CancellationPolicy c where c.rate.id = ?1");
+		query.setParameter(1, id);
+    	return (List<CancellationPolicy>) query.getResultList();
+    }
+	
+	public static List<CancellationPolicy> findByRateMetaIdAndNormal(Long id,boolean isNormal) {
+    	Query query = JPA.em().createQuery("Select c from CancellationPolicy c where c.rate.id = ?1 and c.isNormal = ?2");
+		query.setParameter(1, id);
+		query.setParameter(2, isNormal);
+    	return (List<CancellationPolicy>) query.getResultList();
+    }
+	
+	public static CancellationPolicy findById(Long id) {
+    	Query query = JPA.em().createQuery("Select c from CancellationPolicy c where c.id = ?1");
+		query.setParameter(1, id);
+    	return (CancellationPolicy) query.getSingleResult();
+    }
 	
 	@Transactional
     public void save() {

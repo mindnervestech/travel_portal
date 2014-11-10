@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Date;
 public class RateVM {
 
-	private int id;
+	private long id;
 	private String name;
 	public String rateName;
 	public String roomType;
@@ -71,11 +71,10 @@ public class RateVM {
 	public void setCancellation(List<CancellationPolicyVM> cancellation) {
 		this.cancellation = cancellation;
 	}
-	
-		public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -84,8 +83,4 @@ public class RateVM {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
-			
-	
 }

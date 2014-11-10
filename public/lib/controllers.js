@@ -1782,8 +1782,10 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 	$scope.showPeriod = false;
 	$scope.diffRate = 'no';
 	$scope.showRemoveRate = false;
+	$scope.showSavedRates = false;
 	$scope.rateObject = [];
-	
+	$scope.rateMeta = [];
+	var showRateCount = 0;
 	
 	$http.get('/getRoomTypes').success(function(response){
 		console.log(response);
@@ -1806,13 +1808,35 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 		console.log($scope.formData.toDate);
 		console.log($scope.formData.currencyType);
 		
-		$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
+		$http.get('/getRateData/'+$scope.formData.room+'/'+$scope.formData.fromDate+'/'+$scope.formData.toDate+'/'+$scope.formData.currencyType).success(function(response){
 			console.log(response);
-			$scope.rateObject.push(response);
-			console.log($scope.rateObject[0].special.cancellation[0].days);
+			$scope.rateMeta = response;
+			console.log($scope.rateMeta);
+			if(angular.isUndefined($scope.rateMeta) || $scope.rateMeta == "") {
+				$scope.messageShow = "NO DATA FOUND";
+				$scope.showRateUpdate = false;
+				$scope.showPeriod = false;
+			} else {
+				$scope.messageShow = " ";
+				$scope.showRateUpdate = true;
+				$scope.showPeriod = false;
+			}
+			 
 		});
 		
-		$scope.showContract = false;
+		$scope.showSavedRates = true;
+	};
+	
+	$scope.createNewRate = function() {
+		
+		for(var i=0;i<$scope.rateObject.length;i++) {
+			$scope.rateObject.splice(i,1);
+			console.log(i);
+		}
+		
+		$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
+			$scope.rateObject.push(response);
+		});
 		$scope.showPeriod = true;
 	};
 	
@@ -1831,15 +1855,6 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 	};
 	
 	
-	$scope.isDiffRate = function(value,index) {
-		if(value == 'yes') {
-			$scope.rateObject[index].isSpecialRate = true;
-		} else {
-			$scope.rateObject[index].isSpecialRate = false;
-		}
-		
-	};
-	
 	$scope.setWeekDay = function(value,flag,index) {
 		if(flag == true) {
 			$scope.rateObject[index].special.weekDays.push(value);
@@ -1849,9 +1864,22 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 		console.log($scope.rateObject[index].special.weekDays);
 	};
 	
-		
+	$scope.setRateMetaWeekDay = function(value,flag,index) {
+		if(flag == true) {
+			$scope.rateMeta[index].special.weekDays.push(value);
+		} else {
+			$scope.rateMeta[index].special.weekDays.splice($scope.rateMeta[index].special.weekDays.indexOf(value),1);
+		}
+		console.log($scope.rateMeta[index].special.weekDays);
+	};
+	
 	$scope.addNewRuleforRate = function(index) {
 		$scope.rateObject[index].cancellation.push({});
+		
+	};
+	
+	$scope.addNewRuleforSavedRate = function(index) {
+		$scope.rateMeta[index].cancellation.push({});
 		
 	};
 	
@@ -1859,12 +1887,24 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 		$scope.rateObject[parentIndex].cancellation.splice(index,1);
 	};
 	
+	$scope.removeRuleOfSavedRate = function(index,parentIndex) {
+		$scope.rateMeta[parentIndex].cancellation.splice(index,1);
+	};
+	
 	$scope.removeRuleOfSpecialRate = function(index,parentIndex) {
 		$scope.rateObject[parentIndex].special.cancellation.splice(index,1);
 	};
 	
+	$scope.removeRuleOfSpecialRateMeta = function(index,parentIndex) {
+		$scope.rateMeta[parentIndex].special.cancellation.splice(index,1);
+	};
+	
 	$scope.addNewRuleforSpecialRate = function(index) {
 		$scope.rateObject[index].special.cancellation.push({});
+	};
+	
+	$scope.addNewRuleforSpecialRateMeta = function(index) {
+		$scope.rateMeta[index].special.cancellation.push({});
 	};
 	
 	$scope.addNewRate = function() {
@@ -1903,6 +1943,219 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 			console.log('ERROR');
 		});
 	};
+	
+	$scope.updateRateMeta = function() {
+		
+		$http.post('/updateRateMeta', {"rateObject":$scope.rateMeta}).success(function(data){
+			console.log('success');
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+	};
+	
+	////
+	$scope.selectedRatesId;
+	
+	console.log($scope.selectedRatesId);
+	$scope.webBrowsersGrouped =[];
+	$scope.msClose;
+	$scope.getSelectedCity = [];
+	$scope.getSelectedCountry = [];
+	
+	$scope.showMarketTable = function(Id) {
+		
+		$scope.selectedRatesId = Id;
+		console.log($scope.selectedRatesId);
+		$http.get('/getMarketGroup/'+$scope.selectedRatesId)
+		.success(function(data){
+			if(data) {
+				
+				$scope.webBrowsersGrouped.splice(0);
+					for(var i = 0; i<data.length;i++){
+						$scope.webBrowsersGrouped.push({
+							name:'<strong>'+data[i].country.countryName+'</strong>',
+							multiSelectGroup:true
+						});
+						for(var j =0; j<data[i].country.cityvm.length;j++){
+							console.log(data[i].country.cityvm[j].tick);
+
+							$scope.getSelectedCity.push({
+									name:data[i].country.cityvm[j].cityName,
+									ticked:data[i].country.cityvm[j].tick,
+									countryCode : data[i].country.cityvm[j].cityCountryCode
+							});
+							
+							$scope.webBrowsersGrouped.push({
+								name:data[i].country.cityvm[j].cityName,
+								ticked:data[i].country.cityvm[j].tick
+							});
+						}
+						$scope.webBrowsersGrouped.push({
+							multiSelectGroup:false
+						});
+					}
+			} 
+		});
+	}
+
+	
+	$scope.clickItem;
+	$scope.clickItemList = [];
+	$scope.msClick = function( data ) {
+		$scope.clickItem = data;
+		if(data.multiSelectGroup === undefined) {
+			$scope.clickItemList.push({
+				name:data.name,
+				ticked:data.ticked
+			});
+			console.log(data.ticked);
+			if(data.ticked ===false){
+				for(var i = 0; i<$scope.getSelectedCity.length; i++){
+					console.log(data.name +"=== "+$scope.getSelectedCity[i].name)
+					if(data.name === $scope.getSelectedCity[i].name ){
+						console.log(data.name +"=== "+$scope.getSelectedCity[i].name)
+						$scope.getSelectedCity[i].ticked = false;
+					}
+				}
+				
+			} else {
+				console.log(data.name +"=== "+$scope.getSelectedCity)
+				for(var i = 0; i<$scope.getSelectedCity.length; i++){
+					
+					if(data.name === $scope.getSelectedCity[i].name ){
+						console.log($scope.getSelectedCity[i].ticked)
+						$scope.getSelectedCity[i].ticked = true;
+					}
+				}
+				
+			}	
+			
+		} else {
+			$scope.getSelectedCountry.push({
+				name:data.name
+			});
+		}
+	};
+	$scope.applyToall = function () {
+		allCitySelectionDeselection('all');
+	}
+	$scope.flag = false;
+	allCitySelectionDeselection = function( type) {
+		$scope.flag = true;	 
+		for(var i =0; i<$scope.getSelectedCity.length;i++) {
+			if(type === 'all'){ 
+				$scope.getSelectedCity[i].ticked = true;
+			} else {
+				$scope.getSelectedCity[i].ticked = false;
+			}
+		}
+		/*$http.get('/selectDeselectAll/'+type)
+				.success(function(data){
+					console.log($scope.getSelectedCity);
+				}); */
+			 
+	 };
+	$scope.setSelection = function() {
+		//TODO
+		console.log($scope.getSelectedCity);
+		console.log($scope.flag);
+		if($scope.selectedRatesId != undefined) {
+			if($scope.clickItem != undefined || $scope.flag == true){
+			if($scope.getSelectedCountry.length === 0) {
+					$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
+					.success(function(data){
+						$scope.flag == false;
+						
+					});
+			}else {
+				console.log($scope.clickItem.ticked === undefined);
+				if($scope.clickItem.ticked === undefined){
+				for(var i = 0; i<$scope.getSelectedCountry.length; i++){
+					$http.post('/setCountrySelection/'+$($scope.getSelectedCountry[i].name).text()+'/'+$scope.selectedRatesId)
+					.success(function(data){
+						$scope.getSelectedCountry.splice(0);
+						for(var i = 0; i<$scope.getSelectedCity.length; i++){
+							if($scope.getSelectedCity[i].countryCode === data[0].code){
+									$scope.getSelectedCity[i].ticked =  data[0].value;
+							}
+						}
+						
+					});
+				}
+			}else if($scope.clickItem.ticked === true){
+					if($scope.getSelectedCountry.length != 0) {
+						$http.get('/getCountryCode/'+$scope.clickItem.name)
+						.success(function(data1){
+							console.log($scope.clickItemList);
+							for(var j = 0; j<$scope.clickItemList.length; j++){	
+								for(var i = 0; i<$scope.getSelectedCity.length; i++){
+									console.log($scope.getSelectedCity[i].countryCode == data1)
+									if($scope.getSelectedCity[i].countryCode == data1){
+										console.log($scope.getSelectedCity[i].name +"^^"+$scope.clickItemList[j].name)
+										if($scope.getSelectedCity[i].name == $scope.clickItemList[j].name){
+											$scope.getSelectedCity[i].ticked = true;
+										}else{
+											if(j == 0){
+												$scope.getSelectedCity[i].ticked = false;
+											}
+										}
+									}
+								}
+							}
+							console.log($scope.getSelectedCity);
+							
+							$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
+								.success(function(data){
+									$scope.clickItemList.splice(0);
+									$scope.getSelectedCountry.splice(0);
+								});
+						
+						});
+					}
+				}else {
+					if($scope.getSelectedCountry.length != 0) {
+						$http.get('/getCountryCode/'+$scope.clickItem.name)
+						.success(function(data1){
+						console.log($scope.clickItemList);	
+							for(var j = 0; j<$scope.clickItemList.length; j++){
+								for(var i = 0; i<$scope.getSelectedCity.length; i++){
+									console.log($scope.getSelectedCity[i].countryCode == data1)
+									if($scope.getSelectedCity[i].countryCode == data1){
+										console.log($scope.getSelectedCity[i].name +"^^"+$scope.clickItemList[j].name)
+										if($scope.getSelectedCity[i].name == $scope.clickItemList[j].name){
+											$scope.getSelectedCity[i].ticked = false;
+										}else{
+											if(j == 0){
+												$scope.getSelectedCity[i].ticked = true;
+											}
+										}
+									}
+								}
+							}
+							console.log($scope.getSelectedCity);
+							for(var i = 0; i<$scope.getSelectedCity.length; i++){
+								$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
+								.success(function(data){
+									$scope.clickItemList.splice(0);
+									$scope.getSelectedCountry.splice(0);
+								});
+							}
+						});
+					}
+				}
+			}
+		}else{
+			alert("please select city");
+		}
+		} else{
+			alert("please select id");
+		}
+	};
+	
+	
+	
+	
 	
 	
 }]);

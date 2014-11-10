@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
@@ -49,6 +50,12 @@ public class RateDetails {
 	public void setSpecialDays(String specialDays) {
 		this.specialDays = specialDays;
 	}
+	
+	public static RateDetails findByRateMetaId(Long id) {
+    	Query query = JPA.em().createQuery("Select a from RateDetails a where a.rate.id = ?1");
+		query.setParameter(1, id);
+    	return (RateDetails) query.getSingleResult();
+    }
 	
 	@Transactional
     public void save() {

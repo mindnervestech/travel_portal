@@ -85,6 +85,12 @@ GET	  /hotel_profile/getAmenitiesServicesImagePath/:supplierCode			com.travelpor
 GET	  /hotel_profile/getLeisureorSportsImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getLeisureorSportsImagePath(supplierCode:Long)
 GET	  /hotel_profile/getMapImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getMapImagePath(supplierCode:Long)
  
+ 
+GET     /getMarketGroup/:id                      com.travelportal.controllers.HotelRoomController.getMarketGroup(id:Long)
+POST    /setCitySelection                        com.travelportal.controllers.HotelRoomController.setCitySelection()
+POST    /setCountrySelection/:name/:ratesId                        com.travelportal.controllers.HotelRoomController.setCountrySelection(name:String, ratesId:Integer)
+GET     /getCountryCode/:name                                                                com.travelportal.controllers.HotelRoomController.getCountryCode(name:String)
+
 #following routes are used for fetch room details, Add Room Type and Edit Room Type
 #home screen for edit
 
@@ -94,6 +100,8 @@ GET		/getMealTypes			com.travelportal.controllers.HotelRoomController.getMealTyp
 GET		/getCurrency			com.travelportal.controllers.HotelRoomController.getCurrency
 GET		/getRoomTypes			com.travelportal.controllers.HotelRoomController.getAllRoomTypes
 POST	/saveRate				com.travelportal.controllers.HotelRoomController.saveRate
+POST	/updateRateMeta			com.travelportal.controllers.HotelRoomController.updateRateMeta
+GET		/getRateData/:room/:fromDate/:toDate/:currencyType	com.travelportal.controllers.HotelRoomController.getRateData(room:String,fromDate:String,toDate:String,currencyType:String)
 GET /hotel/roomtypes			com.travelportal.controllers.HotelRoomController.fetchAllRoomTypesForEdit()
 GET /roomtypes/:supplierCode  	com.travelportal.controllers.HotelRoomController.fetchToEditHotelDetails(supplierCode:Long)
 GET /deleteRoomchild/:id   		com.travelportal.controllers.HotelRoomController.deleteRoomchild(id:Integer)

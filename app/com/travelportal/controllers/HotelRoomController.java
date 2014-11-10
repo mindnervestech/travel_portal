@@ -152,7 +152,7 @@ public static void createRootDir() {
 		List<RateVM> list = rateWrapperForm.get().rateObject;
 		
 		for(RateVM rate : list) {
-			System.out.println("RATE ........"+rate.currency+rate.fromDate+rate.toDate+rate.rateName+rate.isSpecialRate);
+			System.out.println("RATE ........"+rate.currency+rate.fromDate+rate.toDate+rate.rateName+rate.isSpecialRate());
 
 				RateMeta rateMeta = new RateMeta();
 				rateMeta.setCurrency(rate.currency);
@@ -163,7 +163,7 @@ public static void createRootDir() {
 				rateMeta.save();
 				
 				RateDetails rateDetails = new RateDetails();
-				if(rate.isSpecialRate == true) {
+				if(rate.isSpecialRate() == true) {
 					rateDetails.setSpecialRate(rate.isSpecialRate);
 					rateDetails.setSpecialDays(rate.special.weekDays.toString());
 				} else {
@@ -183,6 +183,8 @@ public static void createRootDir() {
 						} else {
 							personRate.setMeal(rateDetailsVM.includeMeals);
 						}
+						
+					personRate.setNormal(true);
 					personRate.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
 					personRate.save();
 					
@@ -199,6 +201,8 @@ public static void createRootDir() {
 							} else {
 								personRate2.setMeal(rateDetailsVM.includeMeals);
 							}
+							
+						personRate2.setNormal(false);	
 						personRate2.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
 						personRate2.save();
 						
@@ -216,6 +220,7 @@ public static void createRootDir() {
 								cancellation.setPenalty(vm.penaltyCharge);
 								cancellation.setPercentage(vm.percentage);
 							}
+						cancellation.setNormal(true);	
 						cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
 						cancellation.save();
 					}
@@ -233,6 +238,7 @@ public static void createRootDir() {
 									cancellation.setPenalty(vm.penaltyCharge);
 									cancellation.setPercentage(vm.percentage);
 								}
+							cancellation.setNormal(false);	
 							cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
 							cancellation.save();
 						}
@@ -244,6 +250,194 @@ public static void createRootDir() {
 		return ok();
 	}
 	
+	@Transactional(readOnly=false)
+    public static Result updateRateMeta() throws ParseException {
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Form<RateWrapper> rateWrapperForm = Form.form(RateWrapper.class).bindFromRequest();
+		List<RateVM> list = rateWrapperForm.get().rateObject;
+		
+		for(RateVM rate : list) {
+
+				RateMeta rateMeta = RateMeta.findById(rate.getId());
+				rateMeta.setRateName(rate.rateName);
+				rateMeta.merge();
+				
+				RateDetails rateDetails = RateDetails.findByRateMetaId(rate.getId());
+				if(rate.isSpecialRate() == true) {
+					rateDetails.setSpecialRate(rate.isSpecialRate);
+					rateDetails.setSpecialDays(rate.special.weekDays.toString());
+				} else {
+					rateDetails.setSpecialRate(rate.isSpecialRate);
+				}
+				rateDetails.merge();
+				
+				
+				for(RateDetailsVM rateDetailsVM : rate.normalRate.rateDetails) {
+					PersonRate personRate = PersonRate.findByRateMetaIdAndNormal(rate.getId(),true,rateDetailsVM.name);
+					personRate.setNumberOfPersons(rateDetailsVM.name);
+					personRate.setRateValue(rateDetailsVM.rateValue);
+							if(rateDetailsVM.includeMeals == true) {
+								personRate.setMeal(rateDetailsVM.includeMeals);
+								personRate.setMealType(MealType.getmealTypeByName(rateDetailsVM.meals));
+							} else {
+								personRate.setMeal(rateDetailsVM.includeMeals);
+							}
+							
+							personRate.setNormal(true);
+							personRate.merge();
+					
+				}
+				
+				if(rate.isSpecialRate == true) {
+					for(RateDetailsVM rateDetailsVM : rate.special.rateDetails) {
+						PersonRate personRate = PersonRate.findByRateMetaIdAndNormal(rate.getId(),false,rateDetailsVM.name);
+						personRate.setNumberOfPersons(rateDetailsVM.name);
+						personRate.setRateValue(rateDetailsVM.rateValue);
+								if(rateDetailsVM.includeMeals == true) {
+									personRate.setMeal(rateDetailsVM.includeMeals);
+									personRate.setMealType(MealType.getmealTypeByName(rateDetailsVM.meals));
+								} else {
+									personRate.setMeal(rateDetailsVM.includeMeals);
+								}
+								
+								personRate.setNormal(false);	
+								personRate.merge();
+						
+					}
+				}
+				
+				for(CancellationPolicyVM vm : rate.cancellation) {
+						CancellationPolicy cancellation = CancellationPolicy.findById(vm.id);
+						if(vm.days != null) {
+							cancellation.setCancellationDays(vm.days);
+								if(vm.penaltyCharge == true) {
+									cancellation.setPenalty(vm.penaltyCharge);
+									cancellation.setNights(vm.nights);
+								} else {
+									cancellation.setPenalty(vm.penaltyCharge);
+									cancellation.setPercentage(vm.percentage);
+								}
+							cancellation.setNormal(true);	
+							cancellation.merge();
+						}
+				}
+				
+				if(rate.isSpecialRate == true) {
+					for(CancellationPolicyVM vm : rate.special.cancellation) {
+						CancellationPolicy cancellation = CancellationPolicy.findById(vm.id);
+						if(vm.days != null) {
+							cancellation.setCancellationDays(vm.days);
+								if(vm.penaltyCharge == true) {
+									cancellation.setPenalty(vm.penaltyCharge);
+									cancellation.setNights(vm.nights);
+								} else {
+									cancellation.setPenalty(vm.penaltyCharge);
+									cancellation.setPercentage(vm.percentage);
+								}
+							cancellation.setNormal(false);	
+							cancellation.merge();
+						}
+					}
+				}
+				
+		}
+		
+		return ok();
+	}
+	
+	@Transactional(readOnly=true)
+    public static Result getRateData(String room,String fromDate,String toDate,String currencyType) throws ParseException {
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		List<RateVM> list = new ArrayList<>();
+		List<RateMeta> rateMeta = RateMeta.searchRateMeta(currencyType, format.parse(fromDate), format.parse(toDate), HotelRoomTypes.findByName(room));
+		for(RateMeta rate:rateMeta) {
+			RateDetails rateDetails = RateDetails.findByRateMetaId(rate.getId());
+			List<PersonRate> personRate = PersonRate.findByRateMetaId(rate.getId());
+			List<CancellationPolicy> cancellation = CancellationPolicy.findByRateMetaId(rate.getId());
+			
+			RateVM rateVM = new RateVM();
+			rateVM.setCurrency(rate.getCurrency());
+			rateVM.setFromDate(format.format(rate.getFromDate()));
+			rateVM.setToDate(format.format(rate.getToDate()));
+			rateVM.setRoomType(rate.getRoomType().getRoomType());
+			rateVM.setSpecialRate(rateDetails.isSpecialRate());
+			rateVM.setRateName(rate.getRateName());
+			rateVM.setId(rate.getId());
+			
+			NormalRateVM normalRateVM = new NormalRateVM();
+			SpecialRateVM specialRateVM = new SpecialRateVM();
+			
+			for(PersonRate person:personRate) {
+				
+				if(person.isNormal() == true){
+					RateDetailsVM vm = new RateDetailsVM(person);
+					normalRateVM.rateDetails.add(vm);
+				}
+				
+				if(person.isNormal() == false) {
+					RateDetailsVM vm = new RateDetailsVM(person);
+					specialRateVM.rateDetails.add(vm);
+				}
+				
+			}
+				if(rateDetails.getSpecialDays() != null) {
+					String week[] = rateDetails.getSpecialDays().split(",");
+						for(String day:week) {
+							StringBuilder sb = new StringBuilder(day);
+							if(day.contains("[")) {
+								sb.deleteCharAt(sb.indexOf("["));
+							}
+							if(day.contains("]")) {
+								sb.deleteCharAt(sb.indexOf("]"));
+							}
+							if(day.contains(" ")) {
+								sb.deleteCharAt(sb.indexOf(" "));
+							}
+							specialRateVM.weekDays.add(sb.toString());
+							System.out.println(sb.toString());
+							if(sb.toString().equals("Sun")) {
+								specialRateVM.rateDay0 = true;
+							}
+							if(sb.toString().equals("Mon")) {
+								specialRateVM.rateDay1 = true;
+							}
+							if(sb.toString().equals("Tue")) {
+								specialRateVM.rateDay2 = true;
+							}
+							if(sb.toString().equals("Wed")) {
+								specialRateVM.rateDay3 = true;
+							}
+							if(sb.toString().equals("Thu")) {
+								specialRateVM.rateDay4 = true;
+							}
+							if(sb.toString().equals("Fri")) {
+								specialRateVM.rateDay5 = true;
+							}
+							if(sb.toString().equals("Sat")) {
+								specialRateVM.rateDay6 = true;
+							}
+						}
+				}
+				
+					for(CancellationPolicy cancel:cancellation) {
+						if(cancel.isNormal() == true){
+							CancellationPolicyVM vm = new CancellationPolicyVM(cancel);
+							rateVM.cancellation.add(vm);
+						}
+						if(cancel.isNormal() == false) {
+							CancellationPolicyVM vm = new CancellationPolicyVM(cancel);
+							specialRateVM.cancellation.add(vm);
+						}
+					}
+					
+				rateVM.setNormalRate(normalRateVM);
+				rateVM.setSpecial(specialRateVM);
+			
+				list.add(rateVM);
+		}
+		
+		return ok(Json.toJson(list));
+	}
 	
 	@Transactional(readOnly=true)
     public static Result fetchToEditHotelDetails(long supplierCode) {
@@ -449,5 +643,173 @@ public static void createRootDir() {
 		
 	}
 	
+	///////
+	@Transactional(readOnly = true)
+	public static Result getMarketGroup(long id) {
+		List<Country> country = Country.getCountries();
+		List<MarketVM> group = new ArrayList<MarketVM>();
+		for (Country c : country) {
+			MarketVM marketvm = new MarketVM();
+			CountryVM countryvm = new CountryVM();
+			countryvm.countryCode = c.getCountryCode();
+			countryvm.countryName = c.getCountryName();
+
+			List<CityVM> cityvm = new ArrayList<CityVM>();
+			List<City> city = City.getCities(c.getCountryCode());
+			for (City _city : city) {
+				
+				CityVM _cityvm = new CityVM();
+				_cityvm.id = _city.getCityCode();
+				_cityvm.cityCountryCode = _city.getCountry().getCountryCode();
+				_cityvm.cityName = _city.getCityName();
+				
+				RateMeta rates = RateMeta.getRatesById(id);
+				for(City cty : rates.getCities()){
+					if(cty.getCityCode() == _city.getCityCode()){
+						_cityvm.tick = true;
+						break;
+					}else{
+						_cityvm.tick = false;
+					}
+						
+				}
+				cityvm.add(_cityvm);
+			}
+			countryvm.cityvm = cityvm;
+			marketvm.country = countryvm;
+			group.add(marketvm);
+		}
+		return ok(Json.toJson(group));
+	}
+	
+	public static class MarketVM {
+		public CountryVM country;
+
+	}
+
+	public static class CountryVM {
+		public int countryCode;
+		public String countryName;
+		public List<CityVM> cityvm;
+	}
+
+	public static class CityVM {
+		public int id;
+		public int cityCountryCode;
+		public String cityName;
+		public boolean tick;
+
+	}
+	
+	public static class SelectedCityVM {
+
+		public String name;
+		public int countryCode;
+		public boolean ticked;
+
+	}
+	public static class VM {
+		public int id;
+		public List<SelectedCityVM> city = new ArrayList<SelectedCityVM>();
+	}
+	
+
+	@Transactional(readOnly = false)
+	public static Result setCitySelection() {
+		//JsonNode json = request().body().asJson().get("id");
+		JsonNode jn = request().body().asJson();
+		//System.out.println(json.asInt());
+		//jn.as
+		
+		VM c = Json.fromJson(jn, VM.class);
+		int ratesId  = c.id;
+		List<SelectedCityVM> city = c.city;
+		RateMeta rates = RateMeta.getRatesById(ratesId);
+		
+		if(rates != null && rates.getCities() != null && !rates.getCities().isEmpty())
+		{
+			rates.getCities().removeAll(rates.getCities());
+			//JPA.em().merge(rates);
+		}
+		
+		List<City> listCity = new ArrayList<>();
+		for(SelectedCityVM cityvm : city){
+			City _city = City.getCitiByName(cityvm.name);
+			
+			if(cityvm.ticked){
+				listCity.add(_city);
+			}
+		}
+		rates.setCities(listCity);
+		return ok();
+
+	}
+
+	
+	@Transactional(readOnly = false)
+	public static Result setCountrySelection(String name, int ratesId) {
+		
+		List<Map> list = new ArrayList<>();
+		Country country = Country.getCountryByName(name);
+		List<City> cityList = City.getCities(country.getCountryCode());
+		RateMeta rates = RateMeta.getRatesById(ratesId);
+		/*if(rates != null && rates.getCities() != null && !rates.getCities().isEmpty()) {
+			rates.getCities().removeAll(rates.getCities());
+		}*/
+	
+		if (cityList != null && cityList.size() != 0) {
+			if (rates.getCities() != null && rates.getCities().size() != 0 ) {
+				if (cityList.size() == rates.getCities().size()) {
+
+					//
+					rates.getCities().removeAll(rates.getCities());
+					//seteSelectionByCondition(cityList, false);
+					for (City c : cityList) {
+						Map cityMap = new HashMap<>();
+						City _c = City.getCityByCode(c.getCityCode());
+						cityMap.put("code",_c.getCountry().getCountryCode());
+						cityMap.put("value", false);
+						list.add(cityMap);
+					}
+					
+				} else {
+					rates.getCities().removeAll(rates.getCities());
+					rates.setCities(cityList);
+					//seteSelectionByCondition(cityList, true);
+					for (City c : cityList) {
+						Map cityMap = new HashMap<>();
+						City _c = City.getCityByCode(c.getCityCode());
+						cityMap.put("code",_c.getCountry().getCountryCode());
+						cityMap.put("value", true);
+						list.add(cityMap);
+					}
+				}
+
+			} else {
+				//rates.getCities().removeAll(rates.getCities());
+				rates.setCities(cityList);
+				for (City c : cityList) {
+					Map cityMap = new HashMap<>();
+					City _c = City.getCityByCode(c.getCityCode());
+					cityMap.put("code",_c.getCountry().getCountryCode());
+					cityMap.put("value", true);
+					list.add(cityMap);
+				}
+			}
+
+		}
+		return ok(Json.toJson(list));
+	}
+	@Transactional(readOnly = true)
+	public static Result getCountryCode(String name){
+		City city = City.getCitiByName(name);
+		int id =0;
+		if(city.getCountry() != null){
+			id = city.getCountry().getCountryCode();
+		}
+		return ok(Json.toJson(id));
+	}
 	
 }
+
+

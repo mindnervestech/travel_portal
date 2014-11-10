@@ -1,5 +1,7 @@
 package com.travelportal.domain.rooms;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
@@ -31,7 +34,14 @@ public class PersonRate {
 	private MealType mealType;
 	@OneToOne
 	private RateMeta rate;
+	private boolean isNormal;
 	
+	public boolean isNormal() {
+		return isNormal;
+	}
+	public void setNormal(boolean isNormal) {
+		this.isNormal = isNormal;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -68,6 +78,20 @@ public class PersonRate {
 	public void setRate(RateMeta rate) {
 		this.rate = rate;
 	}
+	
+	public static List<PersonRate> findByRateMetaId(Long id) {
+    	Query query = JPA.em().createQuery("Select p from PersonRate p where p.rate.id = ?1");
+		query.setParameter(1, id);
+    	return (List<PersonRate>) query.getResultList();
+    }
+	
+	public static PersonRate findByRateMetaIdAndNormal(Long id,boolean isNormal,String numberOfPersons) {
+    	Query query = JPA.em().createQuery("Select p from PersonRate p where p.rate.id = ?1 and p.isNormal = ?2 and p.numberOfPersons = ?3");
+		query.setParameter(1, id);
+		query.setParameter(2, isNormal);
+		query.setParameter(3, numberOfPersons);
+    	return (PersonRate) query.getSingleResult();
+    }
 	
 	@Transactional
     public void save() {
