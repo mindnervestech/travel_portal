@@ -1,49 +1,3 @@
-<!-- ------------------------------------------- -->						
-
-    <!-- 
-    <script type="text/javascript">
-var directionsDisplay;
-var directionsService = new google.maps.DirectionsService();
-var map;
-
-function initialize() {
-  directionsDisplay = new google.maps.DirectionsRenderer();
-  var chicago = new google.maps.LatLng(41.850033, -87.6500523);
-  var mapOptions = {
-    zoom:7,
-    center: chicago
-  };
-  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  directionsDisplay.setMap(map);
-}
-
-function calcRoute() {
-	console.log("call");
-  var start = document.getElementById('start').value;
-  var end = document.getElementById('end').value;
-  var request = {
-      origin:start,
-      destination:end,
-      travelMode: google.maps.TravelMode.DRIVING
-  };
-  directionsService.route(request, function(response, status) {
-    if (status == google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(response);
-    }
-  });
-}
-
-google.maps.event.addDomListener(window, 'load', initialize());
-
-    </script>
-    
-	<div id="map-canvas"></div>   -->
- 
-   
- 
-
-<!-- ----------------------------------------------------- -->
-
 <div class="panel panel-green">
 	<div class="panel-heading clearfix">
 		<span class="mts pull-left">HOTEL SUPPLIER PROFILE</span>
@@ -86,8 +40,7 @@ google.maps.event.addDomListener(window, 'load', initialize());
 						</ul>
 	  
 						
-						<div id="myTabContent2" class="tab-content"
-							style="padding-top: 5px;">
+						<div id="myTabContent2" class="tab-content">
 							<form method="post" ng-submit="savetranspotDire()" role="form" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
@@ -106,9 +59,15 @@ When using the Distance Km/Miles area and you need to use Decimal like 0.5 use P
 		
 		<div class="form-group">
 				<div>
-				<label style="margin-left: 6%;">Loaction</label>
-				<label style="margin-left: 17%;">Loaction Address</label>
-				<label style="margin-left: 12%;">Get Map</label>
+				<div class="col-md-1 col-md-offset-1">
+				<label>Loaction</label>
+				</div>
+				<div class="col-md-3 col-md-offset-1">
+				<label>Loaction Address</label>
+				</div>
+				<div class="col-md-3 col-md-offset-1">
+				<label>Get Map</label>
+				</div>
 				
 				</div>
 				</div>
@@ -125,7 +84,7 @@ When using the Distance Km/Miles area and you need to use Decimal like 0.5 use P
 				</div>
 				
 				<div class="col-md-1">
-				<a ng-click="findmap(find)" data-toggle="modal" style="cursor: pointer;"  data-toggle="modal"><img src="/assets/images/map.jpg" style="width: 100%;float: left;"></a><br><br>
+				<a ng-click="findmap(find)" data-toggle="modal" style="cursor: pointer;"  data-toggle="modal"><img src="/assets/images/map.jpg" class="mapSize"></a><br><br>
 				</div>
 				
 			
@@ -146,15 +105,16 @@ When using the Distance Km/Miles area and you need to use Decimal like 0.5 use P
 					<br>
 		 </div>
 			
-		 
-				
-		<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
 		
-		
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-                  
 	</div>
+	 
+				
+		<hr class="mtxxl mbxxl" style="border-color: black;">
+		
+		
+		     <div class="col-md-3 col-md-offset-7">
+                 <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
 </form>
 
 						</div>
@@ -170,21 +130,4 @@ When using the Distance Km/Miles area and you need to use Decimal like 0.5 use P
 	
 </script>
 
- <style>
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
-      }
-      #panel {
-        position: absolute;
-        top: 5px;
-        left: 50%;
-        margin-left: -180px;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-      }
-    </style>
  

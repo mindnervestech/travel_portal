@@ -61,7 +61,7 @@
 			    	</div>
 		</div>
 		</div>
-		 <div class="col-md-6">
+		<!--  <div class="col-md-6">
 		<div class="form-group">
 			<label class="col-md-7 col-md-offset-1"><b>Please Select Rate:</b></label>
 				<div class="col-md-8 col-md-offset-1">
@@ -70,11 +70,16 @@
 					</select>
 				</div>
 		</div>
-		</div>
+		</div> -->
 		
 		</div>
 		
-		
+	
+		<div class="form-group">
+			 <div class="col-md-6 col-md-offset-9">
+		<input type="button" class="btn btn-primary" value="search" ng-click="searchAllotment()">
+	 	</div>
+	 	</div>
 	 	
 		
 		
@@ -87,7 +92,7 @@
 	<hr class="mtxxl mbxxl" style="border-color: black;">
 	
 	<div class="panel-body" > 
-		
+		<div ng-show="showallotent">
 		<div ng-repeat="allot in allotmentM">
 		<fieldset class="billinside">
 	
@@ -119,7 +124,7 @@
 						<div class="col-md-12">
 				
 						<div>
-						<input type="radio" data-ng-model="allot.allocation" value="1">
+						<input type="radio" data-ng-model="allot.allocation" ng-click="selectFreesell(allot)" value="1">
 						&nbsp; Free Sall
 						</div>
 						
@@ -160,7 +165,7 @@
 						
 						<div class="col-md-3">
 				
-						<input type="radio" data-ng-model="allot.allocation" value="2">
+						<input type="radio" data-ng-model="allot.allocation" ng-click="selectstopsell(allot)" value="2">
 						&nbsp; Stop Sell
 												
 				
@@ -237,6 +242,16 @@
 						
 						</div>		
 						
+						 <div class="col-md-6">
+					<div class="form-group">
+						<label class="col-md-7 col-md-offset-1"><b>Please Select Rate:</b></label>
+							<div class="col-md-8 col-md-offset-1">
+							<select class="form-control" data-ng-model="allot.rate" multiple required>
+								<option ng-repeat="rates in rate" value="{{rates.id}}" ng-selected="rates.isSelected == ($parent.$index+1)" ng-show="rates.isSelected == ($parent.$index+1) || rates.isSelected == 0" ng-click="changeIsSelected($parent.$index,$index)">{{rates.name}}</option>
+							</select>
+							</div>
+					</div>
+						</div>
 						
 
 						<div>
@@ -250,6 +265,7 @@
 		     <div class="form-group">
 		        <div class="col-md-6 col-md-offset-4">
 					<button class="btn btn-default" ng-click="newallotmentM($event)">Add Additional Allotment Market</button>
+				</div>
 				</div>
 				</div>
 		<hr class="mtxxl mbxxl" style="border-color: black;">

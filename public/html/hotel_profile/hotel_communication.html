@@ -38,8 +38,7 @@
 							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
 									SAFETY</a></li>
 						</ul>
-						<div id="myTabContent2" class="tab-content"
-							style="padding-top: 5px;">
+						<div id="myTabContent2" class="tab-content">
 							<form method="post" ng-submit="savecommunciat()" role="form" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
@@ -68,12 +67,12 @@
 					</div>
 				</div>
 			</div>
-			
-			<span ng-show="comunicationhotel.primaryEmailAddr !== comunicationhotel.Remail" style="margin-left: 28%;color: red;">E-mail have to match!</span>
-			
+			<div class="col-md-3 col-md-offset-3">
+			<span ng-show="comunicationhotel.primaryEmailAddr !== comunicationhotel.Remail" style="color: red;">E-mail have to match!</span>
+			</div>
 			<div class="col-md-12">
 			<label style="float: left;"><b>*Do you need to copy anyone else on each booking?</b></label>
-			 <div class="col-md-3" style="float: left;">
+			 <div class="col-md-3">
 							 <div style="position: relative;">
 								<input type="radio" name="val" data-ng-model="comunicationhotel.booking" value="Yes">
 								&nbsp; Yes
@@ -120,15 +119,19 @@
 					</div>
 				</div>
 			</div>
-			
-			<span ng-show="comunicationhotel.ccEmailAddr !== comunicationhotel.Rccmail" style="margin-left: 28%;color: red;">CC-Email have to match!</span>
-		    
-		     <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
-		     <div>
-		     <span ng-show="communciatsuccess" style="color: green;margin-left: 3%;">Hotel Communication Save Successfully</span>
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-                 </div>
+			<div class="col-md-4 col-md-offset-3">
+			<span ng-show="comunicationhotel.ccEmailAddr !== comunicationhotel.Rccmail" style="color: red;">CC-Email have to match!</span>
+			</div>
+		    </div>
 	</div>
+		     <hr class="mtxxl mbxxl" style="border-color: black;">
+		     <div class="form-group">
+		     <span ng-show="communciatsuccess" style="color: green;">Hotel Communication Save Successfully</span>
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+                 </div>
+                 </div>
+	
 </form>
 
 

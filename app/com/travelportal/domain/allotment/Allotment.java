@@ -23,6 +23,7 @@ import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelHealthAndSafety;
 import com.travelportal.domain.HotelMealPlan;
+import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.Rate;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.RoomChildPolicies;
@@ -125,6 +126,23 @@ public class Allotment {
 			return null;
 		}
     }
+	public static Allotment getRateById(Long supplierCode,int dateId,int currId,Long roomId) {/*List<Integer> rateid*/
+		
+		try
+		{
+			Query q = JPA.em().createQuery("select c from Allotment c where c.supplierCode = ?1  and c.DatePeriodId = ?2 and c.currencyId.id = ?3 and c.roomId.roomId = ?4");
+			q.setParameter(1, supplierCode);
+			q.setParameter(2, dateId);
+			q.setParameter(3, currId);
+			q.setParameter(4, roomId);
+		//	q.setParameter(5, rateid);
+			return(Allotment) q.getSingleResult();
+		}
+		catch(Exception ex){
+			return null;
+		}
+   }
+
 	
 	public static Allotment allotmentfindById(int Code) {
 		try

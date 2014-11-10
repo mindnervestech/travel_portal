@@ -12,7 +12,7 @@ angular.module('travel_portal').
 			$scope.hotelRoomTypes = response;
 		});
 		
-		$http.get('/allotmentAllData/'+supplierCode).success(function(response) {
+		/*$http.get('/allotmentAllData/'+supplierCode).success(function(response) {
 			
 			console.log(response);
 			
@@ -38,17 +38,79 @@ angular.module('travel_portal').
 				if(data) {
 					console.log(data.rate);		
 					$scope.rate = data.rate;
-				       
+					angular.forEach($scope.rate,function(value,key) { 
+						value.isSelected =0;
+					});
+					
+					$scope.allotmentMarket = response;
+					$scope.allotmentM = response.allotmentmarket;
+					for(var i=0;i<$scope.allotmentM.length;i++) {
+						angular.forEach($scope.allotmentM[i].rate,function(value1,key1) {
+							angular.forEach($scope.rate,function(value,key) {
+								console.log("rate id :"+value.id);
+								console.log("allot id :"+value1.id);
+								if(value1==value.id) {
+									value.isSelected = i+1;
+								}
+							});
+						});
+					}
+					$scope.allotmentM.allotmentId = response.allotmentId;
+					
+				    $scope.allotmentId = response.allotmentId;   
 				} else {
 					
 				}
 			});
 			
-			$scope.allotmentMarket = response;
-			$scope.allotmentM.allotmentId = response.allotmentId;
-			$scope.allotmentM = response.allotmentmarket;
-		    $scope.allotmentId = response.allotmentId;
-		});
+		});*/
+		
+		$scope.showallotent =false;
+		
+		$scope.searchAllotment = function()
+		{
+			console.log($scope.allotmentMarket);
+			$scope.allotmentMarket.supplierCode = supplierCode;
+			
+			$http.post('/getallmentMarket', $scope.allotmentMarket).success(function(response){
+				console.log('success');
+				console.log(response);
+				$scope.showallotent = true;
+				
+				$http.get('/getRates/'+$scope.allotmentMarket.datePeriodId)
+				.success(function(data){
+					if(data.rate.length>0) {
+						console.log(data.rate);		
+						$scope.rate = data.rate;
+						angular.forEach($scope.rate,function(value,key) { 
+							value.isSelected =0;
+						});
+						if(response!="") {
+							$scope.allotmentMarket = response;
+							$scope.allotmentM = response.allotmentmarket;
+							for(var i=0;i<$scope.allotmentM.length;i++) {
+								angular.forEach($scope.allotmentM[i].rate,function(value1,key1) {
+									angular.forEach($scope.rate,function(value,key) {
+										console.log("rate id :"+value.id);
+										console.log("allot id :"+value1.id);
+										if(value1==value.id) {
+											value.isSelected = i+1;
+										}
+									});
+								});
+							}
+							$scope.allotmentM.allotmentId = response.allotmentId;
+						    $scope.allotmentId = response.allotmentId;
+						}
+						
+					} else {
+						
+					}
+				});
+			}).error(function(response, status, headers, config) {
+				console.log('ERROR');
+			});
+		}
 		
 		$scope.selectType = function()
 		{
@@ -111,25 +173,45 @@ angular.module('travel_portal').
 				if(data) {
 					console.log(data.rate);		
 					$scope.rate = data.rate;
-				       
+				    angular.forEach($scope.rate,function(value,key) {
+				    	value.isSelected = 0;
+				    });   
 				} else {
 					
 				}
 			});
+		};
+		
+		
+		
+		$scope.changeIsSelected = function(pIndex,index) {
+			if($scope.rate[index].isSelected == 0) {
+				$scope.rate[index].isSelected = pIndex+1;
+			} else {
+				$scope.rate[index].isSelected = 0;
+			}
+		};
+		
+		
+		
+		
+		$scope.selectstopsell = function(allot)
+		{
+			
+			allot.period = null;
+			allot.choose = null;
+			
 		}
 		
-		
-		
-		
-		$scope.showspecifyAllot = function(specityallot)
+		$scope.selectFreesell = function(allot)
 		{
-			//alert(specityallot);
+			allot.choose = null;
 			
 		}
 		
 		$scope.allotmentMDeleteId = function(allot,index)
 		{
-			console.log( $scope.allotmentId);
+			console.log(allot);
 			
 			$http.get('/deleteAllotmentMarket/'+allot.allotmentMarketId+'/'+ $scope.allotmentId)
 			.success(function(){

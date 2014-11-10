@@ -38,8 +38,7 @@
 							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
 									SAFETY</a></li>
 						</ul>
-						<div id="myTabContent2" class="tab-content"
-							style="padding-top: 5px;">
+						<div id="myTabContent2" class="tab-content">
 							<form method="post" ng-submit="saveAreainfo()" role="form"
 								class="form-horizontal">
 								<div class="row">
@@ -55,10 +54,18 @@
 
 										<div class="form-group">
 											<div>
-												<label style="margin-left: 18%;">Name</label> <label
-													style="margin-left: 28%;">Distance</label> <label
-													style="margin-left: 7%;">Km/miles</label> <label
-													style="margin-left: 7%;">minutes</label>
+												<div class="col-md-2 col-md-offset-2">
+												<label>Name</label>
+												</div>
+													<div class="col-md-1 col-md-offset-2">
+												 <label>Distance</label>
+												 </div>
+												  	<div class="col-md-1 col-md-offset-1">
+												  <label>Km/miles</label>
+												  </div>
+												  	<div class="col-md-1 col-md-offset-1">
+												   <label>minutes</label>
+												   	</div>
 											</div>
 										</div>
 
@@ -72,7 +79,7 @@
 													data-ng-model="formArr[0].name" class="form-control"
 													required>
 											</div>
-											<div class="col-md-2" style="width: 13%;">
+											<div class="col-md-2 setwidth">
 												<input type="text" name="Distance"
 													data-ng-model="formArr[0].distance" class="form-control"
 													required>
@@ -87,7 +94,7 @@
 												</select>
 											</div>
 
-											<div class="col-md-2" style="width: 13%;">
+											<div class="col-md-2 setwidth">
 												<input type="text" name="minutes"
 													data-ng-model="formArr[0].minutes" class="form-control"
 													required>
@@ -103,7 +110,7 @@
 												<input type="text" name="Name"
 													data-ng-model="formArr[1].name" class="form-control">
 											</div>
-											<div class="col-md-2" style="width: 13%;">
+											<div class="col-md-2 setwidth">
 												<input type="text" name="Distance"
 													data-ng-model="formArr[1].distance" class="form-control">
 											</div>
@@ -116,7 +123,7 @@
 												</select>
 											</div>
 
-											<div class="col-md-2" style="width: 13%;">
+											<div class="col-md-2 setwidth">
 												<input type="text" name="minutes"
 													data-ng-model="formArr[1].minutes" class="form-control">
 											</div>
@@ -130,7 +137,7 @@
 												<input type="text" name="Name"
 													data-ng-model="formArr[2].name" class="form-control">
 											</div>
-											<div class="col-md-2" style="width: 13%;">
+											<div class="col-md-2 setwidth">
 												<input type="text" name="Distance"
 													data-ng-model="formArr[2].distance" class="form-control">
 											</div>
@@ -143,7 +150,7 @@
 												</select>
 											</div>
 
-											<div class="col-md-2" style="width: 13%;">
+											<div class="col-md-2 setwidth">
 												<input type="text" name="minutes"
 													data-ng-model="formArr[2].minutes" class="form-control">
 											</div>
@@ -157,7 +164,7 @@
 												<input type="text" name="Name"
 													data-ng-model="formArr[3].name" class="form-control">
 											</div>
-											<div class="col-md-2" style="width: 13%;">
+											<div class="col-md-2 setwidth">
 												<input type="text" name="Distance"
 													data-ng-model="formArr[3].distance" class="form-control">
 											</div>
@@ -170,7 +177,7 @@
 												</select>
 											</div>
 
-											<div class="col-md-2" style="width: 13%;">
+											<div class="col-md-2 setwidth">
 												<input type="text" name="minutes"
 													data-ng-model="formArr[3].minutes" class="form-control">
 											</div>
@@ -186,7 +193,7 @@
 													<input type="text" name="Name"
 														data-ng-model="formArr[4].name" class="form-control">
 												</div>
-												<div class="col-md-2" style="width: 13%;">
+												<div class="col-md-2 setwidth">
 													<input type="text" name="Distance"
 														data-ng-model="formArr[4].distance" class="form-control">
 												</div>
@@ -199,7 +206,7 @@
 													</select>
 												</div>
 
-												<div class="col-md-2" style="width: 13%;">
+												<div class="col-md-2 setwidth">
 													<input type="text" name="minutes"
 														data-ng-model="formArr[4].minutes" class="form-control">
 												</div>
@@ -214,7 +221,7 @@
 													<input type="text" name="Name"
 														data-ng-model="formArr[5].name" class="form-control">
 												</div>
-												<div class="col-md-2" style="width: 13%;">
+												<div class="col-md-2 setwidth">
 													<input type="text" name="Distance"
 														data-ng-model="formArr[5].distance" class="form-control">
 												</div>
@@ -227,7 +234,7 @@
 													</select>
 												</div>
 
-												<div class="col-md-2" style="width: 13%;">
+												<div class="col-md-2 setwidth">
 													<input type="text" name="minutes"
 														data-ng-model="formArr[5].minutes" class="form-control">
 												</div>
@@ -242,7 +249,7 @@
 													<input type="text" name="Name"
 														data-ng-model="formArr[6].name" class="form-control">
 												</div>
-												<div class="col-md-2" style="width: 13%;">
+												<div class="col-md-2 setwidth">
 													<input type="text" name="Distance"
 														data-ng-model="formArr[6].distance" class="form-control">
 												</div>
@@ -255,7 +262,7 @@
 													</select>
 												</div>
 
-												<div class="col-md-2" style="width: 13%;">
+												<div class="col-md-2 setwidth">
 													<input type="text" name="minutes"
 														data-ng-model="formArr[6].minutes" class="form-control">
 												</div>
@@ -270,7 +277,7 @@
 													<input type="text" name="Name"
 														data-ng-model="formArr[7].name" class="form-control">
 												</div>
-												<div class="col-md-2" style="width: 13%;">
+												<div class="col-md-2 setwidth">
 													<input type="text" name="Distance"
 														data-ng-model="formArr[7].distance" class="form-control">
 												</div>
@@ -283,7 +290,7 @@
 													</select>
 												</div>
 
-												<div class="col-md-2" style="width: 13%;">
+												<div class="col-md-2 setwidth">
 													<input type="text" name="minutes"
 														data-ng-model="formArr[7].minutes" class="form-control">
 												</div>
@@ -298,7 +305,7 @@
 													<input type="text" name="Name"
 														data-ng-model="formArr[8].name" class="form-control">
 												</div>
-												<div class="col-md-2" style="width: 13%;">
+												<div class="col-md-2 setwidth">
 													<input type="text" name="Distance"
 														data-ng-model="formArr[8].distance" class="form-control">
 												</div>
@@ -311,7 +318,7 @@
 													</select>
 												</div>
 
-												<div class="col-md-2" style="width: 13%;">
+												<div class="col-md-2 setwidth">
 													<input type="text" name="minutes"
 														data-ng-model="formArr[8].minutes" class="form-control">
 												</div>
@@ -326,7 +333,7 @@
 													<input type="text" name="Name"
 														data-ng-model="formArr[9].name" class="form-control">
 												</div>
-												<div class="col-md-2" style="width: 13%;">
+												<div class="col-md-2 setwidth">
 													<input type="text" name="Distance"
 														data-ng-model="formArr[9].distance" class="form-control">
 												</div>
@@ -339,7 +346,7 @@
 													</select>
 												</div>
 
-												<div class="col-md-2" style="width: 13%;">
+												<div class="col-md-2 setwidth">
 													<input type="text" name="minutes"
 														data-ng-model="formArr[9].minutes" class="form-control">
 												</div>
@@ -352,21 +359,22 @@
 
 									</div>
 
-									<hr class="mtxxl mbxxl"
-										style="border-color: black; float: left; width: 99%;">
+							</div>
+									<hr class="mtxxl mbxxl" style="border-color: black;">
 
 
-									<div>
+									<div class="form-group">
 										<span ng-show="attractionfind"
-											style="color: green; margin-left: 3%;">Area Attraction
+											style="color: green;">Area Attraction
 											Save successfully</span> <span ng-show="attractionnotfind"
-											style="color: red; margin-left: 3%;">Any one Area
+											style="color: red;">Any one Area
 											allready exists</span>
-										<button type="submit" class="btn btn-primary"
-											style="margin-left: 84%;">Save</button>
+											<div class="col-md-2 col-md-offset-9">
+										<button type="submit" class="btn btn-primary">Save</button>
+											</div>
 									</div>
 
-								</div>
+								
 							</form>
 
 

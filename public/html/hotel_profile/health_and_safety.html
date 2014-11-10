@@ -39,8 +39,7 @@
 							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
 									SAFETY</a></li>
 						</ul>
-						<div id="myTabContent2" class="tab-content"
-							style="padding-top: 5px;">
+						<div id="myTabContent2" class="tab-content">
 							<!-- <form method="post" ng-submit="saveHealthSafety()" role="form" class="form-horizontal"> -->
 	<div class="row">
 		<div class="col-md-12">
@@ -53,19 +52,19 @@
 		<div class="tabbable">
 			
             <ul class="nav nav-pills" id="myTab" style="font-size: small;">
-              <li class="active" style="height: 34px;border-right: 1px solid black;"><a href="#documentation" data-toggle="tab" style="padding: 7px 5px;">Documentation</a></li>
-              <li style="height: 34px;"><a href="#Step1" data-toggle="tab" style="padding: 7px 5px;">Fire Precautions</a></li>
-              <li style="height: 34px;"><a href="#Step2" data-toggle="tab" style="padding: 7px 5px;">Exits and Corridors</a></li>
-              <li style="height: 34px;"><a href="#Step3" data-toggle="tab" style="padding: 7px 5px;">Air Conditioning / Heating</a></li>
-              <li style="height: 34px;"><a href="#Step4" data-toggle="tab" style="padding: 7px 5px;">Lifts</a></li>
-              <li style="height: 34px;"><a href="#Step5" data-toggle="tab" style="padding: 7px 5px;">Bedrooms and Balconies</a></li>
-              <li style="height: 34px;"><a href="#Step6" data-toggle="tab" style="padding: 7px 5px;">Kitchen's and Hygiene</a></li>
-              <li style="height: 34px;"><a href="#Step7" data-toggle="tab" style="padding: 7px 5px;">Children's Facilities</a></li>
-              <li style="height: 34px;"><a href="#Step8" data-toggle="tab" style="padding: 7px 5px;">Swimming Pool</a></li>
-              <li style="height: 34px;"><a href="#Step9" data-toggle="tab" style="padding: 7px 5px;">Gas Water Heaters</a></li>
-              <li style="height: 34px;"><a href="#Step10" data-toggle="tab" style="padding: 7px 5px;">CCTV Status</a></li>
-              <li style="height: 34px;"><a href="#Step11" data-toggle="tab" style="padding: 7px 5px;">Additional information</a></li>
-              <li style="height: 34px;"><a href="#Step12" data-toggle="tab" style="padding: 7px 5px;">Documents</a></li>
+              <li class="active menu-li"><a href="#documentation" data-toggle="tab" style="padding: 7px 5px;">Documentation</a></li>
+              <li class="menu-li"><a href="#Step1" data-toggle="tab" style="padding: 7px 5px;">Fire Precautions</a></li>
+              <li class="menu-li"><a href="#Step2" data-toggle="tab" style="padding: 7px 5px;">Exits and Corridors</a></li>
+              <li class="menu-li"><a href="#Step3" data-toggle="tab" style="padding: 7px 5px;">Air Conditioning / Heating</a></li>
+              <li class="menu-li"><a href="#Step4" data-toggle="tab" style="padding: 7px 5px;">Lifts</a></li>
+              <li class="menu-li"><a href="#Step5" data-toggle="tab" style="padding: 7px 5px;">Bedrooms and Balconies</a></li>
+              <li class="menu-li"><a href="#Step6" data-toggle="tab" style="padding: 7px 5px;">Kitchen's and Hygiene</a></li>
+              <li class="menu-li"><a href="#Step7" data-toggle="tab" style="padding: 7px 5px;">Children's Facilities</a></li>
+              <li class="menu-li"><a href="#Step8" data-toggle="tab" style="padding: 7px 5px;">Swimming Pool</a></li>
+              <li class="menu-li"><a href="#Step9" data-toggle="tab" style="padding: 7px 5px;">Gas Water Heaters</a></li>
+              <li class="menu-li"><a href="#Step10" data-toggle="tab" style="padding: 7px 5px;">CCTV Status</a></li>
+              <li class="menu-li"><a href="#Step11" data-toggle="tab" style="padding: 7px 5px;">Additional information</a></li>
+              <li class="menu-li"><a href="#Step12" data-toggle="tab" style="padding: 7px 5px;">Documents</a></li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane active" id="documentation">
@@ -77,10 +76,10 @@
 					<div class="col-md-12">
 					
 		                <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Public Liability or indemnity insurance:</label>
+							<label class="col-md-7 col-md-offset-1">Public Liability or indemnity insurance:</label>
 								<div class="col-md-3">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="publicLiability" data-ng-model="HealthSafety.publicLiability" value="true">
 									&nbsp; Yes
 									</div>
@@ -92,10 +91,10 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Fire Risk Assessment / Certificate:</label>
+							<label class="col-md-7 col-md-offset-1">Fire Risk Assessment / Certificate:</label>
 								<div class="col-md-3">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="fireRisk" data-ng-model="HealthSafety.fireRisk" value="true">
 									&nbsp; Yes
 									</div>
@@ -107,10 +106,10 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Local Tourist authority license:</label>
+							<label class="col-md-7 col-md-offset-1">Local Tourist authority license:</label>
 								<div class="col-md-3">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="localTourist" data-ng-model="HealthSafety.localTourist" value="true">
 									&nbsp; Yes
 									</div>
@@ -122,10 +121,10 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Internal fire alarm testing logs:</label>
+							<label class="col-md-7 col-md-offset-1">Internal fire alarm testing logs:</label>
 								<div class="col-md-3">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="internalFire" data-ng-model="HealthSafety.internalFire" value="true">
 									&nbsp; Yes
 									</div>
@@ -137,10 +136,10 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">HACCP certificate:</label>
+							<label class="col-md-7 col-md-offset-1">HACCP certificate:</label>
 								<div class="col-md-3">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="haccpCertify" data-ng-model="HealthSafety.haccpCertify" value="true">
 									&nbsp; Yes
 									</div>
@@ -152,10 +151,10 @@
 			             </div>		
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Staff training records for fire evacuation procedures:</label>
+							<label class="col-md-7 col-md-offset-1">Staff training records for fire evacuation procedures:</label>
 								<div class="col-md-3">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="recordsForFire" data-ng-model="HealthSafety.recordsForFire" value="true">
 									&nbsp; Yes
 									</div>
@@ -167,10 +166,10 @@
 			             </div>		
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Staff training records for health & hygiene:</label>
+							<label class="col-md-7 col-md-offset-1">Staff training records for health & hygiene:</label>
 								<div class="col-md-3">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="recordsForHealth" data-ng-model="HealthSafety.recordsForHealth" value="true">
 									&nbsp; Yes
 									</div>
@@ -181,7 +180,7 @@
 								</div>
 			             </div>		
 			             
-			             <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+			             <hr class="mtxxl mbxxl" style="border-color: black;">
 			             
 			             <div class="form-group">
 							<label class="col-md-3 control-label"> Expiry Date:</label>
@@ -199,12 +198,12 @@
 								</div>
 						 </div> 
 						 
-						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+						 <hr class="mtxxl mbxxl" style="border-color: black;">
 		
 		
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-		    
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+		    </div>
 		    	    </div>
 			    </div>
 			
@@ -218,14 +217,14 @@
 					<div class="col-md-12">
 					
 		                <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Does the hotel have a working fire alarm:</label>
+							<label class="col-md-7 col-md-offset-1">Does the hotel have a working fire alarm:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="workingFireAlarm" data-ng-model="FirePrecaution.workingFireAlarm" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="workingFireAlarm" data-ng-model="FirePrecaution.workingFireAlarm" value="false">
 									&nbsp; No
 									</div> 
@@ -237,14 +236,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are there smoke detectors in public areas:</label>
+							<label class="col-md-7 col-md-offset-1">Are there smoke detectors in public areas:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="smokeDetectorsInPublicArea" data-ng-model="FirePrecaution.smokeDetectorsInPublicArea" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="smokeDetectorsInPublicArea" data-ng-model="FirePrecaution.smokeDetectorsInPublicArea" value="false">
 									&nbsp; No
 									</div> 
@@ -256,14 +255,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are there smoke detectors in guest bedrooms:</label>
+							<label class="col-md-7 col-md-offset-1">Are there smoke detectors in guest bedrooms:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="smokeDetectorsInGuestBedroom" data-ng-model="FirePrecaution.smokeDetectorsInGuestBedroom" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="smokeDetectorsInGuestBedroom" data-ng-model="FirePrecaution.smokeDetectorsInGuestBedroom" value="false">
 									&nbsp; No
 									</div> 
@@ -275,14 +274,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are there smoke detectors in apartments (where applicable):</label>
+							<label class="col-md-7 col-md-offset-1">Are there smoke detectors in apartments (where applicable):</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="smokeDetectorsInApartment" data-ng-model="FirePrecaution.smokeDetectorsInApartment" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="smokeDetectorsInApartment" data-ng-model="FirePrecaution.smokeDetectorsInApartment" value="false">
 									&nbsp; No
 									</div> 
@@ -294,14 +293,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Does the supplier service the system at least annually:</label>
+							<label class="col-md-7 col-md-offset-1">Does the supplier service the system at least annually:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="systemAtLeastAnnually" data-ng-model="FirePrecaution.systemAtLeastAnnually" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="systemAtLeastAnnually" data-ng-model="FirePrecaution.systemAtLeastAnnually" value="false">
 									&nbsp; No
 									</div> 
@@ -313,14 +312,14 @@
 			             </div>		
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do you carry out regular internal fire alarm tests:</label>
+							<label class="col-md-7 col-md-offset-1">Do you carry out regular internal fire alarm tests:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="internalFireAlarmTest" data-ng-model="FirePrecaution.internalFireAlarmTest" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="internalFireAlarmTest" data-ng-model="FirePrecaution.internalFireAlarmTest" value="false">
 									&nbsp; No
 									</div> 
@@ -332,14 +331,14 @@
 			             </div>		
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are there fire extinguishers in all public areas:</label>
+							<label class="col-md-7 col-md-offset-1">Are there fire extinguishers in all public areas:</label>
 							<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="extinguishersInAllArea" data-ng-model="FirePrecaution.extinguishersInAllArea" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="extinguishersInAllArea" data-ng-model="FirePrecaution.extinguishersInAllArea" value="false">
 									&nbsp; No
 									</div> 
@@ -350,14 +349,14 @@
 								</div>
 			             </div>	
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is emergency lighting installed in the property:</label>
+							<label class="col-md-7 col-md-offset-1">Is emergency lighting installed in the property:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="emergencyLightingInstall" data-ng-model="FirePrecaution.emergencyLightingInstall" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="emergencyLightingInstall" data-ng-model="FirePrecaution.emergencyLightingInstall" value="false">
 									&nbsp; No
 									</div> 
@@ -368,14 +367,14 @@
 								</div>
 			             </div>		
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Can a person of limited walking abilities access the hotel and grounds:</label>
+							<label class="col-md-7 col-md-offset-1">Can a person of limited walking abilities access the hotel and grounds:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="limitedWalkingAbilities" data-ng-model="FirePrecaution.limitedWalkingAbilities" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="limitedWalkingAbilities" data-ng-model="FirePrecaution.limitedWalkingAbilities" value="false">
 									&nbsp; No
 									</div> 
@@ -387,11 +386,11 @@
 			             </div>			
 			             
 			           
-						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+						 <hr class="mtxxl mbxxl" style="border-color: black;">
 				
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-		    
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+		    </div>
 		    	    </div>
 			    </div>
 			
@@ -405,12 +404,12 @@
 					<div class="col-md-12">
 					
 						 <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">
+							<label class="col-md-7 col-md-offset-1">
 							How many exits does the property have? (Including the main door and emergency exits):	
 							</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="text" name="HowManyExits" data-ng-model="ExitsAndCorridor.howManyExits">
 									</div>
 									
@@ -419,14 +418,14 @@
 					
 					
 		                <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are these exits unlocked at all times:</label>
+							<label class="col-md-7 col-md-offset-1">Are these exits unlocked at all times:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="unlockedAtAllTime" data-ng-model="ExitsAndCorridor.unlockedAtAllTime" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="unlockedAtAllTime" data-ng-model="ExitsAndCorridor.unlockedAtAllTime" value="false">
 									&nbsp; No
 									</div> 
@@ -438,14 +437,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are exits clearly signed as such? I.e. FIRE EXIT:</label>
+							<label class="col-md-7 col-md-offset-1">Are exits clearly signed as such? I.e. FIRE EXIT:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="exitsClearlySigned" data-ng-model="ExitsAndCorridor.exitsClearlySigned" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="exitsClearlySigned" data-ng-model="ExitsAndCorridor.exitsClearlySigned" value="false">
 									&nbsp; No
 									</div> 
@@ -457,14 +456,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are exit routes illuminated by emergency lighting:</label>
+							<label class="col-md-7 col-md-offset-1">Are exit routes illuminated by emergency lighting:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="routesIlluminated" data-ng-model="ExitsAndCorridor.routesIlluminated" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="routesIlluminated" data-ng-model="ExitsAndCorridor.routesIlluminated" value="false">
 									&nbsp; No
 									</div> 
@@ -476,14 +475,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there more than one usable staircase from all floors:</label>
+							<label class="col-md-7 col-md-offset-1">Is there more than one usable staircase from all floors:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="usableStaircaseFromAllFloors" data-ng-model="ExitsAndCorridor.usableStaircaseFromAllFloors" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="usableStaircaseFromAllFloors" data-ng-model="ExitsAndCorridor.usableStaircaseFromAllFloors" value="false">
 									&nbsp; No
 									</div> 
@@ -495,11 +494,11 @@
 			             </div>	
 			             
 			           
-						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+						 <hr class="mtxxl mbxxl" style="border-color: black;">
 				
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-		    
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+		    </div>
 		    	    </div>
 			    </div>
                   </form>
@@ -513,21 +512,21 @@
 					<div class="col-md-12">
 					
 						 <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;">							
+							<label class="col-md-7 control-label">							
 								What type of air conditioning does the property have?	
 							</label>
 								
 			             </div>	
 					              
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> Central:</label>
+							<label class="col-md-7 col-md-offset-1"> Central:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="central" data-ng-model="AirCondition.central" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="central" data-ng-model="AirCondition.central" value="false">
 									&nbsp; No
 									</div> 
@@ -539,14 +538,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> Independent units:</label>
+							<label class="col-md-7 col-md-offset-1"> Independent units:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="independentUnits" data-ng-model="AirCondition.independentUnits" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="independentUnits" data-ng-model="AirCondition.independentUnits" value="false">
 									&nbsp; No
 									</div> 
@@ -558,11 +557,11 @@
 			             </div>	
 			             
 			           
-						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+						 <hr class="mtxxl mbxxl" style="border-color: black;">
 				
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-		    
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+		    </div>
 		    	    </div>
 			    </div>
                    </form>
@@ -577,14 +576,14 @@
 					
 											              
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are ALL floors accessible via lift:</label>
+							<label class="col-md-7 col-md-offset-1">Are ALL floors accessible via lift:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="floorsAccessible" data-ng-model="Lifts.floorsAccessible" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="floorsAccessible" data-ng-model="Lifts.floorsAccessible" value="false">
 									&nbsp; No
 									</div> 
@@ -596,14 +595,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do all lifts have internal closing doors:</label>
+							<label class="col-md-7 col-md-offset-1">Do all lifts have internal closing doors:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="internalClosingDoor" data-ng-model="Lifts.internalClosingDoor" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="internalClosingDoor" data-ng-model="Lifts.internalClosingDoor" value="false">
 									&nbsp; No
 									</div> 
@@ -615,14 +614,14 @@
 			             </div>	
 			             
 			             <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> If NO, is there relevant signage displayed to warn guests:</label>
+							<label class="col-md-7 col-md-offset-1"> If NO, is there relevant signage displayed to warn guests:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="relevantSignageDisplay" data-ng-model="Lifts.relevantSignageDisplay" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="relevantSignageDisplay" data-ng-model="Lifts.relevantSignageDisplay" value="false">
 									&nbsp; No
 									</div> 
@@ -644,14 +643,14 @@
 			             
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">  No Smoking:</label>
+							<label class="col-md-7 col-md-offset-1">  No Smoking:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="noSmoking" data-ng-model="Lifts.noSmoking" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="noSmoking" data-ng-model="Lifts.noSmoking" value="false">
 									&nbsp; No
 									</div> 
@@ -663,14 +662,14 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">   No Unaccompanied Children:</label>
+							<label class="col-md-7 col-md-offset-1">   No Unaccompanied Children:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="Lifts.noUnaccompaniedChildren" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="Lifts.noUnaccompaniedChildren" value="false">
 									&nbsp; No
 									</div> 
@@ -682,14 +681,14 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> Do Not Use In The Event of Fire:</label>
+							<label class="col-md-7 col-md-offset-1"> Do Not Use In The Event of Fire:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="eventOfFire" data-ng-model="Lifts.eventOfFire" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="eventOfFire" data-ng-model="Lifts.eventOfFire" value="false">
 									&nbsp; No
 									</div> 
@@ -701,11 +700,11 @@
 			             </div>
 			             
 			           
-						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+						 <hr class="mtxxl mbxxl" style="border-color: black;">
 				
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-		    
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+		    </div>
 		    	    </div>
 			    </div>
                  </form>
@@ -719,14 +718,14 @@
 					
 											              
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are there fire safety instructions posted in guest rooms:</label>
+							<label class="col-md-7 col-md-offset-1">Are there fire safety instructions posted in guest rooms:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="fireSafetyInstructionsPosted" data-ng-model="Bedrooms.fireSafetyInstructionsPosted" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="fireSafetyInstructionsPosted" data-ng-model="Bedrooms.fireSafetyInstructionsPosted" value="false">
 									&nbsp; No
 									</div> 
@@ -738,14 +737,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do electrics automatically disconnect when guests leave the room:</label>
+							<label class="col-md-7 col-md-offset-1">Do electrics automatically disconnect when guests leave the room:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="electricsAutomaticallyDisconnect" data-ng-model="Bedrooms.electricsAutomaticallyDisconnect" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="electricsAutomaticallyDisconnect" data-ng-model="Bedrooms.electricsAutomaticallyDisconnect" value="false">
 									&nbsp; No
 									</div> 
@@ -757,14 +756,14 @@
 			             </div>	
 			             
 			             <div class="form-group">
-						<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do any rooms have balconies?:</label>
+						<label class="col-md-7 col-md-offset-1">Do any rooms have balconies?:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="roomsHaveBalconies" data-ng-model="Bedrooms.roomsHaveBalconies" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="roomsHaveBalconies" data-ng-model="Bedrooms.roomsHaveBalconies" value="false">
 									&nbsp; No
 									</div> 
@@ -777,14 +776,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> If YES, are all balconies at least 1m in height:</label>
+							<label class="col-md-7 col-md-offset-1"> If YES, are all balconies at least 1m in height:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="balconiesAtLeast1m" data-ng-model="Bedrooms.balconiesAtLeast1m" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="balconiesAtLeast1m" data-ng-model="Bedrooms.balconiesAtLeast1m" value="false">
 									&nbsp; No
 									</div> 
@@ -796,14 +795,14 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> Are any gaps greater than 10cm:</label>
+							<label class="col-md-7 col-md-offset-1"> Are any gaps greater than 10cm:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="gapsGreaterThan10cm" data-ng-model="Bedrooms.gapsGreaterThan10cm" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="gapsGreaterThan10cm" data-ng-model="Bedrooms.gapsGreaterThan10cm" value="false">
 									&nbsp; No
 									</div> 
@@ -815,14 +814,14 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Does the hotel have any adjoining rooms:</label>
+							<label class="col-md-7 col-md-offset-1">Does the hotel have any adjoining rooms:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="anyAdjoiningRooms" data-ng-model="Bedrooms.anyAdjoiningRooms" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="anyAdjoiningRooms" data-ng-model="Bedrooms.anyAdjoiningRooms" value="false">
 									&nbsp; No
 									</div> 
@@ -834,12 +833,12 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">
+							<label class="col-md-7 col-md-offset-1">
 							If YES, how many:	
 							</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="text" name="howMany" data-ng-model="Bedrooms.howMany">
 									</div>
 									
@@ -847,11 +846,11 @@
 			             </div>	
 			             
 			           
-						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+						 <hr class="mtxxl mbxxl" style="border-color: black;">
 				
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-		    
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+		    </div>
 		    	    </div>
 			    </div>
                   </form>
@@ -866,14 +865,14 @@
 					
 											              
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Self-Catering Accommodation:</label>
+							<label class="col-md-7 col-md-offset-1">Self-Catering Accommodation:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="selfCateringAccommodation" data-ng-model="KitchenAndHygiene.selfCateringAccommodation" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="selfCateringAccommodation" data-ng-model="KitchenAndHygiene.selfCateringAccommodation" value="false">
 									&nbsp; No
 									</div> 
@@ -885,14 +884,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Where self-catering is available, are all kitchen appliances regularly serviced:</label>
+							<label class="col-md-7 col-md-offset-1">Where self-catering is available, are all kitchen appliances regularly serviced:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="allKitchenAppliancesRegularly" data-ng-model="KitchenAndHygiene.allKitchenAppliancesRegularly" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="allKitchenAppliancesRegularly" data-ng-model="KitchenAndHygiene.allKitchenAppliancesRegularly" value="false">
 									&nbsp; No
 									</div> 
@@ -904,14 +903,14 @@
 			             </div>	
 			             
 			             <div class="form-group">
-						<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do ALL appliances in self-catering accommodation have full usage instructions:</label>
+						<label class="col-md-7 col-md-offset-1">Do ALL appliances in self-catering accommodation have full usage instructions:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="selfCateringAccommodationHaveFull" data-ng-model="KitchenAndHygiene.selfCateringAccommodationHaveFull" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="selfCateringAccommodationHaveFull" data-ng-model="KitchenAndHygiene.selfCateringAccommodationHaveFull" value="false">
 									&nbsp; No
 									</div> 
@@ -924,14 +923,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Main Kitchen:</label>
+							<label class="col-md-7 col-md-offset-1">Main Kitchen:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="mainKitchen" data-ng-model="KitchenAndHygiene.mainKitchen" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="mainKitchen" data-ng-model="KitchenAndHygiene.mainKitchen" value="false">
 									&nbsp; No
 									</div> 
@@ -943,14 +942,14 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do kitchen staff carry out temperature checks during all stages of food preparation:</label>
+							<label class="col-md-7 col-md-offset-1">Do kitchen staff carry out temperature checks during all stages of food preparation:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="stagesOfFoodPreparation" data-ng-model="KitchenAndHygiene.stagesOfFoodPreparation" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="stagesOfFoodPreparation" data-ng-model="KitchenAndHygiene.stagesOfFoodPreparation" value="false">
 									&nbsp; No
 									</div> 
@@ -962,14 +961,14 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are premises adequately proofed against pests:</label>
+							<label class="col-md-7 col-md-offset-1">Are premises adequately proofed against pests:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="premisesAdequatelyProofed" data-ng-model="KitchenAndHygiene.premisesAdequatelyProofed" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="premisesAdequatelyProofed" data-ng-model="KitchenAndHygiene.premisesAdequatelyProofed" value="false">
 									&nbsp; No
 									</div> 
@@ -981,11 +980,11 @@
 			             </div>
 			             
 			             
-						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+						 <hr class="mtxxl mbxxl" style="border-color: black;">
 				
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-		    
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+		    </div>
 		    	    </div>
 			    </div>
 				</form>
@@ -999,14 +998,14 @@
 					
 											              
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there an internal children's play area:</label>
+							<label class="col-md-7 col-md-offset-1">Is there an internal children's play area:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="internalChildrenPlayArea" data-ng-model="ChildrenFaciliti.internalChildrenPlayArea" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="internalChildrenPlayArea" data-ng-model="ChildrenFaciliti.internalChildrenPlayArea" value="false">
 									&nbsp; No
 									</div> 
@@ -1018,14 +1017,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there an external children's play area:</label>
+							<label class="col-md-7 col-md-offset-1">Is there an external children's play area:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="externalChildrenPlayArea" data-ng-model="ChildrenFaciliti.externalChildrenPlayArea" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="externalChildrenPlayArea" data-ng-model="ChildrenFaciliti.externalChildrenPlayArea" value="false">
 									&nbsp; No
 									</div> 
@@ -1037,14 +1036,14 @@
 			             </div>	
 			             
 			             <div class="form-group">
-						<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Does a fully qualified person supervise the kid's club:</label>
+						<label class="col-md-7 col-md-offset-1">Does a fully qualified person supervise the kid's club:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="superviseTheKidClub" data-ng-model="ChildrenFaciliti.superviseTheKidClub" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="superviseTheKidClub" data-ng-model="ChildrenFaciliti.superviseTheKidClub" value="false">
 									&nbsp; No
 									</div> 
@@ -1057,14 +1056,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are regular quality checks of all equipment and furniture carried out:</label>
+							<label class="col-md-7 col-md-offset-1">Are regular quality checks of all equipment and furniture carried out:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="qualityChecksOfEquipmentAndFurniture" data-ng-model="ChildrenFaciliti.qualityChecksOfEquipmentAndFurniture" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="qualityChecksOfEquipmentAndFurniture" data-ng-model="ChildrenFaciliti.qualityChecksOfEquipmentAndFurniture" value="false">
 									&nbsp; No
 									</div> 
@@ -1076,10 +1075,12 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-9 control-label" style="text-align: left;margin-left: 4%;margin-bottom: 3%;">During which months is the kid's club fully operational:</label>
+							<label class="col-md-9">During which months is the kid's club fully operational:</label>
 								 <div>
-								
-				<label ng-repeat="ChildrenF in kidClub" style="padding-right: 30px;width: 24%;margin-left: 9%;">
+								<div class="col-md-12">
+				
+			
+				<label ng-repeat="ChildrenF in kidClub" class="col-lg-3 col-md-6 col-sm-12 col-xs-12 col-md-offset-1" style="padding:0px;">
 				
 				  <input
   				  type="checkbox" name="child"
@@ -1087,13 +1088,14 @@
   				   	ng-model="ChildrenF.isSelected">					
    					 {{ChildrenF.name}}</label>
     			</div> 
+    			</div>
 			             </div>
 			        
-						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+						 <hr class="mtxxl mbxxl" style="border-color: black;">
 				
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-		    
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+		    </div>
 		    	    </div>
 			    </div>
 			    </form>
@@ -1107,14 +1109,14 @@
 					
 											              
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there a pool rules & regulations notice board clearly visible in the pool area:</label>
+							<label class="col-md-7 col-md-offset-1">Is there a pool rules & regulations notice board clearly visible in the pool area:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="poolRulesAndRegulation" data-ng-model="SwimmingPool.poolRulesAndRegulation" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="poolRulesAndRegulation" data-ng-model="SwimmingPool.poolRulesAndRegulation" value="false">
 									&nbsp; No
 									</div> 
@@ -1126,14 +1128,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> Opening / closing times:</label>
+							<label class="col-md-7 col-md-offset-1"> Opening / closing times:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="openingClosingTimes" data-ng-model="SwimmingPool.openingClosingTimes" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="openingClosingTimes" data-ng-model="SwimmingPool.openingClosingTimes" value="false">
 									&nbsp; No
 									</div> 
@@ -1145,14 +1147,14 @@
 			             </div>	
 			             
 			             <div class="form-group">
-						<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Depth information:</label>
+						<label class="col-md-7 col-md-offset-1">Depth information:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="depthInformation" data-ng-model="SwimmingPool.depthInformation" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="depthInformation" data-ng-model="SwimmingPool.depthInformation" value="false">
 									&nbsp; No
 									</div> 
@@ -1165,14 +1167,14 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">No diving:</label>
+							<label class="col-md-7 col-md-offset-1">No diving:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="noDiving" data-ng-model="SwimmingPool.noDiving" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="noDiving" data-ng-model="SwimmingPool.noDiving" value="false">
 									&nbsp; No
 									</div> 
@@ -1184,14 +1186,14 @@
 			             </div>
 			             
 			             <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> No unaccompanied children:</label>
+							<label class="col-md-7 col-md-offset-1"> No unaccompanied children:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="SwimmingPool.noUnaccompaniedChildrenPool" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="noUnaccompaniedChildren" data-ng-model="SwimmingPool.noUnaccompaniedChildrenPool" value="false">
 									&nbsp; No
 									</div> 
@@ -1203,14 +1205,14 @@
 			             </div>
 			             
 			             <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Location of visible lifesaving equipment / lifeguard information:</label>
+							<label class="col-md-7 col-md-offset-1">Location of visible lifesaving equipment / lifeguard information:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="lifesavingEquipment" data-ng-model="SwimmingPool.lifesavingEquipment" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="lifesavingEquipment" data-ng-model="SwimmingPool.lifesavingEquipment" value="false">
 									&nbsp; No
 									</div> 
@@ -1222,14 +1224,14 @@
 			             </div>
 			             
 			             <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">No glass around the pool area:</label>
+							<label class="col-md-7 col-md-offset-1">No glass around the pool area:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="glassAroundThePoolArea" data-ng-model="SwimmingPool.glassAroundThePoolArea" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="glassAroundThePoolArea" data-ng-model="SwimmingPool.glassAroundThePoolArea" value="false">
 									&nbsp; No
 									</div> 
@@ -1241,14 +1243,14 @@
 			             </div>
 			             
 			             <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there a lifeguard or qualified person around the pool area during opening times:</label>
+							<label class="col-md-7 col-md-offset-1">Is there a lifeguard or qualified person around the pool area during opening times:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="lifeguardOrQualifiedPerson" data-ng-model="SwimmingPool.lifeguardOrQualifiedPerson" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="lifeguardOrQualifiedPerson" data-ng-model="SwimmingPool.lifeguardOrQualifiedPerson" value="false">
 									&nbsp; No
 									</div> 
@@ -1260,14 +1262,14 @@
 			             </div>
 			             
 			             <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there a children's pool:</label>
+							<label class="col-md-7 col-md-offset-1">Is there a children's pool:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="thereChildrenPool" data-ng-model="SwimmingPool.thereChildrenPool" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="thereChildrenPool" data-ng-model="SwimmingPool.thereChildrenPool" value="false">
 									&nbsp; No
 									</div> 
@@ -1279,14 +1281,14 @@
 			             </div>
 			             
 			             <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> If YES, is this separated from the adult pool, away from the deep end:</label>
+							<label class="col-md-7 col-md-offset-1"> If YES, is this separated from the adult pool, away from the deep end:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="separatedFromTheAdultPool" data-ng-model="SwimmingPool.separatedFromTheAdultPool" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="separatedFromTheAdultPool" data-ng-model="SwimmingPool.separatedFromTheAdultPool" value="false">
 									&nbsp; No
 									</div> 
@@ -1298,14 +1300,14 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Are there sufficient depth markings around the pool:</label>
+							<label class="col-md-7 col-md-offset-1">Are there sufficient depth markings around the pool:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="sufficientDepthMarkings" data-ng-model="SwimmingPool.sufficientDepthMarkings" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="sufficientDepthMarkings" data-ng-model="SwimmingPool.sufficientDepthMarkings" value="false">
 									&nbsp; No
 									</div> 
@@ -1317,14 +1319,14 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> Is the pool cleaned daily:</label>
+							<label class="col-md-7 col-md-offset-1"> Is the pool cleaned daily:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="thePoolCleanedDaily" data-ng-model="SwimmingPool.thePoolCleanedDaily" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="thePoolCleanedDaily" data-ng-model="SwimmingPool.thePoolCleanedDaily" value="false">
 									&nbsp; No
 									</div> 
@@ -1336,14 +1338,14 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> If YES, are records kept:</label>
+							<label class="col-md-7 col-md-offset-1"> If YES, are records kept:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="recordsKept" data-ng-model="SwimmingPool.recordsKept" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="recordsKept" data-ng-model="SwimmingPool.recordsKept" value="false">
 									&nbsp; No
 									</div> 
@@ -1355,14 +1357,14 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Is there a heated pool in the property:</label>
+							<label class="col-md-7 col-md-offset-1">Is there a heated pool in the property:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="heatedPoolInTheProperty" data-ng-model="SwimmingPool.heatedPoolInTheProperty" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="heatedPoolInTheProperty" data-ng-model="SwimmingPool.heatedPoolInTheProperty" value="false">
 									&nbsp; No
 									</div> 
@@ -1375,10 +1377,14 @@
 			             </div>
 			             
 			              <div class="form-group" style="float: left;">
-							<label class="col-md-9 control-label" style="text-align: left;margin-left: 4%;margin-bottom: 3%;"> If YES, during which months is this operational:</label>
-								<div>
+							<label class="col-md-9"> If YES, during which months is this operational:</label>
 								
-				<label ng-repeat="SwimmingP in operational" style="padding-right: 30px;width: 24%;margin-left: 9%;">
+						<div class="col-md-12">
+				
+			
+				
+			
+				<label ng-repeat="SwimmingP in operational" class="col-lg-3 col-md-6 col-sm-12 col-xs-12 col-md-offset-1" style="padding:0px;">
 				
 				  <input
   				  type="checkbox" name="Swimming"
@@ -1388,13 +1394,14 @@
     			</div> 
 			             </div>
 			             
-						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
-				
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-		    
+						
 		    	    </div>
 			    </div>
+			     <hr class="mtxxl mbxxl" style="border-color: black;">
+				
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+		    </div>
                  
                  </form>
                 </div>
@@ -1407,14 +1414,14 @@
 					
 											              
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">Do you have any Gas Water Heaters in your property:</label>
+							<label class="col-md-7 col-md-offset-1">Do you have any Gas Water Heaters in your property:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="gasWaterHeaters" data-ng-model="GaswaterHeaters.gasWaterHeaters" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="gasWaterHeaters" data-ng-model="GaswaterHeaters.gasWaterHeaters" value="false">
 									&nbsp; No
 									</div> 
@@ -1426,21 +1433,21 @@
 			             </div>	
 			             
 			             <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;">							
+							<label class="col-md-7">							
 								If YES, are they:
 							</label>
 								
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-5 control-label" style="text-align: left;margin-left: 21%;"> Internal:</label>
+							<label class="col-md-5 col-md-offset-1"> Internal:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="internal" data-ng-model="GaswaterHeaters.internal" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="internal" data-ng-model="GaswaterHeaters.internal" value="false">
 									&nbsp; No
 									</div> 
@@ -1452,14 +1459,14 @@
 			             </div>	
 			             
 			             <div class="form-group">
-						<label class="col-md-5 control-label" style="text-align: left;margin-left: 21%;">External:</label>
+						<label class="col-md-5 col-md-offset-1">External:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="External" data-ng-model="GaswaterHeaters.external" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="External" data-ng-model="GaswaterHeaters.external" value="false">
 									&nbsp; No
 									</div> 
@@ -1472,21 +1479,21 @@
 			             </div>	
 			             
 			             <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;">							
+							<label class="col-md-7 control-label">							
 								Do you have all relevant documentation on file regarding:	
 							</label>
 								
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-5 control-label" style="text-align: left;margin-left: 21%;">Servicing:</label>
+							<label class="col-md-5 col-md-offset-1">Servicing:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="Servicing" data-ng-model="GaswaterHeaters.servicing" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="Servicing" data-ng-model="GaswaterHeaters.servicing" value="false">
 									&nbsp; No
 									</div> 
@@ -1498,14 +1505,14 @@
 			             </div>
 			             
 			              <div class="form-group">
-							<label class="col-md-5 control-label" style="text-align: left;margin-left: 21%;">  Maintenance:</label>
+							<label class="col-md-5 col-md-offset-1">  Maintenance:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="Maintenance" data-ng-model="GaswaterHeaters.maintenance" value="true">
 									&nbsp; Yes
 									</div>
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="radio" name="Maintenance" data-ng-model="GaswaterHeaters.maintenance" value="false">
 									&nbsp; No
 									</div> 
@@ -1516,11 +1523,11 @@
 								</div>
 			             </div>
 			             
-						 <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+						 <hr class="mtxxl mbxxl" style="border-color: black;">
 				
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-		    
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+		    </div>
 		    	    </div>
 			    </div>
 			    </form>
@@ -1533,10 +1540,10 @@
 				<div class="row">
 					<div class="col-md-12">
                   <div class="form-group">
-							<label class="col-md-9 control-label" style="text-align: left;margin-left: 4%;margin-bottom: 4%;"> CCTV is used on a 24 hour basis in the following areas of the hotel:</label>
-								<div>
+							<label class="col-md-9"> CCTV is used on a 24 hour basis in the following areas of the hotel:</label>
+								<div class="col-md-12">
 								
-							<label ng-repeat="TVstatus in cctv" style="padding-right: 30px;width: 24%;margin-left: 4%;">
+							<label ng-repeat="TVstatus in cctv" class="col-lg-3 col-md-6 col-sm-12 col-xs-12 col-md-offset-1" style="padding:0px;">
 				
 				 				 <input
   				 				 type="checkbox" name="Swimming"
@@ -1545,10 +1552,11 @@
    								 {{TVstatus.name}}</label>
     						</div> 
 			             </div>
-			              <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+			              <hr class="mtxxl mbxxl" style="border-color: black;">
 				
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+                 </div>
                   </div>
                   </div>
                   </form>
@@ -1561,12 +1569,12 @@
 					<div class="col-md-12">
 					
 						 <div class="form-group">
-							<label class="col-md-5 control-label" style="text-align: left;">
+							<label class="col-md-5">
 							Please use this space to provide any additional information or comments you may have. Please make clear which question(s) your comment is related to:	
 							</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-bottom: 11%;">
+									<div>
 									<textarea name="additionalInformationOrComments" rows="8" cols="45" data-ng-model="additionalInfo.additionalInformationOrComments"></textarea>
 									</div>
 									
@@ -1575,10 +1583,10 @@
 			             </div>	
 			            
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;">NAME:</label>
+							<label class="col-md-7 col-md-offset-1">NAME:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-bottom: 10%;">
+									<div>
 									<input type="text" name="name" data-ng-model="additionalInfo.name">
 									</div>
 									
@@ -1586,20 +1594,20 @@
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> DESIGNATION:</label>
+							<label class="col-md-7 col-md-offset-1"> DESIGNATION:</label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 3%;">
+									<div class="chargechild">
 									<input type="text" name="designation" data-ng-model="additionalInfo.designation">
 									</div>
 									
 								</div>
 			             </div>	
-			             <hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
+			             <hr class="mtxxl mbxxl" style="border-color: black;">
 				
-		     
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-			             
+		     <div class="col-md-2 col-md-offset-9">
+                 <button type="submit" class="btn btn-primary">Save</button>
+			             </div>
 			         </div>
 			      </div>
 			      </form>
@@ -1609,12 +1617,12 @@
                  <div class="tab-pane" id="Step12">
                   
                    <form method="post" ng-submit="saveDocumens()" role="form" class="form-horizontal">
-                   <legend style="width: 73%;">Health & Safety Compliance Documents</legend>
+                   <legend style="width: 66%;">Health & Safety Compliance Documents</legend>
 				<div class="row">
 					<div class="col-md-12">
 					 <div class="form-group">
 					 
-					   <div class="col-md-12" style="margin-bottom: 2%;">
+					   <div class="col-md-12">
 					   <label> To add a new document record please select the file and click the Upload Document button.</label>
 					 </div>
 					</div>
@@ -1653,8 +1661,12 @@
 			             </div>		
 			           </div>	             
 			         </div>
-			         <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+			          
 			      </div>
+			       <hr class="mtxxl mbxxl" style="border-color: black;">
+			         <div class="col-md-2 col-md-offset-9">
+			         <button type="submit" class="btn btn-primary">Save</button>
+			         </div>
 			      </form>
                   
                 </div>

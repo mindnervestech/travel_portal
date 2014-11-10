@@ -1,5 +1,7 @@
 package com.travelportal.domain.allotment;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,10 +9,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.Table;
+
+import com.travelportal.domain.Rate;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -31,7 +36,8 @@ public class AllotmentMarket {
 	@Column(name="choose")
 	private int choose;
 	
-	
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	private List<Rate> rate;
 	
 	
 
@@ -74,6 +80,15 @@ public class AllotmentMarket {
 	public void setChoose(int choose) {
 		this.choose = choose;
 	}
+		
+	public List<Rate> getRate() {
+		return rate;
+	}
+
+	public void setRate(List<Rate> rate) {
+		this.rate = rate;
+	}
+
 	
 	public static AllotmentMarket findById(int Code) {
 		try
@@ -84,7 +99,26 @@ public class AllotmentMarket {
 			return null;
 		}
     }
-
+	
+public static List<AllotmentMarket> getMarketById(int MarketId,List<Integer> rateid) {/*List<Integer> rateid*/
+		
+		//try
+		//{
+			Query q = JPA.em().createQuery("select c from AllotmentMarket c where c.allotmentMarketId = ?1");
+			q.setParameter(1, MarketId);
+			//q.setParameter(2, rateid);
+		
+		
+			return q.getResultList();
+	//	}
+	//	catch(Exception ex){
+	//		return null;
+	//	}
+   }
+	
+	
+	
+	
 	@Transactional
     public void save() {
 		JPA.em().persist(this);

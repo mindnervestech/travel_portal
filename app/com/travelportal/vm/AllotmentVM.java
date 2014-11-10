@@ -12,7 +12,7 @@ public class AllotmentVM {
 	private long roomId;
 	private int datePeriodId;
 	private int currencyId;
-	private List<Integer> rate;
+	//private List<Integer> rate;
 	private List<AllotmentMarketVM> allotmentmarket;
 	
 	
@@ -51,12 +51,12 @@ public class AllotmentVM {
 		this.currencyId = currencyId;
 	}
 	
-	public List<Integer> getRate() {
+	/*public List<Integer> getRate() {
 		return rate;
 	}
 	public void setRate(List<Integer> rate) {
 		this.rate = rate;
-	}
+	}*/
 	public List<AllotmentMarketVM> getAllotmentmarket() {
 		return allotmentmarket;
 	}

@@ -38,8 +38,7 @@
 							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
 									SAFETY</a></li>
 						</ul>
-						<div id="myTabContent2" class="tab-content"
-							style="padding-top: 5px;">
+						<div id="myTabContent2" class="tab-content">
 							<form method="post" name="billinfo" ng-submit="Savebillinginfo()" role="form" class="form-horizontal">
 <fieldset class="billBorder">
   <legend style="width: 70%;border-bottom: none;">Company/Management/ Supplier Information</legend>
@@ -54,10 +53,10 @@
 			</div>
 			
 			<div class="form-group">
-				<label class="col-md-6 control-label" style="text-align: left;margin-left: 4%;">*Invoices/Payments will go to hotel address: </label>
+				<label class="col-md-6 control-label">*Invoices/Payments will go to hotel address: </label>
 				<div class="col-md-5">
 				
-				<div style="float: left;margin-right: 5%;">
+				<div class="chargechild">
 						<input type="radio" name="InvoiceToHotel" data-ng-model="bill.invoiceToHotel" value="true">
 						&nbsp; Yes
 					</div>
@@ -70,7 +69,7 @@
 			</div>		
 			<div>
 			<fieldset class="billinside">
-  			<legend style="width: 35%;border-bottom: none;">Accounting Contact:</legend>
+  			<legend class="allot-firldset">Accounting Contact:</legend>
 				<div class="row">
 					<div class="col-md-10">
 			
@@ -109,7 +108,7 @@
 					
 					<div class="form-group">
 				<label class="col-md-5 control-label">*Direct Telephone:</label>
-				<div class="col-md-2" style="width: 18%;">
+				<div class="col-md-2 setwidth">
 					<input type="number" name="dTelCode" data-ng-model="bill.dTelCode" class="form-control" required>
 					<span class="error" ng-show="billinfo.dTelCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
@@ -122,11 +121,12 @@
 			
 				<div class="form-group">
 				<label class="col-md-5 control-label">*Direct Fax:</label>
-				<div class="col-md-2" style="width: 18%;">
+				<div class="col-md-2 setwidth">
 					<input type="number" name="dFaxCode" data-ng-model="bill.dFaxCode" class="form-control" required>
 					<span class="error" ng-show="billinfo.dFaxCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
-				<p style="float: left;">-</p>
+							<p style="float: left;">-</p>
+				
 					<div class="col-md-4">
 					<input type="number" name="dFaxNo" data-ng-model="bill.dFaxNo" class="form-control" required>
 					<span class="error" ng-show="billinfo.dFaxNo.$error.number" style="color: red;">Not valid number!</span>
@@ -156,10 +156,10 @@
 						<label>If you like to be paid via a bank wire, please enter your bank details:</label>		    	
 		               </div>
 		                <div class="form-group">
-							<label class="col-md-7 control-label" style="text-align: left;margin-left: 4%;"> *We ask for the Bank-to-Bank Wire Service:  </label>
+							<label class="col-md-7 control-label"> *We ask for the Bank-to-Bank Wire Service:  </label>
 								<div class="col-md-4">
 				
-									<div style="float: left;margin-right: 4%;">
+									<div class="chargechild">
 									<input type="radio" name="bank" data-ng-model="bill.bankToBankTransfer" value="true">
 									&nbsp; Yes
 									</div>
@@ -178,13 +178,16 @@
 			<br>
 			
 		</div>
-		<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 95%;margin-left: 2%;">
-		<div>
-		<span ng-show="BillinfoSucccess" style="color: green;margin-left: 3%;">Billing Information Save Successfully</span>
-		 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		</div>
+		<hr class="mtxxl mbxxl" style="border-color: black;">
+		<div class="form-group">
+		<span ng-show="BillinfoSucccess" style="color: green;">Billing Information Save Successfully</span>
+		<div class="col-md-2 col-md-offset-9">
+		 <button type="submit" class="btn btn-primary">Save</button>
+		 </div>
 		 </div>
                 
-	</div>
+	
 	</fieldset>
 </form>
 

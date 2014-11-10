@@ -38,8 +38,7 @@
 							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
 									SAFETY</a></li>
 						</ul>
-						<div id="myTabContent2" class="tab-content"
-							style="padding-top: 5px;">
+						<div id="myTabContent2" class="tab-content">
 							<form method="post" name="contact" ng-submit="SaveContactinfo()" role="form" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
@@ -73,7 +72,7 @@
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Telephone:</label>
-				<div class="col-md-2" style="width: 14%;">
+				<div class="col-md-2 setwidth">
 					<input  type="number" name="dTelCode" data-ng-model="contactInfo.dTelCode" class="form-control" required>
 					<span class="error" ng-show="contact.dTelCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
@@ -85,7 +84,7 @@
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Fax :</label>
-				<div class="col-md-2" style="width: 14%;">
+				<div class="col-md-2 setwidth">
 					<input type="number" name="dFaxCode" data-ng-model="contactInfo.dFaxCode" class="form-control" required>
 					<span class="error" ng-show="contact.dFaxCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
@@ -145,7 +144,7 @@
 				
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Telephone:</label>
-				<div class="col-md-2" style="width: 14%;">
+				<div class="col-md-2 setwidth">
 					<input type="number" name="rDirectTelCode" data-ng-model="contactInfo.rDirectTelCode" class="form-control" required>
 					<span class="error" ng-show="contact.rDirectTelCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
@@ -177,7 +176,7 @@
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Department Telephone:</label>
-				<div class="col-md-2" style="width: 14%;">
+				<div class="col-md-2 setwidth">
 					<input type="number" name="rDeptTelCode" data-ng-model="contactInfo.rDeptTelCode" class="form-control" required>
 					<span class="error" ng-show="contact.rDeptTelCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
@@ -189,7 +188,7 @@
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Department Fax:	</label>
-				<div class="col-md-2" style="width: 14%;">
+				<div class="col-md-2 setwidth">
 					<input type="number" name="rDeptFaxCode" data-ng-model="contactInfo.rDeptFaxCode" class="form-control" required>
 						<span class="error" ng-show="contact.rDeptFaxCode.$error.number" style="color: red;">Not valid number!</span>
 				</div>
@@ -214,9 +213,11 @@
 		
 		
 		
-		<div>
-		<span ng-show="Contactinfosuccess" style="color: green;margin-left: 3%;">Contact Information Save Successfully</span>
-		 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+		<div class="form-group">
+		<span ng-show="Contactinfosuccess" style="color: green;">Contact Information Save Successfully</span>
+			<div class="col-md-2 col-md-offset-9">
+		 <button type="submit" class="btn btn-primary">Save</button>
+		 </div>
 		 </div>
                 
 	</div>

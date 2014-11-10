@@ -76,28 +76,77 @@ public class AllotmentController extends Controller {
 	
 	}
 	
+	@Transactional(readOnly=true)
+	public static Result getallmentMarket() {
+		JsonNode json = request().body().asJson();
+		//DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, AllotmentVM.class);
+		AllotmentVM allVm = Json.fromJson(json, AllotmentVM.class);
+		
+		System.out.println(allVm.getRoomId());
+		Allotment allotment = Allotment.getRateById(allVm.getSupplierCode(),allVm.getDatePeriodId(),allVm.getCurrencyId(),allVm.getRoomId());
+		
+      // Allotment allotment = Allotment.findById(supplierCode);
+		if(allotment==null) {
+			return ok("");
+		}
+		AllotmentVM allotmentVM = new AllotmentVM();
+		allotmentVM.setAllotmentId(allotment.getAllotmentId());
+		allotmentVM.setSupplierCode(allotment.getSupplierCode());
+		allotmentVM.setDatePeriodId(allotment.getDatePeriodId());
+		allotmentVM.setCurrencyId(allotment.getCurrencyId().getId());
+		allotmentVM.setRoomId(allotment.getRoomId().getRoomId());
+		/*List<Integer> listInt = new ArrayList<Integer>();
+		for(Rate rate:allotment.getRate()) {
+			listInt.add(rate.getId());			
+		}
+		allotmentVM.setRate(listInt);*/
+		
+		List<AllotmentMarketVM> marketVMs = new ArrayList<>();
+		for(AllotmentMarket allMarketVM : allotment.getAllotmentmarket())
+		{
+			
+			AllotmentMarketVM vm = new AllotmentMarketVM();
+			vm.setAllocation(allMarketVM.getAllocation());
+			vm.setAllotmentMarketId(allMarketVM.getAllotmentMarketId());
+			vm.setChoose(allMarketVM.getChoose());
+			vm.setPeriod(allMarketVM.getPeriod());
+			vm.setSpecifyAllot(allMarketVM.getSpecifyAllot());
+			List<Integer> listInt = new ArrayList<Integer>();
+			for(Rate rate:allMarketVM.getRate()) {
+				listInt.add(rate.getId());			
+			}
+			vm.setRate(listInt);	
+			
+			marketVMs.add(vm);
+		
+		}
+		allotmentVM.setAllotmentmarket(marketVMs);
+		
+		return ok(Json.toJson(allotmentVM));
+	
+	}
 	
 	@Transactional(readOnly=false)
 	public static Result saveAllotment() {
 		
 		JsonNode json = request().body().asJson();
-		DynamicForm form = DynamicForm.form().bindFromRequest();
 		Json.fromJson(json, AllotmentVM.class);
 		AllotmentVM allotmentVM = Json.fromJson(json, AllotmentVM.class);
 		
-		
-		
-		Allotment allotment = Allotment.findById(allotmentVM.getSupplierCode());
-		
+		Allotment allotment = Allotment.getRateById(allotmentVM.getSupplierCode(),allotmentVM.getDatePeriodId(),allotmentVM.getCurrencyId(),allotmentVM.getRoomId());
+		System.out.println("&&&&&&&&&&&&&&&&&");
+		System.out.println(allotment);
 		if(allotment == null)
 		{
+
 		allotment = new Allotment();
 				
 		allotment.setSupplierCode(allotmentVM.getSupplierCode());
 		allotment.setDatePeriodId(allotmentVM.getDatePeriodId());
 		allotment.setCurrencyId(Currency.getCurrencyByCode1(allotmentVM.getCurrencyId()));
 		allotment.setRoomId(HotelRoomTypes.getHotelRoomDetailsInfo(allotmentVM.getRoomId()));
-		allotment.setRate(Rate.getrateId(allotmentVM.getRate()));
+		//allotment.setRate(Rate.getrateId(allotmentVM.getRate()));
 		
 		
 		for(AllotmentMarketVM allotmentarketVM : allotmentVM.getAllotmentmarket())
@@ -107,6 +156,7 @@ public class AllotmentController extends Controller {
 			allotmentmarket.setSpecifyAllot(allotmentarketVM.getSpecifyAllot());
 			allotmentmarket.setAllocation(allotmentarketVM.getAllocation());
 			allotmentmarket.setChoose(allotmentarketVM.getChoose());
+			allotmentmarket.setRate(Rate.getrateId(allotmentarketVM.getRate()));
 			
 			allotmentmarket.save();
 			allotment.addAllotmentmarket(allotmentmarket);
@@ -119,7 +169,7 @@ public class AllotmentController extends Controller {
 			allotment.setDatePeriodId(allotmentVM.getDatePeriodId());
 			allotment.setCurrencyId(Currency.getCurrencyByCode1(allotmentVM.getCurrencyId()));
 			allotment.setRoomId(HotelRoomTypes.getHotelRoomDetailsInfo(allotmentVM.getRoomId()));
-			allotment.setRate(Rate.getrateId(allotmentVM.getRate()));
+			//allotment.setRate(Rate.getrateId(allotmentVM.getRate()));
 			
 			
 			for(AllotmentMarketVM allotmentarketVM : allotmentVM.getAllotmentmarket())
@@ -136,6 +186,7 @@ public class AllotmentController extends Controller {
 					allotmentmarket.setSpecifyAllot(allotmentarketVM.getSpecifyAllot());
 					allotmentmarket.setAllocation(allotmentarketVM.getAllocation());
 					allotmentmarket.setChoose(allotmentarketVM.getChoose());
+					allotmentmarket.setRate(Rate.getrateId(allotmentarketVM.getRate()));
 					
 					allotmentmarket.save();
 					allotment.addAllotmentmarket(allotmentmarket);
@@ -148,6 +199,7 @@ public class AllotmentController extends Controller {
 					allotmentmarket.setSpecifyAllot(allotmentarketVM.getSpecifyAllot());
 					allotmentmarket.setAllocation(allotmentarketVM.getAllocation());
 					allotmentmarket.setChoose(allotmentarketVM.getChoose());
+					allotmentmarket.setRate(Rate.getrateId(allotmentarketVM.getRate()));
 					
 					allotmentmarket.merge();
 					allotment.addAllotmentmarket(allotmentmarket);
@@ -173,11 +225,11 @@ public class AllotmentController extends Controller {
 		allotmentVM.setDatePeriodId(allotment.getDatePeriodId());
 		allotmentVM.setCurrencyId(allotment.getCurrencyId().getId());
 		allotmentVM.setRoomId(allotment.getRoomId().getRoomId());
-		List<Integer> listInt = new ArrayList<Integer>();
+		/*List<Integer> listInt = new ArrayList<Integer>();
 		for(Rate rate:allotment.getRate()) {
 			listInt.add(rate.getId());			
 		}
-		allotmentVM.setRate(listInt);
+		allotmentVM.setRate(listInt);*/
 		
 		List<AllotmentMarketVM> marketVMs = new ArrayList<>();
 		for(AllotmentMarket allMarketVM : allotment.getAllotmentmarket())
@@ -189,6 +241,12 @@ public class AllotmentController extends Controller {
 			vm.setChoose(allMarketVM.getChoose());
 			vm.setPeriod(allMarketVM.getPeriod());
 			vm.setSpecifyAllot(allMarketVM.getSpecifyAllot());
+			List<Integer> listInt = new ArrayList<Integer>();
+			for(Rate rate:allMarketVM.getRate()) {
+				listInt.add(rate.getId());			
+			}
+			vm.setRate(listInt);	
+			
 			marketVMs.add(vm);
 		
 		}
@@ -197,7 +255,7 @@ public class AllotmentController extends Controller {
 		return ok(Json.toJson(allotmentVM));
 	}
 	
-	//deleteAllotmentMarket
+	
 	
 	@Transactional(readOnly=false)
 	public static Result deleteAllotmentMarket(int allotMarkid,int allotid) {
@@ -207,8 +265,10 @@ public class AllotmentController extends Controller {
 		AllotmentMarket deleteallotent = null;
 		for(AllotmentMarket market : allotment.getAllotmentmarket())
 		{
-			if(market.getAllotmentMarketId() == allotMarkid)
+			if(market.getAllotmentMarketId() == allotMarkid){
 				deleteallotent = market;
+				market.setRate(null);
+			}
 		}
 		allotment.getAllotmentmarket().remove(deleteallotent);
 		deleteallotent.delete();

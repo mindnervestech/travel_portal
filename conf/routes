@@ -62,7 +62,7 @@ POST   /saveUpdateCCTVstatus	 com.travelportal.controllers.HotelProfileControlle
 POST   /savefiles       com.travelportal.controllers.HotelProfileController.savefiles()
 
 #following routes are used for fetch Allotment, 
-
+POST      /getallmentMarket   com.travelportal.controllers.AllotmentController.getallmentMarket()
 GET     /getDates/:roomId/:currencyId  com.travelportal.controllers.AllotmentController.getDates(roomId:Long,currencyId:Integer)
 GET     /getRates/:Id         com.travelportal.controllers.AllotmentController.getRates(Id:Integer)
 GET     /allotmentAllData/:supplierCode   com.travelportal.controllers.AllotmentController.getallotmentAllData(supplierCode:Long)
