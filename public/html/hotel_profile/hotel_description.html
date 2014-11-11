@@ -130,56 +130,48 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 			
 			<label class="col-md-12 control-label" style="margin-bottom: 3%;">Please enter 3 words ONLY that will give the user an idea of where your Property is located. . </label><br>
 		 <div class="col-md-12">
-			
-			<table>
-					
-			<tr class="col-md-12">
-				<td class="col-md-3">
+			<div class="col-md-12">
+				<div class="col-md-3 col-sm-12">
 					<label class="col-md-12 control-label"><b>*Enter Here :</b></label>
-				</td>
-				<td class="col-md-3">
+					<div class="col-md-12 col-sm-12"></div>
+				</div>
+				<div class="col-md-3 col-sm-12">
 					<div class="form-group">
-				     <div class="col-md-9">
-					   <input type="text" name="location1" data-ng-model="descrip.location1" class="form-control" required>
-				    </div>
+				     	<div class="col-md-9">
+					   		<input type="text" name="location1" data-ng-model="descrip.location1" class="form-control" required>
+				    	</div>
+			    	</div>
+					<div class="col-md-12 form-group">(Hyde Park)</div>
 			    </div>
-			    </td>
-				<td class="col-md-3">
+				<div class="col-md-3 col-sm-12">
 					<div class="form-group">
 						<div class="col-md-9">
 							<input type="text" name="location2" data-ng-model="descrip.location2" class="form-control" required>
 						</div>
 				    </div>
-					</td>
-				<td>
+					<div class="col-md-12 form-group">(Piccadilly)</div>
+				</div>
+				<div class="col-md-3 col-sm-12">
 				   <div class="form-group">
-					 <div class="col-md-9">
-						<input type="text" name="location3" data-ng-model="descrip.location3" class="form-control" required>
-					 </div>
-			     </div>
-				</td>
+					 	<div class="col-md-9">
+							<input type="text" name="location3" data-ng-model="descrip.location3" class="form-control" required>
+					 	</div>
+			     	</div>
+					<div class="col-md-12 form-group">(Buckingham Palace)</div>
+				</div>
 				
-			</tr>
+			</div>
 				
-				<tr>
-			<td></td>
-			<td>(Hyde Park)</td>
-			<td>(Piccadilly)</td>
-			<td>(Buckingham Palace)</td>
-			</tr>
-				
-									
-			</table>
-			
-			
+			<div class="col-md-12">
+			</div>
 		</div> 
 		            <br>    
-	</div>
+	</div col-md-12 col-sm-12>
 	<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
-		     <div>
-		     <span ng-show="Descriptinsuccess" style="color: green;margin-left: 3%;">Genral Description Save Successfully</span>
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
-                 </div>
+		<div col-md-12 col-sm-12>
+     		<span ng-show="Descriptinsuccess" style="color: green;margin-left: 3%;">Genral Description Save Successfully</span>
+        	<button type="submit" class="btn btn-primary" style="float: right;margin-right: 20px;">Save</button>
+    	</div>
 	</div>
 </form>
 
