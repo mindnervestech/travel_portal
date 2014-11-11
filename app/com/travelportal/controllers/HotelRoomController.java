@@ -1,25 +1,23 @@
 package com.travelportal.controllers;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.Thumbnails;
 
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.core.io.FileSystemResource;
 
 import play.Play;
 import play.data.DynamicForm;
@@ -27,21 +25,17 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
-import play.mvc.Http.RequestBody;
-import play.mvc.Result;
 import play.mvc.Http.MultipartFormData.FilePart;
+import play.mvc.Result;
 import views.html.index;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.travelportal.domain.City;
+import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
-import com.travelportal.domain.HotelHealthAndSafety;
-import com.travelportal.domain.HotelMealPlan;
-import com.travelportal.domain.HotelServices;
-import com.travelportal.domain.ImgPath;
 import com.travelportal.domain.InfoWiseImagesPath;
 import com.travelportal.domain.MealType;
 import com.travelportal.domain.rooms.CancellationPolicy;
-import com.travelportal.domain.rooms.ChildPolicies;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
@@ -50,13 +44,10 @@ import com.travelportal.domain.rooms.RateWrapper;
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.RoomChildPolicies;
 import com.travelportal.vm.CancellationPolicyVM;
-import com.travelportal.vm.ChildpoliciVM;
-import com.travelportal.vm.HotelmealVM;
 import com.travelportal.vm.NormalRateVM;
 import com.travelportal.vm.RateDetailsVM;
 import com.travelportal.vm.RateVM;
 import com.travelportal.vm.RoomChildpoliciVM;
-import com.travelportal.vm.RoomType;
 import com.travelportal.vm.RoomtypeVM;
 import com.travelportal.vm.SpecialRateVM;
 

@@ -66,7 +66,15 @@ public class TravelPortalUtilsController extends Controller {
 	@Transactional(readOnly=true)
 	public static Result getCities(int countryCode) {
 		final List<City> cities = City.getCities(countryCode);
-		return ok(Json.toJson(cities));
+		List<Map> city = new ArrayList<>();
+ 		for(City c : cities){
+ 			Map m = new HashMap<>();
+ 			m.put("id", c.getCityCode());
+ 			m.put("name", c.getCityName());
+			city.add(m);
+		}
+ 		
+		return ok(Json.toJson(city));
 	}
 
 	@Transactional(readOnly=true)
@@ -90,7 +98,14 @@ public class TravelPortalUtilsController extends Controller {
 	@Transactional(readOnly=true)
 	public static Result getLocations() {
 		final List<Location> location = Location.getLocation();
-		return ok(Json.toJson(location));
+		List<Map> _location  = new ArrayList();
+		for(Location l : location){
+			Map m = new HashMap<>();
+			m.put("id", l.getLocationId());
+			m.put("name", l.getLocationNm());
+			_location.add(m);
+		}
+		return ok(Json.toJson(_location));
 	}
 
 	@Transactional(readOnly=true)

@@ -817,9 +817,15 @@ angular.module('travel_portal').
 	$http.get("/countries").success(function(response) {
 		$scope.countries = response;
 	}); 
-
+	$scope.location = [];
 	$http.get("/location").success(function(response) {
-		$scope.location = response;
+		for(var i =0 ; i<response.length; i++) {
+			$scope.location.push({
+				locationId:response[i].id,
+				locationNm:response[i].name
+			});
+		}
+		
 	}); 
 
 	$http.get("/shoppingfacility").success(function(response) {
@@ -858,9 +864,15 @@ angular.module('travel_portal').
 		$http.get('/cities/'+$scope.generalInfo.countryCode)
 		.success(function(data){
 			if(data) {
-				$scope.cities = data;
+				console.log(data);
+				for(var i = 0; i<data.length; i++){
+					$scope.cities.push({
+						cityCode:data[i].id,
+						cityName:data[i].name
+					});
+				}
 			} else {
-				$scope.cities = [];
+				$scope.cities.splice(0);
 			}
 		});
 	}
@@ -873,9 +885,13 @@ angular.module('travel_portal').
 		$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
 		.success(function(data){
 			if(data) {
-				$scope.cities = data;
+				console.log(data[0]);
+					$scope.cities.push({
+						cityCode:data[0].id,
+						cityName:data[0].name
+					});
 			} else {
-				$scope.cities = [];
+				$scope.cities.splice(0);
 			}
 		});
 		
