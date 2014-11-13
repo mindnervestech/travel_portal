@@ -97,15 +97,11 @@ public class RateMeta {
 	    	return (RateMeta) query.getSingleResult();
 	    }
 	 public static List<RateMeta> getRateMeta(String currency, Date fromDate,Date toDate, Long roomType) {
-		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		 System.out.println(currency);
-		 System.out.println(format.format(fromDate));
-		 System.out.println(format.format(toDate));
-		 System.out.println(roomType);
-	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.currency = ?2 and r.roomType.roomId = ?5");
+		
+	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.currency = ?2 and fromDate = ?3 and toDate = ?4 and r.roomType.roomId = ?5");
 			query.setParameter(2, currency);
-			//query.setParameter(3, format.format(fromDate));
-			//query.setParameter(4, format.format(toDate));
+			query.setParameter(3, fromDate);
+			query.setParameter(4, toDate);
 			query.setParameter(5, roomType);
 	    	return query.getResultList();
 	    }

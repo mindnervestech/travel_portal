@@ -71,8 +71,8 @@ angular.module('travel_portal').
 		{
 		 //  $scope. = $scope.allotmentMarket.datePeriodId;	
 			var arr = $scope.allotmentMarket.datePeriodId.split("@");
-			$scope.allotmentMarket.toPeriod = arr[0];
-			$scope.allotmentMarket.formPeriod = arr[1];
+			$scope.allotmentMarket.formPeriod = arr[0];
+			$scope.allotmentMarket.toPeriod = arr[1];
 			$scope.allotmentMarket.supplierCode = supplierCode;
 			
 			console.log($scope.allotmentMarket);

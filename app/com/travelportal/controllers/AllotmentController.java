@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,29 +80,21 @@ public class AllotmentController extends Controller {
 	}
 	
 	@Transactional(readOnly=true)
-	public static Result getRates() {
+	public static Result getRates() throws ParseException {
 		JsonNode json = request().body().asJson();
-		//DynamicForm form = DynamicForm.form().bindFromRequest();
 		Json.fromJson(json, AllotmentVM.class);
 		AllotmentVM allVm = Json.fromJson(json, AllotmentVM.class);
 		
-		System.out.println("+_+_+_+_+_+");
-		System.out.println(allVm.getRoomId());
-		List<RateMeta> ratemeta = RateMeta.getRateMeta(allVm.getCurrencyName(),allVm.getFormPeriod(),allVm.getToPeriod(),allVm.getRoomId());
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		List<RateMeta> ratemeta = RateMeta.getRateMeta(allVm.getCurrencyName(),format.parse(allVm.getFormPeriod()),format.parse(allVm.getToPeriod()),allVm.getRoomId());
 		return ok(Json.toJson(ratemeta));
-		/*RatePeriod rate = RatePeriod.findById(Id);
-		RatePeriodVM periodVMs = new RatePeriodVM();
-		periodVMs.setRate(rate.getRate());
-		periodVMs.setId(rate.getId());
 		
-		return ok(Json.toJson(periodVMs));*/
-		
-		//return ok();
 	
 	}
 	
 	@Transactional(readOnly=true)
-	public static Result getallmentMarket() {
+	public static Result getallmentMarket() throws ParseException {
 		JsonNode json = request().body().asJson();
 		//DynamicForm form = DynamicForm.form().bindFromRequest();
 		Json.fromJson(json, AllotmentVM.class);
@@ -109,11 +102,11 @@ public class AllotmentController extends Controller {
 		
 		System.out.println(allVm.getFormPeriod());
 		
-		//DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
 		
 		
-		Allotment allotment = Allotment.getRateById(allVm.getSupplierCode(),allVm.getFormPeriod(),allVm.getToPeriod(),allVm.getCurrencyName(),allVm.getRoomId());
+		Allotment allotment = Allotment.getRateById(allVm.getSupplierCode(),format.parse(allVm.getFormPeriod()),format.parse(allVm.getToPeriod()),allVm.getCurrencyName(),allVm.getRoomId());
 		
       // Allotment allotment = Allotment.findById(supplierCode);
 		if(allotment==null) {
@@ -122,8 +115,8 @@ public class AllotmentController extends Controller {
 		AllotmentVM allotmentVM = new AllotmentVM();
 		allotmentVM.setAllotmentId(allotment.getAllotmentId());
 		allotmentVM.setSupplierCode(allotment.getSupplierCode());
-		allotmentVM.setToPeriod(allotment.getToDate());
-		allotmentVM.setFormPeriod(allotment.getFormDate());
+		allotmentVM.setToPeriod(allotment.getToDate().toString());
+		allotmentVM.setFormPeriod(allotment.getFormDate().toString());
 		allotmentVM.setCurrencyName(allotment.getCurrencyId().getCurrencyName());
 		allotmentVM.setRoomId(allotment.getRoomId().getRoomId());
 		
@@ -154,14 +147,14 @@ public class AllotmentController extends Controller {
 	}
 	
 	@Transactional(readOnly=false)
-	public static Result saveAllotment() {
+	public static Result saveAllotment() throws ParseException {
 		
 		JsonNode json = request().body().asJson();
 		Json.fromJson(json, AllotmentVM.class);
 		AllotmentVM allotmentVM = Json.fromJson(json, AllotmentVM.class);
-		//DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
-		Allotment allotment = Allotment.getRateById(allotmentVM.getSupplierCode(),allotmentVM.getFormPeriod(),allotmentVM.getToPeriod(),allotmentVM.getCurrencyName(),allotmentVM.getRoomId());
+		Allotment allotment = Allotment.getRateById(allotmentVM.getSupplierCode(),format.parse(allotmentVM.getFormPeriod()),format.parse(allotmentVM.getToPeriod()),allotmentVM.getCurrencyName(),allotmentVM.getRoomId());
 		System.out.println("&&&&&&&&&&&&&&&&&");
 		System.out.println(allotment);
 		if(allotment == null)
@@ -172,8 +165,8 @@ public class AllotmentController extends Controller {
 		allotment.setSupplierCode(allotmentVM.getSupplierCode());
 		allotment.setCurrencyId(Currency.getCurrencyByCode1(allotmentVM.getCurrencyName()));
 		allotment.setRoomId(HotelRoomTypes.getHotelRoomDetailsInfo(allotmentVM.getRoomId()));
-		allotment.setFormDate(allotmentVM.getFormPeriod());
-		allotment.setToDate(allotmentVM.getToPeriod());
+		allotment.setFormDate(format.parse(allotmentVM.getFormPeriod()));
+		allotment.setToDate(format.parse(allotmentVM.getToPeriod()));
 		/*allotmentVM.setToPeriod(allotment.getToDate());
 		allotmentVM.setFormPeriod(allotment.getFormDate());*/
 		//allotment.setRate(Rate.getrateId(allotmentVM.getRate()));

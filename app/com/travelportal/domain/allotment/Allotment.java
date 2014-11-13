@@ -145,37 +145,30 @@ public class Allotment {
     }
 	public static Allotment getRateById(Long supplierCode,Date formDate,Date toDate,String currId,Long roomId) {/*List<Integer> rateid*/
 		
-		System.out.println(supplierCode);
+	/*Calendar c = Calendar.getInstance();
+	c.setTime(formDate);
+	c.set(Calendar.HOUR_OF_DAY, 0);
+	c.set(Calendar.MINUTE, 0);
+	c.set(Calendar.SECOND, 0);
+	c.set(Calendar.MILLISECOND, 0);
+	formDate = c.getTime();
+	c.setTime(toDate);
+	c.set(Calendar.HOUR_OF_DAY, 0);
+	c.set(Calendar.MINUTE, 0);
+	c.set(Calendar.SECOND, 0);
+	c.set(Calendar.MILLISECOND, 0);
+	toDate = c.getTime();
+	System.out.println("|||||||");
+	*/	System.out.println(formDate);
+		System.out.println(toDate);
 		
-		/*Date from;
-		Date to;*/
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		System.out.println("-------");
-		System.out.println(format.format(formDate));
-		System.out.println(format.format(toDate));
-		System.out.println(currId);
-		System.out.println(roomId);
-		System.out.println("-------");
-		/*String fromD = format.format(formDate);
-		String toD = format.format(toDate);
-		try
-		{
-		 from = format.parse(fromD);
-		 to = format.parse(toD);
-		}
-		catch (Exception ex)
-		{
-			System.out.println(ex);
-		}*/
-	
-		 //String fromD = format.format(formDate);
 		
 		try
 		{
-			Query q = JPA.em().createQuery("select c from Allotment c where c.supplierCode = ?1 and c.currencyId.currencyName = ?4 and c.roomId.roomId = ?5");
+			Query q = JPA.em().createQuery("select c from Allotment c where c.supplierCode = ?1 and c.formDate = ?2 and c.toDate = ?3 and c.currencyId.currencyName = ?4 and c.roomId.roomId = ?5");
 			q.setParameter(1, supplierCode);
-			//q.setParameter(2, from);
-			//q.setParameter(3, to);
+			q.setParameter(2, formDate);
+			q.setParameter(3, toDate);
 			q.setParameter(4, currId);
 			q.setParameter(5, roomId);
 			return(Allotment) q.getSingleResult();
