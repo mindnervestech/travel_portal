@@ -63,12 +63,17 @@ POST   /savefiles       com.travelportal.controllers.HotelProfileController.save
 
 #following routes are used for fetch Allotment, 
 POST      /getallmentMarket   com.travelportal.controllers.AllotmentController.getallmentMarket()
-GET     /getDates/:roomId/:currencyId  com.travelportal.controllers.AllotmentController.getDates(roomId:Long,currencyId:Integer)
-GET     /getRates/:Id         com.travelportal.controllers.AllotmentController.getRates(Id:Integer)
+GET     /getDates/:roomId/:currencyName  com.travelportal.controllers.AllotmentController.getDates(roomId:Long,currencyName:String)
+POST     /getRates         com.travelportal.controllers.AllotmentController.getRates()
 #GET     /allotmentAllData/:supplierCode   com.travelportal.controllers.AllotmentController.getallotmentAllData(supplierCode:Long)
 POST    /saveAllotment		com.travelportal.controllers.AllotmentController.saveAllotment()
 GET     /deleteAllotmentMarket/:allotMarkid/:allotid    com.travelportal.controllers.AllotmentController.deleteAllotmentMarket(allotMarkid:Integer,allotid:Integer)
 
+
+GET     /getAllotmentMarketGroup/:id                      com.travelportal.controllers.AllotmentController.getMarketGroup(id:Integer)
+POST    /setAllotmentCitySelection                        com.travelportal.controllers.AllotmentController.setCitySelection()
+POST    /setAllotmentCountrySelection/:name/:id                        com.travelportal.controllers.AllotmentController.setCountrySelection(name:String, id:Integer)
+GET     /getAllotmentCountryCode/:name                                                                com.travelportal.controllers.AllotmentController.getCountryCode(name:String)
 #following routes are used for fetch manage hotel images, 
 
 POST   /savegeneralImg   com.travelportal.controllers.ManageHotelImagesController.savegeneralImg()
@@ -90,6 +95,9 @@ GET     /getMarketGroup/:id                      com.travelportal.controllers.Ho
 POST    /setCitySelection                        com.travelportal.controllers.HotelRoomController.setCitySelection()
 POST    /setCountrySelection/:name/:ratesId                        com.travelportal.controllers.HotelRoomController.setCountrySelection(name:String, ratesId:Integer)
 GET     /getCountryCode/:name                                                                com.travelportal.controllers.HotelRoomController.getCountryCode(name:String)
+
+
+
 
 #following routes are used for fetch room details, Add Room Type and Edit Room Type
 #home screen for edit

@@ -10,8 +10,10 @@ public class AllotmentVM {
 	private int allotmentId;
 	private Long supplierCode;
 	private long roomId;
-	private int datePeriodId;
-	private int currencyId;
+	private String datePeriodId;
+	private Date formPeriod;
+	private Date toPeriod;
+	private String currencyName;
 	//private List<Integer> rate;
 	private List<AllotmentMarketVM> allotmentmarket;
 	
@@ -38,19 +40,32 @@ public class AllotmentVM {
 		this.roomId = roomId;
 	}
 	
-	public int getDatePeriodId() {
+	
+	
+	public String getDatePeriodId() {
 		return datePeriodId;
 	}
-	public void setDatePeriodId(int datePeriodId) {
+	public void setDatePeriodId(String datePeriodId) {
 		this.datePeriodId = datePeriodId;
 	}
-	public int getCurrencyId() {
-		return currencyId;
+	public Date getFormPeriod() {
+		return formPeriod;
 	}
-	public void setCurrencyId(int currencyId) {
-		this.currencyId = currencyId;
+	public void setFormPeriod(Date formPeriod) {
+		this.formPeriod = formPeriod;
 	}
-	
+	public Date getToPeriod() {
+		return toPeriod;
+	}
+	public void setToPeriod(Date toPeriod) {
+		this.toPeriod = toPeriod;
+	}
+	public String getCurrencyName() {
+		return currencyName;
+	}
+	public void setCurrencyName(String currencyName) {
+		this.currencyName = currencyName;
+	}
 	/*public List<Integer> getRate() {
 		return rate;
 	}

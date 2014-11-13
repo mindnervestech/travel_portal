@@ -20,6 +20,7 @@ import javax.persistence.Table;
 
 import com.travelportal.domain.rooms.ChildPolicies;
 import com.travelportal.domain.rooms.HotelRoomTypes;
+import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RoomChildPolicies;
 
 import play.db.jpa.JPA;
@@ -42,7 +43,7 @@ public class RatePeriod { //supplier specific records...
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelRoomTypes roomtype;
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private List<Rate> rate;
+	private List<RateMeta> rate;
 	
 	
 	
@@ -85,14 +86,15 @@ public class RatePeriod { //supplier specific records...
 	public void setRoomtype(HotelRoomTypes roomtype) {
 		this.roomtype = roomtype;
 	}
-
-	public List<Rate> getRate() {
+	
+	public List<RateMeta> getRate() {
 		return rate;
 	}
 
-	public void setRate(List<Rate> rate) {
+	public void setRate(List<RateMeta> rate) {
 		this.rate = rate;
 	}
+
 	public static List<RatePeriod> getDates(long roomid,int currencyid) {
 		Query q = JPA.em().createQuery("select c from RatePeriod c where c.roomtype.roomId = :roomid and c.currency.id = :currencyid");
 		q.setParameter("roomid", roomid);

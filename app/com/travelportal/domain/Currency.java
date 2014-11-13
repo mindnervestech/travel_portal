@@ -68,8 +68,8 @@ public class Currency {
 		return (Currency) JPA.em().createQuery("select c from Currency c where c.currencyCode = ?1").setParameter(1, code).getSingleResult();
 	}
 	
-	public static Currency getCurrencyByCode1(int code) {
-		return (Currency) JPA.em().createQuery("select c from Currency c where c.id = ?1").setParameter(1, code).getSingleResult();
+	public static Currency getCurrencyByCode1(String code) {
+		return (Currency) JPA.em().createQuery("select c from Currency c where c.currencyName = ?1").setParameter(1, code).getSingleResult();
 	}
 	
 	

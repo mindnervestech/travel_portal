@@ -37,7 +37,7 @@
 			  <div class="form-group">
 				<label class="col-md-7 col-md-offset-1"><b>Please Choose Currency:</b></label>
 				<div class="col-md-8 col-md-offset-1">
-					<select class="form-control" ng-change="onCurrencyChange()" data-ng-model="allotmentMarket.currencyId" data-ng-options="currencyname.id as currencyname.currencyName for currencyname in currency" required>
+					<select class="form-control" ng-change="onCurrencyChange()" data-ng-model="allotmentMarket.currencyName" data-ng-options="currencyname.currencyName as currencyname.currencyName for currencyname in currency" required>
 						<option>Select Currency...</option>
 					</select>
 				</div>
@@ -54,8 +54,8 @@
 			<label class="col-md-7 col-md-offset-1"><b>Please Choose Period:</b></label>
 				<div class="col-md-9 col-md-offset-1">
 			
-					<select class="form-control" ng-model="allotmentMarket.datePeriodId" ng-change="onDateChoose(allotmentMarket.datePeriodId)">
-			    		 <option ng-repeat=" allotM in allotmentMarket1" value="{{allotM.id}}">From : {{allotM.fromPeriod}} - To : {{allotM.toPeriod}}</option>
+					<select class="form-control" ng-model="allotmentMarket.datePeriodId" ng-change="onDateChoose(allotmentMarketallotmentMarket1)">
+			    		 <option ng-repeat=" allotM in allotmentMarket1" value="{{allotM.fromPeriod}}@{{allotM.toPeriod}}">From : {{allotM.fromPeriod}} - To : {{allotM.toPeriod}}</option>
 			    		
 			    	</select>
 			    	</div>
@@ -248,7 +248,7 @@
 						<label class="col-md-7 col-md-offset-1"><b>Please Select Rate:</b></label>
 							<div class="col-md-8 col-md-offset-1">
 							<select class="form-control" data-ng-model="allot.rate" multiple required>
-								<option ng-repeat="rates in rate" value="{{rates.id}}" ng-selected="rates.isSelected == ($parent.$index+1)" ng-show="rates.isSelected == ($parent.$index+1) || rates.isSelected == 0" ng-click="changeIsSelected($parent.$index,$index)">{{rates.name}}</option>
+								<option ng-repeat="rates in rate" value="{{rates.id}}" ng-selected="rates.isSelected == ($parent.$index+1)" ng-show="rates.isSelected == ($parent.$index+1) || rates.isSelected == 0" ng-click="changeIsSelected($parent.$index,$index)">{{rates.rateName}}</option>
 							</select>
 							</div>
 					</div>
@@ -256,7 +256,26 @@
 						<div>
 						
 						</div>
-						</div>
+					
+						 <div class="col-md-6">
+		                 <div class="form-group">
+						<label><b>Apply to all Markets?<br>
+			<label>(Based on Passenger Nationality)</label>
+					<input type="radio" name="applyToMarket" data-ng-value="false" ng-click="showAllotmentMarketTable(allot.allotmentMarketId)">No
+					<input type="radio" name="applyToMarket" data-ng-value="true" ng-click="applyToall()">Yes
+				</b></label><br>
+			
+				<div multi-select input-model="webBrowsersGrouped"
+					button-label="icon name" item-label="icon name maker"
+					tick-property="ticked" orientation="vertical"
+					group-property="multiSelectGroup" on-item-click="msClick(data,$index)"
+					on-open="msOpen( data )"></div>
+				<div class="col-md-2 col-md-offset-9">
+					<button class="btn btn-success" ng-click="setSelection();">Submit</button>
+				</div>
+				</div>
+				</div>
+							</div>
 						
 					<div class="row">
 		            <div class="col-md-6">

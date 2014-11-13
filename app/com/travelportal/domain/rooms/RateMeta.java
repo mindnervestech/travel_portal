@@ -1,5 +1,7 @@
 package com.travelportal.domain.rooms;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +21,8 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 import com.travelportal.domain.City;
+import com.travelportal.domain.RatePeriod;
+
 
 @Entity
 @Table(name="rate_meta")
@@ -85,14 +89,39 @@ public class RateMeta {
 	}
 	
 	 public static RateMeta findRateMeta(String rateName, String currency, Date fromDate,Date toDate, HotelRoomTypes roomType) {
-	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.rateName = ?1 and r.currency = ?2 and r.fromDate = ?3 and r.toDate = ?4 and r.roomType = ?5");
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			System.out.println("-------");
+			System.out.println(format.format(fromDate));
+			System.out.println(format.format(toDate));	
+		 
+		 Query query = JPA.em().createQuery("Select r from RateMeta r where r.rateName = ?1 and r.currency = ?2 and r.fromDate = ?3 and r.toDate = ?4 and r.roomType = ?5");
 			query.setParameter(1, rateName);
 			query.setParameter(2, currency);
-			query.setParameter(3, fromDate);
-			query.setParameter(4, toDate);
+			query.setParameter(3, format.format(fromDate));
+			query.setParameter(4, format.format(toDate));
 			query.setParameter(5, roomType);
 	    	return (RateMeta) query.getSingleResult();
 	    }
+	 public static List<RateMeta> getRateMeta(String currency, Date fromDate,Date toDate, Long roomType) {
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		 System.out.println(currency);
+		 System.out.println(format.format(fromDate));
+		 System.out.println(format.format(toDate));
+		 System.out.println(roomType);
+	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.currency = ?2 and r.roomType.roomId = ?5");
+			query.setParameter(2, currency);
+			//query.setParameter(3, format.format(fromDate));
+			//query.setParameter(4, format.format(toDate));
+			query.setParameter(5, roomType);
+	    	return query.getResultList();
+	    }
+	 
+	 public static List<RateMeta> getDates(long roomid,String currencyName) {
+			Query q = JPA.em().createQuery("select c from RateMeta c where c.roomType.roomId = :roomid and c.currency = :currencyName GROUP BY c.fromDate , c.toDate");
+			q.setParameter("roomid", roomid);
+			q.setParameter("currencyName", currencyName);
+			return q.getResultList();
+		}
 	
 	 public static List<RateMeta> searchRateMeta(String currency, Date fromDate,Date toDate, HotelRoomTypes roomType) {
 	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.currency = ?1 and r.fromDate = ?2 and r.toDate = ?3 and r.roomType = ?4");
@@ -123,6 +152,10 @@ public class RateMeta {
 		 return JPA.em().createQuery("Select r from RateMeta r").getResultList();
 		 }
 	 
+		 
+		 public static List<RateMeta> getrateId(List<Integer> rateid) {
+				return JPA.em().createQuery("select c from RateMeta c where id IN ?1").setParameter(1, rateid).getResultList();
+			}
 	 
 	@Transactional
     public void save() {

@@ -69,19 +69,25 @@ angular.module('travel_portal').
 		
 		$scope.searchAllotment = function()
 		{
-			console.log($scope.allotmentMarket);
+		 //  $scope. = $scope.allotmentMarket.datePeriodId;	
+			var arr = $scope.allotmentMarket.datePeriodId.split("@");
+			$scope.allotmentMarket.toPeriod = arr[0];
+			$scope.allotmentMarket.formPeriod = arr[1];
 			$scope.allotmentMarket.supplierCode = supplierCode;
+			
+			console.log($scope.allotmentMarket);
 			
 			$http.post('/getallmentMarket', $scope.allotmentMarket).success(function(response){
 				console.log('success');
 				console.log(response);
 				$scope.showallotent = true;
 				
-				$http.get('/getRates/'+$scope.allotmentMarket.datePeriodId)
-				.success(function(data){
-					if(data.rate.length>0) {
-						console.log(data.rate);		
-						$scope.rate = data.rate;
+				$http.post('/getRates', $scope.allotmentMarket).success(function(data){
+					console.log("-------");
+					console.log(data);
+					if(data.length>0) {
+						console.log(data);		
+						$scope.rate = data;
 						angular.forEach($scope.rate,function(value,key) { 
 							value.isSelected =0;
 						});
@@ -116,16 +122,16 @@ angular.module('travel_portal').
 		{
 			
 
-			if($scope.allotmentMarket.roomId != null && $scope.allotmentMarket.currencyId != null)
+			if($scope.allotmentMarket.roomId != null && $scope.allotmentMarket.currencyName != null)
 				{
-			$http.get('/getDates/'+$scope.allotmentMarket.roomId+"/"+$scope.allotmentMarket.currencyId)
+			$http.get('/getDates/'+$scope.allotmentMarket.roomId+"/"+$scope.allotmentMarket.currencyName)
 			.success(function(data){
 				if(data) {
 					console.log(data);
 					$scope.allotmentMarket1 =data;
 					 angular.forEach($scope.allotmentMarket1, function(obj, index){
-							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[0].fromPeriod, "yyyy-MM-dd");
-							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[0].toPeriod, "yyyy-MM-dd");
+							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[0].fromDate, "yyyy-MM-dd");
+							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[0].toDate, "yyyy-MM-dd");
 							return;
 						});
 							
@@ -139,18 +145,18 @@ angular.module('travel_portal').
 		$scope.onCurrencyChange = function(){
 			
 		console.log($scope.allotmentMarket.roomId); 
-		console.log($scope.allotmentMarket.currencyId);
+		console.log($scope.allotmentMarket.currencyName);
 		
-		if($scope.allotmentMarket.roomId != null && $scope.allotmentMarket.currencyId != null)
+		if($scope.allotmentMarket.roomId != null && $scope.allotmentMarket.currencyName != null)
 			{
-			$http.get('/getDates/'+$scope.allotmentMarket.roomId+"/"+$scope.allotmentMarket.currencyId)
+			$http.get('/getDates/'+$scope.allotmentMarket.roomId+"/"+$scope.allotmentMarket.currencyName)
 			.success(function(data){
 				if(data) {
 					console.log(data);
 					$scope.allotmentMarket1 =data;
 					 angular.forEach($scope.allotmentMarket1, function(obj, index){
-							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[0].fromPeriod, "yyyy-MM-dd");
-							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[0].toPeriod, "yyyy-MM-dd");
+							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[0].fromDate, "yyyy-MM-dd");
+							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[0].toDate, "yyyy-MM-dd");
 							return;
 						});
 							
@@ -164,15 +170,20 @@ angular.module('travel_portal').
 		
 		}
 		
-		$scope.onDateChoose = function(Id)
+		/*$scope.onDateChoose = function(Id)
 		{
-			console.log(Id);
 			
-			$http.get('/getRates/'+Id)
+			var arr = $scope.allotmentMarket.datePeriodId.split("@");
+			$scope.allotmentMarket.toPeriod = arr[0];
+			$scope.allotmentMarket.formPeriod = arr[1];
+			console.log($scope.allotmentMarket);
+			
+			$http.post('/getRates', $scope.allotmentMarket)
 			.success(function(data){
+				
 				if(data) {
-					console.log(data.rate);		
-					$scope.rate = data.rate;
+					console.log(data);		
+					$scope.rate = data;
 				    angular.forEach($scope.rate,function(value,key) {
 				    	value.isSelected = 0;
 				    });   
@@ -180,7 +191,7 @@ angular.module('travel_portal').
 					
 				}
 			});
-		};
+		};*/
 		
 		
 		
@@ -223,6 +234,13 @@ angular.module('travel_portal').
 		
 		$scope.saveallotment = function()
 		{
+			console.log($scope.allotmentMarket);
+			/*if($scope.allotmentMarket.datePeriodId == null){
+			var arr = $scope.allotmentMarket.datePeriodId.split("@");
+			$scope.allotmentMarket.toPeriod = arr[0];
+			$scope.allotmentMarket.formPeriod = arr[1];
+			}*/
+			
 			$scope.allotmentMarket.allotmentmarket = $scope.allotmentM;
 			$scope.allotmentMarket.supplierCode = supplierCode; 
 			console.log($scope.allotmentMarket);
@@ -246,6 +264,220 @@ angular.module('travel_portal').
 		     
 		       
 		    };
+		    
+		    //////
+		    
+		    $scope.selectedRatesId;
+			
+			console.log($scope.selectedRatesId);
+			$scope.webBrowsersGrouped =[];
+			$scope.msClose;
+			$scope.getSelectedCity = [];
+			$scope.getSelectedCountry = [];
+			
+			$scope.showAllotmentMarketTable = function(Id) {
+				
+				$scope.getSelectedCity.splice(0);
+				$scope.getSelectedCountry.splice(0);
+				$scope.selectedRatesId = Id;
+				console.log($scope.selectedRatesId);
+				$http.get('/getAllotmentMarketGroup/'+$scope.selectedRatesId)
+				.success(function(data){
+					if(data) {
+						
+						$scope.webBrowsersGrouped.splice(0);
+							for(var i = 0; i<data.length;i++){
+								$scope.webBrowsersGrouped.push({
+									name:'<strong>'+data[i].country.countryName+'</strong>',
+									multiSelectGroup:true
+								});
+								for(var j =0; j<data[i].country.cityvm.length;j++){
+									console.log(data[i].country.cityvm[j].tick);
+
+									$scope.getSelectedCity.push({
+											name:data[i].country.cityvm[j].cityName,
+											ticked:data[i].country.cityvm[j].tick,
+											countryCode : data[i].country.cityvm[j].cityCountryCode
+									});
+									
+									$scope.webBrowsersGrouped.push({
+										name:data[i].country.cityvm[j].cityName,
+										ticked:data[i].country.cityvm[j].tick
+									});
+								}
+								$scope.webBrowsersGrouped.push({
+									multiSelectGroup:false
+								});
+							}
+					} 
+				});
+			}
+
+			$scope.flag1 = false;
+			$scope.clickItem;
+			$scope.clickItemList = [];
+			$scope.msClick = function( data ) {
+				$scope.clickItem = data;
+				if(data.multiSelectGroup === undefined) {
+					$scope.flag1 = true;
+					$scope.clickItemList.push({
+						name:data.name,
+						ticked:data.ticked
+					});
+					console.log(data.ticked);
+					if(data.ticked ===false){
+						for(var i = 0; i<$scope.getSelectedCity.length; i++){
+							console.log(data.name +"=== "+$scope.getSelectedCity[i].name)
+							if(data.name === $scope.getSelectedCity[i].name ){
+								console.log(data.name +"=== "+$scope.getSelectedCity[i].name)
+								$scope.getSelectedCity[i].ticked = false;
+							}
+						}
+						
+					} else {
+						console.log(data.name +"=== "+$scope.getSelectedCity)
+						for(var i = 0; i<$scope.getSelectedCity.length; i++){
+							
+							if(data.name === $scope.getSelectedCity[i].name ){
+								console.log($scope.getSelectedCity[i].ticked)
+								$scope.getSelectedCity[i].ticked = true;
+							}
+						}
+						
+					}	
+					
+				} else {
+					$scope.getSelectedCountry.push({
+						name:data.name
+					});
+				}
+			};
+			$scope.applyToall = function () {
+				allCitySelectionDeselection('all');
+			}
+			$scope.flag = false;
+			allCitySelectionDeselection = function( type) {
+				$scope.flag = true;	 
+				for(var i =0; i<$scope.getSelectedCity.length;i++) {
+					if(type === 'all'){ 
+						$scope.getSelectedCity[i].ticked = true;
+					} else {
+						$scope.getSelectedCity[i].ticked = false;
+					}
+				}
+				/*$http.get('/selectDeselectAll/'+type)
+						.success(function(data){
+							console.log($scope.getSelectedCity);
+						}); */
+					 
+			 };
+			$scope.setSelection = function() {
+				//TODO
+				console.log($scope.getSelectedCity);
+				console.log($scope.getSelectedCountry.length);
+				if($scope.selectedRatesId != undefined) {
+					if($scope.clickItem != undefined || $scope.flag == true){
+					if($scope.getSelectedCountry.length === 0 ) {
+							$http.post('/setAllotmentCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
+							.success(function(data){
+								$scope.flag == false;
+								
+							});
+					}else {
+						console.log($scope.clickItem.ticked);
+						if($scope.clickItem.ticked === undefined){
+						for(var i = 0; i<$scope.getSelectedCountry.length; i++){
+							$http.post('/setAllotmentCountrySelection/'+$($scope.getSelectedCountry[i].name).text()+'/'+$scope.selectedRatesId)
+							.success(function(data){
+								$scope.getSelectedCountry.splice(0);
+								for(var i = 0; i<$scope.getSelectedCity.length; i++){
+									if($scope.getSelectedCity[i].countryCode === data[0].code){
+											$scope.getSelectedCity[i].ticked =  data[0].value;
+									}
+								}
+								 if($scope.flag1 === true) {
+                                     $http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
+                                     .success(function(data){
+                                             $scope.flag1 = false;
+                                             
+                                     });
+								 }
+								
+							});
+						}
+					}else if($scope.clickItem.ticked === true){
+							if($scope.getSelectedCountry.length != 0) {
+								$http.get('/getAllotmentCountryCode/'+$scope.clickItem.name)
+								.success(function(data1){
+									console.log($scope.clickItemList);
+									for(var j = 0; j<$scope.clickItemList.length; j++){	
+										for(var i = 0; i<$scope.getSelectedCity.length; i++){
+											console.log($scope.getSelectedCity[i].countryCode == data1)
+											if($scope.getSelectedCity[i].countryCode == data1){
+												console.log($scope.getSelectedCity[i].name +"^^"+$scope.clickItemList[j].name)
+												if($scope.getSelectedCity[i].name == $scope.clickItemList[j].name){
+													$scope.getSelectedCity[i].ticked = true;
+												}else{
+													if(j == 0){
+														$scope.getSelectedCity[i].ticked = false;
+													}
+												}
+											}else{
+                                                $scope.getSelectedCity[i].ticked = true;
+                                            }
+										}
+									}
+									console.log($scope.getSelectedCity);
+									
+									$http.post('/setAllotmentCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
+										.success(function(data){
+											$scope.clickItemList.splice(0);
+											$scope.getSelectedCountry.splice(0);
+										});
+								
+								});
+							}
+						}else {
+							if($scope.getSelectedCountry.length != 0) {
+								$http.get('/getAllotmentCountryCode/'+$scope.clickItem.name)
+								.success(function(data1){
+								console.log($scope.clickItemList);	
+									for(var j = 0; j<$scope.clickItemList.length; j++){
+										for(var i = 0; i<$scope.getSelectedCity.length; i++){
+											console.log($scope.getSelectedCity[i].countryCode == data1)
+											if($scope.getSelectedCity[i].countryCode == data1){
+												console.log($scope.getSelectedCity[i].name +"^^"+$scope.clickItemList[j].name)
+												if($scope.getSelectedCity[i].name == $scope.clickItemList[j].name){
+													$scope.getSelectedCity[i].ticked = false;
+												}else{
+													if(j == 0){
+														$scope.getSelectedCity[i].ticked = true;
+													}
+												}
+											}else{
+                                                $scope.getSelectedCity[i].ticked = false;
+                                            }
+										}
+									}
+									console.log($scope.getSelectedCity);
+									for(var i = 0; i<$scope.getSelectedCity.length; i++){
+										$http.post('/setAllotmentCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
+										.success(function(data){
+											$scope.clickItemList.splice(0);
+											$scope.getSelectedCountry.splice(0);
+										});
+									}
+								});
+							}
+						}
+					}
+				}else{
+					alert("please select city");
+				}
+				} else{
+					alert("please select id");
+				}
+			};
 	     
 		}]
 );
@@ -2018,7 +2250,8 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 	
 	$scope.clickItem;
 	$scope.clickItemList = [];
-	$scope.msClick = function( data ) {
+	$scope.msClick = function( data,index ) {
+		$scope.allotmentM[index].abcd = data; 
 		$scope.clickItem = data;
 		if(data.multiSelectGroup === undefined) {
 			$scope.clickItemList.push({

@@ -5,8 +5,12 @@ import java.io.File;
 import java.io.IOException;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //import org.junit.experimental.theories.internal.AllMembersSupplier;
 
@@ -21,6 +25,11 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.travelportal.controllers.HotelRoomController.CityVM;
+import com.travelportal.controllers.HotelRoomController.CountryVM;
+import com.travelportal.controllers.HotelRoomController.MarketVM;
+import com.travelportal.controllers.HotelRoomController.SelectedCityVM;
+import com.travelportal.controllers.HotelRoomController.VM;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
@@ -28,11 +37,11 @@ import com.travelportal.domain.HotelAttractions;
 import com.travelportal.domain.HotelHealthAndSafety;
 import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.ImgPath;
-import com.travelportal.domain.Rate;
 import com.travelportal.domain.RatePeriod;
 import com.travelportal.domain.allotment.Allotment;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.HotelRoomTypes;
+import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.RoomChildPolicies;
 import com.travelportal.vm.AllotmentMarketVM;
@@ -52,8 +61,12 @@ public class AllotmentController extends Controller {
 	
 	
 	@Transactional(readOnly=true)
-	public static Result getDates(long roomid,int currencyid) {
-		final List<RatePeriod> rateperiod = RatePeriod.getDates(roomid,currencyid);
+	public static Result getDates(long roomid,String currencyName) {
+	
+		List<RateMeta> rateperiod = RateMeta.getDates(roomid, currencyName);
+		return ok(Json.toJson(rateperiod));
+		//return ok();
+		/*final List<RatePeriod> rateperiod = RatePeriod.getDates(roomid,currencyid);
 		List<RatePeriodVM> periodVMs = new ArrayList<RatePeriodVM>();
 		for(RatePeriod period : rateperiod) {
 			RatePeriodVM periodVM = new RatePeriodVM();
@@ -62,17 +75,28 @@ public class AllotmentController extends Controller {
 			periodVM.setId(period.getId());
 			periodVMs.add(periodVM);
 		}
-		return ok(Json.toJson(periodVMs));
+		return ok(Json.toJson(periodVMs));*/
 	}
 	
 	@Transactional(readOnly=true)
-	public static Result getRates(int Id) {
-		RatePeriod rate = RatePeriod.findById(Id);
+	public static Result getRates() {
+		JsonNode json = request().body().asJson();
+		//DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, AllotmentVM.class);
+		AllotmentVM allVm = Json.fromJson(json, AllotmentVM.class);
+		
+		System.out.println("+_+_+_+_+_+");
+		System.out.println(allVm.getRoomId());
+		List<RateMeta> ratemeta = RateMeta.getRateMeta(allVm.getCurrencyName(),allVm.getFormPeriod(),allVm.getToPeriod(),allVm.getRoomId());
+		return ok(Json.toJson(ratemeta));
+		/*RatePeriod rate = RatePeriod.findById(Id);
 		RatePeriodVM periodVMs = new RatePeriodVM();
 		periodVMs.setRate(rate.getRate());
 		periodVMs.setId(rate.getId());
 		
-		return ok(Json.toJson(periodVMs));
+		return ok(Json.toJson(periodVMs));*/
+		
+		//return ok();
 	
 	}
 	
@@ -83,8 +107,13 @@ public class AllotmentController extends Controller {
 		Json.fromJson(json, AllotmentVM.class);
 		AllotmentVM allVm = Json.fromJson(json, AllotmentVM.class);
 		
-		System.out.println(allVm.getRoomId());
-		Allotment allotment = Allotment.getRateById(allVm.getSupplierCode(),allVm.getDatePeriodId(),allVm.getCurrencyId(),allVm.getRoomId());
+		System.out.println(allVm.getFormPeriod());
+		
+		//DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		
+		
+		Allotment allotment = Allotment.getRateById(allVm.getSupplierCode(),allVm.getFormPeriod(),allVm.getToPeriod(),allVm.getCurrencyName(),allVm.getRoomId());
 		
       // Allotment allotment = Allotment.findById(supplierCode);
 		if(allotment==null) {
@@ -93,14 +122,11 @@ public class AllotmentController extends Controller {
 		AllotmentVM allotmentVM = new AllotmentVM();
 		allotmentVM.setAllotmentId(allotment.getAllotmentId());
 		allotmentVM.setSupplierCode(allotment.getSupplierCode());
-		allotmentVM.setDatePeriodId(allotment.getDatePeriodId());
-		allotmentVM.setCurrencyId(allotment.getCurrencyId().getId());
+		allotmentVM.setToPeriod(allotment.getToDate());
+		allotmentVM.setFormPeriod(allotment.getFormDate());
+		allotmentVM.setCurrencyName(allotment.getCurrencyId().getCurrencyName());
 		allotmentVM.setRoomId(allotment.getRoomId().getRoomId());
-		/*List<Integer> listInt = new ArrayList<Integer>();
-		for(Rate rate:allotment.getRate()) {
-			listInt.add(rate.getId());			
-		}
-		allotmentVM.setRate(listInt);*/
+		
 		
 		List<AllotmentMarketVM> marketVMs = new ArrayList<>();
 		for(AllotmentMarket allMarketVM : allotment.getAllotmentmarket())
@@ -113,8 +139,8 @@ public class AllotmentController extends Controller {
 			vm.setPeriod(allMarketVM.getPeriod());
 			vm.setSpecifyAllot(allMarketVM.getSpecifyAllot());
 			List<Integer> listInt = new ArrayList<Integer>();
-			for(Rate rate:allMarketVM.getRate()) {
-				listInt.add(rate.getId());			
+			for(RateMeta rate:allMarketVM.getRate()) {
+				listInt.add(Integer.parseInt(String.valueOf(rate.getId())));			
 			}
 			vm.setRate(listInt);	
 			
@@ -133,8 +159,9 @@ public class AllotmentController extends Controller {
 		JsonNode json = request().body().asJson();
 		Json.fromJson(json, AllotmentVM.class);
 		AllotmentVM allotmentVM = Json.fromJson(json, AllotmentVM.class);
+		//DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
-		Allotment allotment = Allotment.getRateById(allotmentVM.getSupplierCode(),allotmentVM.getDatePeriodId(),allotmentVM.getCurrencyId(),allotmentVM.getRoomId());
+		Allotment allotment = Allotment.getRateById(allotmentVM.getSupplierCode(),allotmentVM.getFormPeriod(),allotmentVM.getToPeriod(),allotmentVM.getCurrencyName(),allotmentVM.getRoomId());
 		System.out.println("&&&&&&&&&&&&&&&&&");
 		System.out.println(allotment);
 		if(allotment == null)
@@ -143,9 +170,12 @@ public class AllotmentController extends Controller {
 		allotment = new Allotment();
 				
 		allotment.setSupplierCode(allotmentVM.getSupplierCode());
-		allotment.setDatePeriodId(allotmentVM.getDatePeriodId());
-		allotment.setCurrencyId(Currency.getCurrencyByCode1(allotmentVM.getCurrencyId()));
+		allotment.setCurrencyId(Currency.getCurrencyByCode1(allotmentVM.getCurrencyName()));
 		allotment.setRoomId(HotelRoomTypes.getHotelRoomDetailsInfo(allotmentVM.getRoomId()));
+		allotment.setFormDate(allotmentVM.getFormPeriod());
+		allotment.setToDate(allotmentVM.getToPeriod());
+		/*allotmentVM.setToPeriod(allotment.getToDate());
+		allotmentVM.setFormPeriod(allotment.getFormDate());*/
 		//allotment.setRate(Rate.getrateId(allotmentVM.getRate()));
 		
 		
@@ -156,7 +186,7 @@ public class AllotmentController extends Controller {
 			allotmentmarket.setSpecifyAllot(allotmentarketVM.getSpecifyAllot());
 			allotmentmarket.setAllocation(allotmentarketVM.getAllocation());
 			allotmentmarket.setChoose(allotmentarketVM.getChoose());
-			allotmentmarket.setRate(Rate.getrateId(allotmentarketVM.getRate()));
+			allotmentmarket.setRate(RateMeta.getrateId(allotmentarketVM.getRate()));
 			
 			allotmentmarket.save();
 			allotment.addAllotmentmarket(allotmentmarket);
@@ -166,8 +196,7 @@ public class AllotmentController extends Controller {
 		else
 		{
 			
-			allotment.setDatePeriodId(allotmentVM.getDatePeriodId());
-			allotment.setCurrencyId(Currency.getCurrencyByCode1(allotmentVM.getCurrencyId()));
+			allotment.setCurrencyId(Currency.getCurrencyByCode1(allotmentVM.getCurrencyName()));
 			allotment.setRoomId(HotelRoomTypes.getHotelRoomDetailsInfo(allotmentVM.getRoomId()));
 			//allotment.setRate(Rate.getrateId(allotmentVM.getRate()));
 			
@@ -186,7 +215,7 @@ public class AllotmentController extends Controller {
 					allotmentmarket.setSpecifyAllot(allotmentarketVM.getSpecifyAllot());
 					allotmentmarket.setAllocation(allotmentarketVM.getAllocation());
 					allotmentmarket.setChoose(allotmentarketVM.getChoose());
-					allotmentmarket.setRate(Rate.getrateId(allotmentarketVM.getRate()));
+					allotmentmarket.setRate(RateMeta.getrateId(allotmentarketVM.getRate()));
 					
 					allotmentmarket.save();
 					allotment.addAllotmentmarket(allotmentmarket);
@@ -199,7 +228,7 @@ public class AllotmentController extends Controller {
 					allotmentmarket.setSpecifyAllot(allotmentarketVM.getSpecifyAllot());
 					allotmentmarket.setAllocation(allotmentarketVM.getAllocation());
 					allotmentmarket.setChoose(allotmentarketVM.getChoose());
-					allotmentmarket.setRate(Rate.getrateId(allotmentarketVM.getRate()));
+					allotmentmarket.setRate(RateMeta.getrateId(allotmentarketVM.getRate()));
 					
 					allotmentmarket.merge();
 					allotment.addAllotmentmarket(allotmentmarket);
@@ -222,8 +251,7 @@ public class AllotmentController extends Controller {
 		
 		allotmentVM.setAllotmentId(allotment.getAllotmentId());
 		allotmentVM.setSupplierCode(allotment.getSupplierCode());
-		allotmentVM.setDatePeriodId(allotment.getDatePeriodId());
-		allotmentVM.setCurrencyId(allotment.getCurrencyId().getId());
+		allotmentVM.setCurrencyName(allotment.getCurrencyId().getCurrencyName());
 		allotmentVM.setRoomId(allotment.getRoomId().getRoomId());
 		/*List<Integer> listInt = new ArrayList<Integer>();
 		for(Rate rate:allotment.getRate()) {
@@ -242,8 +270,8 @@ public class AllotmentController extends Controller {
 			vm.setPeriod(allMarketVM.getPeriod());
 			vm.setSpecifyAllot(allMarketVM.getSpecifyAllot());
 			List<Integer> listInt = new ArrayList<Integer>();
-			for(Rate rate:allMarketVM.getRate()) {
-				listInt.add(rate.getId());			
+			for(RateMeta rate:allMarketVM.getRate()) {
+				listInt.add(Integer.parseInt(String.valueOf(rate.getId())));			
 			}
 			vm.setRate(listInt);	
 			
@@ -297,6 +325,173 @@ public class AllotmentController extends Controller {
 		return ok();
 	}*/
 	
+///////
+	@Transactional(readOnly = true)
+	public static Result getMarketGroup(int id) {
+		List<Country> country = Country.getCountries();
+		List<AllotMarketVM> group = new ArrayList<AllotMarketVM>();
+		for (Country c : country) {
+			AllotMarketVM marketvm = new AllotMarketVM();
+			CountryVM countryvm = new CountryVM();
+			countryvm.countryCode = c.getCountryCode();
+			countryvm.countryName = c.getCountryName();
+
+			List<CityVM> cityvm = new ArrayList<CityVM>();
+			List<City> city = City.getCities(c.getCountryCode());
+			for (City _city : city) {
+				
+				CityVM _cityvm = new CityVM();
+				_cityvm.id = _city.getCityCode();
+				_cityvm.cityCountryCode = _city.getCountry().getCountryCode();
+				_cityvm.cityName = _city.getCityName();
+				
+				AllotmentMarket alotMarket = AllotmentMarket.findById(id);
+				for(City cty : alotMarket.getCities()){
+					if(cty.getCityCode() == _city.getCityCode()){
+						_cityvm.tick = true;
+						break;
+					}else{
+						_cityvm.tick = false;
+					}
+						
+				}
+				cityvm.add(_cityvm);
+			}
+			countryvm.cityvm = cityvm;
+			marketvm.country = countryvm;
+			group.add(marketvm);
+		}
+		return ok(Json.toJson(group));
+	}
+	
+	public static class AllotMarketVM {
+		public CountryVM country;
+
+	}
+
+	public static class CountryVM {
+		public int countryCode;
+		public String countryName;
+		public List<CityVM> cityvm;
+	}
+
+	public static class CityVM {
+		public int id;
+		public int cityCountryCode;
+		public String cityName;
+		public boolean tick;
+
+	}
+	
+	public static class SelectedCityVM {
+
+		public String name;
+		public int countryCode;
+		public boolean ticked;
+
+	}
+	public static class VM {
+		public int id;
+		public List<SelectedCityVM> city = new ArrayList<SelectedCityVM>();
+	}
+	
+
+	@Transactional(readOnly = false)
+	public static Result setCitySelection() {
+		//JsonNode json = request().body().asJson().get("id");
+		JsonNode jn = request().body().asJson();
+		//System.out.println(json.asInt());
+		//jn.as
+		
+		VM c = Json.fromJson(jn, VM.class);
+		int id  = c.id;
+		List<SelectedCityVM> city = c.city;
+		AllotmentMarket alotMarket = AllotmentMarket.findById(id);
+		
+		if(alotMarket != null && alotMarket.getCities() != null && !alotMarket.getCities().isEmpty())
+		{
+			alotMarket.getCities().removeAll(alotMarket.getCities());
+			//JPA.em().merge(rates);
+		}
+		
+		List<City> listCity = new ArrayList<>();
+		for(SelectedCityVM cityvm : city){
+			City _city = City.getCitiByName(cityvm.name);
+			
+			if(cityvm.ticked){
+				listCity.add(_city);
+			}
+		}
+		alotMarket.setCities(listCity);
+		return ok();
+
+	}
+
+	
+	@Transactional(readOnly = false)
+	public static Result setCountrySelection(String name, int id) {
+		
+		List<Map> list = new ArrayList<>();
+		Country country = Country.getCountryByName(name);
+		List<City> cityList = City.getCities(country.getCountryCode());
+		AllotmentMarket alotMarket = AllotmentMarket.findById(id);
+		/*if(rates != null && rates.getCities() != null && !rates.getCities().isEmpty()) {
+			rates.getCities().removeAll(rates.getCities());
+		}*/
+	
+		if (cityList != null && cityList.size() != 0) {
+			if (alotMarket.getCities() != null && alotMarket.getCities().size() != 0 ) {
+				if (cityList.size() == alotMarket.getCities().size()) {
+
+					//
+					alotMarket.getCities().removeAll(alotMarket.getCities());
+					
+					//seteSelectionByCondition(cityList, false);
+					for (City c : cityList) {
+						Map cityMap = new HashMap<>();
+						City _c = City.getCityByCode(c.getCityCode());
+						cityMap.put("code",_c.getCountry().getCountryCode());
+						cityMap.put("value", false);
+						list.add(cityMap);
+					}
+					
+				} else {
+					alotMarket.getCities().removeAll(alotMarket.getCities());
+					alotMarket.setCities(cityList);
+					//seteSelectionByCondition(cityList, true);
+					for (City c : cityList) {
+						Map cityMap = new HashMap<>();
+						City _c = City.getCityByCode(c.getCityCode());
+						cityMap.put("code",_c.getCountry().getCountryCode());
+						cityMap.put("value", true);
+						list.add(cityMap);
+					}
+				}
+
+			} else {
+				//rates.getCities().removeAll(rates.getCities());
+				alotMarket.setCities(cityList);
+				for (City c : cityList) {
+					Map cityMap = new HashMap<>();
+					City _c = City.getCityByCode(c.getCityCode());
+					cityMap.put("code",_c.getCountry().getCountryCode());
+					cityMap.put("value", true);
+					list.add(cityMap);
+				}
+			}
+
+		}
+		return ok(Json.toJson(list));
+	}
+	@Transactional(readOnly = true)
+	public static Result getCountryCode(String name){
+		City city = City.getCitiByName(name);
+		int id =0;
+		if(city.getCountry() != null){
+			id = city.getCountry().getCountryCode();
+		}
+		return ok(Json.toJson(id));
+	}
 	
 	
 }

@@ -1,6 +1,10 @@
 package com.travelportal.domain.allotment;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -24,8 +28,8 @@ import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelHealthAndSafety;
 import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.HotelProfile;
-import com.travelportal.domain.Rate;
 import com.travelportal.domain.rooms.HotelRoomTypes;
+import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RoomChildPolicies;
 import com.travelportal.vm.AllotmentMarketVM;
 import com.travelportal.vm.RoomType;
@@ -38,8 +42,10 @@ public class Allotment {
 	private int allotmentId;
 	@Column(name="supplierCode")
 	private Long supplierCode;
-	@Column(name="DatePeriodId")
-	private int DatePeriodId;
+	@Column(name="formDate")
+	private Date formDate;
+	@Column(name="toDate")
+	private Date toDate;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelRoomTypes roomId;
@@ -47,7 +53,7 @@ public class Allotment {
 	private Currency currencyId;
 	
 	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private List<Rate> rate;
+	private List<RateMeta> rate;
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<AllotmentMarket> allotmentmarket;
 	
@@ -69,14 +75,22 @@ public class Allotment {
 	}
 
 	
-	public int getDatePeriodId() {
-		return DatePeriodId;
+
+	public Date getFormDate() {
+		return formDate;
 	}
 
-	public void setDatePeriodId(int datePeriodId) {
-		DatePeriodId = datePeriodId;
+	public void setFormDate(Date formDate) {
+		this.formDate = formDate;
 	}
 
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
 
 	public Currency getCurrencyId() {
 		return currencyId;
@@ -93,11 +107,11 @@ public class Allotment {
 		this.roomId = roomId;
 	}
 
-	public List<Rate> getRate() {
+	public List<RateMeta> getRate() {
 		return rate;
 	}
 
-	public void setRate(List<Rate> rate) {
+	public void setRate(List<RateMeta> rate) {
 		this.rate = rate;
 	}
 
@@ -116,6 +130,9 @@ public class Allotment {
 		if(!this.allotmentmarket.contains(allotmentmarket))
 		this.allotmentmarket.add(allotmentmarket);
 	}
+	
+	
+	
 
 	public static Allotment findById(Long supplierCode) {
 		try
@@ -126,16 +143,41 @@ public class Allotment {
 			return null;
 		}
     }
-	public static Allotment getRateById(Long supplierCode,int dateId,int currId,Long roomId) {/*List<Integer> rateid*/
+	public static Allotment getRateById(Long supplierCode,Date formDate,Date toDate,String currId,Long roomId) {/*List<Integer> rateid*/
+		
+		System.out.println(supplierCode);
+		
+		/*Date from;
+		Date to;*/
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("-------");
+		System.out.println(format.format(formDate));
+		System.out.println(format.format(toDate));
+		System.out.println(currId);
+		System.out.println(roomId);
+		System.out.println("-------");
+		/*String fromD = format.format(formDate);
+		String toD = format.format(toDate);
+		try
+		{
+		 from = format.parse(fromD);
+		 to = format.parse(toD);
+		}
+		catch (Exception ex)
+		{
+			System.out.println(ex);
+		}*/
+	
+		 //String fromD = format.format(formDate);
 		
 		try
 		{
-			Query q = JPA.em().createQuery("select c from Allotment c where c.supplierCode = ?1  and c.DatePeriodId = ?2 and c.currencyId.id = ?3 and c.roomId.roomId = ?4");
+			Query q = JPA.em().createQuery("select c from Allotment c where c.supplierCode = ?1 and c.currencyId.currencyName = ?4 and c.roomId.roomId = ?5");
 			q.setParameter(1, supplierCode);
-			q.setParameter(2, dateId);
-			q.setParameter(3, currId);
-			q.setParameter(4, roomId);
-		//	q.setParameter(5, rateid);
+			//q.setParameter(2, from);
+			//q.setParameter(3, to);
+			q.setParameter(4, currId);
+			q.setParameter(5, roomId);
 			return(Allotment) q.getSingleResult();
 		}
 		catch(Exception ex){

@@ -10,8 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.travelportal.domain.Currency;
-import com.travelportal.domain.Rate;
 import com.travelportal.domain.rooms.HotelRoomTypes;
+import com.travelportal.domain.rooms.RateMeta;
 
 public class RatePeriodVM {
 
@@ -20,7 +20,7 @@ public class RatePeriodVM {
 	private Date toPeriod;
 	private CurrencyVM currency;
 	private RoomtypeVM roomtype;
-	private List<Rate> rate;
+	private List<RateMeta> rate;
 	
 	public int getId() {
 		return id;
@@ -52,12 +52,14 @@ public class RatePeriodVM {
 	public void setRoomtype(RoomtypeVM roomtype) {
 		this.roomtype = roomtype;
 	}
-	public List<Rate> getRate() {
+	public List<RateMeta> getRate() {
 		return rate;
 	}
-	public void setRate(List<Rate> rate) {
+	public void setRate(List<RateMeta> rate) {
 		this.rate = rate;
 	}
+	
+	
 	
 		
 	
