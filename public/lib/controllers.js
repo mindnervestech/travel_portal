@@ -2212,7 +2212,11 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 	$scope.getSelectedCountry = [];
 	
 	$scope.showMarketTable = function(Id) {
-		
+		console.log(Id);
+		console.log($scope.getSelectedCity);
+		console.log($scope.getSelectedCountry);
+		$scope.getSelectedCity.splice(0);
+		$scope.getSelectedCountry.splice(0);
 		$scope.selectedRatesId = Id;
 		console.log($scope.selectedRatesId);
 		$http.get('/getMarketGroup/'+$scope.selectedRatesId)
@@ -2229,9 +2233,10 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 							console.log(data[i].country.cityvm[j].tick);
 
 							$scope.getSelectedCity.push({
-									name:data[i].country.cityvm[j].cityName,
-									ticked:data[i].country.cityvm[j].tick,
-									countryCode : data[i].country.cityvm[j].cityCountryCode
+                                name:data[i].country.cityvm[j].cityName,
+                                ticked:data[i].country.cityvm[j].tick,
+                                countryCode : data[i].country.cityvm[j].cityCountryCode,
+                                countryName : data[i].country.countryName
 							});
 							
 							$scope.webBrowsersGrouped.push({
@@ -2247,13 +2252,13 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 		});
 	}
 
-	
+	$scope.flag1 = false;
 	$scope.clickItem;
 	$scope.clickItemList = [];
-	$scope.msClick = function( data,index ) {
-		$scope.allotmentM[index].abcd = data; 
+	$scope.msClick = function( data ) {
 		$scope.clickItem = data;
 		if(data.multiSelectGroup === undefined) {
+			 $scope.flag1 = true;
 			$scope.clickItemList.push({
 				name:data.name,
 				ticked:data.ticked
@@ -2305,102 +2310,121 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 				}); */
 			 
 	 };
-	$scope.setSelection = function() {
-		//TODO
-		console.log($scope.getSelectedCity);
-		console.log($scope.flag);
-		if($scope.selectedRatesId != undefined) {
-			if($scope.clickItem != undefined || $scope.flag == true){
-			if($scope.getSelectedCountry.length === 0) {
-					$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
-					.success(function(data){
-						$scope.flag == false;
-						
-					});
-			}else {
-				console.log($scope.clickItem.ticked === undefined);
-				if($scope.clickItem.ticked === undefined){
-				for(var i = 0; i<$scope.getSelectedCountry.length; i++){
-					$http.post('/setCountrySelection/'+$($scope.getSelectedCountry[i].name).text()+'/'+$scope.selectedRatesId)
-					.success(function(data){
-						$scope.getSelectedCountry.splice(0);
-						for(var i = 0; i<$scope.getSelectedCity.length; i++){
-							if($scope.getSelectedCity[i].countryCode === data[0].code){
-									$scope.getSelectedCity[i].ticked =  data[0].value;
-							}
-						}
-						
-					});
-				}
-			}else if($scope.clickItem.ticked === true){
-					if($scope.getSelectedCountry.length != 0) {
-						$http.get('/getCountryCode/'+$scope.clickItem.name)
-						.success(function(data1){
-							console.log($scope.clickItemList);
-							for(var j = 0; j<$scope.clickItemList.length; j++){	
-								for(var i = 0; i<$scope.getSelectedCity.length; i++){
-									console.log($scope.getSelectedCity[i].countryCode == data1)
-									if($scope.getSelectedCity[i].countryCode == data1){
-										console.log($scope.getSelectedCity[i].name +"^^"+$scope.clickItemList[j].name)
-										if($scope.getSelectedCity[i].name == $scope.clickItemList[j].name){
-											$scope.getSelectedCity[i].ticked = true;
-										}else{
-											if(j == 0){
-												$scope.getSelectedCity[i].ticked = false;
-											}
-										}
-									}
-								}
-							}
-							console.log($scope.getSelectedCity);
+	 $scope.setSelection = function() {
+			//TODO
+			console.log($scope.getSelectedCity);
+			console.log($scope.flag == true);
+			if($scope.selectedRatesId != undefined) {
+				if($scope.clickItem != undefined || $scope.flag == true){
+				if($scope.getSelectedCountry.length === 0 ) {
+						$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
+						.success(function(data){
+							$scope.flag = false;
 							
-							$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
-								.success(function(data){
-									$scope.clickItemList.splice(0);
-									$scope.getSelectedCountry.splice(0);
-								});
-						
 						});
-					}
 				}else {
-					if($scope.getSelectedCountry.length != 0) {
-						$http.get('/getCountryCode/'+$scope.clickItem.name)
-						.success(function(data1){
-						console.log($scope.clickItemList);	
-							for(var j = 0; j<$scope.clickItemList.length; j++){
-								for(var i = 0; i<$scope.getSelectedCity.length; i++){
-									console.log($scope.getSelectedCity[i].countryCode == data1)
-									if($scope.getSelectedCity[i].countryCode == data1){
-										console.log($scope.getSelectedCity[i].name +"^^"+$scope.clickItemList[j].name)
-										if($scope.getSelectedCity[i].name == $scope.clickItemList[j].name){
-											$scope.getSelectedCity[i].ticked = false;
-										}else{
-											if(j == 0){
-												$scope.getSelectedCity[i].ticked = true;
+					console.log($scope.clickItem.ticked === undefined);
+					if($scope.clickItem.ticked === undefined){
+							for(var i = 0; i<$scope.getSelectedCountry.length; i++){
+								$http.post('/setCountrySelection/'+$($scope.getSelectedCountry[i].name).text()+'/'+$scope.selectedRatesId)
+								.success(function(data){
+									$scope.getSelectedCountry.splice(0);
+									$scope.flag1 = true;
+									for(var i = 0; i<$scope.getSelectedCity.length; i++){
+										if($scope.getSelectedCity[i].countryCode === data[0].code){
+												$scope.getSelectedCity[i].ticked =  data[0].value;
+										}
+									}
+									if($scope.flag1 === true) {
+										$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
+										.success(function(data){
+											$scope.flag1 = false;
+											
+										});
+									}
+								});
+							}
+						
+				}else if($scope.clickItem.ticked === true){
+					console.log($scope.getSelectedCountry[0].name);
+						if($scope.getSelectedCountry.length != 0) {
+							$http.get('/getCountryCode/'+$scope.clickItem.name)
+							.success(function(data1){
+								console.log($scope.clickItemList);
+								console.log($scope.getSelectedCity);
+								for(var k = 0; k<$scope.getSelectedCountry.length; k++){
+									for(var j = 0; j<$scope.clickItemList.length; j++){	
+										for(var i = 0; i<$scope.getSelectedCity.length; i++){
+											if($scope.getSelectedCity[i].countryCode == data1){
+												console.log($scope.getSelectedCity[i].name +"^^"+$scope.clickItemList[j].name)
+												if($scope.getSelectedCity[i].name == $scope.clickItemList[j].name){
+													$scope.getSelectedCity[i].ticked = true;
+												}else{
+													if(j == 0){
+														$scope.getSelectedCity[i].ticked = false;
+													}
+												}
+											}else{
+												if($scope.getSelectedCity[i].countryName === $($scope.getSelectedCountry[k].name).text()){
+													$scope.getSelectedCity[i].ticked = true;
+												}
 											}
+											
 										}
 									}
 								}
-							}
-							console.log($scope.getSelectedCity);
-							for(var i = 0; i<$scope.getSelectedCity.length; i++){
+								console.log($scope.getSelectedCity);
+								
 								$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
-								.success(function(data){
-									$scope.clickItemList.splice(0);
-									$scope.getSelectedCountry.splice(0);
-								});
-							}
-						});
+									.success(function(data){
+										$scope.clickItemList.splice(0);
+										$scope.getSelectedCountry.splice(0);
+										
+									});
+							
+							});
+						}
+					}else {
+						if($scope.getSelectedCountry.length != 0) {
+							$http.get('/getCountryCode/'+$scope.clickItem.name)
+							.success(function(data1){
+							console.log($scope.clickItemList);	
+								for(var j = 0; j<$scope.clickItemList.length; j++){
+									for(var i = 0; i<$scope.getSelectedCity.length; i++){
+										console.log($scope.getSelectedCity[i].countryCode == data1)
+										if($scope.getSelectedCity[i].countryCode == data1){
+											console.log($scope.getSelectedCity[i].name +"^^"+$scope.clickItemList[j].name)
+											if($scope.getSelectedCity[i].name == $scope.clickItemList[j].name){
+												$scope.getSelectedCity[i].ticked = false;
+											}else{
+												if(j == 0){
+													$scope.getSelectedCity[i].ticked = true;
+												}
+											}
+										}else{
+											$scope.getSelectedCity[i].ticked = false;
+										}
+									}
+								}
+								console.log($scope.getSelectedCity);
+								for(var i = 0; i<$scope.getSelectedCity.length; i++){
+									$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
+									.success(function(data){
+										$scope.clickItemList.splice(0);
+										$scope.getSelectedCountry.splice(0);
+									});
+								}
+							});
+						}
 					}
 				}
+			}else{
+				alert("please select city");
 			}
-		}else{
-			alert("please select city");
-		}
-		} else{
-			alert("please select id");
-		}
-	};
+			} else{
+				alert("please select id");
+			}
+		};
 	
 	
 	

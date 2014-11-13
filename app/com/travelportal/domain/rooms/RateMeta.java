@@ -23,14 +23,13 @@ import play.db.jpa.Transactional;
 import com.travelportal.domain.City;
 import com.travelportal.domain.RatePeriod;
 
-
 @Entity
 @Table(name="rate_meta")
 public class RateMeta {
 
 	@Column(name="rate_id")
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 	@Column(name="rate_name")
 	private String rateName;
 	@OneToOne
@@ -51,10 +50,10 @@ public class RateMeta {
 	public void setCities(List<City> cities) {
 		this.cities = cities;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getRateName() {
@@ -89,16 +88,11 @@ public class RateMeta {
 	}
 	
 	 public static RateMeta findRateMeta(String rateName, String currency, Date fromDate,Date toDate, HotelRoomTypes roomType) {
-		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			System.out.println("-------");
-			System.out.println(format.format(fromDate));
-			System.out.println(format.format(toDate));	
-		 
-		 Query query = JPA.em().createQuery("Select r from RateMeta r where r.rateName = ?1 and r.currency = ?2 and r.fromDate = ?3 and r.toDate = ?4 and r.roomType = ?5");
+	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.rateName = ?1 and r.currency = ?2 and r.fromDate = ?3 and r.toDate = ?4 and r.roomType = ?5");
 			query.setParameter(1, rateName);
 			query.setParameter(2, currency);
-			query.setParameter(3, format.format(fromDate));
-			query.setParameter(4, format.format(toDate));
+			query.setParameter(3, fromDate);
+			query.setParameter(4, toDate);
 			query.setParameter(5, roomType);
 	    	return (RateMeta) query.getSingleResult();
 	    }

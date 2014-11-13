@@ -79,13 +79,13 @@ public class PersonRate {
 		this.rate = rate;
 	}
 	
-	public static List<PersonRate> findByRateMetaId(long id) {
+	public static List<PersonRate> findByRateMetaId(Long id) {
     	Query query = JPA.em().createQuery("Select p from PersonRate p where p.rate.id = ?1");
 		query.setParameter(1, id);
     	return (List<PersonRate>) query.getResultList();
     }
 	
-	public static PersonRate findByRateMetaIdAndNormal(long id,boolean isNormal,String numberOfPersons) {
+	public static PersonRate findByRateMetaIdAndNormal(Long id,boolean isNormal,String numberOfPersons) {
     	Query query = JPA.em().createQuery("Select p from PersonRate p where p.rate.id = ?1 and p.isNormal = ?2 and p.numberOfPersons = ?3");
 		query.setParameter(1, id);
 		query.setParameter(2, isNormal);

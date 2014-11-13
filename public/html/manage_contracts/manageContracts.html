@@ -261,19 +261,21 @@
 			
 			<label style="margin-top: 4%;margin-left: 18%;"><b>Apply to all Markets?<br>
 			<label>(Based on Passenger Nationality)</label>
-					<input type="radio" name="applyToMarket" data-ng-value="false" ng-click="showMarketTable(rate.id)">No
-					<input type="radio" name="applyToMarket" data-ng-value="true" ng-click="applyToall()">Yes
+					<input type="radio" name="applyToMarket{{$index}}" data-ng-value="true" data-ng-model="rate.applyToMarket" ng-click="applyToall()">Yes
+					<input type="radio" name="applyToMarket{{$index}}" data-ng-value="false" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate.id)">No
 				</b></label><br>
-			
-				<div multi-select input-model="webBrowsersGrouped"
-					button-label="icon name" item-label="icon name maker"
-					tick-property="ticked" orientation="vertical"
-					group-property="multiSelectGroup" on-item-click="msClick(data)"
-					on-open="msOpen( data )"></div>
-				<div style="float: right;">
-					<button class="btn btn-success" ng-click="setSelection();">Submit</button>
+				<div ng-show="rate.applyToMarket == false">
+					<div style="margin-left: 30%;width: 100%;">
+						<div multi-select input-model="webBrowsersGrouped"
+							button-label="icon name" item-label="icon name maker"
+							tick-property="ticked" orientation="vertical"
+							group-property="multiSelectGroup" on-item-click="msClick(data)"
+							on-open="msOpen( data )"></div>
+					</div>	
+					<div style="margin-left: 65%;">
+						<button class="btn btn-success" ng-click="setSelection();">Submit</button>
+					</div>
 				</div>
-			
 			
 			</fieldset>	
 					<input type="button" value="ADD NEW RATE" ng-click="createNewRate()" style="float:left; margin-top: 1%;margin-left: 29%;">	

@@ -10,6 +10,15 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET /hotel_profile/:profileId 		com.travelportal.controllers.HotelProfileController.viewSupplierProfile(profileId: Long)
 
 #APIs for fetching seed data 
+
+GET		/signUp						com.travelportal.controllers.ApplicationController.getSignUpForm
+GET		/login						com.travelportal.controllers.ApplicationController.login
+POST	/getCityOfCountry			com.travelportal.controllers.ApplicationController.getCityOfCountry
+POST	/register					com.travelportal.controllers.ApplicationController.doRegister
+GET		/adminLogin					com.travelportal.controllers.ApplicationController.adminLogin
+POST	/doAdminLogin				com.travelportal.controllers.ApplicationController.doAdminLogin
+GET		/adminLogout						com.travelportal.controllers.ApplicationController.adminLogout
+
 GET 	/countries					com.travelportal.controllers.TravelPortalUtilsController.getCountries()
 GET 	/cities/:countryCode		com.travelportal.controllers.TravelPortalUtilsController.getCities(countryCode: Integer)
 GET 	/hotelchains              	com.travelportal.controllers.TravelPortalUtilsController.getChainHotels()

@@ -89,4 +89,12 @@ public class City {
 		return (List<City>) JPA.em().createQuery("select c from City c ")
 				.getResultList();
 	}
+	
+	public static List<String> getCitiesByCountry(int id) {
+
+		return (List<String>) JPA.em()
+				.createQuery("select c from City c where c.country.countryCode = ?1")
+				.setParameter(1, id).getResultList();
+	}
+	
 }

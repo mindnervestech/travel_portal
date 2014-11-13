@@ -76,7 +76,7 @@ public class CancellationPolicy {
 		this.rate = rate;
 	}
 	
-	public static List<CancellationPolicy> findByRateMetaId(long id) {
+	public static List<CancellationPolicy> findByRateMetaId(Long id) {
     	Query query = JPA.em().createQuery("Select c from CancellationPolicy c where c.rate.id = ?1");
 		query.setParameter(1, id);
     	return (List<CancellationPolicy>) query.getResultList();

@@ -72,6 +72,8 @@ public class Currency {
 		return (Currency) JPA.em().createQuery("select c from Currency c where c.currencyName = ?1").setParameter(1, code).getSingleResult();
 	}
 	
-	
+	public static Currency getCurrencyByName(String name) {
+		return (Currency) JPA.em().createQuery("select c from Currency c where c.currencyName = ?1").setParameter(1, name).getSingleResult();
+	}
 	
 }

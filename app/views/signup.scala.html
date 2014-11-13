@@ -1,0 +1,361 @@
+@(countries: List[String], hotelChain: List[String], hotelBrand: List[String], currencies: List[String])
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title></title>
+   <link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css")'>
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/font-awesome/css/font-awesome.min.css")'>
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/bootstrap/css/bootstrap.min.css")'>
+<!--LOADING STYLESHEET FOR PAGE-->
+<!--Loading style vendors-->
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/animate.css/animate.css")'>
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/jquery-pace/pace.css")'>
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/iCheck/skins/all.css")'>
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/jquery-notific8/jquery.notific8.min.css")'>
+<!--Loading style-->
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/css/themes/style1/orange-blue.css")' class="default-style">
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/css/themes/style1/orange-blue.css")' id="theme-change"
+	class="style-change color-change">
+<link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/style-responsive.css")'>
+<link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/app.css")'>
+<script src='@routes.Assets.at("bower_components/jquery/jquery.min.js")'></script>
+
+    </head>
+    <body>
+    	<form action="/register" method="post">
+    	<table class="table" style="margin-left: 20%;">
+    		<tr>
+    			<th>
+					<div class="panel panel-green">
+						<div class="panel-heading clearfix">
+							<span class="mts pull-left">Signup</span>
+						</div>
+					</div>
+				</th>
+			</tr>
+		<tr>
+		<td>	
+			<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>*Property/Hotel Name:</b></label>
+							<div class="col-md-9">
+								<input type="text" name="hotelName">
+							</div>
+					</div>
+				</div>	
+		</td>			
+		</tr>
+			
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>Company/Management/ Supplier Name 
+								(if different than hotel name):</b></label>
+							<div class="col-md-9">
+								<input type="text" name="supplierName">
+							</div>
+					</div>
+				</div>	
+		</td>
+		</tr>		
+			
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>*Hotel Street Address:</b></label>
+							<div class="col-md-9">
+								<textarea name="hotelAddress"></textarea>
+							</div>
+					</div>
+				</div>
+		</td>
+		</tr>		
+		
+		<tr>
+		<td>
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>*Country:</b></label>
+							<div class="col-md-3">
+								<select class="form-control" id="cntry" name="country" onclick="getCountry()">
+										<option value="0">--Select country--</option>
+										 @for(country <- countries) {
+										        <option value="@country">@country</option>
+										  }
+										
+								</select>
+							</div>
+					</div>
+				</div>
+		</td>
+		</tr>
+		<tr>
+		<td>
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>*City:</b></label>
+							<div class="col-md-3">
+								<select class="form-control" id="myCity" name="city">
+										<option value="0">--Select city--</option>
+										<option></option>
+								</select>
+							</div>
+					</div>
+				</div>
+		</td>
+		</tr>
+		
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>Zip/Postal Code:</b></label>
+							<div class="col-md-9">
+								<input type="text" name="zipcode">
+							</div>
+					</div>
+				</div>	
+		</td>
+		</tr>		
+			
+		<tr>
+		<td>				
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>*Is the hotel part of chain?:</b></label>
+							<div class="col-md-9">
+								<input type="radio" name="partOfChain" value="true" checked="checked" onclick="isChain(true)">Yes
+								<input type="radio" name="partOfChain" value="false" onclick="isChain(false)">No
+							</div>
+					</div>
+				</div>	
+		</td>
+		</tr>
+		
+		<tr>
+		<td>				
+				<div class="row" style="margin-top: 3%;" id="chainSelect">
+					<div class="form-group">
+						<label class="col-md-3 control-label">Please choose your hotel chain affiliate from the drop down menu</label>
+							<div class="col-md-3">
+								<select class="form-control" name="chainHotel">
+										<option value="0">--Select hotel chain affiliate--</option>
+										 @for(chain <- hotelChain) {
+										        <option value="@chain">@chain</option>
+										  }
+								</select>
+							</div>
+					</div>
+				</div>
+		</td>
+		</tr>
+		
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 1%;" id="chainSelect2">
+					<div class="form-group">
+						<label class="col-md-3 control-label">Please choose your hotel brand:</label>
+							<div class="col-md-3">
+								<select class="form-control" name="hotelBrand">
+										<option value="0">--Select hotel brand--</option>
+										@for(brand <- hotelBrand) {
+										        <option value="@brand">@brand</option>
+										  }
+								</select>
+							</div>
+					</div>
+				</div>
+		</td>
+		</tr>
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>Is your property Compliant with all known Health & Safety Laws of your country?:</b></label>
+							<div class="col-md-9">
+								<input type="radio" name="laws" value="true">Yes
+								<input type="radio" name="laws" value="false" checked="checked">No
+							</div>
+					</div>
+				</div>	
+		</td>
+		</tr>
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label">Please choose the currency from the drop down menu that you wish to supply the net payable rates in:</label>
+					</div>
+				</div>
+		</td>
+		</tr>
+		
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>*Select Currency: </b></label>
+							<div class="col-md-3">
+								<select class="form-control" name="currency">
+										<option value="0">--Choose one--</option>
+										@for(currency <- currencies) {
+										        <option value="@currency">@currency</option>
+										  }
+								</select>
+							</div>
+					</div>
+				</div>
+		</td>
+		</tr>
+		
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>Please define the policy for market specific rates:</b></label>
+							<div class="col-md-9">
+								<input type="radio" name="policy" value="Based on Travel Agent Location">&nbsp;&nbsp;&nbsp;&nbsp;Based on Travel Agent Location <br>
+								<input type="radio" name="policy" value="Based on Passenger Residency">&nbsp;&nbsp;&nbsp;&nbsp;Based on Passenger Residency <br>
+								<input type="radio" name="policy" value="Based on Passenger Nationality" checked="checked">&nbsp;&nbsp;&nbsp;&nbsp;Based on Passenger Nationality <br>
+							</div>
+					</div>
+				</div>	
+		</td>
+		</tr>
+		
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<label>Please select the star rating and only use the approved authorized licensed rating given to your property. We reserve the right to change the rating if required 
+					</label>
+				</div>
+		</td>
+		</tr>
+		
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>*Please Choose a Star Rating: </b></label>
+							<div class="col-md-3">
+								<select class="form-control" name="starRating">
+										<option value="0">--Choose one--</option>
+										<option value="Budget">Budget **</option>
+										<option value="Standard">Standard ***</option>
+										<option value="Superior">Superior ****</option>
+										<option value="Luxury">Luxury *****</option>
+										<option value="Serviced">Serviced Apartment</option>
+								</select>
+							</div>
+					</div>
+				</div>
+		</td>
+		</tr>
+		
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<label><p>A First-class accommodation category that highlights luxury, hospitality, and premium customer service related services. These are <br>
+					outstanding lodging facilities offering fine cuisine, an extensive range of amenities/services. May be centrally located and easy access to <br>
+					the commercial business areas. 
+					</p></label>
+				</div>
+		</td>
+		</tr>
+		
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<label><p>
+					</p></label>Please choose a password that you will remember. Your password should be a minimum of 6 characters long and easy to remember. For <br>
+					security reasons, <b>DO NOT</b> use a simple password like your hotel name. Your Property ID will always be your hotel name exactly as written <br>
+					on the DOTW agreement and as listed above in field labeled Property/Hotel Name (please do not make changes).<br> 
+<b>Note: </b>Once you click update if you made changes here, the system will log you out and you will need to log back with your new password.
+				</div>
+		</td>
+		</tr>
+		
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>*Password:</b></label>
+							<div class="col-md-9">
+								<input type="password" name="password">
+								<label>(minimum 6 characters)</label>
+							</div>
+					</div>
+				</div>	
+		</td>
+		</tr>
+		
+		<tr>
+		<td>		
+				<div class="row" style="margin-top: 3%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>*Verify:</b></label>
+							<div class="col-md-9">
+								<input type="password" name="verify">
+							</div>
+					</div>
+				</div>
+		</td>
+		</tr>		
+		<tr>
+		<td>
+				<input type="submit" value="Submit">
+		</td>
+		</tr>	
+		</table>	
+		</form>	
+		
+</body>
+</html>
+<script type="text/javascript">
+function getCountry() {
+	console.log($("#cntry").val());
+	if($("#cntry").val() != "0") {
+		$.ajax({
+			url: "/getCityOfCountry",
+			  type: "POST",
+			  data: {country:$("#cntry").val()},  
+		      success:function(data) {
+		        console.log('success');
+		        console.log(data);
+		        $('#myCity').children().remove().end();
+		        $('#myCity').append('<option value="0">--Select city--</option>');
+		        $.each(data, function(key, value) {   
+		        	$('#myCity').append('<option value="' + value.cityName + '">' + value.cityName + '</option>'); 
+		       });
+		        
+		      }
+		   });
+	}
+	
+}
+
+function isChain(value) {
+	if(value == true) {
+		$("#chainSelect").css("display","block");
+		$("#chainSelect2").css("display","block");
+	}
+	if(value == false) {
+		$("#chainSelect").css("display","none");
+		$("#chainSelect2").css("display","none");
+	}
+}
+
+</script>

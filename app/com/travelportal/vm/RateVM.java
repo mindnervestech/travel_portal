@@ -14,6 +14,7 @@ public class RateVM {
 	public String currency;
 	public NormalRateVM normalRate;
 	public boolean isSpecialRate;
+	public boolean applyToMarket = true;
 	public SpecialRateVM special;
 	public List<CancellationPolicyVM> cancellation = new ArrayList<CancellationPolicyVM>();
 	

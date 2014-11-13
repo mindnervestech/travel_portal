@@ -64,7 +64,9 @@ public class Country {
 
 	public static Country getCountryByName(String name) {
 		return (Country) JPA.em()
-				.createQuery("select c from Country c where countryName = ?1")
+				.createQuery("select c from Country c where c.countryName = ?1")
 				.setParameter(1, name).getSingleResult();
 	}
+	
+	
 }

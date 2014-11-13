@@ -132,6 +132,7 @@ public static void createRootDir() {
 		rateVM.isSpecialRate = false;
 		rateVM.special = special;
 		rateVM.cancellation.add(cancel);
+		rateVM.applyToMarket = true;
 		return ok(Json.toJson(rateVM));
 	}
 	
@@ -696,6 +697,7 @@ public static void createRootDir() {
 
 		public String name;
 		public int countryCode;
+		public String countryName;
 		public boolean ticked;
 
 	}
