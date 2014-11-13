@@ -270,14 +270,15 @@ angular.module('travel_portal').
 		       
 		    };
 		    
-		    //////
 		    
+		 		    
+		    //////
+		    //$scope.applyMarket = false;
 		    $scope.selectedRatesId;
 			console.log($scope.selectedRatesId);
 			//$scope.webBrowsersGrouped =[];
 			$scope.msClose;
 			$scope.getSelectedCity = [];
-			
 			$scope.showAllotmentMarketTable = function(alloc) {
 				Id = alloc.allotmentMarketId;
 					
