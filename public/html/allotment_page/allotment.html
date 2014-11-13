@@ -259,19 +259,25 @@
 					
 						 <div class="col-md-6">
 		                 <div class="form-group">
+		                  <div class="col-md-10">
 						<label><b>Apply to all Markets?<br>
 			<label>(Based on Passenger Nationality)</label>
-					<input type="radio" name="applyToMarket" data-ng-value="false" ng-click="showAllotmentMarketTable(allot.allotmentMarketId)">No
-					<input type="radio" name="applyToMarket" data-ng-value="true" ng-click="applyToall()">Yes
+					<input type="radio" name="applyToMarket"  data-ng-model="allot.applyMarket" data-ng-value="false" ng-click="showAllotmentMarketTable(allot)">No
+					<input type="radio" name="applyToMarket"  data-ng-model="allot.applyMarket" data-ng-value="true" ng-click="applyToall()">Yes
 				</b></label><br>
+				</div>
 			
-				<div multi-select input-model="webBrowsersGrouped"
+				<div multi-select input-model="allot.allocatedCities"
 					button-label="icon name" item-label="icon name maker"
 					tick-property="ticked" orientation="vertical"
-					group-property="multiSelectGroup" on-item-click="msClick(data,$index)"
-					on-open="msOpen( data )"></div>
+					group-property="multiSelectGroup"
+					on-open="msOpen( data )">
+					
+				</div>
+				
+					
 				<div class="col-md-2 col-md-offset-9">
-					<button class="btn btn-success" ng-click="setSelection();">Submit</button>
+					<input type="button" class="btn btn-success" ng-click="setSelection(allot);" value="Submit">
 				</div>
 				</div>
 				</div>

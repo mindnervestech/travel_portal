@@ -70,7 +70,7 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
 
         template: 
             '<span class="multiSelect inlineBlock">' +        
-                '<button style = "width:31%"; type="button" class="button multiSelectButton buttonClicked" ng-click="toggleCheckboxes( $event ); refreshSelectedItems(); refreshButton();" ng-bind-html="varButtonLabel">' +
+                '<button style = "width:68%"; type="button" class="button multiSelectButton buttonClicked" ng-click="toggleCheckboxes( $event ); refreshSelectedItems(); refreshButton();" ng-bind-html="varButtonLabel">' +
                 '</button>' +                              
                 '<div class="checkboxLayer">' +                        
                     '<form>' + 
@@ -665,7 +665,6 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
             // select All / select None / reset buttons
             $scope.select = function( type, e ) {
             	
-            	allCitySelectionDeselection(type);
                 helperIndex = helperItems.indexOf( e.target );
                 $scope.tabIndex = helperIndex;
 
