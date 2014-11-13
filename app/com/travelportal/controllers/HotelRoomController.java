@@ -697,7 +697,6 @@ public static void createRootDir() {
 
 		public String name;
 		public int countryCode;
-		public String countryName;
 		public boolean ticked;
 
 	}
@@ -739,69 +738,6 @@ public static void createRootDir() {
 	}
 
 	
-	@Transactional(readOnly = false)
-	public static Result setCountrySelection(String name, int ratesId) {
-		
-		List<Map> list = new ArrayList<>();
-		Country country = Country.getCountryByName(name);
-		List<City> cityList = City.getCities(country.getCountryCode());
-		RateMeta rates = RateMeta.getRatesById(ratesId);
-		/*if(rates != null && rates.getCities() != null && !rates.getCities().isEmpty()) {
-			rates.getCities().removeAll(rates.getCities());
-		}*/
-	
-		if (cityList != null && cityList.size() != 0) {
-			if (rates.getCities() != null && rates.getCities().size() != 0 ) {
-				if (cityList.size() == rates.getCities().size()) {
-
-					//
-					rates.getCities().removeAll(rates.getCities());
-					//seteSelectionByCondition(cityList, false);
-					for (City c : cityList) {
-						Map cityMap = new HashMap<>();
-						City _c = City.getCityByCode(c.getCityCode());
-						cityMap.put("code",_c.getCountry().getCountryCode());
-						cityMap.put("value", false);
-						list.add(cityMap);
-					}
-					
-				} else {
-					rates.getCities().removeAll(rates.getCities());
-					rates.setCities(cityList);
-					//seteSelectionByCondition(cityList, true);
-					for (City c : cityList) {
-						Map cityMap = new HashMap<>();
-						City _c = City.getCityByCode(c.getCityCode());
-						cityMap.put("code",_c.getCountry().getCountryCode());
-						cityMap.put("value", true);
-						list.add(cityMap);
-					}
-				}
-
-			} else {
-				//rates.getCities().removeAll(rates.getCities());
-				rates.setCities(cityList);
-				for (City c : cityList) {
-					Map cityMap = new HashMap<>();
-					City _c = City.getCityByCode(c.getCityCode());
-					cityMap.put("code",_c.getCountry().getCountryCode());
-					cityMap.put("value", true);
-					list.add(cityMap);
-				}
-			}
-
-		}
-		return ok(Json.toJson(list));
-	}
-	@Transactional(readOnly = true)
-	public static Result getCountryCode(String name){
-		City city = City.getCitiByName(name);
-		int id =0;
-		if(city.getCountry() != null){
-			id = city.getCountry().getCountryCode();
-		}
-		return ok(Json.toJson(id));
-	}
 	
 }
 

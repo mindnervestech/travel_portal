@@ -2063,232 +2063,126 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 	};
 	
 	////
-	$scope.selectedRatesId;
-	
+    
+    $scope.selectedRatesId;
 	console.log($scope.selectedRatesId);
-	$scope.webBrowsersGrouped =[];
+	//$scope.webBrowsersGrouped =[];
 	$scope.msClose;
 	$scope.getSelectedCity = [];
-	$scope.getSelectedCountry = [];
 	
-	$scope.showMarketTable = function(Id) {
-		console.log(Id);
-		console.log($scope.getSelectedCity);
-		console.log($scope.getSelectedCountry);
+	$scope.showAllotmentMarketTable = function(alloc) {
+		Id = alloc.allotmentMarketId;
+			
+		
 		$scope.getSelectedCity.splice(0);
-		$scope.getSelectedCountry.splice(0);
 		$scope.selectedRatesId = Id;
 		console.log($scope.selectedRatesId);
-		$http.get('/getMarketGroup/'+$scope.selectedRatesId)
+		$http.get('/getAllotmentMarketGroup/'+$scope.selectedRatesId)
 		.success(function(data){
 			if(data) {
+				alloc.allocatedCities = [];
 				
-				$scope.webBrowsersGrouped.splice(0);
 					for(var i = 0; i<data.length;i++){
-						$scope.webBrowsersGrouped.push({
+						alloc.allocatedCities.push({
 							name:'<strong>'+data[i].country.countryName+'</strong>',
 							multiSelectGroup:true
 						});
 						for(var j =0; j<data[i].country.cityvm.length;j++){
-							console.log(data[i].country.cityvm[j].tick);
-
-							$scope.getSelectedCity.push({
-                                name:data[i].country.cityvm[j].cityName,
-                                ticked:data[i].country.cityvm[j].tick,
-                                countryCode : data[i].country.cityvm[j].cityCountryCode,
-                                countryName : data[i].country.countryName
-							});
 							
-							$scope.webBrowsersGrouped.push({
+							alloc.allocatedCities.push({
 								name:data[i].country.cityvm[j].cityName,
 								ticked:data[i].country.cityvm[j].tick
 							});
+							//allot.applyMarket = false;
 						}
-						$scope.webBrowsersGrouped.push({
+						alloc.allocatedCities.push({
 							multiSelectGroup:false
 						});
 					}
+					
+					//console.log(alloc.allocatedCities);
+					console.log(alloc.allocatedCities);
+					//alloc.allocatedCities =  $scope.webBrowsersGrouped; //[{name:"pune",ticked:true}];	
 			} 
 		});
 	}
-
-	$scope.flag1 = false;
-	$scope.clickItem;
-	$scope.clickItemList = [];
-	$scope.msClick = function( data ) {
-		$scope.clickItem = data;
-		if(data.multiSelectGroup === undefined) {
-			 $scope.flag1 = true;
-			$scope.clickItemList.push({
-				name:data.name,
-				ticked:data.ticked
-			});
-			console.log(data.ticked);
-			if(data.ticked ===false){
-				for(var i = 0; i<$scope.getSelectedCity.length; i++){
-					console.log(data.name +"=== "+$scope.getSelectedCity[i].name)
-					if(data.name === $scope.getSelectedCity[i].name ){
-						console.log(data.name +"=== "+$scope.getSelectedCity[i].name)
-						$scope.getSelectedCity[i].ticked = false;
-					}
+	
+	
+	
+	
+	$scope.setSelection = function(allot) {
+		
+		$scope.getSelectedCity.splice(0);
+		console.log(allot.allocatedCities)
+			for(var i = 0; i<allot.allocatedCities.length;i++){
+				if(allot.allocatedCities[i].multiSelectGroup == undefined ){
+					$scope.getSelectedCity.push({
+                        name:allot.allocatedCities[i].name,
+                        ticked:allot.allocatedCities[i].ticked,
+                        countryCode : allot.allocatedCities[i].countryCode
+					});
 				}
+			}
+			$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
+			.success(function(data){
+				$scope.flag = false;
 				
-			} else {
-				console.log(data.name +"=== "+$scope.getSelectedCity)
-				for(var i = 0; i<$scope.getSelectedCity.length; i++){
-					
-					if(data.name === $scope.getSelectedCity[i].name ){
-						console.log($scope.getSelectedCity[i].ticked)
-						$scope.getSelectedCity[i].ticked = true;
-					}
-				}
-				
-			}	
-			
-		} else {
-			$scope.getSelectedCountry.push({
-				name:data.name
 			});
-		}
+		
 	};
-	$scope.applyToall = function () {
-		allCitySelectionDeselection('all');
-	}
-	$scope.flag = false;
-	allCitySelectionDeselection = function( type) {
-		$scope.flag = true;	 
-		for(var i =0; i<$scope.getSelectedCity.length;i++) {
-			if(type === 'all'){ 
-				$scope.getSelectedCity[i].ticked = true;
-			} else {
-				$scope.getSelectedCity[i].ticked = false;
+	
+	
+	
+	
+	
+	
+}]);
+
+
+angular.module('travel_portal').
+controller("manageSuppliersController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
+		
+			$scope.getData = function() {
+				
+				$http.get('/getPendingUsers').success(function(response){
+					console.log(response);
+					$scope.pendingUsers = response;
+				});
+				
+				$http.get('/getApprovedUsers').success(function(response){
+					console.log(response);
+					$scope.approvedUsersList = response;
+				});
+				
+				$http.get('/getRejectedUsers').success(function(response){
+					console.log(response);
+					$scope.rejectedUsers = response;
+				});
+				
 			}
+		
+		$scope.approvePending = function(userId,user) {
+			$scope.userId = userId;
+			$http.get('/approveUser/'+$scope.userId).success(function(response){
+				$scope.pendingUsers.splice($scope.pendingUsers.indexOf(user),1);
+				$scope.getData();
+			});
 		}
-		/*$http.get('/selectDeselectAll/'+type)
-				.success(function(data){
-					console.log($scope.getSelectedCity);
-				}); */
-			 
-	 };
-	 $scope.setSelection = function() {
-			//TODO
-			console.log($scope.getSelectedCity);
-			console.log($scope.flag == true);
-			if($scope.selectedRatesId != undefined) {
-				if($scope.clickItem != undefined || $scope.flag == true){
-				if($scope.getSelectedCountry.length === 0 ) {
-						$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
-						.success(function(data){
-							$scope.flag = false;
-							
-						});
-				}else {
-					console.log($scope.clickItem.ticked === undefined);
-					if($scope.clickItem.ticked === undefined){
-							for(var i = 0; i<$scope.getSelectedCountry.length; i++){
-								$http.post('/setCountrySelection/'+$($scope.getSelectedCountry[i].name).text()+'/'+$scope.selectedRatesId)
-								.success(function(data){
-									$scope.getSelectedCountry.splice(0);
-									$scope.flag1 = true;
-									for(var i = 0; i<$scope.getSelectedCity.length; i++){
-										if($scope.getSelectedCity[i].countryCode === data[0].code){
-												$scope.getSelectedCity[i].ticked =  data[0].value;
-										}
-									}
-									if($scope.flag1 === true) {
-										$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
-										.success(function(data){
-											$scope.flag1 = false;
-											
-										});
-									}
-								});
-							}
-						
-				}else if($scope.clickItem.ticked === true){
-					console.log($scope.getSelectedCountry[0].name);
-						if($scope.getSelectedCountry.length != 0) {
-							$http.get('/getCountryCode/'+$scope.clickItem.name)
-							.success(function(data1){
-								console.log($scope.clickItemList);
-								console.log($scope.getSelectedCity);
-								for(var k = 0; k<$scope.getSelectedCountry.length; k++){
-									for(var j = 0; j<$scope.clickItemList.length; j++){	
-										for(var i = 0; i<$scope.getSelectedCity.length; i++){
-											if($scope.getSelectedCity[i].countryCode == data1){
-												console.log($scope.getSelectedCity[i].name +"^^"+$scope.clickItemList[j].name)
-												if($scope.getSelectedCity[i].name == $scope.clickItemList[j].name){
-													$scope.getSelectedCity[i].ticked = true;
-												}else{
-													if(j == 0){
-														$scope.getSelectedCity[i].ticked = false;
-													}
-												}
-											}else{
-												if($scope.getSelectedCity[i].countryName === $($scope.getSelectedCountry[k].name).text()){
-													$scope.getSelectedCity[i].ticked = true;
-												}
-											}
-											
-										}
-									}
-								}
-								console.log($scope.getSelectedCity);
-								
-								$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
-									.success(function(data){
-										$scope.clickItemList.splice(0);
-										$scope.getSelectedCountry.splice(0);
-										
-									});
-							
-							});
-						}
-					}else {
-						if($scope.getSelectedCountry.length != 0) {
-							$http.get('/getCountryCode/'+$scope.clickItem.name)
-							.success(function(data1){
-							console.log($scope.clickItemList);	
-								for(var j = 0; j<$scope.clickItemList.length; j++){
-									for(var i = 0; i<$scope.getSelectedCity.length; i++){
-										console.log($scope.getSelectedCity[i].countryCode == data1)
-										if($scope.getSelectedCity[i].countryCode == data1){
-											console.log($scope.getSelectedCity[i].name +"^^"+$scope.clickItemList[j].name)
-											if($scope.getSelectedCity[i].name == $scope.clickItemList[j].name){
-												$scope.getSelectedCity[i].ticked = false;
-											}else{
-												if(j == 0){
-													$scope.getSelectedCity[i].ticked = true;
-												}
-											}
-										}else{
-											$scope.getSelectedCity[i].ticked = false;
-										}
-									}
-								}
-								console.log($scope.getSelectedCity);
-								for(var i = 0; i<$scope.getSelectedCity.length; i++){
-									$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
-									.success(function(data){
-										$scope.clickItemList.splice(0);
-										$scope.getSelectedCountry.splice(0);
-									});
-								}
-							});
-						}
-					}
-				}
-			}else{
-				alert("please select city");
-			}
-			} else{
-				alert("please select id");
-			}
-		};
-	
-	
-	
-	
-	
-	
+		
+		$scope.rejectUser = function(userId,user) {
+			$scope.userId = userId;
+			$http.get('/rejectUser/'+$scope.userId).success(function(response){
+				$scope.approvedUsers.splice($scope.approvedUsers.indexOf(user),1);
+				$scope.getData();
+			});
+		}
+		
+		$scope.pendingUser = function(userId,user) {
+			$scope.userId = userId;
+			$http.get('/pendingUser/'+$scope.userId).success(function(response){
+				$scope.rejectedUsers.splice($scope.rejectedUsers.indexOf(user),1);
+				$scope.getData();
+			});
+		}
+		
 }]);

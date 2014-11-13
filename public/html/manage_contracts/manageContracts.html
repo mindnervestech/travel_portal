@@ -265,13 +265,12 @@
 					<input type="radio" name="applyToMarket{{$index}}" data-ng-value="false" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate.id)">No
 				</b></label><br>
 				<div ng-show="rate.applyToMarket == false">
-					<div style="margin-left: 30%;width: 100%;">
-						<div multi-select input-model="webBrowsersGrouped"
-							button-label="icon name" item-label="icon name maker"
-							tick-property="ticked" orientation="vertical"
-							group-property="multiSelectGroup" on-item-click="msClick(data)"
-							on-open="msOpen( data )"></div>
-					</div>	
+					<div multi-select input-model="rate.allocatedCities"
+					button-label="icon name" item-label="icon name maker"
+					tick-property="ticked" orientation="vertical"
+					group-property="multiSelectGroup"
+					on-open="msOpen( data )">
+				</div>
 					<div style="margin-left: 65%;">
 						<button class="btn btn-success" ng-click="setSelection();">Submit</button>
 					</div>

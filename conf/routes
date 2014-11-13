@@ -17,7 +17,15 @@ POST	/getCityOfCountry			com.travelportal.controllers.ApplicationController.getC
 POST	/register					com.travelportal.controllers.ApplicationController.doRegister
 GET		/adminLogin					com.travelportal.controllers.ApplicationController.adminLogin
 POST	/doAdminLogin				com.travelportal.controllers.ApplicationController.doAdminLogin
-GET		/adminLogout						com.travelportal.controllers.ApplicationController.adminLogout
+GET		/adminLogout				com.travelportal.controllers.ApplicationController.adminLogout
+
+
+GET		/getPendingUsers			com.travelportal.controllers.AdminController.getPendingUsers
+GET		/getApprovedUsers			com.travelportal.controllers.AdminController.getApprovedUsers
+GET		/getRejectedUsers			com.travelportal.controllers.AdminController.getRejectedUsers
+GET		/approveUser/:id			com.travelportal.controllers.AdminController.approveUser(id: Long)
+GET		/rejectUser/:id				com.travelportal.controllers.AdminController.rejectUser(id: Long)
+GET		/pendingUser/:id			com.travelportal.controllers.AdminController.pendingUser(id: Long)
 
 GET 	/countries					com.travelportal.controllers.TravelPortalUtilsController.getCountries()
 GET 	/cities/:countryCode		com.travelportal.controllers.TravelPortalUtilsController.getCities(countryCode: Integer)
@@ -100,8 +108,6 @@ GET	  /hotel_profile/getMapImagePath/:supplierCode			com.travelportal.controller
  
 GET     /getMarketGroup/:id                      com.travelportal.controllers.HotelRoomController.getMarketGroup(id:Long)
 POST    /setCitySelection                        com.travelportal.controllers.HotelRoomController.setCitySelection()
-POST    /setCountrySelection/:name/:ratesId                        com.travelportal.controllers.HotelRoomController.setCountrySelection(name:String, ratesId:Integer)
-GET     /getCountryCode/:name                                                                com.travelportal.controllers.HotelRoomController.getCountryCode(name:String)
 
 
 

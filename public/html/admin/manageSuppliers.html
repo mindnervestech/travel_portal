@@ -1,0 +1,96 @@
+<div class="panel panel-green">
+	<div class="panel-heading clearfix">
+		<span class="mts pull-left">Manage Users</span>
+	</div>
+	
+	<form action="/adminLogout" method="get"><input type="submit" class="btn" value="logout" style="margin-left: 92%;margin-top: 1%;"></form>
+	<ul class="nav nav-tabs" role="tablist" id="myTab">
+		  <li class="active"><a data-target="#approved" role="tab" data-toggle="tab" style="cursor: pointer;">Approved</a></li>
+		  <li><a data-target="#rejected" role="tab" data-toggle="tab" style="cursor: pointer;">Rejected</a></li>
+		  <li><a data-target="#pending" role="tab" data-toggle="tab" style="cursor: pointer;">Pending</a></li>
+		</ul>
+		
+		<!-- Tab panes -->
+		<div class="tab-content" ng-init="getData()">
+		  <div class="tab-pane active" id="approved">
+		 		<h4>Approved Users</h4>
+		 		
+		 		<table ng-table="tableParams" class="table">
+			    	<tbody>
+			    		<tr>
+			    			<th>Supplier Name</th>
+			    			<th>Hotel Name</th>
+			    			<th>Policy</th>
+			    			<th>Star Rating</th>
+			    			<th></th>
+			    		</tr>
+			    		<tr ng-repeat=" user in approvedUsers">
+			    			<td>{{user.supplierName}}</td>
+			    			<td>{{user.hotelName}}</td>
+			    			<td>{{user.policy}}</td>
+			    			<td>{{user.starRating}}</td>
+			    			<td><input type="button"  class="btn" value="Reject" ng-click="rejectUser(user.id,user)"></td>
+			    		</tr>
+			    		<!-- <tr>
+			    			<td><h4>{{pageNumber1}}/{{pageSize1}}</h4></td>
+			    			<td></td>
+			    			<td></td>
+			    			<td><input type="button" value="Prev" ng-click="onPrev1()"></td>
+			    			<td>
+			                		<input type="button" value="Next" ng-click="onNext1()">
+			                </td>
+			    		</tr> -->
+			    	</tbody>
+			    </table>
+		  </div>
+		  
+			  <div class="tab-pane" id="rejected">
+			  	<h4>Rejected Users</h4>
+			  	<table ng-table="tableParams" class="table">
+			    	<tbody>
+			    		<tr>
+			    			<th>Supplier Name</th>
+			    			<th>Hotel Name</th>
+			    			<th>Policy</th>
+			    			<th>Star Rating</th>
+			    			<th></th>
+			    		</tr>
+			    		<tr ng-repeat=" user in rejectedUsers">
+			    			<td>{{user.supplierName}}</td>
+			    			<td>{{user.hotelName}}</td>
+			    			<td>{{user.policy}}</td>
+			    			<td>{{user.starRating}}</td>
+			    			<td><input type="button"  class="btn" value="Pending" ng-click="pendingUser(user.id,user)"></td>
+			    		</tr>
+			    	</tbody>
+			    </table>
+			  </div>
+			  
+		   <div class="tab-pane" id="pending">
+		   		<h4>Pending Users</h4>
+		   		<table ng-table="tableParams" class="table">
+			    	<tbody>
+			    		<tr>
+			    			<th>Supplier Name</th>
+			    			<th>Hotel Name</th>
+			    			<th>Policy</th>
+			    			<th>Star Rating</th>
+			    			<th></th>
+			    		</tr>
+			    		<tr ng-repeat=" user in pendingUsers">
+			    			<td>{{user.supplierName}}</td>
+			    			<td>{{user.hotelName}}</td>
+			    			<td>{{user.policy}}</td>
+			    			<td>{{user.starRating}}</td>
+			    			<td><input type="button"  class="btn" value="Approve" ng-click="approvePending(user.id,user)"></td>
+			    		</tr>
+			    	</tbody>
+			    </table>
+		   </div>
+		   
+		</div>
+	
+	
+	
+</div>	
+	

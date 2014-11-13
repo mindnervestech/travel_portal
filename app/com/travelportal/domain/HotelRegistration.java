@@ -1,11 +1,14 @@
 package com.travelportal.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
@@ -142,6 +145,25 @@ public class HotelRegistration {
 		this.supplierCode = supplierCode;
 	}
 	
+	public static List<HotelRegistration> getAllPendingUsers() {
+		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.status = 'PENDING'");
+		return (List<HotelRegistration>) query.getResultList();
+	}
+	
+	public static List<HotelRegistration> getAllApprovedUsers() {
+		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.status = 'APPROVED'");
+		return (List<HotelRegistration>) query.getResultList();
+	}
+	
+	public static List<HotelRegistration> getAllRejectedUsers() {
+		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.status = 'REJECTED'");
+		return (List<HotelRegistration>) query.getResultList();
+	}
+	
+	public static HotelRegistration findById(long id) {
+		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.id = ?1").setParameter(1, id);
+		return (HotelRegistration) query.getSingleResult();
+	}
 	
 	@Transactional
     public void save() {
