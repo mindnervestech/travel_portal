@@ -79,7 +79,7 @@ public class PersonRate {
 		this.rate = rate;
 	}
 	
-	public static List<PersonRate> findByRateMetaId(Long id) {
+	public static List<PersonRate> findByRateMetaId(long id) {
     	Query query = JPA.em().createQuery("Select p from PersonRate p where p.rate.id = ?1");
 		query.setParameter(1, id);
     	return (List<PersonRate>) query.getResultList();

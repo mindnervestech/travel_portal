@@ -15,7 +15,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.Table;
 
-import com.travelportal.domain.Rate;
+import com.travelportal.domain.City;
+import com.travelportal.domain.rooms.RateMeta;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -37,8 +38,9 @@ public class AllotmentMarket {
 	private int choose;
 	
 	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private List<Rate> rate;
-	
+	private List<RateMeta> rate;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public List<City> cities;
 	
 
 	public int getAllotmentMarketId() {
@@ -81,15 +83,23 @@ public class AllotmentMarket {
 		this.choose = choose;
 	}
 		
-	public List<Rate> getRate() {
+
+	public List<RateMeta> getRate() {
 		return rate;
 	}
 
-	public void setRate(List<Rate> rate) {
+	public void setRate(List<RateMeta> rate) {
 		this.rate = rate;
 	}
 
-	
+	public List<City> getCities() {
+		return cities;
+	}
+
+	public void setCities(List<City> cities) {
+		this.cities = cities;
+	}
+
 	public static AllotmentMarket findById(int Code) {
 		try
 		{
@@ -139,4 +149,9 @@ public static List<AllotmentMarket> getMarketById(int MarketId,List<Integer> rat
     public void refresh() {
         JPA.em().refresh(this);
     }
+
+	public static AllotmentMarket getAllotmentMarketById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

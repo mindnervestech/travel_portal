@@ -13,7 +13,7 @@ public class AllotmentMarketVM {
 	private String specifyAllot;
 	private int allocation;
 	private int choose;
-	private List<Integer> rate;
+	private List<Long> rate;
 	
 	
 	public int getAllotmentMarketId() {
@@ -47,10 +47,10 @@ public class AllotmentMarketVM {
 	public void setChoose(int choose) {
 		this.choose = choose;
 	}
-	public List<Integer> getRate() {
+	public List<Long> getRate() {
 		return rate;
 	}
-	public void setRate(List<Integer> rate) {
+	public void setRate(List<Long> rate) {
 		this.rate = rate;
 	}
 	

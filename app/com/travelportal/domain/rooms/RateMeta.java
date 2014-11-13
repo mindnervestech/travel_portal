@@ -30,7 +30,7 @@ public class RateMeta {
 
 	@Column(name="rate_id")
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private long id;
 	@Column(name="rate_name")
 	private String rateName;
 	@OneToOne
@@ -51,10 +51,10 @@ public class RateMeta {
 	public void setCities(List<City> cities) {
 		this.cities = cities;
 	}
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getRateName() {
@@ -153,7 +153,7 @@ public class RateMeta {
 		 }
 	 
 		 
-		 public static List<RateMeta> getrateId(List<Integer> rateid) {
+		 public static List<RateMeta> getrateId(List<Long> rateid) {
 				return JPA.em().createQuery("select c from RateMeta c where id IN ?1").setParameter(1, rateid).getResultList();
 			}
 	 

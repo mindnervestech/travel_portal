@@ -138,9 +138,9 @@ public class AllotmentController extends Controller {
 			vm.setChoose(allMarketVM.getChoose());
 			vm.setPeriod(allMarketVM.getPeriod());
 			vm.setSpecifyAllot(allMarketVM.getSpecifyAllot());
-			List<Integer> listInt = new ArrayList<Integer>();
+			List<Long> listInt = new ArrayList<Long>();
 			for(RateMeta rate:allMarketVM.getRate()) {
-				listInt.add(Integer.parseInt(String.valueOf(rate.getId())));			
+				listInt.add(Long.parseLong(String.valueOf(rate.getId())));			
 			}
 			vm.setRate(listInt);	
 			
@@ -269,9 +269,9 @@ public class AllotmentController extends Controller {
 			vm.setChoose(allMarketVM.getChoose());
 			vm.setPeriod(allMarketVM.getPeriod());
 			vm.setSpecifyAllot(allMarketVM.getSpecifyAllot());
-			List<Integer> listInt = new ArrayList<Integer>();
+			List<Long> listInt = new ArrayList<Long>();
 			for(RateMeta rate:allMarketVM.getRate()) {
-				listInt.add(Integer.parseInt(String.valueOf(rate.getId())));			
+				listInt.add(Long.parseLong(String.valueOf(rate.getId())));			
 			}
 			vm.setRate(listInt);	
 			
