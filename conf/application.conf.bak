@@ -42,8 +42,8 @@ mail.storage.path="C:\\mypath"
 
 db.default.driver=com.mysql.jdbc.Driver
 db.default.url="jdbc:mysql://li664-78.members.linode.com:3306/travel_portal"
-db.default.user=myuser
-db.default.password="mypass"
+db.default.user=travel_portal
+db.default.pass=fAbvG643CsuV6GQK
 db.default.jndiName=DefaultDS
 jpa.default=defaultPersistenceUnit
 
