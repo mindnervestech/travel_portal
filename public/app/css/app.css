@@ -107,6 +107,9 @@ width: 861px !important;
 .setwidth{
 	width: 100px;
 }
+.overF{
+	overflow: auto;
+}
 .manageButton{
 	float: left;
 	margin-top: 9%;

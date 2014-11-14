@@ -16,7 +16,7 @@ public class HotelGeneralInfoVM {
 	private boolean isHealthSafetyCompliance;
 	private int currencyCode;
 	private int marketSpecificPolicyCode;
-	private String startRating;
+	private int startRating;
 	private String primaryPasswd;
 	private String verifiedPasswd;
 	
@@ -183,13 +183,13 @@ public class HotelGeneralInfoVM {
 	/**
 	 * @return the startRating
 	 */
-	public String getStartRating() {
+	public int getStartRating() {
 		return startRating;
 	}
 	/**
 	 * @param startRating the startRating to set
 	 */
-	public void setStartRating(String startRating) {
+	public void setStartRating(int startRating) {
 		this.startRating = startRating;
 	}
 	/**

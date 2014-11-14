@@ -194,7 +194,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelgeneralinfoVM.setCityCode(hotelProfile.getCity().getCityCode());
 		hotelgeneralinfoVM.setMarketSpecificPolicyCode(hotelProfile.getMarketPolicyType().getMarketPolicyTypeId());
 		hotelgeneralinfoVM.setBrandHotelCode(hotelProfile.getHoteBrands().getBrandsCode());
-		hotelgeneralinfoVM.setStartRating(String.valueOf(hotelProfile.getStartRatings()));
+		hotelgeneralinfoVM.setStartRating(hotelProfile.getStartRatings());
 		hotelgeneralinfoVM.setSupplierCode(hotelProfile.getSupplier_code());
 
 		HotelDescription hoteldescription = new HotelDescription();

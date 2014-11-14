@@ -266,7 +266,7 @@ public class AllotmentController extends Controller {
 			for(RateMeta rate:allMarketVM.getRate()) {
 				listInt.add(Long.parseLong(String.valueOf(rate.getId())));			
 			}
-			vm.setRate(listInt);	
+			vm.setRate(listInt);
 			
 			marketVMs.add(vm);
 		

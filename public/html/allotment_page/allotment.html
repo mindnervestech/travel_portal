@@ -262,8 +262,8 @@
 		                  <div class="col-md-10">
 						<label><b>Apply to all Markets?<br>
 			<label>(Based on Passenger Nationality)</label>
-					<input type="radio" name="applyToMarket"  data-ng-model="applyMarket" data-ng-value="false" ng-click="showAllotmentMarketTable(allot)">No
-					<input type="radio" name="applyToMarket"  data-ng-model="applyMarket" data-ng-value="true" ng-click="applyToall()">Yes
+					<input type="radio" data-ng-model="allot.applyMarket" value="false" ng-click="showAllotmentMarketTable(allot)">No
+					<input type="radio" data-ng-model="allot.applyMarket" value="true" ng-click="applyToall()">Yes
 				</b></label><br>
 				</div>
 			
@@ -282,6 +282,19 @@
 				</div>
 				</div>
 							</div>
+						
+				
+				<!-- <div class="chargechild">
+						<input type="radio" name="val" ng-click="ShowTax(true)" data-ng-model="mealpolicy.taxIncluded" value="true">
+						&nbsp; Yes
+					</div>
+					<div>
+						<input type="radio" name="val" ng-click="ShowTax(false)" data-ng-model="mealpolicy.taxIncluded" value="false">
+						&nbsp; No
+					</div>  -->
+				
+					
+						
 						
 					<div class="row">
 		            <div class="col-md-6">

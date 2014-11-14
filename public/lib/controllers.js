@@ -281,7 +281,8 @@ angular.module('travel_portal').
 			$scope.getSelectedCity = [];
 			$scope.showAllotmentMarketTable = function(alloc) {
 				Id = alloc.allotmentMarketId;
-					
+				console.log("-----------");	
+				console.log(alloc);
 				
 				$scope.getSelectedCity.splice(0);
 				$scope.selectedRatesId = Id;
@@ -322,7 +323,7 @@ angular.module('travel_portal').
 			$scope.setSelection = function(allot) {
 				
 				$scope.getSelectedCity.splice(0);
-				console.log(allot.allocatedCities)
+				console.log(allot)
 					for(var i = 0; i<allot.allocatedCities.length;i++){
 						if(allot.allocatedCities[i].multiSelectGroup == undefined ){
 							$scope.getSelectedCity.push({
@@ -957,7 +958,9 @@ angular.module('travel_portal').
 		$http.get('/cities/'+$scope.generalInfo.countryCode)
 		.success(function(data){
 			if(data) {
+				console.log("----");
 				console.log(data);
+				$scope.cities = [];
 				for(var i = 0; i<data.length; i++){
 					$scope.cities.push({
 						cityCode:data[i].id,
@@ -972,22 +975,26 @@ angular.module('travel_portal').
 	
 	$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
 		$scope.getallData=response;
-		//console.log(response);
+		console.log(response);
 		
 		
 		$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
 		.success(function(data){
 			if(data) {
-				console.log(data[0]);
+				console.log("----");
+				console.log(data);
+				$scope.cities = [];
+				for(var i = 0; i<data.length; i++){
 					$scope.cities.push({
-						cityCode:data[0].id,
-						cityName:data[0].name
+						cityCode:data[i].id,
+						cityName:data[i].name
 					});
+				}
 			} else {
 				$scope.cities.splice(0);
 			}
 		});
-		
+		//$scope.generalInfo.cityCode = response.hotelgeneralinfo.cityCode;
 		$scope.generalInfo=response.hotelgeneralinfo;
 		if (response.areaattractionsVM != undefined) {
 			for(var i=0;i<response.areaattractionsVM.length;i++) {
