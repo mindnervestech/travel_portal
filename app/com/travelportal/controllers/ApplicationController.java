@@ -26,13 +26,18 @@ import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.home;
 
 public class ApplicationController extends Controller{
 
 	@Transactional
 	public static Result login() {
-		
-		return ok(views.html.login.render());
+		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
+		final String value = session().get("SUPPLIER");
+        if (value == null) {
+        	return ok(views.html.login.render());
+        }
+        return ok(home.render("Home Page", Long.parseLong(session().get("SUPPLIER"))));
 	}
 	
 	@Transactional
@@ -63,11 +68,37 @@ public class ApplicationController extends Controller{
 	}
 	
 	@Transactional
+	public static Result doSupplierLogin() {
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
+		try {
+			HotelRegistration user = HotelRegistration.doLogin(form.get("code"),form.get("pass"),form.get("type"));
+			System.out.println(user.getHotelAddress());
+			if(user != null) {
+				session().put("SUPPLIER", user.getSupplierCode());
+				long code = Long.parseLong(user.getSupplierCode());
+				return ok(home.render("Home Page", code));
+			}
+		
+		} catch(NoResultException e) { }
+		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
+		return ok(views.html.login.render());
+	}
+	
+	@Transactional
 	public static Result adminLogout() {
 		System.out.println("SESSION VALUE   "+session().get("NAME"));
 		session().clear();
 		return ok(views.html.adminLogin.render());
 	}	
+	
+	@Transactional
+	public static Result supplierLogout() {
+		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
+		session().clear();
+		return ok(views.html.login.render());
+	}	
+	
 	
 	@Transactional
 	public static Result getSignUpForm() {
@@ -142,10 +173,11 @@ public class ApplicationController extends Controller{
 			int randomInt = randomGenerator.nextInt(100);
 		register.setSupplierCode(format.format(date).concat(Integer.toString(randomInt)));
 		register.setStatus("PENDING");
+		register.setSupplierType("Accomodation");
 		
 		register.save();
 		
-		return ok();
+		return ok(views.html.signupMessage.render());
 	}
 	
 }

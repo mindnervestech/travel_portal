@@ -161,13 +161,13 @@
 					
 					<label>Please define the applicable day/s by ticking the respective boxes below and enter the net payable rates:</label>
 					<div style="margin-left: 29%;margin-top: 3%;">
-						<input type="checkbox" ng-change="setRateMetaWeekDay('Sun',rate.rateDay0,$index)" data-ng-model="rate.rateDay0"><label>Sun&nbsp;&nbsp;</label>
-						<input type="checkbox" ng-change="setRateMetaWeekDay('Mon',rate.rateDay1,$index)" data-ng-model="rate.rateDay1"><label>Mon&nbsp;&nbsp;</label>
-						<input type="checkbox" ng-change="setRateMetaWeekDay('Tue',rate.rateDay2,$index)" data-ng-model="rate.rateDay2"><label>Tue&nbsp;&nbsp;</label>
-						<input type="checkbox" ng-change="setRateMetaWeekDay('Wed',rate.rateDay3,$index)" data-ng-model="rate.rateDay3"><label>Wed&nbsp;&nbsp;</label>
-						<input type="checkbox" ng-change="setRateMetaWeekDay('Thu',rate.rateDay4,$index)" data-ng-model="rate.rateDay4"><label>Thu&nbsp;&nbsp;</label>
-						<input type="checkbox" ng-change="setRateMetaWeekDay('Fri',rate.rateDay5,$index)" data-ng-model="rate.rateDay5"><label>Fri&nbsp;&nbsp;</label>
-						<input type="checkbox" ng-change="setRateMetaWeekDay('Sat',rate.rateDay6,$index)" data-ng-model="rate.rateDay6"><label>Sat&nbsp;&nbsp;</label>
+						<input type="checkbox" ng-change="setRateMetaWeekDay('Sun',rate.special.rateDay0,$index)" data-ng-model="rate.special.rateDay0"><label>Sun&nbsp;&nbsp;</label>
+						<input type="checkbox" ng-change="setRateMetaWeekDay('Mon',rate.special.rateDay1,$index)" data-ng-model="rate.special.rateDay1"><label>Mon&nbsp;&nbsp;</label>
+						<input type="checkbox" ng-change="setRateMetaWeekDay('Tue',rate.special.rateDay2,$index)" data-ng-model="rate.special.rateDay2"><label>Tue&nbsp;&nbsp;</label>
+						<input type="checkbox" ng-change="setRateMetaWeekDay('Wed',rate.special.rateDay3,$index)" data-ng-model="rate.special.rateDay3"><label>Wed&nbsp;&nbsp;</label>
+						<input type="checkbox" ng-change="setRateMetaWeekDay('Thu',rate.special.rateDay4,$index)" data-ng-model="rate.special.rateDay4"><label>Thu&nbsp;&nbsp;</label>
+						<input type="checkbox" ng-change="setRateMetaWeekDay('Fri',rate.special.rateDay5,$index)" data-ng-model="rate.special.rateDay5"><label>Fri&nbsp;&nbsp;</label>
+						<input type="checkbox" ng-change="setRateMetaWeekDay('Sat',rate.special.rateDay6,$index)" data-ng-model="rate.special.rateDay6"><label>Sat&nbsp;&nbsp;</label>
 					</div>
 					
 					<fieldset class="billinside">
@@ -262,17 +262,17 @@
 			<label style="margin-top: 4%;margin-left: 18%;"><b>Apply to all Markets?<br>
 			<label>(Based on Passenger Nationality)</label>
 					<input type="radio" name="applyToMarket{{$index}}" data-ng-value="true" data-ng-model="rate.applyToMarket" ng-click="applyToall()">Yes
-					<input type="radio" name="applyToMarket{{$index}}" data-ng-value="false" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate.id)">No
+					<input type="radio" name="applyToMarket{{$index}}" data-ng-value="false" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate)">No
 				</b></label><br>
-				<div ng-show="rate.applyToMarket == false">
+				<div ng-show="rate.applyToMarket == false" style="width: 45%;margin-left: 27%;">
 					<div multi-select input-model="rate.allocatedCities"
 					button-label="icon name" item-label="icon name maker"
 					tick-property="ticked" orientation="vertical"
 					group-property="multiSelectGroup"
 					on-open="msOpen( data )">
 				</div>
-					<div style="margin-left: 65%;">
-						<button class="btn btn-success" ng-click="setSelection();">Submit</button>
+					<div style="margin-left: 70%;">
+						<button class="btn btn-success" ng-click="setSelection(rate);">Submit</button>
 					</div>
 				</div>
 			
@@ -486,7 +486,22 @@
 						<div style="margin-left: 83%;margin-top: 7%;margin-right: 1%;"><input type="button" value="REMOVE THIS RATE" ng-click="removeRate($index)" ng-show="showRemoveRate == true"></div>
 			</div>
 			
-			
+				<label style="margin-top: 4%;margin-left: 18%;"><b>Apply to all Markets?<br>
+			<label>(Based on Passenger Nationality)</label>
+					<input type="radio" name="applyToRate{{$index}}" data-ng-value="true" data-ng-model="rate.applyToMarket" ng-click="applyToall()">Yes
+					<input type="radio" name="applyToRate{{$index}}" data-ng-value="false" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate)">No
+				</b></label><br>
+				<div ng-show="rate.applyToMarket == false" style="width: 45%;margin-left: 27%;">
+					<div multi-select input-model="rate.allocatedCities"
+					button-label="icon name" item-label="icon name maker"
+					tick-property="ticked" orientation="vertical"
+					group-property="multiSelectGroup"
+					on-open="msOpen( data )">
+				</div>
+					<div style="margin-left: 70%;">
+						<button class="btn btn-success" ng-click="setSelection(rate);">Submit</button>
+					</div>
+				</div>
 
 			</fieldset>	
 						<input type="button" value="ADD ADDITIONAL RATES" ng-click="addNewRate()" style="float:left; margin-top: 1%;margin-left: 1%;">

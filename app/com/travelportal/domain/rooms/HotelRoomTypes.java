@@ -266,8 +266,8 @@ public class HotelRoomTypes {
 		return roomTypeList;
 	}
 	
-	public static List<Object[]> getRoomTypes() {
-		Query q = JPA.em().createNativeQuery("select distinct hotel_room_types.room_type from hotel_room_types");
+	public static List<Object[]> getRoomTypes(long code) {
+		Query q = JPA.em().createNativeQuery("select hotel_room_types.room_type from hotel_room_types where hotel_room_types.supplier_code = '"+code+"'");
 		return (List<Object[]>) q.getResultList();
 	}
 	

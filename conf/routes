@@ -18,6 +18,8 @@ POST	/register					com.travelportal.controllers.ApplicationController.doRegister
 GET		/adminLogin					com.travelportal.controllers.ApplicationController.adminLogin
 POST	/doAdminLogin				com.travelportal.controllers.ApplicationController.doAdminLogin
 GET		/adminLogout				com.travelportal.controllers.ApplicationController.adminLogout
+POST	/hotel_profile				com.travelportal.controllers.ApplicationController.doSupplierLogin
+GET		/supplierLogout				com.travelportal.controllers.ApplicationController.supplierLogout
 
 
 GET		/getPendingUsers			com.travelportal.controllers.AdminController.getPendingUsers

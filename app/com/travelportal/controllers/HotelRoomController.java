@@ -84,7 +84,8 @@ public static void createRootDir() {
 	
 	@Transactional(readOnly=true)
     public static Result getAllRoomTypes() {
-		List<Object[]> types = HotelRoomTypes.getRoomTypes();
+		long code = Long.parseLong(session().get("SUPPLIER"));
+		List<Object[]> types = HotelRoomTypes.getRoomTypes(code);
 		return ok(Json.toJson(types));
 	}
 	
@@ -654,17 +655,21 @@ public static void createRootDir() {
 				_cityvm.id = _city.getCityCode();
 				_cityvm.cityCountryCode = _city.getCountry().getCountryCode();
 				_cityvm.cityName = _city.getCityName();
-				
-				RateMeta rates = RateMeta.getRatesById(id);
-				for(City cty : rates.getCities()){
-					if(cty.getCityCode() == _city.getCityCode()){
-						_cityvm.tick = true;
-						break;
-					}else{
-						_cityvm.tick = false;
+				if(id != 0) {
+					RateMeta rates = RateMeta.getRatesById(id);
+					for(City cty : rates.getCities()){
+						if(cty.getCityCode() == _city.getCityCode()){
+							_cityvm.tick = true;
+							break;
+						}else{
+							_cityvm.tick = false;
+						}
+							
 					}
-						
+				} else {
+					_cityvm.tick = false;
 				}
+				
 				cityvm.add(_cityvm);
 			}
 			countryvm.cityvm = cityvm;

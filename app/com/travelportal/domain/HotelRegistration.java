@@ -40,7 +40,14 @@ public class HotelRegistration {
 	private String password;
 	private String supplierCode;
 	private String status;
+	private String supplierType;
 	
+	public String getSupplierType() {
+		return supplierType;
+	}
+	public void setSupplierType(String supplierType) {
+		this.supplierType = supplierType;
+	}
 	public long getId() {
 		return id;
 	}
@@ -162,6 +169,11 @@ public class HotelRegistration {
 	
 	public static HotelRegistration findById(long id) {
 		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.id = ?1").setParameter(1, id);
+		return (HotelRegistration) query.getSingleResult();
+	}
+	
+	public static HotelRegistration doLogin(String code, String password, String type) {
+		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.supplierCode = ?1 and h.password = ?2 and h.supplierType = ?3 and h.status = 'APPROVED'").setParameter(1, code).setParameter(2, password).setParameter(3, type);
 		return (HotelRegistration) query.getSingleResult();
 	}
 	

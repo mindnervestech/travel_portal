@@ -11,12 +11,37 @@
     <script src='@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")'></script>
     </head>
     <body> 
-        				<div class="navbar navbar-fixed-top" >
-              <div class="navbar-inner">
-                <div class="container">
-                  <div class="nav-collapse">
-                    <ul class="nav" style="width:98%;">
-					  <li class=""><a href="/signUp">SignUp</a></li>
-					 <div class="pull-right" style="width: 26%;margin-right: 1%;"> 
+	
+				<div style="margin-left: 30%;margin-top: 16%;margin-right: 30%;">
+					 <form action="/hotel_profile" method="post">
+						<table class="table">
+							<tr>
+								<td><label>Supplier Code</label></td>
+								<td><input type="text" name="code"></td>
+							</tr>
+							<tr>
+								<td><label>Password</label></td>
+								<td><input type="password" name="pass"></td>
+							</tr>
+							<tr>
+								<td><label>Supplier Type</label></td>
+								<td>
+									<select name="type">
+										<option value="Accomodation">Accomodation</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="submit" value="Login"> </td>
+							</tr>
+							<tr>
+								<td>
+								</td>
+								<td><a href="/signUp">Supplier SignUp</a></td>
+							</tr>
+						</table>
+						</form>
+					</div>	
     </body>
 </html>

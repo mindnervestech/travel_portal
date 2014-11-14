@@ -2078,14 +2078,19 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 	$scope.msClose;
 	$scope.getSelectedCity = [];
 	
-	$scope.showAllotmentMarketTable = function(alloc) {
-		Id = alloc.allotmentMarketId;
+	$scope.showMarketTable = function(alloc) {
+		 
 			
-		
+		console.log(alloc.id);
 		$scope.getSelectedCity.splice(0);
-		$scope.selectedRatesId = Id;
+		if(angular.isUndefined(alloc.id)) {
+			$scope.selectedRatesId = 0;
+		} else {
+			$scope.selectedRatesId = alloc.id;
+		}
+		console.log($scope.rateObject);
 		console.log($scope.selectedRatesId);
-		$http.get('/getAllotmentMarketGroup/'+$scope.selectedRatesId)
+		$http.get('/getMarketGroup/'+$scope.selectedRatesId)
 		.success(function(data){
 			if(data) {
 				alloc.allocatedCities = [];
@@ -2115,7 +2120,14 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 		});
 	}
 	
-	
+	$scope.applyToAll = function(allot){
+		for(var i = 0; i<allot.allocatedCities.length;i++){
+			if(allot.allocatedCities[i].multiSelectGroup == undefined ){
+				allot.allocatedCities[i].ticked = true;
+			}
+		}
+		$scope.setSelection(allot);
+	}
 	
 	
 	$scope.setSelection = function(allot) {
@@ -2133,7 +2145,6 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 			}
 			$http.post('/setCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
 			.success(function(data){
-				$scope.flag = false;
 				
 			});
 		
