@@ -61,4 +61,10 @@ public class HotelChain {
 	public static List<HotelChain> getChainHotels() {
 		return JPA.em().createQuery("select c from HotelChain c ").getResultList();
 	}
+	
+	public static HotelChain getHotelChainByName(String name) {
+		
+		return (HotelChain) JPA.em().createQuery("select c from HotelChain c where c.chainHotelName = ?1").setParameter(1, name).getSingleResult();
+	}
+	
 }

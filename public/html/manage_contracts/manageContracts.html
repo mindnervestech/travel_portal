@@ -81,7 +81,7 @@
 						</tr>
 						<tr data-ng-repeat="rateData in rate.normalRate.rateDetails track by $index">
 							<td>{{rateData.name}}</td>
-							<td><input type="text" ng-model="rateData.rateValue" value=""> </td>
+							<td><input type="number" ng-model="rateData.rateValue" value=""> </td>
 							<td>*Include Meals?
 								<input type="radio" name="{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.includeMeals">Yes
 								<input type="radio" name="{{rateData.name}}{{$parent.$index}}" data-ng-value="false" data-ng-model="rateData.includeMeals">No
@@ -181,7 +181,7 @@
 						</tr>
 						<tr data-ng-repeat="rateData in rate.special.rateDetails track by $index">
 							<td>{{rateData.name}}</td>
-							<td><input type="text" ng-model="rateData.rateValue" value=""> </td>
+							<td><input type="number" ng-model="rateData.rateValue" value=""> </td>
 							<td>*Include Meals?
 								<input type="radio" name="special{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.includeMeals">Yes
 								<input type="radio" name="special{{rateData.name}}{{$parent.$index}}" data-ng-value="false" data-ng-model="rateData.includeMeals">No
@@ -275,13 +275,14 @@
 						<button class="btn btn-success" ng-click="setSelection(rate);">Submit</button>
 					</div>
 				</div>
-			
+						<input type="button" value="DELETE RATE" style="margin-top: 1%;margin-left: 84%" ng-click="deleteRate(rate.id,$index)">
 			</fieldset>	
-					<input type="button" value="ADD NEW RATE" ng-click="createNewRate()" style="float:left; margin-top: 1%;margin-left: 29%;">	
-					<input type="button" value="UPDATE RATES" style="margin-top: 1%;margin-left: 10%" ng-show="showRateUpdate == true" ng-click="updateRateMeta()">
+					<input type="button" value="ADD NEW RATE" ng-click="createNewRate()" style="float:left; margin-top: 3%;margin-left: 29%;">	
+					<input type="button" value="UPDATE RATES" style="margin-top: 3%;margin-left: 10%;" ng-show="showRateUpdate == true" ng-click="updateRateMeta()">
+					<p style="color: green;margin-top: 5%;margin-left: 39%;" ng-show="isUpdated == true"><b>Rate updated successfully</b></p>
 			</div>
 			
-			<div class="panel-body" ng-show="showPeriod == true">
+			<div class="panel-body" ng-show="showPeriod == true" style="margin-top: 2%;">
 			
 			<fieldset class="billinside" ng-repeat="rate in rateObject track by $index" style="margin-top: 2%;">
 			<a data-toggle="collapse" data-target="#demo1{{$index}}" aria-expanded="true" aria-controls="demo1{{$index}}" style="cursor: pointer;">
@@ -308,7 +309,7 @@
 						</tr>
 						<tr data-ng-repeat="rateData in rate.normalRate.rateDetails track by $index">
 							<td>{{rateData.name}}</td>
-							<td><input type="text" ng-model="rateData.rateValue" value=""> </td>
+							<td><input type="number" ng-model="rateData.rateValue" value=""> </td>
 							<td>*Include Meals?
 								<input type="radio" name="create{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.includeMeals">Yes
 								<input type="radio" name="create{{rateData.name}}{{$parent.$index}}" data-ng-value="false" data-ng-model="rateData.includeMeals" checked>No
@@ -408,7 +409,7 @@
 						</tr>
 						<tr data-ng-repeat="rateData in rate.special.rateDetails track by $index">
 							<td>{{rateData.name}}</td>
-							<td><input type="text" ng-model="rateData.rateValue" value=""> </td>
+							<td><input type="number" ng-model="rateData.rateValue" value=""> </td>
 							<td>*Include Meals?
 								<input type="radio" name="{{rateData.name}}{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="rateData.includeMeals">Yes
 								<input type="radio" name="{{rateData.name}}{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="rateData.includeMeals">No

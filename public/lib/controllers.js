@@ -973,12 +973,6 @@ angular.module('travel_portal').
 		});
 	}
 	
-	$scope.getdescription = function()
-	{
-		alert("Yogesh");
-		concsole.log("ABCD");
-	}
-	
 	$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
 		$scope.getallData=response;
 		console.log(response);
@@ -1119,8 +1113,6 @@ angular.module('travel_portal').
 
 	$http.get("/MealTypeplan/"+$rootScope.supplierCode).success(function(response){
 		$scope.MealType=response;
-		console.log("-----------------");
-		console.log($scope.MealType);
 		if($scope.MealType != null )
 			{
 			$scope.mealRate = true;
@@ -1597,8 +1589,11 @@ angular.module('travel_portal').
 			console.log('success');
 			$http.get("/MealTypeplan/"+$rootScope.supplierCode).success(function(response){
 				$scope.MealType=response;
-				console.log("+++++++");
-				console.log($scope.MealType);
+				if($scope.MealType != null )
+					{
+					$scope.mealRate = true;
+					}
+				
 				angular.forEach($scope.MealType, function(obj, index){
 					$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
 					$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
@@ -1907,6 +1902,7 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 	$scope.rateObject = [];
 	$scope.rateMeta = [];
 	var showRateCount = 0;
+	$scope.isUpdated = false;
 	
 	$http.get('/getRoomTypes').success(function(response){
 		console.log(response);
@@ -1944,7 +1940,7 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 			}
 			 
 		});
-		
+		$scope.isUpdated = false;
 		$scope.showSavedRates = true;
 	};
 	
@@ -1957,6 +1953,7 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 		
 		$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
 			$scope.rateObject.push(response);
+			console.log($scope.rateObject);
 		});
 		$scope.showPeriod = true;
 	};
@@ -2069,11 +2066,18 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 		
 		$http.post('/updateRateMeta', {"rateObject":$scope.rateMeta}).success(function(data){
 			console.log('success');
-			
+			$scope.isUpdated = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
 	};
+	
+	$scope.deleteRate = function(id,index) {
+		$http.get('/deleteRate/'+id).success(function(response){
+			$scope.rateMeta.splice(index,1);
+		});
+	}
+	
 	
 	////
     
@@ -2175,7 +2179,7 @@ controller("manageSuppliersController",['$scope', '$rootScope','$http',function(
 				
 				$http.get('/getApprovedUsers').success(function(response){
 					console.log(response);
-					$scope.approvedUsersList = response;
+					$scope.approvedUsers = response;
 				});
 				
 				$http.get('/getRejectedUsers').success(function(response){

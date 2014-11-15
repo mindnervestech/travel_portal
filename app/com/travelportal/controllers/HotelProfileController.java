@@ -38,6 +38,7 @@ import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.HotelPrivateContacts;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
+import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.ImgPath;
 import com.travelportal.domain.InternalContacts;
 import com.travelportal.domain.Location;
@@ -114,7 +115,7 @@ public class HotelProfileController extends Controller {
 		hotelprofile.setMarketPolicyType(MarketPolicyTypes.getMarketPolicyTypesIdByCode(Integer.parseInt(form.get("marketSpecificPolicyCode"))));
 		hotelprofile.setHoteBrands(HotelBrands.getHotelBrandsbyCode(Integer.parseInt(form.get("brandHotelCode"))));
 		hotelprofile.setPassword(form.get("primaryPasswd"));
-		hotelprofile.setStartRatings(Integer.parseInt(form.get("startRating")));
+		hotelprofile.setStartRatings(HotelStarRatings.getHotelRatingsById(Integer.parseInt(form.get("startRating"))));
 		hotelprofile.setVerifyPassword(form.get("verifiedPasswd"));
 
 		if(form.get("supplierCode") == null || form.get("supplierCode") == "")

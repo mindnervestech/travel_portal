@@ -156,7 +156,7 @@ public static void createRootDir() {
 				rateMeta.save();
 				
 				RateDetails rateDetails = new RateDetails();
-				if(rate.isSpecialRate() == true) {
+				if(rate.isSpecialRate == true) {
 					rateDetails.setSpecialRate(rate.isSpecialRate);
 					rateDetails.setSpecialDays(rate.special.weekDays.toString());
 				} else {
@@ -242,6 +242,18 @@ public static void createRootDir() {
 		
 		return ok();
 	}
+	
+	@Transactional(readOnly=false)
+    public static Result deleteRateMeta(long id) {
+		RateMeta rateMeta = RateMeta.findById(id);
+		rateMeta.delete();
+		RateDetails detail = RateDetails.findByRateMetaId(id);
+		detail.delete();
+		PersonRate.deleteByRateMetaId(id);
+		CancellationPolicy.deleteByRateMetaId(id);
+		return ok();
+	}
+	
 	
 	@Transactional(readOnly=false)
     public static Result updateRateMeta() throws ParseException {

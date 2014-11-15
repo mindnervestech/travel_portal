@@ -1,4 +1,4 @@
-
+@(error: String)
 
 <!DOCTYPE html>
 
@@ -13,27 +13,36 @@
     <body> 
 	
 				<div style="margin-left: 30%;margin-top: 16%;margin-right: 30%;">
-					 <form action="/hotel_profile" method="post">
+					<p style="color: red;margin-left: 44%;">@error</p>
+					 <form id="loginForm" action="/hotel_profile" method="post">
 						<table class="table">
 							<tr>
-								<td><label>Supplier Code</label></td>
-								<td><input type="text" name="code"></td>
+								<th>Supplier Login</th>
+								<th></th>
+							</tr>
+							<tr>
+								<td><label>Email</label></td>
+								<td><input type="text" name="email" required></td>
 							</tr>
 							<tr>
 								<td><label>Password</label></td>
-								<td><input type="password" name="pass"></td>
+								<td><input type="password" name="pass" required></td>
+							</tr>
+							<tr>
+								<td><label>Supplier Code</label></td>
+								<td><input type="text" name="code" required></td>
 							</tr>
 							<tr>
 								<td><label>Supplier Type</label></td>
 								<td>
-									<select name="type">
+									<select name="type" required>
 										<option value="Accomodation">Accomodation</option>
 									</select>
 								</td>
 							</tr>
 							<tr>
 								<td></td>
-								<td><input type="submit" value="Login"> </td>
+								<td><input type="submit" value="Login" class="btn btn-primary"> </td>
 							</tr>
 							<tr>
 								<td>

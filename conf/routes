@@ -124,6 +124,7 @@ GET		/getCurrency			com.travelportal.controllers.HotelRoomController.getCurrency
 GET		/getRoomTypes			com.travelportal.controllers.HotelRoomController.getAllRoomTypes
 POST	/saveRate				com.travelportal.controllers.HotelRoomController.saveRate
 POST	/updateRateMeta			com.travelportal.controllers.HotelRoomController.updateRateMeta
+GET		/deleteRate/:id			com.travelportal.controllers.HotelRoomController.deleteRateMeta(id: Long)
 GET		/getRateData/:room/:fromDate/:toDate/:currencyType	com.travelportal.controllers.HotelRoomController.getRateData(room:String,fromDate:String,toDate:String,currencyType:String)
 GET /hotel/roomtypes			com.travelportal.controllers.HotelRoomController.fetchAllRoomTypesForEdit()
 GET /roomtypes/:supplierCode  	com.travelportal.controllers.HotelRoomController.fetchToEditHotelDetails(supplierCode:Long)

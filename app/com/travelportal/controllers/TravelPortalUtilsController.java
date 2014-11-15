@@ -177,6 +177,7 @@ public class TravelPortalUtilsController extends Controller {
 	@Transactional(readOnly=true)
 	public static Result getAllData(long supplierCode) {
 		
+		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.print(">>>>>>sss.. suppler code " + supplierCode);
 		HotelProfile hotelProfile = HotelProfile.findAllData(supplierCode);
 		System.out.print("hotel name " + hotelProfile.getHotelName());
@@ -194,10 +195,22 @@ public class TravelPortalUtilsController extends Controller {
 		hotelgeneralinfoVM.setCityCode(hotelProfile.getCity().getCityCode());
 		hotelgeneralinfoVM.setMarketSpecificPolicyCode(hotelProfile.getMarketPolicyType().getMarketPolicyTypeId());
 		hotelgeneralinfoVM.setBrandHotelCode(hotelProfile.getHoteBrands().getBrandsCode());
-		hotelgeneralinfoVM.setStartRating(hotelProfile.getStartRatings());
+		hotelgeneralinfoVM.setStartRating(hotelProfile.getStartRatings().getId());
 		hotelgeneralinfoVM.setSupplierCode(hotelProfile.getSupplier_code());
 
 		HotelDescription hoteldescription = new HotelDescription();
+		HotelInternalInformation hotelinternalinformation = new HotelInternalInformation();
+		HotelHealthAndSafetyVM healthAndSafetyVM = new HotelHealthAndSafetyVM();
+		HotelContactInformation hotelcontactinformation = new HotelContactInformation();
+		HotelCommunication hotelcommuniction = new HotelCommunication();
+		List<AreaAttractionsVM> areaattractionsVM = new ArrayList<>();
+		HotelBillingInformation hotelbillinginformation = new HotelBillingInformation();
+		List<TransportationDirectionsVM> transportationdirectionsVM = new ArrayList<>();
+		Set<HotelAmenities> hotelamenities = hotelProfile.getAmenities();
+		List<HotelHealthAndSafety> docInfo = HotelHealthAndSafety.getdocumentList(supplierCode);
+		
+		try {
+		
 		hoteldescription.setDescription(hotelProfile.getHotelProfileDesc());
 		hoteldescription.setHotelLocation(hotelProfile.getLocation().getLocationId());
 		hoteldescription.setShoppingFacilityCode(hotelProfile.getShoppingFacility().getId());
@@ -209,7 +222,7 @@ public class TravelPortalUtilsController extends Controller {
 		hoteldescription.setSupplierCode(hotelProfile.getSupplier_code());
 
 		InternalContacts internalcontacts = InternalContacts.findById(supplierCode);
-		HotelInternalInformation hotelinternalinformation = new HotelInternalInformation();
+		
 
 		hotelinternalinformation.setGenMgrName(hotelProfile.getHotelGeneralManager());
 		hotelinternalinformation.setGenMgrEmail(hotelProfile.getGeneralMgrEmail());
@@ -230,7 +243,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelinternalinformation.setSupplierCode(internalcontacts.getSupplierCode());
 		
 		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(supplierCode);
-		HotelHealthAndSafetyVM healthAndSafetyVM = new HotelHealthAndSafetyVM();
+		
 		
 		healthAndSafetyVM.setSupplierCode(hAndSafety.getSupplierCode());
 		healthAndSafetyVM.setFireRisk(hAndSafety.getFireRisk());
@@ -335,14 +348,14 @@ public class TravelPortalUtilsController extends Controller {
 		healthAndSafetyVM.setName(hAndSafety.getName());
 		healthAndSafetyVM.setDesignation(hAndSafety.getDesignation());
 		
-		List<HotelHealthAndSafety> docInfo = HotelHealthAndSafety.getdocumentList(supplierCode);
+		
 		
 		//return ok(Json.toJson(docInfo));
 		
 		
 		
 		HotelPrivateContacts hotelprivatecontacts = HotelPrivateContacts.findById(supplierCode);
-		HotelContactInformation hotelcontactinformation = new HotelContactInformation();
+		
 		
 		
 		hotelcontactinformation.setSupplierCode(hotelprivatecontacts.getSupplierCode());
@@ -368,7 +381,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelcontactinformation.setrDirectTelCode(hotelprivatecontacts.getReservationContactTelCode());
 
 		BusinessCommunication businesscommunication = BusinessCommunication.findById(supplierCode);
-		HotelCommunication hotelcommuniction = new HotelCommunication();
+		
 		hotelcommuniction.setPrimaryEmailAddr(businesscommunication.getPrimaryEmailAddr());
 		hotelcommuniction.setCcEmailAddr(businesscommunication.getCcEmailAddr());
 		hotelcommuniction.setSupplierCode(businesscommunication.getSupplierCode());
@@ -377,7 +390,7 @@ public class TravelPortalUtilsController extends Controller {
 		List<HotelAttractions> attractions = hotelProfile.getHotelareaattraction();
 
 		//AreaAttractionsSuppVM areaattractionssuppVM = new AreaAttractionsSuppVM();
-		List<AreaAttractionsVM> areaattractionsVM = new ArrayList<>();
+		
 
 		for(HotelAttractions hotelattractionvm : attractions)
 		{
@@ -391,7 +404,7 @@ public class TravelPortalUtilsController extends Controller {
 		}
 
 		List<TransportationDirection> transportationdirections = hotelProfile.getTransportCode();
-		List<TransportationDirectionsVM> transportationdirectionsVM = new ArrayList<>();
+		
 
 		for(TransportationDirection transportationDirection: transportationdirections)
 		{
@@ -403,7 +416,7 @@ public class TravelPortalUtilsController extends Controller {
 
 		}
 
-		Set<HotelAmenities> hotelamenities = hotelProfile.getAmenities();
+		
 		/*	List<Integer> hotelamenitiesVM = new ArrayList<Integer>();
 		for(HotelAmenities hAmenities : hotelamenities)
 		{
@@ -417,7 +430,7 @@ public class TravelPortalUtilsController extends Controller {
 		System.out.println(supplierCode);
 		BillingInformation billinginformation = BillingInformation.findById(supplierCode);
 		System.out.println(billinginformation);
-		HotelBillingInformation hotelbillinginformation = new HotelBillingInformation();
+		
 
 		hotelbillinginformation.setInvoiceToHotel(billinginformation.getInvoiceToHotel());
 		hotelbillinginformation.setaFirstName(billinginformation.getFirstName());
@@ -431,9 +444,8 @@ public class TravelPortalUtilsController extends Controller {
 		hotelbillinginformation.setSupplierCode(billinginformation.getSupplierCode());
 		hotelbillinginformation.setdExtNo(billinginformation.getExt());
 		hotelbillinginformation.setBankToBankTransfer(billinginformation.getBankservice());
-
-
-		Map<String, Object> map = new HashMap<String, Object>();
+		} catch(NullPointerException e) { }
+		
 		map.put("hotelgeneralinfo", hotelgeneralinfoVM);
 		map.put("hoteldescription", hoteldescription);
 		map.put("hotelinternalinformation", hotelinternalinformation);
@@ -445,6 +457,7 @@ public class TravelPortalUtilsController extends Controller {
 		map.put("hotelamenities", hotelamenities);
 		map.put("healthAndSafetyVM", healthAndSafetyVM);
 		map.put("docInfo", docInfo);
+		
 		return ok(Json.toJson(map));
 
 	}

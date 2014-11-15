@@ -72,8 +72,8 @@ public class HotelProfile {
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private MarketPolicyTypes marketPolicyType;
 	
-	@Column(name="star_ratings_value")
-	private int startRatings;  //1,2 ...
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private HotelStarRatings startRatings;  //1,2 ...
 	
 	@Column(name="password")
 	private String password;
@@ -83,6 +83,8 @@ public class HotelProfile {
 	
 	@Column(name="hotel_profile_desc")
 	private String hotelProfileDesc;
+	
+	private boolean laws;
 	
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<HotelServices> services;
@@ -166,6 +168,14 @@ public class HotelProfile {
 	
 	
 	
+	public boolean isLaws() {
+		return laws;
+	}
+
+	public void setLaws(boolean laws) {
+		this.laws = laws;
+	}
+
 	public List<TransportationDirection> getTransportCode() {
 		return transportCode;
 	}
@@ -393,13 +403,13 @@ public class HotelProfile {
 	/**
 	 * @return the startRatings
 	 */
-	public int getStartRatings() {
+	public HotelStarRatings getStartRatings() {
 		return startRatings;
 	}
 	/**
 	 * @param startRatings the startRatings to set
 	 */
-	public void setStartRatings(int startRatings) {
+	public void setStartRatings(HotelStarRatings startRatings) {
 		this.startRatings = startRatings;
 	}
 	/**
@@ -742,7 +752,7 @@ public class HotelProfile {
 	
 	
 	public static HotelProfile findById(Long id) {
-    	Query query = JPA.em().createQuery("Select a from HotelProfile a where a.supplier_code = ?1");
+    	Query query = JPA.em().createQuery("Select a from HotelProfile a where a.id = ?1");
 		query.setParameter(1, id);
     	return (HotelProfile) query.getSingleResult();
     }

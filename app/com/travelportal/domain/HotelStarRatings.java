@@ -42,4 +42,12 @@ public class HotelStarRatings {
 		return JPA.em().createQuery("select c from HotelStarRatings c ").getResultList();
 	}
 	
+	public static HotelStarRatings getHotelRatingsByName(String name) {
+		return (HotelStarRatings) JPA.em().createQuery("select c from HotelStarRatings c where c.starRatingTxt = ?1").setParameter(1, name).getSingleResult();
+	}
+	
+	public static HotelStarRatings getHotelRatingsById(int id) {
+		return (HotelStarRatings) JPA.em().createQuery("select c from HotelStarRatings c where c.id = ?1").setParameter(1, id).getSingleResult();
+	}
+	
 }

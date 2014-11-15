@@ -16,6 +16,7 @@ import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelBrands;
 import com.travelportal.domain.HotelChain;
 import com.travelportal.domain.HotelRegistration;
+import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.rooms.RateWrapper;
 import com.travelportal.vm.HotelSignUpVM;
 import com.travelportal.vm.RoomtypeVM;
@@ -26,6 +27,7 @@ import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.Array;
 import views.html.home;
 
 public class ApplicationController extends Controller{
@@ -35,7 +37,7 @@ public class ApplicationController extends Controller{
 		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
 		final String value = session().get("SUPPLIER");
         if (value == null) {
-        	return ok(views.html.login.render());
+        	return ok(views.html.login.render(" "));
         }
         return ok(home.render("Home Page", Long.parseLong(session().get("SUPPLIER"))));
 	}
@@ -72,7 +74,7 @@ public class ApplicationController extends Controller{
 		DynamicForm form = DynamicForm.form().bindFromRequest();
 		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
 		try {
-			HotelRegistration user = HotelRegistration.doLogin(form.get("code"),form.get("pass"),form.get("type"));
+			HotelRegistration user = HotelRegistration.doLogin(form.get("email"),form.get("code"),form.get("pass"),form.get("type"));
 			System.out.println(user.getHotelAddress());
 			if(user != null) {
 				session().put("SUPPLIER", user.getSupplierCode());
@@ -82,7 +84,7 @@ public class ApplicationController extends Controller{
 		
 		} catch(NoResultException e) { }
 		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
-		return ok(views.html.login.render());
+		return ok(views.html.login.render("Invalid Credentials"));
 	}
 	
 	@Transactional
@@ -96,7 +98,7 @@ public class ApplicationController extends Controller{
 	public static Result supplierLogout() {
 		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
 		session().clear();
-		return ok(views.html.login.render());
+		return ok(views.html.login.render(" "));
 	}	
 	
 	
@@ -127,7 +129,13 @@ public class ApplicationController extends Controller{
 			currencyList.add(currency.getCurrencyName());
 		}
 		
-		return ok(views.html.signup.render(countryList, chainList, brandList, currencyList));
+		List<HotelStarRatings> ratings = HotelStarRatings.gethotelStarratings();
+		List<String> ratingList = new ArrayList<>();
+		for(HotelStarRatings rating: ratings) {
+			ratingList.add(rating.getstarRatingTxt());
+		}
+		
+		return ok(views.html.signup.render(countryList, chainList, brandList, currencyList, ratingList));
 	}
 	
 	@Transactional
@@ -172,6 +180,7 @@ public class ApplicationController extends Controller{
 			Random randomGenerator = new Random();
 			int randomInt = randomGenerator.nextInt(100);
 		register.setSupplierCode(format.format(date).concat(Integer.toString(randomInt)));
+		register.setEmail(hotelSignUpVM.getEmail());
 		register.setStatus("PENDING");
 		register.setSupplierType("Accomodation");
 		

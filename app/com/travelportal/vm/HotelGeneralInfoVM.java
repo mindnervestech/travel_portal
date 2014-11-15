@@ -1,5 +1,7 @@
 package com.travelportal.vm;
 
+import com.travelportal.domain.HotelStarRatings;
+
 public class HotelGeneralInfoVM {
 	
 	private Long supplierCode;
@@ -187,10 +189,10 @@ public class HotelGeneralInfoVM {
 		return startRating;
 	}
 	/**
-	 * @param startRating the startRating to set
+	 * @param hotelStarRatings the startRating to set
 	 */
-	public void setStartRating(int startRating) {
-		this.startRating = startRating;
+	public void setStartRating(int hotelStarRatings) {
+		this.startRating = hotelStarRatings;
 	}
 	/**
 	 * @return the primaryPasswd

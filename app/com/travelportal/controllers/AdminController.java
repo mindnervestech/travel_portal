@@ -3,7 +3,15 @@ package com.travelportal.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.travelportal.domain.City;
+import com.travelportal.domain.Country;
+import com.travelportal.domain.Currency;
+import com.travelportal.domain.HotelBrands;
+import com.travelportal.domain.HotelChain;
+import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelRegistration;
+import com.travelportal.domain.HotelStarRatings;
+import com.travelportal.domain.MarketPolicyTypes;
 import com.travelportal.vm.HotelRegistrationVM;
 
 import play.db.jpa.Transactional;
@@ -54,6 +62,30 @@ public class AdminController extends Controller {
 		HotelRegistration register = HotelRegistration.findById(id);
 		register.setStatus("APPROVED");
 		register.merge();
+		HotelProfile hotelProfile = new HotelProfile();
+		
+		hotelProfile.setSupplier_code(Long.parseLong(register.getSupplierCode()));
+		hotelProfile.setHotelName(register.getHotelName());
+		hotelProfile.setSupplierName(register.getSupplierName());
+		hotelProfile.setAddress(register.getHotelAddress());
+		hotelProfile.setCountry(register.getCountry());
+		hotelProfile.setCurrency(register.getCurrency());
+		hotelProfile.setCity(register.getCity());
+		if(register.isPartOfChain()) {
+			hotelProfile.setPartOfChain("true");
+			hotelProfile.setHoteBrands(HotelBrands.getHotelBrandsByName(register.getHotelBrand()));
+			hotelProfile.setChainHotel(HotelChain.getHotelChainByName(register.getChainHotel()));
+		} else {
+			hotelProfile.setPartOfChain("false");
+		}
+		
+		hotelProfile.setHotelEmailAddr(register.getEmail());
+		hotelProfile.setMarketPolicyType(MarketPolicyTypes.getMarketPolicyByName(register.getPolicy()));
+		hotelProfile.setPassword(register.getPassword());
+		hotelProfile.setStartRatings(HotelStarRatings.getHotelRatingsByName(register.getStarRating()));
+		hotelProfile.setLaws(register.isLaws());
+		hotelProfile.setZipCode(register.getZipcode());
+		hotelProfile.save();
 		return ok();
 	}
 	

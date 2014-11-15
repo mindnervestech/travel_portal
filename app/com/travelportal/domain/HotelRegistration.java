@@ -41,7 +41,14 @@ public class HotelRegistration {
 	private String supplierCode;
 	private String status;
 	private String supplierType;
+	private String email;
 	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public String getSupplierType() {
 		return supplierType;
 	}
@@ -172,8 +179,8 @@ public class HotelRegistration {
 		return (HotelRegistration) query.getSingleResult();
 	}
 	
-	public static HotelRegistration doLogin(String code, String password, String type) {
-		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.supplierCode = ?1 and h.password = ?2 and h.supplierType = ?3 and h.status = 'APPROVED'").setParameter(1, code).setParameter(2, password).setParameter(3, type);
+	public static HotelRegistration doLogin(String email, String code, String password, String type) {
+		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.supplierCode = ?1 and h.password = ?2 and h.supplierType = ?3 and h.email = ?4 and h.status = 'APPROVED'").setParameter(1, code).setParameter(2, password).setParameter(3, type).setParameter(4, email);
 		return (HotelRegistration) query.getSingleResult();
 	}
 	

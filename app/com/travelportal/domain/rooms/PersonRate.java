@@ -93,6 +93,12 @@ public class PersonRate {
     	return (PersonRate) query.getSingleResult();
     }
 	
+	public static int deleteByRateMetaId(Long id) {
+    	Query query = JPA.em(). createQuery("delete from PersonRate p where p.rate.id = ?1");
+		query.setParameter(1, id);
+    	return query.executeUpdate();
+    }
+	
 	@Transactional
     public void save() {
 		JPA.em().persist(this);

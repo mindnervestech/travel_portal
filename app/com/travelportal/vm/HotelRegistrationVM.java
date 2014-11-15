@@ -9,6 +9,7 @@ public class HotelRegistrationVM {
 	public String hotelName;
 	public String policy;
 	public String starRating;
+	public String code;
 	
 	public HotelRegistrationVM(HotelRegistration reg) {
 		this.id = reg.getId();
@@ -16,6 +17,7 @@ public class HotelRegistrationVM {
 		this.hotelName = reg.getHotelName();
 		this.policy = reg.getPolicy();
 		this.starRating = reg.getStarRating();
+		this.code = reg.getSupplierCode();
 	}
 	
 	public long getId() {
