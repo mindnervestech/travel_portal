@@ -752,7 +752,7 @@ public class HotelProfile {
 	
 	
 	public static HotelProfile findById(Long id) {
-    	Query query = JPA.em().createQuery("Select a from HotelProfile a where a.id = ?1");
+    	Query query = JPA.em().createQuery("Select a from HotelProfile a where a.supplier_code = ?1");
 		query.setParameter(1, id);
     	return (HotelProfile) query.getSingleResult();
     }
