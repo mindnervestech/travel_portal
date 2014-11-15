@@ -15,7 +15,7 @@ public class HotelmealVM {
 	private long supplierCode;
 	private Double taxvalue;
 	private String taxtype;
-	private boolean taxIncluded;
+	private String taxIncluded;
 	private String ageCriteria;
 	private List<ChildpoliciVM> child;
 	
@@ -69,13 +69,13 @@ public class HotelmealVM {
 		this.fromPeriod = fromPeriod;
 	}
 	
-	public boolean gettaxIncluded() {
+	public String gettaxIncluded() {
 		return taxIncluded;
 	}
 	/**
 	 * @param fromPeriod the fromPeriod to set
 	 */
-	public void settaxIncluded(boolean taxIncluded) {
+	public void settaxIncluded(String taxIncluded) {
 		this.taxIncluded = taxIncluded;
 	}
 	

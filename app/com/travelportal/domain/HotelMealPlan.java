@@ -44,7 +44,11 @@ public class HotelMealPlan { //supplier specific records...
 	@Column(name="guest_type")
 	private String guestType; //adult or child...
 	@Column(name="tax_included")
-	private boolean taxIncluded; //flag to show whether the taz is included or not in rate given.
+	private String taxIncluded; //flag to show whether the taz is included or not in rate given.
+	public String getTaxIncluded() {
+		return taxIncluded;
+	}
+
 	@Column(name="age_criteria")
 	private String ageCriteria;
 	private long SupplierCode;
@@ -101,10 +105,10 @@ public class HotelMealPlan { //supplier specific records...
 	public void setTaxtype(String taxtype) {
 		this.taxtype = taxtype;
 	}
-	public boolean isTaxIncluded() {
+	public String isTaxIncluded() {
 		return taxIncluded;
 	}
-	public void setTaxIncluded(boolean taxIncluded) {
+	public void setTaxIncluded(String taxIncluded) {
 		this.taxIncluded = taxIncluded;
 	}
 	/**

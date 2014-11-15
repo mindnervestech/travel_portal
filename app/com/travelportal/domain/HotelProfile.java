@@ -742,14 +742,14 @@ public class HotelProfile {
 	
 	
 	public static HotelProfile findById(Long id) {
-    	Query query = JPA.em().createQuery("Select a from HotelProfile a where a.id = ?1");
+    	Query query = JPA.em().createQuery("Select a from HotelProfile a where a.supplier_code = ?1");
 		query.setParameter(1, id);
     	return (HotelProfile) query.getSingleResult();
     }
 	
 	/*findAllData*/
 	public static HotelProfile findAllData(Long supplierCode) {
-		return (HotelProfile) JPA.em().createQuery("select c from HotelProfile c where c.id = ?1").setParameter(1,supplierCode).getSingleResult();
+		return (HotelProfile) JPA.em().createQuery("select c from HotelProfile c where c.supplier_code = ?1").setParameter(1,supplierCode).getSingleResult();
 	}
 	
 	

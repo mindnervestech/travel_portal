@@ -973,6 +973,12 @@ angular.module('travel_portal').
 		});
 	}
 	
+	$scope.getdescription = function()
+	{
+		alert("Yogesh");
+		concsole.log("ABCD");
+	}
+	
 	$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
 		$scope.getallData=response;
 		console.log(response);
@@ -1113,6 +1119,8 @@ angular.module('travel_portal').
 
 	$http.get("/MealTypeplan/"+$rootScope.supplierCode).success(function(response){
 		$scope.MealType=response;
+		console.log("-----------------");
+		console.log($scope.MealType);
 		if($scope.MealType != null )
 			{
 			$scope.mealRate = true;
@@ -1589,11 +1597,8 @@ angular.module('travel_portal').
 			console.log('success');
 			$http.get("/MealTypeplan/"+$rootScope.supplierCode).success(function(response){
 				$scope.MealType=response;
-				if($scope.MealType != null )
-					{
-					$scope.mealRate = true;
-					}
-				
+				console.log("+++++++");
+				console.log($scope.MealType);
 				angular.forEach($scope.MealType, function(obj, index){
 					$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
 					$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
