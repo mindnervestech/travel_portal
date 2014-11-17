@@ -1521,12 +1521,14 @@ angular.module('travel_portal').
 		
 	}
 	
+	$scope.saveUpExitsAndCorridors = false;
 	$scope.saveExitsAndCorridors = function(){
 		
 		$scope.ExitsAndCorridor.supplierCode = $rootScope.supplierCode; 
 		console.log($scope.ExitsAndCorridor);
 		$http.post('/saveUpdateExitsAndCorridor', $scope.ExitsAndCorridor).success(function(data){
 			console.log('success');
+			$scope.saveUpExitsAndCorridors = true;
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1534,25 +1536,28 @@ angular.module('travel_portal').
 		
 	}
 	
+	$scope.saveUpAirCondition = false;
 	$scope.saveAirCondition = function(){
 		
 		$scope.AirCondition.supplierCode = $rootScope.supplierCode; 
 		console.log($scope.AirCondition);
 		$http.post('/saveUpdateAirCondition', $scope.AirCondition).success(function(data){
 			console.log('success');
-			
+			$scope.saveUpAirCondition = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
 		
 	}
 	
+	$scope.saveUpLifts = false;
 	$scope.saveLifts = function(){
 		
 		$scope.Lifts.supplierCode = $rootScope.supplierCode; 
 		console.log($scope.Lifts);
 		$http.post('/saveUpdateLifts', $scope.Lifts).success(function(data){
 			console.log('success');
+			$scope.saveUpLifts = true;
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1560,12 +1565,14 @@ angular.module('travel_portal').
 		
 	}
 	
+	$scope.saveUpBedrooms = false;
 	$scope.saveBedroomsAsndBalconies = function(){
 		
 		$scope.Bedrooms.supplierCode = $rootScope.supplierCode; 
 		console.log($scope.Bedrooms);
 		$http.post('/saveUpdateBedroomsAsndBalconies', $scope.Bedrooms).success(function(data){
 			console.log('success');
+			$scope.saveUpBedrooms = true;
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1573,13 +1580,14 @@ angular.module('travel_portal').
 		
 	}
 	
-	
+	$scope.saveUpKitchen = false;
 	$scope.saveKitchenAndHygiene = function(){
 		
 		$scope.KitchenAndHygiene.supplierCode = $rootScope.supplierCode; 
 		console.log($scope.KitchenAndHygiene);
 		$http.post('/saveUpdateKitchenAndHygiene', $scope.KitchenAndHygiene).success(function(data){
 			console.log('success');
+			$scope.saveUpKitchen = true;
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1587,6 +1595,7 @@ angular.module('travel_portal').
 		
 	}
 	
+	$scope.saveUPChildren = false;
      $scope.saveChildrenFaciliti = function(){
 		
 		$scope.ChildrenFaciliti.supplierCode = $rootScope.supplierCode; 
@@ -1594,6 +1603,7 @@ angular.module('travel_portal').
 		console.log($scope.ChildrenFaciliti);
 		$http.post('/saveUpdateChildrenFaciliti', $scope.ChildrenFaciliti).success(function(data){
 			console.log('success');
+			$scope.saveUPChildren = true;
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1601,6 +1611,7 @@ angular.module('travel_portal').
 		
 	}
      
+     $scope.saveUpSwiming = false;
      $scope.saveSwimmingPool = function(){
  		
  		$scope.SwimmingPool.supplierCode = $rootScope.supplierCode; 
@@ -1608,12 +1619,14 @@ angular.module('travel_portal').
  		console.log($scope.SwimmingPool);
  		$http.post('/saveUpdateSwimmingPool', $scope.SwimmingPool).success(function(data){
  			console.log('success');
+ 			$scope.saveUpSwiming = true;
  			
  		}).error(function(data, status, headers, config) {
  			console.log('ERROR');
  		});
  		
  	}
+     $scope.cctvSt = false;
      $scope.CCTVStatus={};
      $scope.saveCCTVstatus = function(){
   		
@@ -1622,32 +1635,35 @@ angular.module('travel_portal').
   		console.log($scope.CCTVStatus);
   		$http.post('/saveUpdateCCTVstatus', $scope.CCTVStatus).success(function(data){
   			console.log('success');
+  			$scope.cctvSt = true;
   			
   		}).error(function(data, status, headers, config) {
   			console.log('ERROR');
   		});
   		
   	}
-     
+     $scope.saveAddition = false;
      $scope.saveAdditionalInfo = function(){
  		
  		$scope.additionalInfo.supplierCode = $rootScope.supplierCode; 
  		console.log($scope.additionalInfo);
  		$http.post('/saveUpdateAdditionalInfo', $scope.additionalInfo).success(function(data){
  			console.log('success');
+ 			$scope.saveAddition = true;
  			
  		}).error(function(data, status, headers, config) {
  			console.log('ERROR');
  		});
  		
  	}
-     
+     $scope.saveGasHeaters = false;
      $scope.saveGaswaterHeaters = function(){
   		
   		$scope.GaswaterHeaters.supplierCode = $rootScope.supplierCode; 
   		console.log($scope.GaswaterHeaters);
   		$http.post('/saveUpdateGaswaterHeaters', $scope.GaswaterHeaters).success(function(data){
   			console.log('success');
+  			$scope.saveGasHeaters = true;
   			
   		}).error(function(data, status, headers, config) {
   			console.log('ERROR');

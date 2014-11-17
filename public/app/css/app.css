@@ -130,3 +130,11 @@ width: 861px !important;
         padding: 5px;
         border: 1px solid #999;
       }
+      
+ .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+color: white;
+cursor: default;
+background-color: #488c6c;
+border: 1px solid #ddd;
+border-bottom-color: transparent;
+}     
