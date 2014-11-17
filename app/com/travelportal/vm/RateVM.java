@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Date;
 public class RateVM {
 
-	private long id;
-	private String name;
+	public long id;
+	public String name;
 	public String rateName;
 	public String roomType;
 	public String fromDate;
@@ -84,4 +84,11 @@ public class RateVM {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public boolean isApplyToMarket() {
+		return applyToMarket;
+	}
+	public void setApplyToMarket(boolean applyToMarket) {
+		this.applyToMarket = applyToMarket;
+	}
+	
 }

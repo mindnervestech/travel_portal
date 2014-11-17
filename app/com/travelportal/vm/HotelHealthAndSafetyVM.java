@@ -5,93 +5,93 @@ import java.util.List;
 
 public class HotelHealthAndSafetyVM {
 	
-	private String publicLiability;
-	private String fireRisk;
-	private String localTourist;
-	private String internalFire;
-	private String haccpCertify;
-	private String recordsForFire;
-	private String recordsForHealth;
-	private Date expiryDate;
-	private Date expiryDate1;
-	private long supplierCode;
+	public String publicLiability;
+	public String fireRisk;
+	public String localTourist;
+	public String internalFire;
+	public String haccpCertify;
+	public String recordsForFire;
+	public String recordsForHealth;
+	public Date expiryDate;
+	public Date expiryDate1;
+	public long supplierCode;
 	/*------------------1.FirePrecaution--------------------*/
-	private String workingFireAlarm;
-	private String smokeDetectorsInPublicArea;
-	private String smokeDetectorsInGuestBedroom;
-	private String smokeDetectorsInApartment;
-	private String systemAtLeastAnnually;
-	private String internalFireAlarmTest;
-	private String extinguishersInAllArea;
-	private String emergencyLightingInstall;
-	private String limitedWalkingAbilities;	
+	public String workingFireAlarm;
+	public String smokeDetectorsInPublicArea;
+	public String smokeDetectorsInGuestBedroom;
+	public String smokeDetectorsInApartment;
+	public String systemAtLeastAnnually;
+	public String internalFireAlarmTest;
+	public String extinguishersInAllArea;
+	public String emergencyLightingInstall;
+	public String limitedWalkingAbilities;	
 	/*-----------------------2.Exits and Corridors-----------------------*/
-	private String howManyExits;
-	private String unlockedAtAllTime;
-	private String exitsClearlySigned;
-	private String routesIlluminated;
-	private String usableStaircaseFromAllFloors;
+	public String howManyExits;
+	public String unlockedAtAllTime;
+	public String exitsClearlySigned;
+	public String routesIlluminated;
+	public String usableStaircaseFromAllFloors;
 	/*-----------------------3.Air Conditioning------------------------*/
-	private String central;
-	private String independentUnits;
+	public String central;
+	public String independentUnits;
 	/*-------------------------4.Lifts---------------------------------*/
-	private String floorsAccessible;
-	private String internalClosingDoor;
-	private String relevantSignageDisplay;
-	private String noSmoking;
-	private String noUnaccompaniedChildren;
-	private String eventOfFire;
+	public String floorsAccessible;
+	public String internalClosingDoor;
+	public String relevantSignageDisplay;
+	public String noSmoking;
+	public String noUnaccompaniedChildren;
+	public String eventOfFire;
 	/*-----------------------5.Bedrooms and Balconies--------------------------*/
-	private String fireSafetyInstructionsPosted;
-	private String electricsAutomaticallyDisconnect;
-	private String roomsHaveBalconies;
-	private String balconiesAtLeast1m;
-	private String gapsGreaterThan10cm;
-	private String anyAdjoiningRooms;
-	private String howMany;
+	public String fireSafetyInstructionsPosted;
+	public String electricsAutomaticallyDisconnect;
+	public String roomsHaveBalconies;
+	public String balconiesAtLeast1m;
+	public String gapsGreaterThan10cm;
+	public String anyAdjoiningRooms;
+	public String howMany;
 	/*-------------------------6.Kitchen's and Hygiene---------------------------*/
-	private String selfCateringAccommodation;
-	private String allKitchenAppliancesRegularly;
-	private String selfCateringAccommodationHaveFull;
-	private String mainKitchen;
-	private String stagesOfFoodPreparation;
-	private String premisesAdequatelyProofed;
+	public String selfCateringAccommodation;
+	public String allKitchenAppliancesRegularly;
+	public String selfCateringAccommodationHaveFull;
+	public String mainKitchen;
+	public String stagesOfFoodPreparation;
+	public String premisesAdequatelyProofed;
 	/*--------------------------7.Children's Facilities---------------------------------*/
-	private String internalChildrenPlayArea;
-	private String externalChildrenPlayArea;
-	private String superviseTheKidClub;
-	private String qualityChecksOfEquipmentAndFurniture;
+	public String internalChildrenPlayArea;
+	public String externalChildrenPlayArea;
+	public String superviseTheKidClub;
+	public String qualityChecksOfEquipmentAndFurniture;
 	public List<String> monthkid;
 	/*-------------------------8.Swimming Pool -------------------------------------------*/
 
-	private String poolRulesAndRegulation;
-	private String openingClosingTimes;
-	private String depthInformation;
-	private String noDiving;
-	private String noUnaccompaniedChildrenPool;
-	private String lifesavingEquipment;
-	private String glassAroundThePoolArea;
-	private String lifeguardOrQualifiedPerson;
-	private String thereChildrenPool;
-	private String separatedFromTheAdultPool;
-	private String sufficientDepthMarkings;
-	private String thePoolCleanedDaily;
-	private String recordsKept;
-	private String heatedPoolInTheProperty;
+	public String poolRulesAndRegulation;
+	public String openingClosingTimes;
+	public String depthInformation;
+	public String noDiving;
+	public String noUnaccompaniedChildrenPool;
+	public String lifesavingEquipment;
+	public String glassAroundThePoolArea;
+	public String lifeguardOrQualifiedPerson;
+	public String thereChildrenPool;
+	public String separatedFromTheAdultPool;
+	public String sufficientDepthMarkings;
+	public String thePoolCleanedDaily;
+	public String recordsKept;
+	public String heatedPoolInTheProperty;
 	public List<String> monthOperational;
 	
 	/*--------------------------9.Gas Water Heaters---------------------------------*/
-	private String gasWaterHeaters;
-	private String internal;
-	private String external;
-	private String servicing;
-	private String maintenance;
+	public String gasWaterHeaters;
+	public String internal;
+	public String external;
+	public String servicing;
+	public String maintenance;
 	/*---------------------------10.CCTV Status----------------------------------------*/
 	public List<String> cctvArea;
 	/*--------------------------11.Additional Info---------------------------------*/
-	private String additionalInformationOrComments;
-	private String name;
-	private String designation;
+	public String additionalInformationOrComments;
+	public String name;
+	public String designation;
 
 	
 	

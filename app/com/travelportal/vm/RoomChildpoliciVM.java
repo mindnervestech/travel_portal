@@ -4,11 +4,11 @@ import java.util.List;
 
 public class RoomChildpoliciVM {
 	
-	private int roomchildPolicyId;
-	private int allowedChildAgeFrom;
-	private int allowedChildAgeTo;
-	private int years;
-	private String netRate;
+	public int roomchildPolicyId;
+	public int allowedChildAgeFrom;
+	public int allowedChildAgeTo;
+	public int years;
+	public String netRate;
 	
 	
 	

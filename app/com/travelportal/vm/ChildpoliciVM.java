@@ -2,14 +2,14 @@ package com.travelportal.vm;
 
 
 public class ChildpoliciVM {
-	private int childPolicyId;
-	private int allowedChildAgeFrom;
-	private int allowedChildAgeTo;
-	private Double charge;
-	private String chargeType;
-	private int meal_plan_id;
-	private Double childtaxvalue;
-	private String childtaxtype;
+	public int childPolicyId;
+	public int allowedChildAgeFrom;
+	public int allowedChildAgeTo;
+	public Double charge;
+	public String chargeType;
+	public int meal_plan_id;
+	public Double childtaxvalue;
+	public String childtaxtype;
 	
 	public int getMeal_plan_id() {
 		return meal_plan_id;

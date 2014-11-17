@@ -174,56 +174,44 @@ public class TravelPortalUtilsController extends Controller {
 		return ok(Json.toJson(mealtypes));
 	}
 
+	
 	@Transactional(readOnly=true)
-	public static Result getAllData(long supplierCode) {
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.print(">>>>>>sss.. suppler code " + supplierCode);
+	public static Result finddescripData(long supplierCode) {
+			
 		HotelProfile hotelProfile = HotelProfile.findAllData(supplierCode);
-		System.out.print("hotel name " + hotelProfile.getHotelName());
-		HotelGeneralInfoVM hotelgeneralinfoVM = new HotelGeneralInfoVM();
-
-		hotelgeneralinfoVM.setHotelNm(hotelProfile.getHotelName());
-		hotelgeneralinfoVM.setHotelAddr(hotelProfile.getAddress());
-		hotelgeneralinfoVM.setCountryCode(hotelProfile.getCountry().getCountryCode());
-		hotelgeneralinfoVM.setCurrencyCode(hotelProfile.getCurrency().getCurrencyCode());
-		hotelgeneralinfoVM.setHotelPartOfChain(hotelProfile.getPartOfChain());
-		hotelgeneralinfoVM.setChainHotelCode(hotelProfile.getChainHotel().getChainHotelCode());
-		hotelgeneralinfoVM.setEmail(hotelProfile.getHotelEmailAddr());
-		hotelgeneralinfoVM.setPrimaryPasswd(hotelProfile.getPassword());
-		hotelgeneralinfoVM.setVerifiedPasswd(hotelProfile.getVerifyPassword());
-		hotelgeneralinfoVM.setCityCode(hotelProfile.getCity().getCityCode());
-		hotelgeneralinfoVM.setMarketSpecificPolicyCode(hotelProfile.getMarketPolicyType().getMarketPolicyTypeId());
-		hotelgeneralinfoVM.setBrandHotelCode(hotelProfile.getHoteBrands().getBrandsCode());
-		hotelgeneralinfoVM.setStartRating(hotelProfile.getStartRatings().getId());
-		hotelgeneralinfoVM.setSupplierCode(hotelProfile.getSupplier_code());
-
 		HotelDescription hoteldescription = new HotelDescription();
-		HotelInternalInformation hotelinternalinformation = new HotelInternalInformation();
-		HotelHealthAndSafetyVM healthAndSafetyVM = new HotelHealthAndSafetyVM();
-		HotelContactInformation hotelcontactinformation = new HotelContactInformation();
-		HotelCommunication hotelcommuniction = new HotelCommunication();
-		List<AreaAttractionsVM> areaattractionsVM = new ArrayList<>();
-		HotelBillingInformation hotelbillinginformation = new HotelBillingInformation();
-		List<TransportationDirectionsVM> transportationdirectionsVM = new ArrayList<>();
-		Set<HotelAmenities> hotelamenities = hotelProfile.getAmenities();
-		List<HotelHealthAndSafety> docInfo = HotelHealthAndSafety.getdocumentList(supplierCode);
-		
-		try {
 		
 		hoteldescription.setDescription(hotelProfile.getHotelProfileDesc());
+		if(hotelProfile.getLocation() != null)
+		{
 		hoteldescription.setHotelLocation(hotelProfile.getLocation().getLocationId());
+		}
+		if(hotelProfile.getShoppingFacility() != null)
+		{
 		hoteldescription.setShoppingFacilityCode(hotelProfile.getShoppingFacility().getId());
+		}
+		if(hotelProfile.getNightLife() != null)
+		{
 		hoteldescription.setNightLifeCode(hotelProfile.getNightLife().getNightLifeCode());
+		}
 		hoteldescription.setServices(hotelProfile.getIntListServices());
-		hoteldescription.setlocation1(hotelProfile.getlocation1());
-		hoteldescription.setlocation2(hotelProfile.getlocation2());
-		hoteldescription.setlocation3(hotelProfile.getlocation3());
+		hoteldescription.setLocation1(hotelProfile.getlocation1());
+		hoteldescription.setLocation2(hotelProfile.getlocation2());
+		hoteldescription.setLocation3(hotelProfile.getlocation3());
 		hoteldescription.setSupplierCode(hotelProfile.getSupplier_code());
-
-		InternalContacts internalcontacts = InternalContacts.findById(supplierCode);
+	
 		
-
+		return ok(Json.toJson(hoteldescription));
+		
+	}
+	
+	@Transactional(readOnly=true)
+	public static Result findInternalData(long supplierCode) {
+	
+		HotelProfile hotelProfile = HotelProfile.findAllData(supplierCode);
+		InternalContacts internalcontacts = InternalContacts.findById(supplierCode);
+		HotelInternalInformation hotelinternalinformation = new HotelInternalInformation();
+				
 		hotelinternalinformation.setGenMgrName(hotelProfile.getHotelGeneralManager());
 		hotelinternalinformation.setGenMgrEmail(hotelProfile.getGeneralMgrEmail());
 		hotelinternalinformation.setBuiltYear(hotelProfile.getHotelBuiltYear());
@@ -232,6 +220,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelinternalinformation.setNoOffloor(hotelProfile.getNoOfFloors());
 		hotelinternalinformation.setNoOfRoom(hotelProfile.getNoOfRooms());
 		hotelinternalinformation.setSafetyCompliance(hotelProfile.getFireSafetyCompliance());
+		
 		hotelinternalinformation.setGuestTel(internalcontacts.getGuestTelValue());
 		hotelinternalinformation.setGuestTelCode(internalcontacts.getGuestTelCityCode());
 		hotelinternalinformation.setGuestFax(internalcontacts.getGuestFaxValue());
@@ -241,9 +230,139 @@ public class TravelPortalUtilsController extends Controller {
 		hotelinternalinformation.setDirectFaxNo(internalcontacts.getDirectFaxValue());
 		hotelinternalinformation.setDirectFaxCode(internalcontacts.getDirectFaxCityCode());
 		hotelinternalinformation.setSupplierCode(internalcontacts.getSupplierCode());
+				
+		return ok(Json.toJson(hotelinternalinformation));
+	}
+	
+	@Transactional(readOnly=true)
+	public static Result findContactData(long supplierCode) {
+		
+		HotelPrivateContacts hotelprivatecontacts = HotelPrivateContacts.findById(supplierCode);
+		HotelContactInformation hotelcontactinformation = new HotelContactInformation();
+		
+		
+		hotelcontactinformation.setSupplierCode(hotelprivatecontacts.getSupplierCode());
+		if(hotelprivatecontacts.getMainContactPersonName() != null){
+		hotelcontactinformation.setcPersonName(hotelprivatecontacts.getMainContactPersonName());
+		}
+		if(hotelprivatecontacts.getMainContactPersonTitle() != null){
+		hotelcontactinformation.setcTitle(hotelprivatecontacts.getMainContactPersonTitle());
+		}
+		
+		hotelcontactinformation.setdTelNo(hotelprivatecontacts.getMainContactTelNo());
+		hotelcontactinformation.setdTelCode(hotelprivatecontacts.getMainContactTelCode());
+		hotelcontactinformation.setdFaxNo(hotelprivatecontacts.getMainContactFaxNo());
+		hotelcontactinformation.setdFaxCode(hotelprivatecontacts.getMainContactFaxCode());
+		hotelcontactinformation.setDeptExtNo(hotelprivatecontacts.getMainContactExt());
+		hotelcontactinformation.setdEmailAddr(hotelprivatecontacts.getMainContactEmailAddr());
+		hotelcontactinformation.setdTollFreeTelNo(hotelprivatecontacts.getTollFreeNo());
+		if(hotelprivatecontacts.getSalutation_salutation_id() != null)
+		{
+		hotelcontactinformation.setSalutationCode(hotelprivatecontacts.getSalutation_salutation_id().getSalutationId());
+		}
+		hotelcontactinformation.setReservationDetailSame(hotelprivatecontacts.getReservationSameAsMainContact());
+		hotelcontactinformation.setrContactName(hotelprivatecontacts.getReservationContactPersonName());
+		hotelcontactinformation.setrTitle(hotelprivatecontacts.getReservationContactPersonTitle());
+		hotelcontactinformation.setrDeptTelNo(hotelprivatecontacts.getDeptTelNo());
+		hotelcontactinformation.setrEmailAddr(hotelprivatecontacts.getReservationContactEmailAddr());
+		hotelcontactinformation.setrDeptTelCode(hotelprivatecontacts.getReservationContactTelNo());
+		hotelcontactinformation.setrDeptFaxNo(hotelprivatecontacts.getDeptFaxNo());
+		hotelcontactinformation.setrDeptFaxCode(hotelprivatecontacts.getDeptFaxCode());
+		hotelcontactinformation.setrDirectTelCode(hotelprivatecontacts.getReservationContactTelNo());
+		hotelcontactinformation.setrDirectTelCode(hotelprivatecontacts.getReservationContactTelCode());
+		
+		return ok(Json.toJson(hotelcontactinformation));
+	}
+	
+	
+	@Transactional(readOnly=true)
+	public static Result findCommunicationData(long supplierCode) {
+		BusinessCommunication businesscommunication = BusinessCommunication.findById(supplierCode);
+		HotelCommunication hotelcommuniction = new HotelCommunication();
+		hotelcommuniction.setPrimaryEmailAddr(businesscommunication.getPrimaryEmailAddr());
+		hotelcommuniction.setCcEmailAddr(businesscommunication.getCcEmailAddr());
+		hotelcommuniction.setSupplierCode(businesscommunication.getSupplierCode());
+		hotelcommuniction.setBooking(businesscommunication.getbooking());
+		
+		return ok(Json.toJson(hotelcommuniction));
+	}
+		
+	@Transactional(readOnly=true)
+	public static Result findBillData(long supplierCode) {
+			
+		BillingInformation billinginformation = BillingInformation.findById(supplierCode);
+		System.out.println(billinginformation);
+		HotelBillingInformation hotelbillinginformation = new HotelBillingInformation();
+
+		hotelbillinginformation.setInvoiceToHotel(billinginformation.getInvoiceToHotel());
+		hotelbillinginformation.setaFirstName(billinginformation.getFirstName());
+		hotelbillinginformation.setaLastName(billinginformation.getLastName());
+		hotelbillinginformation.setTitle(billinginformation.getTitle());
+		hotelbillinginformation.setdEmailAddr(billinginformation.getEmailAddr());
+		hotelbillinginformation.setdTelNo(billinginformation.getTelNo());
+		hotelbillinginformation.setdTelCode(billinginformation.getTelNoCode());
+		hotelbillinginformation.setdFaxNo(billinginformation.getFaxNo());
+		hotelbillinginformation.setdFaxCode(billinginformation.getFaxNoCode());
+		hotelbillinginformation.setSupplierCode(billinginformation.getSupplierCode());
+		hotelbillinginformation.setdExtNo(billinginformation.getExt());
+		hotelbillinginformation.setBankToBankTransfer(billinginformation.getBankservice());
+		
+		return ok(Json.toJson(hotelbillinginformation));
+	}
+	
+	@Transactional(readOnly=true)
+	public static Result findAmenitiesData(long supplierCode) {
+		HotelProfile hotelProfile = HotelProfile.findAllData(supplierCode);
+		Set<HotelAmenities> hotelamenities = hotelProfile.getAmenities();
+		return ok(Json.toJson(hotelamenities));
+	}
+	
+
+	@Transactional(readOnly=true)
+	public static Result findAreaData(long supplierCode) {
+		HotelProfile hotelProfile = HotelProfile.findAllData(supplierCode);
+		List<HotelAttractions> attractions = hotelProfile.getHotelareaattraction();
+		
+		List<AreaAttractionsVM> areaattractionsVM = new ArrayList<>();
+
+		for(HotelAttractions hotelattractionvm : attractions)
+		{
+			AreaAttractionsVM vm = new AreaAttractionsVM();
+			vm.setAttraction_code(hotelattractionvm.getAttractionCode());
+			vm.setName(hotelattractionvm.getAttractionNm());
+			vm.setDistance(hotelattractionvm.getDistance());
+			vm.setKm(hotelattractionvm.getDistanceType());
+			vm.setMinutes(hotelattractionvm.getTimeRequireInMinutes());		
+			areaattractionsVM.add(vm);
+		}
+		return ok(Json.toJson(areaattractionsVM));
+	}
+	
+	@Transactional(readOnly=true)
+	public static Result findTranDirData(long supplierCode) {
+		
+		HotelProfile hotelProfile = HotelProfile.findAllData(supplierCode);
+		List<TransportationDirection> transportationdirections = hotelProfile.getTransportCode();
+		List<TransportationDirectionsVM> transportationdirectionsVM = new ArrayList<>();
+
+		for(TransportationDirection transportationDirection: transportationdirections)
+		{
+			TransportationDirectionsVM vm = new TransportationDirectionsVM();
+			vm.setTransportCode(transportationDirection.getTransportCode());
+			vm.setLocationName(transportationDirection.getLocationName());
+			vm.setLocationAddr(transportationDirection.getLocationAddr());
+			transportationdirectionsVM.add(vm);
+
+		}
+		return ok(Json.toJson(transportationdirectionsVM));
+	}
+	
+	
+	@Transactional(readOnly=true)
+	public static Result findHealthAndSafData(long supplierCode) {
 		
 		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(supplierCode);
-		
+		HotelHealthAndSafetyVM healthAndSafetyVM = new HotelHealthAndSafetyVM();
 		
 		healthAndSafetyVM.setSupplierCode(hAndSafety.getSupplierCode());
 		healthAndSafetyVM.setFireRisk(hAndSafety.getFireRisk());
@@ -348,115 +467,67 @@ public class TravelPortalUtilsController extends Controller {
 		healthAndSafetyVM.setName(hAndSafety.getName());
 		healthAndSafetyVM.setDesignation(hAndSafety.getDesignation());
 		
+		List<HotelHealthAndSafety> docInfo = HotelHealthAndSafety.getdocumentList(supplierCode);
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("healthAndSafetyVM", healthAndSafetyVM);
+		map.put("docInfo", docInfo);
+		return ok(Json.toJson(map));
 		
-		//return ok(Json.toJson(docInfo));
+	}
+	
+	
+	@Transactional(readOnly=true)
+	public static Result getAllData(long supplierCode) {
 		
-		
-		
-		HotelPrivateContacts hotelprivatecontacts = HotelPrivateContacts.findById(supplierCode);
-		
-		
-		
-		hotelcontactinformation.setSupplierCode(hotelprivatecontacts.getSupplierCode());
-		hotelcontactinformation.setcPersonName(hotelprivatecontacts.getMainContactPersonName());
-		hotelcontactinformation.setcTitle(hotelprivatecontacts.getMainContactPersonTitle());
-		hotelcontactinformation.setdTelNo(hotelprivatecontacts.getMainContactTelNo());
-		hotelcontactinformation.setdTelCode(hotelprivatecontacts.getMainContactTelCode());
-		hotelcontactinformation.setdFaxNo(hotelprivatecontacts.getMainContactFaxNo());
-		hotelcontactinformation.setdFaxCode(hotelprivatecontacts.getMainContactFaxCode());
-		hotelcontactinformation.setDeptExtNo(hotelprivatecontacts.getMainContactExt());
-		hotelcontactinformation.setdEmailAddr(hotelprivatecontacts.getMainContactEmailAddr());
-		hotelcontactinformation.setdTollFreeTelNo(hotelprivatecontacts.getTollFreeNo());
-		hotelcontactinformation.setSalutationCode(hotelprivatecontacts.getSalutation_salutation_id().getSalutationId());
-		hotelcontactinformation.setReservationDetailSame(hotelprivatecontacts.getReservationSameAsMainContact());
-		hotelcontactinformation.setrContactName(hotelprivatecontacts.getReservationContactPersonName());
-		hotelcontactinformation.setrTitle(hotelprivatecontacts.getReservationContactPersonTitle());
-		hotelcontactinformation.setrDeptTelNo(hotelprivatecontacts.getDeptTelNo());
-		hotelcontactinformation.setrEmailAddr(hotelprivatecontacts.getReservationContactEmailAddr());
-		hotelcontactinformation.setrDeptTelCode(hotelprivatecontacts.getReservationContactTelNo());
-		hotelcontactinformation.setrDeptFaxNo(hotelprivatecontacts.getDeptFaxNo());
-		hotelcontactinformation.setrDeptFaxCode(hotelprivatecontacts.getDeptFaxCode());
-		hotelcontactinformation.setrDirectTelCode(hotelprivatecontacts.getReservationContactTelNo());
-		hotelcontactinformation.setrDirectTelCode(hotelprivatecontacts.getReservationContactTelCode());
+		System.out.print(">>>>>>sss.. suppler code " + supplierCode);
+		HotelProfile hotelProfile = HotelProfile.findAllData(supplierCode);
+		System.out.print("hotel name " + hotelProfile.getHotelName());
+		HotelGeneralInfoVM hotelgeneralinfoVM = new HotelGeneralInfoVM();
 
-		BusinessCommunication businesscommunication = BusinessCommunication.findById(supplierCode);
-		
-		hotelcommuniction.setPrimaryEmailAddr(businesscommunication.getPrimaryEmailAddr());
-		hotelcommuniction.setCcEmailAddr(businesscommunication.getCcEmailAddr());
-		hotelcommuniction.setSupplierCode(businesscommunication.getSupplierCode());
-		hotelcommuniction.setBooking(businesscommunication.getbooking());
-
-		List<HotelAttractions> attractions = hotelProfile.getHotelareaattraction();
-
-		//AreaAttractionsSuppVM areaattractionssuppVM = new AreaAttractionsSuppVM();
-		
-
-		for(HotelAttractions hotelattractionvm : attractions)
+		hotelgeneralinfoVM.setHotelNm(hotelProfile.getHotelName());
+		hotelgeneralinfoVM.setHotelAddr(hotelProfile.getAddress());
+		if(hotelProfile.getCountry() != null)
 		{
-			AreaAttractionsVM vm = new AreaAttractionsVM();
-			vm.setAttraction_code(hotelattractionvm.getAttractionCode());
-			vm.setname(hotelattractionvm.getAttractionNm());
-			vm.setDistance(hotelattractionvm.getDistance());
-			vm.setKm(hotelattractionvm.getDistanceType());
-			vm.setMinutes(hotelattractionvm.getTimeRequireInMinutes());		
-			areaattractionsVM.add(vm);
+		hotelgeneralinfoVM.setCountryCode(hotelProfile.getCountry().getCountryCode());
 		}
-
-		List<TransportationDirection> transportationdirections = hotelProfile.getTransportCode();
-		
-
-		for(TransportationDirection transportationDirection: transportationdirections)
+		if(hotelProfile.getCurrency() != null)
 		{
-			TransportationDirectionsVM vm = new TransportationDirectionsVM();
-			vm.setTransportCode(transportationDirection.getTransportCode());
-			vm.setLocationName(transportationDirection.getLocationName());
-			vm.setLocationAddr(transportationDirection.getLocationAddr());
-			transportationdirectionsVM.add(vm);
-
+		hotelgeneralinfoVM.setCurrencyCode(hotelProfile.getCurrency().getCurrencyCode());
 		}
-
-		
-		/*	List<Integer> hotelamenitiesVM = new ArrayList<Integer>();
-		for(HotelAmenities hAmenities : hotelamenities)
+		hotelgeneralinfoVM.setHotelPartOfChain(hotelProfile.getPartOfChain());
+		if(hotelProfile.getChainHotel() != null)
 		{
-			//hotelamenitiesVM.add();
-		    // vm.setSupplierCode(hAmenities.getAmenitiesNm());
-		}*/
-
+		hotelgeneralinfoVM.setChainHotelCode(hotelProfile.getChainHotel().getChainHotelCode());
+		}
+		hotelgeneralinfoVM.setEmail(hotelProfile.getHotelEmailAddr());
+		hotelgeneralinfoVM.setPrimaryPasswd(hotelProfile.getPassword());
+		hotelgeneralinfoVM.setVerifiedPasswd(hotelProfile.getVerifyPassword());
+		hotelgeneralinfoVM.setCityCode(hotelProfile.getCity().getCityCode());
+		if(hotelProfile.getMarketPolicyType() != null)
+		{
+		hotelgeneralinfoVM.setMarketSpecificPolicyCode(hotelProfile.getMarketPolicyType().getMarketPolicyTypeId());
+		}
+		if(hotelProfile.getHoteBrands() != null)
+		{
+		hotelgeneralinfoVM.setBrandHotelCode(hotelProfile.getHoteBrands().getBrandsCode());
+		}
+		if(hotelProfile.getStartRatings() != null)
+		{
+			System.out.println(hotelProfile.getStartRatings().getId());
+			
+		hotelgeneralinfoVM.setStartRating(hotelProfile.getStartRatings().getId());
+		}
+		hotelgeneralinfoVM.setSupplierCode(hotelProfile.getSupplier_code());
 
 
 
 		System.out.println(supplierCode);
-		BillingInformation billinginformation = BillingInformation.findById(supplierCode);
-		System.out.println(billinginformation);
 		
 
-		hotelbillinginformation.setInvoiceToHotel(billinginformation.getInvoiceToHotel());
-		hotelbillinginformation.setaFirstName(billinginformation.getFirstName());
-		hotelbillinginformation.setaLastName(billinginformation.getLastName());
-		hotelbillinginformation.setTitle(billinginformation.getTitle());
-		hotelbillinginformation.setdEmailAddr(billinginformation.getEmailAddr());
-		hotelbillinginformation.setdTelNo(billinginformation.getTelNo());
-		hotelbillinginformation.setdTelCode(billinginformation.getTelNoCode());
-		hotelbillinginformation.setdFaxNo(billinginformation.getFaxNo());
-		hotelbillinginformation.setdFaxCode(billinginformation.getFaxNoCode());
-		hotelbillinginformation.setSupplierCode(billinginformation.getSupplierCode());
-		hotelbillinginformation.setdExtNo(billinginformation.getExt());
-		hotelbillinginformation.setBankToBankTransfer(billinginformation.getBankservice());
-		} catch(NullPointerException e) { }
-		
+
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("hotelgeneralinfo", hotelgeneralinfoVM);
-		map.put("hoteldescription", hoteldescription);
-		map.put("hotelinternalinformation", hotelinternalinformation);
-		map.put("hotelcontactinformation", hotelcontactinformation);
-		map.put("hotelcommuniction", hotelcommuniction);
-		map.put("areaattractionsVM", areaattractionsVM);
-		map.put("hotelbillinginformation", hotelbillinginformation);
-		map.put("transportationdirectionsVM", transportationdirectionsVM);
-		map.put("hotelamenities", hotelamenities);
-		map.put("healthAndSafetyVM", healthAndSafetyVM);
-		map.put("docInfo", docInfo);
 		
 		return ok(Json.toJson(map));
 

@@ -4,9 +4,9 @@ import javax.persistence.Column;
 
 public class CurrencyVM {
 	
-	private int id;
-	private int currencyCode;
-	private String currencyName;
+	public int id;
+	public int currencyCode;
+	public String currencyName;
 	public int getId() {
 		return id;
 	}

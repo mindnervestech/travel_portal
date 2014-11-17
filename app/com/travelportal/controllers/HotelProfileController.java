@@ -805,15 +805,15 @@ public class HotelProfileController extends Controller {
 		hotelmealplan.setToPeriod(hotelmealvm.getToPeriod());
 		hotelmealplan.setMealPlanNm(hotelmealvm.getMealPlanNm());
 		hotelmealplan.setRate(hotelmealvm.getRate());
-		hotelmealplan.setSupplierCode(hotelmealvm.getsupplierCode());
-		hotelmealplan.setTaxIncluded(hotelmealvm.gettaxIncluded());
+		hotelmealplan.setSupplierCode(hotelmealvm.getSupplierCode());
+		hotelmealplan.setTaxIncluded(hotelmealvm.getTaxIncluded());
 		hotelmealplan.setTaxvalue(hotelmealvm.getTaxvalue());
 		hotelmealplan.setTaxtype(hotelmealvm.getTaxtype());
 		hotelmealplan.setMealType(MealType.getMealTypeIdByCode(hotelmealvm.getMealType()));
 
 
 
-		for(ChildpoliciVM vm : hotelmealvm.getchild()){
+		for(ChildpoliciVM vm : hotelmealvm.getChild()){
 			ChildPolicies childPolicies = ChildPolicies.findById(vm.getChildPolicyId());
 			childPolicies.setAllowedChildAgeFrom(vm.getAllowedChildAgeFrom());
 			childPolicies.setAllowedChildAgeTo(vm.getAllowedChildAgeTo());
@@ -845,13 +845,13 @@ public class HotelProfileController extends Controller {
 		hotelmealplan.setToPeriod(hotelmealvm.getToPeriod());
 		hotelmealplan.setMealPlanNm(hotelmealvm.getMealPlanNm());
 		hotelmealplan.setRate(hotelmealvm.getRate());
-		hotelmealplan.setSupplierCode(hotelmealvm.getsupplierCode());
-		hotelmealplan.setTaxIncluded(hotelmealvm.gettaxIncluded());
+		hotelmealplan.setSupplierCode(hotelmealvm.getSupplierCode());
+		hotelmealplan.setTaxIncluded(hotelmealvm.getTaxIncluded());
 		hotelmealplan.setTaxvalue(hotelmealvm.getTaxvalue());
 		hotelmealplan.setTaxtype(hotelmealvm.getTaxtype());
 		hotelmealplan.setMealType(MealType.getMealTypeIdByCode(hotelmealvm.getMealType()));
 
-		for(ChildpoliciVM vm : hotelmealvm.getchild()){
+		for(ChildpoliciVM vm : hotelmealvm.getChild()){
 			ChildPolicies childPolicies = new ChildPolicies();
 			childPolicies.setAllowedChildAgeFrom(vm.getAllowedChildAgeFrom());
 			childPolicies.setAllowedChildAgeTo(vm.getAllowedChildAgeTo());
@@ -914,18 +914,18 @@ public class HotelProfileController extends Controller {
 		//hotelprofile.setHotelareaattraction(null);
 
 		for(AreaAttractionsVM vm : areaattractionssuppVM.getAreaInfo()){
-			if(vm.getname() != "")
+			if(vm.getName() != "")
 			{
 
 				HotelAttractions hotelattractions = new HotelAttractions();
 
-				if(hotelattractions.attractionrepeat(vm.getname()) == null)
+				if(hotelattractions.attractionrepeat(vm.getName()) == null)
 				{
 
 					hotelattractions.setDistanceType(vm.getKm());
 					hotelattractions.setDistance(vm.getDistance());
 					hotelattractions.setTimeRequireInMinutes(vm.getMinutes());
-					hotelattractions.setAttractionNm(vm.getname());
+					hotelattractions.setAttractionNm(vm.getName());
 
 
 					hotelattractions.save();
@@ -1000,9 +1000,9 @@ public class HotelProfileController extends Controller {
 		hotelprofile.setShoppingFacility(ShoppingFacility.getShoppingFacilityByCode(hoteldescription.getShoppingFacilityCode()));
 		hotelprofile.setNightLife(NightLife.getNightLifeByCode(hoteldescription.getNightLifeCode()));
 		hotelprofile.setServices(HotelServices.getallhotelservice(hoteldescription.getServices()));
-		hotelprofile.setlocation1(hoteldescription.getlocation1());
-		hotelprofile.setlocation2(hoteldescription.getlocation2());
-		hotelprofile.setlocation3(hoteldescription.getlocation3());
+		hotelprofile.setlocation1(hoteldescription.getLocation1());
+		hotelprofile.setlocation2(hoteldescription.getLocation2());
+		hotelprofile.setlocation3(hoteldescription.getLocation3());
 		hotelprofile.setSupplier_code(Long.parseLong(form.get("supplierCode")));
 
 

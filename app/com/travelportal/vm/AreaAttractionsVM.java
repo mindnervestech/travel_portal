@@ -2,11 +2,11 @@ package com.travelportal.vm;
 
 
 public class AreaAttractionsVM {
-	private int attraction_code;
-	private String name;
-	private double distance;
-	private String km;
-	private int minutes;
+	public int attraction_code;
+	public String name;
+	public double distance;
+	public String km;
+	public int minutes;
 	
 	
 	public int getAttraction_code() {
@@ -15,10 +15,11 @@ public class AreaAttractionsVM {
 	public void setAttraction_code(int attraction_code) {
 		this.attraction_code = attraction_code;
 	}
-	public String getname() {
+	
+	public String getName() {
 		return name;
 	}
-	public void setname(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	public double getDistance() {

@@ -4,9 +4,9 @@ package com.travelportal.vm;
 public class TransportationDirectionsVM {
 	
 		
-	private int transportCode;
-	private String locationName;
-	private String locationAddr;
+	public int transportCode;
+	public String locationName;
+	public String locationAddr;
 	public int getTransportCode() {
 		return transportCode;
 	}

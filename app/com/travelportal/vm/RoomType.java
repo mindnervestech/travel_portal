@@ -1,8 +1,8 @@
 package com.travelportal.vm;
 
 public class RoomType {
-	private Long roomId;
-	private String roomType;
+	public Long roomId;
+	public String roomType;
 	
 	/**
 	 * @return the roomId

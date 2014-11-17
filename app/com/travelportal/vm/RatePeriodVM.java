@@ -15,12 +15,12 @@ import com.travelportal.domain.rooms.RateMeta;
 
 public class RatePeriodVM {
 
-	private int id;
-	private Date fromPeriod;
-	private Date toPeriod;
-	private CurrencyVM currency;
-	private RoomtypeVM roomtype;
-	private List<RateMeta> rate;
+	public int id;
+	public Date fromPeriod;
+	public Date toPeriod;
+	public CurrencyVM currency;
+	public RoomtypeVM roomtype;
+	public List<RateMeta> rate;
 	
 	public int getId() {
 		return id;
@@ -57,6 +57,9 @@ public class RatePeriodVM {
 	}
 	public void setRate(List<RateMeta> rate) {
 		this.rate = rate;
+	}
+	public void setCurrency(CurrencyVM currency) {
+		this.currency = currency;
 	}
 	
 	

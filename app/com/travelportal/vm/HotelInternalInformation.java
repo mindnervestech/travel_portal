@@ -1,24 +1,24 @@
 package com.travelportal.vm;
 
 public class HotelInternalInformation {
-	private Long supplierCode;
-	private int builtYear;
-	private int renovationYear;
-	private String safetyCompliance;
-	private int noOffloor;
-	private int noOfRoom;
-	private int guestTel;
-	private int guestTelCode;
-	private int guestFax;
-	private int guestFaxCode;
-	private String webSiteUrl;
-	private String emailAddr;
-	private int directTelNo;
-	private int directTelCode;
-	private int directFaxNo;
-	private int directFaxCode;
-	private String genMgrName;
-	private String genMgrEmail;
+	public Long supplierCode;
+	public int builtYear;
+	public int renovationYear;
+	public String safetyCompliance;
+	public int noOffloor;
+	public int noOfRoom;
+	public int guestTel;
+	public int guestTelCode;
+	public int guestFax;
+	public int guestFaxCode;
+	public String webSiteUrl;
+	public String emailAddr;
+	public int directTelNo;
+	public int directTelCode;
+	public int directFaxNo;
+	public int directFaxCode;
+	public String genMgrName;
+	public String genMgrEmail;
 	/**
 	 * @return the supplierCode
 	 */

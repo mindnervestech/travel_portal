@@ -5,8 +5,8 @@ import java.util.List;
 public class AreaAttractionsSuppVM {
 	
 	
-	private long supplierCode;
-	private List<AreaAttractionsVM> areaInfo;
+	public long supplierCode;
+	public List<AreaAttractionsVM> areaInfo;
 	
 	public long getSupplierCode() {
 		return supplierCode;

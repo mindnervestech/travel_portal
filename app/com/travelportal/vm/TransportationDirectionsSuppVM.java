@@ -5,8 +5,8 @@ import java.util.List;
 public class TransportationDirectionsSuppVM {
 	
 	
-	private long supplierCode;
-	private List<TransportationDirectionsVM> findLocation;
+	public long supplierCode;
+	public List<TransportationDirectionsVM> findLocation;
 	
 	
 	

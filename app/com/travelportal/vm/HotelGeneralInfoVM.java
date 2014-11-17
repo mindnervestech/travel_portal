@@ -4,23 +4,23 @@ import com.travelportal.domain.HotelStarRatings;
 
 public class HotelGeneralInfoVM {
 	
-	private Long supplierCode;
-	private String hotelNm;
-	private String supplierNm;
-	private String hotelAddr;
-	private int countryCode;
-	private String email;
-	private int cityCode;
-	private String zipCode;
-	private String HotelPartOfChain;
-	private int chainHotelCode;
-	private int BrandHotelCode;
-	private boolean isHealthSafetyCompliance;
-	private int currencyCode;
-	private int marketSpecificPolicyCode;
-	private int startRating;
-	private String primaryPasswd;
-	private String verifiedPasswd;
+	public Long supplierCode;
+	public String hotelNm;
+	public String supplierNm;
+	public String hotelAddr;
+	public int countryCode;
+	public String email;
+	public int cityCode;
+	public String zipCode;
+	public String HotelPartOfChain;
+	public int chainHotelCode;
+	public int BrandHotelCode;
+	public boolean isHealthSafetyCompliance;
+	public int currencyCode;
+	public int marketSpecificPolicyCode;
+	public int startRating;
+	public String primaryPasswd;
+	public String verifiedPasswd;
 	
 	/**
 	 * @return the supplierCode

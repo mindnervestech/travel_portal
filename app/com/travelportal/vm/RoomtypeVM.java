@@ -8,23 +8,19 @@ import javax.persistence.Column;
 public class RoomtypeVM {
 	
 	
-	private Long supplierCode;
-	private String roomId;
-	private String roomType;
-	private String roomname; //normal, deluxe etc..
-	private int maxOccupancy;
-	private int maxAdultOccupancy;
-	private int maxAdultOccSharingWithChildren;
-	private int childAllowedFreeWithAdults;
-	private String chargesForChildren;
-	private String extraBedAllowed;
-	//private boolean extraBedChargable;
-	//private Double extraBedChargeValue;
-	//private String extraBedChargeType;
-	private String roomSuiteType;
-	//private boolean twinBeds;
-	private List<Integer> roomamenities;
-	private List<RoomChildpoliciVM> roomchildPolicies;
+	public Long supplierCode;
+	public String roomId;
+	public String roomType;
+	public String roomname; //normal, deluxe etc..
+	public int maxOccupancy;
+	public int maxAdultOccupancy;
+	public int maxAdultOccSharingWithChildren;
+	public int childAllowedFreeWithAdults;
+	public String chargesForChildren;
+	public String extraBedAllowed;
+	public String roomSuiteType;
+	public List<Integer> roomamenities;
+	public List<RoomChildpoliciVM> roomchildPolicies;
 	public Long getSupplierCode() {
 		return supplierCode;
 	}

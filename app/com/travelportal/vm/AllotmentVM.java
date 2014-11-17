@@ -7,15 +7,15 @@ import javax.persistence.Column;
 
 public class AllotmentVM {
 	
-	private int allotmentId;
-	private Long supplierCode;
-	private long roomId;
-	private String datePeriodId;
-	private String formPeriod;
-	private String toPeriod;
-	private String currencyName;
-	//private List<Integer> rate;
-	private List<AllotmentMarketVM> allotmentmarket;
+	public int allotmentId;
+	public Long supplierCode;
+	public long roomId;
+	public String datePeriodId;
+	public String formPeriod;
+	public String toPeriod;
+	public String currencyName;
+	//public List<Integer> rate;
+	public List<AllotmentMarketVM> allotmentmarket;
 	
 	
 	

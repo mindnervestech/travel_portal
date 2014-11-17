@@ -1,18 +1,18 @@
 package com.travelportal.vm;
 
 public class HotelBillingInformation {
-	private Long supplierCode;
-	private String InvoiceToHotel;
-	private String aFirstName;
-	private String aLastName;
-	private String title;
-	private String dEmailAddr;
-	private int dTelNo;
-	private int dTelCode;
-	private int dFaxNo;
-	private int dFaxCode;
-	private int dExtNo;
-	private String BankToBankTransfer;
+	public Long supplierCode;
+	public String InvoiceToHotel;
+	public String aFirstName;
+	public String aLastName;
+	public String title;
+	public String dEmailAddr;
+	public int dTelNo;
+	public int dTelCode;
+	public int dFaxNo;
+	public int dFaxCode;
+	public int dExtNo;
+	public String BankToBankTransfer;
 	/**
 	 * @return the supplierCode
 	 */

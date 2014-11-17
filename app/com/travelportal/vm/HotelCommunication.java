@@ -1,10 +1,10 @@
 package com.travelportal.vm;
 
 public class HotelCommunication {
-	private Long supplierCode;
-	private String primaryEmailAddr;
-	private String ccEmailAddr;
-	private String booking;
+	public Long supplierCode;
+	public String primaryEmailAddr;
+	public String ccEmailAddr;
+	public String booking;
 	
 	/**
 	 * @return the supplierCode

@@ -464,7 +464,7 @@
 			     </div>	
 							
           
-			<div  ng-show="taxQTY">
+			<div  ng-show="mealdata.taxIncluded == 'false'">
 				<label class="col-md-1 control-label">*Tax:</label>
 				<div class="col-md-2">
 					<input type="text" name="taxvalue" data-ng-model="mealdata.taxvalue" class="form-control meal-font-text-size">
