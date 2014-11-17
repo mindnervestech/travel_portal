@@ -261,7 +261,7 @@
 			
 			<label style="margin-top: 4%;margin-left: 18%;"><b>Apply to all Markets?<br>
 			<label>(Based on Passenger Nationality)</label>
-					<input type="radio" name="applyToMarket{{$index}}" data-ng-value="true" data-ng-model="rate.applyToMarket" ng-click="applyToall()">Yes
+					<input type="radio" name="applyToMarket{{$index}}" data-ng-value="true" data-ng-model="rate.applyToMarket" ng-click="applyToAll(rate)">Yes
 					<input type="radio" name="applyToMarket{{$index}}" data-ng-value="false" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate)">No
 				</b></label><br>
 				<div ng-show="rate.applyToMarket == false" style="width: 45%;margin-left: 27%;">
@@ -489,7 +489,7 @@
 			
 				<label style="margin-top: 4%;margin-left: 18%;"><b>Apply to all Markets?<br>
 			<label>(Based on Passenger Nationality)</label>
-					<input type="radio" name="applyToRate{{$index}}" data-ng-value="true" data-ng-model="rate.applyToMarket" ng-click="applyToall()">Yes
+					<input type="radio" name="applyToRate{{$index}}" data-ng-value="true" data-ng-model="rate.applyToMarket" ng-click="applyToAll(rate)">Yes
 					<input type="radio" name="applyToRate{{$index}}" data-ng-value="false" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate)">No
 				</b></label><br>
 				<div ng-show="rate.applyToMarket == false" style="width: 45%;margin-left: 27%;">
@@ -499,9 +499,7 @@
 					group-property="multiSelectGroup"
 					on-open="msOpen( data )">
 				</div>
-					<div style="margin-left: 70%;">
-						<button class="btn btn-success" ng-click="setSelection(rate);">Submit</button>
-					</div>
+					
 				</div>
 
 			</fieldset>	

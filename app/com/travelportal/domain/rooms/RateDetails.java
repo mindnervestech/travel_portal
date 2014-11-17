@@ -25,7 +25,14 @@ public class RateDetails {
 	private boolean isSpecialRate;
 	@Column(name="special_days")
 	private String specialDays;
+	private boolean applyToMarket;
 	
+	public boolean isApplyToMarket() {
+		return applyToMarket;
+	}
+	public void setApplyToMarket(boolean applyToMarket) {
+		this.applyToMarket = applyToMarket;
+	}
 	public Long getId() {
 		return id;
 	}

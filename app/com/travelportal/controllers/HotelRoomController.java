@@ -43,6 +43,7 @@ import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RateWrapper;
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.RoomChildPolicies;
+import com.travelportal.vm.AllocatedCitiesVM;
 import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.NormalRateVM;
 import com.travelportal.vm.RateDetailsVM;
@@ -155,6 +156,28 @@ public static void createRootDir() {
 				rateMeta.setRoomType(HotelRoomTypes.findByName(rate.roomType));
 				rateMeta.save();
 				
+				RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType));
+				List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
+				for(AllocatedCitiesVM vm: rate.allocatedCities) {
+					if(vm.multiSelectGroup == false && vm.name != null){
+						SelectedCityVM cityVM = new SelectedCityVM();
+						cityVM.name = vm.name;
+						cityVM.ticked = vm.ticked;
+						selectedCityVM.add(cityVM);
+					}
+					
+					System.out.println(vm.multiSelectGroup);
+				}
+				List<City> listCity = new ArrayList<>();
+				for(SelectedCityVM cityvm : selectedCityVM){
+					City _city = City.getCitiByName(cityvm.name);
+					
+					if(cityvm.ticked){
+						listCity.add(_city);
+					}
+				}
+				rateObject.setCities(listCity);
+				
 				RateDetails rateDetails = new RateDetails();
 				if(rate.isSpecialRate == true) {
 					rateDetails.setSpecialRate(rate.isSpecialRate);
@@ -162,6 +185,7 @@ public static void createRootDir() {
 				} else {
 					rateDetails.setSpecialRate(rate.isSpecialRate);
 				}
+				rateDetails.setApplyToMarket(rate.applyToMarket);
 				rateDetails.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
 				rateDetails.save();
 				
@@ -368,6 +392,7 @@ public static void createRootDir() {
 			rateVM.setSpecialRate(rateDetails.isSpecialRate());
 			rateVM.setRateName(rate.getRateName());
 			rateVM.setId(rate.getId());
+			rateVM.applyToMarket = rateDetails.isApplyToMarket();
 			
 			NormalRateVM normalRateVM = new NormalRateVM();
 			SpecialRateVM specialRateVM = new SpecialRateVM();

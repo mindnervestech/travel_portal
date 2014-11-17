@@ -2213,7 +2213,8 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 	};
 	
 	$scope.saveRate = function() {
-		console.log($scope.rateObject.length);
+		console.log($scope.rateObject);
+		
 		for(var i=0;i<$scope.rateObject.length;i++) {
 			console.log(i);
 			$scope.rateObject[i].roomType = $scope.formData.room;
@@ -2254,6 +2255,7 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 	//$scope.webBrowsersGrouped =[];
 	$scope.msClose;
 	$scope.getSelectedCity = [];
+	
 	
 	$scope.showMarketTable = function(alloc) {
 		 
@@ -2303,7 +2305,11 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 				allot.allocatedCities[i].ticked = true;
 			}
 		}
-		$scope.setSelection(allot);
+		console.log($scope.selectedRatesId);
+		if($scope.selectedRatesId != 0) {
+			$scope.setSelection(allot);
+		}
+		
 	}
 	
 	

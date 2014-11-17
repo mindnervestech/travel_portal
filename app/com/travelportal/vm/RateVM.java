@@ -14,9 +14,11 @@ public class RateVM {
 	public String currency;
 	public NormalRateVM normalRate;
 	public boolean isSpecialRate;
-	public boolean applyToMarket = true;
+	public boolean applyToMarket;
 	public SpecialRateVM special;
 	public List<CancellationPolicyVM> cancellation = new ArrayList<CancellationPolicyVM>();
+	public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
+	
 	
 	public String getRateName() {
 		return rateName;
@@ -84,11 +86,4 @@ public class RateVM {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public boolean isApplyToMarket() {
-		return applyToMarket;
-	}
-	public void setApplyToMarket(boolean applyToMarket) {
-		this.applyToMarket = applyToMarket;
-	}
-	
 }
