@@ -777,15 +777,16 @@ public class HotelProfileController extends Controller {
 		System.out.println(docId);
 		System.out.println(id);
 		HotelHealthAndSafety healthAndSafety =HotelHealthAndSafety.HealthSafetyfindById(docId);
-		ImgPath deletePath = null;
+		/*ImgPath deletePath = null;
 		for(ImgPath path : healthAndSafety.getImgpath()){
 			if(path.getImgpathId() == id);
-			deletePath = path;
-		}
-		healthAndSafety.getImgpath().remove(deletePath);
-		File currentFile = new File(deletePath.getImgpath());
+				deletePath = path;
+		}*/
+		ImgPath imgPath = ImgPath.getImagPathById(id);
+		File currentFile = new File(imgPath.getImgpath());
 		currentFile.delete();
-		deletePath.delete();
+		healthAndSafety.getImgpath().remove(imgPath);
+		imgPath.delete();
 		
 		//healthAndSafety.setImgpath(null);
 		healthAndSafety.merge();

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
@@ -59,6 +60,13 @@ public class ImgPath { //Seed table.
 	public void setDatetime(Date datetime) {
 		this.datetime = datetime;
 	}
+	
+	public static ImgPath getImagPathById(int id) {
+    	Query query = JPA.em(). createQuery("select p from ImgPath p where p.imgpathId = ?1");
+		query.setParameter(1, id);
+    	return (ImgPath) query.getSingleResult();
+    }
+
 
 	@Transactional
     public void save() {

@@ -1299,13 +1299,23 @@ angular.module('travel_portal').
 	
 	
 	$scope.DeleteDocId = function(doc){
-		console.log(doc.imgpathId);
+		console.log(doc);
 
 
 		$http.get('/deleteDocument/'+$scope.docId+'/'+doc.imgpathId)
 		.success(function(){
 			
 			console.log('success');
+			$http.get('/findHealthAndSafData/'+$rootScope.supplierCode).success(function(response) {
+				console.log(response);
+				
+				 angular.forEach(response.docInfo[0].imgpath, function(obj, index){
+						response.docInfo[0].imgpath[index].datetime = $filter('date')(response.docInfo[0].imgpath[index].datetime, "yyyy-MM-dd");
+						return;
+					});
+				 $scope.document = response.docInfo[0].imgpath;
+				  $scope.docId = response.docInfo[0].id;
+			});
 		});
 		};
 
@@ -1482,25 +1492,28 @@ angular.module('travel_portal').
 
 		
 	
-	
+	$scope.saveUpdateFirePrecaution = false;
 	$scope.saveFirePrecaution = function(){
 		
 		$scope.FirePrecaution.supplierCode = $rootScope.supplierCode;
 		console.log($scope.FirePrecaution);
 		$http.post('/saveUpdateFirePrecaution', $scope.FirePrecaution).success(function(data){
 			console.log('success');
+			$scope.saveUpdateFirePrecaution = true;
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
 	}
 	
+	$scope.saveUpdateDocumentation = false;
 	$scope.saveDocumentation = function(){
 		
 		$scope.HealthSafety.supplierCode = $rootScope.supplierCode; 
 		console.log($scope.HealthSafety);
 		$http.post('/saveUpdateHealthSafety', $scope.HealthSafety).success(function(data){
 			console.log('success');
+			$scope.saveUpdateDocumentation = true;
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1727,6 +1740,10 @@ angular.module('travel_portal').
 		$scope.mealpolicy.supplierCode = $rootScope.supplierCode ;
 
 		$scope.mealpolicy.child=$scope.contacts;
+		 if($scope.mealpolicy.taxIncluded == "true"){
+			 delete $scope.mealpolicy.taxtype;
+			 delete $scope.mealpolicy.taxvalue;
+		 }
 		console.log($scope.mealpolicy);
 		$http.post('/savemealpolicy',$scope.mealpolicy).success(function(data){
 			console.log('success');
@@ -1752,7 +1769,18 @@ angular.module('travel_portal').
 
 	$scope.mealPlanUpdateSuccessMsg = false;
 	$scope.updatemealplan = function(){
-
+		
+		 if($scope.mealdata.taxIncluded == "true"){
+			 delete $scope.mealdata.taxtype;
+			 delete $scope.mealdata.taxvalue;
+		 }
+		 angular.forEach($scope.mealdata.child, function(obj, index){
+			 if($scope.mealdata.child[index].chargeType == "true"){
+				delete $scope.mealdata.child[index].childtaxtype;
+				delete $scope.mealdata.child[index].childtaxvalue;
+			 }
+				 
+		 });
 		
 		console.log($scope.mealdata);
 		$http.post('/updatemealpolicy',$scope.mealdata).success(function(data){
