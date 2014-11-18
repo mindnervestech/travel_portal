@@ -336,35 +336,70 @@ public static void createRootDir() {
 				}
 				
 				for(CancellationPolicyVM vm : rate.cancellation) {
-						CancellationPolicy cancellation = CancellationPolicy.findById(vm.id);
-						if(vm.days != null) {
-							cancellation.setCancellationDays(vm.days);
-								if(vm.penaltyCharge == true) {
-									cancellation.setPenalty(vm.penaltyCharge);
-									cancellation.setNights(vm.nights);
-								} else {
-									cancellation.setPenalty(vm.penaltyCharge);
-									cancellation.setPercentage(vm.percentage);
-								}
-							cancellation.setNormal(true);	
-							cancellation.merge();
-						}
+						if(vm.id == 0) {
+							CancellationPolicy cancellation = new CancellationPolicy();
+							if(vm.days != null) {
+								cancellation.setCancellationDays(vm.days);
+									if(vm.penaltyCharge == true) {
+										cancellation.setPenalty(vm.penaltyCharge);
+										cancellation.setNights(vm.nights);
+									} else {
+										cancellation.setPenalty(vm.penaltyCharge);
+										cancellation.setPercentage(vm.percentage);
+									}
+								cancellation.setNormal(true);	
+								cancellation.setRate(RateMeta.findById(rate.id));
+								cancellation.save();
+							}
+						} else {
+						
+							CancellationPolicy cancellation = CancellationPolicy.findById(vm.id);
+							if(vm.days != null) {
+								cancellation.setCancellationDays(vm.days);
+									if(vm.penaltyCharge == true) {
+										cancellation.setPenalty(vm.penaltyCharge);
+										cancellation.setNights(vm.nights);
+									} else {
+										cancellation.setPenalty(vm.penaltyCharge);
+										cancellation.setPercentage(vm.percentage);
+									}
+								cancellation.setNormal(true);	
+								cancellation.merge();
+							}
+						}	
 				}
 				
 				if(rate.isSpecialRate == true) {
 					for(CancellationPolicyVM vm : rate.special.cancellation) {
-						CancellationPolicy cancellation = CancellationPolicy.findById(vm.id);
-						if(vm.days != null) {
-							cancellation.setCancellationDays(vm.days);
-								if(vm.penaltyCharge == true) {
-									cancellation.setPenalty(vm.penaltyCharge);
-									cancellation.setNights(vm.nights);
-								} else {
-									cancellation.setPenalty(vm.penaltyCharge);
-									cancellation.setPercentage(vm.percentage);
-								}
-							cancellation.setNormal(false);	
-							cancellation.merge();
+						if(vm.id == 0) {
+							CancellationPolicy cancellation = new CancellationPolicy();
+							if(vm.days != null) {
+								cancellation.setCancellationDays(vm.days);
+									if(vm.penaltyCharge == true) {
+										cancellation.setPenalty(vm.penaltyCharge);
+										cancellation.setNights(vm.nights);
+									} else {
+										cancellation.setPenalty(vm.penaltyCharge);
+										cancellation.setPercentage(vm.percentage);
+									}
+								cancellation.setNormal(false);	
+								cancellation.setRate(RateMeta.findById(rate.id));
+								cancellation.save();
+							}
+						} else {
+							CancellationPolicy cancellation = CancellationPolicy.findById(vm.id);
+							if(vm.days != null) {
+								cancellation.setCancellationDays(vm.days);
+									if(vm.penaltyCharge == true) {
+										cancellation.setPenalty(vm.penaltyCharge);
+										cancellation.setNights(vm.nights);
+									} else {
+										cancellation.setPenalty(vm.penaltyCharge);
+										cancellation.setPercentage(vm.percentage);
+									}
+								cancellation.setNormal(false);	
+								cancellation.merge();
+							}
 						}
 					}
 				}

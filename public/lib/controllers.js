@@ -2276,7 +2276,7 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 	$scope.showMarketTable = function(alloc) {
 		 
 			
-		console.log(alloc.id);
+		console.log(alloc);
 		$scope.getSelectedCity.splice(0);
 		if(angular.isUndefined(alloc.id)) {
 			$scope.selectedRatesId = 0;
