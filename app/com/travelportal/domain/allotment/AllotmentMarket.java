@@ -32,10 +32,12 @@ public class AllotmentMarket {
 	private String period;
 	@Column(name="specifyAllot")
 	private String specifyAllot;
-	@Column(name="Allocation")
+	@Column(name="allocation")
 	private int Allocation;
 	@Column(name="choose")
 	private int choose;
+	@Column(name="applyMarket")
+	private String applyMarket;
 	
 	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<RateMeta> rate;
@@ -99,11 +101,30 @@ public class AllotmentMarket {
 	public void setCities(List<City> cities) {
 		this.cities = cities;
 	}
+	
+	public String getApplyMarket() {
+		return applyMarket;
+	}
+
+	public void setApplyMarket(String applyMarket) {
+		this.applyMarket = applyMarket;
+	}
 
 	public static AllotmentMarket findById(int Code) {
 		try
 		{
 		return (AllotmentMarket) JPA.em().createQuery("select c from AllotmentMarket c where c.allotmentMarketId = ?1").setParameter(1, Code).getSingleResult();
+		}
+		catch(Exception ex){
+			return null;
+		}
+    }
+	
+	
+	public static AllotmentMarket findByTopid() {
+		try
+		{
+		return (AllotmentMarket) JPA.em().createQuery("select c from AllotmentMarket c where c.allotmentMarketId = (select max(a.allotmentMarketId) from AllotmentMarket a)").getSingleResult();
 		}
 		catch(Exception ex){
 			return null;

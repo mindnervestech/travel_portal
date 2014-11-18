@@ -81,6 +81,9 @@ angular.module('travel_portal').
 				console.log('success');
 				console.log(response);
 				$scope.showallotent = true;
+				if(response.allotmentmarket.length==0) {
+					response.allotmentmarket.push({});
+				}
 				
 				$http.post('/getRates', $scope.allotmentMarket).success(function(data){
 					console.log("-------");
@@ -113,10 +116,13 @@ angular.module('travel_portal').
 						
 					}
 				});
+				
 			}).error(function(response, status, headers, config) {
 				console.log('ERROR');
 			});
 		}
+		
+		
 		
 		$scope.selectType = function()
 		{
@@ -226,6 +232,15 @@ angular.module('travel_portal').
 			
 			$http.get('/deleteAllotmentMarket/'+allot.allotmentMarketId+'/'+ $scope.allotmentId)
 			.success(function(){
+				angular.forEach($scope.allotmentM[index].rate,function(value1,key1) {
+					angular.forEach($scope.rate,function(value,key) {
+						console.log("rate id :"+value.id);
+						console.log("allot id :"+value1.id);
+						if(value1==value.id) {
+							value.isSelected = 0;
+						}
+					});
+				});
 				$scope.allotmentM.splice(index, 1);
 				console.log('success');
 			});
@@ -245,9 +260,7 @@ angular.module('travel_portal').
 			$scope.allotmentMarket.allotmentmarket = $scope.allotmentM;
 			$scope.allotmentMarket.supplierCode = supplierCode; 
 			console.log($scope.allotmentMarket);
-			 angular.forEach($scope.allotmentMarket.allotmentmarket, function(obj, index){
-				 delete obj.allocatedCities;
-			 });
+		
 			console.log($scope.allotmentMarket.allotmentmarket[0].allocatedCities);
 			
 			$http.post('/saveAllotment',$scope.allotmentMarket).success(function(data){
@@ -270,54 +283,70 @@ angular.module('travel_portal').
 		       
 		    };
 		    
+		  		    
 		    
-		 		    
-		    //////
-		    //$scope.applyMarket = false;
+		 ////////
+		    
 		    $scope.selectedRatesId;
 			console.log($scope.selectedRatesId);
-			//$scope.webBrowsersGrouped =[];
+		
 			$scope.msClose;
 			$scope.getSelectedCity = [];
-			$scope.showAllotmentMarketTable = function(alloc) {
-				Id = alloc.allotmentMarketId;
+			$scope.showAllotmentMarketTable = function(allot) {
 				console.log("-----------");	
-				console.log(alloc);
+				console.log(allot);
+				if(angular.isUndefined(allot.allotmentMarketId)) {
+					$scope.selectedRatesId = 0;
+				} else {
+					$scope.selectedRatesId = allot.allotmentMarketId;
+				}
+				
+				
 				
 				$scope.getSelectedCity.splice(0);
-				$scope.selectedRatesId = Id;
 				console.log($scope.selectedRatesId);
 				$http.get('/getAllotmentMarketGroup/'+$scope.selectedRatesId)
 				.success(function(data){
 					if(data) {
-						alloc.allocatedCities = [];
+						allot.allocatedCities = [];
 						
 							for(var i = 0; i<data.length;i++){
-								alloc.allocatedCities.push({
+								allot.allocatedCities.push({
 									name:'<strong>'+data[i].country.countryName+'</strong>',
 									multiSelectGroup:true
 								});
 								for(var j =0; j<data[i].country.cityvm.length;j++){
 									
-									alloc.allocatedCities.push({
+									allot.allocatedCities.push({
 										name:data[i].country.cityvm[j].cityName,
 										ticked:data[i].country.cityvm[j].tick
 									});
 									//allot.applyMarket = false;
 								}
-								alloc.allocatedCities.push({
+								allot.allocatedCities.push({
 									multiSelectGroup:false
 								});
 							}
-							
-							//console.log(alloc.allocatedCities);
-							console.log(alloc.allocatedCities);
+														
+							console.log(allot.allocatedCities);
 							//alloc.allocatedCities =  $scope.webBrowsersGrouped; //[{name:"pune",ticked:true}];	
 					} 
 				});
 			}
 			
-			
+			$scope.applyToAll = function(allot){
+				console.log(allot);
+				for(var i = 0; i<allot.allocatedCities.length;i++){
+					if(allot.allocatedCities[i].multiSelectGroup == undefined ){
+						allot.allocatedCities[i].ticked = true;
+					}
+				}
+				console.log($scope.selectedRatesId);
+				if($scope.selectedRatesId != 0) {
+					$scope.setSelection(allot);
+				}
+				
+			}
 			
 			
 			$scope.setSelection = function(allot) {
@@ -884,10 +913,10 @@ angular.module('travel_portal').
 		supplierCode:''
 	};
 	
-	$scope.locationsearch.findLocation = [];
 
-	$scope.locationsearch.findLocation.push( {  } );
+	$scope.locationsearch.findLocation.push({});
 	$scope.newLocation = function($event){
+		console.log("newLocation");
 		$scope.locationsearch.findLocation.push( {  } );
 		$event.preventDefault();
 	};
@@ -1109,6 +1138,8 @@ angular.module('travel_portal').
 		}
 		$scope.getTranAndDirInfo = function(){
 			$http.get('/findTranDirData/'+$rootScope.supplierCode).success(function(response) {
+				console.log("getTranAndDirInfo :: "+response);
+				if(response != '')
 			 $scope.locationsearch.findLocation = response;
 			});
 		}

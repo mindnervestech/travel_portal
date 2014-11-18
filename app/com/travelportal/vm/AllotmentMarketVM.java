@@ -1,5 +1,6 @@
 package com.travelportal.vm;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,8 @@ public class AllotmentMarketVM {
 	public int allocation;
 	public int choose;
 	public List<Long> rate;
-	
+	public String applyMarket;
+	public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
 	
 	public int getAllotmentMarketId() {
 		return allotmentMarketId;
@@ -54,6 +56,18 @@ public class AllotmentMarketVM {
 		this.rate = rate;
 	}
 	
+	public List<AllocatedCitiesVM> getAllocatedCities() {
+		return allocatedCities;
+	}
+	public void setAllocatedCities(List<AllocatedCitiesVM> allocatedCities) {
+		this.allocatedCities = allocatedCities;
+	}
+	public String getApplyMarket() {
+		return applyMarket;
+	}
+	public void setApplyMarket(String applyMarket) {
+		this.applyMarket = applyMarket;
+	}
 	
 	
 	

@@ -1,5 +1,5 @@
 
-<div class="panel panel-green">
+<div ng-init="callfuntion()" class="panel panel-green">
 	<div class="panel-heading clearfix">
 		<span class="mts pull-left">Contract Management</span>
 	</div>
@@ -263,7 +263,7 @@
 						<label><b>Apply to all Markets?<br>
 			<label>(Based on Passenger Nationality)</label>
 					<input type="radio" data-ng-model="allot.applyMarket" value="false" ng-click="showAllotmentMarketTable(allot)">No
-					<input type="radio" data-ng-model="allot.applyMarket" value="true" ng-click="applyToall()">Yes
+					<input type="radio" data-ng-model="allot.applyMarket" value="true" ng-click="applyToAll(allot)">Yes
 				</b></label><br>
 				</div>
 			
@@ -276,9 +276,9 @@
 				</div>
 				
 					
-				<div class="col-md-2 col-md-offset-9">
+				<!-- <div class="col-md-2 col-md-offset-9">
 					<input type="button" class="btn btn-success" ng-click="setSelection(allot);" value="Submit">
-				</div>
+				</div> -->
 				</div>
 				</div>
 							</div>
