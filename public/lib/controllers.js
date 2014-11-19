@@ -758,7 +758,7 @@ angular.module('travel_portal').
 			    $scope.createroomtypeMsg = false;
 			    
 			    $scope.CreateRoomType =function(){
-			    	$scope.roomTypeIns.supplierCode = $scope.supplierCode; //$scope.roomTypeIns;
+			    	$scope.roomTypeIns.supplierCode = supplierCode; //$scope.roomTypeIns;
 			    	$scope.roomTypeIns.roomchildPolicies = $scope.childpolicy;
 			    	$scope.roomTypeIns.roomamenities = $scope.roomamenities;
 			    	

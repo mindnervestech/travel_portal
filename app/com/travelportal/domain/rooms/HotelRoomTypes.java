@@ -31,7 +31,7 @@ public class HotelRoomTypes {
 	private Long roomId;
 	@Column(name="supplier_code")
 	private Long supplierCode;
-	@Column(name="room_type", unique=true)
+	@Column(name="room_type")  //, unique=true
 	private String roomType; //normal, deluxe etc..
 	@Column(name="max_occupancy")
 	private int maxOccupancy;
