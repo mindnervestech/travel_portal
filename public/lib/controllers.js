@@ -395,7 +395,7 @@ angular.module('travel_portal').
 	    	 Lobbypic = $Lobbypic[0]; 
 	    	    	 
 	     }
-	     $scope.imgLobby = "getLobbyImagePath/"+supplierCode+"?d="+new Date().getTime();
+	     $scope.imgLobby = "/hotel_profile/getLobbyImagePath/"+supplierCode+"?d="+new Date().getTime();
 	     $scope.saveLobbyImage = {};
 	     $scope.saveHotelLobbyImage = function(){	     
 	    	
@@ -412,7 +412,7 @@ angular.module('travel_portal').
 	     }).success(function(data, status, headers, config) {
 	    	 console.log(data);   
 	    	 console.log(data.hotel_Lobby);
-	          $scope.imgLobby = "getLobbyImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	          $scope.imgLobby = "/hotel_profile/getLobbyImagePath/"+data.supplierCode+"?d="+new Date().getTime();
 	            $scope.openLobbyPic = false;	
 		    	 $scope.openLobbyPic1 = true;
 	          
@@ -441,7 +441,7 @@ angular.module('travel_portal').
 	    	    	 
 	     }
 		
-		 $scope.imgRoom = "getRoomImagePath/"+supplierCode+"?d="+new Date().getTime();
+		 $scope.imgRoom = "/hotel_profile/getRoomImagePath/"+supplierCode+"?d="+new Date().getTime();
 	     $scope.saveRoomImage = {};
 	     $scope.saveHotelRoomImage = function(){	     
 	    	
@@ -457,7 +457,7 @@ angular.module('travel_portal').
 	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
 	     }).success(function(data, status, headers, config) {
 	    	 console.log(data);   
-	          $scope.imgRoom = "getRoomImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	          $scope.imgRoom = "/hotel_profile/getRoomImagePath/"+data.supplierCode+"?d="+new Date().getTime();
 	            $scope.openRoomPic = false;	
 		    	 $scope.openRoomPic1 = true;
 	          
@@ -487,7 +487,7 @@ angular.module('travel_portal').
 	    	    	 
 	     }
 		
-		 $scope.imgAmenitiesServices = "getAmenitiesServicesImagePath/"+supplierCode+"?d="+new Date().getTime();
+		 $scope.imgAmenitiesServices = "/hotel_profile/getAmenitiesServicesImagePath/"+supplierCode+"?d="+new Date().getTime();
 	     $scope.saveAmenitiesServicesImage = {};
 	     $scope.saveHotelAmenitiesServices = function(){	     
 	    	
@@ -503,7 +503,7 @@ angular.module('travel_portal').
 	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
 	     }).success(function(data, status, headers, config) {
 	    	 console.log(data);   
-	          $scope.imgAmenitiesServices = "getAmenitiesServicesImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	          $scope.imgAmenitiesServices = "/hotel_profile/getAmenitiesServicesImagePath/"+data.supplierCode+"?d="+new Date().getTime();
 	            $scope.openAmenitiesServices = false;	
 		    	 $scope.openAmenitiesServices1 = true;
 	          
@@ -532,7 +532,7 @@ angular.module('travel_portal').
 	    	    	 
 	     }
 		
-		 $scope.imgLeisureorSports = "getLeisureorSportsImagePath/"+supplierCode+"?d="+new Date().getTime();
+		 $scope.imgLeisureorSports = "/hotel_profile/getLeisureorSportsImagePath/"+supplierCode+"?d="+new Date().getTime();
 	     $scope.saveLeisureorSportsImage = {};
 	     $scope.saveHotelLeisureorSports = function(){	     
 	    	
@@ -548,7 +548,7 @@ angular.module('travel_portal').
 	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
 	     }).success(function(data, status, headers, config) {
 	    	 console.log(data);   
-	          $scope.imgLeisureorSports = "getLeisureorSportsImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	          $scope.imgLeisureorSports = "/hotel_profile/getLeisureorSportsImagePath/"+data.supplierCode+"?d="+new Date().getTime();
 	            $scope.openLeisureorSports = false;	
 		    	 $scope.openLeisureorSports1 = true;
 	          
@@ -579,7 +579,7 @@ angular.module('travel_portal').
 	    	    	 
 	     }
 		
-		 $scope.imgMap = "getMapImagePath/"+supplierCode+"?d="+new Date().getTime();
+		 $scope.imgMap = "/hotel_profile/getMapImagePath/"+supplierCode+"?d="+new Date().getTime();
 	     $scope.saveMapImage = {};
 	     $scope.saveHotelMapImage = function(){	     
 	    	
@@ -595,7 +595,7 @@ angular.module('travel_portal').
 	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
 	     }).success(function(data, status, headers, config) {
 	    	 console.log(data);   
-	          $scope.imgMap = "getMapImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	          $scope.imgMap = "/hotel_profile/getMapImagePath/"+data.supplierCode+"?d="+new Date().getTime();
 	            $scope.openMapPic = false;	
 		    	 $scope.openMapPic1 = true;
 	          
