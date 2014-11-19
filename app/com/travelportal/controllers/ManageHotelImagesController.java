@@ -125,7 +125,7 @@ public static void createRootDir() {
 	public static Result getImagePath(long supplierCode) {
 		
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-		File f = new File( infowiseimagesPath.getGeneralPicture());
+		File f = new File(infowiseimagesPath.getGeneralPicture());
         return ok(f);		
 		
 	}

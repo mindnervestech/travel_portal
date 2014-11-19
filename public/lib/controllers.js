@@ -349,7 +349,7 @@ angular.module('travel_portal').
 	    	 generalPic = $generalPic[0]; 
 	    	    	 
 	     }
-	     $scope.img = "getImagePath/"+supplierCode+"?d="+new Date().getTime();
+	     $scope.img = "/getImagePath/"+supplierCode+"?d="+new Date().getTime();
 	     $scope.savegeneral = {};
 	     $scope.savegeneralPic = function(){	     
 	    	$scope.savegeneral.supplierCode = supplierCode;
@@ -365,7 +365,7 @@ angular.module('travel_portal').
 	     }).success(function(data, status, headers, config) {
 	    	 console.log(data);   
 	    	 console.log(data.generalPicture);
-	            $scope.img = "getImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	            $scope.img = "/getImagePath/"+data.supplierCode+"?d="+new Date().getTime();
 	            $scope.opengeneralPic = false;	
 		    	 $scope.opengeneralPic1 = true;
 	     }); 
