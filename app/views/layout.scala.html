@@ -44,6 +44,9 @@
 	class="style-change color-change">
 <link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/style-responsive.css")'>
 <link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/app.css")'>
+
+ <link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/js/pnotify_css/pnotify.buttons.css")'> 
+<link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/js/pnotify_css/pnotify.core.css")'>
 </head>
 <body class=" ">
 <div>
@@ -77,6 +80,8 @@
                 </ul>
             </div>
         </nav>
+        
+         <span id="loading-id"><img src='@routes.Assets.at("app/images/loading.gif")'/></span>  
         <!--BEGIN MODAL CONFIG PORTLET-->
         
         <!--END MODAL CONFIG PORTLET--></div>
@@ -153,7 +158,6 @@
         </div>
         <!--END FOOTER--><!--END PAGE WRAPPER--></div>
 </div>
-
     
     
 	 <script src='@routes.Assets.at("app/js/jquery-1.10.2.min.js")'></script> 
@@ -166,9 +170,8 @@
 	<script src='@routes.Assets.at("bower_components/angular/angular-file-upload-shim.min.js")'></script>
 	<script src='@routes.Assets.at("bower_components/angular-route/angular-route.min.js")'></script>
 	
-	<script
-		src='@routes.Assets.at("app/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js")'></script>
-	<script src='@routes.Assets.at("app/js/html5shiv.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js")'></script>
+	<script src='@routes.Assets.at("app/js/html5shiv.js")'></script>	
 	<script src='@routes.Assets.at("app/js/respond.min.js")'></script>
 	<script src='@routes.Assets.at("app/vendors/metisMenu/jquery.metisMenu.js")'></script>
 	<script src='@routes.Assets.at("app/vendors/slimScroll/jquery.slimscroll.js")'></script>
@@ -189,8 +192,15 @@
 	<script src='@routes.Assets.at("bower_components/ng-dialog/js/ngDialog.min.js")'></script>
 	<script src='@routes.Assets.at("bower_components/bootstrap/js/bootstrap-datepicker.js")'></script>
 	<!-- <script src='@routes.Assets.at("bower_components/jquery/jquery.validate.min.js")'></script>
-	<script src='@routes.Assets.at("bower_components/jquery/jquery.min.js")'></script> -->
 	
+	
+	<script src='@routes.Assets.at("bower_components/jquery/jquery.min.js")'></script> -->
+
+	<script src='@routes.Assets.at("app/js/pnotify/pnotify.core.js")'></script>	
+	 <script src='@routes.Assets.at("app/js/pnotify/pnotify.buttons.js")'></script>
+	<script src='@routes.Assets.at("app/js/pnotify/pnotify.confirm.js")'></script> 
+	<script src='@routes.Assets.at("app/js/pnotify/angular-pnotify.js")'></script>
+		
 	<!--CORE JAVASCRIPT-->
 	<script src='@routes.Assets.at("app/js/main.js")'></script>
 	<script src='@routes.Assets.at("app/js/ui-checkbox-radio.js")'></script>
@@ -207,3 +217,5 @@
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script> 
 </body>
 </html>
+
+

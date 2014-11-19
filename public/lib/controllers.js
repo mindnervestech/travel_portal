@@ -12,58 +12,6 @@ angular.module('travel_portal').
 			$scope.hotelRoomTypes = response;
 		});
 		
-		/*$http.get('/allotmentAllData/'+supplierCode).success(function(response) {
-			
-			console.log(response);
-			
-			
-			$http.get('/getDates/'+response.roomId+"/"+response.currencyId)
-			.success(function(data){
-				if(data) {
-					console.log(data);
-					$scope.allotmentMarket1 =data;
-					 angular.forEach($scope.allotmentMarket1, function(obj, index){
-							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[0].fromPeriod, "yyyy-MM-dd");
-							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[0].toPeriod, "yyyy-MM-dd");
-							return;
-						});
-							
-					console.log($scope.allotmentMarket1);
-				       
-				} 
-			});
-			
-			$http.get('/getRates/'+response.datePeriodId)
-			.success(function(data){
-				if(data) {
-					console.log(data.rate);		
-					$scope.rate = data.rate;
-					angular.forEach($scope.rate,function(value,key) { 
-						value.isSelected =0;
-					});
-					
-					$scope.allotmentMarket = response;
-					$scope.allotmentM = response.allotmentmarket;
-					for(var i=0;i<$scope.allotmentM.length;i++) {
-						angular.forEach($scope.allotmentM[i].rate,function(value1,key1) {
-							angular.forEach($scope.rate,function(value,key) {
-								console.log("rate id :"+value.id);
-								console.log("allot id :"+value1.id);
-								if(value1==value.id) {
-									value.isSelected = i+1;
-								}
-							});
-						});
-					}
-					$scope.allotmentM.allotmentId = response.allotmentId;
-					
-				    $scope.allotmentId = response.allotmentId;   
-				} else {
-					
-				}
-			});
-			
-		});*/
 		
 		$scope.showallotent =false;
 		
@@ -85,6 +33,11 @@ angular.module('travel_portal').
 					response.allotmentmarket.push({});
 				}
 				
+				for(var i=0;i<response.allotmentmarket.length;i++) {
+					if(response.allotmentmarket[i].applyMarket == "false"){
+					$scope.showAllotmentMarketTable(response.allotmentmarket[i]);
+					}
+				}
 				$http.post('/getRates', $scope.allotmentMarket).success(function(data){
 					console.log("-------");
 					console.log(data);
@@ -249,13 +202,6 @@ angular.module('travel_portal').
 		
 		$scope.saveallotment = function()
 		{
-			//delete $scope.allotmentMarket
-			
-			/*if($scope.allotmentMarket.datePeriodId == null){
-			var arr = $scope.allotmentMarket.datePeriodId.split("@");
-			$scope.allotmentMarket.toPeriod = arr[0];
-			$scope.allotmentMarket.formPeriod = arr[1];
-			}*/
 			
 			$scope.allotmentMarket.allotmentmarket = $scope.allotmentM;
 			$scope.allotmentMarket.supplierCode = supplierCode; 
@@ -277,7 +223,8 @@ angular.module('travel_portal').
 		  $scope.allotmentM.push( {  } );
 		 
 		 $scope.newallotmentM = function($event){
-		        $scope.allotmentM.push( {  } );
+		        $scope.allotmentM.push( {applyMarket:"false"} );
+		        $scope.showAllotmentMarketTable($scope.allotmentM);
 		        $event.preventDefault();
 		     
 		       
@@ -292,9 +239,11 @@ angular.module('travel_portal').
 		
 			$scope.msClose;
 			$scope.getSelectedCity = [];
+			
 			$scope.showAllotmentMarketTable = function(allot) {
-				console.log("-----------");	
+					
 				console.log(allot);
+			
 				if(angular.isUndefined(allot.allotmentMarketId)) {
 					$scope.selectedRatesId = 0;
 				} else {
@@ -304,7 +253,9 @@ angular.module('travel_portal').
 				
 				
 				$scope.getSelectedCity.splice(0);
+				
 				console.log($scope.selectedRatesId);
+				
 				$http.get('/getAllotmentMarketGroup/'+$scope.selectedRatesId)
 				.success(function(data){
 					if(data) {
@@ -316,25 +267,34 @@ angular.module('travel_portal').
 									multiSelectGroup:true
 								});
 								for(var j =0; j<data[i].country.cityvm.length;j++){
-									
+									if(allot.applyMarket == "false")
+										{
 									allot.allocatedCities.push({
 										name:data[i].country.cityvm[j].cityName,
 										ticked:data[i].country.cityvm[j].tick
 									});
-									//allot.applyMarket = false;
+										}else{
+											console.log("True all tick");
+											allot.allocatedCities.push({
+											name:data[i].country.cityvm[j].cityName,
+											ticked:true
+											});
+											
+											}
+								
 								}
 								allot.allocatedCities.push({
 									multiSelectGroup:false
 								});
 							}
-														
+												
 							console.log(allot.allocatedCities);
-							//alloc.allocatedCities =  $scope.webBrowsersGrouped; //[{name:"pune",ticked:true}];	
+								
 					} 
 				});
 			}
 			
-			$scope.applyToAll = function(allot){
+			/*$scope.applyToAll = function(allot){
 				console.log(allot);
 				for(var i = 0; i<allot.allocatedCities.length;i++){
 					if(allot.allocatedCities[i].multiSelectGroup == undefined ){
@@ -346,7 +306,7 @@ angular.module('travel_portal').
 					$scope.setSelection(allot);
 				}
 				
-			}
+			}*/
 			
 			
 			$scope.setSelection = function(allot) {
@@ -806,6 +766,10 @@ angular.module('travel_portal').
 			    				    	
 			    	$http.post('/hotel/saveUpdateRoomType',$scope.roomTypeIns).success(function(data){
 						console.log('success');
+						$http.get("/roomtypes/"+supplierCode).success(function(response){
+							console.log('success');
+							$scope.hotelRoomTypes = response;
+						});
 											
 					}).error(function(data, status, headers, config) {
 						console.log('ERROR');
@@ -861,7 +825,7 @@ angular.module('travel_portal').
 
 
 angular.module('travel_portal').
-	controller("hoteProfileController",function($scope, $http, $location, $rootScope,$filter, $upload, ngDialog) {
+	controller("hoteProfileController",function($scope, $http, $location,notificationService, $rootScope,$filter, $upload, ngDialog) {
 
 		
 		
@@ -1901,6 +1865,7 @@ angular.module('travel_portal').
 		console.log($scope.internalInfo);
 		$http.post('/updateInternalInfo',$scope.internalInfo).success(function(data){
 			console.log('success');
+			notificationService.success("Internal Info Save Successfully");
 			$scope.InternalInfoSuccess = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -2036,6 +2001,7 @@ angular.module('travel_portal').
 		console.log($scope.businessInfo);
 		$http.post('/saveamenities',$scope.businessInfo).success(function(data){
 			console.log('success');
+			notificationService.success(' Successfully');
 			$scope.businessSucess = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');

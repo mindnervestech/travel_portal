@@ -2212,7 +2212,7 @@ ol.list-indicators li.active {
   border: 0px;
 }
 .nav-pills li.active a {
-  border: 1px solid #e74c3c;
+  border: 1px solid #488c6c
 }
 ul.nav.nav-tabs.ul-edit {
   border-bottom: 5px solid #e74c3c !important;
@@ -7087,11 +7087,11 @@ fieldset[disabled] .btn-white.active {
   margin-bottom: -2px;
 }
 .nav-pills li.active a {
-  background: #e74c3c;
+  background: #488c6c;
 }
 .nav-pills li.active a:hover,
 .nav-pills li.active a:focus {
-  background: #e74c3c;
+  background: #488c6c;
 }
 .nav-pills li a {
   -webkit-border-radius: 0 !important;

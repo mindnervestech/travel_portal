@@ -115,6 +115,15 @@ width: 861px !important;
 	margin-top: 9%;
 	margin-left: 29%;
 }
+
+
+#loading-id {
+position: absolute;
+z-index: 100;
+top: 50%;
+left: 50%;
+} 
+
  html, body, #map-canvas {
         height: 100%;
         margin: 0px;

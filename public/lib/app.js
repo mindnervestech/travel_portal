@@ -1,6 +1,6 @@
 'use strict';
 /*angular.module('travel_portal',['ngRoute','rcWizard', 'rcForm', 'rcDisabledBootstrap']).config(function ($routeProvider) {*/
-angular.module('travel_portal',['ngRoute','ngDialog','angularFileUpload','multi-select']).config(function ($routeProvider) {
+var app = angular.module('travel_portal',['ngRoute','ngDialog','angularFileUpload','jlareau.pnotify','multi-select']).config(function ($routeProvider) {
 	$routeProvider
 	.when('/', {
 		templateUrl: '/assets/html/hotel_profile/general_info.html',
@@ -88,3 +88,32 @@ angular.module('travel_portal',['ngRoute','ngDialog','angularFileUpload','multi-
 	})
 	
 });
+
+app.factory('MyHttpInterceptor', function ($q) {
+    return {
+      request: function (config) {
+                  $('#loading-id').show();
+                  return config || $q.when(config);           
+      },
+ 
+      requestError: function (rejection) {
+                  $('#loading-id').hide();
+          return $q.reject(rejection);
+      },
+ 
+      // On response success
+      response: function (response) {
+                  $('#loading-id').hide();
+          return response || $q.when(response);
+      },
+ 
+      // On response failture
+      responseError: function (rejection) {
+                  $('#loading-id').hide();
+          return $q.reject(rejection);
+      }
+    };
+});
+app.config(function ($httpProvider) {
+   $httpProvider.interceptors.push('MyHttpInterceptor');  
+})

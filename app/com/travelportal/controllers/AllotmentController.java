@@ -133,6 +133,7 @@ public class AllotmentController extends Controller {
 			vm.setChoose(allMarketVM.getChoose());
 			vm.setPeriod(allMarketVM.getPeriod());
 			vm.setSpecifyAllot(allMarketVM.getSpecifyAllot());
+			vm.setApplyMarket(allMarketVM.getApplyMarket());
 			List<Long> listInt = new ArrayList<Long>();
 			for(RateMeta rate:allMarketVM.getRate()) {
 				listInt.add(Long.parseLong(String.valueOf(rate.getId())));			
