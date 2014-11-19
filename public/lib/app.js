@@ -1,6 +1,6 @@
 'use strict';
 /*angular.module('travel_portal',['ngRoute','rcWizard', 'rcForm', 'rcDisabledBootstrap']).config(function ($routeProvider) {*/
-var app = angular.module('travel_portal',['ngRoute','ngDialog','angularFileUpload','jlareau.pnotify','multi-select']).config(function ($routeProvider) {
+var app = angular.module('travel_portal',['ngRoute','ngDialog','angularFileUpload','multi-select']).config(function ($routeProvider) {
 	$routeProvider
 	.when('/', {
 		templateUrl: '/assets/html/hotel_profile/general_info.html',
