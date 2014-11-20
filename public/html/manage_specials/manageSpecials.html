@@ -1,0 +1,297 @@
+<div class="panel panel-green">
+	<div class="panel-heading clearfix">
+		<span class="mts pull-left">ADD HOTEL SPECIAL PROMOTION</span>
+	</div>
+	
+	<div class="row" style="margin-top: 3%;margin-left: 2%;">
+				<div class="form-group">
+					<label class="col-md-3 control-label"><b>Please define the period :</b></label>
+					<div class="col-md-3">
+						<label class=" control-label"><b>From:</b></label>
+						<input id = "date" name="fromDate"  class="input-filter form-control" data-provide="datepicker" data-ng-model="formData.fromDate" data-date-format="yyyy-mm-dd" style="height: 25px;" required>
+					</div>
+					<div class="col-md-3">
+						<label class=" control-label"><b>To:</b></label>		
+		                <input name="toDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="formData.toDate" data-date-format="yyyy-mm-dd" style="height: 25px;" required>
+					</div>
+		                   
+				</div>
+			</div>
+			<div class="row" style="margin-top: 3%;margin-left: 2%;">
+				<div class="col-md-3">
+				</div>
+				<div class="col-md-3">
+					<b>{{messageShow}}</b>
+				</div>
+			</div>
+	<div class="row" style="margin-top: 3%;margin-left: 2%;">
+		<div class="col-md-3">
+		</div>
+		<div class="form-group col-md-3">
+			<input type="button" value="Show Periods" ng-click="showPeriods()">
+		</div>
+	</div>
+	
+	<div class="panel-body" ng-show="showSavedPeriods == true">
+	
+	<fieldset class="billinside"   ng-repeat="special in specialsData track by $index" style="margin-top: 5%;margin-bottom: 5%;margin-left: 2%;margin-right: 2%;">
+			<a data-toggle="collapse" data-target="#demo{{$index}}" aria-expanded="true" aria-controls="demo{{$index}}" style="cursor: pointer;">
+			<legend style="width: 10%; border-bottom: none;font-size: 18;">{{special.promotionName}}</legend>
+			</a>
+			<div id="demo{{$index}}" class="collapse in">
+			
+			
+			<div class="row" style="margin-top: 3%;margin-left: 2%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>Please choose your Room types:</b></label>
+							<div class="col-md-4">
+								<select class="form-control" data-ng-model="special.roomTypes" multiple>
+									 <option ng-repeat="type in rooms" value="{{type.roomType}}" ng-selected="type.isSelected == true">{{type.roomType}}</option>
+								</select>
+							</div>
+					</div>
+			</div>
+			
+				
+			
+			<div>
+			<fieldset class="billinside" ng-repeat="market in special.markets track by $index" style="margin-top: 5%;">
+						<a data-toggle="collapse" data-target="#mrkt{{$index}}" aria-expanded="true" aria-controls="mrkt{{$index}}" style="cursor: pointer;">
+						<legend style="width: 8%; border-bottom: none;font-size: 12px;"><b>Market {{$index+1}}</b></legend>
+						</a>
+						<div id="mrkt{{$index}}" class="collapse in">
+							<table style="font-size: 11px;">
+								<tr>
+									<th colspan="2">Rule</th>
+									<th>Applicable Markets</th>
+								</tr>
+								<tr>
+									<td>
+										<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="form-group">
+												<label class="col-md-3 control-label">Stay</label>
+													<div class="col-md-8">
+														<select class="form-control" data-ng-model="market.stayDays">
+															<option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option>
+														</select>
+													</div>
+													<label>Day/s </label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="form-group">
+												<label class="col-md-3 control-label">Pay</label>
+													<div class="col-md-8">
+														<select class="form-control" data-ng-model="market.payDays">
+															<option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option>
+														</select>
+													</div>
+													<label>Day/s </label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<label>Apply to all Markets?
+											<input type="radio" name="applyToRate{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="rate.applyToMarket" ng-click="applyToAll(rate)">Yes
+											<input type="radio" name="applyToRate{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate)">No
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									
+								</tr>
+							</table>
+								
+							<div class="row" style="margin-top: 3%;margin-left: 2%;">
+								<div class="form-group">
+									<label class="col-md-3 control-label">Please select the type of Free Stay:</label>
+										<div class="col-md-4">
+											<select class="form-control"  data-ng-model="market.typeOfStay">
+												<option value="Standard Policy" selected="">Standard Policy</option>   
+												<option value="First Night">First Night</option>   
+												<option value="Cheapest night">Cheapest night</option>   
+												<option value="Most expensive night/s">Most expensive night/s</option>
+											</select>
+										</div>
+								</div>
+							</div>	
+								
+							<div class="row" style="margin-top: 3%;margin-left: 2%;">
+								<div class="form-group">
+									<label>Do you allow this special to be applicable multiple times under the same booking? </label>
+											<input type="radio" name="multiple{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="market.multiple">Yes
+											<input type="radio" name="multiple{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="market.multiple">No
+								</div>
+							</div>			
+							<div class="row" style="margin-top: 3%;margin-left: 2%;">
+								<div class="form-group">
+									<label>Do you allow this special to be combined with other specials under the same booking? </label>
+											<input type="radio" name="combined{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="market.combined">Yes
+											<input type="radio" name="combined{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="market.combined">No
+								</div>
+							</div>					
+						</div>
+						<input type="button" value="DELETE" ng-click="deleteSavedMarket($parent.$index,$index)" style="float:right;margin-top: 1%;margin-right: 1%;" ng-show="showSavedRemoveMarket == true"><br>
+					</fieldset>
+						<input type="button" id="rateRule" value="ADD NEW MARKET" ng-click="addNewSavedMarket($index)" style="float:right;margin-top: 1%;margin-right: 1%;"><br>
+					
+				</div>
+			</div>	
+			<input type="button" value="DELETE PERIOD" ng-click="deletePeriod($index)" style="float:left; margin-top: 3%;margin-left: 5%;" ng-show="showRemovePeriod == true">
+	</fieldset>
+			<div class="row" style="margin-top: 3%;margin-left: 2%;">
+				<div class="col-md-3">
+				</div>
+				<div class="form-group col-md-3">
+					<input type="button" value="UPDATE PERIOD" ng-click="updatePeriod()">
+				</div>
+			</div>
+	</div>
+	
+	<div ng-show="isCreateNew == true">
+	<fieldset class="billinside"   ng-repeat="special in specialsObject track by $index" style="margin-top: 5%;margin-bottom: 5%;margin-left: 2%;margin-right: 2%;">
+			<a data-toggle="collapse" data-target="#demo{{$index}}" aria-expanded="true" aria-controls="demo{{$index}}" style="cursor: pointer;">
+			<legend style="width: 10%; border-bottom: none;font-size: 18;">Period {{$index+1}}</legend>
+			</a>
+			<div id="demo{{$index}}" class="collapse in">
+			
+			<div class="row" style="margin-top: 3%;margin-left: 2%;">
+				<div class="form-group">
+					<label class="col-md-3 control-label"><b>Please define the period :</b></label>
+					<div class="col-md-3">
+						<label class=" control-label"><b>From:</b></label>
+						<input id = "date" name="fromDate"  class="input-filter form-control" data-provide="datepicker" data-ng-model="special.fromDate" data-date-format="yyyy-mm-dd" style="height: 25px;" required>
+					</div>
+					<div class="col-md-3">
+						<label class=" control-label"><b>To:</b></label>		
+		                <input name="toDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="special.toDate" data-date-format="yyyy-mm-dd" style="height: 25px;" required>
+					</div>
+		                   
+				</div>
+			</div>
+			
+			<div class="row" style="margin-top: 3%;margin-left: 4%;">
+					<label>Please provide a name for this Special, this name will be displayed to the Customer and also appear in the Booking Forms.<br> Please use names like Stay 3 nights and pay for 2 nights only</label>
+			</div>
+			
+			<div class="row" style="margin-top: 3%;margin-left: 2%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>Please enter the promotion name here :</b></label>
+							<div class="col-md-3">
+								<input type="text" data-ng-model="special.promotionName">
+							</div>
+					</div>
+			</div>
+			
+			<div class="row" style="margin-top: 3%;margin-left: 2%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>Please choose your Room types:</b></label>
+							<div class="col-md-4">
+								<select class="form-control" data-ng-model="special.roomTypes" multiple>
+									 <option ng-repeat="type in rooms" value="{{type.roomType}}">{{type.roomType}}</option>
+								</select>
+							</div>
+					</div>
+			</div>
+			
+				
+			
+			<div>
+			<fieldset class="billinside" ng-repeat="market in special.markets track by $index" style="margin-top: 5%;">
+						<a data-toggle="collapse" data-target="#mrkt{{$index}}" aria-expanded="true" aria-controls="mrkt{{$index}}" style="cursor: pointer;">
+						<legend style="width: 8%; border-bottom: none;font-size: 12px;"><b>Market {{$index+1}}</b></legend>
+						</a>
+						<div id="mrkt{{$index}}" class="collapse in">
+							<table style="font-size: 11px;">
+								<tr>
+									<th colspan="2">Rule</th>
+									<th>Applicable Markets</th>
+								</tr>
+								<tr>
+									<td>
+										<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="form-group">
+												<label class="col-md-3 control-label">Stay</label>
+													<div class="col-md-8">
+														<select class="form-control" data-ng-model="market.stayDays">
+															<option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option>
+														</select>
+													</div>
+													<label>Day/s </label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="form-group">
+												<label class="col-md-3 control-label">Pay</label>
+													<div class="col-md-8">
+														<select class="form-control" data-ng-model="market.payDays">
+															<option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option>
+														</select>
+													</div>
+													<label>Day/s </label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<label>Apply to all Markets?
+											<input type="radio" name="applyToRate{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="rate.applyToMarket" ng-click="applyToAll(rate)">Yes
+											<input type="radio" name="applyToRate{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate)">No
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									
+								</tr>
+							</table>
+								
+							<div class="row" style="margin-top: 3%;margin-left: 2%;">
+								<div class="form-group">
+									<label class="col-md-3 control-label">Please select the type of Free Stay:</label>
+										<div class="col-md-4">
+											<select class="form-control"  data-ng-model="market.typeOfStay">
+												<option value="Standard Policy" selected="">Standard Policy</option>   
+												<option value="First Night">First Night</option>   
+												<option value="Cheapest night">Cheapest night</option>   
+												<option value="Most expensive night/s">Most expensive night/s</option>
+											</select>
+										</div>
+								</div>
+							</div>	
+								
+							<div class="row" style="margin-top: 3%;margin-left: 2%;">
+								<div class="form-group">
+									<label>Do you allow this special to be applicable multiple times under the same booking? </label>
+											<input type="radio" name="multiple{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="market.multiple">Yes
+											<input type="radio" name="multiple{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="market.multiple">No
+								</div>
+							</div>			
+							<div class="row" style="margin-top: 3%;margin-left: 2%;">
+								<div class="form-group">
+									<label>Do you allow this special to be combined with other specials under the same booking? </label>
+											<input type="radio" name="combined{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="market.combined">Yes
+											<input type="radio" name="combined{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="market.combined">No
+								</div>
+							</div>					
+						</div>
+						<input type="button" value="DELETE" ng-click="deleteMarket($parent.$index,$index)" style="float:right;margin-top: 1%;margin-right: 1%;" ng-show="showRemoveMarket == true"><br>
+					</fieldset>
+						<input type="button" id="rateRule" value="ADD NEW MARKET" ng-click="addNewMarket($index)" style="float:right;margin-top: 1%;margin-right: 1%;"><br>
+					
+				</div>
+			</div>	
+			<input type="button" value="DELETE PERIOD" ng-click="deletePeriod($index)" style="float:left; margin-top: 3%;margin-left: 5%;" ng-show="showRemovePeriod == true">
+	</fieldset>
+				<input type="button" value="SAVE PERIOD" ng-click="savePeriod()" style="float:left; margin-top: 3%;margin-left: 15%;">
+	</div>
+				<input type="button" value="ADD NEW PERIOD" ng-click="createNewPeriod()" style="float:left; margin-top: 3%;margin-left: 5%;">	
+				
+				
+				<p style="color: green;margin-top: 5%;margin-left: 39%;" ng-show="isUpdated == true"><b>Rate updated successfully</b></p>
+	
+</div>	

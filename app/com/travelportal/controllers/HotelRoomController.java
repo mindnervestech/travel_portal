@@ -49,6 +49,7 @@ import com.travelportal.vm.NormalRateVM;
 import com.travelportal.vm.RateDetailsVM;
 import com.travelportal.vm.RateVM;
 import com.travelportal.vm.RoomChildpoliciVM;
+import com.travelportal.vm.RoomType;
 import com.travelportal.vm.RoomtypeVM;
 import com.travelportal.vm.SpecialRateVM;
 
@@ -88,6 +89,20 @@ public static void createRootDir() {
 		long code = Long.parseLong(session().get("SUPPLIER"));
 		List<Object[]> types = HotelRoomTypes.getRoomTypes(code);
 		return ok(Json.toJson(types));
+	}
+	
+	@Transactional(readOnly=true)
+    public static Result getAllRoomTypesByCode() {
+		long code = Long.parseLong(session().get("SUPPLIER"));
+		List<HotelRoomTypes> types = HotelRoomTypes.getRoomTypesByCode(code);
+		List<RoomType> roomsList = new ArrayList<>();
+		for(HotelRoomTypes room : types) {
+			RoomType type = new RoomType();
+			type.roomType = room.getRoomType();
+			roomsList.add(type);
+		}
+		
+		return ok(Json.toJson(roomsList));
 	}
 	
 	@Transactional(readOnly=true)

@@ -142,3 +142,8 @@ POST /hotel/saveUpdateRoomType			com.travelportal.controllers.HotelRoomControlle
 #POST /hotel/roomtypes/:roomId	com.travelportal.controllers.HotelRoomController.editHotelRoom(roomId: Long)
 GET /room/amenities				com.travelportal.controllers.HotelRoomController.getAvailableRoomAmenities()
 GET /roomtypesInfo/:roomId  	com.travelportal.controllers.HotelRoomController.getroomtypesInfo(roomId:Long)
+GET		/getSpecialsObject		com.travelportal.controllers.SupplierController.getSpecialsObject
+POST	/saveSpecials			com.travelportal.controllers.SupplierController.saveSpecialsObject
+GET		/getSpecialsData/:fromDate/:toDate	com.travelportal.controllers.SupplierController.getSpecialsData(fromDate:String,toDate:String)
+GET 	/getRooms				com.travelportal.controllers.HotelRoomController.getAllRoomTypesByCode
+POST	/updateSpecials			com.travelportal.controllers.SupplierController.updateSpecials

@@ -271,6 +271,12 @@ public class HotelRoomTypes {
 		return (List<Object[]>) q.getResultList();
 	}
 	
+	public static List<HotelRoomTypes> getRoomTypesByCode(Long code) {
+		Query q = JPA.em().createQuery("select r from HotelRoomTypes r where r.supplierCode = ?1");
+				q.setParameter(1, code);
+		return (List<HotelRoomTypes>) q.getResultList();
+	}
+	
 	public static HotelRoomTypes getHotelRoomDetailsInfo(Long RoomId) {
 		Query q = JPA.em().createQuery("select r from HotelRoomTypes r where r.roomId = ?1");
 		q.setParameter(1, RoomId);
@@ -291,6 +297,12 @@ public class HotelRoomTypes {
 	    	return (HotelRoomTypes) query.getSingleResult();
 	    }
 	 
+	 public static List<HotelRoomTypes> findByListName(List<String> names) {
+	    Query query = JPA.em().createQuery("Select a from HotelRoomTypes a where a.roomType IN ?1");
+		query.setParameter(1, names);
+	    return ( List<HotelRoomTypes>) query.getResultList();
+	 }
+
 	public static List<HotelRoomTypes> getHotelRoomDetails(long supplierCode) {
 		return JPA.em().createQuery("select r from HotelRoomTypes r where r.supplierCode = ?1").setParameter(1, supplierCode).getResultList();
 	}

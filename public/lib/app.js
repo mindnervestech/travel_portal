@@ -86,6 +86,10 @@ var app = angular.module('travel_portal',['ngRoute','ngDialog','angularFileUploa
 		templateUrl: '/assets/html/admin/manageSuppliers.html',
 		controller: 'manageSuppliersController'
 	})
+	.when('/manageSpecials', {
+		templateUrl: '/assets/html/manage_specials/manageSpecials.html',
+		controller: 'manageSpecialsController'
+	})
 	
 });
 

@@ -2401,3 +2401,119 @@ controller("manageSuppliersController",['$scope', '$rootScope','$http',function(
 		}
 		
 }]);
+
+angular.module('travel_portal').
+controller("manageSpecialsController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
+	
+	$scope.specialsObject = [];
+	$scope.specialsData = [];
+	$scope.showRemoveMarket = false;
+	$scope.showSavedRemoveMarket = false;
+	$scope.showRemovePeriod = false;
+	$scope.showSavedPeriods = false;
+	$scope.isCreateNew = false;
+	
+	$http.get('/getRooms').success(function(response){
+		console.log(response);
+		$scope.rooms = response;
+	});
+	
+	
+	$scope.createNewPeriod = function() {
+		$http.get('/getSpecialsObject').success(function(response){
+			$scope.specialsObject.push(response);
+			$scope.isCreateNew = true;
+		});
+		
+		if($scope.specialsObject.length > 0) {
+			$scope.showRemovePeriod = true;
+		}
+	}
+	
+	$scope.addNewMarket = function(index) {
+		$scope.specialsObject[index].markets.push({});
+		if($scope.specialsObject[index].markets.length > 0) {
+			$scope.showRemoveMarket = true;
+		}
+	}
+	
+	$scope.addNewSavedMarket = function(index) {
+		$scope.specialsData[index].markets.push({});
+		if($scope.specialsData[index].markets.length > 0) {
+			$scope.showSavedRemoveMarket = true;
+		}
+	}
+	
+	$scope.deleteMarket = function(parentIndex,index) {
+		$scope.specialsObject[parentIndex].markets.splice(index,1);
+		if($scope.specialsObject[parentIndex].markets.length == 1) {
+			$scope.showRemoveMarket = false;
+		}
+	}
+	
+	$scope.deleteSavedMarket = function(parentIndex,index) {
+		$scope.specialsData[parentIndex].markets.splice(index,1);
+		if($scope.specialsData[parentIndex].markets.length == 1) {
+			$scope.showSavedRemoveMarket = false;
+		}
+	}
+	
+	$scope.deletePeriod = function(index) {
+		$scope.specialsObject.splice(index,1);
+          console.log($scope.specialsObject.length);
+		if($scope.specialsObject.length == 1) {
+			$scope.showRemovePeriod = false;
+		}
+	}
+	
+	$scope.savePeriod = function() {
+		console.log($scope.specialsObject);
+		$http.post('/saveSpecials', {"specialsObject":$scope.specialsObject}).success(function(data){
+			console.log('success');
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+	}
+	
+	$scope.updatePeriod = function() {
+		$http.post('/updateSpecials', {"specialsObject":$scope.specialsData}).success(function(data){
+			console.log('success');
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});
+	}
+	
+	$scope.showPeriods = function() {
+		$http.get('/getSpecialsData/'+$scope.formData.fromDate+'/'+$scope.formData.toDate).success(function(response){
+			console.log(response);
+			$scope.specialsData = response;
+			console.log($scope.specialsData);
+			if(angular.isUndefined($scope.specialsData) || $scope.specialsData == "") {
+				$scope.messageShow = "NO DATA FOUND";
+				$scope.showRateUpdate = false;
+				$scope.showSavedPeriods = false;
+			} else {
+				$scope.messageShow = " ";
+				$scope.showRateUpdate = true;
+				$scope.showSavedPeriods = true;
+				var i,j,k;
+				for(i=0;i<$scope.specialsData.length;i++) {
+					for(j=0;j<$scope.rooms.length;j++) {
+						for(k=0;k<$scope.specialsData[i].roomTypes.length;k++) {
+							if($scope.rooms[j].roomType == $scope.specialsData[i].roomTypes[k]) {
+								$scope.rooms[j].isSelected = true;
+							}
+						};
+					};
+				};
+				
+			}
+			
+			console.log($scope.rooms);
+		});
+	}
+	
+}]);
+
