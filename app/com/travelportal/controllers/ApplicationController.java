@@ -86,6 +86,23 @@ public class ApplicationController extends Controller{
 		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
 		return ok(views.html.login.render("Invalid Credentials"));
 	}
+	//
+
+	@Transactional(readOnly=false)
+	public static Result findSupplier() {
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		System.out.println("-----------------");
+		System.out.println(form.get("supplierCode"));
+		HotelRegistration user = HotelRegistration.findSupplier(form.get("supplierCode"),form.get("hotelNm"));
+		System.out.println(user.getSupplierCode());
+		if(user != null) {
+			//session().put("SUPPLIER", user.getSupplierCode());
+			long code = Long.parseLong(user.getSupplierCode());
+			return ok(home.render("Home Page", code));
+		}
+		return ok(views.html.adminHome.render());
+		
+	}
 	
 	@Transactional
 	public static Result adminLogout() {

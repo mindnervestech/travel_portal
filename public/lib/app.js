@@ -10,6 +10,10 @@ var app = angular.module('travel_portal',['ngRoute','ngDialog','angularFileUploa
 		templateUrl: '/assets/html/hotel_profile/general_info.html',
 		controller: 'hoteProfileController'
 	})
+	.when('/supplier/:id', {
+		templateUrl: '/assets/html/hotel_profile/general_info.html',
+		controller: 'hoteProfileController'
+	})
 	.when('/profile1', {
 		templateUrl: '/assets/html/hotel_profile/hotel_description.html',
 		controller: 'hoteProfileController'
@@ -86,7 +90,18 @@ var app = angular.module('travel_portal',['ngRoute','ngDialog','angularFileUploa
 		templateUrl: '/assets/html/admin/manageSuppliers.html',
 		controller: 'manageSuppliersController'
 	})
-	.when('/manageSpecials', {
+	
+	.when('/findSupplier', {
+		templateUrl: '/assets/html/admin/find_supplier.html',
+		controller: 'manageSuppliersController'
+	})
+		
+	.when('/supplierAgreement', {
+		templateUrl: '/assets/html/supplierAgreement/supplier_agreement.html',
+		controller: 'supplierAgreementController'
+	})
+	
+		.when('/manageSpecials', {
 		templateUrl: '/assets/html/manage_specials/manageSpecials.html',
 		controller: 'manageSpecialsController'
 	})

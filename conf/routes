@@ -100,6 +100,11 @@ GET     /deleteAllotmentMarket/:allotMarkid/:allotid    com.travelportal.control
 
 GET     /getAllotmentMarketGroup/:id                      com.travelportal.controllers.AllotmentController.getMarketGroup(id:Integer)
 POST    /setAllotmentCitySelection                        com.travelportal.controllers.AllotmentController.setCitySelection()
+
+POST   /showpdf				com.travelportal.controllers.SupplierAgreementController.getshowpdf()
+GET    /hotel_profile/getPdfPath/:supplierCode			com.travelportal.controllers.SupplierAgreementController.getPdfPath(supplierCode:Long)
+
+POST   /findSupplier  		com.travelportal.controllers.ApplicationController.findSupplier()
 #following routes are used for fetch manage hotel images, 
 
 POST   /savegeneralImg   com.travelportal.controllers.ManageHotelImagesController.savegeneralImg()

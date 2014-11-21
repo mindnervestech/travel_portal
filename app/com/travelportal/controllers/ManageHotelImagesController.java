@@ -73,7 +73,7 @@ public static void createRootDir() {
          BufferedImage image = null;
          File f = new File(ThumbnailImage);
          System.out.println(originalFileName);
-      //   try {
+         try {
         	   
                   BufferedImage originalImage = ImageIO.read(src);
                         Thumbnails.of(originalImage)
@@ -84,17 +84,17 @@ public static void createRootDir() {
                             toFile(_f);
            
         	 
-        // } catch (FileNotFoundException e) {
-             //    e.printStackTrace();
-        // } catch (IOException e) {
-           //      e.printStackTrace();
-       //  } finally {
+         } catch (FileNotFoundException e) {
+                 e.printStackTrace();
+         } catch (IOException e) {
+                 e.printStackTrace();
+         } finally {
                  try {
                          if(out != null) out.close();
                  } catch (IOException e) {
                          e.printStackTrace();
                  }
-        // }
+         }
            
  		 System.out.println(fileName);
  		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(Long.parseLong(form.get("supplierCode")));

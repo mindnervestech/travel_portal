@@ -134,7 +134,7 @@ hr {
 @media (min-width: 768px) {
   #page-wrapper {
     position: relative;
-    margin: 0 0 0 250px;
+    margin: 0 0 0 220px;
     padding: 0;
   }
 }
@@ -1168,7 +1168,7 @@ hr {
   .navbar-static-side {
     z-index: 1;
     position: absolute;
-    width: 250px;
+    width: 220px;
   }
 }
 .right-sidebar #topbar .navbar-header {

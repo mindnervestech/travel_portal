@@ -30,17 +30,10 @@
 			    			<td>{{user.policy}}</td>
 			    			<td>{{user.starRating}}</td>
 			    			<td>{{user.code}}</td>
-			    			<td><input type="button"  class="btn" value="Reject" ng-click="rejectUser(user.id,user)"></td>
+			    			<!-- <td><input type="button"  class="btn" value="Reject" ng-click="rejectUser(user.id,user)"></td> -->
+			    		<td>	<input name="" type="button" class="btn btn-primary" value="View" ng-click="ApprovedUser(user)" class="btnblue"  data-toggle="modal"  /></td>
 			    		</tr>
-			    		<!-- <tr>
-			    			<td><h4>{{pageNumber1}}/{{pageSize1}}</h4></td>
-			    			<td></td>
-			    			<td></td>
-			    			<td><input type="button" value="Prev" ng-click="onPrev1()"></td>
-			    			<td>
-			                		<input type="button" value="Next" ng-click="onNext1()">
-			                </td>
-			    		</tr> -->
+			    	
 			    	</tbody>
 			    </table>
 		  </div>
@@ -63,7 +56,8 @@
 			    			<td>{{user.policy}}</td>
 			    			<td>{{user.starRating}}</td>
 			    			<td>{{user.code}}</td>
-			    			<td><input type="button"  class="btn" value="Pending" ng-click="pendingUser(user.id,user)"></td>
+			    			<td>	<input name="" type="button" class="btn btn-primary" value="View" ng-click="rejectedUser(user)" class="btnblue"  data-toggle="modal"  /></td>
+			    			<!-- <td><input type="button"  class="btn" value="Pending" ng-click="pendingUser(user.id,user)"></td> -->
 			    		</tr>
 			    	</tbody>
 			    </table>
@@ -87,7 +81,8 @@
 			    			<td>{{user.policy}}</td>
 			    			<td>{{user.starRating}}</td>
 			    			<td>{{user.code}}</td>
-			    			<td><input type="button"  class="btn" value="Approve" ng-click="approvePending(user.id,user)"></td>
+			    			<td>	<input name="" type="button" class="btn btn-primary" value="View" ng-click="pendingU(user)" class="btnblue"  data-toggle="modal" /></td>
+			    			<!-- <td><input type="button"  class="btn" value="Approve" ng-click="approvePending(user.id,user)"></td> -->
 			    		</tr>
 			    	</tbody>
 			    </table>
@@ -98,4 +93,416 @@
 	
 	
 </div>	
+<script type="text/ng-template" id="Approved">
+		<div id="myTabContent2" class="tab-content hotel-profile-tab-content">
+							<form method="post" role="form" data-ng-submit="ApprovReject()" class="form-horizontal">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Supplier Code</label>
+				<div class="col-md-9">
+					<input type="text" placeholder="Supplier Code" class="form-control"
+						data-ng-model="generalInfo.code" disabled="disabled">
+				</div>
+			</div>
+			 <!-- disabled="disabled" -->
+			<div class="form-group">
+				<label class="col-md-3 control-label">Company Name</label>
+				<div class="col-md-9">
+					<input type="text" id="companyName" name="hotelNm" data-ng-model="generalInfo.hotelName" placeholder="Hotel Name" class="form-control" disabled="disabled" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Hotel Address</label>
+				<div class="col-md-9">
+					<textarea  id="hotelAddr" data-ng-model="generalInfo.hotelAddress" name="address" rows="6"
+						class="form-control" disabled="disabled" required></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Country</label>
+				<div class="col-md-9">
+				<input type="text" id="country" name="country" data-ng-model="generalInfo.country" placeholder="country" class="form-control" disabled="disabled" required>
+					
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">City</label>
+				<div class="col-md-9">
+				<input type="text" id="city" name="city" data-ng-model="generalInfo.city" placeholder="city" class="form-control" disabled="disabled" required>
+					
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Email</label>
+				<div class="col-md-9">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						<input type="email" data-ng-model="generalInfo.email" placeholder="Email Address"
+							class="form-control" disabled="disabled" required>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Is hotel part of Chain</label>
+				<div class="col-md-9">
+					<div>
+						<input type="radio" name="hotelPartOfChain" data-ng-model="generalInfo.partOfChain" data-ng-value="true" disabled="disabled">
+						&nbsp; Yes
+					</div>
+					<div>
+						<input type="radio" name="hotelPartOfChain" data-ng-model="generalInfo.partOfChain" data-ng-value="false" disabled="disabled">
+						&nbsp; No
+					</div> 
+				</div>
+			</div>
+			
+			<div ng-show="generalInfo.partOfChain == true">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Hotel affiliate to</label>
+				<div class="col-md-9">
+			<input type="text" id="chainHotel" name="chainHotel" data-ng-model="generalInfo.chainHotel" placeholder="chainHotel" class="form-control" disabled="disabled" required>
+					
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Please choose your hotel brand :</label>
+				<div class="col-md-9">
+<input type="text" id="chainHotel" name="hotelBrand" data-ng-model="generalInfo.hotelBrand" placeholder="hotelBrand" class="form-control" disabled="disabled" required>
+					
+				</div>
+			</div>
+			</div>
+			
+			<hr class="mtxxl mbxxl" style="border-color: black">
+			
+			<br>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Choose Currency</label>
+				<div class="col-md-9">
+					<input type="text" id="currency" name="currency" data-ng-model="generalInfo.currency" placeholder="currency" class="form-control" disabled="disabled" required>
+				</div>
+			</div>
+			<hr class="mtxxl mbxxl" style="border-color: black">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Define Policy for
+					Market Specific Rates</label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input type="text" id="policy" name="policy" data-ng-model="generalInfo.policy" placeholder="policy" class="form-control" disabled="disabled" required>
+					</div>
+				</div>
+			</div>
+			<hr class="mtxxl mbxxl" style="border-color: black">
+			<div>
+			
+			<br>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Choose a Star Rating:</label>
+				<div class="col-md-9">
+					<input type="text" id="starRating" name="starRating" data-ng-model="generalInfo.starRating" placeholder="starRating" class="form-control" disabled="disabled" required>
+				</div>
+			</div>
+			
+            <br>
+           
+			<br>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Password :</label>
+				<div class="col-md-9">
+					<input type="password" name="password" data-ng-model="generalInfo.password" class="form-control" style="width: 70%;" disabled="disabled" required>
+				</div>
+			</div>
+			
+			
+			
+			</div>
+			
+		<hr class="mtxxl mbxxl" style="border-color: black">	
+		</div>
+		<div class="col-md-3 col-md-offset-9"">
+				<button type="submit" class="btn btn-primary" ng-click="closeThisDialog()">Rejected</button>
+				<button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
+		</div>
+	</div>
+</form>
+
+						</div>
+</script>
+
+<script type="text/ng-template" id="Reject">
+		<div id="myTabContent2" class="tab-content hotel-profile-tab-content">
+							<form method="post" role="form" data-ng-submit="pendingUser()" class="form-horizontal">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Supplier Code</label>
+				<div class="col-md-9">
+					<input type="text" placeholder="Supplier Code" class="form-control"
+						data-ng-model="generalInfo.code" disabled="disabled">
+				</div>
+			</div>
+			 <!-- disabled="disabled" -->
+			<div class="form-group">
+				<label class="col-md-3 control-label">Company Name</label>
+				<div class="col-md-9">
+					<input type="text" id="companyName" name="hotelNm" data-ng-model="generalInfo.hotelName" placeholder="Hotel Name" class="form-control" disabled="disabled" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Hotel Address</label>
+				<div class="col-md-9">
+					<textarea  id="hotelAddr" data-ng-model="generalInfo.hotelAddress" name="address" rows="6"
+						class="form-control" disabled="disabled" required></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Country</label>
+				<div class="col-md-9">
+				<input type="text" id="country" name="country" data-ng-model="generalInfo.country" placeholder="country" class="form-control" disabled="disabled" required>
+					
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">City</label>
+				<div class="col-md-9">
+				<input type="text" id="city" name="city" data-ng-model="generalInfo.city" placeholder="city" class="form-control" disabled="disabled" required>
+					
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Email</label>
+				<div class="col-md-9">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						<input type="email" data-ng-model="generalInfo.email" placeholder="Email Address"
+							class="form-control" disabled="disabled" required>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Is hotel part of Chain</label>
+				<div class="col-md-9">
+					<div>
+						<input type="radio" name="hotelPartOfChain" data-ng-model="generalInfo.partOfChain" data-ng-value="true" disabled="disabled">
+						&nbsp; Yes
+					</div>
+					<div>
+						<input type="radio" name="hotelPartOfChain" data-ng-model="generalInfo.partOfChain" data-ng-value="false" disabled="disabled">
+						&nbsp; No
+					</div> 
+				</div>
+			</div>
+			
+			<div ng-show="generalInfo.partOfChain == true">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Hotel affiliate to</label>
+				<div class="col-md-9">
+			<input type="text" id="chainHotel" name="chainHotel" data-ng-model="generalInfo.chainHotel" placeholder="chainHotel" class="form-control" disabled="disabled" required>
+					
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Please choose your hotel brand :</label>
+				<div class="col-md-9">
+<input type="text" id="chainHotel" name="hotelBrand" data-ng-model="generalInfo.hotelBrand" placeholder="hotelBrand" class="form-control" disabled="disabled" required>
+					
+				</div>
+			</div>
+			</div>
+			
+			<hr class="mtxxl mbxxl" style="border-color: black">
+			
+			<br>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Choose Currency</label>
+				<div class="col-md-9">
+					<input type="text" id="currency" name="currency" data-ng-model="generalInfo.currency" placeholder="currency" class="form-control" disabled="disabled" required>
+				</div>
+			</div>
+			<hr class="mtxxl mbxxl" style="border-color: black">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Define Policy for
+					Market Specific Rates</label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input type="text" id="policy" name="policy" data-ng-model="generalInfo.policy" placeholder="policy" class="form-control" disabled="disabled" required>
+					</div>
+				</div>
+			</div>
+			<hr class="mtxxl mbxxl" style="border-color: black">
+			<div>
+			
+			<br>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Choose a Star Rating:</label>
+				<div class="col-md-9">
+					<input type="text" id="starRating" name="starRating" data-ng-model="generalInfo.starRating" placeholder="starRating" class="form-control" disabled="disabled" required>
+				</div>
+			</div>
+			
+            <br>
+           
+			<br>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Password :</label>
+				<div class="col-md-9">
+					<input type="password" name="password" data-ng-model="generalInfo.password" class="form-control" style="width: 70%;" disabled="disabled" required>
+				</div>
+			</div>
+			
+			
+			
+			</div>
+			
+		<hr class="mtxxl mbxxl" style="border-color: black">	
+		</div>
+		<div class="col-md-3 col-md-offset-9"">
+				<button type="submit" class="btn btn-primary" ng-click="closeThisDialog()">Pending</button>
+				<button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
+		</div>
+	</div>
+</form>
+
+						</div>
+</script>
+
+<script type="text/ng-template" id="pending">
+		<div id="myTabContent2" class="tab-content hotel-profile-tab-content">
+							<form method="post" role="form" data-ng-submit="approvePending()" class="form-horizontal">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Supplier Code</label>
+				<div class="col-md-9">
+					<input type="text" placeholder="Supplier Code" class="form-control"
+						data-ng-model="generalInfo.code" disabled="disabled">
+				</div>
+			</div>
+			 <!-- disabled="disabled" -->
+			<div class="form-group">
+				<label class="col-md-3 control-label">Company Name</label>
+				<div class="col-md-9">
+					<input type="text" id="companyName" name="hotelNm" data-ng-model="generalInfo.hotelName" placeholder="Hotel Name" class="form-control" disabled="disabled" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Hotel Address</label>
+				<div class="col-md-9">
+					<textarea  id="hotelAddr" data-ng-model="generalInfo.hotelAddress" name="address" rows="6"
+						class="form-control" disabled="disabled" required></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Country</label>
+				<div class="col-md-9">
+				<input type="text" id="country" name="country" data-ng-model="generalInfo.country" placeholder="country" class="form-control" disabled="disabled" required>
+					
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">City</label>
+				<div class="col-md-9">
+				<input type="text" id="city" name="city" data-ng-model="generalInfo.city" placeholder="city" class="form-control" disabled="disabled" required>
+					
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Email</label>
+				<div class="col-md-9">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						<input type="email" data-ng-model="generalInfo.email" placeholder="Email Address"
+							class="form-control" disabled="disabled" required>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Is hotel part of Chain</label>
+				<div class="col-md-9">
+					<div>
+						<input type="radio" name="hotelPartOfChain" data-ng-model="generalInfo.partOfChain" data-ng-value="true" disabled="disabled">
+						&nbsp; Yes
+					</div>
+					<div>
+						<input type="radio" name="hotelPartOfChain" data-ng-model="generalInfo.partOfChain" data-ng-value="false" disabled="disabled">
+						&nbsp; No
+					</div> 
+				</div>
+			</div>
+			
+			<div ng-show="generalInfo.partOfChain == true">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Hotel affiliate to</label>
+				<div class="col-md-9">
+			<input type="text" id="chainHotel" name="chainHotel" data-ng-model="generalInfo.chainHotel" placeholder="chainHotel" class="form-control" disabled="disabled" required>
+					
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Please choose your hotel brand :</label>
+				<div class="col-md-9">
+<input type="text" id="chainHotel" name="hotelBrand" data-ng-model="generalInfo.hotelBrand" placeholder="hotelBrand" class="form-control" disabled="disabled" required>
+					
+				</div>
+			</div>
+			</div>
+			
+			<hr class="mtxxl mbxxl" style="border-color: black">
+			
+			<br>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Choose Currency</label>
+				<div class="col-md-9">
+					<input type="text" id="currency" name="currency" data-ng-model="generalInfo.currency" placeholder="currency" class="form-control" disabled="disabled" required>
+				</div>
+			</div>
+			<hr class="mtxxl mbxxl" style="border-color: black">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Define Policy for
+					Market Specific Rates</label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input type="text" id="policy" name="policy" data-ng-model="generalInfo.policy" placeholder="policy" class="form-control" disabled="disabled" required>
+					</div>
+				</div>
+			</div>
+			<hr class="mtxxl mbxxl" style="border-color: black">
+			<div>
+			
+			<br>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Choose a Star Rating:</label>
+				<div class="col-md-9">
+					<input type="text" id="starRating" name="starRating" data-ng-model="generalInfo.starRating" placeholder="starRating" class="form-control" disabled="disabled" required>
+				</div>
+			</div>
+			
+            <br>
+           
+			<br>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Password :</label>
+				<div class="col-md-9">
+					<input type="password" name="password" data-ng-model="generalInfo.password" class="form-control" style="width: 70%;" disabled="disabled" required>
+				</div>
+			</div>
+			
+			
+			
+			</div>
+			
+		<hr class="mtxxl mbxxl" style="border-color: black">	
+		</div>
+		<div class="col-md-3 col-md-offset-9"">
+				<button type="submit" class="btn btn-primary" ng-click="closeThisDialog()">Approved</button>
+				<button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
+		</div>
+	</div>
+</form>
+
+						</div>
+</script>
+
+
 	

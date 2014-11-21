@@ -184,6 +184,11 @@ public class HotelRegistration {
 		return (HotelRegistration) query.getSingleResult();
 	}
 	
+	public static HotelRegistration findSupplier(String code,String name) {
+		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.supplierCode = ?1 and h.status = 'APPROVED'").setParameter(1, code);
+		return (HotelRegistration) query.getSingleResult();
+	}
+	
 	@Transactional
     public void save() {
 		JPA.em().persist(this);

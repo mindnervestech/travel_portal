@@ -1,3 +1,18 @@
+
+angular.module('travel_portal').
+controller("supplierAgreementController",['$scope', '$http','$filter','$upload',
+                                         function($scope, $http, $filter, $upload) {
+	
+	console.log(supplierCode);
+	
+	$scope.pdfFile = "/hotel_profile/getPdfPath/"+supplierCode;
+	console.log($scope.pdfFile);
+	
+	
+}]
+);
+
+
 angular.module('travel_portal').
 	controller("allotmentController",['$scope', '$http','$filter','$upload','ngDialog',
 	                                         function($scope, $http, $filter, $upload, ngDialog) {
@@ -825,7 +840,7 @@ angular.module('travel_portal').
 
 
 angular.module('travel_portal').
-	controller("hoteProfileController",function($scope, $http, $location,notificationService, $rootScope,$filter, $upload, ngDialog) {
+	controller("hoteProfileController",function($scope, $http,$routeParams,$location,$rootScope,$filter, $upload, ngDialog) {
 
 		
 		
@@ -1168,7 +1183,16 @@ angular.module('travel_portal').
 			});
 		}
 	
-	$rootScope.supplierCode = supplierCode;
+		if($routeParams.id == undefined || $routeParams.id == null )
+			{
+			$rootScope.supplierCode = supplierCode;
+			alert("No");
+			}
+		else{
+			alert("yes");
+			$rootScope.supplierCode =$routeParams.id;
+			}
+		
 	console.log("location :"+$location.path());
 	if($location.path() == "/profile0")
 	{
@@ -2355,8 +2379,11 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 
 
 angular.module('travel_portal').
-controller("manageSuppliersController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
+controller("manageSuppliersController",function($scope,$rootScope,$location, $http,ngDialog){
 		
+
+		
+	
 			$scope.getData = function() {
 				
 				$http.get('/getPendingUsers').success(function(response){
@@ -2376,32 +2403,107 @@ controller("manageSuppliersController",['$scope', '$rootScope','$http',function(
 				
 			}
 		
-		$scope.approvePending = function(userId,user) {
-			$scope.userId = userId;
+		$scope.approvePending = function() {
+			$scope.userId = $scope.generalInfo.id;
 			$http.get('/approveUser/'+$scope.userId).success(function(response){
-				$scope.pendingUsers.splice($scope.pendingUsers.indexOf(user),1);
+				$scope.pendingUsers.splice($scope.pendingUsers.indexOf($scope.generalInfo),1);
 				$scope.getData();
 			});
 		}
 		
-		$scope.rejectUser = function(userId,user) {
-			$scope.userId = userId;
+		$scope.ApprovedUser = function(user) {
+			//$scope.userId = userId;
+			console.log(user);
+			
+			$scope.generalInfo = user;
+			console.log($scope.generalInfo);
+			$http.get("/marketrate").success(function(response) {
+				$scope.marketrate = response;
+			});
+			
+			ngDialog.open({
+				template: 'Approved',
+				scope : $scope,
+				className: 'ngdialog-theme-default'
+			});
+			
+		}
+		
+		$scope.rejectedUser = function(user) {
+			//$scope.userId = userId;
+			console.log(user);
+			
+			$scope.generalInfo = user;
+			console.log($scope.generalInfo);
+			$http.get("/marketrate").success(function(response) {
+				$scope.marketrate = response;
+			});
+			
+			ngDialog.open({
+				template: 'Reject',
+				scope : $scope,
+				className: 'ngdialog-theme-default'
+			});
+			
+		}
+		
+		
+		$scope.pendingU = function(user) {
+			//$scope.userId = userId;
+			console.log(user);
+			
+			$scope.generalInfo = user;
+			console.log($scope.generalInfo);
+			$http.get("/marketrate").success(function(response) {
+				$scope.marketrate = response;
+			});
+			
+			ngDialog.open({
+				template: 'pending',
+				scope : $scope,
+				className: 'ngdialog-theme-default'
+			});
+			
+		}
+		
+		$scope.ApprovReject = function(){
+			//
+			console.log($scope.generalInfo);
+			$scope.userId = $scope.generalInfo.id;
+			//console.log($scope.userId);
 			$http.get('/rejectUser/'+$scope.userId).success(function(response){
-				$scope.approvedUsers.splice($scope.approvedUsers.indexOf(user),1);
-				$scope.getData();
-			});
+				console.log("Success")
+			$scope.approvedUsers.splice($scope.approvedUsers.indexOf($scope.generalInfo),1);
+			$scope.getData();
+		});
 		}
 		
-		$scope.pendingUser = function(userId,user) {
-			$scope.userId = userId;
+		$scope.pendingUser = function() {
+			
+			$scope.userId = $scope.generalInfo.id;
 			$http.get('/pendingUser/'+$scope.userId).success(function(response){
-				$scope.rejectedUsers.splice($scope.rejectedUsers.indexOf(user),1);
+				$scope.rejectedUsers.splice($scope.rejectedUsers.indexOf($scope.generalInfo),1);
 				$scope.getData();
 			});
 		}
 		
-}]);
-
+		$scope.searchSupplier = function(find){
+			
+			console.log($scope.find);
+			$rootScope.supplierCode = $scope.find.supplierCode; 
+			$http.post('/findSupplier',$scope.find).success(function(data){
+				console.log("Success")
+				console.log(data);
+			$location.path("/supplier/206");
+		//window.location.assign("hotel_profile/206");
+		
+			
+		});
+			
+			
+		}
+		
+});
 angular.module('travel_portal').
 controller("manageSpecialsController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
 	
@@ -2516,4 +2618,3 @@ controller("manageSpecialsController",['$scope', '$rootScope','$http',function($
 	}
 	
 }]);
-
