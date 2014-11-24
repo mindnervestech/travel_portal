@@ -6,6 +6,7 @@ public class HotelGeneralInfoVM {
 	
 	public Long supplierCode;
 	public String hotelNm;
+	/*public String companyNm;*/
 	public String supplierNm;
 	public String hotelAddr;
 	public int countryCode;
@@ -21,6 +22,7 @@ public class HotelGeneralInfoVM {
 	public int startRating;
 	public String primaryPasswd;
 	public String verifiedPasswd;
+	public String isAdmin;
 	
 	/**
 	 * @return the supplierCode
@@ -218,6 +220,14 @@ public class HotelGeneralInfoVM {
 	public void setVerifiedPasswd(String verifiedPasswd) {
 		this.verifiedPasswd = verifiedPasswd;
 	}
+	/*public String getCompanyNm() {
+		return companyNm;
+	}
+	public void setCompanyNm(String companyNm) {
+		this.companyNm = companyNm;
+	}*/
 
+	
+	
 	
 }

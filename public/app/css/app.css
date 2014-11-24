@@ -116,6 +116,13 @@ width: 861px !important;
 	margin-left: 29%;
 }
 
+.divDiv{
+	
+	border-bottom: 1px solid grey;
+	border-top: 1px solid grey;
+	padding-top: 2%;
+	padding-bottom: 2%;
+}
 
 #loading-id {
 position: absolute;
@@ -123,6 +130,11 @@ z-index: 100;
 top: 50%;
 left: 50%;
 } 
+
+.custom_menu{
+				background-color: #f0f2f5;
+				color: red;
+			}
 
  html, body, #map-canvas {
         height: 100%;

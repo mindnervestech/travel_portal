@@ -193,10 +193,14 @@ public class ApplicationController extends Controller{
 		register.setStarRating(hotelSignUpVM.starRating);
 		register.setSupplierName(hotelSignUpVM.supplierName);
 		register.setZipcode(hotelSignUpVM.zipcode);
-			Date date = new Date();
+		/*Date date = new Date();
+		Random randomGenerator = new Random();
+		int randomInt = randomGenerator.nextInt(10000);
+	register.setSupplierCode(format.format(date).concat(Integer.toString(randomInt)));*/
+			
 			Random randomGenerator = new Random();
-			int randomInt = randomGenerator.nextInt(100);
-		register.setSupplierCode(format.format(date).concat(Integer.toString(randomInt)));
+			int randomInt = randomGenerator.nextInt(100000);
+		register.setSupplierCode(Integer.toString(randomInt));
 		register.setEmail(hotelSignUpVM.getEmail());
 		register.setStatus("PENDING");
 		register.setSupplierType("Accomodation");

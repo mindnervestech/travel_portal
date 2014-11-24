@@ -106,6 +106,7 @@ public class HotelProfileController extends Controller {
 
 		hotelprofile.setHotelName(form.get("hotelNm"));
 		hotelprofile.setSupplierName(form.get("hotelNm"));
+		//hotelprofile.setCompanyNm(form.get("companyNm"));
 		hotelprofile.setAddress(form.get("hotelAddr"));
 		hotelprofile.setCountry(Country.getCountryByCode(Integer.parseInt(form.get("countryCode"))));
 		hotelprofile.setCurrency(Currency.getCurrencyByCode(Integer.parseInt(form.get("currencyCode"))));
@@ -131,6 +132,7 @@ public class HotelProfileController extends Controller {
 		map.put("ID", hotelprofile.getSupplier_code());
 		map.put("NAME", hotelprofile.getHotelName());
 		map.put("ADDR",hotelprofile.getAddress());
+		map.put("Currency",hotelprofile.getCurrency().getCurrencyName());
 		return ok(Json.toJson(map));
 
 
@@ -1141,7 +1143,8 @@ public class HotelProfileController extends Controller {
 	public static Result updateBillingInfo() {
 
 		 DynamicForm form = DynamicForm.form().bindFromRequest();
-			//System.out.println(form.get("Name"));
+		 System.out.println("&&&&&&&&&&");	
+		 System.out.println(form.get("bankName"));
 		    
 		    BillingInformation billinginfo = BillingInformation.findById(Long.parseLong(form.get("supplierCode")));
 		    
@@ -1162,6 +1165,18 @@ public class HotelProfileController extends Controller {
 				billinginfo.setExt(Integer.parseInt(form.get("dExtNo")));;
 				billinginfo.setSupplierCode(Long.parseLong(form.get("supplierCode")));
 				billinginfo.setBankservice(form.get("bankToBankTransfer"));
+				billinginfo.setBankName(form.get("bankName"));
+				if(form.get("accountNo") != null)
+				{
+				billinginfo.setAccountNo(Long.parseLong(form.get("accountNo")));
+				}
+				else
+				{
+					billinginfo.setAccountNo(null);
+				}
+				billinginfo.setAccountType(form.get("accountType"));
+				billinginfo.setBranchName(form.get("branchName"));
+				billinginfo.setSwiftCode(form.get("swifiCode"));
 				
 		        billinginfo.save();
 		    	
@@ -1181,6 +1196,18 @@ public class HotelProfileController extends Controller {
 				billinginfo.setFaxNoCode(Integer.parseInt(form.get("dFaxCode")));
 				billinginfo.setExt(Integer.parseInt(form.get("dExtNo")));
 				billinginfo.setBankservice(form.get("bankToBankTransfer"));
+				billinginfo.setBankName(form.get("bankName"));
+				if(form.get("accountNo") != null)
+				{
+				billinginfo.setAccountNo(Long.parseLong(form.get("accountNo")));
+				}
+				else
+				{
+					billinginfo.setAccountNo(null);
+				}
+				billinginfo.setAccountType(form.get("accountType"));
+				billinginfo.setBranchName(form.get("branchName"));
+				billinginfo.setSwiftCode(form.get("swifiCode"));
 			
 	        billinginfo.merge();
 		    }

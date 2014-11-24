@@ -50,16 +50,23 @@
 				</div>
 			</div>
 			 <!-- disabled="disabled" -->
+			 {{flagAdmin}}
 			<div class="form-group">
-				<label class="col-md-3 control-label">Company Name</label>
+				<label class="col-md-3 control-label">Hotel Name</label>
 				<div class="col-md-9">
-					<input type="text" id="companyName" name="hotelNm" data-ng-model="generalInfo.hotelNm" placeholder="Hotel Name" class="form-control" disabled="disabled" required>
+					<input type="text" id="hotelName" name="hotelNm" data-ng-model="generalInfo.hotelNm" placeholder="Hotel Name" class="form-control" disabled="disabled" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Company/Management/ Supplier Name</label>
+				<div class="col-md-9">
+					<input type="text" id="supplierName" name="hotelNm" data-ng-model="generalInfo.supplierNm" placeholder="Supplier Name" class="form-control" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Hotel Address</label>
 				<div class="col-md-9">
-					<textarea  id="hotelAddr" data-ng-model="generalInfo.hotelAddr" name="address" rows="6"
+					<textarea  id="hotelAddr" data-ng-model="generalInfo.hotelAddr" name="address" rows="3"
 						class="form-control" disabled="disabled" required></textarea>
 				</div>
 			</div>
@@ -155,6 +162,7 @@
 			<div>
 			<div>Please select the star rating and only use the approved authorized licensed rating given to your property. We reserve the right to change the rating if required </div>
 			<br>
+			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Choose a Star Rating:</label>
 				<div class="col-md-9">
@@ -169,7 +177,7 @@
 			</div>
             <br>
             <div>
-            Please choose a password that you will remember. Your password should be a minimum of 6 characters long and easy to remember. For security reasons, DO NOT use a simple password like your hotel name. Your Property ID will always be your hotel name exactly as written on the DOTW agreement and as listed above in field labeled Property/Hotel Name (please do not make changes). 
+            Please choose a password that you will remember. Your password should be a minimum of 6 characters long and easy to remember. For security reasons, DO NOT use a simple password like your hotel name. Your Property ID will always be your hotel name exactly as written on the The Expedition agreement and as listed above in field labeled Property/Hotel Name (please do not make changes). 
 Note: Once you click update if you made changes here, the system will log you out and you will need to log back with your new password.
 			</div>
 			<br>

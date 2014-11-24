@@ -13,6 +13,11 @@ public class HotelBillingInformation {
 	public int dFaxCode;
 	public int dExtNo;
 	public String BankToBankTransfer;
+	public String bankName;
+	public Long accountNo;
+	public String accountType;
+	public String branchName;
+	public String swiftCode;
 	/**
 	 * @return the supplierCode
 	 */
@@ -121,6 +126,40 @@ public class HotelBillingInformation {
 	public void setdExtNo(int dExtNo) {
 		this.dExtNo = dExtNo;
 	}
+	public String getBankName() {
+		return bankName;
+	}
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+	public Long getAccountNo() {
+		return accountNo;
+	}
+	public void setAccountNo(Long accountNo) {
+		this.accountNo = accountNo;
+	}
+	public String getAccountType() {
+		return accountType;
+	}
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+	
+	public String getSwiftCode() {
+		return swiftCode;
+	}
+	public void setSwiftCode(String swiftCode) {
+		this.swiftCode = swiftCode;
+	}
+	public String getBranchName() {
+		return branchName;
+	}
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
+	}
+	
 
+	
+	
 	
 }

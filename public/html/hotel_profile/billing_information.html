@@ -27,10 +27,10 @@
 									PRICES</a></li>
 							<li><a href="#profile8" data-toggle="tab">HOTEL
 									AMENITIES</a></li>
-							<li><a href="#profile9" data-toggle="tab">BUSINESS
+							<li><a href="#profile9" data-toggle="tab">HOTEL
 									FEATURES</a></li>
-							<li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
-									& SPORT</a></li>
+							<!-- <li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
+									& SPORT</a></li> -->
 							<li><a href="#profile11" data-toggle="tab">AREA
 									ATTRACTIONS</a></li>
 							<li><a href="#profile12" data-toggle="tab">TRANSPORTATION
@@ -170,6 +170,47 @@
 				
 					</div>
 			</div>		
+				<div ng-show="bill.bankToBankTransfer == 'true'">
+					<div class="form-group">
+						<label class="col-md-5 control-label">Bank Name:</label>
+						<div class="col-md-7">
+						<input type="text" name="bankName" data-ng-model="bill.bankName" class="form-control" required>
+					</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<label class="col-md-5 control-label">Account No.:</label>
+						<div class="col-md-7">
+						<input type="text" name="accountNo" data-ng-model="bill.accountNo" class="form-control" required>
+					</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<label class="col-md-5 control-label">Account Type:</label>
+						<div class="col-md-7">
+						<input type="text" name="accountType" data-ng-model="bill.accountType" class="form-control" required>
+					</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<label class="col-md-5 control-label">Branch Name:</label>
+						<div class="col-md-7">
+						<input type="text" name="branchName" data-ng-model="bill.branchName" class="form-control" required>
+					</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<label class="col-md-5 control-label">SWIFT Code:</label>
+						<div class="col-md-7">
+						<input type="text" name="swifiCode" data-ng-model="bill.swiftCode" class="form-control" required>
+					</div>
+					</div>
+					</div>
+			
 		    
 		    	    </div>
 			    </div>

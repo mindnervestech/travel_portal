@@ -41,6 +41,16 @@ public class BillingInformation {
 	private int faxNoCode;
 	@Column(name="ext")
 	private int ext;
+	@Column(name="bank_name")
+	public String bankName;
+	@Column(name="account_no")
+	public Long accountNo;
+	@Column(name="account_type")
+	public String accountType;
+	@Column(name="Branch_name")
+	public String branchName;
+	@Column(name="swift_code")
+	public String swiftCode;
 	
 	private long supplier_code;
 	/**
@@ -176,7 +186,51 @@ public class BillingInformation {
 		this.ext = ext;
 	}
 	
-    public static BillingInformation findById(long id) {
+		
+	
+    public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+
+	public Long getAccountNo() {
+		return accountNo;
+	}
+
+	public void setAccountNo(Long accountNo) {
+		this.accountNo = accountNo;
+	}
+
+	public String getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
+	
+
+	public String getBranchName() {
+		return branchName;
+	}
+
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
+	}
+
+	public String getSwiftCode() {
+		return swiftCode;
+	}
+
+	public void setSwiftCode(String swiftCode) {
+		this.swiftCode = swiftCode;
+	}
+
+	public static BillingInformation findById(long id) {
     	
     	try
 		{

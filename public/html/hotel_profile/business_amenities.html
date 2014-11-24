@@ -27,10 +27,10 @@
 									PRICES</a></li>
 							<li><a href="#profile8" data-toggle="tab">HOTEL
 									AMENITIES</a></li>
-							<li class="active"><a href="#profile9" data-toggle="tab">BUSINESS
+							<li><a href="#profile9" data-toggle="tab">HOTEL
 									FEATURES</a></li>
-							<li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
-									& SPORT</a></li>
+							<!-- <li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
+									& SPORT</a></li> -->
 							<li><a href="#profile11" data-toggle="tab">AREA
 									ATTRACTIONS</a></li>
 							<li><a href="#profile12" data-toggle="tab">TRANSPORTATION
@@ -45,6 +45,7 @@
 		<div class="col-md-12">
 					
 			<div>
+			<label><b><u>Business Features</u></b></label><br> 
 		<label><b>Please check ALL that apply to your hotel:</b></label><br> 
 		</div>
 				
@@ -77,10 +78,9 @@
 		</div>
 		</div>
 				
-		<hr class="mtxxl mbxxl" style="border-color: black;">
+				
 		
-		
-		     <div class="col-md-12">
+		     <div class="col-md-12 divDiv">
 		     <div>
 		        <span ng-show="businessSucess" style="color: green;">Successfully Add Hotel Amenities</span>
 		        </div>
@@ -91,9 +91,65 @@
             
 	
 </form>
+		
+				
+							<form method="post" ng-submit="saveleisure_sport()" role="form" class="form-horizontal">
+	<div class="row">
+		<div class="col-md-12">
+					
+			<div>
+			<label><b><u>Hotel Leisure And Sport</u></b></label><br>
+		<label><b>Please check ALL that apply to your hotel:</b></label><br> 
+		</div>
+		<!-- ng-show="false" -->
+			
+		
+		 <div>
+		
+			
+			<div class="form-group">
+				
+				</div><br>
+				
+				<div class="col-md-12">
+				<label ng-repeat="leisure in leisureSport" class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding:0px;">
+				
+				  <input
+  				  type="checkbox"
+  				    ng-click="leisureClicked($event,leisure)"
+  				   	ng-model="leisure.isSelected">					
+   					 {{leisure.amenitiesNm}}</label>
+    			</div>
+				
+				
+		</div>		 		<br>
+																
+			
+			
+		</div>
+		</div>
+				
+			
+		     <div class="col-md-12 divDiv">
+		     <div>
+		        <span ng-show="leisuresucess" style="color: green;">Successfully Add Hotel Amenities</span>
+		        </div>
+		        <div class="col-md-2 col-md-offset-7">
+                 <button type="submit" ng-init="leisure.supplierCode = supplierCode" class="btn btn-primary">Save</button>
+                 </div>
+                 </div>
+                 
+	
+</form>
 
+
+						
 
 						</div>
+						
+						
+						
+						
 					</div>
 				</div>
 			</div>

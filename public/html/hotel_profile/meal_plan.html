@@ -27,10 +27,10 @@
 									PRICES</a></li>
 							<li><a href="#profile8" data-toggle="tab">HOTEL
 									AMENITIES</a></li>
-							<li><a href="#profile9" data-toggle="tab">BUSINESS
+							<li><a href="#profile9" data-toggle="tab">HOTEL
 									FEATURES</a></li>
-							<li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
-									& SPORT</a></li>
+							<!-- <li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
+									& SPORT</a></li> -->
 							<li><a href="#profile11" data-toggle="tab">AREA
 									ATTRACTIONS</a></li>
 							<li><a href="#profile12" data-toggle="tab">TRANSPORTATION
@@ -53,11 +53,11 @@
 				<div class="col-md-5">
 				
 				<div class="chargechild">
-						<input type="radio" name="val" ng-click="showMeal(true)" value="true">
+						<input type="radio" name="val" data-ng-model="mealpolicy.haveMeal" ng-click="showMeal(true)" value="true">
 						&nbsp; Yes
 					</div>
 					<div>
-						<input type="radio" name="val" ng-click="showMeal(false)" value="false">
+						<input type="radio" name="val" data-ng-model="mealpolicy.haveMeal" ng-click="showMeal(false)" value="false">
 						&nbsp; No
 					</div> 
 				
@@ -67,7 +67,7 @@
 			<div></div>	
 			<div>
 			
-			<label>The Payable Rates for this Meals will apply in THB - Thai Baht. </label>
+			<label>The Payable Rates for this Meals will apply in {{generalInfo.currencyCode}}. </label>
 			<br>
 			</div>
 			<div ng-show="mealRate">
@@ -152,6 +152,24 @@
 <fieldset class="billBorder">
   <legend class="gen-img">Add/Edit Meal</legend>
  <div>*Please define the period of time:<br><br></div>
+
+<div class="form-group">
+				<label class="col-md-6">Do you have meal rates?   </label>
+				<div class="col-md-5">
+				
+				<div class="chargechild">
+						<input type="radio" name="val" data-ng-model="mealpolicy.haveMeal" ng-click="showMeal(true)" value="true">
+						&nbsp; Yes
+					</div>
+					<div>
+						<input type="radio" name="val" data-ng-model="mealpolicy.haveMeal" ng-click="showMeal(false)" value="false">
+						&nbsp; No
+					</div> 
+				
+					</div>
+					<br>
+			</div>	
+
 		<div class="form-group">
 				<label class="col-md-2 control-label">From:</label>
 				<div class="col-md-2">

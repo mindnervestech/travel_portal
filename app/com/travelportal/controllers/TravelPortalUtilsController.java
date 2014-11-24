@@ -306,6 +306,11 @@ public class TravelPortalUtilsController extends Controller {
 		hotelbillinginformation.setSupplierCode(billinginformation.getSupplierCode());
 		hotelbillinginformation.setdExtNo(billinginformation.getExt());
 		hotelbillinginformation.setBankToBankTransfer(billinginformation.getBankservice());
+		hotelbillinginformation.setBankName(billinginformation.getBankName());
+		hotelbillinginformation.setAccountNo(billinginformation.getAccountNo());
+		hotelbillinginformation.setBranchName(billinginformation.getBranchName());
+		hotelbillinginformation.setAccountType(billinginformation.getAccountType());
+		hotelbillinginformation.setSwiftCode(billinginformation.getSwiftCode());
 		
 		return ok(Json.toJson(hotelbillinginformation));
 	}
@@ -486,6 +491,7 @@ public class TravelPortalUtilsController extends Controller {
 		HotelGeneralInfoVM hotelgeneralinfoVM = new HotelGeneralInfoVM();
 
 		hotelgeneralinfoVM.setHotelNm(hotelProfile.getHotelName());
+		hotelgeneralinfoVM.setSupplierNm(hotelProfile.getSupplierName());
 		hotelgeneralinfoVM.setHotelAddr(hotelProfile.getAddress());
 		if(hotelProfile.getCountry() != null)
 		{
@@ -494,6 +500,7 @@ public class TravelPortalUtilsController extends Controller {
 		if(hotelProfile.getCurrency() != null)
 		{
 		hotelgeneralinfoVM.setCurrencyCode(hotelProfile.getCurrency().getCurrencyCode());
+		//hotelgeneralinfoVM.setCurrencyCode(hotelProfile.getCurrency().getCurrencyName());
 		}
 		hotelgeneralinfoVM.setHotelPartOfChain(hotelProfile.getPartOfChain());
 		if(hotelProfile.getChainHotel() != null)
@@ -520,7 +527,10 @@ public class TravelPortalUtilsController extends Controller {
 		}
 		hotelgeneralinfoVM.setSupplierCode(hotelProfile.getSupplier_code());
 
-
+		if(session().get("NAME") != null){
+			hotelgeneralinfoVM.isAdmin = "true";	
+		}
+			
 
 		System.out.println(supplierCode);
 		

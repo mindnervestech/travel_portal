@@ -8,7 +8,7 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 #Supplier Home Page
 #GET /home	com.travelportal.controllers.HotelProfileController.home()
 GET /hotel_profile/:profileId 		com.travelportal.controllers.HotelProfileController.viewSupplierProfile(profileId: Long)
-
+#GET /supplierfind/:supplierCode/:supplierName  com.travelportal.controllers.SupplierLoginthroughAdminController.getsupplierLogin(supplierCode:String,supplierName:String)
 #APIs for fetching seed data 
 
 GET		/signUp						com.travelportal.controllers.ApplicationController.getSignUpForm
@@ -104,7 +104,7 @@ POST    /setAllotmentCitySelection                        com.travelportal.contr
 POST   /showpdf				com.travelportal.controllers.SupplierAgreementController.getshowpdf()
 GET    /hotel_profile/getPdfPath/:supplierCode			com.travelportal.controllers.SupplierAgreementController.getPdfPath(supplierCode:Long)
 
-POST   /findSupplier  		com.travelportal.controllers.ApplicationController.findSupplier()
+POST   /findSupplier  		com.travelportal.controllers.SupplierLoginthroughAdminController.getsupplierLogin()
 #following routes are used for fetch manage hotel images, 
 
 POST   /savegeneralImg   com.travelportal.controllers.ManageHotelImagesController.savegeneralImg()

@@ -1,7 +1,7 @@
 
 angular.module('travel_portal').
-controller("supplierAgreementController",['$scope', '$http','$filter','$upload',
-                                         function($scope, $http, $filter, $upload) {
+controller("supplierAgreementController",['$scope','notificationService','$http','$filter','$upload',
+                                         function($scope,notificationService, $http, $filter, $upload) {
 	
 	console.log(supplierCode);
 	
@@ -14,8 +14,8 @@ controller("supplierAgreementController",['$scope', '$http','$filter','$upload',
 
 
 angular.module('travel_portal').
-	controller("allotmentController",['$scope', '$http','$filter','$upload','ngDialog',
-	                                         function($scope, $http, $filter, $upload, ngDialog) {
+	controller("allotmentController",['$scope', '$http','notificationService','$filter','$upload','ngDialog',
+	                                         function($scope, $http,notificationService, $filter, $upload, ngDialog) {
 		
 				
 		$http.get("/currency").success(function(response) {
@@ -226,6 +226,7 @@ angular.module('travel_portal').
 			
 			$http.post('/saveAllotment',$scope.allotmentMarket).success(function(data){
 				console.log('success');
+				 notificationService.success("Save Successfully");
 									
 			}).error(function(data, status, headers, config) {
 				console.log('ERROR');
@@ -350,8 +351,8 @@ angular.module('travel_portal').
 
 
 angular.module('travel_portal').
-	controller("ManageHotelImageController",['$scope', '$http', '$rootScope','$filter','$upload','ngDialog',
-	                                         function($scope, $http, $rootScope,  $filter, $upload, ngDialog) {
+	controller("ManageHotelImageController",['$scope', '$http','notificationService','$rootScope','$filter','$upload','ngDialog',
+	                                         function($scope, $http,notificationService, $rootScope,  $filter, $upload, ngDialog) {
 		
 		 var generalPic =null;
 		 $scope.opengeneralPic = false;
@@ -381,6 +382,7 @@ angular.module('travel_portal').
 	    	 console.log(data);   
 	    	 console.log(data.generalPicture);
 	            $scope.img = "/hotel_profile/getImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	            notificationService.success("Replace Successfully");
 	            $scope.opengeneralPic = false;	
 		    	 $scope.opengeneralPic1 = true;
 	     }); 
@@ -428,7 +430,8 @@ angular.module('travel_portal').
 	    	 console.log(data);   
 	    	 console.log(data.hotel_Lobby);
 	          $scope.imgLobby = "/hotel_profile/getLobbyImagePath/"+data.supplierCode+"?d="+new Date().getTime();
-	            $scope.openLobbyPic = false;	
+	          notificationService.success("Replace Successfully"); 
+	          $scope.openLobbyPic = false;	
 		    	 $scope.openLobbyPic1 = true;
 	          
 	     }); 
@@ -473,7 +476,8 @@ angular.module('travel_portal').
 	     }).success(function(data, status, headers, config) {
 	    	 console.log(data);   
 	          $scope.imgRoom = "/hotel_profile/getRoomImagePath/"+data.supplierCode+"?d="+new Date().getTime();
-	            $scope.openRoomPic = false;	
+	          notificationService.success("Replace Successfully");  
+	          $scope.openRoomPic = false;	
 		    	 $scope.openRoomPic1 = true;
 	          
 	     }); 
@@ -519,7 +523,8 @@ angular.module('travel_portal').
 	     }).success(function(data, status, headers, config) {
 	    	 console.log(data);   
 	          $scope.imgAmenitiesServices = "/hotel_profile/getAmenitiesServicesImagePath/"+data.supplierCode+"?d="+new Date().getTime();
-	            $scope.openAmenitiesServices = false;	
+	          notificationService.success("Replace Successfully"); 
+	          $scope.openAmenitiesServices = false;	
 		    	 $scope.openAmenitiesServices1 = true;
 	          
 	     }); 
@@ -564,7 +569,8 @@ angular.module('travel_portal').
 	     }).success(function(data, status, headers, config) {
 	    	 console.log(data);   
 	          $scope.imgLeisureorSports = "/hotel_profile/getLeisureorSportsImagePath/"+data.supplierCode+"?d="+new Date().getTime();
-	            $scope.openLeisureorSports = false;	
+	          notificationService.success("Replace Successfully");  
+	          $scope.openLeisureorSports = false;	
 		    	 $scope.openLeisureorSports1 = true;
 	          
 	     }); 
@@ -611,7 +617,8 @@ angular.module('travel_portal').
 	     }).success(function(data, status, headers, config) {
 	    	 console.log(data);   
 	          $scope.imgMap = "/hotel_profile/getMapImagePath/"+data.supplierCode+"?d="+new Date().getTime();
-	            $scope.openMapPic = false;	
+	          notificationService.success("Replace Successfully"); 
+	          $scope.openMapPic = false;	
 		    	 $scope.openMapPic1 = true;
 	          
 	     }); 
@@ -698,7 +705,7 @@ angular.module('travel_portal').
 );
 
 angular.module('travel_portal').
-	controller("hoteRoomController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
+	controller("hoteRoomController",['$scope','notificationService','$rootScope','$http',function($scope,notificationService,$rootScope, $http){
 	
 			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10];
 		//	$scope.supplierCode = 3;
@@ -776,6 +783,10 @@ angular.module('travel_portal').
 			    	$scope.roomTypeIns.supplierCode = supplierCode; //$scope.roomTypeIns;
 			    	$scope.roomTypeIns.roomchildPolicies = $scope.childpolicy;
 			    	$scope.roomTypeIns.roomamenities = $scope.roomamenities;
+			    	if(roomTypeIns.chargesForChildren == "false")
+			    		{
+			    		$scope.roomTypeIns.roomchildPolicies = [];
+			    		}
 			    	
 			    	console.log($scope.roomTypeIns);
 			    				    	
@@ -783,8 +794,10 @@ angular.module('travel_portal').
 						console.log('success');
 						$http.get("/roomtypes/"+supplierCode).success(function(response){
 							console.log('success');
+							notificationService.success("Save Successfully");
 							$scope.hotelRoomTypes = response;
 						});
+						$scope.roomT = true;
 											
 					}).error(function(data, status, headers, config) {
 						console.log('ERROR');
@@ -808,8 +821,16 @@ angular.module('travel_portal').
 
 
 				};
-			   
-				
+			   $scope.roomT = true;
+				$scope.clearData = function(){
+					$scope.roomT = false;
+					$scope.roomTypeIns = null;
+					$scope.childpolicy = [];
+					angular.forEach($scope.roomAmenities, function(obj, index){
+						 obj.isSelected=false;
+					 });
+					console.log($scope.roomTypeIns);
+				}
 			    
 			    $scope.serviceClicked = function(e, roomTypeIns) {
 					
@@ -840,7 +861,7 @@ angular.module('travel_portal').
 
 
 angular.module('travel_portal').
-	controller("hoteProfileController",function($scope, $http,$routeParams,$location,$rootScope,$filter, $upload, ngDialog) {
+	controller("hoteProfileController",function($scope, $http,$routeParams,$location,notificationService,$rootScope,$filter, $upload, ngDialog) {
 
 		
 		
@@ -1061,6 +1082,8 @@ angular.module('travel_portal').
 	{
 		$http.get('/findBillData/'+$rootScope.supplierCode).success(function(response) {
 			$scope.bill = response;
+			console.log("<><><<><><><><><");
+			console.log(response);
 		});
 	}
 	$scope.getAmenitiesInfo = function()
@@ -1102,6 +1125,17 @@ angular.module('travel_portal').
 				});
 			});
 		});
+			
+			$http.get('/findAmenitiesData/'+$rootScope.supplierCode).success(function(response) {
+				angular.forEach($scope.leisureSport, function(obj, index){
+					angular.forEach(response, function(obj1, index){
+						if ((obj.amenitiesCode == obj1.amenitiesCode)) {
+							$scope.leisure_sport_check.push(obj.amenitiesCode);
+							obj.isSelected=true;
+						};
+					});
+				});
+				});
 	}
 		
 		$scope.getAreaInfo = function(){
@@ -1186,10 +1220,8 @@ angular.module('travel_portal').
 		if($routeParams.id == undefined || $routeParams.id == null )
 			{
 			$rootScope.supplierCode = supplierCode;
-			alert("No");
 			}
 		else{
-			alert("yes");
 			$rootScope.supplierCode =$routeParams.id;
 			}
 		
@@ -1518,7 +1550,8 @@ angular.module('travel_portal').
 		console.log($scope.FirePrecaution);
 		$http.post('/saveUpdateFirePrecaution', $scope.FirePrecaution).success(function(data){
 			console.log('success');
-			$scope.saveUpdateFirePrecaution = true;
+			//$scope.saveUpdateFirePrecaution = true;
+			 notificationService.success("Save Successfully");
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1532,7 +1565,8 @@ angular.module('travel_portal').
 		console.log($scope.HealthSafety);
 		$http.post('/saveUpdateHealthSafety', $scope.HealthSafety).success(function(data){
 			console.log('success');
-			$scope.saveUpdateDocumentation = true;
+			//$scope.saveUpdateDocumentation = true;
+			 notificationService.success("Save Successfully");
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1547,7 +1581,8 @@ angular.module('travel_portal').
 		console.log($scope.ExitsAndCorridor);
 		$http.post('/saveUpdateExitsAndCorridor', $scope.ExitsAndCorridor).success(function(data){
 			console.log('success');
-			$scope.saveUpExitsAndCorridors = true;
+			//$scope.saveUpExitsAndCorridors = true;
+			 notificationService.success("Save Successfully");
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1562,7 +1597,8 @@ angular.module('travel_portal').
 		console.log($scope.AirCondition);
 		$http.post('/saveUpdateAirCondition', $scope.AirCondition).success(function(data){
 			console.log('success');
-			$scope.saveUpAirCondition = true;
+			//$scope.saveUpAirCondition = true;
+			 notificationService.success("Save Successfully");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
@@ -1576,7 +1612,8 @@ angular.module('travel_portal').
 		console.log($scope.Lifts);
 		$http.post('/saveUpdateLifts', $scope.Lifts).success(function(data){
 			console.log('success');
-			$scope.saveUpLifts = true;
+			//$scope.saveUpLifts = true;
+			 notificationService.success("Save Successfully");
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1591,7 +1628,8 @@ angular.module('travel_portal').
 		console.log($scope.Bedrooms);
 		$http.post('/saveUpdateBedroomsAsndBalconies', $scope.Bedrooms).success(function(data){
 			console.log('success');
-			$scope.saveUpBedrooms = true;
+			//$scope.saveUpBedrooms = true;
+			 notificationService.success("Save Successfully");
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1606,7 +1644,8 @@ angular.module('travel_portal').
 		console.log($scope.KitchenAndHygiene);
 		$http.post('/saveUpdateKitchenAndHygiene', $scope.KitchenAndHygiene).success(function(data){
 			console.log('success');
-			$scope.saveUpKitchen = true;
+			//$scope.saveUpKitchen = true;
+			 notificationService.success("Save Successfully");
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1622,7 +1661,8 @@ angular.module('travel_portal').
 		console.log($scope.ChildrenFaciliti);
 		$http.post('/saveUpdateChildrenFaciliti', $scope.ChildrenFaciliti).success(function(data){
 			console.log('success');
-			$scope.saveUPChildren = true;
+			//$scope.saveUPChildren = true;
+			 notificationService.success("Save Successfully");
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1638,7 +1678,8 @@ angular.module('travel_portal').
  		console.log($scope.SwimmingPool);
  		$http.post('/saveUpdateSwimmingPool', $scope.SwimmingPool).success(function(data){
  			console.log('success');
- 			$scope.saveUpSwiming = true;
+ 			//$scope.saveUpSwiming = true;
+ 			 notificationService.success("Save Successfully");
  			
  		}).error(function(data, status, headers, config) {
  			console.log('ERROR');
@@ -1654,7 +1695,8 @@ angular.module('travel_portal').
   		console.log($scope.CCTVStatus);
   		$http.post('/saveUpdateCCTVstatus', $scope.CCTVStatus).success(function(data){
   			console.log('success');
-  			$scope.cctvSt = true;
+  			//$scope.cctvSt = true;
+  			 notificationService.success("Save Successfully");
   			
   		}).error(function(data, status, headers, config) {
   			console.log('ERROR');
@@ -1668,7 +1710,8 @@ angular.module('travel_portal').
  		console.log($scope.additionalInfo);
  		$http.post('/saveUpdateAdditionalInfo', $scope.additionalInfo).success(function(data){
  			console.log('success');
- 			$scope.saveAddition = true;
+ 			//$scope.saveAddition = true;
+ 			 notificationService.success("Save Successfully");
  			
  		}).error(function(data, status, headers, config) {
  			console.log('ERROR');
@@ -1682,7 +1725,8 @@ angular.module('travel_portal').
   		console.log($scope.GaswaterHeaters);
   		$http.post('/saveUpdateGaswaterHeaters', $scope.GaswaterHeaters).success(function(data){
   			console.log('success');
-  			$scope.saveGasHeaters = true;
+  			//$scope.saveGasHeaters = true;
+  			 notificationService.success("Save Successfully");
   			
   		}).error(function(data, status, headers, config) {
   			console.log('ERROR');
@@ -1760,9 +1804,10 @@ angular.module('travel_portal').
 			$rootScope.supplierCode=data.ID;
 			$rootScope.supplierName=data.NAME;
 			$rootScope.supplierAddr=data.ADDR;
+			$rootScope.supplierCurrency=data.Currency;
 
 			//$scope.saveDescription($scope.supp);
-
+			notificationService.success("Save Successfully");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
@@ -1792,8 +1837,8 @@ angular.module('travel_portal').
 					return;
 				});
 			});	
-			
-			$scope.mealPlanSuccessMsg = true;
+			notificationService.success("Save Successfully");
+			//$scope.mealPlanSuccessMsg = true;
 			//$scope.mealpolicy = [];
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1820,8 +1865,8 @@ angular.module('travel_portal').
 		console.log($scope.mealdata);
 		$http.post('/updatemealpolicy',$scope.mealdata).success(function(data){
 			console.log('success');
-			$scope.mealPlanUpdateSuccessMsg = true;
-
+			//$scope.mealPlanUpdateSuccessMsg = true;
+			 notificationService.success("Update Successfully");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
@@ -1850,6 +1895,7 @@ angular.module('travel_portal').
 				$scope.attractionfind = "false";
 				$scope.attractionnotfind = "true";
 			}
+			 notificationService.success("Save Successfully");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
@@ -1876,6 +1922,7 @@ angular.module('travel_portal').
 				$scope.locationnotfind = "true";
 				$scope.locationfind = "false";
 			}
+			 notificationService.success("Save Successfully");
 			//$scope.locationfind; 
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1929,7 +1976,8 @@ angular.module('travel_portal').
 		console.log($scope.contactInfo);
 		$http.post('/updateContactInfo',$scope.contactInfo).success(function(data){
 			console.log('success');
-			$scope.Contactinfosuccess = true;
+			notificationService.success("Save Successfully");
+			//$scope.Contactinfosuccess = true;
 
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1942,10 +1990,19 @@ angular.module('travel_portal').
 	{
 		$scope.bill.supplierCode=$rootScope.supplierCode;
 
+		if($scope.bill.bankToBankTransfer == "false"){
+			delete $scope.bill.bankName;
+			delete $scope.bill.branchName;
+			delete $scope.bill.swifiCode;
+			delete $scope.bill.accountNo;
+			delete $scope.bill.accountType;
+			
+		}
 		console.log($scope.bill);
 		$http.post('/updatebillingInfo',$scope.bill).success(function(data){
 			console.log('success');
-			$scope.BillinfoSucccess = true;
+			notificationService.success("Save Successfully");
+		//	$scope.BillinfoSucccess = true;
 
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1961,7 +2018,8 @@ angular.module('travel_portal').
 		console.log($scope.comunicationhotel);
 		$http.post('/updateComunication',$scope.comunicationhotel).success(function(data){
 			console.log('success');
-			$scope.communciatsuccess = true;
+			notificationService.success("Save Successfully");
+			//$scope.communciatsuccess = true;
 
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -1980,7 +2038,8 @@ angular.module('travel_portal').
 		console.log("//////////////////");
 		$http.post('/updateDescription',$scope.descrip).success(function(data){
 			console.log('success');
-			$scope.Descriptinsuccess = true;
+			notificationService.success("Save Successfully");
+			//$scope.Descriptinsuccess = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
@@ -1993,7 +2052,8 @@ angular.module('travel_portal').
 		console.log($scope.leisure);
 		$http.post('/saveamenities',$scope.leisure).success(function(data){
 			console.log('success');
-			$scope.leisuresucess = true;
+			notificationService.success("Save Successfully");
+			//$scope.leisuresucess = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
@@ -2065,7 +2125,8 @@ angular.module('travel_portal').
 		console.log($scope.amenitiesInfo);
 		$http.post('/saveamenities',$scope.amenitiesInfo).success(function(data){
 			console.log('success');
-			$scope.amenitiesSuccess = true;
+			notificationService.success("Save Successfully");
+			//$scope.amenitiesSuccess = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
@@ -2095,7 +2156,7 @@ angular.module('travel_portal').
 });
 
 angular.module('travel_portal').
-controller("manageContractsController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
+controller("manageContractsController",['$scope','notificationService','$rootScope','$http',function($scope,notificationService,$rootScope, $http){
 	
 	$scope.showMeals = false;
 	$scope.addMeal1 = 'no';
@@ -2262,6 +2323,7 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 		
 		$http.post('/saveRate', {"rateObject":$scope.rateObject}).success(function(data){
 			console.log('success');
+			 notificationService.success("Save Successfully");
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -2379,7 +2441,7 @@ controller("manageContractsController",['$scope', '$rootScope','$http',function(
 
 
 angular.module('travel_portal').
-controller("manageSuppliersController",function($scope,$rootScope,$location, $http,ngDialog){
+controller("manageSuppliersController",function($scope,notificationService,$rootScope,$location, $http,ngDialog){
 		
 
 		
@@ -2490,22 +2552,30 @@ controller("manageSuppliersController",function($scope,$rootScope,$location, $ht
 		$scope.searchSupplier = function(find){
 			
 			console.log($scope.find);
-			$rootScope.supplierCode = $scope.find.supplierCode; 
-			$http.post('/findSupplier',$scope.find).success(function(data){
-				console.log("Success")
-				console.log(data);
-			$location.path("/supplier/206");
+			$scope.supplierCode = $scope.find.supplierCode;
+			$scope.supplierName = $scope.find.hotelNm;
+			//$http.post('/findSupplier',$scope.find).success(function(data){
+		//		console.log("Success")
+			//	console.log(data);
+			//	$scope.flagAdmin = 1;
+		//	$location.path("/supplier/206");
 		//window.location.assign("hotel_profile/206");
+				
+				 //window.open('hotel_profile/'+$scope.supplierCode+"/"+$scope.flagAdmin);
+				/*$http.get('/supplierfind/'+$scope.supplierCode+'/'+$scope.supplierName).success(function(response){
+					console.log("Success");
+				});*/
+				/*$location.path('supplierfind/'+$scope.supplierCode+"/"+$scope.supplierName);*/
 		
 			
-		});
+		//});
 			
 			
 		}
 		
 });
 angular.module('travel_portal').
-controller("manageSpecialsController",['$scope', '$rootScope','$http',function($scope,$rootScope, $http){
+controller("manageSpecialsController",['$scope','notificationService','$rootScope','$http',function($scope,notificationService,$rootScope, $http){
 	
 	$scope.specialsObject = [];
 	$scope.specialsData = [];
@@ -2572,6 +2642,7 @@ controller("manageSpecialsController",['$scope', '$rootScope','$http',function($
 		console.log($scope.specialsObject);
 		$http.post('/saveSpecials', {"specialsObject":$scope.specialsObject}).success(function(data){
 			console.log('success');
+			 notificationService.success("Save Successfully");
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -2581,7 +2652,7 @@ controller("manageSpecialsController",['$scope', '$rootScope','$http',function($
 	$scope.updatePeriod = function() {
 		$http.post('/updateSpecials', {"specialsObject":$scope.specialsData}).success(function(data){
 			console.log('success');
-			
+			 notificationService.success("Update Successfully");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});

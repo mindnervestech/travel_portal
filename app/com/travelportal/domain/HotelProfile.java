@@ -42,6 +42,9 @@ public class HotelProfile {
 	@Column(name="hotel_nm")
 	private String hotelName;
 	
+/*	@Column(name="company_nm")
+	public String companyNm;*/
+	
 	@Column(name="address")
 	private String address;
 	
@@ -219,6 +222,16 @@ public class HotelProfile {
 		this.supplierName = supplierName;
 	}
 	
+	
+	
+	/*public String getCompanyNm() {
+		return companyNm;
+	}
+
+	public void setCompanyNm(String companyNm) {
+		this.companyNm = companyNm;
+	}*/
+
 	public String getlocation1() {
 		return location1;
 	}
