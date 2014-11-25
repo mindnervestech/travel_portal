@@ -528,7 +528,10 @@ public class TravelPortalUtilsController extends Controller {
 		hotelgeneralinfoVM.setSupplierCode(hotelProfile.getSupplier_code());
 
 		if(session().get("NAME") != null){
-			hotelgeneralinfoVM.isAdmin = "true";	
+			hotelgeneralinfoVM.isAdmin = "Admin";	
+		}else
+		{
+			hotelgeneralinfoVM.isAdmin = "Supplier";	
 		}
 			
 

@@ -8,7 +8,6 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 #Supplier Home Page
 #GET /home	com.travelportal.controllers.HotelProfileController.home()
 GET /hotel_profile/:profileId 		com.travelportal.controllers.HotelProfileController.viewSupplierProfile(profileId: Long)
-#GET /supplierfind/:supplierCode/:supplierName  com.travelportal.controllers.SupplierLoginthroughAdminController.getsupplierLogin(supplierCode:String,supplierName:String)
 #APIs for fetching seed data 
 
 GET		/signUp						com.travelportal.controllers.ApplicationController.getSignUpForm
@@ -20,12 +19,12 @@ POST	/doAdminLogin				com.travelportal.controllers.ApplicationController.doAdmin
 GET		/adminLogout				com.travelportal.controllers.ApplicationController.adminLogout
 POST	/hotel_profile				com.travelportal.controllers.ApplicationController.doSupplierLogin
 GET		/supplierLogout				com.travelportal.controllers.ApplicationController.supplierLogout
-
+GET    /supplierfind/:supplierCode/:supplierName  com.travelportal.controllers.SupplierLoginthroughAdminController.getfindSupplier(supplierCode:String,supplierName:String)
 
 GET		/getPendingUsers			com.travelportal.controllers.AdminController.getPendingUsers
 GET		/getApprovedUsers			com.travelportal.controllers.AdminController.getApprovedUsers
 GET		/getRejectedUsers			com.travelportal.controllers.AdminController.getRejectedUsers
-GET		/approveUser/:id			com.travelportal.controllers.AdminController.approveUser(id: Long)
+GET		/approveUser/:id/:email/:supplierCode			com.travelportal.controllers.AdminController.approveUser(id: Long,email: String,supplierCode: Long)
 GET		/rejectUser/:id				com.travelportal.controllers.AdminController.rejectUser(id: Long)
 GET		/pendingUser/:id			com.travelportal.controllers.AdminController.pendingUser(id: Long)
 

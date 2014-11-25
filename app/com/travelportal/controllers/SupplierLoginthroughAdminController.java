@@ -39,16 +39,38 @@ public class SupplierLoginthroughAdminController extends Controller {
 	DynamicForm form = DynamicForm.form().bindFromRequest();
 	
 	HotelRegistration user = HotelRegistration.findSupplier(form.get("supplierCode"),form.get("hotelNm"));
-	System.out.println(user.getSupplierCode());
+	//System.out.println(user.getSupplierCode());
+	
 	System.out.println("SESSION VALUE   "+session().get("NAME"));
 	if(user != null) {
 		//session().put("SUPPLIER", user.getSupplierCode());
 		long code = Long.parseLong(user.getSupplierCode());
-		//window.open('home.render("Home Page", code)');
+		
 		return ok(home.render("Home Page", code));
+		
 	}
 	
+	
+	//return ok();
 	return ok(views.html.adminHome.render());
+}
+	
+	
+	
+	@Transactional
+	public static Result getfindSupplier(String SupplierCode,String SupplierName) {
+		String successdata="";
+		HotelRegistration hotelRegistration = HotelRegistration.findSupplier(SupplierCode,SupplierName);
+		if(hotelRegistration != null)
+		{
+			successdata = "true";
+		}
+		else
+		{
+			successdata = "false";
+		}
+		return ok(successdata);
+		
 	}
 			
 }

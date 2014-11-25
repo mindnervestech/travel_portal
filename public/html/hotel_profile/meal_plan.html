@@ -38,10 +38,10 @@
 							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
 									SAFETY</a></li>
 						</ul>
-						<div id="myTabContent2" class="tab-content">
+						<div id="myTabContent2">
 
 <form method="post"  ng-submit="Savebillinginfo()" role="form" class="form-horizontal">
-<fieldset class="billBorder overF">
+<fieldset class="billBorder">
   <legend class="meal-fieldset">Meal</legend>
 	<div class="row">
 		<div class="col-md-12">
@@ -90,8 +90,8 @@
                            <td>{{meal.mealType.mealTypeNm}}</td>
                             <td>From Date: {{meal.fromPeriod}}<br>To Date: {{meal.toPeriod}}</td>
                             <td>
-                            <table>
-                            <tr style="background-color: #488c6c;  color: white;">
+                            <table  style="width: 100%;font-size: small;">
+                            <tr style="font-size: small; background-color: #488c6c;  color: white;">
                             <td>ADULT RATE:</td>
                             <td>{{meal.rate}}</td>
                             
@@ -101,7 +101,7 @@
                             <td>{{meal.taxIncluded}}</td>
                             
                             </tr>
-                            <tr style="background-color: #488c6c;  color: white;">
+                            <tr style="font-size: small; background-color: #488c6c;  color: white;">
                             <td>CHILD RATE 1 - 11 years:</td>
                             <td>{{meal.rate}}</td>
                             </tr>
@@ -184,7 +184,7 @@
 				</div>
 <br>
 			</div>
-
+<div class="row">
 		<div class="form-group">
 				<label class="col-md-2 control-label">*Meal Type :</label>
 				<div class="col-md-2">
@@ -192,16 +192,19 @@
 						<option>Select Country...</option>
 					</select>
 				</div>
-<br>
-			</div>
-
-		<div class="form-group">
+	
 				<label class="col-md-2 control-label">*Meal Name :</label>
 				<div class="col-md-3">
 					<input type="text" name="mealPlanNm" data-ng-model="mealpolicy.mealPlanNm" class="form-control meal-font-text-size" required>
 				</div>
-<br>
+
 			</div>
+
+		
+				
+<br>
+			
+</div>
 
 <div></div>
 		<fieldset class="billBorder">
@@ -441,16 +444,12 @@
 						<option>Select Country...</option>
 					</select>
 				</div>
-<br>
-			</div>
 
-
-		<div class="form-group">
 				<label class="col-md-2 control-label">*Meal Name :</label>
 				<div class="col-md-3">
 					<input type="text" name="mealPlanNm" data-ng-model="mealdata.mealPlanNm" class="form-control meal-font-text-size" required>
 				</div>
-<br>
+
 			</div>
 
 <div></div>

@@ -1,21 +1,28 @@
 
 angular.module('travel_portal').
-controller("supplierAgreementController",['$scope','notificationService','$http','$filter','$upload',
-                                         function($scope,notificationService, $http, $filter, $upload) {
+controller("supplierAgreementController",['$scope','$rootScope','notificationService','$http','$filter','$upload',
+                                         function($scope,$rootScope,notificationService, $http, $filter, $upload) {
 	
 	console.log(supplierCode);
 	
 	$scope.pdfFile = "/hotel_profile/getPdfPath/"+supplierCode;
 	console.log($scope.pdfFile);
-	
+	console.log($rootScope.checkUser);
+	if($rootScope.checkUser == "Admin"){
+		$scope.user = "true";
+	}else{
+		$scope.user = "false";
+	}
+		
+		
 	
 }]
 );
 
 
 angular.module('travel_portal').
-	controller("allotmentController",['$scope', '$http','notificationService','$filter','$upload','ngDialog',
-	                                         function($scope, $http,notificationService, $filter, $upload, ngDialog) {
+	controller("allotmentController",['$scope', '$http','notificationService','$rootScope','$filter','$upload','ngDialog',
+	                                         function($scope, $http,notificationService,$rootScope, $filter, $upload, ngDialog) {
 		
 				
 		$http.get("/currency").success(function(response) {
@@ -1014,14 +1021,15 @@ angular.module('travel_portal').
 	
 		$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
 			$scope.getallData=response;
+			 
 			console.log(response);
+		
 			
 			
 			$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
 			.success(function(data){
 				if(data) {
-					console.log("----");
-					console.log(data);
+				
 					$scope.cities = [];
 					for(var i = 0; i<data.length; i++){
 						$scope.cities.push({
@@ -1035,7 +1043,7 @@ angular.module('travel_portal').
 			});
 			
 			$scope.generalInfo=response.hotelgeneralinfo;
-			    
+			  $rootScope.checkUser = response.hotelgeneralinfo.isAdmin; 
 			 
 		});
 		}
@@ -1290,6 +1298,13 @@ angular.module('travel_portal').
 		angular.forEach($scope.MealType, function(obj, index){
 			$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
 			$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
+			/*if($scope.MealType[index].taxIncluded == "true"){
+				$scope.MealType[index].taxIncluded = "Yes";
+			}else{
+				$scope.MealType[index].taxIncluded = "No";
+			}*/
+				
+				
 			return;
 		});
 	});	
@@ -1739,7 +1754,7 @@ angular.module('travel_portal').
 			$scope.getallData=response;
 			console.log(response);
 			
-			
+			console.log(response.hotelgeneralinfo.isAdmin)
 			$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
 			.success(function(data){
 				if(data) {
@@ -1758,7 +1773,7 @@ angular.module('travel_portal').
 			});
 			
 			$scope.generalInfo=response.hotelgeneralinfo;
-			    
+			   $rootScope.checkUser = response.hotelgeneralinfo.isAdmin; 
 			 
 		});
      
@@ -2467,7 +2482,9 @@ controller("manageSuppliersController",function($scope,notificationService,$root
 		
 		$scope.approvePending = function() {
 			$scope.userId = $scope.generalInfo.id;
-			$http.get('/approveUser/'+$scope.userId).success(function(response){
+			$scope.email = $scope.generalInfo.email;
+			$scope.supplierCode = $scope.generalInfo.code;
+			$http.get('/approveUser/'+$scope.userId+'/'+$scope.email+'/'+$scope.supplierCode).success(function(response){
 				$scope.pendingUsers.splice($scope.pendingUsers.indexOf($scope.generalInfo),1);
 				$scope.getData();
 			});
@@ -2554,6 +2571,22 @@ controller("manageSuppliersController",function($scope,notificationService,$root
 			console.log($scope.find);
 			$scope.supplierCode = $scope.find.supplierCode;
 			$scope.supplierName = $scope.find.hotelNm;
+		//	window.open('http://localhost:9000/adminLogin#/findSupplier');
+			$http.get('/supplierfind/'+$scope.supplierCode+'/'+$scope.supplierName).success(function(response){
+				console.log(response);
+				if(response == "true"){
+					window.open('http://localhost:9000/adminLogin#/findSupplier');
+				}else{
+					notificationService.error("Supplier Not Found");
+				}
+				
+			}).error(function(data, status, headers, config){
+				console.log("error");
+				
+			});
+			
+			
+			
 			//$http.post('/findSupplier',$scope.find).success(function(data){
 		//		console.log("Success")
 			//	console.log(data);
