@@ -790,7 +790,7 @@ angular.module('travel_portal').
 			    	$scope.roomTypeIns.supplierCode = supplierCode; //$scope.roomTypeIns;
 			    	$scope.roomTypeIns.roomchildPolicies = $scope.childpolicy;
 			    	$scope.roomTypeIns.roomamenities = $scope.roomamenities;
-			    	if(roomTypeIns.chargesForChildren == "false")
+			    	if($scope.roomTypeIns.chargesForChildren == "false")
 			    		{
 			    		$scope.roomTypeIns.roomchildPolicies = [];
 			    		}
@@ -1021,9 +1021,8 @@ angular.module('travel_portal').
 	
 		$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
 			$scope.getallData=response;
-			 
-			console.log(response);
-		
+			$rootScope.hotelName = response.hotelgeneralinfo.hotelNm;
+				
 			
 			
 			$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
@@ -1753,6 +1752,8 @@ angular.module('travel_portal').
      $http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
 			$scope.getallData=response;
 			console.log(response);
+			$rootScope.hotelName = response.hotelgeneralinfo.hotelNm;
+				
 			
 			console.log(response.hotelgeneralinfo.isAdmin)
 			$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
@@ -2184,6 +2185,8 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	$scope.rateMeta = [];
 	var showRateCount = 0;
 	$scope.isUpdated = false;
+	
+	console.log($rootScope.hotelName);
 	
 	$http.get('/getRoomTypes').success(function(response){
 		console.log(response);

@@ -53,11 +53,11 @@
 				<div class="col-md-5">
 				
 				<div class="chargechild">
-						<input type="radio" name="val" data-ng-model="mealpolicy.haveMeal" ng-click="showMeal(true)" value="true">
+						<input type="radio" name="val" data-ng-model="haveMeal" ng-click="showMeal(true)" value="true">
 						&nbsp; Yes
 					</div>
 					<div>
-						<input type="radio" name="val" data-ng-model="mealpolicy.haveMeal" ng-click="showMeal(false)" value="false">
+						<input type="radio" name="val" data-ng-model="haveMeal" ng-click="showMeal(false)" value="false">
 						&nbsp; No
 					</div> 
 				
@@ -153,22 +153,6 @@
   <legend class="gen-img">Add/Edit Meal</legend>
  <div>*Please define the period of time:<br><br></div>
 
-<div class="form-group">
-				<label class="col-md-6">Do you have meal rates?   </label>
-				<div class="col-md-5">
-				
-				<div class="chargechild">
-						<input type="radio" name="val" data-ng-model="mealpolicy.haveMeal" ng-click="showMeal(true)" value="true">
-						&nbsp; Yes
-					</div>
-					<div>
-						<input type="radio" name="val" data-ng-model="mealpolicy.haveMeal" ng-click="showMeal(false)" value="false">
-						&nbsp; No
-					</div> 
-				
-					</div>
-					<br>
-			</div>	
 
 		<div class="form-group">
 				<label class="col-md-2 control-label">From:</label>
@@ -631,7 +615,7 @@
 
 	<span ng-show="mealPlanUpdateSuccessMsg" style="color: green;margin-left: 2%;">Update Successfully</span>
 	<button type="submit" class="btn btn-primary">Update</button> 
-	<button type="button" ng-click=" closeThisDialog()" class="btn btn-primary">Close</button>
+	<button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
 
 
 	 
