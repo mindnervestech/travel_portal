@@ -519,6 +519,7 @@ public class TravelPortalUtilsController extends Controller {
 		{
 		hotelgeneralinfoVM.setBrandHotelCode(hotelProfile.getHoteBrands().getBrandsCode());
 		}
+		
 		if(hotelProfile.getStartRatings() != null)
 		{
 			System.out.println(hotelProfile.getStartRatings().getId());

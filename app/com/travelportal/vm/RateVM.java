@@ -56,10 +56,10 @@ public class RateVM {
 	public void setNormalRate(NormalRateVM normalRate) {
 		this.normalRate = normalRate;
 	}
-	public boolean isSpecialRate() {
+	public boolean getIsSpecialRate() {
 		return isSpecialRate;
 	}
-	public void setSpecialRate(boolean isSpecialRate) {
+	public void setIsSpecialRate(boolean isSpecialRate) {
 		this.isSpecialRate = isSpecialRate;
 	}
 	public SpecialRateVM getSpecial() {

@@ -938,6 +938,7 @@ angular.module('travel_portal').
 
 	$http.get("/currency").success(function(response) {
 		$scope.currency = response;
+		
 	});
 
 	$http.get("/hotelbrands").success(function(response) {
@@ -996,6 +997,8 @@ angular.module('travel_portal').
 
 	$http.get("/MealType").success(function(response){
 		$scope.MealTypes=response;
+		
+		
 	});
 
 	$scope.onCountryChange = function() {
@@ -1023,7 +1026,21 @@ angular.module('travel_portal').
 			$scope.getallData=response;
 			$rootScope.hotelName = response.hotelgeneralinfo.hotelNm;
 				
+			/*angular.forEach($scope.roomamenities, function(obj, index){
+				 if ((roomTypeIns.amenityId === obj)) {
+			    	$scope.roomamenities.splice(index, 1);
+			    
+			       	return;
+			    };
+			  });*/
 			
+			/*angular.forEach($scope.currency, function(obj1, index){
+
+				if ((response.currencyCode == $scope.currency.currencyCode)) {
+					$scope.currencyname = $scope.currency.currencyName ;					
+				};
+			});*/
+			console.log($scope.currency);
 			
 			$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
 			.success(function(data){
@@ -1292,7 +1309,12 @@ angular.module('travel_portal').
 		if($scope.MealType != null )
 			{
 			$scope.mealRate = true;
-			}
+			$scope.haveMeal = "true";
+			
+			}else
+				{
+				$scope.haveMeal = "false";
+				}
 		
 		angular.forEach($scope.MealType, function(obj, index){
 			$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
@@ -1754,7 +1776,13 @@ angular.module('travel_portal').
 			console.log(response);
 			$rootScope.hotelName = response.hotelgeneralinfo.hotelNm;
 				
-			
+			angular.forEach($scope.currency, function(obj, index){
+
+				if ((response.hotelgeneralinfo.currencyCode == $scope.currency[index].currencyCode)) {
+					$rootScope.currencyname = $scope.currency[index].currencyName ;					
+				};
+			});
+						
 			console.log(response.hotelgeneralinfo.isAdmin)
 			$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
 			.success(function(data){
@@ -1862,6 +1890,9 @@ angular.module('travel_portal').
 
 
 	};
+	
+	
+	
 
 	$scope.mealPlanUpdateSuccessMsg = false;
 	$scope.updatemealplan = function(){
@@ -1877,6 +1908,7 @@ angular.module('travel_portal').
 			 }
 				 
 		 });
+		 
 		
 		console.log($scope.mealdata);
 		$http.post('/updatemealpolicy',$scope.mealdata).success(function(data){
@@ -2203,6 +2235,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		$scope.mealTypes = response;
 	});
 	
+	
 	$scope.showData = function() {
 		console.log($scope.formData.room);
 		console.log($scope.formData.fromDate);
@@ -2212,13 +2245,25 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		$http.get('/getRateData/'+$scope.formData.room+'/'+$scope.formData.fromDate+'/'+$scope.formData.toDate+'/'+$scope.formData.currencyType).success(function(response){
 			console.log(response);
 			$scope.rateMeta = response;
+			
+			for(var i=0;i<$scope.rateMeta.length;i++) {
+				
+				if($scope.rateMeta[i].applyToMarket == false){
+					console.log($scope.rateMeta[i].id);
+					$scope.showMarketTable($scope.rateMeta[i]);
+				}
+				
+				}
+				
 			console.log($scope.rateMeta);
 			if(angular.isUndefined($scope.rateMeta) || $scope.rateMeta == "") {
-				$scope.messageShow = "NO DATA FOUND";
+				$scope.messageShow = "No Rate Found For This Period please";
+				$scope.link = "Add New Rate";
 				$scope.showRateUpdate = false;
 				$scope.showPeriod = false;
 			} else {
 				$scope.messageShow = " ";
+				$scope.link = " ";
 				$scope.showRateUpdate = true;
 				$scope.showPeriod = false;
 			}
@@ -2276,8 +2321,9 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	};
 	
 	$scope.addNewRuleforRate = function(index) {
+
 		$scope.rateObject[index].cancellation.push({});
-		
+	
 	};
 	
 	$scope.addNewRuleforSavedRate = function(index) {
@@ -2422,10 +2468,10 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 				allot.allocatedCities[i].ticked = true;
 			}
 		}
-		console.log($scope.selectedRatesId);
+		/*console.log($scope.selectedRatesId);
 		if($scope.selectedRatesId != 0) {
 			$scope.setSelection(allot);
-		}
+		}*/
 		
 	}
 	
@@ -2700,11 +2746,13 @@ controller("manageSpecialsController",['$scope','notificationService','$rootScop
 			$scope.specialsData = response;
 			console.log($scope.specialsData);
 			if(angular.isUndefined($scope.specialsData) || $scope.specialsData == "") {
-				$scope.messageShow = "NO DATA FOUND";
+				$scope.messageShow = "No Rate Found For This Period please";
+				$scope.link = "Add New Rate";
 				$scope.showRateUpdate = false;
 				$scope.showSavedPeriods = false;
 			} else {
 				$scope.messageShow = " ";
+				$scope.link = " ";
 				$scope.showRateUpdate = true;
 				$scope.showSavedPeriods = true;
 				var i,j,k;

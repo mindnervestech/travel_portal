@@ -8,7 +8,7 @@ import com.travelportal.domain.rooms.CancellationPolicy;
 public class CancellationPolicyVM {
 	public long id;
 	public String days;
-	public boolean penaltyCharge;
+	public boolean penaltyCharge = true;
 	public String nights;
 	public String percentage;
 	

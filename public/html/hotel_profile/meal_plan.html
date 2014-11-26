@@ -67,7 +67,7 @@
 			<div></div>	
 			<div>
 			
-			<label>The Payable Rates for this Meals will apply in {{generalInfo.currencyCode}}. </label>
+			<label>The Payable Rates for this Meals will apply in {{currencyname}}. </label>
 			<br>
 			</div>
 			<div ng-show="mealRate">
@@ -91,7 +91,7 @@
                             <td>From Date: {{meal.fromPeriod}}<br>To Date: {{meal.toPeriod}}</td>
                             <td>
                             <table  style="width: 100%;font-size: small;">
-                            <tr style="font-size: small; background-color: #488c6c;  color: white;">
+                            <tr style="font-size: small; background-color: #8DC84D;  color: white;">
                             <td>ADULT RATE:</td>
                             <td>{{meal.rate}}</td>
                             
@@ -101,7 +101,7 @@
                             <td>{{meal.taxIncluded}}</td>
                             
                             </tr>
-                            <tr style="font-size: small; background-color: #488c6c;  color: white;">
+                            <tr style="font-size: small; background-color: #8DC84D;  color: white;">
                             <td>CHILD RATE 1 - 11 years:</td>
                             <td>{{meal.rate}}</td>
                             </tr>
@@ -157,13 +157,13 @@
 		<div class="form-group">
 				<label class="col-md-2 control-label">From:</label>
 				<div class="col-md-2">
-                   <input id = "date" name="fromPeriod" data-ng-model="mealpolicy.fromPeriod" class="input-filter form-control meal-font-text-size" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
+                   <input id = "date" name="fromPeriod" data-ng-model="mealpolicy.fromPeriod" class="input-filter form-control meal-font-text-size" data-provide="datepicker" data-date-autoclose="true" data-date-format="yyyy-mm-dd" required>
 					
 				</div>
 		
 				<label class="col-md-2 control-label">To and include:</label>
 				<div class="col-md-2">
-					<input id = "date" name="toPeriod" data-ng-model="mealpolicy.toPeriod" class="input-filter form-control meal-font-text-size" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
+					<input id = "date" name="toPeriod" data-ng-model="mealpolicy.toPeriod" class="input-filter form-control meal-font-text-size" data-provide="datepicker" data-date-autoclose="true" data-date-format="yyyy-mm-dd" required>
 					
 				</div>
 <br>
@@ -408,13 +408,13 @@
 		<div class="form-group">
 				<label class="col-md-2 control-label">From:</label>
 				<div class="col-md-2">
-                   <input id = "date" name="fromPeriod" data-ng-model="mealdata.fromPeriod" class="input-filter form-control meal-font-text-size" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
+                   <input id = "date" name="fromPeriod" data-ng-model="mealdata.fromPeriod" class="input-filter form-control meal-font-text-size" data-provide="datepicker" data-date-autoclose="true" data-date-format="yyyy-mm-dd" required>
 					
 				</div>
 		
 				<label class="col-md-2 control-label">To and include:</label>
 				<div class="col-md-2">
-					<input id = "date" name="toPeriod" data-ng-model="mealdata.toPeriod" class="input-filter form-control meal-font-text-size" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
+					<input id = "date" name="toPeriod" data-ng-model="mealdata.toPeriod" class="input-filter form-control meal-font-text-size" data-provide="datepicker" data-date-autoclose="true" data-date-format="yyyy-mm-dd" required>
 					
 				</div>
 <br>

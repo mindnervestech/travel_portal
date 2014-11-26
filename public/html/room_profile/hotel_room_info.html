@@ -130,7 +130,7 @@
 		         <div class="row">
 		            <div class="col-lg-12">
 						<div class="form-group">
-							<label class="col-md-6 control-label">Please define
+							<label class="col-md-3 control-label">Please define
 								your children policy:</label><br>
 						</div>
 					</div>
@@ -138,9 +138,9 @@
 				    <div class="row">
 		              <div class="col-lg-12">
 						<div class="form-group">
-							<label class="col-md-2 control-label">From: </label>
-							<div class="col-md-3">
-								<select class="form-control" data-ng-model="child.allowedChildAgeFrom" required>
+							<label class="col-md-1 control-label">From: </label>
+							<div class="col-md-1">
+								<select class="form-control" data-ng-model="child.allowedChildAgeFrom" style="padding: 0px;" required>
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
@@ -167,8 +167,8 @@
 
 
 							<label class="col-md-1 control-label">To: </label>
-							<div class="col-md-3">
-								<select class="form-control" data-ng-model="child.allowedChildAgeTo" required>
+							<div class="col-md-1">
+								<select class="form-control" data-ng-model="child.allowedChildAgeTo" style="padding: 0px;" required>
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
@@ -192,11 +192,25 @@
 								</select>
 
 							</div>
-							<br>
+							<label class="col-md-1 control-label">year:</label>
+							<div class="col-md-2">
+								<input type="text" placeholder="year" class="form-control"
+									data-ng-model="child.years"> <br>
+							</div>
+							
+							<label class="col-md-2 control-label">enter zero if free:
+							</label>
+							<div class="col-md-2">
+								<select class="form-control" data-ng-model="child.netRate" required>
+									<option>% of</option>
+									<option>add to</option>
+
+								</select>
+							</div>
 						</div>
 						</div>
 						</div>
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<label class="col-md-2 control-label">year:</label>
 							<div class="col-md-2">
 								<input type="text" placeholder="year" class="form-control"
@@ -216,7 +230,7 @@
 								</select>
 							</div>
 							<br>
-						</div>
+						</div> -->
 
 						
 					</span>

@@ -45,6 +45,7 @@ import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.RoomChildPolicies;
 import com.travelportal.vm.AllocatedCitiesVM;
 import com.travelportal.vm.CancellationPolicyVM;
+import com.travelportal.vm.HotelHealthAndSafetyVM;
 import com.travelportal.vm.NormalRateVM;
 import com.travelportal.vm.RateDetailsVM;
 import com.travelportal.vm.RateVM;
@@ -157,11 +158,13 @@ public static void createRootDir() {
 	@Transactional(readOnly=false)
     public static Result saveRate() throws ParseException {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				
 		Form<RateWrapper> rateWrapperForm = Form.form(RateWrapper.class).bindFromRequest();
 		List<RateVM> list = rateWrapperForm.get().rateObject;
 		
 		for(RateVM rate : list) {
-			System.out.println("RATE ........"+rate.currency+rate.fromDate+rate.toDate+rate.rateName+rate.isSpecialRate());
+			//rate.isSpecialRate = true;
+			System.out.println("RATE ........"+rate.currency+rate.fromDate+rate.toDate+rate.rateName+rate.getIsSpecialRate());
 
 				RateMeta rateMeta = new RateMeta();
 				rateMeta.setCurrency(rate.currency);
@@ -307,7 +310,7 @@ public static void createRootDir() {
 				rateMeta.merge();
 				
 				RateDetails rateDetails = RateDetails.findByRateMetaId(rate.getId());
-				if(rate.isSpecialRate() == true) {
+				if(rate.getIsSpecialRate() == true) {   //	if(rate.isSpecialRate() == true) {
 					rateDetails.setSpecialRate(rate.isSpecialRate);
 					rateDetails.setSpecialDays(rate.special.weekDays.toString());
 				} else {
@@ -439,7 +442,7 @@ public static void createRootDir() {
 			rateVM.setFromDate(format.format(rate.getFromDate()));
 			rateVM.setToDate(format.format(rate.getToDate()));
 			rateVM.setRoomType(rate.getRoomType().getRoomType());
-			rateVM.setSpecialRate(rateDetails.isSpecialRate());
+			rateVM.setIsSpecialRate(rateDetails.isSpecialRate());
 			rateVM.setRateName(rate.getRateName());
 			rateVM.setId(rate.getId());
 			rateVM.applyToMarket = rateDetails.isApplyToMarket();
