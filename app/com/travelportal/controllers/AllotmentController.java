@@ -39,6 +39,7 @@ import com.travelportal.domain.HotelAttractions;
 import com.travelportal.domain.HotelHealthAndSafety;
 import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.ImgPath;
+import com.travelportal.domain.Location;
 import com.travelportal.domain.RatePeriod;
 import com.travelportal.domain.allotment.Allotment;
 import com.travelportal.domain.allotment.AllotmentMarket;
@@ -67,6 +68,9 @@ public class AllotmentController extends Controller {
 	public static Result getDates(long roomid,String currencyName) {
 	
 		List<RateMeta> rateperiod = RateMeta.getDates(roomid, currencyName);
+		System.out.println("Print data");
+		System.out.println(rateperiod);
+	
 		return ok(Json.toJson(rateperiod));
 		//return ok();
 		/*final List<RatePeriod> rateperiod = RatePeriod.getDates(roomid,currencyid);
@@ -90,7 +94,16 @@ public class AllotmentController extends Controller {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
 		List<RateMeta> ratemeta = RateMeta.getRateMeta(allVm.getCurrencyName(),format.parse(allVm.getFormPeriod()),format.parse(allVm.getToPeriod()),allVm.getRoomId());
-		return ok(Json.toJson(ratemeta));
+			
+		List<Map> _rate  = new ArrayList();
+		for(RateMeta l : ratemeta){
+			Map m = new HashMap<>();
+			m.put("id", l.getId());
+			m.put("rateName", l.getRateName());
+			_rate.add(m);
+		}
+		
+		return ok(Json.toJson(_rate));
 		
 	
 	}

@@ -3,18 +3,48 @@ angular.module('travel_portal').
 controller("supplierAgreementController",['$scope','$rootScope','notificationService','$http','$filter','$upload',
                                          function($scope,$rootScope,notificationService, $http, $filter, $upload) {
 	
+	var navJs = 0;
+	
 	console.log(supplierCode);
 	
 	$scope.pdfFile = "/hotel_profile/getPdfPath/"+supplierCode;
 	console.log($scope.pdfFile);
 	console.log($rootScope.checkUser);
 	if($rootScope.checkUser == "Admin"){
-		$scope.user = "true";
+		$scope.uploadpdf = "true";
+		$scope.showpdf = "false";
 	}else{
-		$scope.user = "false";
+		$scope.showpdf = "true";
+		$scope.uploadpdf = "false";
 	}
 		
 		
+	 var Pdffile = null;
+	   $scope.selectProfilePdf = function($files)
+	   {		
+		   Pdffile = $files[0]; 		
+	   }
+	   
+	   $scope.savepdfData = {};
+	   $scope.PdfUpload = function(){
+		   
+		   $scope.savepdfData.supplierCode = supplierCode;
+		   $scope.upload = $upload.upload({
+	           url: '/savepdf', 
+	           method:'post',
+	           data:$scope.savepdfData,
+	           fileFormDataName: 'file1',
+	           file:Pdffile,
+	          
+	   }).progress(function(evt) {
+	           console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+	   }).success(function(data, status, headers, config) {
+	          console.log(data);
+	          notificationService.success("Upload Successfully");
+	          $scope.showtext = false;
+	          
+	   }); 
+	   }
 	
 }]
 );
@@ -39,39 +69,51 @@ angular.module('travel_portal').
 		
 		$scope.searchAllotment = function()
 		{
-		 //  $scope. = $scope.allotmentMarket.datePeriodId;	
+		
 			var arr = $scope.allotmentMarket.datePeriodId.split("@");
 			$scope.allotmentMarket.formPeriod = arr[0];
 			$scope.allotmentMarket.toPeriod = arr[1];
 			$scope.allotmentMarket.supplierCode = supplierCode;
 			
+			console.log($scope.allotmentMarket.allotmentmarket);
+			console.log($scope.allotmentM);
+			$scope.allotmentM = [];
+			if($scope.allotmentMarket.allotmentmarket !=  undefined){
+				delete $scope.allotmentMarket.allotmentmarket;
+			}
 			console.log($scope.allotmentMarket);
-			
 			$http.post('/getallmentMarket', $scope.allotmentMarket).success(function(response){
 				console.log('success');
+				console.log("**********");
 				console.log(response);
+				console.log(response.allotmentmarket);
 				$scope.showallotent = true;
-				if(response.allotmentmarket.length==0) {
-					response.allotmentmarket.push({});
-				}
-				
-				for(var i=0;i<response.allotmentmarket.length;i++) {
-					if(response.allotmentmarket[i].applyMarket == "false"){
-					$scope.showAllotmentMarketTable(response.allotmentmarket[i]);
+				if(response.allotmentmarket ==  undefined){
+					$scope.allotmentM.push({});					
+				}else{
+					for(var i=0;i<response.allotmentmarket.length;i++) {
+						//if(response.allotmentmarket[i].applyMarket == "false"){
+						$scope.showAllotmentMarketTable(response.allotmentmarket[i]);
+						//}
 					}
 				}
+							
+				
 				$http.post('/getRates', $scope.allotmentMarket).success(function(data){
 					console.log("-------");
-					console.log(data);
+					//console.log(data);
 					if(data.length>0) {
-						console.log(data);		
+					
 						$scope.rate = data;
+					
 						angular.forEach($scope.rate,function(value,key) { 
 							value.isSelected =0;
 						});
 						if(response!="") {
 							$scope.allotmentMarket = response;
+							console.log($scope.allotmentM);
 							$scope.allotmentM = response.allotmentmarket;
+							console.log($scope.allotmentM);
 							for(var i=0;i<$scope.allotmentM.length;i++) {
 								angular.forEach($scope.allotmentM[i].rate,function(value1,key1) {
 									angular.forEach($scope.rate,function(value,key) {
@@ -94,6 +136,7 @@ angular.module('travel_portal').
 				
 			}).error(function(response, status, headers, config) {
 				console.log('ERROR');
+				
 			});
 		}
 		
@@ -109,10 +152,13 @@ angular.module('travel_portal').
 			.success(function(data){
 				if(data) {
 					console.log(data);
+					
 					$scope.allotmentMarket1 =data;
 					 angular.forEach($scope.allotmentMarket1, function(obj, index){
-							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[0].fromDate, "yyyy-MM-dd");
-							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[0].toDate, "yyyy-MM-dd");
+						 var i=0;
+							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[index][i], "yyyy-MM-dd");
+							i++;
+							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[index][i], "yyyy-MM-dd");
 							return;
 						});
 							
@@ -136,8 +182,10 @@ angular.module('travel_portal').
 					console.log(data);
 					$scope.allotmentMarket1 =data;
 					 angular.forEach($scope.allotmentMarket1, function(obj, index){
-							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[0].fromDate, "yyyy-MM-dd");
-							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[0].toDate, "yyyy-MM-dd");
+						 var i=0;
+							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[index][i], "yyyy-MM-dd");
+							i++;
+							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[index][i], "yyyy-MM-dd");
 							return;
 						});
 							
@@ -713,9 +761,10 @@ angular.module('travel_portal').
 
 angular.module('travel_portal').
 	controller("hoteRoomController",['$scope','notificationService','$rootScope','$http',function($scope,notificationService,$rootScope, $http){
-	
+	   // $scope.allotmentM.push( {applyMarket:"false"} );
+		//ss$scope.roomTypeIns.chargesForChildren = "false";
 			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10];
-		//	$scope.supplierCode = 3;
+		
 			console.log("hoteRoomController successfully initialized."+supplierCode);
 
 			$scope.$watch("sel_room_type", function(selRoomType) {
@@ -764,6 +813,7 @@ angular.module('travel_portal').
 				});
 				
 			}
+			
 			
 			
 			$scope.initRoomTypePage = function() {
@@ -1025,22 +1075,7 @@ angular.module('travel_portal').
 		$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
 			$scope.getallData=response;
 			$rootScope.hotelName = response.hotelgeneralinfo.hotelNm;
-				
-			/*angular.forEach($scope.roomamenities, function(obj, index){
-				 if ((roomTypeIns.amenityId === obj)) {
-			    	$scope.roomamenities.splice(index, 1);
-			    
-			       	return;
-			    };
-			  });*/
-			
-			/*angular.forEach($scope.currency, function(obj1, index){
-
-				if ((response.currencyCode == $scope.currency.currencyCode)) {
-					$scope.currencyname = $scope.currency.currencyName ;					
-				};
-			});*/
-			console.log($scope.currency);
+		
 			
 			$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
 			.success(function(data){
@@ -2223,6 +2258,11 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	$http.get('/getRoomTypes').success(function(response){
 		console.log(response);
 		$scope.roomTypes = response;
+		
+		/*angular.forEach($scope.response, function(obj, index){
+			$scope.roomTypes[index] = response[index];
+		});
+		console.log($scope.roomTypes);*/
 	});
 	
 	$http.get('/getCurrency').success(function(response){
@@ -2259,9 +2299,11 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			if(angular.isUndefined($scope.rateMeta) || $scope.rateMeta == "") {
 				$scope.messageShow = "No Rate Found For This Period please";
 				$scope.link = "Add New Rate";
+				$scope.addNewButton = "false";
 				$scope.showRateUpdate = false;
 				$scope.showPeriod = false;
 			} else {
+				$scope.addNewButton = "true";
 				$scope.messageShow = " ";
 				$scope.link = " ";
 				$scope.showRateUpdate = true;
@@ -2275,6 +2317,8 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	
 	$scope.createNewRate = function() {
 		
+		
+		
 		for(var i=0;i<$scope.rateObject.length;i++) {
 			$scope.rateObject.splice(i,1);
 			console.log(i);
@@ -2283,6 +2327,8 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
 			$scope.rateObject.push(response);
 			console.log($scope.rateObject);
+			$scope.messageShow = " ";
+			$scope.link = " ";
 		});
 		$scope.showPeriod = true;
 	};
@@ -2395,7 +2441,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	};
 	
 	$scope.updateRateMeta = function() {
-		
+		console.log($scope.rateMeta);
 		$http.post('/updateRateMeta', {"rateObject":$scope.rateMeta}).success(function(data){
 			console.log('success');
 			$scope.isUpdated = true;

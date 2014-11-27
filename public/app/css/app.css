@@ -43,6 +43,7 @@
  .ngdialog-content{
 width: 731px !important;
 background: white !important;
+top :-120px;
 }
 .gen-img{
 	 width: 145px;

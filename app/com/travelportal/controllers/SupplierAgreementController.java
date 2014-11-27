@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.sql.Timestamp;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -13,6 +16,8 @@ import net.coobird.thumbnailator.Thumbnails;
 
 import org.apache.commons.io.FilenameUtils;
 
+import com.travelportal.domain.HotelHealthAndSafety;
+import com.travelportal.domain.ImgPath;
 import com.travelportal.domain.InfoWiseImagesPath;
 
 import play.Play;
@@ -43,6 +48,44 @@ public static void createRootDir() {
       
 }
 
+
+@Transactional(readOnly=false)
+public static Result savepdf(){
+	DynamicForm form = DynamicForm.form().bindFromRequest();
+
+	//HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(Long.parseLong(form.get("supplierCode")));
+	
+	FilePart picture = request().body().asMultipartFormData().getFile("file1");
+	
+	createDir(rootDir,Long.parseLong(form.get("supplierCode")));
+	 String fileName = picture.getFilename();
+	 String imgPath = rootDir + File.separator +Long.parseLong(form.get("supplierCode"))+File.separator+ "SupplierAgreement"+ File.separator+"SupplierAgreement."+FilenameUtils.getExtension(fileName);
+	
+     File src = picture.getFile();
+     OutputStream out = null;
+     BufferedImage image = null;
+     File f = new File(imgPath);
+     System.out.println(imgPath);
+     try {
+    	 Files.copy(src.toPath(),f.toPath(),java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+    	
+     } catch (FileNotFoundException e) {
+             e.printStackTrace();
+     } catch (IOException e) {
+             e.printStackTrace();
+     } finally {
+             try {
+                     if(out != null) out.close();
+             } catch (IOException e) {
+                     e.printStackTrace();
+             }
+     }
+  
+		
+	return ok();
+	
+}
+
 @Transactional(readOnly=false)
 public static Result getshowpdf(){
 	
@@ -52,7 +95,7 @@ public static Result getshowpdf(){
 	System.out.println(form.get("supplierCode"));
 		createDir(rootDir,Long.parseLong(form.get("supplierCode")));
 	
-	String PdfFile = rootDir + File.separator + Long.parseLong(form.get("supplierCode")) +File.separator+ "SupplierAgreement"+File.separator+"Your_contract.pdf";
+	String PdfFile = rootDir + File.separator + Long.parseLong(form.get("supplierCode")) +File.separator+ "SupplierAgreement"+File.separator+"SupplierAgreement.pdf";
 	
 	return ok();
 	
@@ -64,9 +107,9 @@ public static Result getPdfPath(long supplierCode) {
 	System.out.println(supplierCode);
 	createDir(rootDir,supplierCode);
 	response().setContentType("application/pdf");
-	response().setHeader("Content-Disposition", "inline; filename="+"Your_contract.pdf");
+	response().setHeader("Content-Disposition", "inline; filename="+"SupplierAgreement.pdf");
 	
-	String PdfFile = rootDir + File.separator + supplierCode +File.separator+ "SupplierAgreement"+File.separator+"Your_contract.pdf";
+	String PdfFile = rootDir + File.separator + supplierCode +File.separator+ "SupplierAgreement"+File.separator+"SupplierAgreement.pdf";
 	File f = new File(PdfFile);
 	response().setHeader("Content-Length", ((int)f.length())+"");
     return ok(f);	

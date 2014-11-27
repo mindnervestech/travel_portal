@@ -318,6 +318,27 @@ public static void createRootDir() {
 				}
 				rateDetails.merge();
 				
+				RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType));
+				List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
+				for(AllocatedCitiesVM vm: rate.allocatedCities) {
+					if(vm.multiSelectGroup == false && vm.name != null){
+						SelectedCityVM cityVM = new SelectedCityVM();
+						cityVM.name = vm.name;
+						cityVM.ticked = vm.ticked;
+						selectedCityVM.add(cityVM);
+					}
+					
+					System.out.println(vm.multiSelectGroup);
+				}
+				List<City> listCity = new ArrayList<>();
+				for(SelectedCityVM cityvm : selectedCityVM){
+					City _city = City.getCitiByName(cityvm.name);
+					
+					if(cityvm.ticked){
+						listCity.add(_city);
+					}
+				}
+				rateObject.setCities(listCity);
 				
 				for(RateDetailsVM rateDetailsVM : rate.normalRate.rateDetails) {
 					PersonRate personRate = PersonRate.findByRateMetaIdAndNormal(rate.getId(),true,rateDetailsVM.name);

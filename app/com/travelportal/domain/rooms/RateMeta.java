@@ -107,7 +107,9 @@ public class RateMeta {
 	    }
 	 
 	 public static List<RateMeta> getDates(long roomid,String currencyName) {
-			Query q = JPA.em().createQuery("select c from RateMeta c where c.roomType.roomId = :roomid and c.currency = :currencyName GROUP BY c.fromDate , c.toDate");
+		
+		
+			Query q = JPA.em().createQuery("select c.fromDate,c.toDate from RateMeta c where c.roomType.roomId = :roomid and c.currency = :currencyName GROUP BY c.fromDate , c.toDate");
 			q.setParameter("roomid", roomid);
 			q.setParameter("currencyName", currencyName);
 			return q.getResultList();

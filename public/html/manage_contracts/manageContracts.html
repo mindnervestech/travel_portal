@@ -256,9 +256,6 @@
 				</fieldset>
 			
 				
-				
-						<div style="margin-left: 83%;margin-top: 7%;margin-right: 1%;"><input type="button" value="REMOVE THIS RATE" ng-click="removeRate($index)" ng-show="showRemoveRate == true"></div>
-			</div>
 			
 			<label style="float: left"><b>Apply to all Markets?<br>
 			<label>(Based on Passenger Nationality)</label>
@@ -272,18 +269,18 @@
 					group-property="multiSelectGroup"
 					on-open="msOpen( data )" style="float: left;width: 78%;">
 				</div>
-					<div style="float: left;">
+					<!-- <div style="float: left;">
 						<button class="btn btn-success" ng-click="setSelection(rate);">Submit</button>
-					</div>
+					</div> -->
 				</div>
 				<br>
 				<hr style="float: left;width: 100%;">
 						<input type="button" value="DELETE RATE" style="margin-top: 1%;margin-left: 84%" ng-click="deleteRate(rate.id,$index)">
 			</fieldset>	
-			<!-- <div ng-show=> -->
-					  <input type="button" value="ADD NEW RATE" ng-click="createNewRate()" style="float:left; margin-top: 3%;margin-left: 29%;">
-					<!--   </div>  	 -->
-					<input type="button" value="UPDATE RATES" style="margin-top: 3%;margin-left: 10%;" ng-show="showRateUpdate == true" ng-click="updateRateMeta()">
+			 <div ng-show="addNewButton"> 
+					  <input type="button" class="btn btn-primary" value="ADD NEW RATE" ng-click="createNewRate()" style="float:left; margin-top: 3%;margin-left: 29%;">
+					  </div>  	 
+					<input type="button" class="btn btn-primary" value="UPDATE RATES" style="margin-top: 3%;margin-left: 10%;" ng-show="showRateUpdate == true" ng-click="updateRateMeta()">
 					<p style="color: green;margin-top: 5%;margin-left: 39%;" ng-show="isUpdated == true"><b>Rate updated successfully</b></p>
 			</div>
 			
@@ -489,7 +486,7 @@
 			
 				
 				
-						<div><input type="button" value="REMOVE THIS RATE" ng-click="removeRate($index)" ng-show="showRemoveRate == true"></div>
+						
 			</div>
 			
 				<label style="margin-top: 2%;float: left;"><b>Apply to all Markets?<br>
@@ -507,6 +504,7 @@
 					
 				</div>
 
+				<div><input type="button" value="REMOVE THIS RATE" ng-click="removeRate($index)" ng-show="showRemoveRate == true"></div>
 			</fieldset>	
 						<input type="button" value="ADD ADDITIONAL RATES" ng-click="addNewRate()" style="float:left; margin-top: 1%;margin-left: 1%;">
 		

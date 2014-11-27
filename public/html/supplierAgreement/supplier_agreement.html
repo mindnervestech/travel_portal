@@ -11,7 +11,30 @@
 						<div id="myTabContent2" class="tab-content">
 							
 	<div class="row">
-		<div class="col-md-12">
+		
+		<div ng-show="uploadpdf" class="col-md-12">
+			 <!--  <label class="col-md-1 control-label" style="text-align: left;">please Click on Images</label> -->
+			<div class="col-md-4">
+		  <a ng-click="showtext='true'" ><img src="/assets/images/uploadImg.jpg" style="cursor: pointer;"></a><br><br>
+				</div>
+				
+				 <div ng-show="showtext" class="col-md-6" style="margin-top: 10%;">
+					   <label class="col-md-1 control-label" style="text-align: left;"> File:</label>
+						<div class="col-md-6">
+					 <input ng-file-select="selectProfilePdf($files)" name="" type="file" />
+			             
+			             </div>		
+			               <button type="submit" ng-click="PdfUpload()" class="btn btn-primary">Upload PDF File</button>
+			           </div>	             
+			         	          
+			        
+			       
+			        
+				
+		
+			
+		</div>
+		<div ng-show="showpdf" class="col-md-12">
 			
 		 
   			

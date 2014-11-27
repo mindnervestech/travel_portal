@@ -85,7 +85,7 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
                                 '<button type="button" class="clearButton" ng-click="inputLabel.labelFilter=\'\';updateFilter();prepareGrouping();prepareIndex();select( \'clear\', $event )">&times;</button> ' +
                             '</div>' +
                         '</div>' +
-                        '<div class="checkBoxContainer" style="{{setHeight();}}">' +
+                        '<div class="checkBoxContainer" style="{{setHeight();}};height: 180px;overflow-y: scroll;">' +
                             '<div ng-repeat="item in filteredModel | filter:removeGroupEndMarker" class="multiSelectItem"' +
                                 'ng-class="{selected: item[ tickProperty ], horizontal: orientationH, vertical: orientationV, multiSelectGroup:item[ groupProperty ], disabled:itemIsDisabled( item )}"' +
                                 'ng-click="syncItems( item, $event, $index );"' + 
