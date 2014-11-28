@@ -99,6 +99,11 @@ public class PersonRate {
     	return query.executeUpdate();
     }
 	
+	public static int deleteAllotment(long code) {
+		Query q = JPA.em().createNativeQuery("delete from allotmentmarket_rate_meta  where rate_rate_id = '"+code+"'");
+		return q.executeUpdate();
+	}
+	
 	@Transactional
     public void save() {
 		JPA.em().persist(this);

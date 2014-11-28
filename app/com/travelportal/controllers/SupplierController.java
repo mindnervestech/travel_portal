@@ -6,7 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Query;
+
+import com.travelportal.domain.Currency;
+import com.travelportal.domain.rooms.CancellationPolicy;
 import com.travelportal.domain.rooms.HotelRoomTypes;
+import com.travelportal.domain.rooms.PersonRate;
+import com.travelportal.domain.rooms.RateDetails;
+import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.SpecialsMarketVM;
@@ -14,6 +21,7 @@ import com.travelportal.vm.SpecialsVM;
 import com.travelportal.vm.SpecialsWrapper;
 
 import play.data.Form;
+import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -30,6 +38,16 @@ public class SupplierController extends Controller {
 		return ok(Json.toJson(specialsVM));
 	}
 	
+	
+	@Transactional(readOnly=true)
+    public static Result getPeriod(long supplierCode) {
+		System.out.println("*********Call Ok *****************8");
+		List<Specials> list = Specials.getperiod(supplierCode);
+		return ok(Json.toJson(list));
+		//return ok();
+		
+	}
+	
 	@Transactional(readOnly=false)
     public static Result saveSpecialsObject() throws ParseException {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -41,6 +59,7 @@ public class SupplierController extends Controller {
 			specials.setFromDate(format.parse(spec.fromDate));
 			specials.setToDate(format.parse(spec.toDate));
 			specials.setPromotionName(spec.promotionName);
+			specials.setSupplierCode(spec.supplierCode);
 			specials.setRoomTypes(HotelRoomTypes.findByListName(spec.roomTypes));
 			specials.save();
 			
@@ -59,6 +78,28 @@ public class SupplierController extends Controller {
 		return ok();
 	}
 	
+	
+	@Transactional(readOnly=false)
+    public static Result deleteMarket(long id){
+		SpecialsMarket.deleteSp(id);	
+		return ok();
+	}
+	
+	@Transactional(readOnly=false)
+    public static Result deletePeriod(long id){
+		System.out.println("**************");
+		System.out.println(id);
+		SpecialsMarket.deleteSp(id);		
+		
+		
+		Specials spe = Specials.findBySpecialsID(id);
+		spe.setRoomTypes(null);
+		spe.delete();
+				
+		
+		return ok();
+	}
+	
 	@Transactional(readOnly=false)
     public static Result updateSpecials() throws ParseException {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -70,6 +111,7 @@ public class SupplierController extends Controller {
 			specials.setFromDate(format.parse(spec.fromDate));
 			specials.setToDate(format.parse(spec.toDate));
 			specials.setPromotionName(spec.promotionName);
+			specials.setSupplierCode(spec.supplierCode);
 			specials.setRoomTypes(HotelRoomTypes.findByListName(spec.roomTypes));
 			specials.merge();
 			
@@ -98,16 +140,17 @@ public class SupplierController extends Controller {
 	}
 	
 	@Transactional(readOnly=true)
-    public static Result getSpecialsData(String fromDate,String toDate) throws ParseException {
+    public static Result getSpecialsData(String fromDate,String toDate,String promotionName) throws ParseException {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		List<SpecialsVM> list = new ArrayList<>();
-		List<Specials> specialsList = Specials.findSpecialByDate(format.parse(fromDate), format.parse(toDate));
+		List<Specials> specialsList = Specials.findSpecialByDate(format.parse(fromDate), format.parse(toDate),promotionName);
 		for(Specials special : specialsList) {
 			SpecialsVM specialsVM = new SpecialsVM();
 			specialsVM.id = special.getId();
 			specialsVM.fromDate = format.format(special.getFromDate());
 			specialsVM.toDate = format.format(special.getToDate());
 			specialsVM.promotionName = special.getPromotionName();
+			specialsVM.supplierCode = special.getSupplierCode();
 			for(HotelRoomTypes room : special.getRoomTypes()) {
 				specialsVM.roomTypes.add(room.getRoomType());
 			}

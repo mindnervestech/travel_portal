@@ -364,7 +364,7 @@
 		</div>
                 		<button type="button" class="btn btn-default" ng-click="newContact($event)">+ Add Child Rate</button>
            			<span ng-show="contacts.length > 0">
-                        <button type="button" class="btn btn-default" ng-click="contacts.splice(contacts.length-1, 1)">remove</button>
+                        <button type="button" class="btn btn-default" ng-click="contacts.splice(contacts.length-1, 1)">Remove</button>
                     </span> 
  
 	</div>
@@ -399,6 +399,7 @@
 </script>
  
  <script type="text/ng-template" id="editing">
+
 <form method="post" data-ng-submit="updatemealplan()" role="form" class="form-horizontal">
 <div class="main-text">Edit Meal Plan<br><br></div>
 <div class="row">
@@ -636,8 +637,12 @@
 
 		
     </form>
+</div>
+</div>
+
+
+
 </script>
- 
  
  
  

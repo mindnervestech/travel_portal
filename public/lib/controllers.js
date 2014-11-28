@@ -17,6 +17,24 @@ controller("supplierAgreementController",['$scope','$rootScope','notificationSer
 		$scope.showpdf = "true";
 		$scope.uploadpdf = "false";
 	}
+	
+	$http.get('/getPdfPath1/'+supplierCode).success(function(response){
+		console.log("***************");
+		console.log(response.found);
+		if(response.found == 1){
+			$scope.imageShow = "true";
+			$scope.labelShow = "false";
+		}else{
+			$scope.labelShow = "true";
+			$scope.imageShow = "false";
+		}
+	});
+	
+	
+	/*$http.get("/roomtypes/"+supplierCode).success(function(response){
+		console.log('success');
+		$scope.hotelRoomTypes = response;
+	});*/
 		
 		
 	 var Pdffile = null;
@@ -54,7 +72,8 @@ angular.module('travel_portal').
 	controller("allotmentController",['$scope', '$http','notificationService','$rootScope','$filter','$upload','ngDialog',
 	                                         function($scope, $http,notificationService,$rootScope, $filter, $upload, ngDialog) {
 		
-				
+		//$scope.allot=({applyMarket = "true"});		
+		
 		$http.get("/currency").success(function(response) {
 			$scope.currency = response;
 		});
@@ -198,29 +217,6 @@ angular.module('travel_portal').
 		
 		
 		}
-		
-		/*$scope.onDateChoose = function(Id)
-		{
-			
-			var arr = $scope.allotmentMarket.datePeriodId.split("@");
-			$scope.allotmentMarket.toPeriod = arr[0];
-			$scope.allotmentMarket.formPeriod = arr[1];
-			console.log($scope.allotmentMarket);
-			
-			$http.post('/getRates', $scope.allotmentMarket)
-			.success(function(data){
-				
-				if(data) {
-					console.log(data);		
-					$scope.rate = data;
-				    angular.forEach($scope.rate,function(value,key) {
-				    	value.isSelected = 0;
-				    });   
-				} else {
-					
-				}
-			});
-		};*/
 		
 		
 		
@@ -761,8 +757,8 @@ angular.module('travel_portal').
 
 angular.module('travel_portal').
 	controller("hoteRoomController",['$scope','notificationService','$rootScope','$http',function($scope,notificationService,$rootScope, $http){
-	   // $scope.allotmentM.push( {applyMarket:"false"} );
-		//ss$scope.roomTypeIns.chargesForChildren = "false";
+	    $scope.roomTypeIns = ( {chargesForChildren:"false"} );
+	    
 			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10];
 		
 			console.log("hoteRoomController successfully initialized."+supplierCode);
@@ -1367,11 +1363,16 @@ angular.module('travel_portal').
 	$scope.mealpolicy= {};
 	$scope.addnew = function(){
 		$scope.mealpolicy= {};
+		$scope.contacts = [];
+		$scope.mealpolicy= ({taxIncluded : "true"});
+		//$scope.cont= ({chargeType:"true"});
 		ngDialog.open({
-			template: 'manage',
+			template: '/assets/html/hotel_profile/create_meal_plan.html',
 			scope : $scope,
 			className: 'ngdialog-theme-default'
 		});
+		
+		
 	};
 	
 	$scope.findmap = function(find,scope){
@@ -1382,6 +1383,12 @@ angular.module('travel_portal').
 			scope : $scope,
 			className: 'ngdialog-theme-default'				
 		});
+		$rootScope.$on('ngDialog.opened', function (e, $dialog) {
+			$('#testDiv3').slimScroll({
+		          color: '#00f'
+		      });
+		});
+		
 		
 	}
 
@@ -1413,7 +1420,7 @@ angular.module('travel_portal').
 		console.log($scope.mealdata);
 
 		ngDialog.open({
-			template: 'editing',
+			template: '/assets/html/hotel_profile/edit_meal_plan.html',
 			scope : $scope,
 			className: 'ngdialog-theme-default'
 		});
@@ -2444,16 +2451,22 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		console.log($scope.rateMeta);
 		$http.post('/updateRateMeta', {"rateObject":$scope.rateMeta}).success(function(data){
 			console.log('success');
-			$scope.isUpdated = true;
+			 notificationService.success("Update Successfully");
+			//$scope.isUpdated = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 		});
 	};
 	
 	$scope.deleteRate = function(id,index) {
-		$http.get('/deleteRate/'+id).success(function(response){
-			$scope.rateMeta.splice(index,1);
-		});
+		var r = confirm("Do You Want To Delete!");
+	    if (r == true) {
+	    	$http.get('/deleteRate/'+id).success(function(response){			
+				$scope.rateMeta.splice(index,1);
+			});
+	        alert("Delete Successfully !");
+	    }	
+		
 	}
 	
 	
@@ -2703,7 +2716,7 @@ controller("manageSuppliersController",function($scope,notificationService,$root
 		
 });
 angular.module('travel_portal').
-controller("manageSpecialsController",['$scope','notificationService','$rootScope','$http',function($scope,notificationService,$rootScope, $http){
+controller("manageSpecialsController",['$scope','notificationService','$filter','$rootScope','$http',function($scope,notificationService,$filter,$rootScope, $http){
 	
 	$scope.specialsObject = [];
 	$scope.specialsData = [];
@@ -2712,6 +2725,21 @@ controller("manageSpecialsController",['$scope','notificationService','$rootScop
 	$scope.showRemovePeriod = false;
 	$scope.showSavedPeriods = false;
 	$scope.isCreateNew = false;
+	
+	$http.get("/getPeriod/"+supplierCode).success(function(response){
+		console.log('success');
+		console.log(response);
+		$scope.allperiod = response;
+		
+		
+		 angular.forEach($scope.allperiod, function(obj, index){
+				$scope.allperiod[index].fromDate = $filter('date')(response[index].fromDate, "yyyy-MM-dd");
+				
+				$scope.allperiod[index].toDate = $filter('date')(response[index].toDate, "yyyy-MM-dd");
+				return;
+			});
+		
+	});
 	
 	$http.get('/getRooms').success(function(response){
 		console.log(response);
@@ -2723,6 +2751,7 @@ controller("manageSpecialsController",['$scope','notificationService','$rootScop
 		$http.get('/getSpecialsObject').success(function(response){
 			$scope.specialsObject.push(response);
 			$scope.isCreateNew = true;
+			$scope.showSavedPeriods = false;
 		});
 		
 		if($scope.specialsObject.length > 0) {
@@ -2752,25 +2781,87 @@ controller("manageSpecialsController",['$scope','notificationService','$rootScop
 	}
 	
 	$scope.deleteSavedMarket = function(parentIndex,index) {
-		$scope.specialsData[parentIndex].markets.splice(index,1);
-		if($scope.specialsData[parentIndex].markets.length == 1) {
-			$scope.showSavedRemoveMarket = false;
-		}
+		
+		console.log($scope.specialsData[parentIndex].id);
+		$scope.marketId = $scope.specialsData[parentIndex].id;
+		var r = confirm("Do You Want To Delete!");
+	    if (r == true) {
+		$http.get("/deleteMarket/"+$scope.marketId).success(function(response){
+			console.log('success');
+			
+			$scope.specialsData[parentIndex].markets.splice(index,1);
+			if($scope.specialsData[parentIndex].markets.length == 1) {
+				$scope.showSavedRemoveMarket = false;
+			}
+			
+		});
+	    }
+		
+		
+		
 	}
 	
 	$scope.deletePeriod = function(index) {
-		$scope.specialsObject.splice(index,1);
-          console.log($scope.specialsObject.length);
-		if($scope.specialsObject.length == 1) {
+		console.log($scope.specialsData);
+		$scope.id = $scope.specialsData[0].id;
+		
+		
+		var r = confirm("Do You Want To Delete!");
+	    if (r == true) {
+		$http.get("/deletePeriod/"+$scope.id).success(function(response){
+			console.log('success');
+			
 			$scope.showRemovePeriod = false;
-		}
+			console.log($scope.showRemovePeriod);
+			$http.get("/getPeriod/"+supplierCode).success(function(response){
+				console.log('success');
+				console.log(response);
+				$scope.allperiod = response;
+				
+				
+				 angular.forEach($scope.allperiod, function(obj, index){
+						$scope.allperiod[index].fromDate = $filter('date')(response[index].fromDate, "yyyy-MM-dd");
+						
+						$scope.allperiod[index].toDate = $filter('date')(response[index].toDate, "yyyy-MM-dd");
+						return;
+					});
+				
+			});
+			
+		});
+		 alert("Delete Successfully !");
+	    }
+		
+		/*$http.get('/deletePeriod', {"specialsData":$scope.specialsData}).success(function(data){
+			console.log('success');
+			
+			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+		});*/
+		
 	}
 	
 	$scope.savePeriod = function() {
+		$scope.specialsObject[0].supplierCode = supplierCode;
 		console.log($scope.specialsObject);
 		$http.post('/saveSpecials', {"specialsObject":$scope.specialsObject}).success(function(data){
 			console.log('success');
 			 notificationService.success("Save Successfully");
+			 $http.get("/getPeriod/"+supplierCode).success(function(response){
+					console.log('success');
+					console.log(response);
+					$scope.allperiod = response;
+					
+					
+					 angular.forEach($scope.allperiod, function(obj, index){
+							$scope.allperiod[index].fromDate = $filter('date')(response[index].fromDate, "yyyy-MM-dd");
+							
+							$scope.allperiod[index].toDate = $filter('date')(response[index].toDate, "yyyy-MM-dd");
+							return;
+						});
+					
+				});
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
@@ -2778,6 +2869,7 @@ controller("manageSpecialsController",['$scope','notificationService','$rootScop
 	}
 	
 	$scope.updatePeriod = function() {
+		$scope.specialsData[0].supplierCode = supplierCode;
 		$http.post('/updateSpecials', {"specialsObject":$scope.specialsData}).success(function(data){
 			console.log('success');
 			 notificationService.success("Update Successfully");
@@ -2787,16 +2879,24 @@ controller("manageSpecialsController",['$scope','notificationService','$rootScop
 	}
 	
 	$scope.showPeriods = function() {
-		$http.get('/getSpecialsData/'+$scope.formData.fromDate+'/'+$scope.formData.toDate).success(function(response){
+		console.log($scope.formData);
+		
+		var arr = $scope.formData.datePeriodId.split("@");
+		$scope.formData.fromDate = arr[0];
+		$scope.formData.toDate = arr[1];
+		$scope.formData.promotionName = arr[2];
+		
+		$http.get('/getSpecialsData/'+$scope.formData.fromDate+'/'+$scope.formData.toDate+'/'+$scope.formData.promotionName).success(function(response){
 			console.log(response);
 			$scope.specialsData = response;
 			console.log($scope.specialsData);
 			if(angular.isUndefined($scope.specialsData) || $scope.specialsData == "") {
-				$scope.messageShow = "No Rate Found For This Period please";
+				$scope.messageShow = "No Period Found then";
 				$scope.link = "Add New Rate";
 				$scope.showRateUpdate = false;
 				$scope.showSavedPeriods = false;
 			} else {
+				$scope.isCreateNew =false;
 				$scope.messageShow = " ";
 				$scope.link = " ";
 				$scope.showRateUpdate = true;

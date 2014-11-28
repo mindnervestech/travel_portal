@@ -14,11 +14,14 @@
 		
 		<div ng-show="uploadpdf" class="col-md-12">
 			 <!--  <label class="col-md-1 control-label" style="text-align: left;">please Click on Images</label> -->
-			<div class="col-md-4">
-		  <a ng-click="showtext='true'" ><img src="/assets/images/uploadImg.jpg" style="cursor: pointer;"></a><br><br>
+			<div ng-show="imageShow" class="col-md-4">
+		  <a ng-click="showpdf = 'true'"><img src="/assets/images/pdfImages.jpg" style="cursor: pointer;"></a><br><br>
+				</div>
+				<div ng-show="labelShow" class="col-md-4">
+		   <label class="col-md-4 control-label">Supplier Agreement Not Available</label>
 				</div>
 				
-				 <div ng-show="showtext" class="col-md-6" style="margin-top: 10%;">
+				 <div class="col-md-6" style="margin-top: 10%;">
 					   <label class="col-md-1 control-label" style="text-align: left;"> File:</label>
 						<div class="col-md-6">
 					 <input ng-file-select="selectProfilePdf($files)" name="" type="file" />
@@ -34,7 +37,7 @@
 		
 			
 		</div>
-		<div ng-show="showpdf" class="col-md-12">
+		<div ng-show="showpdf" class="col-md-12" style="margin-left: 8%;">
 			
 		 
   			

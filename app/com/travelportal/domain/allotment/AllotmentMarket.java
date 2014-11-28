@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NoResultException;
+import javax.persistence.OneToMany;
 import javax.persistence.Query;
 import javax.persistence.Table;
 
@@ -39,7 +40,7 @@ public class AllotmentMarket {
 	@Column(name="applyMarket")
 	private String applyMarket;
 	
-	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<RateMeta> rate;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<City> cities;
@@ -130,6 +131,7 @@ public class AllotmentMarket {
 			return null;
 		}
     }
+	
 	
 public static List<AllotmentMarket> getMarketById(int MarketId,List<Integer> rateid) {/*List<Integer> rateid*/
 		

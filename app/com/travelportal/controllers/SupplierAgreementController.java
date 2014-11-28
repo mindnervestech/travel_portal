@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -97,22 +99,56 @@ public static Result getshowpdf(){
 	
 	String PdfFile = rootDir + File.separator + Long.parseLong(form.get("supplierCode")) +File.separator+ "SupplierAgreement"+File.separator+"SupplierAgreement.pdf";
 	
+	File f = new File(PdfFile);
+	if(((int)f.length()) == 0)
+	{
+	System.out.println("*********File Not Found***********");	
+	}else{
+		System.out.println("*********File Found***********");
+	}
+	
 	return ok();
 	
 }
 	
 @Transactional(readOnly=false)
 public static Result getPdfPath(long supplierCode) {
-	System.out.println("###yogesh######");
-	System.out.println(supplierCode);
+	String found = ""; 
 	createDir(rootDir,supplierCode);
 	response().setContentType("application/pdf");
 	response().setHeader("Content-Disposition", "inline; filename="+"SupplierAgreement.pdf");
 	
 	String PdfFile = rootDir + File.separator + supplierCode +File.separator+ "SupplierAgreement"+File.separator+"SupplierAgreement.pdf";
+	System.out.println("***********");
 	File f = new File(PdfFile);
+	
 	response().setHeader("Content-Length", ((int)f.length())+"");
     return ok(f);	
+	
+	
+}
+@Transactional(readOnly=false)
+public static Result getPdfPath1(long supplierCode) {
+	String found = ""; 
+	createDir(rootDir,supplierCode);
+	response().setContentType("application/pdf");
+	response().setHeader("Content-Disposition", "inline; filename="+"SupplierAgreement.pdf");
+	
+	String PdfFile = rootDir + File.separator + supplierCode +File.separator+ "SupplierAgreement"+File.separator+"SupplierAgreement.pdf";
+	System.out.println("***********");
+	File f = new File(PdfFile);
+	if(((int)f.length()) == 0)
+	{
+		found = "0";
+		System.out.println(found);
+	}else{
+		found ="1";
+		System.out.println(found);
+	}
+	Map m = new HashMap<>();
+	m.put("found", found);
+	
+    return ok(Json.toJson(m));	
 	
 	
 }
@@ -123,87 +159,6 @@ public static void createDir(String rootDir, long supplierCode) {
             file3.mkdirs();
     }
 }
-
-
-/*
-@Transactional(readOnly=false)
-public static Result savegeneralImg() throws IOException {
-	
-
-	DynamicForm form = DynamicForm.form().bindFromRequest();
-	
-	FilePart picture = request().body().asMultipartFormData().getFile("generalImg");
-	
-	System.out.println(form.get("supplierCode"));
-	
-	createDir(rootDir,Long.parseLong(form.get("supplierCode")));
-	 String fileName = picture.getFilename();
-	
-	 String ThumbnailImage = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator+"GeneralPic"+ File.separator+"Logo_thumbnail."+FilenameUtils.getExtension(fileName);
-     String originalFileName = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator +"GeneralPic"+File.separator+"Original_image."+FilenameUtils.getExtension(fileName);
-	 
-	 
-     File src = picture.getFile();
-     OutputStream out = null;
-     BufferedImage image = null;
-     File f = new File(ThumbnailImage);
-     System.out.println(originalFileName);
-     try {
-    	   
-              BufferedImage originalImage = ImageIO.read(src);
-                    Thumbnails.of(originalImage)
-                        .size(220, 220)
-                        .toFile(f);
-                        File _f = new File(originalFileName);
-                        Thumbnails.of(originalImage).scale(1.0).
-                        toFile(_f);
-       
-    	 
-     } catch (FileNotFoundException e) {
-             e.printStackTrace();
-     } catch (IOException e) {
-             e.printStackTrace();
-     } finally {
-             try {
-                     if(out != null) out.close();
-             } catch (IOException e) {
-                     e.printStackTrace();
-             }
-     }
-       
-		 System.out.println(fileName);
-		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(Long.parseLong(form.get("supplierCode")));
-		 if(infowiseimagesPath == null)
-		 {
-		infowiseimagesPath = new InfoWiseImagesPath();
-		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
-		infowiseimagesPath.setGeneralPicture(ThumbnailImage);
-		infowiseimagesPath.save();
-		 }
-		 else
-		 {
-			infowiseimagesPath.setGeneralPicture(ThumbnailImage);
-	 		infowiseimagesPath.merge();
-		 }
-		
-	return ok(Json.toJson(infowiseimagesPath));
-		//return ok();
-	
-}
-public static void createDir(String rootDir, long supplierCode) {
-    File file3 = new File(rootDir + File.separator+supplierCode +File.separator+ "ManageHotelImages"+File.separator+"GeneralPic");
-    if (!file3.exists()) {
-            file3.mkdirs();
-    }
-}
-@Transactional(readOnly=false)
-public static Result getImagePath(long supplierCode) {
-	
-	InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-	File f = new File(infowiseimagesPath.getGeneralPicture());
-    return ok(f);		
-	
-}*/
 
 	
 	

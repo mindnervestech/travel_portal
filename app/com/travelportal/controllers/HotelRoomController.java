@@ -287,12 +287,21 @@ public static void createRootDir() {
 	
 	@Transactional(readOnly=false)
     public static Result deleteRateMeta(long id) {
-		RateMeta rateMeta = RateMeta.findById(id);
-		rateMeta.delete();
+				
 		RateDetails detail = RateDetails.findByRateMetaId(id);
 		detail.delete();
 		PersonRate.deleteByRateMetaId(id);
 		CancellationPolicy.deleteByRateMetaId(id);
+		PersonRate.deleteAllotment(id);
+		
+		RateMeta rateMeta = RateMeta.findById(id);
+		rateMeta.getCities().removeAll(rateMeta.getCities());
+		
+		//rateMeta.setCities(null);
+		
+		rateMeta.delete();
+	
+		
 		return ok();
 	}
 	

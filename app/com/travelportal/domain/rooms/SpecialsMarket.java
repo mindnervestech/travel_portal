@@ -69,6 +69,18 @@ public class SpecialsMarket {
 		this.special = special;
 	}
 	
+	public static int deleteMarketSp(Long id) {
+    	Query query = JPA.em().createQuery("delete from SpecialsMarket p where p.id = ?1");
+		query.setParameter(1, id);
+    	return query.executeUpdate();
+    }
+	
+	public static int deleteSp(Long id) {
+    	Query query = JPA.em().createQuery("delete from SpecialsMarket p where p.special.id = ?1");
+		query.setParameter(1, id);
+    	return query.executeUpdate();
+    }
+	
 	public static List<SpecialsMarket> findBySpecialsId(Long id) {
     	Query query = JPA.em().createQuery("Select s from SpecialsMarket s where s.special.id = ?1");
 		query.setParameter(1, id);

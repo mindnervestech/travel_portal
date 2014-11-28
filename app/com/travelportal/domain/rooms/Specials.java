@@ -23,6 +23,7 @@ public class Specials {
 	private Date fromDate;
 	private Date toDate;
 	private String promotionName;
+	private Long supplierCode;
 	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<HotelRoomTypes> roomTypes;
 	
@@ -57,6 +58,25 @@ public class Specials {
 	public void setRoomTypes(List<HotelRoomTypes> roomTypes) {
 		this.roomTypes = roomTypes;
 	}
+		
+	public Long getSupplierCode() {
+		return supplierCode;
+	}
+	public void setSupplierCode(Long supplierCode) {
+		this.supplierCode = supplierCode;
+	}
+	
+	public static Specials findBySpecialsID(Long id) {
+    	Query query = JPA.em().createQuery("Select a from Specials a where a.id = ?1");
+		query.setParameter(1, id);
+    	return (Specials) query.getSingleResult();
+    }
+	
+	public static List<Specials> getperiod(Long code) {
+		Query q = JPA.em().createQuery("select r from Specials r where r.supplierCode = ?1");
+				q.setParameter(1, code);
+		return (List<Specials>) q.getResultList();
+	}
 	
 	public static Specials findSpecial(String promotionName, Date fromDate,Date toDate) {
     	Query query = JPA.em().createQuery("Select s from Specials s where s.promotionName = ?1 and s.fromDate = ?2 and s.toDate = ?3");
@@ -66,10 +86,11 @@ public class Specials {
     	return (Specials) query.getSingleResult();
     }
 	
-	public static List<Specials> findSpecialByDate(Date fromDate,Date toDate) {
-    	Query query = JPA.em().createQuery("Select s from Specials s where s.fromDate = ?1 and s.toDate = ?2");
+	public static List<Specials> findSpecialByDate(Date fromDate,Date toDate,String promotionName) {
+    	Query query = JPA.em().createQuery("Select s from Specials s where s.fromDate = ?1 and s.toDate = ?2 and s.promotionName = ?3");
 		query.setParameter(1, fromDate);
 		query.setParameter(2, toDate);
+		query.setParameter(3,promotionName);
     	return (List<Specials>) query.getResultList();
     }
 	

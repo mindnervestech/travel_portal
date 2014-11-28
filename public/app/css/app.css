@@ -44,11 +44,21 @@
 width: 731px !important;
 background: white !important;
 top :-120px;
+height: 650px;
+overflow-x: hidden;
+
 }
 .gen-img{
 	 width: 145px;
 	 border-bottom: none;
 }
+
+.meal-fild{
+	 width: 105px;
+	 border-bottom: none;
+	 font-size: 14px;
+}
+
 .lobby-room-img{
 	 width: 120px;
 	 border-bottom: none;

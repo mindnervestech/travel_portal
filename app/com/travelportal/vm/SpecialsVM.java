@@ -9,6 +9,7 @@ public class SpecialsVM {
 	public String fromDate;
 	public String toDate;
 	public String promotionName;
+	public Long supplierCode;
 	public List<String> roomTypes = new ArrayList<>();
 	public List<SpecialsMarketVM> markets = new ArrayList<SpecialsMarketVM>();
 }

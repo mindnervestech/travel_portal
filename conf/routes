@@ -102,6 +102,7 @@ POST    /setAllotmentCitySelection                        com.travelportal.contr
 POST    /savepdf  			com.travelportal.controllers.SupplierAgreementController.savepdf()
 POST   /showpdf				com.travelportal.controllers.SupplierAgreementController.getshowpdf()
 GET    /hotel_profile/getPdfPath/:supplierCode			com.travelportal.controllers.SupplierAgreementController.getPdfPath(supplierCode:Long)
+GET   /getPdfPath1/:supplierCode			com.travelportal.controllers.SupplierAgreementController.getPdfPath1(supplierCode:Long)
 
 POST   /findSupplier  		com.travelportal.controllers.SupplierLoginthroughAdminController.getsupplierLogin()
 #following routes are used for fetch manage hotel images, 
@@ -148,6 +149,9 @@ GET /room/amenities				com.travelportal.controllers.HotelRoomController.getAvail
 GET /roomtypesInfo/:roomId  	com.travelportal.controllers.HotelRoomController.getroomtypesInfo(roomId:Long)
 GET		/getSpecialsObject		com.travelportal.controllers.SupplierController.getSpecialsObject
 POST	/saveSpecials			com.travelportal.controllers.SupplierController.saveSpecialsObject
-GET		/getSpecialsData/:fromDate/:toDate	com.travelportal.controllers.SupplierController.getSpecialsData(fromDate:String,toDate:String)
+GET   /deletePeriod/:id		com.travelportal.controllers.SupplierController.deletePeriod(id:Long)
+GET   /deleteMarket/:id		com.travelportal.controllers.SupplierController.deleteMarket(id:Long)
+GET     /getPeriod/:supplierCode			com.travelportal.controllers.SupplierController.getPeriod(supplierCode:Long)
+GET		/getSpecialsData/:fromDate/:toDate/:promotionName	com.travelportal.controllers.SupplierController.getSpecialsData(fromDate:String,toDate:String,promotionName:String)
 GET 	/getRooms				com.travelportal.controllers.HotelRoomController.getAllRoomTypesByCode
 POST	/updateSpecials			com.travelportal.controllers.SupplierController.updateSpecials
