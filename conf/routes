@@ -11,6 +11,7 @@ GET /hotel_profile/:profileId 		com.travelportal.controllers.HotelProfileControl
 #APIs for fetching seed data 
 
 GET		/signUp						com.travelportal.controllers.ApplicationController.getSignUpForm
+GET		/agentsignUp						com.travelportal.controllers.ApplicationController.getAgentSignUpForm
 GET		/login						com.travelportal.controllers.ApplicationController.login
 POST	/getCityOfCountry			com.travelportal.controllers.ApplicationController.getCityOfCountry
 POST	/register					com.travelportal.controllers.ApplicationController.doRegister
@@ -149,8 +150,11 @@ GET /room/amenities				com.travelportal.controllers.HotelRoomController.getAvail
 GET /roomtypesInfo/:roomId  	com.travelportal.controllers.HotelRoomController.getroomtypesInfo(roomId:Long)
 GET		/getSpecialsObject		com.travelportal.controllers.SupplierController.getSpecialsObject
 POST	/saveSpecials			com.travelportal.controllers.SupplierController.saveSpecialsObject
+GET     /getSpecialMarketGroup/:id               com.travelportal.controllers.SupplierController.getMarketGroup(id:Long)
 GET   /deletePeriod/:id		com.travelportal.controllers.SupplierController.deletePeriod(id:Long)
 GET   /deleteMarket/:id		com.travelportal.controllers.SupplierController.deleteMarket(id:Long)
+GET   /deletecansell/:id/:value    com.travelportal.controllers.HotelRoomController.deletecansell(id:Long,value:Boolean)
+GET   /deleteSpecialcansell/:id/:value    com.travelportal.controllers.HotelRoomController.deleteSpecialcansells(id:Long,value:Boolean)
 GET     /getPeriod/:supplierCode			com.travelportal.controllers.SupplierController.getPeriod(supplierCode:Long)
 GET		/getSpecialsData/:fromDate/:toDate/:promotionName	com.travelportal.controllers.SupplierController.getSpecialsData(fromDate:String,toDate:String,promotionName:String)
 GET 	/getRooms				com.travelportal.controllers.HotelRoomController.getAllRoomTypesByCode

@@ -17,6 +17,7 @@ import com.travelportal.domain.HotelBrands;
 import com.travelportal.domain.HotelChain;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.HotelStarRatings;
+import com.travelportal.domain.Salutation;
 import com.travelportal.domain.rooms.RateWrapper;
 import com.travelportal.vm.HotelSignUpVM;
 import com.travelportal.vm.RoomtypeVM;
@@ -118,6 +119,25 @@ public class ApplicationController extends Controller{
 		return ok(views.html.login.render(" "));
 	}	
 	
+	
+	@Transactional
+	public static Result getAgentSignUpForm() {
+	
+		List<Country> countries = Country.getCountries();
+		List<String> countryList = new ArrayList<>();
+		for(Country country: countries) {
+			countryList.add(country.getCountryName());
+		}
+		
+		List<Salutation> salutations = Salutation.getsalutation();
+		List<String> salList = new ArrayList<>();
+		for(Salutation salutation: salutations){
+			salList.add(salutation.getSalutationValue());
+		}
+		
+		
+		return ok(views.html.agentsignup.render(countryList,salList));
+	}
 	
 	@Transactional
 	public static Result getSignUpForm() {

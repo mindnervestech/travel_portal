@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Query;
 
+import com.travelportal.domain.City;
+
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
@@ -26,6 +28,8 @@ public class Specials {
 	private Long supplierCode;
 	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<HotelRoomTypes> roomTypes;
+	/*@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public List<City> cities;*/
 	
 	
 	public Long getId() {

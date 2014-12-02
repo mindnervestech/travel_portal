@@ -43,6 +43,7 @@ import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RateWrapper;
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.RoomChildPolicies;
+import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.AllocatedCitiesVM;
 import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.HotelHealthAndSafetyVM;
@@ -754,6 +755,21 @@ public static void createRootDir() {
         return ok(f);
 		
 		
+	}
+	
+	//
+	
+	@Transactional(readOnly=false)
+    public static Result deletecansell(long id,boolean value){
+		CancellationPolicy.deletecansellpolicy(id,value);
+		return ok();
+	}
+	
+	
+	@Transactional(readOnly=false)
+    public static Result deleteSpecialcansells(long id,boolean value){
+		CancellationPolicy.deleteSpecicansellpolicy(id,value);
+		return ok();
 	}
 	
 	///////

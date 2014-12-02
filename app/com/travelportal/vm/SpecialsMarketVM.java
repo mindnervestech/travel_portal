@@ -1,5 +1,8 @@
 package com.travelportal.vm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SpecialsMarketVM {
 
 	public long id;
@@ -8,5 +11,7 @@ public class SpecialsMarketVM {
 	public String typeOfStay;
 	public boolean multiple;
 	public boolean combined;
+	public String applyToMarket;
+	public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
 	
 }

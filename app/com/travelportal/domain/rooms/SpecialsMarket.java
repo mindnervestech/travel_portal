@@ -2,12 +2,19 @@ package com.travelportal.domain.rooms;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Query;
+
+import com.travelportal.domain.City;
+import com.travelportal.domain.allotment.AllotmentMarket;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -22,8 +29,11 @@ public class SpecialsMarket {
 	private String typeOfStay;
 	private boolean multiple;
 	private boolean combined;
+	private String applyToMarket;
 	@OneToOne
 	private Specials special;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public List<City> cities;
 	
 	
 	public Long getId() {
@@ -68,6 +78,41 @@ public class SpecialsMarket {
 	public void setSpecial(Specials special) {
 		this.special = special;
 	}
+	
+	public String getApplyToMarket() {
+		return applyToMarket;
+	}
+	public void setApplyToMarket(String applyToMarket) {
+		this.applyToMarket = applyToMarket;
+	}
+	public List<City> getCities() {
+		return cities;
+	}
+	public void setCities(List<City> cities) {
+		this.cities = cities;
+	}
+	
+	public static SpecialsMarket findByIdCity(long Code) {
+		try
+		{
+			Query query = JPA.em().createQuery("Select s from SpecialsMarket s where s.id = ?1");
+			query.setParameter(1, Code);
+	    	return (SpecialsMarket) query.getSingleResult();
+		}
+		catch(Exception ex){
+			return null;
+		}
+    }
+	
+	public static SpecialsMarket findByTopid() {
+		try
+		{
+		return (SpecialsMarket) JPA.em().createQuery("select c from SpecialsMarket c where c.id = (select max(a.id) from SpecialsMarket a)").getSingleResult();
+		}
+		catch(Exception ex){
+			return null;
+		}
+    }
 	
 	public static int deleteMarketSp(Long id) {
     	Query query = JPA.em().createQuery("delete from SpecialsMarket p where p.id = ?1");

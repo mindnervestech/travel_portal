@@ -8,7 +8,16 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.travelportal.controllers.AllotmentController.AllotMarketVM;
+import com.travelportal.controllers.AllotmentController.CityVM;
+import com.travelportal.controllers.AllotmentController.CountryVM;
+import com.travelportal.controllers.AllotmentController.VM;
+import com.travelportal.controllers.HotelRoomController.SelectedCityVM;
+import com.travelportal.domain.City;
+import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
+import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.CancellationPolicy;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
@@ -16,6 +25,7 @@ import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
+import com.travelportal.vm.AllocatedCitiesVM;
 import com.travelportal.vm.SpecialsMarketVM;
 import com.travelportal.vm.SpecialsVM;
 import com.travelportal.vm.SpecialsWrapper;
@@ -70,8 +80,33 @@ public class SupplierController extends Controller {
 				specialsMarket.setTypeOfStay(market.typeOfStay);
 				specialsMarket.setCombined(market.combined);
 				specialsMarket.setMultiple(market.multiple);
+				specialsMarket.setApplyToMarket(market.applyToMarket);
 				specialsMarket.setSpecial(Specials.findSpecial(spec.promotionName, format.parse(spec.fromDate), format.parse(spec.toDate)));
 				specialsMarket.save();
+				
+				//RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType));
+				 SpecialsMarket SpecM = SpecialsMarket.findByTopid();
+				List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
+				for(AllocatedCitiesVM vm: market.allocatedCities) {
+					if(vm.multiSelectGroup == false && vm.name != null){
+						SelectedCityVM cityVM = new SelectedCityVM();
+						cityVM.name = vm.name;
+						cityVM.ticked = vm.ticked;
+						selectedCityVM.add(cityVM);
+					}
+					
+					System.out.println(vm.multiSelectGroup);
+				}
+				List<City> listCity = new ArrayList<>();
+				for(SelectedCityVM cityvm : selectedCityVM){
+					City _city = City.getCitiByName(cityvm.name);
+					
+					if(cityvm.ticked){
+						listCity.add(_city);
+					}
+				}
+				SpecM.setCities(listCity);
+				
 			}
 		}
 		
@@ -81,7 +116,7 @@ public class SupplierController extends Controller {
 	
 	@Transactional(readOnly=false)
     public static Result deleteMarket(long id){
-		SpecialsMarket.deleteSp(id);	
+		SpecialsMarket.deleteMarketSp(id);	
 		return ok();
 	}
 	
@@ -123,8 +158,31 @@ public class SupplierController extends Controller {
 					specialsMarket.setTypeOfStay(market.typeOfStay);
 					specialsMarket.setCombined(market.combined);
 					specialsMarket.setMultiple(market.multiple);
+					specialsMarket.setApplyToMarket(market.applyToMarket);
 					specialsMarket.setSpecial(Specials.findSpecial(spec.promotionName, format.parse(spec.fromDate), format.parse(spec.toDate)));
 					specialsMarket.save();
+					
+					 SpecialsMarket SpecM = SpecialsMarket.findByTopid();
+						List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
+						for(AllocatedCitiesVM vm: market.allocatedCities) {
+							if(vm.multiSelectGroup == false && vm.name != null){
+								SelectedCityVM cityVM = new SelectedCityVM();
+								cityVM.name = vm.name;
+								cityVM.ticked = vm.ticked;
+								selectedCityVM.add(cityVM);
+							}
+							
+							System.out.println(vm.multiSelectGroup);
+						}
+						List<City> listCity = new ArrayList<>();
+						for(SelectedCityVM cityvm : selectedCityVM){
+							City _city = City.getCitiByName(cityvm.name);
+							
+							if(cityvm.ticked){
+								listCity.add(_city);
+							}
+						}
+						SpecM.setCities(listCity);
 				} else {
 					SpecialsMarket specialsMarket = SpecialsMarket.findById(market.id);
 					specialsMarket.setStayDays(market.stayDays);
@@ -133,6 +191,28 @@ public class SupplierController extends Controller {
 					specialsMarket.setCombined(market.combined);
 					specialsMarket.setMultiple(market.multiple);
 					specialsMarket.merge();
+					
+					// SpecialsMarket SpecM = SpecialsMarket.findByTopid();
+						List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
+						for(AllocatedCitiesVM vm: market.allocatedCities) {
+							if(vm.multiSelectGroup == false && vm.name != null){
+								SelectedCityVM cityVM = new SelectedCityVM();
+								cityVM.name = vm.name;
+								cityVM.ticked = vm.ticked;
+								selectedCityVM.add(cityVM);
+							}
+							
+							System.out.println(vm.multiSelectGroup);
+						}
+						List<City> listCity = new ArrayList<>();
+						for(SelectedCityVM cityvm : selectedCityVM){
+							City _city = City.getCitiByName(cityvm.name);
+							
+							if(cityvm.ticked){
+								listCity.add(_city);
+							}
+						}
+						specialsMarket.setCities(listCity);
 				}
 			}
 		}
@@ -163,6 +243,7 @@ public class SupplierController extends Controller {
 				vm.payDays = market.getPayDays();
 				vm.stayDays = market.getStayDays();
 				vm.typeOfStay = market.getTypeOfStay();
+				vm.applyToMarket = market.getApplyToMarket();
 				vm.id = market.getId();
 				specialsVM.markets.add(vm);
 			}
@@ -171,5 +252,115 @@ public class SupplierController extends Controller {
 		}
 		return ok(Json.toJson(list));
 	}	
+	
+	
+	@Transactional(readOnly = true)
+	public static Result getMarketGroup(long id) {
+		List<Country> country = Country.getCountries();
+		List<MarketVM> group = new ArrayList<MarketVM>();
+		for (Country c : country) {
+			MarketVM marketvm = new MarketVM();
+			CountryVM countryvm = new CountryVM();
+			countryvm.countryCode = c.getCountryCode();
+			countryvm.countryName = c.getCountryName();
+
+			List<CityVM> cityvm = new ArrayList<CityVM>();
+			List<City> city = City.getCities(c.getCountryCode());
+			for (City _city : city) {
+				
+				CityVM _cityvm = new CityVM();
+				_cityvm.id = _city.getCityCode();
+				_cityvm.cityCountryCode = _city.getCountry().getCountryCode();
+				_cityvm.cityName = _city.getCityName();
+				if(id != 0) {
+					SpecialsMarket alotMarket = SpecialsMarket.findByIdCity(id);
+					System.out.println("*******************");
+					System.out.println(alotMarket);
+				for(City cty : alotMarket.getCities()){
+					if(cty.getCityCode() == _city.getCityCode()){
+						_cityvm.tick = true;
+						break;
+					}else{
+						_cityvm.tick = false;
+					}
+						
+				}
+			} else {
+				_cityvm.tick = false;
+				}
+				cityvm.add(_cityvm);
+			}
+			countryvm.cityvm = cityvm;
+			marketvm.country = countryvm;
+			group.add(marketvm);
+		}
+		return ok(Json.toJson(group));
+	}
+	
+	public static class MarketVM {
+		public CountryVM country;
+
+	}
+
+	public static class CountryVM {
+		public int countryCode;
+		public String countryName;
+		public List<CityVM> cityvm;
+	}
+
+	public static class CityVM {
+		public int id;
+		public int cityCountryCode;
+		public String cityName;
+		public boolean tick;
+
+	}
+	
+	public static class SelectedCityVM {
+
+		public String name;
+		public int countryCode;
+		public boolean ticked;
+
+	}
+	public static class VM {
+		public int id;
+		public List<SelectedCityVM> city = new ArrayList<SelectedCityVM>();
+	}
+	
+
+	@Transactional(readOnly = false)
+	public static Result setCitySelection() {
+		//JsonNode json = request().body().asJson().get("id");
+		JsonNode jn = request().body().asJson();
+		//System.out.println(json.asInt());
+		//jn.as
+		
+		VM c = Json.fromJson(jn, VM.class);
+		int id  = c.id;
+		List<SelectedCityVM> city = c.city;
+		AllotmentMarket alotMarket = AllotmentMarket.findById(id);
+		
+		if(alotMarket != null && alotMarket.getCities() != null && !alotMarket.getCities().isEmpty())
+		{
+			alotMarket.getCities().removeAll(alotMarket.getCities());
+			//JPA.em().merge(rates);
+		}
+		
+		List<City> listCity = new ArrayList<>();
+		for(SelectedCityVM cityvm : city){
+			City _city = City.getCitiByName(cityvm.name);
+			
+			if(cityvm.ticked){
+				listCity.add(_city);
+			}
+		}
+		alotMarket.setCities(listCity);
+		return ok();
+
+	}
+
+	
+
 	
 }

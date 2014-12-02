@@ -101,6 +101,20 @@ public class CancellationPolicy {
     	return query.executeUpdate();
     }
 	
+	public static int deleteSpecicansellpolicy(Long id,boolean value) {
+    	Query query = JPA.em().createQuery("delete from CancellationPolicy p where p.id = ?1 and p.isPenalty = ?2");
+		query.setParameter(1, id);
+		query.setParameter(2, value);
+    	return query.executeUpdate();
+    }
+	public static int deletecansellpolicy(Long id,boolean value) {
+    	Query query = JPA.em().createQuery("delete from CancellationPolicy p where p.id = ?1 and p.isPenalty = ?2");
+		query.setParameter(1, id);
+		query.setParameter(2, value);
+    	return query.executeUpdate();
+    }
+	
+	
 	@Transactional
     public void save() {
 		JPA.em().persist(this);
