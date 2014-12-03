@@ -248,7 +248,8 @@ angular.module('travel_portal').
 		$scope.allotmentMDeleteId = function(allot,index)
 		{
 			console.log(allot);
-			
+			var r = confirm("Do You Want To Delete!");
+		    if (r == true) {
 			$http.get('/deleteAllotmentMarket/'+allot.allotmentMarketId+'/'+ $scope.allotmentId)
 			.success(function(){
 				angular.forEach($scope.allotmentM[index].rate,function(value1,key1) {
@@ -263,6 +264,7 @@ angular.module('travel_portal').
 				$scope.allotmentM.splice(index, 1);
 				console.log('success');
 			});
+		    }
 		}
 		
 		
@@ -864,6 +866,9 @@ angular.module('travel_portal').
 					console.log($scope.roomTypeIns.roomId);
 					console.log($scope.roomTypeIns.roomchildPolicies);
 					console.log("@#$%$%^&*(*&&^^#%%#%");
+					
+					var r = confirm("Do You Want To Delete!");
+				    if (r == true) {
 					$http.get('/deleteRoomchild/'+$scope.roomTypeIns.roomId)
 					.success(function(){
 						$scope.roomTypeIns.roomchildPolicies = [];
@@ -871,6 +876,7 @@ angular.module('travel_portal').
 						console.log('success');
 						//$scope.childpolicy.push( {  } );
 					});
+				    }
 
 
 				};
@@ -1430,7 +1436,8 @@ angular.module('travel_portal').
 	$scope.DeleteDocId = function(doc){
 		console.log(doc);
 
-
+		var r = confirm("Do You Want To Delete!");
+	    if (r == true) {
 		$http.get('/deleteDocument/'+$scope.docId+'/'+doc.imgpathId)
 		.success(function(){
 			
@@ -1446,12 +1453,14 @@ angular.module('travel_portal').
 				  $scope.docId = response.docInfo[0].id;
 			});
 		});
+	    }
 		};
 
 	$scope.setDeleteId = function(meal){
 		console.log(meal.id);
 
-
+		var r = confirm("Do You Want To Delete!");
+	    if (r == true) {
 		$http.get('/deletemealpolicy/'+meal.id)
 		.success(function(){
 			angular.forEach($scope.MealType, function(obj, index){
@@ -1462,11 +1471,13 @@ angular.module('travel_portal').
 			});
 			console.log('success');
 		});
-
+	    }
 	};
 
 	$scope.childDeleteId = function(){
 		
+		var r = confirm("Do You Want To Delete!");
+	    if (r == true) {
 		$http.get('/deletechile/'+$rootScope.mealIdData.id)
 		.success(function(){
 			$scope.MealType.child = [];
@@ -1474,7 +1485,7 @@ angular.module('travel_portal').
 
 			console.log('success');
 		});
-
+	    }
 
 	};
 	
@@ -2673,7 +2684,7 @@ controller("manageSuppliersController",function($scope,notificationService,$root
 		
 		
 		$scope.pendingU = function(user) {
-			//$scope.userId = userId;
+			
 			console.log(user);
 			
 			$scope.generalInfo = user;
@@ -2752,6 +2763,8 @@ controller("manageSuppliersController",function($scope,notificationService,$root
 		}
 		
 });
+
+
 angular.module('travel_portal').
 controller("manageSpecialsController",['$scope','notificationService','$filter','$rootScope','$http',function($scope,notificationService,$filter,$rootScope, $http){
 	
@@ -3041,6 +3054,116 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 			$scope.setSelection(allot);
 		}*/
 		
+	}
+	
+}]);
+
+
+angular.module('travel_portal').
+controller("manageAgentController",['$scope','notificationService','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$filter,$rootScope, $http,ngDialog){
+	
+	$scope.getData = function() {
+	
+	   $http.get('/getApprovedAgent').success(function(response){
+			
+			console.log(response);
+			$scope.approvedUsers = response;
+		});
+		
+		$http.get('/getPendingAgent').success(function(response){
+			console.log(response);
+			$scope.pendingUsers = response;
+		});
+		
+	
+		
+		$http.get('/getRejectedAgent').success(function(response){
+			console.log(response);
+			$scope.rejectedUsers = response;
+		});
+		
+	}
+	
+	$scope.pendingU = function(user) {
+		
+		console.log(user);
+		
+		$scope.generalInfo = user;
+		console.log($scope.generalInfo);
+		/*$http.get("/marketrate").success(function(response) {
+			$scope.marketrate = response;
+		});*/
+		
+		ngDialog.open({
+			template: 'pending',
+			scope : $scope,
+			className: 'ngdialog-theme-default'
+		});
+		
+	}
+	
+	$scope.rejectedUser = function(user) {
+	
+		console.log(user);
+		
+		$scope.generalInfo = user;
+		console.log($scope.generalInfo);
+		/*$http.get("/marketrate").success(function(response) {
+			$scope.marketrate = response;
+		});*/
+		
+		ngDialog.open({
+			template: 'Reject',
+			scope : $scope,
+			className: 'ngdialog-theme-default'
+		});
+		
+	}
+	
+	$scope.ApprovedUser = function(user) {
+		
+		console.log(user);
+		
+		$scope.generalInfo = user;
+		console.log($scope.generalInfo);
+		/*$http.get("/marketrate").success(function(response) {
+			$scope.marketrate = response;
+		});*/
+		
+		ngDialog.open({
+			template: 'Approved',
+			scope : $scope,
+			className: 'ngdialog-theme-default'
+		});
+		
+	}
+	
+	$scope.approvePending = function() {
+		$scope.userId = $scope.generalInfo.id;
+		$scope.email = $scope.generalInfo.email;
+		$scope.loginId = $scope.generalInfo.loginId;
+		$http.get('/approveAgent/'+$scope.userId+'/'+$scope.email).success(function(response){
+			$scope.pendingUsers.splice($scope.pendingUsers.indexOf($scope.generalInfo),1);
+			$scope.getData();
+		});
+	}
+	
+	$scope.ApprovReject = function(){
+		console.log($scope.generalInfo);
+		$scope.userId = $scope.generalInfo.id;
+		$http.get('/rejectAgent/'+$scope.userId).success(function(response){
+			console.log("Success")
+		$scope.approvedUsers.splice($scope.approvedUsers.indexOf($scope.generalInfo),1);
+		$scope.getData();
+	});
+	}
+	
+	$scope.pendingUser = function() {
+		$scope.userId = $scope.generalInfo.id;
+		$http.get('/pendingAgent/'+$scope.userId).success(function(response){
+			$scope.rejectedUsers.splice($scope.rejectedUsers.indexOf($scope.generalInfo),1);
+			$scope.getData();
+		});
 	}
 	
 }]);

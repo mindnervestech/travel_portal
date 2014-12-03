@@ -1,11 +1,12 @@
-@(countries: List[String],salutation: List[String])
+@(countries: List[String],salutation: List[String],hearAboutUs:
+List[String],natureOfBusiness: List[String],Currency: List[String])
 
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title></title>
-   <link type="text/css" rel="stylesheet"
+<head>
+<title></title>
+<link type="text/css" rel="stylesheet"
 	href='@routes.Assets.at("app/vendors/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css")'>
 <link type="text/css" rel="stylesheet"
 	href='@routes.Assets.at("app/vendors/font-awesome/css/font-awesome.min.css")'>
@@ -23,474 +24,534 @@
 	href='@routes.Assets.at("app/vendors/jquery-notific8/jquery.notific8.min.css")'>
 <!--Loading style-->
 <link type="text/css" rel="stylesheet"
-	href='@routes.Assets.at("app/css/themes/style1/orange-blue.css")' class="default-style">
+	href='@routes.Assets.at("app/css/themes/style1/orange-blue.css")'
+	class="default-style">
 <link type="text/css" rel="stylesheet"
-	href='@routes.Assets.at("app/css/themes/style1/orange-blue.css")' id="theme-change"
-	class="style-change color-change">
-<link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/style-responsive.css")'>
-<link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/app.css")'>
+	href='@routes.Assets.at("app/css/themes/style1/orange-blue.css")'
+	id="theme-change" class="style-change color-change">
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/css/style-responsive.css")'>
+<link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/css/app.css")'>
 <script src='@routes.Assets.at("bower_components/jquery/jquery.min.js")'></script>
-<script src='@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")'></script>
-<script src='@routes.Assets.at("app/vendors/jquery-bootstrap-wizard/jquery.bootstrap.wizard.min.js")'></script>
+<script
+	src='@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")'></script>
+<script
+	src='@routes.Assets.at("app/vendors/jquery-bootstrap-wizard/jquery.bootstrap.wizard.min.js")'></script>
 
-    </head>
-    
-    
-      <div class="col-lg-12">
-    <div class="portlet box portlet-green">
-      <div class="portlet-header">
-        <div class="caption">CUSTOMER REGISTRATION</div>
-        <div class="tools"><i class="fa fa-chevron-up"></i><i data-toggle="modal" data-target="#modal-config" class="fa fa-cog"></i><i class="fa fa-refresh"></i><i class="fa fa-times"></i></div>
-      </div>
-      <div class="portlet-body">
-        <div id="rootwizard-custom">
-          <div class="navbar">
-            <div class="navbar-inner">
-               <ul>
-                <li><a data-target="#tab1-wizard-custom-circle" data-toggle="tab"><!-- <i class="glyphicon glyphicon-user"></i> -->
-                    <p class="anchor"></p>
-                    <p class="description"></p></a></li>
-                <li><a data-target="#tab2-wizard-custom-circle" data-toggle="tab"><!-- <i class="glyphicon glyphicon-send mln"></i> -->
-                    <p class="anchor"></p>
-                    <p class="description"></p></a></li>
-                <li><a data-target="#tab3-wizard-custom-circle" data-toggle="tab"><!-- <i class="glyphicon glyphicon-shopping-cart"></i> -->
-                    <p class="anchor"></p>
-                    <p class="description"></p></a></li>
-                <li><a data-target="#tab4-wizard-custom-circle" data-toggle="tab"><!-- <i class="glyphicon glyphicon-check"></i> -->
-                    <p class="anchor"></p>
-                    <p class="description"></p></a></li>
-              </ul> 
-            </div>
-          </div>
-          <div id="bar" class="progress active">
-            <div class="bar progress-bar progress-bar-primary"></div>
-          </div>
-          <div class="tab-content">
-            <div id="tab1-wizard-custom-circle" class="tab-pane">
-              <h3 class="mbxl">Step 1</h3>
-             <form method="post" name="contact" action="/agentregister" method="post" role="form" class="form-horizontal">
-	<div class="col-md-12">
-		<div class="col-md-12">
-			
-			<div class="form-group">
-				<label class="col-md-3 control-label">*Title:</label>
-				<div class="col-md-7">
-					<select class="form-control" id="title" name="title" required>
-										<option value="">--Select title--</option>
-										 @for(title <- salutation) {
-										        <option value="@title">@title</option>
-										  }
-										
-								</select>
-				</div>
+</head>
+
+
+<div class="col-lg-12">
+	<div class="portlet box portlet-green">
+		<div class="portlet-header">
+			<div class="caption">CUSTOMER REGISTRATION</div>
+			<div class="tools">
+				<i class="fa fa-chevron-up"></i><i data-toggle="modal"
+					data-target="#modal-config" class="fa fa-cog"></i><i
+					class="fa fa-refresh"></i><i class="fa fa-times"></i>
 			</div>
-			
-			<div class="form-group">
-				<label class="col-md-3 control-label">*First Name:</label>
-				<div class="col-md-7">
-					<input type="text" name="firstName" class="form-control"  required>
-				</div>
-			</div>
-			
-			
-			
-			
-						
-			<div class="form-group">
-				<label class="col-md-3 control-label">*Last Name:</label>
-				<div class="col-md-7">
-					<input type="text" name="lastName" class="form-control"  required>
-				</div>
-			</div>
-			
-			
-			<div class="form-group">
-				<label class="col-md-3 control-label">*Country:</label>
-						
-					<div class="col-md-3">
-				<select class="form-control" id="cntry" name="country" onchange="getCountry()" required>
-										<option value="">--Select country--</option>
-										 @for(country <- countries) {
-										        <option value="@country">@country</option>
-										  }
-										
-								</select>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="col-md-3 control-label">*Nature of Business:</label>
-				<div class="col-md-7">
-				<select class="form-control" id="business" name="business" required>
-										<option value="">-- Choose One --</option>
-										<option value="">Tour Operator</option>
-										<option value="">Travel Agent</option>
-										<option value="">Airline</option>
-										<option value="">Travel Switch</option>
-										<option value="">Travel Portal</option>										
-										<option value="">Destination Management Company</option>
-										<option value="">Travel Call Centre</option>
-										<option value="">Wholesaler</option>
-										<option value="">Home-worker</option>
-					</select>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="col-md-3 control-label">How did you hear about us?	</label>
-				<div class="col-md-7">
-					<select class="form-control" id="hear" name="hear" required>
-										<option value="">-- Choose One --</option>
-										<option value="">Visit by DOTW Sales Representative</option>
-										<option value="">Trade Show</option>
-										<option value="">ATM</option>
-										<option value="">WTM</option>
-										<option value="">Fitur</option>
-										<option value="">ITB</option>
-										<option value="">Flyer from DOTW</option>
-										<option value="">DOTW NEWS</option>
-										<option value="">MITT Moscow</option>
-										<option value="">Referred by Supplier</option>
-										<option value="">Referred by Tourism Board</option>
-										<option value="">Referred by Travel Agent</option>
-										<option value="">Google</option>
-										<option value="">Gazetteer's</option>
-										<option value="">Yahoo</option>
-										<option value="">Amadeus</option>
-										<option value="">Other</option>		
-					</select>
-				</div>
-			</div>
-			
-			<div class="form-group">
-					<label class="col-md-3 control-label">Thank you, please click next	</label>
+		</div>
+		<div class="portlet-body">
+			<div id="rootwizard-custom">
+				<div class="navbar">
+					<div class="navbar-inner">
+						<ul>
+							<li><a data-target="#tab1-wizard-custom-circle"
+								data-toggle="tab">
+									<!-- <i class="glyphicon glyphicon-user"></i> -->
+									<p class="anchor"></p>
+									<p class="description"></p>
+							</a></li>
+							<li><a data-target="#tab2-wizard-custom-circle"
+								data-toggle="tab">
+									<!-- <i class="glyphicon glyphicon-send mln"></i> -->
+									<p class="anchor"></p>
+									<p class="description"></p>
+							</a></li>
+							<li><a data-target="#tab3-wizard-custom-circle"
+								data-toggle="tab">
+									<!-- <i class="glyphicon glyphicon-shopping-cart"></i> -->
+									<p class="anchor"></p>
+									<p class="description"></p>
+							</a></li>
+							<!-- <li><a data-target="#tab4-wizard-custom-circle"
+								data-toggle="tab">
+									<i class="glyphicon glyphicon-check"></i>
+									<p class="anchor"></p>
+									<p class="description"></p>
+							</a></li> -->
+						</ul>
 					</div>
-					
-		
-		</div>  
-		
-		
-		
-		<div class="form-group">
-		<div>
-					<label class="col-md-5 control-label">*Please complete all fields in order to continue, and click</label>
-					</div>
-			<!-- <div class="col-md-2 col-md-offset-9">
+				</div>
+				<div id="bar" class="progress active">
+					<div class="bar progress-bar progress-bar-primary"></div>
+				</div>
+				<form method="post" name="contact" action="/agentregister"
+							method="post" role="form" class="form-horizontal">
+				<div class="tab-content">
+				
+					<div id="tab1-wizard-custom-circle" class="tab-pane">
+						<h3 class="mbxl">Step 1</h3>
+						
+							<div class="col-md-12">
+								<div class="col-md-12">
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Title:</label>
+										<div class="col-md-6">
+											<select class="form-control" id="title" name="title" required>
+												<option value="">--Select title--</option> @for(title <-
+												salutation) {
+												<option value="@title">@title</option> }
+
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*First Name:</label>
+										<div class="col-md-6">
+											<input type="text" name="firstName" class="form-control"
+												required>
+										</div>
+									</div>
+
+
+
+
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Last Name:</label>
+										<div class="col-md-6">
+											<input type="text" name="lastName" class="form-control"
+												required>
+										</div>
+									</div>
+
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Country:</label>
+
+										<div class="col-md-6">
+											<select class="form-control" id="cntry" name="country"
+												onchange="getCountry()" required>
+												<option value="">--Select country--</option> @for(country <-
+												countries) {
+												<option value="@country">@country</option> }
+
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Nature of
+											Business:</label>
+										<div class="col-md-6">
+											<select class="form-control" id="business" name="business"
+												required>
+												<option value="">--Select--</option> @for(business <-
+												natureOfBusiness) {
+												<option value="@business">@business</option> }
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">How did you hear
+											about us? </label>
+										<div class="col-md-6">
+											<select class="form-control" id="hear" name="hear" required>
+												<option value="">--Select--</option> @for(hear <-
+												hearAboutUs) {
+												<option value="@hear">@hear</option> }
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">Thank you,
+											please click next </label>
+									</div>
+
+
+								</div>
+
+
+
+								<div class="form-group">
+									<div>
+										<label class="col-md-5 control-label">*Please complete
+											all fields in order to continue, and click</label>
+									</div>
+									<!-- <div class="col-md-2 col-md-offset-9">
 		 <button type="submit" class="btn btn-primary">Next</button>
 		 </div> -->
-		 </div>
-                
-	</div>
-</form>
-            </div>
-            <div id="tab2-wizard-custom-circle" class="tab-pane">
-              <h3 class="mbxl">Delivery information</h3>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="inputStreet" class="control-label">Street <span class='require'>*</span></label>
-                    <input id="inputStreet" type="text" placeholder="" class="form-control"/><i class="alert alert-hide">Oops! Forgot something? Let try again.</i>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="inputFirstName" class="control-label">District</label>
-                    <input id="inputDistrict" type="text" placeholder="" class="form-control"/><i class="alert alert-hide">Oops! Forgot something? Let try again.</i>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="inputCity" class="control-label">City <span class='require'>*</span></label>
-                    <input id="inputCity" type="text" placeholder="" class="form-control"/><i class="alert alert-hide">Oops! Forgot something? Let try again.</i>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="inputPostCode" class="control-label">Post Code</label>
-                    <input id="inputPostCode" type="text" placeholder="" class="form-control"/><i class="alert alert-hide">Oops! Forgot something? Let try again.</i>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="selCountry" class="control-label">Country</label>
-                    <select id="selCountry" class="form-control">
-                      <option value="">Select a Country</option>
-                      <option value="">United States</option>
-                      <option value="">England</option>
-                      <option value="">France</option>
-                      <option value="">Spain</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="tab3-wizard-custom-circle" class="tab-pane fadeIn">
-              <h3 class="mbxl">Checking products</h3>
-              <form action="#" class="form-horizontal">
-                <div class="form-group">
-                  <label for="inputUsername" class="col-md-2 control-label">Product 1:</label>
-                  <div class="col-md-10">
-                    <input type="text" placeholder="Detail" class="inputUsername form-control"/>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputUsername" class="col-md-2 control-label">Product 2:</label>
-                  <div class="col-md-10">
-                    <input type="text" placeholder="Detail" class="inputUsername form-control"/>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputUsername" class="col-md-2 control-label">Product 3:</label>
-                  <div class="col-md-10">
-                    <input type="text" placeholder="Detail" class="inputUsername form-control"/>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="selCountry" class="col-md-2 control-label">Check out method</label>
-                  <div class="col-lg-3 col-md-5">
-                    <select id="selCountry" class="form-control">
-                      <option value="">Cash</option>
-                      <option value="">Visa Card</option>
-                      <option value="">Credit Card</option>
-                    </select>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div id="tab4-wizard-custom-circle" class="tab-pane fadeIn">
-              <h3 class="mbxl">Thank you!</h3>
-              <p>Congragulation! You have completed checkout steps.</p>
-              <p>Thank you for use our products.</p>
-            </div>
-            <div class="action text-right">
-              <button type="button" name="previous" value="Previous" class="btn btn-info button-previous"><i class="fa fa-arrow-circle-o-left mrx"></i>Previous</button>
-              <button type="button" name="next" value="Next" class="btn btn-info button-next mlm">Next<i class="fa fa-arrow-circle-o-right mlx"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-    
-   <!--  <body style="background-color: white;">
-    	<div class="panel panel-green">
-						<div class="panel-heading clearfix">
-							<span class="mts pull-left">Agent Signup</span>
+								</div>
+
+							</div>
+					
+					</div>
+					<div id="tab2-wizard-custom-circle" class="tab-pane">
+						<h3 class="mbxl">Step 2</h3>
+						
+							<div class="col-md-12">
+								<div class="col-md-12">
+
+									<div class="form-group">
+										<div>
+											<label class="col-md-5 control-label"><b>Thank
+													you, Dfg,</b><br> Please give us some more details on your
+												business so we can serve you better:</label>
+										</div>
+
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">Position/Designation:</label>
+										<div class="col-md-6">
+											<input type="text" name="Position" class="form-control"
+												required>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Company Name:</label>
+										<div class="col-md-6">
+											<input type="text" name="companyName" class="form-control"
+												required>
+										</div>
+									</div>
+
+
+
+
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Company Street
+											Address: </label>
+
+										<div class="col-md-6">
+											<textarea id="companyAddress" name="companyAddress" rows="2"
+												class="form-control" required></textarea>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Company City:</label>
+										<div class="col-md-6">
+											<select class="form-control" id="myCity" name="city" required>
+												<option value="">-- Choose One --</option>
+											</select>
+										</div>
+									</div>
+
+
+
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">Company
+											Zip/Postal Code:</label>
+										<div class="col-md-6">
+											<input type="text" name="postalCode" class="form-control"
+												required>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Preferred
+											Payment Method: </label>
+										<div class="col-md-6">
+											<select class="form-control" id="paymentMethod" onchange="getpaymentMode()"
+												name="paymentMethod" required>
+												<option value="">-- Choose One --</option>
+												<option value="Credit">Credit</option>
+												<option value="Credit Card">Credit Card</option>
+
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Please enter
+											customer's finance department email address:</label>
+
+										<div class="col-md-6">
+											<input type="email" name="financeEmailAddr"
+												class="form-control" required>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Preferred
+											currency you like to book in: </label>
+										<div class="col-md-6">
+											<select class="form-control" id="currency" name="currency"
+												required>
+												<option value="">--Select--</option>
+												 @for(Currencys <- Currency) {
+												<option value="@Currencys">@Currencys</option> }
+
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*E-mail Address:</label>
+
+										<div class="col-md-6">
+											<input type="email" name="EmailAddr" class="form-control"
+												required>
+										</div>
+									</div>
+
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Confirm E-mail
+											Address:</label>
+
+										<div class="col-md-6">
+											<input type="email" name="EmailAddr" class="form-control"
+												required>
+										</div>
+									</div>
+
+								</div>
+
+								<div class="form-group">
+									<label class="col-md-3 control-label">*Choose your
+										login ID: </label>
+									<div class="col-md-6">
+										<input type="text" name="loginId" class="form-control"
+											required>
+									</div>
+								</div>
+								
+								<div class="form-group">
+						<label class="col-md-3 control-label">*Password:</label>
+							<div class="col-md-6">
+								<input type="password" name="password" class="form-control" required>
+								<label>(minimum 6 characters)</label>
+							</div>
+					</div>
+
+								<div class="form-group">
+									<label class="col-md-3 control-label">*Direct
+										Telephone:</label>
+									<div class="col-md-2 setwidth">
+										<input type="number" name="directCode" class="form-control"
+											required>
+
+									</div>
+
+									<div class="col-md-3">
+										<input type="number" name="directTelNo" class="form-control"
+											required>
+
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-md-3 control-label">*Direct Fax:</label>
+									<div class="col-md-2 setwidth">
+										<input type="number" name="faxCode" class="form-control"
+											required>
+
+									</div>
+
+									<div class="col-md-3">
+										<input type="number" name="faxTelNo" class="form-control"
+											required>
+
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-md-3 control-label">Web Site: </label>
+									<div class="col-md-6">
+										<input type="text" name="webSite" class="form-control"
+											required>
+									</div>
+								</div>
+
+
+
+								<div class="form-group">
+									<div>
+										<label class="col-md-5 control-label">*Please complete
+											all fields in order to continue, and click</label>
+									</div>
+
+								</div>
+
+							</div>
+						
+
+
+					</div>
+					<div id="tab3-wizard-custom-circle" class="tab-pane fadeIn">
+						<h3 class="mbxl">Checking products</h3>
+						<div class="col-md-12">
+							<div class="col-md-12">
+								<div class="form-group">
+									<div>
+										<label class="col-md-5 control-label">Thank you for
+											registering with Destinations Of The World.</label>
+									</div>
+
+								</div>
+
+								<div class="form-group">
+
+
+									<div class="col-md-6">
+										<textarea id="registering" name="registering" rows="7"
+											class="form-control" placeholder="fffffffffff ffffffffffffffffff" disabled="disabled"></textarea>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									
+									<div class="col-md-6">
+										 <input type="checkbox" name="agree" value="1">I agree terms and conditions.<br>
+									</div>
+								</div>
+								<div class="form-group">
+								<input type="submit" class="btn btn-info">
+								</div>
+							</div>
 						</div>
 					</div>
-    	<div id="myTabContent2">
-							<form method="post" name="contact" action="/agentregister" method="post" role="form" class="form-horizontal">
-	<div class="col-md-12">
-		<div class="col-md-12">
-			
-			<div class="form-group">
-				<label class="col-md-3 control-label">*Title:</label>
-				<div class="col-md-7">
-					<select class="form-control" id="title" name="title" required>
-										<option value="">--Select title--</option>
-										 @for(title <- salutation) {
-										        <option value="@title">@title</option>
-										  }
-										
-								</select>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="col-md-3 control-label">*First Name:</label>
-				<div class="col-md-7">
-					<input type="text" name="firstName" class="form-control"  required>
-				</div>
-			</div>
-			
-			
-			
-			
-						
-			<div class="form-group">
-				<label class="col-md-3 control-label">*Last Name:</label>
-				<div class="col-md-7">
-					<input type="text" name="lastName" class="form-control"  required>
-				</div>
-			</div>
-			
-			
-			<div class="form-group">
-				<label class="col-md-3 control-label">*Country:</label>
-						
-					<div class="col-md-3">
-				<select class="form-control" id="cntry" name="country" onchange="getCountry()" required>
-										<option value="">--Select country--</option>
-										 @for(country <- countries) {
-										        <option value="@country">@country</option>
-										  }
-										
-								</select>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="col-md-3 control-label">*Nature of Business:</label>
-				<div class="col-md-7">
-				<select class="form-control" id="business" name="business" required>
-										<option value="">-- Choose One --</option>
-										<option value="">Tour Operator</option>
-										<option value="">Travel Agent</option>
-										<option value="">Airline</option>
-										<option value="">Travel Switch</option>
-										<option value="">Travel Portal</option>										
-										<option value="">Destination Management Company</option>
-										<option value="">Travel Call Centre</option>
-										<option value="">Wholesaler</option>
-										<option value="">Home-worker</option>
-					</select>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="col-md-3 control-label">How did you hear about us?	</label>
-				<div class="col-md-7">
-					<select class="form-control" id="hear" name="hear" required>
-										<option value="">-- Choose One --</option>
-										<option value="">Visit by DOTW Sales Representative</option>
-										<option value="">Trade Show</option>
-										<option value="">ATM</option>
-										<option value="">WTM</option>
-										<option value="">Fitur</option>
-										<option value="">ITB</option>
-										<option value="">Flyer from DOTW</option>
-										<option value="">DOTW NEWS</option>
-										<option value="">MITT Moscow</option>
-										<option value="">Referred by Supplier</option>
-										<option value="">Referred by Tourism Board</option>
-										<option value="">Referred by Travel Agent</option>
-										<option value="">Google</option>
-										<option value="">Gazetteer's</option>
-										<option value="">Yahoo</option>
-										<option value="">Amadeus</option>
-										<option value="">Other</option>		
-					</select>
-				</div>
-			</div>
-			
-			<div class="form-group">
-					<label class="col-md-3 control-label">Thank you, please click next	</label>
+
+					<!-- <div id="tab4-wizard-custom-circle" class="tab-pane fadeIn">
+						<h3 class="mbxl">Thank you!</h3>
+						<p>Congragulation! You have completed checkout steps.</p>
+						<p>Thank you for use our products.</p>
+					</div> -->
+					<div  class="action text-right">
+						<button type="button" name="previous" value="Previous"
+							class="btn btn-info button-previous">
+							<i class="fa fa-arrow-circle-o-left mrx"></i>Previous
+						</button>
+						<button type="button" name="next" value="Next"
+							class="btn btn-info button-next mlm">
+							Next<i class="fa fa-arrow-circle-o-right mlx"></i>
+						</button>
 					</div>
 					
-		<hr class="mtxxl mbxxl" style="border-color: black">	
-		</div>  
-		
-		
-		
-		<div class="form-group">
-		<div>
-					<label class="col-md-5 control-label">*Please complete all fields in order to continue, and click</label>
-					</div>
-			<div class="col-md-2 col-md-offset-9">
-		 <button type="submit" class="btn btn-primary">Next</button>
-		 </div>
-		 </div>
-                
+				</div>
+				</form>
+			</div>
+		</div>
 	</div>
-</form>
-		
-</body> -->
+</div>
+
+
 </html>
 <script type="text/javascript">
-function getCountry() {
-	console.log($("#cntry").val());
-	if($("#cntry").val() != "") {
-		$.ajax({
-			url: "/getCityOfCountry",
-			  type: "POST",
-			  data: {country:$("#cntry").val()},  
-		      success:function(data) {
-		        console.log('success');
-		        console.log(data);
-		        $('#myCity').children().remove().end();
-		        $('#myCity').append('<option value="0">--Select city--</option>');
-		        $.each(data, function(key, value) {   
-		        	$('#myCity').append('<option value="' + value.cityName + '">' + value.cityName + '</option>'); 
-		       });
-		        
-		      }
-		   });
+	function getCountry() {
+		console.log($("#cntry").val());
+		if ($("#cntry").val() != "") {
+			$.ajax({
+				url : "/getCityOfCountry",
+				type : "POST",
+				data : {
+					country : $("#cntry").val()
+				},
+				success : function(data) {
+					console.log('success');
+					console.log(data);
+					$('#myCity').children().remove().end();
+					$('#myCity').append(
+							'<option value="0">--Select city--</option>');
+					$.each(data, function(key, value) {
+						$('#myCity').append(
+								'<option value="' + value.cityName + '">'
+										+ value.cityName + '</option>');
+					});
+
+				}
+			});
+		}
+
 	}
-	
-}
 
-function isChain(value) {
-	if(value == true) {
-		$("#chainSelect").css("display","block");
-		$("#chainSelect2").css("display","block");
+	function isChain(value) {
+		if (value == true) {
+			$("#chainSelect").css("display", "block");
+			$("#chainSelect2").css("display", "block");
+		}
+		if (value == false) {
+			$("#chainSelect").css("display", "none");
+			$("#chainSelect2").css("display", "none");
+		}
 	}
-	if(value == false) {
-		$("#chainSelect").css("display","none");
-		$("#chainSelect2").css("display","none");
-	}
-}
 
+	$('#rootwizard-custom').bootstrapWizard(
+			{
+				onTabShow : function(tab, navigation, index) {
+					var $total = navigation.find('li').length;
+					var $current = index + 1;
+					var $percent = ($current / $total) * 100;
+					$('#rootwizard-custom').find('.bar').css({
+						width : $percent + '%'
+					});
+				},
+				'onNext' : function(tab, navigation, index) {
 
-$('#rootwizard-custom').bootstrapWizard({
-    onTabShow: function(tab, navigation, index) {
-        var $total = navigation.find('li').length;
-        var $current = index+1;
-        var $percent = ($current/$total) * 100;
-        $('#rootwizard-custom').find('.bar').css({width:$percent+'%'});
-    },
-    'onNext': function(tab, navigation, index) {
-    	
-    	/*if($scope.channelName =='Amazon'){
-    		$scope.isAmazon = true;
-    		alert($scope.isAmazon);
-    	}*/
-        // select id of current tab content
-        var $id = tab.find("a").attr("href");
-        var $approved = 1;
-        // Check all input validation
-        $($id + " input").each(function(){
-            if (!$(this).val()) {
-                $(this).css('border-color', 'red');
-                $(this).parent().parent().find("i.alert").removeClass("alert-hide");
-                $approved = 0;
-            } else {
-                $(this).parent().parent().find("i.alert").addClass("alert-hide");
-            }
-        });
-        if ($approved !== 1) return false;
-        
-    },
-    'onTabClick': function(tab, navigation, index) {
-        // select id of current tab content
-        var $id = tab.find("a").attr("href");
-        console.log($id);
-        var $approved = 1;
-        // Check all input validation
-        $($id + " input").each(function(){
-            if (!$(this).val()) {
-                $(this).css('border-color', 'red');
-                $(this).parent().parent().find("i.alert").removeClass("alert-hide");
-                $approved = 0;
-            } else {
-                $(this).parent().parent().find("i.alert").addClass("alert-hide");
-            }
-        });
-        if ($approved !== 1) return false;
-        // Add class visited to style css
-        if (tab.attr("class")=="visited"){
-            tab.removeClass("visited");
-        } else {
-            tab.addClass("visited");
-        }
-    },
-    'tabClass': 'bwizard-steps-o','nextSelector': '.button-next', 'previousSelector': '.button-previous'
-});
+					/*if($scope.channelName =='Amazon'){
+						$scope.isAmazon = true;
+						alert($scope.isAmazon);
+					}*/
+					// select id of current tab content
+					var $id = tab.find("a").attr("href");
+					var $approved = 1;
+					// Check all input validation
+					$($id + " input").each(
+							function() {
+								if (!$(this).val()) {
+									$(this).css('border-color', 'red');
+									$(this).parent().parent().find("i.alert")
+											.removeClass("alert-hide");
+									$approved = 0;
+								} else {
+									$(this).parent().parent().find("i.alert")
+											.addClass("alert-hide");
+								}
+							});
+					if ($approved !== 1)
+						return false;
 
-
-
-
+				},
+				'onTabClick' : function(tab, navigation, index) {
+					// select id of current tab content
+					var $id = tab.find("a").attr("href");
+					console.log($id);
+					var $approved = 1;
+					// Check all input validation
+					$($id + " input").each(
+							function() {
+								if (!$(this).val()) {
+									$(this).css('border-color', 'red');
+									$(this).parent().parent().find("i.alert")
+											.removeClass("alert-hide");
+									$approved = 0;
+								} else {
+									$(this).parent().parent().find("i.alert")
+											.addClass("alert-hide");
+								}
+							});
+					if ($approved !== 1)
+						return false;
+					// Add class visited to style css
+					if (tab.attr("class") == "visited") {
+						tab.removeClass("visited");
+					} else {
+						tab.addClass("visited");
+					}
+				},
+				'tabClass' : 'bwizard-steps-o',
+				'nextSelector' : '.button-next',
+				'previousSelector' : '.button-previous'
+			});
 </script>

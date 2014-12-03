@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title></title>
+        <link type="text/css" rel="stylesheet"
+	href='@routes.Assets.at("app/vendors/bootstrap/css/bootstrap.min.css")'>
+   
+    <script src='@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")'></script>
+    </head>
+    <body> 
+	
+				<div style="margin-left: 30%;margin-top: 16%;margin-right: 30%;">
+				
+					 <form id="loginForm" action="doAgentLogin" method="post">
+						<table class="table">
+							<tr>
+								<th>Agent Login</th>
+								<th></th>
+							</tr>
+							<tr>
+								<td><label>Login Id</label></td>
+								<td><input type="loginId" name="loginId" required></td>
+							</tr>
+							<tr>
+								<td><label>Password</label></td>
+								<td><input type="password" name="pass" required></td>
+							</tr>
+							<tr>
+								<td><label>Agent Code</label></td>
+								<td><input type="text" name="code" required></td>
+							</tr>
+							
+							<tr>
+								<td></td>
+								<td><input type="submit" value="Login" class="btn btn-primary"> </td>
+							</tr>
+							<tr>
+								<td>
+								</td>
+								<td><a href="/signUp">Agent SignUp</a></td>
+							</tr>
+						</table>
+						</form>
+					</div>	
+    </body>
+</html>

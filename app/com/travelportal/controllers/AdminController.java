@@ -25,6 +25,9 @@ import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.MarketPolicyTypes;
+import com.travelportal.domain.agent.AgentRegistration;
+import com.travelportal.vm.AgentRegisVM;
+import com.travelportal.vm.AgentRegistrationVM;
 import com.travelportal.vm.HotelRegistrationVM;
 
 import play.Play;
@@ -112,8 +115,6 @@ public class AdminController extends Controller {
 		}
 		
 		
-	   	 //final String username="mindnervesdemo@gmail.com";
-	       // final String password="mindnervesadmin";
 		final String username=Play.application().configuration().getString("username");
 	        final String password=Play.application().configuration().getString("password");
 	        
@@ -136,46 +137,18 @@ public class AdminController extends Controller {
 	  			feedback.setFrom(new InternetAddress(username));
 	  			feedback.setRecipients(Message.RecipientType.TO,
 	  			InternetAddress.parse(email));
-	  			feedback.setSubject("You Approved For travel_portal");
-	  			//message.setText();
-	  			 BodyPart messageBodyPart = new MimeBodyPart();
-	  	         // Now set the actual message
-	  	         messageBodyPart.setText("You Approved For travel_portal \n Your Supplier Code : "+supplierCode);
-	  	         // Create a multipar message
-	  	         Multipart multipart = new MimeMultipart();
-	  	         // Set text message part
-	  	         multipart.addBodyPart(messageBodyPart);
-	              // Send the complete message parts
+	  			feedback.setSubject("You Approved For travel_portal");	  			
+	  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
+	  	         messageBodyPart.setText("You Approved For travel_portal \n Your Supplier Code : "+supplierCode);	  	    
+	  	         Multipart multipart = new MimeMultipart();	  	    
+	  	         multipart.addBodyPart(messageBodyPart);	            
 	  	         feedback.setContent(multipart);
 	  		     Transport.send(feedback);
 	       		} catch (MessagingException e) {
 	  			  throw new RuntimeException(e);
 	  		}
 	 		
-	 		
-	 		/*{
-	  	      
-				Message message = new MimeMessage(session);
-				message.setFrom(new InternetAddress("Rajan_Jain"));
-				//Add multiple recipients.
-				message.addRecipients(Message.RecipientType.CC, InternetAddress.parse("yogesh_337@yahoo.com"));
-				//message.addRecipients(Message.RecipientType.CC, InternetAddress.parse("rajanjain8aug@gmail.com"));
-				message.setSubject( "Welcome to Arihant Booking");
-				//message.setText();
-				 BodyPart messageBodyPart = new MimeBodyPart();
-		         // Now set the actual message
-		         messageBodyPart.setText("Welcome to Arihant Booking.\n \n Please click on following link to verify your account.\n  http://arihantbooking.com/#/  \n\nRegards,\nArihant Booking Support Team");
-		         // Create a multipar message
-		         Multipart multipart = new MimeMultipart();
-		         // Set text message part
-		         multipart.addBodyPart(messageBodyPart);
-		         message.setContent(multipart);
-			     Transport.send(message);
-	    		} catch (MessagingException e) {
-				  throw new RuntimeException(e);
-			}*/
-
-		
+	 			
 		return ok();
 	}
 	
@@ -190,6 +163,141 @@ public class AdminController extends Controller {
 	@Transactional
 	public static Result pendingUser(Long id) {
 		HotelRegistration register = HotelRegistration.findById(id);
+		register.setStatus("PENDING");
+		register.merge();
+		return ok();
+	}
+	
+	/*---------------------------------Agent-----------------------------------------*/
+	
+	
+	@Transactional
+	public static Result getPendingAgent() {
+		List<AgentRegistration> list = AgentRegistration.getAllPendingAgent();
+		List<AgentRegistrationVM> vm = new ArrayList<>();
+		for(AgentRegistration hotel : list) {
+			AgentRegistrationVM agentRegisVM = new AgentRegistrationVM(hotel);
+			vm.add(agentRegisVM);
+		}
+		
+		return ok(Json.toJson(vm));
+	}
+	
+	@Transactional
+	public static Result getApprovedAgent() {
+		List<AgentRegistration> list = AgentRegistration.getAllApprovedAgent();
+		List<AgentRegistrationVM> vm = new ArrayList<>();
+		for(AgentRegistration hotel : list) {
+			System.out.println("9090909090909090909");
+			AgentRegistrationVM agentRegisVM = new AgentRegistrationVM(hotel);
+			vm.add(agentRegisVM);
+		}
+		
+		return ok(Json.toJson(vm));
+	}
+	
+	@Transactional
+	public static Result getRejectedAgent() {
+		List<AgentRegistration> list = AgentRegistration.getAllRejectedAgent();
+		List<AgentRegistrationVM> vm = new ArrayList<>();
+		for(AgentRegistration hotel : list) {
+			AgentRegistrationVM agentRegisVM = new AgentRegistrationVM(hotel);
+			vm.add(agentRegisVM);
+		}
+		
+		return ok(Json.toJson(vm));
+	}
+	
+	
+	@Transactional
+	public static Result approveAgent(Long id,String email) {
+		AgentRegistration register = AgentRegistration.findById(id);
+		register.setStatus("APPROVED");
+		register.merge();
+		
+		
+		/*HotelProfile hotelp = HotelProfile.findById(supplierCode);
+		
+		if(hotelp == null){			
+		
+			
+		HotelProfile hotelProfile = new HotelProfile();
+		
+		hotelProfile.setSupplier_code(Long.parseLong(register.getSupplierCode()));
+		hotelProfile.setHotelName(register.getHotelName());
+		hotelProfile.setSupplierName(register.getSupplierName());
+		hotelProfile.setAddress(register.getHotelAddress());
+		hotelProfile.setCountry(register.getCountry());
+		hotelProfile.setCurrency(register.getCurrency());
+		hotelProfile.setCity(register.getCity());
+		if(register.isPartOfChain()) {
+			hotelProfile.setPartOfChain("true");
+			hotelProfile.setHoteBrands(HotelBrands.getHotelBrandsByName(register.getHotelBrand()));
+			hotelProfile.setChainHotel(HotelChain.getHotelChainByName(register.getChainHotel()));
+		} else {
+			hotelProfile.setPartOfChain("false");
+		}
+		
+		hotelProfile.setHotelEmailAddr(register.getEmail());
+		hotelProfile.setMarketPolicyType(MarketPolicyTypes.getMarketPolicyByName(register.getPolicy()));
+		hotelProfile.setPassword(register.getPassword());
+		hotelProfile.setStartRatings(HotelStarRatings.getHotelRatingsByName(register.getStarRating()));
+		hotelProfile.setLaws(register.isLaws());
+		hotelProfile.setZipCode(register.getZipcode());
+		hotelProfile.save();
+		
+		
+		}
+		*/
+		
+		/*final String username=Play.application().configuration().getString("username");
+	        final String password=Play.application().configuration().getString("password");
+	        
+	 		Properties props = new Properties();
+	 		props.put("mail.smtp.auth", "true");
+	 		props.put("mail.smtp.starttls.enable", "true");
+	 		props.put("mail.smtp.host", "smtp.gmail.com");
+	 		props.put("mail.smtp.port", "587");
+	  
+	 		Session session = Session.getInstance(props,
+	 		  new javax.mail.Authenticator() {
+	 			protected PasswordAuthentication getPasswordAuthentication() {
+	 				return new PasswordAuthentication(username, password);
+	 			}
+	 		  });
+	  
+	 		try{
+	 		   
+	  			Message feedback = new MimeMessage(session);
+	  			feedback.setFrom(new InternetAddress(username));
+	  			feedback.setRecipients(Message.RecipientType.TO,
+	  			InternetAddress.parse(email));
+	  			feedback.setSubject("You Approved For travel_portal");	  			
+	  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
+	  	         messageBodyPart.setText("You Approved For travel_portal \n Your Agent Id : "+id);	  	    
+	  	         Multipart multipart = new MimeMultipart();	  	    
+	  	         multipart.addBodyPart(messageBodyPart);	            
+	  	         feedback.setContent(multipart);
+	  		     Transport.send(feedback);
+	       		} catch (MessagingException e) {
+	  			  throw new RuntimeException(e);
+	  		}*/
+	 		
+	 			
+		return ok();
+	}
+	
+	@Transactional
+	public static Result rejectAgent(Long id) {
+		AgentRegistration register = AgentRegistration.findById(id);
+		register.setStatus("REJECTED");
+		register.merge();
+		return ok();
+	}
+	
+	@Transactional
+	public static Result pendingAgent(Long id) {
+		AgentRegistration register = AgentRegistration.findById(id);
 		register.setStatus("PENDING");
 		register.merge();
 		return ok();

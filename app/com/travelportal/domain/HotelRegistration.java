@@ -187,7 +187,7 @@ public class HotelRegistration {
 	public static HotelRegistration findSupplier(String code,String name) {
 		try
 		{    		 				
-			Query query = JPA.em().createQuery("select h from HotelRegistration h where h.supplierCode = ?1 and h.status = 'APPROVED'").setParameter(1, code);
+			Query query = JPA.em().createQuery("select h from HotelRegistration h where h.supplierCode = ?1 or h.hotelName = ?2 and h.status = 'APPROVED'").setParameter(1, code).setParameter(2, name);
 		return (HotelRegistration) query.getSingleResult();
 		}
 		catch(Exception ex){

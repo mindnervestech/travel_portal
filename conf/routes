@@ -13,10 +13,13 @@ GET /hotel_profile/:profileId 		com.travelportal.controllers.HotelProfileControl
 GET		/signUp						com.travelportal.controllers.ApplicationController.getSignUpForm
 GET		/agentsignUp						com.travelportal.controllers.ApplicationController.getAgentSignUpForm
 GET		/login						com.travelportal.controllers.ApplicationController.login
+GET		/agentlogin						com.travelportal.controllers.ApplicationController.agentlogin
 POST	/getCityOfCountry			com.travelportal.controllers.ApplicationController.getCityOfCountry
 POST	/register					com.travelportal.controllers.ApplicationController.doRegister
+POST    /agentregister				com.travelportal.controllers.ApplicationController.agentRegister
 GET		/adminLogin					com.travelportal.controllers.ApplicationController.adminLogin
 POST	/doAdminLogin				com.travelportal.controllers.ApplicationController.doAdminLogin
+POST	/doAgentLogin				com.travelportal.controllers.ApplicationController.doAgentLogin
 GET		/adminLogout				com.travelportal.controllers.ApplicationController.adminLogout
 POST	/hotel_profile				com.travelportal.controllers.ApplicationController.doSupplierLogin
 GET		/supplierLogout				com.travelportal.controllers.ApplicationController.supplierLogout
@@ -126,6 +129,14 @@ GET	  /hotel_profile/getMapImagePath/:supplierCode			com.travelportal.controller
 GET     /getMarketGroup/:id                      com.travelportal.controllers.HotelRoomController.getMarketGroup(id:Long)
 POST    /setCitySelection                        com.travelportal.controllers.HotelRoomController.setCitySelection()
 
+#manage Agent in Admin
+
+GET		/getPendingAgent			com.travelportal.controllers.AdminController.getPendingAgent
+GET		/getApprovedAgent			com.travelportal.controllers.AdminController.getApprovedAgent
+GET		/getRejectedAgent			com.travelportal.controllers.AdminController.getRejectedAgent
+GET		/approveAgent/:id/:email			com.travelportal.controllers.AdminController.approveAgent(id: Long,email:String)
+GET		/rejectAgent/:id			com.travelportal.controllers.AdminController.rejectAgent(id: Long)
+GET		/pendingAgent/:id		com.travelportal.controllers.AdminController.pendingAgent(id: Long)
 
 
 

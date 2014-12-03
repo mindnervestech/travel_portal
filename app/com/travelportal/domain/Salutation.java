@@ -53,4 +53,11 @@ public class Salutation {
 		return (Salutation) JPA.em().createQuery("select c from Salutation c where salutationId = ?1").setParameter(1, code).getSingleResult();
 	}
 	
+	public static Salutation getSalutationByName(String name) {
+
+		return (Salutation) JPA.em()
+				.createQuery("select c from Salutation c where c.salutationValue = ?1")
+				.setParameter(1, name).getSingleResult();
+	}
+	
 }

@@ -8,17 +8,22 @@ import java.util.List;
 import java.util.Random;
 
 import javax.persistence.NoResultException;
+import javax.persistence.OneToOne;
 
 import com.travelportal.domain.AdminUser;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
+import com.travelportal.domain.HearAboutUs;
 import com.travelportal.domain.HotelBrands;
 import com.travelportal.domain.HotelChain;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.HotelStarRatings;
+import com.travelportal.domain.NatureOfBusiness;
 import com.travelportal.domain.Salutation;
+import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.RateWrapper;
+import com.travelportal.vm.AgentRegisVM;
 import com.travelportal.vm.HotelSignUpVM;
 import com.travelportal.vm.RoomtypeVM;
 
@@ -44,6 +49,11 @@ public class ApplicationController extends Controller{
 	}
 	
 	@Transactional
+	public static Result agentlogin() {
+		return ok();
+	}
+	
+	@Transactional
 	public static Result adminLogin() {
 		final String value = session().get("NAME");
         if (value == null) {
@@ -53,6 +63,8 @@ public class ApplicationController extends Controller{
         return ok(views.html.adminHome.render());
 		
 	}
+	
+
 	
 	@Transactional
 	public static Result doAdminLogin() {
@@ -68,6 +80,26 @@ public class ApplicationController extends Controller{
 		} catch(NoResultException e) { }
 		System.out.println("SESSION VALUE   "+session().get("NAME"));
 		return ok(views.html.adminLogin.render());
+	}
+	
+	@Transactional
+	public static Result doAgentLogin() {
+		/*DynamicForm form = DynamicForm.form().bindFromRequest();
+		try {
+			AgentRegistration agentUser = AgentRegistration.doLogin(form.get("code"),form.get("loginId"),form.get("pass"));
+			
+			if(agentUser != null) {
+				session().put("AGENT", String.valueOf(agentUser.getId()));
+				long code = agentUser.getId();
+				return ok(agentHome.render("Home Page", code));
+			}
+		
+		} catch(NoResultException e) { }
+		System.out.println("SESSION VALUE   "+session().get("AGENT"));
+		return ok(views.html.agentLogin.render());*/
+		
+		return ok();
+	
 	}
 	
 	@Transactional
@@ -135,8 +167,25 @@ public class ApplicationController extends Controller{
 			salList.add(salutation.getSalutationValue());
 		}
 		
+		List<HearAboutUs> hearAboutUs = HearAboutUs.gethearAboutUs();
+		List<String> hearlist = new ArrayList<>();
+		for(HearAboutUs heaUs: hearAboutUs){
+			hearlist.add(heaUs.getHearAboutUs());
+		}
+			
+		List<NatureOfBusiness> natureOfBusinesses = NatureOfBusiness.getNatureOfBusiness();
+		List<String> natureList = new ArrayList<>();
+		for(NatureOfBusiness natBusiness:natureOfBusinesses){
+			natureList.add(natBusiness.getNatureofbusiness());
+		}
+		List<Currency> currencies = Currency.getCurrency();
+		List<String> currencyList = new ArrayList<>();
+		for(Currency currency : currencies) {
+			currencyList.add(currency.getCurrencyName());
+		}
 		
-		return ok(views.html.agentsignup.render(countryList,salList));
+		
+		return ok(views.html.agentsignup.render(countryList,salList,hearlist,natureList,currencyList));
 	}
 	
 	@Transactional
@@ -186,6 +235,45 @@ public class ApplicationController extends Controller{
 			cities = City.getCitiesByCountry(country.getCountryCode());
 			
 		return ok(Json.toJson(cities));
+	}
+	
+	
+	@Transactional
+	public static Result agentRegister() {
+		Form<AgentRegisVM> agForm= Form.form(AgentRegisVM.class).bindFromRequest();
+		AgentRegisVM agentVm = agForm.get();
+		
+		AgentRegistration aRegistration = new AgentRegistration();
+		
+		aRegistration.setCountry(Country.getCountryByName(agentVm.country));
+		aRegistration.setCity(City.getCitiByName(agentVm.city));
+		aRegistration.setTitle(Salutation.getSalutationByName(agentVm.title));
+		aRegistration.setFirstName(agentVm.firstName);
+		aRegistration.setLastName(agentVm.lastName);
+		aRegistration.setBusiness(NatureOfBusiness.getNatureOfBusinessByName(agentVm.business));
+		aRegistration.setHear(HearAboutUs.getHearAboutUsByName(agentVm.hear));
+		aRegistration.setPosition(agentVm.Position);
+		aRegistration.setCompanyName(agentVm.companyName);
+		aRegistration.setCompanyAddress(agentVm.companyAddress);
+		aRegistration.setPostalCode(agentVm.postalCode);
+		aRegistration.setPaymentMethod(agentVm.paymentMethod);
+		aRegistration.setFinanceEmailAddr(agentVm.financeEmailAddr);
+		aRegistration.setEmailAddr(agentVm.EmailAddr);
+		aRegistration.setLoginId(agentVm.loginId);
+		aRegistration.setDirectCode(agentVm.directCode);
+		aRegistration.setDirectTelNo(agentVm.directTelNo);
+		aRegistration.setFaxCode(agentVm.faxCode);
+		aRegistration.setFaxTelNo(agentVm.faxTelNo);
+		aRegistration.setWebSite(agentVm.webSite);
+		aRegistration.setCurrency(Currency.getCurrencyByName(agentVm.currency));
+		aRegistration.setAgree(agentVm.agree);
+		aRegistration.setPassword(agentVm.password);
+		aRegistration.setStatus("PENDING");
+				
+	
+		aRegistration.save();
+		return ok();
+		
 	}
 	
 	@Transactional
