@@ -24,6 +24,8 @@ public class AgentRegistrationVM {
 	public String postalCode;
 	public String paymentMethod;
 	public String financeEmailAddr;
+	public String receiveNet;
+	public String commission;
 	public String currency;
 	public String EmailAddr;	
 	public String loginId;
@@ -53,7 +55,9 @@ public class AgentRegistrationVM {
 		this.city =reg.getCity().getCityName();
 		this.postalCode =reg.getPostalCode();
 		this.paymentMethod =reg.getPaymentMethod();
-		this.financeEmailAddr =reg.getFinanceEmailAddr();		
+		this.financeEmailAddr =reg.getFinanceEmailAddr();
+		this.receiveNet = reg.getReceiveNet();
+		this.commission = reg.getCommission();
 		this.currency =reg.getCurrency().getCurrencyName();
 		this.EmailAddr =reg.getEmailAddr();
 		this.loginId =reg.getLoginId();

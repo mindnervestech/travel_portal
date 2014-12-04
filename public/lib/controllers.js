@@ -2365,7 +2365,6 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		
 	};
 	
-	
 	$scope.setWeekDay = function(value,flag,index) {
 		if(flag == true) {
 			$scope.rateObject[index].special.weekDays.push(value);
@@ -2541,7 +2540,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 							multiSelectGroup:true
 						});
 						for(var j =0; j<data[i].country.cityvm.length;j++){
-							if(alloc.applyMarket == "false")
+							if(alloc.applyToMarket == false)
 								{
 							alloc.allocatedCities.push({
 								name:data[i].country.cityvm[j].cityName,
@@ -2727,11 +2726,12 @@ controller("manageSuppliersController",function($scope,notificationService,$root
 			console.log($scope.find);
 			$scope.supplierCode = $scope.find.supplierCode;
 			$scope.supplierName = $scope.find.hotelNm;
-		//	window.open('http://localhost:9000/adminLogin#/findSupplier');
+	
 			$http.get('/supplierfind/'+$scope.supplierCode+'/'+$scope.supplierName).success(function(response){
 				console.log(response);
 				if(response == "true"){
-					window.open('http://localhost:9000/adminLogin#/findSupplier');
+					//window.open('http://localhost:9000/adminLogin#/findSupplier');
+					
 				}else{
 					notificationService.error("Supplier Not Found");
 				}
@@ -3140,9 +3140,11 @@ controller("manageAgentController",['$scope','notificationService','$filter','$r
 	
 	$scope.approvePending = function() {
 		$scope.userId = $scope.generalInfo.id;
-		$scope.email = $scope.generalInfo.email;
+		$scope.email = $scope.generalInfo.EmailAddr;
+		
 		$scope.loginId = $scope.generalInfo.loginId;
 		$http.get('/approveAgent/'+$scope.userId+'/'+$scope.email).success(function(response){
+			 notificationService.success("Approved Successfully");
 			$scope.pendingUsers.splice($scope.pendingUsers.indexOf($scope.generalInfo),1);
 			$scope.getData();
 		});
@@ -3153,6 +3155,7 @@ controller("manageAgentController",['$scope','notificationService','$filter','$r
 		$scope.userId = $scope.generalInfo.id;
 		$http.get('/rejectAgent/'+$scope.userId).success(function(response){
 			console.log("Success")
+			 notificationService.success("Reject Successfully");
 		$scope.approvedUsers.splice($scope.approvedUsers.indexOf($scope.generalInfo),1);
 		$scope.getData();
 	});
@@ -3161,6 +3164,7 @@ controller("manageAgentController",['$scope','notificationService','$filter','$r
 	$scope.pendingUser = function() {
 		$scope.userId = $scope.generalInfo.id;
 		$http.get('/pendingAgent/'+$scope.userId).success(function(response){
+			 notificationService.success("Pending Successfully");
 			$scope.rejectedUsers.splice($scope.rejectedUsers.indexOf($scope.generalInfo),1);
 			$scope.getData();
 		});

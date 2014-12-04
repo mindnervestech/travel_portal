@@ -45,31 +45,31 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 <div class="col-lg-12">
 	<div class="portlet box portlet-green">
 		<div class="portlet-header">
-			<div class="caption">CUSTOMER REGISTRATION</div>
-			<div class="tools">
+			<div class="caption">AGENT REGISTRATION</div>
+			<!-- <div class="tools">
 				<i class="fa fa-chevron-up"></i><i data-toggle="modal"
 					data-target="#modal-config" class="fa fa-cog"></i><i
 					class="fa fa-refresh"></i><i class="fa fa-times"></i>
-			</div>
+			</div> -->
 		</div>
 		<div class="portlet-body">
 			<div id="rootwizard-custom">
 				<div class="navbar">
 					<div class="navbar-inner">
 						<ul>
-							<li><a data-target="#tab1-wizard-custom-circle"
+							<li style="display: none;"><a data-target="#tab1-wizard-custom-circle"
 								data-toggle="tab">
 									<!-- <i class="glyphicon glyphicon-user"></i> -->
 									<p class="anchor"></p>
 									<p class="description"></p>
 							</a></li>
-							<li><a data-target="#tab2-wizard-custom-circle"
+							<li style="display: none;"><a data-target="#tab2-wizard-custom-circle"
 								data-toggle="tab">
 									<!-- <i class="glyphicon glyphicon-send mln"></i> -->
 									<p class="anchor"></p>
 									<p class="description"></p>
 							</a></li>
-							<li><a data-target="#tab3-wizard-custom-circle"
+							<li style="display: none;"><a data-target="#tab3-wizard-custom-circle"
 								data-toggle="tab">
 									<!-- <i class="glyphicon glyphicon-shopping-cart"></i> -->
 									<p class="anchor"></p>
@@ -95,7 +95,7 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 						<h3 class="mbxl">Step 1</h3>
 						
 							<div class="col-md-12">
-								<div class="col-md-12">
+								
 
 									<div class="form-group">
 										<label class="col-md-3 control-label">*Title:</label>
@@ -175,7 +175,7 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 									</div>
 
 
-								</div>
+								
 
 
 
@@ -272,15 +272,58 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 										</div>
 									</div>
 
-									<div class="form-group">
+									<div class="form-group" id="financeEmailSelect" style="display: none;">
 										<label class="col-md-3 control-label">*Please enter
 											customer's finance department email address:</label>
 
 										<div class="col-md-6">
 											<input type="email" name="financeEmailAddr"
-												class="form-control" required>
+												class="form-control">
 										</div>
 									</div>
+								
+					<div class="form-group" id="wantToReceiveNet" style="display: none;">
+						<label class="col-md-3 control-label"><b>*Please choose if you want to receive net or commissionable rate:</b></label>
+							<div class="col-md-2">
+								<input type="radio" name="receiveNet" value="net" onclick="isreceiveNet(true)"> Net &nbsp&nbsp
+								<input type="radio" name="receiveNet" value="commission" checked="checked" onclick="isreceiveNet(false)"> Commission
+							</div>
+							<div class="col-md-4"  id="commissionSelect">
+											
+											<select class="form-control" id="commission" name="commission">
+												<option value="">-- Choose One --</option>
+												<option value="1">1%</option>
+												<option value="2">2%</option>
+												<option value="3">3%</option>
+												<option value="4">4%</option>
+												<option value="5">5%</option>
+												<option value="6">6%</option>
+												<option value="7">7%</option>
+												<option value="8">8%</option>
+												<option value="9">9%</option>
+												<option value="10">10%</option>
+												<option value="11">11%</option>
+												<option value="12">12%</option>
+												<option value="13">13%</option>
+												<option value="14">14%</option>
+												<option value="15">15%</option>
+												<option value="16">16%</option>
+												<option value="17">17%</option>
+												<option value="18">18%</option>
+												<option value="19">19%</option>
+												<option value="20">20%</option>
+												<option value="21">21%</option>
+												<option value="22">22%</option>
+												<option value="23">23%</option>
+												<option value="24">24%</option>
+												<option value="25">25%</option>
+												
+
+											</select>
+										</div>
+					</div>
+				
+									
 
 									<div class="form-group">
 										<label class="col-md-3 control-label">*Preferred
@@ -390,7 +433,7 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 
 					</div>
 					<div id="tab3-wizard-custom-circle" class="tab-pane fadeIn">
-						<h3 class="mbxl">Checking products</h3>
+						<h3 class="mbxl">Step 3</h3>
 						<div class="col-md-12">
 							<div class="col-md-12">
 								<div class="form-group">
@@ -413,7 +456,7 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 								<div class="form-group">
 									
 									<div class="col-md-6">
-										 <input type="checkbox" name="agree" value="1">I agree terms and conditions.<br>
+										 <input type="checkbox" name="agree" value="1" required>I agree terms and conditions.<br>
 									</div>
 								</div>
 								<div class="form-group">
@@ -449,6 +492,19 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 
 </html>
 <script type="text/javascript">
+
+function getpaymentMode(){
+	console.log($("#paymentMethod").val());
+	if($("#paymentMethod").val() == "Credit"){
+		$("#financeEmailSelect").css("display", "block");
+		$('#wantToReceiveNet').css("display","none");
+	}
+	if($("#paymentMethod").val() == "Credit Card"){
+		$("#financeEmailSelect").css("display", "none");
+		$('#wantToReceiveNet').css("display","block");
+	}
+}
+
 	function getCountry() {
 		console.log($("#cntry").val());
 		if ($("#cntry").val() != "") {
@@ -476,14 +532,14 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 
 	}
 
-	function isChain(value) {
+	function isreceiveNet(value) {
 		if (value == true) {
-			$("#chainSelect").css("display", "block");
-			$("#chainSelect2").css("display", "block");
+			/*$("#netSelect").css("display", "block");*/
+			$("#commissionSelect").css("display", "none");
 		}
 		if (value == false) {
-			$("#chainSelect").css("display", "none");
-			$("#chainSelect2").css("display", "none");
+		/*	$("#netSelect").css("display", "none"); */
+			$("#commissionSelect").css("display", "block");
 		}
 	}
 

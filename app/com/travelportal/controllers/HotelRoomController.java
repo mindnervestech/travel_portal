@@ -173,6 +173,7 @@ public static void createRootDir() {
 				rateMeta.setFromDate(format.parse(rate.fromDate));
 				rateMeta.setToDate(format.parse(rate.toDate));
 				rateMeta.setRoomType(HotelRoomTypes.findByName(rate.roomType));
+				
 				rateMeta.save();
 				
 				RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType));
@@ -326,6 +327,7 @@ public static void createRootDir() {
 				} else {
 					rateDetails.setSpecialRate(rate.isSpecialRate);
 				}
+				rateDetails.setApplyToMarket(rate.applyToMarket);
 				rateDetails.merge();
 				
 				RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType));

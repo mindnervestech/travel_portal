@@ -268,11 +268,13 @@ public class ApplicationController extends Controller{
 		aRegistration.setCurrency(Currency.getCurrencyByName(agentVm.currency));
 		aRegistration.setAgree(agentVm.agree);
 		aRegistration.setPassword(agentVm.password);
+		aRegistration.setCommission(agentVm.commission);
+		aRegistration.setReceiveNet(agentVm.receiveNet);
 		aRegistration.setStatus("PENDING");
 				
 	
 		aRegistration.save();
-		return ok();
+		return ok(views.html.agentLogin.render());
 		
 	}
 	

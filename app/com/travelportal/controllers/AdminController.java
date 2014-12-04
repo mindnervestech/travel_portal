@@ -250,7 +250,7 @@ public class AdminController extends Controller {
 		}
 		*/
 		
-		/*final String username=Play.application().configuration().getString("username");
+		final String username=Play.application().configuration().getString("username");
 	        final String password=Play.application().configuration().getString("password");
 	        
 	 		Properties props = new Properties();
@@ -281,7 +281,7 @@ public class AdminController extends Controller {
 	  		     Transport.send(feedback);
 	       		} catch (MessagingException e) {
 	  			  throw new RuntimeException(e);
-	  		}*/
+	  		}
 	 		
 	 			
 		return ok();

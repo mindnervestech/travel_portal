@@ -3,6 +3,7 @@ package com.travelportal.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ning.http.client.Response;
 import com.travelportal.domain.HotelRegistration;
 
 import play.data.DynamicForm;

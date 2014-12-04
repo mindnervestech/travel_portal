@@ -16,6 +16,8 @@ public class AgentRegisVM {
 	public String postalCode;
 	public String paymentMethod;
 	public String financeEmailAddr;
+	public String receiveNet;
+	public String commission;
 	public String currency;
 	public String EmailAddr;	
 	public String loginId;
@@ -178,6 +180,18 @@ public class AgentRegisVM {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getReceiveNet() {
+		return receiveNet;
+	}
+	public void setReceiveNet(String receiveNet) {
+		this.receiveNet = receiveNet;
+	}
+	public String getCommission() {
+		return commission;
+	}
+	public void setCommission(String commission) {
+		this.commission = commission;
 	}
 	
 		
