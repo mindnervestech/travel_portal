@@ -1,8 +1,11 @@
-@(message: String, supplierCode: Long)
+@(message: String, supplierCode: Long , permissions : String) 
 <script>
 	console.log(">>>>" + @supplierCode);
 	var supplierCode = @supplierCode;
+	
+	var permissions = @Html(permissions);
+	
 </script>
-@layout(message) {
+@layout(message,permissions) {
 
 }

@@ -116,7 +116,9 @@ public class SupplierController extends Controller {
 	
 	@Transactional(readOnly=false)
     public static Result deleteMarket(long id){
+		SpecialsMarket.deletespecialCity(id);
 		SpecialsMarket.deleteMarketSp(id);	
+		
 		return ok();
 	}
 	
@@ -124,6 +126,15 @@ public class SupplierController extends Controller {
     public static Result deletePeriod(long id){
 		System.out.println("**************");
 		System.out.println(id);
+		
+		List<SpecialsMarket> specialsList = SpecialsMarket.findBySpecialsId(id);
+		for(SpecialsMarket special : specialsList) {
+			SpecialsMarket.deletespecialCity(special.getId());
+			//specials.setFromDate(format.parse(spec.fromDate));
+			
+		}
+		
+		
 		SpecialsMarket.deleteSp(id);		
 		
 		

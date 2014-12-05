@@ -69,7 +69,7 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label"><b>Please choose your Room types:</b></label>
 							<div class="col-md-4">
-								<select class="form-control" data-ng-model="special.roomTypes" multiple>
+								<select class="form-control" data-ng-model="special.roomTypes" multiple style="height: 25%;">
 									 <option ng-repeat="type in rooms" value="{{type.roomType}}" ng-selected="type.isSelected == true">{{type.roomType}}</option>
 								</select>
 							</div>
@@ -231,7 +231,7 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label"><b>Please choose your Room types:</b></label>
 							<div class="col-md-4">
-								<select class="form-control" data-ng-model="special.roomTypes" multiple>
+								<select class="form-control" data-ng-model="special.roomTypes" multiple style="height: 25%;">
 									 <option ng-repeat="type in rooms" value="{{type.roomType}}">{{type.roomType}}</option>
 								</select>
 							</div>

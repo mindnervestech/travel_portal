@@ -22,7 +22,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
-import views.html.home;
+//import views.html.home;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.travelportal.domain.BillingInformation;
@@ -86,7 +86,8 @@ public class HotelProfileController extends Controller {
 	public static Result viewSupplierProfile(final Long supplierCode) {
 		//Accept the supplier code as parameter...
 		System.out.println("view supplier profile...");
-		return ok(home.render("Home Page", supplierCode));
+		//return ok(home.render("Home Page", supplierCode));
+		return ok();
 	}
 	
 	@Transactional(readOnly=false)

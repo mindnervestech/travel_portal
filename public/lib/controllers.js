@@ -1,5 +1,17 @@
 
 angular.module('travel_portal').
+controller("ApplicationController",function($scope,$http) {
+	
+	alert("Hiiiii");
+	$scope.permission;
+	$scope.init = function(data) {
+		
+		$scope.permission = data;
+		console.log($scope.permission);
+	};
+	
+});
+angular.module('travel_portal').
 controller("supplierAgreementController",['$scope','$rootScope','notificationService','$http','$filter','$upload',
                                          function($scope,$rootScope,notificationService, $http, $filter, $upload) {
 	
@@ -108,7 +120,8 @@ angular.module('travel_portal').
 				console.log(response.allotmentmarket);
 				$scope.showallotent = true;
 				if(response.allotmentmarket ==  undefined){
-					$scope.allotmentM.push({});					
+					$scope.allotmentM.push({applyMarket:"true"});
+					$scope.showAllotmentMarketTable($scope.allotmentM);
 				}else{
 					for(var i=0;i<response.allotmentmarket.length;i++) {
 						//if(response.allotmentmarket[i].applyMarket == "false"){
@@ -292,7 +305,7 @@ angular.module('travel_portal').
 		  $scope.allotmentM.push( {  } );
 		 
 		 $scope.newallotmentM = function($event){
-		        $scope.allotmentM.push( {applyMarket:"false"} );
+		        $scope.allotmentM.push( {applyMarket:"true"} );
 		        $scope.showAllotmentMarketTable($scope.allotmentM);
 		        $event.preventDefault();
 		     
@@ -922,8 +935,8 @@ angular.module('travel_portal').
 angular.module('travel_portal').
 	controller("hoteProfileController",function($scope, $http,$routeParams,$location,notificationService,$rootScope,$filter, $upload, ngDialog) {
 
-		
-		
+		console.log("$$$$$$&$$$$$");
+		console.log(permissions);
 	$scope.generalInfo = {};
 	$scope.descrip = {};
 	$scope.countries = [];
@@ -2818,7 +2831,9 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 	}
 	
 	$scope.addNewSavedMarket = function(index) {
-		$scope.specialsData[index].markets.push({});
+		$scope.specialsData[index].markets.push({applyToMarket:"true"});
+		 /*$scope.allotmentM.push( {applyMarket:"true"} );*/
+		$scope.showMarketTable($scope.specialsData[index].markets);
 		if($scope.specialsData[index].markets.length > 0) {
 			$scope.showSavedRemoveMarket = true;
 		}
@@ -2833,8 +2848,8 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 	
 	$scope.deleteSavedMarket = function(parentIndex,index) {
 		
-		console.log($scope.specialsData[parentIndex].id);
-		$scope.marketId = $scope.specialsData[parentIndex].id;
+		console.log($scope.specialsData[parentIndex].markets[index].id);
+		$scope.marketId = $scope.specialsData[parentIndex].markets[index].id;
 		var r = confirm("Do You Want To Delete!");
 	    if (r == true) {
 		$http.get("/deleteMarket/"+$scope.marketId).success(function(response){
@@ -2862,7 +2877,7 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 		$http.get("/deletePeriod/"+$scope.id).success(function(response){
 			console.log('success');
 			
-			$scope.showRemovePeriod = false;
+			$scope.showSavedPeriods = false;
 			console.log($scope.showRemovePeriod);
 			$http.get("/getPeriod/"+supplierCode).success(function(response){
 				console.log('success');
@@ -3004,7 +3019,9 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 		$http.get('/getSpecialMarketGroup/'+$scope.selectedRatesId)
 		.success(function(data){
 			if(data) {
-				alloc.allocatedCities = [];
+				
+					alloc.allocatedCities = [];
+								
 				
 					for(var i = 0; i<data.length;i++){
 						alloc.allocatedCities.push({

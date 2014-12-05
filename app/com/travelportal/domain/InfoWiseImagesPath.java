@@ -23,16 +23,28 @@ public class InfoWiseImagesPath { //Seed table.
 	private long supplierCode;
 	@Column(name="general_picture")
 	private String generalPicture;
+	@Column(name="general_Description")
+	private String generalDescription;
 	@Column(name=" hotel_lobby")
 	private String  hotel_Lobby;
+	@Column(name="lobby_Description")
+	private String lobbyDescription;
 	@Column(name="hotel_room")
 	private String hotelRoom;
+	@Column(name="room_Description")
+	private String roomDescription;
 	@Column(name="amenities_services")
 	private String amenitiesServices;
+	@Column(name="amenities_Description")
+	private String amenitiesDescription;
 	@Column(name="leisure_sports")
 	private String leisureSports;
+	@Column(name="leisure_Description")
+	private String leisureDescription;
 	@Column(name=" map_image")
 	private String  map_image;
+	@Column(name="map_Description")
+	private String mapDescription;
 	
 	
 
@@ -99,6 +111,54 @@ public class InfoWiseImagesPath { //Seed table.
 
 	public void setMap_image(String map_image) {
 		this.map_image = map_image;
+	}
+	
+	public String getGeneralDescription() {
+		return generalDescription;
+	}
+
+	public void setGeneralDescription(String generalDescription) {
+		this.generalDescription = generalDescription;
+	}
+	
+	public String getLobbyDescription() {
+		return lobbyDescription;
+	}
+
+	public void setLobbyDescription(String lobbyDescription) {
+		this.lobbyDescription = lobbyDescription;
+	}
+
+	public String getRoomDescription() {
+		return roomDescription;
+	}
+
+	public void setRoomDescription(String roomDescription) {
+		this.roomDescription = roomDescription;
+	}
+
+	public String getAmenitiesDescription() {
+		return amenitiesDescription;
+	}
+
+	public void setAmenitiesDescription(String amenitiesDescription) {
+		this.amenitiesDescription = amenitiesDescription;
+	}
+
+	public String getLeisureDescription() {
+		return leisureDescription;
+	}
+
+	public void setLeisureDescription(String leisureDescription) {
+		this.leisureDescription = leisureDescription;
+	}
+
+	public String getMapDescription() {
+		return mapDescription;
+	}
+
+	public void setMapDescription(String mapDescription) {
+		this.mapDescription = mapDescription;
 	}
 
 	@Transactional

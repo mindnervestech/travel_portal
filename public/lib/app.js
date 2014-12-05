@@ -141,3 +141,30 @@ app.factory('MyHttpInterceptor', function ($q) {
 app.config(function ($httpProvider) {
    $httpProvider.interceptors.push('MyHttpInterceptor');  
 })
+
+app.directive('ngSec',function(){
+	return {
+		scope: { permission: '='},
+	link: function(scope, element, attrs, ngModelCtrl) {
+		
+		console.log(scope.permission);
+	var sec = scope.permission;  /* ${permissions};*/
+	var obj = sec[attrs.ngSec];
+	console.log(attrs.ngSec);
+	if(typeof  obj === 'undefined') {
+
+	}
+
+	if(obj === 'false') {
+	$(element).remove();
+	}
+
+	if(obj === 'R') {
+	$(element).block(); //todo http://malsup.com/jquery/block
+	$(element).children().off('click');
+	}
+
+	}
+	}
+	});
+

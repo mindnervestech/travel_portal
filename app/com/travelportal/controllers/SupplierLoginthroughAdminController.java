@@ -47,7 +47,8 @@ public class SupplierLoginthroughAdminController extends Controller {
 		//session().put("SUPPLIER", user.getSupplierCode());
 		long code = Long.parseLong(user.getSupplierCode());
 		
-		return ok(home.render("Home Page", code));
+		return ok(views.html.adminHome.render());
+		//return ok(home.render("Home Page", code));
 		
 	}
 	

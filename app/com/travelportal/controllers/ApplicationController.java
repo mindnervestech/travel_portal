@@ -1,9 +1,11 @@
 package com.travelportal.controllers;
 
+import java.security.acl.Permission;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -20,6 +22,7 @@ import com.travelportal.domain.HotelChain;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.NatureOfBusiness;
+import com.travelportal.domain.Permissions;
 import com.travelportal.domain.Salutation;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.RateWrapper;
@@ -45,7 +48,8 @@ public class ApplicationController extends Controller{
         if (value == null) {
         	return ok(views.html.login.render(" "));
         }
-        return ok(home.render("Home Page", Long.parseLong(session().get("SUPPLIER"))));
+        return ok(views.html.login.render(" "));
+        //return ok(home.render("Home Page", Long.parseLong(session().get("SUPPLIER"))));
 	}
 	
 	@Transactional
@@ -112,7 +116,14 @@ public class ApplicationController extends Controller{
 			if(user != null) {
 				session().put("SUPPLIER", user.getSupplierCode());
 				long code = Long.parseLong(user.getSupplierCode());
-				return ok(home.render("Home Page", code));
+				HashMap<String , String> permission = new HashMap<>();
+		        List<Permissions> permissions = Permissions.getPermission();
+		    
+		        for(Permissions permissions2 : permissions){
+		        	permission.put(permissions2.getName() , String.valueOf(user.getPermissions().contains(permissions2)));
+		        }
+		        System.out.println(permission);
+				return ok(home.render("Home Page", code , Json.stringify(Json.toJson(permission))));  //
 			}
 		
 		} catch(NoResultException e) { }
@@ -131,7 +142,8 @@ public class ApplicationController extends Controller{
 		if(user != null) {
 			//session().put("SUPPLIER", user.getSupplierCode());
 			long code = Long.parseLong(user.getSupplierCode());
-			return ok(home.render("Home Page", code));
+			return ok(views.html.adminHome.render());
+			//return ok(home.render("Home Page", code));
 		}
 		return ok(views.html.adminHome.render());
 		

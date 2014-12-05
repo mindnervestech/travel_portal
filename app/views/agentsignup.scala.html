@@ -3,7 +3,7 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 
 <!DOCTYPE html>
 
-<html>
+<html data-ng-app="travel_portal">
 <head>
 <title></title>
 <link type="text/css" rel="stylesheet"
@@ -33,16 +33,65 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 	href='@routes.Assets.at("app/css/style-responsive.css")'>
 <link type="text/css" rel="stylesheet"
 	href='@routes.Assets.at("app/css/app.css")'>
-<script src='@routes.Assets.at("bower_components/jquery/jquery.min.js")'></script>
-<script
-	src='@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")'></script>
+	 <script src='@routes.Assets.at("app/js/jquery-1.10.2.min.js")'></script> 
+	<script src='@routes.Assets.at("app/js/jquery-migrate-1.2.1.min.js")'></script>
+	<script src='@routes.Assets.at("app/js/jquery-ui.js")'></script>
+	<script src='@routes.Assets.at("app/js/prettify.js")'></script>
+	<script src='@routes.Assets.at("app/js/jquery.slimscroll.min.js")'></script>
+	
+	
+	<!--loading bootstrap js-->
+	<script src='@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")'></script>
+	<script src='@routes.Assets.at("bower_components/angular/angular.min.js")'></script>
+	<script src='@routes.Assets.at("bower_components/angular/angular-file-upload.min.js")'></script>
+	<script src='@routes.Assets.at("bower_components/angular/angular-file-upload-shim.min.js")'></script>
+	<script src='@routes.Assets.at("bower_components/angular-route/angular-route.min.js")'></script>
+	
+	<script src='@routes.Assets.at("app/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js")'></script>
+	<script src='@routes.Assets.at("app/js/html5shiv.js")'></script>	
+	<script src='@routes.Assets.at("app/js/respond.min.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/metisMenu/jquery.metisMenu.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/slimScroll/jquery.slimscroll.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/jquery-cookie/jquery.cookie.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/iCheck/icheck.min.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/iCheck/custom.min.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/jquery-notific8/jquery.notific8.min.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/jquery-highcharts/highcharts.js")'></script>
+	<script src='@routes.Assets.at("app/js/jquery.menu.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/jquery-pace/pace.min.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/holder/holder.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/responsive-tabs/responsive-tabs.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/jquery-news-ticker/jquery.newsTicker.min.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/moment/moment.js")'></script>
+	<script src='@routes.Assets.at("app/js/angular-multi-select.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js")'></script>
+	<script src='@routes.Assets.at("app/vendors/bootstrap-daterangepicker/daterangepicker.js")'></script>
+	<script src='@routes.Assets.at("bower_components/ng-dialog/js/ngDialog.min.js")'></script>
+	<script src='@routes.Assets.at("bower_components/bootstrap/js/bootstrap-datepicker.js")'></script>
+	<!-- <script src='@routes.Assets.at("bower_components/jquery/jquery.validate.min.js")'></script>
+	
+	
+	<script src='@routes.Assets.at("bower_components/jquery/jquery.min.js")'></script> -->
+
+	<script src='@routes.Assets.at("app/js/pnotify/pnotify.core.js")'></script>	
+	 <script src='@routes.Assets.at("app/js/pnotify/pnotify.buttons.js")'></script>
+	<script src='@routes.Assets.at("app/js/pnotify/pnotify.confirm.js")'></script> 
+	<script src='@routes.Assets.at("app/js/pnotify/angular-pnotify.js")'></script>
+		
+	<!--CORE JAVASCRIPT-->
+	<script src='@routes.Assets.at("app/js/main.js")'></script>
+	<script src='@routes.Assets.at("app/js/ui-checkbox-radio.js")'></script>
+	<!--LOADING SCRIPTS FOR PAGE-->
+	<script src='@routes.Assets.at("app/js/ui-tabs.js")'></script>
+	<script src='@routes.Assets.at("app/js/ui-tabs.js")'></script>
+	<script src='@routes.Assets.at("lib/app.js")'></script>
+	<script src='@routes.Assets.at("lib/controllers.js")'></script>
 <script
 	src='@routes.Assets.at("app/vendors/jquery-bootstrap-wizard/jquery.bootstrap.wizard.min.js")'></script>
 
 </head>
 
-
-<div class="col-lg-12">
+<div class="col-lg-12" ng-controller="ApplicationController">
 	<div class="portlet box portlet-green">
 		<div class="portlet-header">
 			<div class="caption">AGENT REGISTRATION</div>
@@ -88,7 +137,7 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 					<div class="bar progress-bar progress-bar-primary"></div>
 				</div>
 				<form method="post" name="contact" action="/agentregister"
-							method="post" role="form" class="form-horizontal">
+							 role="form" class="form-horizontal">
 				<div class="tab-content">
 				
 					<div id="tab1-wizard-custom-circle" class="tab-pane">
@@ -382,9 +431,8 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 									<label class="col-md-3 control-label">*Direct
 										Telephone:</label>
 									<div class="col-md-2 setwidth">
-										<input type="number" name="directCode" class="form-control"
-											required>
-
+										<input type="number" name="directCode" class="form-control"	required>
+										<span class="error" ng-show="contact.directCode.$error.number" style="color: red;">Not valid number!</span> 
 									</div>
 
 									<div class="col-md-3">
@@ -397,14 +445,12 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 								<div class="form-group">
 									<label class="col-md-3 control-label">*Direct Fax:</label>
 									<div class="col-md-2 setwidth">
-										<input type="number" name="faxCode" class="form-control"
-											required>
+										<input type="number" name="faxCode" class="form-control" required>
 
 									</div>
 
 									<div class="col-md-3">
-										<input type="number" name="faxTelNo" class="form-control"
-											required>
+										<input type="number" name="faxTelNo" class="form-control" required>
 
 									</div>
 								</div>

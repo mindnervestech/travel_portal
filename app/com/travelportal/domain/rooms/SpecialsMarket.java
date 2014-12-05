@@ -1,5 +1,6 @@
 package com.travelportal.domain.rooms;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -137,6 +138,18 @@ public class SpecialsMarket {
 		query.setParameter(1, id);
     	return (SpecialsMarket) query.getSingleResult();
     }
+	
+	public static int deletespecialCity(long code) {
+		Query q = JPA.em().createNativeQuery("delete from specialsmarket_city where SpecialsMarket_id = '"+code+"'");
+		return q.executeUpdate();
+	}
+	
+	/*public static List<SpecialsMarket> findSpecialByDate(long code) {
+    	Query query = JPA.em().createQuery("Select s.id from SpecialsMarket s where s.special.id = ?1");
+		query.setParameter(1, code);
+    	return (List<SpecialsMarket>) query.getResultList();
+    }*/
+
 	
 	@Transactional
     public void save() {

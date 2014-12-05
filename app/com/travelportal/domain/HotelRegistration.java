@@ -2,14 +2,19 @@ package com.travelportal.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Query;
 import javax.persistence.Table;
+
+import com.travelportal.domain.rooms.Specials;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -43,6 +48,9 @@ public class HotelRegistration {
 	private String supplierType;
 	private String email;
 	
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<Permissions> permissions;
+
 	public String getEmail() {
 		return email;
 	}
@@ -158,6 +166,17 @@ public class HotelRegistration {
 	public void setSupplierCode(String supplierCode) {
 		this.supplierCode = supplierCode;
 	}
+	
+	
+	
+	public List<Permissions> getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(List<Permissions> permissions) {
+		this.permissions = permissions;
+	}
+	
+	
 	
 	public static List<HotelRegistration> getAllPendingUsers() {
 		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.status = 'PENDING'");
