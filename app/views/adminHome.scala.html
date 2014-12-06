@@ -49,7 +49,7 @@
 </head>
 <body class=" ">
 <div>
-    
+     <span id="loading-id"><img src='@routes.Assets.at("app/images/loading.gif")'/></span>
     <!--BEGIN BACK TO TOP--><!--<a id="totop" href="#">
     <i class="fa fa-angle-up"></i></a>--><!--END BACK TO TOP--><!--BEGIN TOPBAR-->
     <div id="header-topbar-option-demo" class="page-header-topbar">
@@ -68,7 +68,7 @@
 						<a href="javascript:void(0)" class="btn-chat">Home</a>
 					</li> -->
                     <li id="topbar-chat" class="hidden-xs">
-						<a href="#/findSupplier" onclick="window.open(this.href); return false" class="btn-chat">Supplier Area</a>
+						<a href="#/findSupplier" onclick="window.open(this.href,this.target,'width=620,height=620'); return false;" class="btn-chat">Supplier Area</a>
 					</li>
 					<!-- <li id="topbar-chat" class="hidden-xs">
 						<a href="javascript:void(0)" class="btn-chat">Contact US</a>

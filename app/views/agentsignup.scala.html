@@ -3,7 +3,7 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 
 <!DOCTYPE html>
 
-<html data-ng-app="travel_portal">
+<html ng-app="travel_portal">
 <head>
 <title></title>
 <link type="text/css" rel="stylesheet"
@@ -33,65 +33,83 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 	href='@routes.Assets.at("app/css/style-responsive.css")'>
 <link type="text/css" rel="stylesheet"
 	href='@routes.Assets.at("app/css/app.css")'>
-	 <script src='@routes.Assets.at("app/js/jquery-1.10.2.min.js")'></script> 
-	<script src='@routes.Assets.at("app/js/jquery-migrate-1.2.1.min.js")'></script>
-	<script src='@routes.Assets.at("app/js/jquery-ui.js")'></script>
-	<script src='@routes.Assets.at("app/js/prettify.js")'></script>
-	<script src='@routes.Assets.at("app/js/jquery.slimscroll.min.js")'></script>
-	
-	
-	<!--loading bootstrap js-->
-	<script src='@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")'></script>
-	<script src='@routes.Assets.at("bower_components/angular/angular.min.js")'></script>
-	<script src='@routes.Assets.at("bower_components/angular/angular-file-upload.min.js")'></script>
-	<script src='@routes.Assets.at("bower_components/angular/angular-file-upload-shim.min.js")'></script>
-	<script src='@routes.Assets.at("bower_components/angular-route/angular-route.min.js")'></script>
-	
-	<script src='@routes.Assets.at("app/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js")'></script>
-	<script src='@routes.Assets.at("app/js/html5shiv.js")'></script>	
-	<script src='@routes.Assets.at("app/js/respond.min.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/metisMenu/jquery.metisMenu.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/slimScroll/jquery.slimscroll.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/jquery-cookie/jquery.cookie.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/iCheck/icheck.min.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/iCheck/custom.min.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/jquery-notific8/jquery.notific8.min.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/jquery-highcharts/highcharts.js")'></script>
-	<script src='@routes.Assets.at("app/js/jquery.menu.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/jquery-pace/pace.min.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/holder/holder.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/responsive-tabs/responsive-tabs.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/jquery-news-ticker/jquery.newsTicker.min.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/moment/moment.js")'></script>
-	<script src='@routes.Assets.at("app/js/angular-multi-select.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/bootstrap-daterangepicker/daterangepicker.js")'></script>
-	<script src='@routes.Assets.at("bower_components/ng-dialog/js/ngDialog.min.js")'></script>
-	<script src='@routes.Assets.at("bower_components/bootstrap/js/bootstrap-datepicker.js")'></script>
-	<!-- <script src='@routes.Assets.at("bower_components/jquery/jquery.validate.min.js")'></script>
+<script src='@routes.Assets.at("app/js/jquery-1.10.2.min.js")'></script>
+<script src='@routes.Assets.at("app/js/jquery-migrate-1.2.1.min.js")'></script>
+<script src='@routes.Assets.at("app/js/jquery-ui.js")'></script>
+<script src='@routes.Assets.at("app/js/prettify.js")'></script>
+<script src='@routes.Assets.at("app/js/jquery.slimscroll.min.js")'></script>
+
+
+<!--loading bootstrap js-->
+<script
+	src='@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")'></script>
+<script
+	src='@routes.Assets.at("bower_components/angular/angular.min.js")'></script>
+<script
+	src='@routes.Assets.at("bower_components/angular/angular-file-upload.min.js")'></script>
+<script
+	src='@routes.Assets.at("bower_components/angular/angular-file-upload-shim.min.js")'></script>
+<script
+	src='@routes.Assets.at("bower_components/angular-route/angular-route.min.js")'></script>
+
+<script
+	src='@routes.Assets.at("app/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js")'></script>
+<script src='@routes.Assets.at("app/js/html5shiv.js")'></script>
+<script src='@routes.Assets.at("app/js/respond.min.js")'></script>
+<script
+	src='@routes.Assets.at("app/vendors/metisMenu/jquery.metisMenu.js")'></script>
+<script
+	src='@routes.Assets.at("app/vendors/slimScroll/jquery.slimscroll.js")'></script>
+<script
+	src='@routes.Assets.at("app/vendors/jquery-cookie/jquery.cookie.js")'></script>
+<script src='@routes.Assets.at("app/vendors/iCheck/icheck.min.js")'></script>
+<script src='@routes.Assets.at("app/vendors/iCheck/custom.min.js")'></script>
+<script
+	src='@routes.Assets.at("app/vendors/jquery-notific8/jquery.notific8.min.js")'></script>
+<script
+	src='@routes.Assets.at("app/vendors/jquery-highcharts/highcharts.js")'></script>
+<script src='@routes.Assets.at("app/js/jquery.menu.js")'></script>
+<script src='@routes.Assets.at("app/vendors/jquery-pace/pace.min.js")'></script>
+<script src='@routes.Assets.at("app/vendors/holder/holder.js")'></script>
+<script
+	src='@routes.Assets.at("app/vendors/responsive-tabs/responsive-tabs.js")'></script>
+<script
+	src='@routes.Assets.at("app/vendors/jquery-news-ticker/jquery.newsTicker.min.js")'></script>
+<script src='@routes.Assets.at("app/vendors/moment/moment.js")'></script>
+<script src='@routes.Assets.at("app/js/angular-multi-select.js")'></script>
+<script
+	src='@routes.Assets.at("app/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js")'></script>
+<script
+	src='@routes.Assets.at("app/vendors/bootstrap-daterangepicker/daterangepicker.js")'></script>
+<script
+	src='@routes.Assets.at("bower_components/ng-dialog/js/ngDialog.min.js")'></script>
+<script
+	src='@routes.Assets.at("bower_components/bootstrap/js/bootstrap-datepicker.js")'></script>
+<!-- <script src='@routes.Assets.at("bower_components/jquery/jquery.validate.min.js")'></script>
 	
 	
 	<script src='@routes.Assets.at("bower_components/jquery/jquery.min.js")'></script> -->
 
-	<script src='@routes.Assets.at("app/js/pnotify/pnotify.core.js")'></script>	
-	 <script src='@routes.Assets.at("app/js/pnotify/pnotify.buttons.js")'></script>
-	<script src='@routes.Assets.at("app/js/pnotify/pnotify.confirm.js")'></script> 
-	<script src='@routes.Assets.at("app/js/pnotify/angular-pnotify.js")'></script>
-		
-	<!--CORE JAVASCRIPT-->
-	<script src='@routes.Assets.at("app/js/main.js")'></script>
-	<script src='@routes.Assets.at("app/js/ui-checkbox-radio.js")'></script>
-	<!--LOADING SCRIPTS FOR PAGE-->
-	<script src='@routes.Assets.at("app/js/ui-tabs.js")'></script>
-	<script src='@routes.Assets.at("app/js/ui-tabs.js")'></script>
-	<script src='@routes.Assets.at("lib/app.js")'></script>
-	<script src='@routes.Assets.at("lib/controllers.js")'></script>
+<script src='@routes.Assets.at("app/js/pnotify/pnotify.core.js")'></script>
+<script src='@routes.Assets.at("app/js/pnotify/pnotify.buttons.js")'></script>
+<script src='@routes.Assets.at("app/js/pnotify/pnotify.confirm.js")'></script>
+<script src='@routes.Assets.at("app/js/pnotify/angular-pnotify.js")'></script>
+
+<!--CORE JAVASCRIPT-->
+<script src='@routes.Assets.at("app/js/main.js")'></script>
+<script src='@routes.Assets.at("app/js/ui-checkbox-radio.js")'></script>
+<!--LOADING SCRIPTS FOR PAGE-->
+<script src='@routes.Assets.at("app/js/ui-tabs.js")'></script>
+<script src='@routes.Assets.at("app/js/ui-tabs.js")'></script>
+<script src='@routes.Assets.at("lib/app.js")'></script>
+<script src='@routes.Assets.at("lib/controllers.js")'></script>
 <script
 	src='@routes.Assets.at("app/vendors/jquery-bootstrap-wizard/jquery.bootstrap.wizard.min.js")'></script>
 
 </head>
 
 <div class="col-lg-12" ng-controller="ApplicationController">
+ <span id="loading-id"><img src='@routes.Assets.at("app/images/loading.gif")'/></span>
 	<div class="portlet box portlet-green">
 		<div class="portlet-header">
 			<div class="caption">AGENT REGISTRATION</div>
@@ -102,129 +120,115 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 			</div> -->
 		</div>
 		<div class="portlet-body">
-			<div id="rootwizard-custom">
-				<div class="navbar">
-					<div class="navbar-inner">
-						<ul>
-							<li style="display: none;"><a data-target="#tab1-wizard-custom-circle"
-								data-toggle="tab">
-									<!-- <i class="glyphicon glyphicon-user"></i> -->
-									<p class="anchor"></p>
-									<p class="description"></p>
-							</a></li>
-							<li style="display: none;"><a data-target="#tab2-wizard-custom-circle"
-								data-toggle="tab">
-									<!-- <i class="glyphicon glyphicon-send mln"></i> -->
-									<p class="anchor"></p>
-									<p class="description"></p>
-							</a></li>
-							<li style="display: none;"><a data-target="#tab3-wizard-custom-circle"
-								data-toggle="tab">
-									<!-- <i class="glyphicon glyphicon-shopping-cart"></i> -->
-									<p class="anchor"></p>
-									<p class="description"></p>
-							</a></li>
-							<!-- <li><a data-target="#tab4-wizard-custom-circle"
-								data-toggle="tab">
-									<i class="glyphicon glyphicon-check"></i>
-									<p class="anchor"></p>
-									<p class="description"></p>
-							</a></li> -->
-						</ul>
-					</div>
-				</div>
+			<div id="rootwizard-custom-circle">
+			  <div class="navbar">
+            <div class="navbar-inner">
+              <ul>
+                <li><a href="#tab1-wizard-custom-circle" data-toggle="tab"><i class="glyphicon glyphicon-user"></i>
+                    <p class="anchor">1. Step 1</p>
+                    <p class="description">Set up account</p></a></li>
+                <li><a href="#tab2-wizard-custom-circle" data-toggle="tab"><i class="glyphicon glyphicon-send mln"></i>
+                    <p class="anchor">2. Step 2</p>
+                    <p class="description">Provide information</p></a></li>
+                <li><a href="#tab3-wizard-custom-circle" data-toggle="tab"><i class="glyphicon glyphicon-check"></i>
+                    <p class="anchor">3. Finish</p>
+                    <p class="description">Confirm all</p></a></li>
+              </ul>
+            </div>
+          </div>
+
 				<div id="bar" class="progress active">
 					<div class="bar progress-bar progress-bar-primary"></div>
 				</div>
 				<form method="post" name="contact" action="/agentregister"
-							 role="form" class="form-horizontal">
-				<div class="tab-content">
-				
-					<div id="tab1-wizard-custom-circle" class="tab-pane">
-						<h3 class="mbxl">Step 1</h3>
-						
+					role="form" class="form-horizontal">
+					<div class="tab-content">
+
+						<div id="tab1-wizard-custom-circle" class="tab-pane">
+							<!-- 	<h3 class="mbxl">Step 1</h3> -->
+
 							<div class="col-md-12">
-								
 
-									<div class="form-group">
-										<label class="col-md-3 control-label">*Title:</label>
-										<div class="col-md-6">
-											<select class="form-control" id="title" name="title" required>
-												<option value="">--Select title--</option> @for(title <-
-												salutation) {
-												<option value="@title">@title</option> }
 
-											</select>
-										</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">*Title:</label>
+									<div class="col-md-6">
+										<select class="form-control" id="title" name="title" placeholder="" required>
+											<option value="">--Select title--</option> @for(title <-
+											salutation) {
+											<option value="@title">@title</option> }
+
+										</select>
 									</div>
+								</div>
 
-									<div class="form-group">
-										<label class="col-md-3 control-label">*First Name:</label>
-										<div class="col-md-6">
-											<input type="text" name="firstName" class="form-control"
-												required>
-										</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">*First Name:</label>
+									<div class="col-md-6">
+										<input type="text" name="firstName" class="form-control"
+											required>
 									</div>
+								</div>
 
 
 
 
 
-									<div class="form-group">
-										<label class="col-md-3 control-label">*Last Name:</label>
-										<div class="col-md-6">
-											<input type="text" name="lastName" class="form-control"
-												required>
-										</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">*Last Name:</label>
+									<div class="col-md-6">
+										<input type="text" name="lastName" class="form-control"
+											required>
 									</div>
+								</div>
 
 
-									<div class="form-group">
-										<label class="col-md-3 control-label">*Country:</label>
+								<div class="form-group">
+									<label class="col-md-3 control-label">*Country:</label>
 
-										<div class="col-md-6">
-											<select class="form-control" id="cntry" name="country"
-												onchange="getCountry()" required>
-												<option value="">--Select country--</option> @for(country <-
-												countries) {
-												<option value="@country">@country</option> }
+									<div class="col-md-6">
+										<select class="form-control" id="cntry" name="country"
+											onchange="getCountry()" required>
+											<option value="">--Select country--</option> @for(country <-
+											countries) {
+											<option value="@country">@country</option> }
 
-											</select>
-										</div>
+										</select>
 									</div>
+								</div>
 
-									<div class="form-group">
-										<label class="col-md-3 control-label">*Nature of
-											Business:</label>
-										<div class="col-md-6">
-											<select class="form-control" id="business" name="business"
-												required>
-												<option value="">--Select--</option> @for(business <-
-												natureOfBusiness) {
-												<option value="@business">@business</option> }
-											</select>
-										</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">*Nature of
+										Business:</label>
+									<div class="col-md-6">
+										<select class="form-control" id="business" name="business"
+											required>
+											<option value="">--Select Nature Of Business--</option> @for(business <-
+											natureOfBusiness) {
+											<option value="@business">@business</option> }
+										</select>
 									</div>
+								</div>
 
-									<div class="form-group">
-										<label class="col-md-3 control-label">How did you hear
-											about us? </label>
-										<div class="col-md-6">
-											<select class="form-control" id="hear" name="hear" required>
-												<option value="">--Select--</option> @for(hear <-
-												hearAboutUs) {
-												<option value="@hear">@hear</option> }
-											</select>
-										</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">How did you hear
+										about us? </label>
+									<div class="col-md-6">
+										<select class="form-control" id="hear" name="hear" required>
+											<option value="">--Select--</option> @for(hear <-
+											hearAboutUs) {
+											<option value="@hear">@hear</option> }
+										</select>
 									</div>
+								</div>
 
-									<div class="form-group">
-										<label class="col-md-3 control-label">Thank you,
-											please click next </label>
-									</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Thank you, please
+										click next </label>
+								</div>
 
 
-								
+
 
 
 
@@ -239,11 +243,11 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 								</div>
 
 							</div>
-					
-					</div>
-					<div id="tab2-wizard-custom-circle" class="tab-pane">
-						<h3 class="mbxl">Step 2</h3>
-						
+
+						</div>
+						<div id="tab2-wizard-custom-circle" class="tab-pane">
+							<!-- <h3 class="mbxl">Step 2</h3> -->
+
 							<div class="col-md-12">
 								<div class="col-md-12">
 
@@ -290,7 +294,7 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 										<label class="col-md-3 control-label">*Company City:</label>
 										<div class="col-md-6">
 											<select class="form-control" id="myCity" name="city" required>
-												<option value="">-- Choose One --</option>
+												<option value="">-- Choose City --</option>
 											</select>
 										</div>
 									</div>
@@ -311,9 +315,9 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 										<label class="col-md-3 control-label">*Preferred
 											Payment Method: </label>
 										<div class="col-md-6">
-											<select class="form-control" id="paymentMethod" onchange="getpaymentMode()"
-												name="paymentMethod" required>
-												<option value="">-- Choose One --</option>
+											<select class="form-control" id="paymentMethod"
+												onchange="getpaymentMode()" name="paymentMethod" required>
+												<option value="">-- Choose Payment Method --</option>
 												<option value="Credit">Credit</option>
 												<option value="Credit Card">Credit Card</option>
 
@@ -321,7 +325,8 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 										</div>
 									</div>
 
-									<div class="form-group" id="financeEmailSelect" style="display: none;">
+									<div class="form-group" id="financeEmailSelect"
+										style="display: none;">
 										<label class="col-md-3 control-label">*Please enter
 											customer's finance department email address:</label>
 
@@ -330,16 +335,22 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 												class="form-control">
 										</div>
 									</div>
-								
-					<div class="form-group" id="wantToReceiveNet" style="display: none;">
-						<label class="col-md-3 control-label"><b>*Please choose if you want to receive net or commissionable rate:</b></label>
-							<div class="col-md-2">
-								<input type="radio" name="receiveNet" value="net" onclick="isreceiveNet(true)"> Net &nbsp&nbsp
-								<input type="radio" name="receiveNet" value="commission" checked="checked" onclick="isreceiveNet(false)"> Commission
-							</div>
-							<div class="col-md-4"  id="commissionSelect">
-											
-											<select class="form-control" id="commission" name="commission">
+
+									<div class="form-group" id="wantToReceiveNet"
+										style="display: none;">
+										<label class="col-md-3 control-label"><b>*Please
+												choose if you want to receive net or commissionable rate:</b></label>
+										<div class="col-md-2">
+											<input type="radio" name="receiveNet" value="net"
+												onclick="isreceiveNet(true)"> Net &nbsp&nbsp <input
+												type="radio" name="receiveNet" value="commission"
+												checked="checked" onclick="isreceiveNet(false)">
+											Commission
+										</div>
+										<div class="col-md-4" id="commissionSelect">
+
+											<select class="form-control" id="commission"
+												name="commission">
 												<option value="">-- Choose One --</option>
 												<option value="1">1%</option>
 												<option value="2">2%</option>
@@ -366,13 +377,13 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 												<option value="23">23%</option>
 												<option value="24">24%</option>
 												<option value="25">25%</option>
-												
+
 
 											</select>
 										</div>
-					</div>
-				
-									
+									</div>
+
+
 
 									<div class="form-group">
 										<label class="col-md-3 control-label">*Preferred
@@ -380,8 +391,8 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 										<div class="col-md-6">
 											<select class="form-control" id="currency" name="currency"
 												required>
-												<option value="">--Select--</option>
-												 @for(Currencys <- Currency) {
+												<option value="">--Select Currency--</option> @for(Currencys <-
+												Currency) {
 												<option value="@Currencys">@Currencys</option> }
 
 											</select>
@@ -418,21 +429,23 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 											required>
 									</div>
 								</div>
-								
+
 								<div class="form-group">
-						<label class="col-md-3 control-label">*Password:</label>
-							<div class="col-md-6">
-								<input type="password" name="password" class="form-control" required>
-								<label>(minimum 6 characters)</label>
-							</div>
-					</div>
+									<label class="col-md-3 control-label">*Password:</label>
+									<div class="col-md-6">
+										<input type="password" name="password" class="form-control"
+											required> <label>(minimum 6 characters)</label>
+									</div>
+								</div>
 
 								<div class="form-group">
 									<label class="col-md-3 control-label">*Direct
 										Telephone:</label>
 									<div class="col-md-2 setwidth">
-										<input type="number" name="directCode" class="form-control"	required>
-										<span class="error" ng-show="contact.directCode.$error.number" style="color: red;">Not valid number!</span> 
+										<input type="number" name="directCode" class="form-control"
+											required> <span class="error"
+											ng-show="contact.directCode.$error.number"
+											style="color: red;">Not valid number!</span>
 									</div>
 
 									<div class="col-md-3">
@@ -445,12 +458,14 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 								<div class="form-group">
 									<label class="col-md-3 control-label">*Direct Fax:</label>
 									<div class="col-md-2 setwidth">
-										<input type="number" name="faxCode" class="form-control" required>
+										<input type="number" name="faxCode" class="form-control"
+											required>
 
 									</div>
 
 									<div class="col-md-3">
-										<input type="number" name="faxTelNo" class="form-control" required>
+										<input type="number" name="faxTelNo" class="form-control"
+											required>
 
 									</div>
 								</div>
@@ -474,61 +489,250 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 								</div>
 
 							</div>
-						
 
 
-					</div>
-					<div id="tab3-wizard-custom-circle" class="tab-pane fadeIn">
-						<h3 class="mbxl">Step 3</h3>
-						<div class="col-md-12">
+
+						</div>
+						<div id="tab3-wizard-custom-circle" class="tab-pane fadeIn">
+							<!-- <h3 class="mbxl">Step 3</h3> -->
 							<div class="col-md-12">
-								<div class="form-group">
-									<div>
-										<label class="col-md-5 control-label">Thank you for
-											registering with Destinations Of The World.</label>
+								<div class="col-md-12">
+									<div class="form-group">
+										<div>
+   									 
+											<label class="col-md-5 control-label">Thank you for
+												registering with Destinations Of The World.</label>
+										</div>
+
 									</div>
 
-								</div>
-
-								<div class="form-group">
+									<div class="form-group">
 
 
+										<div class="col-md-6">
+											<textarea id="registering" name="registering" rows="9"
+												class="form-control"
+												placeholder=" DESTINATION OF THE WORLD
+Terms and Conditions 
+
+In these Terms and Conditions for Destinations of the World (&quot;DOTW&quot;, &quot;our&quot;, &quot;us&quot; or &quot;we&quot;), the terms &quot;you&quot; and &quot;your&quot; refers to the Travel Business (i.e. a travel company such as travel agents, tour operator, other wholesaler or airline providing ground services to customers), that wishes to purchase a variety of travel components, including but not limited to, accommodation, transfers, sightseeing tours, excursions and meals out (collectively referred to as &quot;Travel Components&quot;) on our website or via XML for onward sale to the end customer (&quot;Customer). 
+
+Please read these Terms and Conditions carefully. By accessing our online reservation system you represent to DOTW that:
+
+- You have read and understand these Terms and Conditions.
+- You agree to be bound by these Terms and Condition, in relation to your access to the DOTW system and our website.
+- You as the representative for your Travel Business have the authority to enter into these Terms and Conditions and bind Travel Company.
+
+
+You hereby agree to waive any rights to challenge the validity or enforceability of these Terms and Conditions on the grounds that the agreement created by acceptance of these Terms and Conditions was made electronically. 
+
+1.	Scope of Services
+i. 	These Terms and Conditions refer to all bookings and/or services made through our online reservation system. By accessing and completing a booking through our online reservation system you acknowledge to have read, understood and agree to comply with the following Terms and Conditions and all applicable laws and regulations governing DOTW's online reservation system, website and services.  
+ii. 	In order to gain access to our online reservation system, you confirm that you are a bona fide Travel Business. Only a bona fide Travel Business is able to obtain a login ID, password and company access code to enter our online reservation system. If you cease to be a bona fide Travel Business, you must notify us immediately. In the event you provide DOTW with false information, defraud or attempt to defraud DOTW, you will lose all privileges to our online reservation system and we reserve all rights against you.   
+iii. 	Note, we transact only with travel companies for the sale of Travel Components and make no direct contact with the Customer. DOTW is not a travel agent, nor is it acting as a travel agent. 
+
+2.	Independent Contractor
+Nothing in these Terms and Conditions shall be construed as establishing or implying a partnership, agency, or joint venture relationship between the parties or authorising a party to commit or bind the other party in any way whatsoever without obtaining the other party's prior written consent. 
+
+3.	Credit  Line
+i. 	As a Travel Business accessing our online reservation system to book Travel Components and wishing to establish a credit line (&quot;Credit Line&quot;), you agree to comply with our Terms and Conditions and will be designated as a &quot;Credit Customer&quot;.  
+ii. 	To obtain a Credit Line, we will require a floating deposit or bank guarantee from an internationally recognised bank, equivalent to a value that is mutually agreed upon between the parties.  
+iii. 	Upon obtaining a floating deposit or bank guarantee in the requisite amount and our approval of your completed credit application form. A Credit Line will be established in an amount equal to, or, at the discretion of DOTW greater than the value of your floating deposit or bank guarantee. 
+iv. 	All Credit Customers will be provided with an individual supervisor login ID, password, unique company code and white labelling tools to customize its website company logo and banner. The &quot;Supervisor&quot; shall be designated by the Travel Business. 
+v. 	The Supervisor, will have the right to choose whether the rates are net or commissionable, the amount of the net or commissionable rates and the level of commission (1% - 25%). The Supervisor will have access to your company's user management module to create, edit or suspend additional internal users of the Travel Business, determine individual user rights and decide the commission percentage for each user. The user may change the commission percentage at the time of each booking if the user has been provided such rights by the Supervisor. Travel Business shall be liable and responsible for any bookings, amendments, cancellations, or actions of any kind and/or any breach of DOTW terms and conditions undertaken by its designated users.  
+
+4.	Payments 
+i.	All rates quoted are net, non-commissionable, and inclusive of taxes and service charges (unless stated otherwise in the booking details).
+ii.	Rates are quoted in the currency selected at the time of booking and invoices must be paid in the same currency as the invoice.
+iii.	Full payment must be received within twenty-one (21) days from the invoice date, and prior to exceeding the credit limit on your Credit Line.   
+iv.  	Invoices will be issued on the commencement date of the respective Travel Component. The value of the invoiced amount will be deducted from the Credit Line to reflect the current available credit on the account in real time.
+v. 	New bookings will only be processed if the available credit is above zero.
+vi. 	In the event Travel Business attempts to make a booking but fails to have the minimum available credit needed, the new booking will not be processed, the data will be automatically saved and the account will be temporarily suspended until such time that payments are made to bring the balance within the Credit Line. The saved booking will only be processed once there is sufficient credit back on the account and the account is reactivated. You should be aware that the saved booking will be processed with the current rates and availability at the time of reprocessing.   
+vii.  	We reserve the right to cancel all forward bookings if the credit limit is exceeded and payment is not made in a timely manner.
+
+5. 	Dynamic and Package Rates 
+i. 	Dynamic rates and inventory of Travel Components available on DOTW's online reservation system will include Restricted and Unrestricted Products which will be displayed along with the terms and conditions associated with that booking.
+ii.	Dynamic rates will display a minimum selling price along with the net rate and Travel Business must adhere to the minimum selling price.  
+iii.	Package rates will be identified as such and must be combined with another Travel Component. 
+iv.	Without prejudice to DOTW's other rights, we reserve the right to restrict your access to dynamic rates and Travel Components if you are found to be selling below the minimum selling price and/or breaching the policy regarding packaged rates. 
+v.	Travel Business shall indemnify us against any and all claims arising as a result of Travel Business' breach of the minimum selling price policy or package rate policy and will compensate us for any financial penalty or claim resulting from such breach. 
+
+6.  	Restricted and Unrestricted Rates 
+i. 	Unrestricted Rates are rates that may be cancelled or amended without charge, prior to the date and time specified as the deadline to cancel or make changes (&quot;Cancellation Deadline&quot;). 
+ii. 	Invoices for Unrestricted Rates shall be issued on the check-in date. 
+iii. 	A cancellation fee will apply for all bookings cancelled after the Cancellation Deadline but up to the check-in date. 
+iv. 	Bookings may be amended after the Cancellation Deadline if the Travel Component is available and the booking conditions allow it. Invoices shall be issued upon modifying the booking to cover the cost of the change and late amendment charges. 
+v. 	If a booking is cancelled or amended after the Cancellation Deadline, the additional booking charge will be displayed on the screen prior to accepting the reservation. On acceptance of the additional charges, the booking will be cancelled or amended and an invoice will automatically be generated for the additional charges, and the amount deducted from the Credit Line. 
+iv. 	Bookings may not be cancelled or amended after the date the Customer is intended to check in or utilise the Travel Component. Any such requests must be in directly referred to our Reservations Department in writing and will incur additional charges. 
+v. 	No Shows (i.e. Customers who have made a booking but fail to utilise the Travel Component(s)) shall be charged one hundred (100%) percent the cost of the Travel Component(s). 
+vi. 	Restricted Rates cannot be amended or cancelled once confirmed and require immediate payment at the time of booking. Cancellations and amendments will be charged one-hundred (100%) percent and will not be refunded under any circumstances. 
+
+7. 	Booking Procedures 
+i. 	For each reservation, a maximum of five rooms and up to twenty-one nights per stay can be booked online. 
+ii. 	If nine rooms or more are requested it will be considered a group booking and the system will automatically redirect the request to the Group RFP (request for proposal) module.
+iii. 	Hotels and apartment rates are quoted per room, per night and may be described as follows: Best Available; Room only; Bed & Breakfast; Half Board; Full Board, and All Inclusive.
+iv. 	The Best Available Rate will be displayed when the requested rate plan is not available. The Best Available Rate refers to the pre-discounted, or non-commissionable lowest rate for rooms, inclusive of taxes (unless stated in the booking details), special promotional rates and/or restricted rates that are offered to the general public by the any hotel supplier. 
+v. 	The number of persons in a booking must be specified, regardless of whether they are children or adults. When booking children, the child's age must be specified. As evidenced by the booking details, breakfast for children is not always included in the rate, especially when a child sharing the room is free of cost.
+
+8. 	Accommodation Services
+i. 	Accommodation services are classified as follows: five star, four star, three star and two star hotels and serviced apartments. Classifications are provided to us by the accommodation provider. While we endeavour to use reasonable care to validate and authenticate the information provided, by agreeing to these Terms and Conditions, you accept that we cannot be held responsible for inaccurate information provided to us by the Travel Component supplier, including but not limited to images, descriptions, amenities and facilities. 
+ii. 	The maximum number of guests on the booking must equate to the following room categories e.g.: 
+A. 	For hotels: single - one adult, double or twin -two adults, triple - three adults and quad - four adults; and  
+B. 	For serviced apartments: studio - two adults, one bedroom -two adults, two bedrooms - four adults, three bedrooms - six adults, four bedrooms - eight adults and five bedrooms - ten adults.
+iii. 	Extra beds for adults and children may also be requested. Upon request, the system will automatically scan the database and display hotels with room types and categories that match the search criteria based on the maximum number of occupants allowed in the room.
+iv. 	In the event a booking requires additional meals for adults and children, the meal types available and the number of meals may be booked at the time of the reservation is made. The rates are quoted per meal, per person, net non-commissionable and may include applicable taxes and service charges.
+vi.	Additional charges for housekeeping (for serviced apartments) or any other relevant services charges will be shown in the tariff notes at the time of booking.
+
+9. 	Bookings from Allocations
+Travel Business will receive immediate booking confirmation for Travel Components that are shown as available. The booking is instantaneously sent to the supplier to update the reservation with their reference number. Once updated, the booking reference may be viewed online. 
+
+
+10. 	Bookings on Request
+i. 	On request bookings are bookings that cannot be confirmed at the time of booking and will require the supplier's written confirmation for the requested Travel Components due to DOTW's allocations having been exhausted and/or the rate not being available for the requested dates. The booking will automatically be sent to the supplier who may accept or deny the request, choose to confirm the booking at a higher rate (although every attempt will be made to confirm the requested service at the contracted rate), or offer a different room type. If rooms are not available at a higher rate or room type, the requested service will be denied and an alternative property of the same category, location and price range will be offered. 
+ii. 	When a booking is made and confirmed at a higher rate, different room type, or an alternate property, Travel Business must accept the confirmed services prior to the Cancellation Deadline or the booking will be automatically released without penalty.
+
+11. 	Minimum Stay	
+The system will automatically apply the Travel Component's minimum stay restrictions and display the rates and availability for the minimum stay period even if the request is for less than the number of minimum days.
+
+12. 	Transfers and Sightseeing Tours
+The rates for transfers and tours vary depending on whether they apply to private vehicles or scheduled tours/transfers. For private vehicles, rates are quoted &quot;per vehicle&quot; up to the maximum capacity of the vehicle. For scheduled transfers and tours, the rates are quoted for the total number of passengers and vary on the type of vehicle used.
+
+13. 	Visas Services for the United Arab Emirates
+i. 	The visa application module to book visas to the United Arab Emirates will be made available only to a Travel Business that has signed our visa service agreement (&quot;Visa Agreement&quot;).  Approval of any Visa Agreement is at DOTW's sole discretion.  
+ii. 	A visa application shall only be considered if it is booked on the same itinerary as a Travel Component consisting of a confirmed hotel or apartment reservation in the United Arab Emirates, for a minimum period of three nights, in an establishment that has a three star rating or higher.   
+iii. 	Travel Business cannot cancel or amend an accommodation booking to less than three nights once a visa approved.
+iv. 	Visa services are non-refundable.  
+v. 	You acknowledge that payment is due irrespective of whether the visa is approved by the immigration authorities or not. DOTW cannot under any circumstances guarantee the approval of, or be held responsible for, the denial of a visa application by UAE immigration authorities.  
+ 
+14. 	Refunds
+i. 	Refund requests must be in writing and received within thirty (30) days from the intended commencement date of the Travel Component in order to be processed. 
+ii. 	Refund requests will only be processed once it is confirmed that the intended Travel Components have not been utilized and the refund request complies with the terms and conditions of the booking. Travel Business understands and confirms that any refund request that does not fall under the requisite terms and conditions of the booking will be denied. 
+iii. 	Refund requests require a minimum of twenty-one (21) days for processing. No claims will be reviewed once a refund is processed. 
+
+15. 	Descriptions
+Any and all descriptions of Travel Components contained on our website are provided to us by the Travel Component supplier. We in turn pass these descriptions on to you in good faith. While we endeavour to use reasonable care to verify these descriptions, we cannot check or inspect all facilities or services offered as part of our Travel Components. You understand and confirm that we do not accept any liability or responsibility whatsoever for the accuracy of any descriptions or details of the Travel Components, nor do we accept any liability for any loss, damage or claim incurred by Travel Business and/or its Customer in relying on these descriptions.
+
+16. 	Onward Sales
+i. 	Our contract for the sale of Travel Components is solely with you. We do not contract for the onward or forward sale of the Travel Components to the Customer, directly or indirectly. A Customer purchasing Travel Components is contracting directly with you as the Travel Business; therefore the onward sale of Travel Components is solely the Travel Business' responsibility.  
+ii. 	DOTW does not accept liability for any loss, damage, legal proceeding, or any other claim or wrongdoing that may arise as a result of Travel Business's onward sale to the Customer. By using our services, you confirm that we cannot be held responsible or liable for any dispute between Travel Business and any Customer arising from the onward sale of Travel Components by the Travel Business to the Customer.
+
+17. 	Indemnity and Liability
+i. 	You agree to indemnify, defend and hold us harmless from and against any loss or liability, including legal expenses, arising out of any and all claims, demands, debts, damages, losses, actions, suits, expenses or costs arising out of or in connection with damage to or loss of the Customer in any way sustained or alleged to have been sustained in connection with the Travel Components under these Terms and Conditions due to any negligent act or omission on the part of you and/or your contractors, employees, subcontractors, representatives or agents. 
+ii. 	In addition, you acknowledge and accept that, we are not liable to indemnify or defend Travel Business against any claims, damages, consequential damages, negligence, failing, fault or omission on the part of any Travel Component provider, owner or controller of any Travel Component and/or any third party. 
+
+18. 	Force Majeure
+i. 	Where any Force Majeure event renders impossible or hinders or delays the performance of any obligation or the exercise of any right under these Terms and Condition, then the failure or omission of DOTW or Travel Business to perform such obligations shall not be treated as a failure or omission to comply with these Terms and Conditions.
+ii. 	Force Majeure shall be defined as events occurring outside the reasonable control of DOTW or Travel Business, including but not limited to, acts of God or forces of nature, volcanic activity, landslide, lightning, earthquake, flood, fire, explosion, major storm (hurricane, typhoon, monsoon, cyclone, etc.) or major storm warning, act of war (declared or undeclared) or public enemy, strike (excluding strikes, lockouts or other industrial disputes or action solely among employees of Travel Business) act or omission of sovereign states or those purporting to represent sovereign states, blockade, embargo, quarantine, public disorder, sabotage, accident or similar events beyond the control of you or us.
+
+19. 	Confidentiality
+i. 	You shall hold in confidence and refrain from divulging and cause your employees to hold in confidence and refrain from disclosing any Confidential Information, including net rates, which you and your employees, agents and subcontractors may acquire during the course of using our online reservation system to any third party or Customer. &quot;Confidential Information&quot; means all business, financial or Intellectual Property and related information about DOTW which comes to be known to you during the term of this agreement. It will include among other things information about staff, their personal contact information, businesses, methods, future plans, policies, and details of suppliers and customers. 
+ii. 	In the event that you are forced to disclose such Confidential Information to anyone other than those mentioned in the above clause or to the general public for reasons beyond your control, you shall immediately notify DOTW about such disclosure.
+iii. 	Any information will cease to be Confidential Information if it is required to be given to any government or local authority under the prevailing law, rules or regulations or which becomes public by any source other than the parties or their members and /or employees.
+iv. 	Notwithstanding the provisions of these Terms and Conditions, if there is a Non-Disclosure Agreement (NDA) in place with DOTW, you agree to comply with the obligations set forth in the NDA. Should a conflict arise between these Terms and Conditions and the NDA, the NDA shall prevail. 
+v. 	The Parties agree that this provision will survive termination of these Terms and Conditions. 
+
+20. 	 Intellectual Property Rights 
+i. 	DOTW is the owner and licensed user of all Intellectual Property rights and published material on its online reservation system and website. Those works are protected by copyright laws and treaties around the world.  All such rights are reserved.
+ii. 	&quot;Intellectual Property&quot; refers to intellectual property of every sort, whether or not registered or registrable in any country, including intellectual property of kinds coming into existence after today; and including, among others, patents, trademarks, unregistered marks, designs, copyrights, software, domain names, discoveries, creations and inventions, so far only as they are applicable to the products and/or services of each Party. 
+iii. 	You shall indemnify and keep indemnified DOTW against any and all claims, costs, demands, actions or proceedings made against or incurred by DOTW as a result of your use of DOTW Intellectual Property not in accordance with these Terms and Conditions. 
+
+21. 	Term and Termination
+i.	These Terms and Conditions will remain in effect, until such time as DOTW or Travel Business provides the other with thirty (30) days advance written notice of termination. 
+ii.	DOTW has the right to immediately terminate this agreement upon your breach of these Terms and Conditions, including but not limited to the following: you committing a material breach that is incapable of remedy or you fail to commence taking action in good faith to remedy within seven (7) days of a written request by us; you are declared bankrupt or a liquidator/administrator is appointed over your assets; or you commit an action which causes harm to DOTW's reputation and/or status. 
+iii.	Upon termination, you will stop using DOTW information and data. In addition you will destroy and certify such destruction, or return all Confidential Information to DOTW within thirty (30) days. Destruction or return of information shall be at DOTW's sole discretion.  
+
+22. 	Restrictions
+i. 	Travel Business shall take all reasonable precautions necessary to prevent any abuse of the DOTW online reservation system. 
+ii. 	Abuse of the online reservation system or XML includes but is not limited to, speculative booking, reservation of space in anticipation of demand, improper record or access, training third parties on the use of the DOTW online reservation system, Bursting, reverse engineering and misuse of access to the system granted by DOTW to Travel Business under these Terms and Conditions. Any breach of your obligations pursuant to this provision shall be considered a material breach of our Terms and Conditions and shall provide DOTW with the right to deny you access to our online reservation system or website via XML immediately, without giving notice and without any liability to DOTW whatsoever.
+ii. 	 &quot;Bursting&quot; is defined as the act of systematically drawing information from the DOTW system outside the process of transacting bookings. Bursting is not allowed without our express written consent. If Travel Business desires to have Bursting capabilities, it must make such request in writing and DOTW shall have sole discretion to deny or accept Travel Business' request. Bursting without prior written authorization shall be considered immediate cause for terminating Travel Business' access to our system. 
+iii. 	Travel Business shall not personally or through any third party, decompile, disassemble or otherwise reverse engineer the DOTW online reservation system, XML or any other DOTW software and/or updates supplied to Travel Business during the course of the agreement between the parties. 
+
+23. 	Miscellaneous
+i. 	Any booking and/or any use of our services shall comply with all local, national or international applicable legal provisions. 
+ii. 	We reserve the right to amend these Terms and Conditions if and when necessary. It is Travel Business' responsibility to be aware, remain current and comply by our Terms and Conditions.
+iii. 	Without prejudice to any of DOTW's other rights, we reserves the right to deny access to our online reservation service, cancel bookings, or terminate this agreement wherever and whenever we believe you are in breach of our Terms and Conditions. 
+iv. 	You agree to comply with all DOTW's terms and conditions and legal statements, including but not limited to, these Terms and Conditions, Destinations of the World Terms of Use, Destinations of the World Privacy Policy, NDA, any legal agreement between you and DOTW, any legal statements we release, and any applicable local, national or international law that relates to our services and/or online reservation system, including the UK Data Protection Act (1998). In the event of a conflict between the provisions, the most stringent conditions shall take order of precedence. 
+v. 	If any of the obligations in these Terms and Conditions is at any time held by any jurisdiction to be void, invalid or unenforceable, it shall be treated as changed or reduced only to the extent minimally necessary to bring it within the laws of that jurisdiction. To prevent it from being void it shall then be considered binding in its changed or reduced form. Subject to that, each provision shall be interpreted as severable and shall not in any way affect any other of these terms.
+vi. 	The waiver, in one instance, of any act, condition or requirement stipulated in these Terms and Conditions shall not constitute a continuing waiver or a waiver of the same act, condition or requirement in other instances, unless specifically so stated.  If we choose not to exercise any rights under these Terms and Conditions, it shall in no way constitute a waiver of those rights, nor shall it excuse you from any of your requirements under these Terms and Conditions. 
+vii.	All references to time shall be based on the Gregorian calendar.
+viii.	The headings in these Terms and Conditions are for reference only and are not to be construed as part of the understanding between you and DOTW.
+ix.	You may not assign your rights to use our online reservation system and/or services. For purposes of these Terms and Conditions, mergers, consolidations, corporate reorganisation, transfer or sale of a controlling interest in a party's stock or a substantial or partial sale of corporate assets shall not be regarded as an assignment.
+x.	These Terms and Conditions may be executed in two or more counterparts, each of which shall be deemed an original but all of which together shall constitute one and the same Terms and Conditions. The counterparts of these Terms and Conditions may be executed and delivered by facsimile or other electronic signature by DOTW to Travel Business and by Travel Business to DOTW.  The receiving party may rely on the receipt of such document so executed and delivered by facsimile or other electronic means as if the original had been received.
+xi.	These Terms and Conditions have been drafted, and shall be construed, in the English language.  Any translation of the Terms and Conditions prepared by either party is for convenience only. If there is any contradiction between the English language version and any such translation, then the English language version shall prevail.
+xii.	Any provision of these Terms and Conditions which impose an obligation after termination or expiration of the Terms and Conditions shall survive the termination or expiration of these Terms and Conditions.
+
+24. 	Law and Jurisdiction
+i. 	Any claim arising from or related to, these Terms and Conditions, our online reservation system, website or any other claim and/or dispute related to our terms and conditions, services, online reservation system or website shall be settled exclusively by arbitration, in the English language, at the Dubai International Financial Centre (DIFC) LCIA. DOTW has the right to bring proceedings against you for breach of our services, obligations, Terms and Conditions, or any related claim in your country of residence or any other relevant country. 
+ii. 	These Terms and Conditions and any dispute and/or claim arising out of or in connection with them, or their subject matter or formation (including non-contractual disputes or claims) shall be governed by and construed in accordance with the laws of the DIFC.
+
+
+
+
+
+Read and accepted the Terms and Conditions Contract:
+Destinations of the World JLT
+
+Contact Name : _____________________________________
+
+__________________________________________
+
+Destinations of the World JLT
+Mazaya Business Avenue
+42nd Floor, Tower BB2 
+Jumeirah Lakes Towers
+Post Office Box 19950, Dubai, United Arab Emirates
+ 
+Date : Sat Dec 06, 2014 07:17:09 GMT+4h
+Signature : ..................
+Company Seal :
+ 
+
+Travel Company Name and Address 
+Ggg
+Kkj Jhjh
+Signature : .........................................................
+Name : Mrs. Yy Hh
+Designation : Rr
+Date : .........................
+Company Seal :      			"
+												readonly></textarea>
+										</div>
+									</div>
+
+									<div class="form-group">
+
+										<div class="col-md-6">
+											<input type="checkbox" name="agree" value="1" required>I
+											agree terms and conditions.<br>
+										</div>
+									</div>
 									<div class="col-md-6">
-										<textarea id="registering" name="registering" rows="7"
-											class="form-control" placeholder="fffffffffff ffffffffffffffffff" disabled="disabled"></textarea>
+										<input type="submit" class="btn btn-info">
 									</div>
-								</div>
-								
-								<div class="form-group">
-									
-									<div class="col-md-6">
-										 <input type="checkbox" name="agree" value="1" required>I agree terms and conditions.<br>
-									</div>
-								</div>
-								<div class="form-group">
-								<input type="submit" class="btn btn-info">
+
 								</div>
 							</div>
 						</div>
-					</div>
 
-					<!-- <div id="tab4-wizard-custom-circle" class="tab-pane fadeIn">
+						<!-- <div id="tab4-wizard-custom-circle" class="tab-pane fadeIn">
 						<h3 class="mbxl">Thank you!</h3>
 						<p>Congragulation! You have completed checkout steps.</p>
 						<p>Thank you for use our products.</p>
 					</div> -->
-					<div  class="action text-right">
-						<button type="button" name="previous" value="Previous"
-							class="btn btn-info button-previous">
-							<i class="fa fa-arrow-circle-o-left mrx"></i>Previous
-						</button>
-						<button type="button" name="next" value="Next"
-							class="btn btn-info button-next mlm">
-							Next<i class="fa fa-arrow-circle-o-right mlx"></i>
-						</button>
+						<div class="action text-right">
+
+							
+							<button type="button" name="previous" value="Previous"
+								class="btn btn-info button-previous">
+								<i class="fa fa-arrow-circle-o-left mrx"></i>Previous
+							</button>
+							<button type="button" name="next" value="Next"
+								class="btn btn-info button-next mlm">
+								Next<i class="fa fa-arrow-circle-o-right mlx"></i>
+							</button>
+						</div>
+
 					</div>
-					
-				</div>
 				</form>
 			</div>
 		</div>
@@ -538,6 +742,8 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 
 </html>
 <script type="text/javascript">
+
+var showB="false";
 
 function getpaymentMode(){
 	console.log($("#paymentMethod").val());
@@ -589,13 +795,13 @@ function getpaymentMode(){
 		}
 	}
 
-	$('#rootwizard-custom').bootstrapWizard(
+	$('#rootwizard-custom-circle').bootstrapWizard(
 			{
 				onTabShow : function(tab, navigation, index) {
 					var $total = navigation.find('li').length;
 					var $current = index + 1;
 					var $percent = ($current / $total) * 100;
-					$('#rootwizard-custom').find('.bar').css({
+					$('#rootwizard-custom-circle').find('.bar').css({
 						width : $percent + '%'
 					});
 				},

@@ -1,10 +1,12 @@
 package com.travelportal.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.ning.http.client.Response;
 import com.travelportal.domain.HotelRegistration;
+import com.travelportal.domain.Permissions;
 
 import play.data.DynamicForm;
 import play.db.jpa.Transactional;
@@ -47,8 +49,13 @@ public class SupplierLoginthroughAdminController extends Controller {
 		//session().put("SUPPLIER", user.getSupplierCode());
 		long code = Long.parseLong(user.getSupplierCode());
 		
-		return ok(views.html.adminHome.render());
-		//return ok(home.render("Home Page", code));
+		HashMap<String , String> permission = new HashMap<>();
+        List<Permissions> permissions = Permissions.getPermission();
+    
+        for(Permissions permissions2 : permissions){
+        	permission.put(permissions2.getName() , String.valueOf(user.getPermissions().contains(permissions2)));
+        }
+		return ok(home.render("Home Page", code,Json.stringify(Json.toJson(permission))));
 		
 	}
 	

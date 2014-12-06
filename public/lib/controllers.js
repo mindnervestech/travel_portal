@@ -2,7 +2,7 @@
 angular.module('travel_portal').
 controller("ApplicationController",function($scope,$http) {
 	
-	alert("Hiiiii");
+	
 	$scope.permission;
 	$scope.init = function(data) {
 		
