@@ -145,10 +145,7 @@
 									<label class="col-md-3 control-label">Please select the type of Free Stay:</label>
 										<div class="col-md-4">
 											<select class="form-control"  data-ng-model="market.typeOfStay" required>
-												<option value="Standard Policy" selected="">Standard Policy</option>   
-												<option value="First Night">First Night</option>   
-												<option value="Cheapest night">Cheapest night</option>   
-												<option value="Most expensive night/s">Most expensive night/s</option>
+												<option ng-repeat=" freeS in freeStay" value="{{freeS}}">{{freeS}}</option>
 											</select>
 										</div>
 								</div>
@@ -307,10 +304,7 @@
 									<label class="col-md-3 control-label">Please select the type of Free Stay:</label>
 										<div class="col-md-4">
 											<select class="form-control"  data-ng-model="market.typeOfStay" required>
-												<option value="Standard Policy" selected="">Standard Policy</option>   
-												<option value="First Night">First Night</option>   
-												<option value="Cheapest night">Cheapest night</option>   
-												<option value="Most expensive night/s">Most expensive night/s</option>
+												<option ng-repeat=" freeS in freeStay" value="{{freeS}}">{{freeS}}</option>
 											</select>
 										</div>
 								</div>

@@ -8,7 +8,7 @@ public class RateVM {
 	public long id;
 	public String name;
 	public String rateName;
-	public String roomType;
+	public Long roomId;
 	public String fromDate;
 	public String toDate;
 	public String currency;
@@ -26,11 +26,13 @@ public class RateVM {
 	public void setRateName(String rateName) {
 		this.rateName = rateName;
 	}
-	public String getRoomType() {
-		return roomType;
+	
+		
+	public Long getRoomId() {
+		return roomId;
 	}
-	public void setRoomType(String roomType) {
-		this.roomType = roomType;
+	public void setRoomId(Long roomId) {
+		this.roomId = roomId;
 	}
 	public String getFromDate() {
 		return fromDate;

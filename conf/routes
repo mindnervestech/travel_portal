@@ -144,14 +144,14 @@ GET		/pendingAgent/:id		com.travelportal.controllers.AdminController.pendingAgen
 #home screen for edit
 
 
-GET		/getRateObject/:room			com.travelportal.controllers.HotelRoomController.getRateObject(room:String)
+GET		/getRateObject/:room			com.travelportal.controllers.HotelRoomController.getRateObject(room:Long)
 GET		/getMealTypes			com.travelportal.controllers.HotelRoomController.getMealTypes
 GET		/getCurrency			com.travelportal.controllers.HotelRoomController.getCurrency
 GET		/getRoomTypes			com.travelportal.controllers.HotelRoomController.getAllRoomTypes
 POST	/saveRate				com.travelportal.controllers.HotelRoomController.saveRate
 POST	/updateRateMeta			com.travelportal.controllers.HotelRoomController.updateRateMeta
 GET		/deleteRate/:id			com.travelportal.controllers.HotelRoomController.deleteRateMeta(id: Long)
-GET		/getRateData/:room/:fromDate/:toDate/:currencyType	com.travelportal.controllers.HotelRoomController.getRateData(room:String,fromDate:String,toDate:String,currencyType:String)
+GET		/getRateData/:room/:fromDate/:toDate/:currencyType	com.travelportal.controllers.HotelRoomController.getRateData(room:Long,fromDate:String,toDate:String,currencyType:String)
 GET /hotel/roomtypes			com.travelportal.controllers.HotelRoomController.fetchAllRoomTypesForEdit()
 GET /roomtypes/:supplierCode  	com.travelportal.controllers.HotelRoomController.fetchToEditHotelDetails(supplierCode:Long)
 GET /deleteRoomchild/:id   		com.travelportal.controllers.HotelRoomController.deleteRoomchild(id:Integer)
@@ -169,4 +169,5 @@ GET   /deleteSpecialcansell/:id/:value    com.travelportal.controllers.HotelRoom
 GET     /getPeriod/:supplierCode			com.travelportal.controllers.SupplierController.getPeriod(supplierCode:Long)
 GET		/getSpecialsData/:fromDate/:toDate/:promotionName	com.travelportal.controllers.SupplierController.getSpecialsData(fromDate:String,toDate:String,promotionName:String)
 GET 	/getRooms				com.travelportal.controllers.HotelRoomController.getAllRoomTypesByCode
+GET     /getfreeStay					com.travelportal.controllers.SupplierController.getfreeStay
 POST	/updateSpecials			com.travelportal.controllers.SupplierController.updateSpecials

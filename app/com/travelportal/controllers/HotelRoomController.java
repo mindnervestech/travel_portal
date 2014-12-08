@@ -89,7 +89,8 @@ public static void createRootDir() {
 	@Transactional(readOnly=true)
     public static Result getAllRoomTypes() {
 		long code = Long.parseLong(session().get("SUPPLIER"));
-		List<Object[]> types = HotelRoomTypes.getRoomTypes(code);
+		//List<Object[]> types = HotelRoomTypes.getRoomTypes(code);
+		List<HotelRoomTypes> types = HotelRoomTypes.getRoomTypesByCode(code);
 		return ok(Json.toJson(types));
 	}
 	
@@ -120,7 +121,7 @@ public static void createRootDir() {
 	}
 	
 	@Transactional(readOnly=true)
-    public static Result getRateObject(String roomType) {
+    public static Result getRateObject(Long roomType) {
 		
 		int maxAdults = HotelRoomTypes.getHotelRoomMaxAdultOccupancy(roomType);
 		
@@ -172,11 +173,11 @@ public static void createRootDir() {
 				rateMeta.setRateName(rate.rateName);
 				rateMeta.setFromDate(format.parse(rate.fromDate));
 				rateMeta.setToDate(format.parse(rate.toDate));
-				rateMeta.setRoomType(HotelRoomTypes.findByName(rate.roomType));
+				rateMeta.setRoomType(HotelRoomTypes.findById(rate.roomId));
 				
 				rateMeta.save();
 				
-				RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType));
+				RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findById(rate.roomId));
 				List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
 				for(AllocatedCitiesVM vm: rate.allocatedCities) {
 					if(vm.multiSelectGroup == false && vm.name != null){
@@ -206,7 +207,7 @@ public static void createRootDir() {
 					rateDetails.setSpecialRate(rate.isSpecialRate);
 				}
 				rateDetails.setApplyToMarket(rate.applyToMarket);
-				rateDetails.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
+				rateDetails.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findById(rate.roomId)));
 				rateDetails.save();
 				
 				
@@ -222,7 +223,7 @@ public static void createRootDir() {
 						}
 						
 					personRate.setNormal(true);
-					personRate.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
+					personRate.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findById(rate.roomId)));
 					personRate.save();
 					
 				}
@@ -240,7 +241,7 @@ public static void createRootDir() {
 							}
 							
 						personRate2.setNormal(false);	
-						personRate2.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
+						personRate2.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findById(rate.roomId)));
 						personRate2.save();
 						
 					}
@@ -258,7 +259,7 @@ public static void createRootDir() {
 								cancellation.setPercentage(vm.percentage);
 							}
 						cancellation.setNormal(true);	
-						cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
+						cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findById(rate.roomId)));
 						cancellation.save();
 					}
 				}
@@ -276,7 +277,7 @@ public static void createRootDir() {
 									cancellation.setPercentage(vm.percentage);
 								}
 							cancellation.setNormal(false);	
-							cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType)));
+							cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findById(rate.roomId)));
 							cancellation.save();
 						}
 					}
@@ -330,7 +331,7 @@ public static void createRootDir() {
 				rateDetails.setApplyToMarket(rate.applyToMarket);
 				rateDetails.merge();
 				
-				RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType));
+				RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findById(rate.roomId));
 				List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
 				for(AllocatedCitiesVM vm: rate.allocatedCities) {
 					if(vm.multiSelectGroup == false && vm.name != null){
@@ -461,10 +462,10 @@ public static void createRootDir() {
 	}
 	
 	@Transactional(readOnly=true)
-    public static Result getRateData(String room,String fromDate,String toDate,String currencyType) throws ParseException {
+    public static Result getRateData(Long room,String fromDate,String toDate,String currencyType) throws ParseException {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		List<RateVM> list = new ArrayList<>();
-		List<RateMeta> rateMeta = RateMeta.searchRateMeta(currencyType, format.parse(fromDate), format.parse(toDate), HotelRoomTypes.findByName(room));
+		List<RateMeta> rateMeta = RateMeta.searchRateMeta(currencyType, format.parse(fromDate), format.parse(toDate), room);
 		for(RateMeta rate:rateMeta) {
 			RateDetails rateDetails = RateDetails.findByRateMetaId(rate.getId());
 			List<PersonRate> personRate = PersonRate.findByRateMetaId(rate.getId());
@@ -474,7 +475,7 @@ public static void createRootDir() {
 			rateVM.setCurrency(rate.getCurrency());
 			rateVM.setFromDate(format.format(rate.getFromDate()));
 			rateVM.setToDate(format.format(rate.getToDate()));
-			rateVM.setRoomType(rate.getRoomType().getRoomType());
+			rateVM.setRoomId(rate.getRoomType().getRoomId());
 			rateVM.setIsSpecialRate(rateDetails.isSpecialRate());
 			rateVM.setRateName(rate.getRateName());
 			rateVM.setId(rate.getId());

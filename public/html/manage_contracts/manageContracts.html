@@ -13,7 +13,7 @@
 				<div class="col-md-3">
 					<select class="form-control" data-ng-model="formData.room" required>
 							<option value="">Select Room Type...</option>
-							<option data-ng-repeat="type in roomTypes" value="{{type}}">{{type}}</option>
+							<option data-ng-repeat="type in roomTypes" value="{{type.roomId}}">{{type.roomType}}</option>
 					</select>
 				</div>
 		</div>
@@ -83,7 +83,7 @@
 						<tr data-ng-repeat="rateData in rate.normalRate.rateDetails track by $index">
 							<td>{{rateData.name}}</td>
 							<td><input type="number" name="rateValue{{$index}}" ng-model="rateData.rateValue" value="" size="6" min="18" max="99" required> 
-							<span class="error" ng-show="contact.rateValue{{$index}}.$error.number" style="color: red;">Not valid number!</span>
+							<!-- <span class="error" ng-show="contact.rateValue{{$index}}.$error.number" style="color: red;">Not valid number!</span> -->
 							</td>
 							<td>*Include Meals?
 								<input type="radio" name="{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.includeMeals">Yes

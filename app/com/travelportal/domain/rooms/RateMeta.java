@@ -115,8 +115,8 @@ public class RateMeta {
 			return q.getResultList();
 		}
 	
-	 public static List<RateMeta> searchRateMeta(String currency, Date fromDate,Date toDate, HotelRoomTypes roomType) {
-	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.currency = ?1 and r.fromDate = ?2 and r.toDate = ?3 and r.roomType = ?4");
+	 public static List<RateMeta> searchRateMeta(String currency, Date fromDate,Date toDate, Long roomType) {
+	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.currency = ?1 and r.fromDate = ?2 and r.toDate = ?3 and r.roomType.roomId = ?4");
 			query.setParameter(1, currency);
 			query.setParameter(2, fromDate);
 			query.setParameter(3, toDate);

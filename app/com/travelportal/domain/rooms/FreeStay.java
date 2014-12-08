@@ -40,7 +40,7 @@ public class FreeStay {
 	}
 	
 	public static List<FreeStay> getFreeStay() {
-		return JPA.em().createQuery("select c from FreeStay c ").getResultList();
+		return JPA.em().createQuery("select c.typeFreeStay from FreeStay c ").getResultList();
 	}
 	public static FreeStay getFreeStayByName(String name) {
 

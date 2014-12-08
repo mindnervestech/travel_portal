@@ -141,7 +141,6 @@ app.factory('MyHttpInterceptor', function ($q) {
 app.config(function ($httpProvider) {
    $httpProvider.interceptors.push('MyHttpInterceptor');  
 })
-
 app.directive('ngSec',function(){
 	return {
 		scope: { permission: '='},

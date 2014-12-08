@@ -19,6 +19,7 @@ import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.CancellationPolicy;
+import com.travelportal.domain.rooms.FreeStay;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
@@ -57,6 +58,15 @@ public class SupplierController extends Controller {
 		//return ok();
 		
 	}
+	
+	@Transactional(readOnly=true)
+	 public static Result getfreeStay() {
+		System.out.println("*********Call Ok *****************8");
+		List<FreeStay> freelist = FreeStay.getFreeStay();
+		return ok(Json.toJson(freelist));
+				
+	}
+	
 	
 	@Transactional(readOnly=false)
     public static Result saveSpecialsObject() throws ParseException {

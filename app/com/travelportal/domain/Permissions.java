@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import play.db.jpa.JPA;
 
 @Entity
-@Table(name="Permissions")
+@Table(name="permissions")
 public class Permissions {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)

@@ -266,10 +266,10 @@ public class HotelRoomTypes {
 		return roomTypeList;
 	}
 	
-	public static List<Object[]> getRoomTypes(long code) {
-		Query q = JPA.em().createNativeQuery("select hotel_room_types.room_type from hotel_room_types  where hotel_room_types.supplier_code = '"+code+"'");
-		return (List<Object[]>) q.getResultList();
-	}
+//	public static List<Object[]> getRoomTypes(long code) {
+//		Query q = JPA.em().createNativeQuery("select hotel_room_types.room_type from hotel_room_types  where hotel_room_types.supplier_code = '"+code+"'");
+//		return (List<Object[]>) q.getResultList();
+//	}
 	
 	public static List<HotelRoomTypes> getRoomTypesByCode(Long code) {
 		Query q = JPA.em().createQuery("select r from HotelRoomTypes r where r.supplierCode = ?1");
@@ -307,8 +307,8 @@ public class HotelRoomTypes {
 		return JPA.em().createQuery("select r from HotelRoomTypes r where r.supplierCode = ?1").setParameter(1, supplierCode).getResultList();
 	}
 	
-	public static int getHotelRoomMaxAdultOccupancy(String roomType) {
-		return (int) JPA.em().createQuery("select r.maxAdultOccupancy from HotelRoomTypes r where r.roomType = ?1").setParameter(1, roomType).getSingleResult();
+	public static int getHotelRoomMaxAdultOccupancy(Long roomType) {
+		return (int) JPA.em().createQuery("select r.maxAdultOccupancy from HotelRoomTypes r where r.roomId = ?1").setParameter(1, roomType).getSingleResult();
 	}
 	
 	@Transactional

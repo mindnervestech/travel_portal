@@ -2483,7 +2483,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		
 		for(var i=0;i<$scope.rateObject.length;i++) {
 			console.log(i);
-			$scope.rateObject[i].roomType = $scope.formData.room;
+			$scope.rateObject[i].roomId = $scope.formData.room;
 			$scope.rateObject[i].fromDate = $scope.formData.fromDate;
 			$scope.rateObject[i].toDate = $scope.formData.toDate;
 			$scope.rateObject[i].currency = $scope.formData.currencyType;
@@ -2807,6 +2807,12 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 	$http.get('/getRooms').success(function(response){
 		console.log(response);
 		$scope.rooms = response;
+	});
+	
+	$http.get('/getfreeStay').success(function(response){
+		console.log("response");
+		console.log(response);
+		$scope.freeStay = response;
 	});
 	
 	
