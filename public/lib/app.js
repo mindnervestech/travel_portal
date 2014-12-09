@@ -111,6 +111,11 @@ var app = angular.module('travel_portal',['ngRoute','ngDialog','jlareau.pnotify'
 		controller: 'manageAgentController'
 	})
 	
+	.when('/markupPage', {
+		templateUrl: '/assets/html/admin/markup_page.html',
+		controller: 'markupController'
+	})
+	
 });
 
 app.factory('MyHttpInterceptor', function ($q) {

@@ -40,6 +40,8 @@ public class RateMeta {
 	private Date toDate;
 	@Column(name="currency")
 	private String currency;
+	@Column(name="supplierCode")
+	private Long supplierCode;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<City> cities;
@@ -55,6 +57,14 @@ public class RateMeta {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	
+	public Long getSupplierCode() {
+		return supplierCode;
+	}
+	public void setSupplierCode(Long supplierCode) {
+		this.supplierCode = supplierCode;
 	}
 	public String getRateName() {
 		return rateName;
@@ -103,6 +113,14 @@ public class RateMeta {
 			query.setParameter(3, fromDate);
 			query.setParameter(4, toDate);
 			query.setParameter(5, roomType);
+	    	return query.getResultList();
+	    }
+	 
+	 public static List<RateMeta> getRateSupplier(Long code) {
+			
+	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.supplierCode = ?1");
+			query.setParameter(1, code);
+			
 	    	return query.getResultList();
 	    }
 	 

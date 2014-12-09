@@ -171,3 +171,9 @@ GET		/getSpecialsData/:fromDate/:toDate/:promotionName	com.travelportal.controll
 GET 	/getRooms				com.travelportal.controllers.HotelRoomController.getAllRoomTypesByCode
 GET     /getfreeStay					com.travelportal.controllers.SupplierController.getfreeStay
 POST	/updateSpecials			com.travelportal.controllers.SupplierController.updateSpecials
+
+#following routes are used for fetch markup details
+
+GET   /getSupplier      com.travelportal.controllers.MarkUpController.getSupplier
+GET   /getAgent         com.travelportal.controllers.MarkUpController.getAgent
+GET   /getSupplierRate/:code			com.travelportal.controllers.MarkUpController.getSupplierRate(code:Long)

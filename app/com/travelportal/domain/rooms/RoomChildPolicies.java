@@ -100,6 +100,17 @@ public class RoomChildPolicies {
 		 }
     }
 	
+	 public static int deletefindById(int id) {
+	    	Query query = JPA.em().createQuery("delete from RoomChildPolicies a where a.roomchildPolicyId = ?1");
+			query.setParameter(1, id);
+			return query.executeUpdate();
+	    }
+	 
+	 public static int deletechildRel(int code) {
+			Query q = JPA.em().createNativeQuery("delete from hotel_room_types_room_child_policies where roomchildPolicies_room_child_policy_id = '"+code+"'");
+			return q.executeUpdate();
+		}
+		
 
 	@Transactional
     public void save() {

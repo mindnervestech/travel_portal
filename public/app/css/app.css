@@ -119,6 +119,12 @@ overflow-x: hidden;
 .setwidth{
 	width: 100px;
 }
+
+.markupSize{
+	height: 300px;
+	overflow: auto;
+}
+
 .overF{
 	overflow: auto;
 }

@@ -243,7 +243,7 @@ angular.module('travel_portal').
 		
 		
 		
-		
+	
 		$scope.selectstopsell = function(allot)
 		{
 			
@@ -774,7 +774,7 @@ angular.module('travel_portal').
 	controller("hoteRoomController",['$scope','notificationService','$rootScope','$http',function($scope,notificationService,$rootScope, $http){
 	    $scope.roomTypeIns = ( {chargesForChildren:"false"} );
 	    
-			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10];
+			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 		
 			console.log("hoteRoomController successfully initialized."+supplierCode);
 
@@ -874,22 +874,27 @@ angular.module('travel_portal').
 			    	
 			    }
 			  
-			    $scope.roomChildDeleteId = function(){
-					console.log("@#$%$%^&*(*&&^^#%%#%");
-					console.log($scope.roomTypeIns.roomId);
+			    $scope.roomChildDeleteId = function(index){
+					console.log($scope.childpolicy);
+					console.log($scope.childpolicy[$scope.childpolicy.length-1].roomchildPolicyId);
 					console.log($scope.roomTypeIns.roomchildPolicies);
 					console.log("@#$%$%^&*(*&&^^#%%#%");
-					
+								
+					if($scope.childpolicy[$scope.childpolicy.length-1].roomchildPolicyId != undefined){
 					var r = confirm("Do You Want To Delete!");
 				    if (r == true) {
-					$http.get('/deleteRoomchild/'+$scope.roomTypeIns.roomId)
+					$http.get('/deleteRoomchild/'+$scope.childpolicy[$scope.childpolicy.length-1].roomchildPolicyId)
 					.success(function(){
-						$scope.roomTypeIns.roomchildPolicies = [];
-						$scope.childpolicy = [];//$scope.roomTypeIns.roomchildPolicies = [];
+					//	$scope.roomTypeIns.roomchildPolicies = [];
+					//	$scope.childpolicy = [];//$scope.roomTypeIns.roomchildPolicies = [];
 						console.log('success');
+						$scope.childpolicy.splice($scope.childpolicy.length-1,1);
 						//$scope.childpolicy.push( {  } );
 					});
 				    }
+					}else{
+						$scope.childpolicy.splice($scope.childpolicy.length-1,1);
+					}
 
 
 				};
@@ -2311,9 +2316,9 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		console.log($scope.formData.room);
 		console.log($scope.formData.fromDate);
 		console.log($scope.formData.toDate);
-		console.log($scope.formData.currencyType);
+		console.log($scope.currencyname);
 		
-		$http.get('/getRateData/'+$scope.formData.room+'/'+$scope.formData.fromDate+'/'+$scope.formData.toDate+'/'+$scope.formData.currencyType).success(function(response){
+		$http.get('/getRateData/'+$scope.formData.room+'/'+$scope.formData.fromDate+'/'+$scope.formData.toDate+'/'+$scope.currencyname).success(function(response){
 			console.log(response);
 			$scope.rateMeta = response;
 			
@@ -2325,7 +2330,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 				}
 				
 				}
-				
+			/*$scope.rateData = [{meals:'Lunch'}];*/
 			console.log($scope.rateMeta);
 			if(angular.isUndefined($scope.rateMeta) || $scope.rateMeta == "") {
 				$scope.messageShow = "No Rate Found For This Period please";
@@ -2486,7 +2491,8 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			$scope.rateObject[i].roomId = $scope.formData.room;
 			$scope.rateObject[i].fromDate = $scope.formData.fromDate;
 			$scope.rateObject[i].toDate = $scope.formData.toDate;
-			$scope.rateObject[i].currency = $scope.formData.currencyType;
+			$scope.rateObject[i].currency = $scope.currencyname;
+			$scope.rateObject[i].supplierCode = supplierCode;
 		}
 		
 		$http.post('/saveRate', {"rateObject":$scope.rateObject}).success(function(data){
@@ -3193,4 +3199,242 @@ controller("manageAgentController",['$scope','notificationService','$filter','$r
 		});
 	}
 	
+}]);
+
+angular.module('travel_portal').
+controller("markupController",['$scope','notificationService','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$filter,$rootScope, $http,ngDialog){
+
+	$scope.supplier_check = [];
+	$scope.agent_check = [];
+	$scope.specificAgent_check = [];
+	$scope.rate_check = [];
+	
+	$http.get("/getSupplier").success(function(response){
+		$scope.supplier=response;
+		
+		console.log($scope.supplier);
+	});
+	
+	$scope.supplierClicked = function(e, supplierInfo) {
+
+		if($(e.target).is(":checked")) {
+			$scope.supplier_check.push(supplierInfo.code);
+		} else {
+			DeletesupplierItem(supplierInfo);
+		}
+		console.log("//////////");
+		console.log($scope.supplier_check);
+	}
+
+	DeletesupplierItem = function(supplierInfo){
+		angular.forEach($scope.supplier_check, function(obj, index){
+			if ((supplierInfo.code == obj)) {
+				$scope.supplier_check.splice(index, 1);
+				return;
+			};
+		});
+
+	}
+	
+	$scope.suppliercheckAll = function () {
+        if ($scope.selectedAll) {
+            $scope.selectedAll = false;
+            angular.forEach($scope.supplier, function (supplierInfo) {
+            	supplierInfo.isSelected = $scope.selectedAll;
+            });
+            $scope.supplier_check = [];
+        } else {
+        	
+            $scope.selectedAll = true;
+            $scope.supplier_check = [];
+            angular.forEach($scope.supplier, function (supplierInfo,index) {
+            	supplierInfo.isSelected = $scope.selectedAll;
+                    	$scope.supplier_check.push($scope.supplier[index].code);
+            });
+        }
+       
+        	console.log($scope.supplier_check);
+    };
+	
+	$http.get("/getAgent").success(function(response){
+		$scope.agent=response;
+		console.log("+++++++++++++++=");
+		console.log($scope.agent);
+	});
+	
+	
+	$scope.agentClicked = function(e, agentInfo) {
+
+		if($(e.target).is(":checked")) {
+			$scope.agent_check.push(agentInfo.id);
+		} else {
+			DeleteagentItem(agentInfo);
+		}
+		console.log("//////////");
+		console.log($scope.agent_check);
+	}
+
+	DeleteagentItem = function(agentInfo){
+		angular.forEach($scope.agent_check, function(obj, index){
+			if ((agentInfo.id == obj)) {
+				$scope.agent_check.splice(index, 1);
+				return;
+			};
+		});
+
+	}
+	
+	$scope.agentcheckAll = function () {
+        if ($scope.agentselectedAll) {
+            $scope.agentselectedAll = false;
+            angular.forEach($scope.agent, function (agentInfo) {
+            	agentInfo.isSelected = $scope.agentselectedAll;
+            });
+            $scope.agent_check = [];
+        } else {
+        	
+            $scope.agentselectedAll = true;
+            $scope.agent_check = [];
+            $scope.i = 0;
+            angular.forEach($scope.agent, function (agentInfo, index) {
+            	agentInfo.isSelected = $scope.agentselectedAll;
+            	console.log(agentInfo);
+                    	$scope.agent_check.push($scope.agent[index].id);
+                    	
+                    	
+            });
+        }
+       
+        	console.log($scope.agent_check);
+    };
+    
+    $scope.saveBatchMarkup = function(){
+    	$scope.batchMarkup.agent = $scope.agent_check;
+    	$scope.batchMarkup.supplier = $scope.supplier_check;
+    	if($scope.batchMarkup.selected == "1"){
+    		delete $scope.batchMarkup.flat;
+    	}else{
+    		delete $scope.batchMarkup.percent;
+    	}
+    		
+    	console.log($scope.batchMarkup);
+    }
+	
+	
+    $scope.specificAgentClicked = function(e, specificAgentInfo) {
+
+		if($(e.target).is(":checked")) {
+			$scope.specificAgent_check.push(specificAgentInfo.id);
+		} else {
+			DeletespecificAgentItem(specificAgentInfo);
+		}
+		console.log("//////////");
+		console.log($scope.specificAgent_check);
+	}
+
+	DeletespecificAgentItem = function(specificAgentInfo){
+		angular.forEach($scope.specificAgent_check, function(obj, index){
+			if ((specificAgentInfo.id == obj)) {
+				$scope.specificAgent_check.splice(index, 1);
+				return;
+			};
+		});
+
+	}
+	
+	$scope.specificAgentcheckAll = function () {
+        if ($scope.specificAgentselectedAll) {
+            $scope.specificAgentselectedAll = false;
+            angular.forEach($scope.agent, function (specificAgentInfo) {
+            	specificAgentInfo.isSelected = $scope.specificAgentselectedAll;
+            });
+            $scope.specificAgent_check = [];
+        } else {
+        	
+            $scope.specificAgentselectedAll = true;
+            $scope.specificAgent_check = [];
+            $scope.i = 0;
+            angular.forEach($scope.agent, function (specificAgentInfo, index) {
+            	specificAgentInfo.isSelected = $scope.specificAgentselectedAll;
+            	console.log(specificAgentInfo);
+                    	$scope.specificAgent_check.push($scope.agent[index].id);
+                    	
+                    	
+            });
+        }
+       
+        	console.log($scope.specificAgent_check);
+    };
+    
+    $scope.showRate = function(code){
+    	console.log(code);
+    	$scope.showAllRate = true;
+    	$http.get("/getSupplierRate/"+code).success(function(response){
+    		$scope.supplierRate = response;
+    		console.log(response);
+    	});
+    }
+    
+    
+    $scope.rateClicked = function(e, rate) {
+
+		if($(e.target).is(":checked")) {
+			$scope.rate_check.push(rate.id);
+		} else {
+			DeleterateItem(rate);
+		}
+		console.log("//////////");
+		console.log($scope.rate_check);
+	}
+
+	DeleterateItem = function(rate){
+		angular.forEach($scope.rate_check, function(obj, index){
+			if ((rate.id == obj)) {
+				$scope.rate_check.splice(index, 1);
+				return;
+			};
+		});
+
+	}
+	
+	$scope.ratecheckAll = function () {
+        if ($scope.rateselectedAll) {
+            $scope.rateselectedAll = false;
+            angular.forEach($scope.supplierRate, function (rate) {
+            	rate.isSelected = $scope.rateselectedAll;
+            });
+            $scope.rate_check = [];
+        } else {
+        	
+            $scope.rateselectedAll = true;
+            $scope.rate_check = [];
+            $scope.i = 0;
+            angular.forEach($scope.supplierRate, function (rate, index) {
+            	rate.isSelected = $scope.rateselectedAll;
+            	console.log(rate);
+                    	$scope.rate_check.push($scope.supplierRate[index].id);
+                    	
+                    	
+            });
+        }
+       
+        	console.log($scope.rate_check);
+    };
+    
+    $scope.saveSpecificMarkup = function(){
+    	$scope.specificMarkup.rateSelected = $scope.rate_check;
+    	$scope.specificMarkup.agentSpecific = $scope.specificAgent_check;
+    	if($scope.specificMarkup.specificSelected == "1"){
+    		delete $scope.specificMarkup.specificFlat;
+    	}else{
+    		delete $scope.specificMarkup.specificPercent;
+    	}
+    		
+    	console.log($scope.specificMarkup);
+    }
+    
+    $scope.showSpecials = function(){
+    	alert("Hiiii");
+    }
+    
 }]);

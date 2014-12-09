@@ -21,6 +21,7 @@ import play.db.jpa.Transactional;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelMealPlan;
+import com.travelportal.domain.HotelProfile;
 import com.travelportal.vm.RoomType;
 
 @Entity
@@ -289,6 +290,20 @@ public class HotelRoomTypes {
 	    	Query query = JPA.em().createQuery("Select a from HotelRoomTypes a where a.roomId = ?1");
 			query.setParameter(1, id);
 	    	return (HotelRoomTypes) query.getSingleResult();
+	    }
+	 
+	 public static HotelRoomTypes findByIdAndName(String name,Long code) {
+			try
+			{
+		 System.out.println(name);
+	    	Query query = JPA.em().createQuery("Select a from HotelRoomTypes a where a.supplierCode = ?1 and a.roomType = ?2");
+			query.setParameter(1, code);
+			query.setParameter(2, name);
+	    	return (HotelRoomTypes) query.getSingleResult();
+			}
+			catch(Exception ex){
+				return null;
+			}
 	    }
 	
 	 public static HotelRoomTypes findByName(String type) {

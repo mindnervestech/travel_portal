@@ -22,7 +22,9 @@
 					</select>
 				</div>
 				</div>
+				<div ng-show="roomT">
 				<input type="button" class="btn btn-primary" ng-click="clearData()" value="Create New Room Type">
+				</div>
 			</div>
 			 
 			
@@ -36,12 +38,21 @@
 			</div>
 			<!-- Add / Edit Room Type section -->
 			<div class="form-group">
-				<label class="col-md-4">Room Name</label>
-				<div class="col-md-5">
-					<input type="text" placeholder="Room Name" class="form-control"
-						data-ng-model="roomTypeIns.roomname"> <br>
+			<div class="col-md-4" style="margin-left: -14px;">
+			<div  class="col-md-12">
+				<label>Room Name</label>
 				</div>
-
+				<div  class="col-md-9">
+				<label>(deluxe room,superior room etc)</label>
+				</div>
+				</div>
+				<div class="col-md-6">
+				<div class="col-md-6">
+					<input type="text" class="form-control"
+						data-ng-model="roomTypeIns.roomname" style="width: 239px;margin-left: -1px;"> <br>
+				</div>
+				</div>
+				
 			</div>
 			<div class="form-group">
 				<label class="col-md-4">*What is the maximum
@@ -97,6 +108,10 @@
 									<option>4</option>
 									<option>5</option>
 									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
 							</select>
 						</div>
 					</div>
@@ -192,7 +207,7 @@
 							<label class="col-md-1">Year:</label>
 							<div class="col-md-2">
 								<input type="text" class="form-control"
-									data-ng-model="child.years"> <br>
+									data-ng-model="child.years"> <br>									
 							</div>
 							
 							<label class="col-md-2">Enter zero if free:
@@ -234,8 +249,8 @@
 
 					</div>
 					<div>
-					
-                        <button class="btn btn-default col-md-offset-1" ng-click="roomChildDeleteId()">Remove</button>
+					<input type="button" class="btn btn-default col-md-offset-1" ng-click="roomChildDeleteId($index)" value="Remove">
+                        <!-- <button class="btn btn-default col-md-offset-1" ng-click="roomChildDeleteId($index)">Remove</button> -->
 					<button class="btn btn-default" ng-click="newchildpolicy($event)">Add New Child Age Interval</button>
 				
 				</div>

@@ -1,7 +1,7 @@
 <div class="panel panel-green">
 
 	<div class="panel-heading clearfix">
-		<span class="mts pull-left">Contract Management</span>
+		<span class="mts pull-left">Tariff Management</span>
 	</div>
 	
 	<div class="panel-body">
@@ -38,10 +38,11 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label"><b>Please Choose Currency:</b></label>
 				<div class="col-md-3">
-					<select class="form-control" data-ng-model="formData.currencyType" required>
-							<option value="">--Choose Currency--</option>
-							<option data-ng-repeat="currency in currencies" value="{{currency.currencyName}}">{{currency.currencyName}}</option>
-					</select>
+			 	<input type="text" data-ng-model="formData.currencyType" value={{currencyname}} class="form-control" disabled="disabled"> 
+					<!--  <select class="form-control" data-ng-model="formData.currencyType" required>
+							<option value="{{currencyname}}">{{currencyname}}</option>
+							<option data-ng-repeat="currency in currencies" value=" {{currency.currencyName}}">{{currency.currencyName}}</option>     {{currency.currencyName}}">{{currency.currencyName}}</option>
+					</select> -->
 				</div>
 		</div>
 		</div>
@@ -58,7 +59,7 @@
 	 	
 	</div>
 	
-	<div style="margin-left: 6%;"><b>{{messageShow}}<a ng-click="createNewRate()" href=""><u> {{link}}</u></a></b></div>
+	<div style="margin-left: 6%;"><b style="font-size: 13px;color: red;">{{messageShow}}<a ng-click="createNewRate()" href="" style="color: blue;"><u> {{link}}</u></a></b></div>
 	
 	<div class="panel-body" ng-show="showSavedRates == true">
 		<!-- <form name="contact" role="form" class="form-horizontal"> -->
@@ -67,7 +68,7 @@
 						
 			<fieldset class="billinside" ng-repeat="rate in rateMeta track by $index" style="margin-top: 2%;">
 			<a data-toggle="collapse" data-target="#demo{{$index}}" aria-expanded="true" aria-controls="demo{{$index}}" style="cursor: pointer;">
-			<legend style="width: 18%; border-bottom: none;font-size: 18;">&nbsp;&nbsp;&nbsp;&nbsp;{{rate.rateName}}</legend>
+			<legend style="width: 75%; border-bottom: none;font-size: 18;">&nbsp;&nbsp;&nbsp;&nbsp;{{rate.rateName}}</legend>
 			</a>
 			<div id="demo{{$index}}" class="collapse in">
 			

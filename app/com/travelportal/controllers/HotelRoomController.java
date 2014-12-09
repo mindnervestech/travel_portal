@@ -169,6 +169,7 @@ public static void createRootDir() {
 			System.out.println("RATE ........"+rate.currency+rate.fromDate+rate.toDate+rate.rateName+rate.getIsSpecialRate());
 
 				RateMeta rateMeta = new RateMeta();
+				rateMeta.setSupplierCode(rate.supplierCode);
 				rateMeta.setCurrency(rate.currency);
 				rateMeta.setRateName(rate.rateName);
 				rateMeta.setFromDate(format.parse(rate.fromDate));
@@ -591,13 +592,19 @@ public static void createRootDir() {
 		RoomtypeVM roomtypeVM = Json.fromJson(json, RoomtypeVM.class);
 		
 		System.out.println("&^&&^&&^&^&^&^&&&^");
-		System.out.println(roomtypeVM.getRoomId());
+		System.out.println(roomtypeVM.getRoomname());
+		System.out.println(roomtypeVM.getSupplierCode());
 		System.out.println("&^&&^&&^&^&^&^&&&^");
+		//HotelRoomTypes hotelroomTypes =HotelRoomTypes.findByIdAndName(roomtypeVM.getRoomname(),roomtypeVM.getSupplierCode());
 		
 		if(roomtypeVM.getRoomId()== null || roomtypeVM.getRoomId()=="")
 		{
+			HotelRoomTypes hotelroomTypes =HotelRoomTypes.findByIdAndName(roomtypeVM.getRoomname(),roomtypeVM.getSupplierCode());
 			
-			HotelRoomTypes hotelroomTypes = new HotelRoomTypes();
+			if(hotelroomTypes == null)
+			{
+			
+			hotelroomTypes = new HotelRoomTypes();
 			hotelroomTypes.setRoomType(roomtypeVM.getRoomname());
 			hotelroomTypes.setExtraBedAllowed(roomtypeVM.getExtraBedAllowed());
 			hotelroomTypes.setChargesForChildren(roomtypeVM.getChargesForChildren());
@@ -622,6 +629,7 @@ public static void createRootDir() {
 				
 			}
 			hotelroomTypes.save();
+			}
 		}
 		else
 		{
@@ -668,14 +676,15 @@ public static void createRootDir() {
 	@Transactional(readOnly=false)
 	public static Result deleteRoomchild(int id) {
 
-		HotelRoomTypes hotelroomtypes = HotelRoomTypes.findById(id);
+		RoomChildPolicies.deletechildRel(id);
+		RoomChildPolicies.deletefindById(id);
 		
-		for(RoomChildPolicies childPolicies: hotelroomtypes.getRoomchildPolicies()){
+		/*for(RoomChildPolicies childPolicies: hotelroomtypes.getRoomchildPolicies()){
 			childPolicies.delete();
 			System.out.println("hii111111");
-		}
-		hotelroomtypes.setRoomchildPolicies(null);
-		hotelroomtypes.merge();
+		}*/
+		/*hotelroomtypes.setRoomchildPolicies(null);
+		hotelroomtypes.merge();*/
 
 		return ok();
 	}

@@ -1,0 +1,327 @@
+<div class="panel panel-green">
+	<div class="panel-heading clearfix">
+		<span class="mts pull-left">Search Supplier</span>
+	</div>
+	<div class="panel-body">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="tabbable tabs-left">
+
+						<div id="myTabContent2">
+
+
+							<div class="row">
+								<div class="col-md-12">
+									<script type="text/javascript">
+										$('#myTab a').click(function(e) {
+											e.preventDefault();
+											$(this).tab('show');
+										})
+									</script>
+									<style>
+</style>
+									<div class="tabbable">
+
+										<ul class="nav nav-pills" id="myTab" style="font-size: small;">
+											<li class="active menu-li custom_menu"><a href="#step1"
+												data-toggle="tab" style="padding: 7px 5px;">Batch Markup</a></li>
+											<li class="menu-li custom_menu"><a href="#Step2"
+												data-toggle="tab" style="padding: 7px 5px;">Specific
+													Markups</a></li>
+
+										</ul>
+										<div class="tab-content" id="myTabContent" style="overflow: hidden;">
+										
+											<div class="tab-pane active" id="step1">
+											
+											<form method="post" name="myform" ng-submit="saveBatchMarkup()" role="form" class="form-horizontal" novalidate>
+												<div class="row">
+													<div class="form-group">
+														<div class="col-md-4">
+															<fieldset class="billBorder">
+		 
+  																<legend class="gen-img">Supplier</legend>
+															<div class="col-md-12">
+																<label><b>Supplier:</b></label><br>
+															</div>
+															<div class="col-md-12">
+																 <li>Select All Supplier
+																 <input type="checkbox" name="supplierselect" ng-model="selectedAll" ng-click="suppliercheckAll()" />
+																</li>
+															</div>
+															<div class="row">
+														<div class="form-group">
+														
+														</div>
+														</div>
+														
+
+															<div>
+																
+																<div class="col-md-12 markupSize">
+																	<label ng-repeat="supplierInfo in supplier"
+																		class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+																		style="padding: 0px;"> <input type="checkbox" name="supplier"
+																		ng-click="supplierClicked($event,supplierInfo)"
+																		ng-model="supplierInfo.isSelected">
+																		{{supplierInfo.supplierName}} - Code : {{supplierInfo.code}}  /  {{supplierInfo.country}}
+																	</label>
+																</div>
+
+
+															</div>
+															<br>
+
+
+															</fieldset>
+														</div>
+														<div class="col-md-4">
+														<fieldset class="billBorder">
+		 
+  																<legend class="gen-img">Agent</legend>
+															<div class="col-md-12">
+																<label><b>Agent:</b></label><br>
+															</div>
+															<div class="col-md-12">
+																 <li>Select All Agent
+																 <input type="checkbox" name="agentselectall" ng-model="agentselectedAll" ng-click="agentcheckAll()" />
+																</li>
+															</div>
+															<div class="row">
+														<div class="form-group">
+														
+														</div>
+														</div>
+														
+															<div>
+																
+
+																<div class="col-md-12 markupSize">
+																	<label ng-repeat="agentInfo in agent"
+																		class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+																		style="padding: 0px;"> <input type="checkbox" name="agent"
+																		ng-click="agentClicked($event,agentInfo)"
+																		ng-model="agentInfo.isSelected">
+																		{{agentInfo.firstName}} - {{agentInfo.id}}  /  {{agentInfo.country}}
+																	</label>
+																</div>
+
+
+															</div>
+															<br>
+
+
+															</fieldset>
+														</div>
+														<div class="col-md-4">
+															<div class="row">
+															<div class="col-md-5">
+																<input type="radio" name="selected"
+																	data-ng-model="batchMarkup.selected" value="1">
+																&nbsp; Percent
+															</div>
+															<div ng-show="batchMarkup.selected == 1" class="col-md-6">
+
+														<input type="number" id="percent" name="percent" data-ng-model="batchMarkup.percent"  class="form-control" required>
+														</div>
+														</div>
+														<div class="row">
+														<div class="col-md-5">
+																<input type="radio" name="selected"
+																	data-ng-model="batchMarkup.selected" value="0">
+																&nbsp; Fat
+															</div>
+															<div ng-show="batchMarkup.selected == 0" class="col-md-6">
+															<input type="number" id="flat" name="flat" data-ng-model="batchMarkup.flat"  class="form-control" required>
+														</div>
+														</div>
+														<div class="row">
+														<div class="col-md-12">
+														
+														</div>
+														</div>
+														</div>
+														<div class="col-md-3">
+														<button type="submit" class="btn btn-primary">Save</button>
+														</div>
+													</div>
+												</div>
+												</form>
+											</div>
+											<div class="tab-pane" id="Step2">
+											
+											<form method="post" name="myform" ng-submit="saveSpecificMarkup()" role="form" class="form-horizontal" novalidate>
+												<div class="row">
+													<div class="form-group">
+														<div class="col-md-4">
+															<fieldset class="billBorder">
+		 
+  																<legend class="gen-img">Supplier</legend>
+															<!-- <div class="col-md-12">
+																<label><b>Supplier:</b></label><br>
+															</div> -->
+															
+															<br>
+															<!-- <div class="col-md-12">
+															<hr class="mtxxl mbxxl" style="border-color: black;">
+															</div> -->
+
+															<div>
+																<br>
+
+																<div class="col-md-12">
+																
+																<select class="form-control" ng-model="specificMarkup.code" ng-change="onDateChoose(allotmentMarketallotmentMarket1)">
+			    														 <option ng-repeat=" supplierInfo in supplier" value="{{supplierInfo.code}}">{{supplierInfo.supplierName}} - Code : {{supplierInfo.code}}  /  {{supplierInfo.country}}</option>
+			    		
+			  												  	</select>
+																	<!-- <label ng-repeat="supplierInfo in supplier"
+																		class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+																		style="padding: 0px;"> <input type="checkbox" name="supplier"
+																		ng-click="supplierClicked($event,supplierInfo)"
+																		ng-model="supplierInfo.isSelected">
+																		{{supplierInfo.supplierName}} - Code : {{supplierInfo.code}}  /  {{supplierInfo.country}}
+																	</label> -->
+																</div>
+																<div class="row">
+																<div class="form-group">
+																</div>
+																</div>
+																<div class="row">
+													<div class="form-group">
+																
+																<div class="col-md-4 col-md-offset-1">
+																	<a ng-click="showRate(specificMarkup.code)" style="color: blue;"><u>Show Rate</u></a>
+																</div>
+																<div class="col-md-4 col-md-offset-1">
+																	<a ng-click="showSpecials(specificMarkup.code)" style="color: blue;"><u>Show Specials</u></a>
+																</div>
+																</div>
+																</div>
+
+
+															</div>
+															<br>
+
+
+															</fieldset>
+														</div>
+														<div class="col-md-4">
+														<fieldset class="billBorder">
+		 
+  																<legend class="gen-img">Agent</legend>
+															<div class="col-md-12">
+																<label><b>Agent:</b></label><br>
+															</div>
+															<div class="col-md-12">
+																 <li>Select All Agent
+																 <input type="checkbox" name="specificAgentselectall" ng-model="specificAgentselectedAll" ng-click="specificAgentcheckAll()" />
+																</li>
+															</div>
+															<div>
+																<br>
+
+																<div class="col-md-12 markupSize">
+																	<label ng-repeat="specificAgentInfo in agent"
+																		class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+																		style="padding: 0px;"> <input type="checkbox" name="agent"
+																		ng-click="specificAgentClicked($event,specificAgentInfo)"
+																		ng-model="specificAgentInfo.isSelected">
+																		{{specificAgentInfo.firstName}} - {{specificAgentInfo.id}}  /  {{specificAgentInfo.country}}
+																	</label>
+																</div>
+
+
+															</div>
+															<br>
+
+
+															</fieldset>
+														</div>
+														<div class="col-md-4">
+															<div class="row">
+															<div class="col-md-5">
+																<input type="radio" name="specificSelected"
+																	data-ng-model="specificMarkup.specificSelected" value="1">
+																&nbsp; Percent
+															</div>
+															<div ng-show="specificMarkup.specificSelected == 1" class="col-md-6">
+
+														<input type="number" id="specificPercent" name="specificPercent" data-ng-model="specificMarkup.specificPercent"  class="form-control" required>
+														</div>
+														</div>
+														<div class="row">
+														<div class="col-md-5">
+																<input type="radio" name="specificSelected"
+																	data-ng-model="specificMarkup.specificSelected" value="0">
+																&nbsp; Fat
+															</div>
+															<div ng-show="specificMarkup.specificSelected == 0" class="col-md-6">
+															<input type="number" id="specificFlat" name="specificFlat" data-ng-model="specificMarkup.specificFlat"  class="form-control" required>
+														</div>
+														</div>
+														<div class="row">
+														<div class="form-group">
+														
+														</div>
+														</div>
+														</div>
+														<div class="col-md-3">
+														<button type="submit" class="btn btn-primary">Save</button>
+														</div>		
+													</div>
+												</div>
+												<div class="row" ng-show="showAllRate">
+													<div class="form-group">
+														<div class="col-md-12">
+															<table class="table" border="1" style="width: 100%;font-size: small;margin-bottom: 11%;">
+                	<thead style="background-color: #488c6c;">
+                    	<tr>
+                    	<th><li style="color: white;">All&nbsp&nbsp<input type="checkbox" name="rateselectedAll" ng-model="rateselectedAll" ng-click="ratecheckAll()" /></li></th>
+                           <th><a style="color: white;">Sr.No</a></th>
+                            <th><a style="color: white;">Rate Id</a></th>
+                            <th><a style="color: white;">Rate Name</a></th>
+                           <!--  <th style="width: 20%;	"><a style="color: white;">Action</a></th> --> 
+                           
+                            
+                        </tr>
+                    </thead>
+                	<tbody>
+                	
+                    	<tr ng-repeat="rate in supplierRate">
+                    		<td style="text-align: center;width: 82px;"> <input type="checkbox" name="supplierRate"
+								ng-click="rateClicked($event,rate)"
+								ng-model="rate.isSelected"></td>
+          					<td>{{$index+1}}</td>
+          					 <td>{{rate.id}}</td>
+                           <td>{{rate.rateName}}</td>
+                            <!-- <td><a ng-click="DeleteDocId(doc)" style="cursor: pointer;" data-toggle="modal"><img src="/assets/images/deleteIcon.png" style="width: 14%;margin-left: 24%;"></a></td> --> 
+                           
+                            </tr>
+                           
+                    	</tbody>
+                </table>												
+														</div>
+													</div>
+												</div>	
+														
+												
+												</form>
+											
+											
+											
+											</div>
+												
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

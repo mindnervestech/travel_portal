@@ -187,7 +187,7 @@ public class HotelRegistration {
 		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.status = 'APPROVED'");
 		return (List<HotelRegistration>) query.getResultList();
 	}
-	
+		
 	public static List<HotelRegistration> getAllRejectedUsers() {
 		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.status = 'REJECTED'");
 		return (List<HotelRegistration>) query.getResultList();

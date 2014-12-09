@@ -12,6 +12,7 @@ public class RateVM {
 	public String fromDate;
 	public String toDate;
 	public String currency;
+	public Long supplierCode;
 	public NormalRateVM normalRate;
 	public boolean isSpecialRate;
 	public boolean applyToMarket;
@@ -20,6 +21,13 @@ public class RateVM {
 	public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
 	
 	
+	
+	public Long getSupplierCode() {
+		return supplierCode;
+	}
+	public void setSupplierCode(Long supplierCode) {
+		this.supplierCode = supplierCode;
+	}
 	public String getRateName() {
 		return rateName;
 	}

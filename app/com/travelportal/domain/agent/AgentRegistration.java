@@ -298,9 +298,9 @@ public class AgentRegistration {
 		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.status = 'PENDING'");
 		return (List<AgentRegistration>) query.getResultList();
 	}
-	
+	//Query q = JPA.em().createQuery("select c.fromDate,c.toDate from RateMeta c where c.roomType.roomId = :roomid and c.currency = :currencyName GROUP BY c.fromDate , c.toDate");
 	public static List<AgentRegistration> getAllApprovedAgent() {
-		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.status = 'APPROVED'");
+		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.status = 'APPROVED' GROUP BY h.country");
 		return (List<AgentRegistration>) query.getResultList();
 	}
 	
