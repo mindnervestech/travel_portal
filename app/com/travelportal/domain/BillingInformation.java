@@ -1,10 +1,13 @@
 package com.travelportal.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
@@ -29,6 +32,8 @@ public class BillingInformation {
 	private String lastName;
 	@Column(name="title")
 	private String title;
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private Salutation salutationCode;
 	@Column(name="email_addr")
 	private String emailAddr;
 	@Column(name="tel_no")
@@ -186,9 +191,15 @@ public class BillingInformation {
 		this.ext = ext;
 	}
 	
-		
-	
-    public String getBankName() {
+	public Salutation getSalutationCode() {
+		return salutationCode;
+	}
+
+	public void setSalutationCode(Salutation salutationCode) {
+		this.salutationCode = salutationCode;
+	}
+
+	public String getBankName() {
 		return bankName;
 	}
 

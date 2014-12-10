@@ -1157,7 +1157,7 @@ public class HotelProfileController extends Controller {
 				billinginfo.setFirstName(form.get("aFirstName"));
 				billinginfo.setLastName(form.get("aLastName"));
 				billinginfo.setTitle(form.get("title"));
-					
+				billinginfo.setSalutationCode(Salutation.getsalutationIdIdByCode(Integer.parseInt(form.get("salutationCode"))));
 				billinginfo.setEmailAddr(form.get("dEmailAddr"));
 				billinginfo.setTelNo(Integer.parseInt(form.get("dTelNo")));
 				billinginfo.setTelNoCode(Integer.parseInt(form.get("dTelCode")));
@@ -1209,7 +1209,7 @@ public class HotelProfileController extends Controller {
 				billinginfo.setAccountType(form.get("accountType"));
 				billinginfo.setBranchName(form.get("branchName"));
 				billinginfo.setSwiftCode(form.get("swifiCode"));
-			
+				billinginfo.setSalutationCode(Salutation.getsalutationIdIdByCode(Integer.parseInt(form.get("salutationCode"))));
 	        billinginfo.merge();
 		    }
 			return ok();

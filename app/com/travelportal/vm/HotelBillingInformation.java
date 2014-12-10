@@ -6,6 +6,7 @@ public class HotelBillingInformation {
 	public String aFirstName;
 	public String aLastName;
 	public String title;
+	public int salutationCode;
 	public String dEmailAddr;
 	public int dTelNo;
 	public int dTelCode;
@@ -33,6 +34,13 @@ public class HotelBillingInformation {
 	
 	
 	
+	
+	public int getSalutationCode() {
+		return salutationCode;
+	}
+	public void setSalutationCode(int salutationCode) {
+		this.salutationCode = salutationCode;
+	}
 	public String getInvoiceToHotel() {
 		return InvoiceToHotel;
 	}

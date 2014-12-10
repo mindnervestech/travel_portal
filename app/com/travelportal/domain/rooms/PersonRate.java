@@ -30,8 +30,14 @@ public class PersonRate {
 	private double rateValue;
 	@Column(name="is_meal")
 	private boolean isMeal;
+	@Column(name="online_rate_value")
+	private double onlineRateValue;
+	@Column(name="online_is_meal")
+	private boolean onlineIsMeal;
 	@OneToOne
 	private MealType mealType;
+	@OneToOne
+	private MealType onlineMealType;
 	@OneToOne
 	private RateMeta rate;
 	private boolean isNormal;
@@ -79,6 +85,25 @@ public class PersonRate {
 		this.rate = rate;
 	}
 	
+	
+	public double getOnlineRateValue() {
+		return onlineRateValue;
+	}
+	public void setOnlineRateValue(double onlineRateValue) {
+		this.onlineRateValue = onlineRateValue;
+	}
+	public boolean isOnlineIsMeal() {
+		return onlineIsMeal;
+	}
+	public void setOnlineIsMeal(boolean onlineIsMeal) {
+		this.onlineIsMeal = onlineIsMeal;
+	}
+	public MealType getOnlineMealType() {
+		return onlineMealType;
+	}
+	public void setOnlineMealType(MealType onlineMealType) {
+		this.onlineMealType = onlineMealType;
+	}
 	public static List<PersonRate> findByRateMetaId(Long id) {
     	Query query = JPA.em().createQuery("Select p from PersonRate p where p.rate.id = ?1");
 		query.setParameter(1, id);

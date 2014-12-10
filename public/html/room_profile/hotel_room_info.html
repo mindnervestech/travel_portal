@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="tabbable tabs-left">
-<form method="post" ng-submit="CreateRoomType()" role="form" class="form-horizontal">
+<form method="post" ng-submit="CreateRoomType()" role="form" class="form-horizontal form-validate">
 <div data-ng-init="initRoomTypePage()">					
 <div class="panel-body">
 	<div class="col-lg-12">
@@ -143,13 +143,15 @@
 		            <div class="col-lg-12">
 						<div class="form-group">
 							<label class="col-md-3 control-label">Please define
-								your children policy:</label><br>
+								your children policy:</label>
+								<label class="col-md-3 control-label" style="margin-left: 5%;">Enter Any One</label>
+								<br>
 						</div>
 					</div>
 				 </div>
 				    <div class="row">
 		              <div class="col-lg-12">
-						<div class="form-group">
+						<div>
 							<label class="col-md-1 control-label">From: </label>
 							<div class="col-md-1">
 								<select class="form-control" data-ng-model="child.allowedChildAgeFrom" style="padding: 0px;" required>
@@ -205,8 +207,8 @@
 
 							</div>
 							<label class="col-md-1">Year:</label>
-							<div class="col-md-2">
-								<input type="text" class="form-control"
+							<div class="col-md-2" style="height: 35px;">
+								<input type="text" name="year{{$index}}" class="form-control required number"
 									data-ng-model="child.years"> <br>									
 							</div>
 							
@@ -222,6 +224,15 @@
 						</div>
 						</div>
 						</div>
+						<div class="row">
+		            <div class="col-lg-12">
+						<div class="form-group">
+								<label class="col-md-3 control-label" style="margin-left: 29%;">Currency / %</label>
+								<br>
+						</div>
+					</div>
+				 </div>
+						
 						<!-- <div class="form-group">
 							<label class="col-md-2 control-label">year:</label>
 							<div class="col-md-2">

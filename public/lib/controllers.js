@@ -774,6 +774,12 @@ angular.module('travel_portal').
 	controller("hoteRoomController",['$scope','notificationService','$rootScope','$http',function($scope,notificationService,$rootScope, $http){
 	    $scope.roomTypeIns = ( {chargesForChildren:"false"} );
 	    
+		$(".form-validate").validate({
+	        errorPlacement: function(error, element){
+	            error.insertAfter(element);
+	        }
+	    });
+	    
 			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 		
 			console.log("hoteRoomController successfully initialized."+supplierCode);
@@ -940,6 +946,12 @@ angular.module('travel_portal').
 angular.module('travel_portal').
 	controller("hoteProfileController",function($scope, $http,$routeParams,$location,notificationService,$rootScope,$filter, $upload, ngDialog) {
 
+		$(".form-validate").validate({
+	        errorPlacement: function(error, element){
+	            error.insertAfter(element);
+	        }
+	    });
+		
 		console.log("$$$$$$&$$$$$");
 		console.log(permissions);
 	$scope.generalInfo = {};
@@ -1002,93 +1014,91 @@ angular.module('travel_portal').
 		$scope.setText = set;
 	};
 
-	$http.get("/hotelchains").success(function(response) {
-		$scope.hotelchain = response;
-	}); 
+	$scope.init = function () {
+		$http.get("/hotelchains").success(function(response) {
+			$scope.hotelchain = response;
+		}); 
 
-	$http.get("/currency").success(function(response) {
-		$scope.currency = response;
+		$http.get("/currency").success(function(response) {
+			$scope.currency = response;
+			
+		});
+
+		$http.get("/hotelbrands").success(function(response) {
+			$scope.hotelbrand = response;
+		});
+
+		$http.get("/marketrate").success(function(response) {
+			$scope.marketrate = response;
+		});
+
+		$http.get("/starrating").success(function(response) {
+			$scope.starrating = response;
+		});
+
+		$http.get("/countries").success(function(response) {
+			$scope.countries = response;
+		}); 
 		
-	});
 
-	$http.get("/hotelbrands").success(function(response) {
-		$scope.hotelbrand = response;
-	});
 
-	$http.get("/marketrate").success(function(response) {
-		$scope.marketrate = response;
-	});
-
-	$http.get("/starrating").success(function(response) {
-		$scope.starrating = response;
-	});
-
-	$http.get("/countries").success(function(response) {
-		$scope.countries = response;
-	}); 
-	$scope.location = [];
-	$http.get("/location").success(function(response) {
-		for(var i =0 ; i<response.length; i++) {
-			$scope.location.push({
-				locationId:response[i].id,
-				locationNm:response[i].name
+		$scope.onCountryChange = function() {
+			$http.get('/cities/'+$scope.generalInfo.countryCode)
+			.success(function(data){
+				if(data) {
+					console.log("----");
+					console.log(data);
+					$scope.cities = [];
+					for(var i = 0; i<data.length; i++){
+						$scope.cities.push({
+							cityCode:data[i].id,
+							cityName:data[i].name
+						});
+					}
+				} else {
+					$scope.cities.splice(0);
+				}
 			});
 		}
 		
-	}); 
-
-	$http.get("/shoppingfacility").success(function(response) {
-		$scope.shoppingfacility = response;
-	}); 
-
-	$http.get("/nightlife").success(function(response) {
-		$scope.nightlife = response;
-	}); 
-
-	$http.get("/services").success(function(response) {
-		$scope.services = response;
-	}); 
-
-	$http.get("/amenities").success(function(response){
-		$scope.amenities=response;
-	});
-
-	$http.get("/business").success(function(response){
-		$scope.business=response;
-	});
-
-	$http.get("/leisureSport").success(function(response){
-		$scope.leisureSport=response;
-	});
-
-	$http.get("/salutation").success(function(response){
-		$scope.salutation=response;
-	});
-
-	$http.get("/MealType").success(function(response){
-		$scope.MealTypes=response;
 		
-		
-	});
+		  $http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
+				$scope.getallData=response;
+				console.log(response);
+				$rootScope.hotelName = response.hotelgeneralinfo.hotelNm;
+					
+				angular.forEach($scope.currency, function(obj, index){
 
-	$scope.onCountryChange = function() {
-		$http.get('/cities/'+$scope.generalInfo.countryCode)
-		.success(function(data){
-			if(data) {
-				console.log("----");
-				console.log(data);
-				$scope.cities = [];
-				for(var i = 0; i<data.length; i++){
-					$scope.cities.push({
-						cityCode:data[i].id,
-						cityName:data[i].name
-					});
-				}
-			} else {
-				$scope.cities.splice(0);
-			}
-		});
+					if ((response.hotelgeneralinfo.currencyCode == $scope.currency[index].currencyCode)) {
+						$rootScope.currencyname = $scope.currency[index].currencyName ;					
+					};
+				});
+							
+				console.log(response.hotelgeneralinfo.isAdmin)
+				$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
+				.success(function(data){
+					if(data) {
+						console.log("----");
+						console.log(data);
+						$scope.cities = [];
+						for(var i = 0; i<data.length; i++){
+							$scope.cities.push({
+								cityCode:data[i].id,
+								cityName:data[i].name
+							});
+						}
+					} else {
+						$scope.cities.splice(0);
+					}
+				});
+				
+				$scope.generalInfo=response.hotelgeneralinfo;
+				   $rootScope.checkUser = response.hotelgeneralinfo.isAdmin; 
+				 
+			});
 	}
+	
+	
 	
 	$scope.getgeneralinfo = function(){
 	
@@ -1121,6 +1131,29 @@ angular.module('travel_portal').
 	
 	$scope.getdescription = function()
 	{
+		$scope.location = [];
+		$http.get("/location").success(function(response) {
+			for(var i =0 ; i<response.length; i++) {
+				$scope.location.push({
+					locationId:response[i].id,
+					locationNm:response[i].name
+				});
+			}
+			
+		}); 
+
+		$http.get("/shoppingfacility").success(function(response) {
+			$scope.shoppingfacility = response;
+		}); 
+
+		$http.get("/nightlife").success(function(response) {
+			$scope.nightlife = response;
+		}); 
+		
+		$http.get("/services").success(function(response) {
+			$scope.services = response;
+		}); 
+		
 		$http.get('/finddescripData/'+$rootScope.supplierCode).success(function(response) {
 			$scope.descrip = response;
 			console.log("***********");
@@ -1144,7 +1177,10 @@ angular.module('travel_portal').
 	}
 	$scope.getContactInfo = function()
 	{
-	
+		$http.get("/salutation").success(function(response){
+			$scope.salutation=response;
+		});
+		
 		$http.get('/findContactData/'+$rootScope.supplierCode).success(function(response) {
 			$scope.contactInfo =  response;
 		});
@@ -1159,14 +1195,75 @@ angular.module('travel_portal').
 	}
 	$scope.getBillInfo = function()
 	{
+		$http.get("/salutation").success(function(response){
+			$scope.salutation=response;
+		});
+		
 		$http.get('/findBillData/'+$rootScope.supplierCode).success(function(response) {
 			$scope.bill = response;
 			console.log("<><><<><><><><><");
 			console.log(response);
 		});
 	}
+	
+	$scope.getMealInfo = function(){
+		
+		$http.get("/MealType").success(function(response){
+			$scope.MealTypes=response;			
+			
+		});
+		
+		
+		$http.get("/MealTypeplan/"+$rootScope.supplierCode).success(function(response){
+			$scope.MealType=response;
+			console.log("-----------------");
+			console.log($scope.MealType);
+			if($scope.MealType != null )
+				{
+				$scope.mealRate = true;
+				$scope.haveMeal = "true";
+				
+				}else
+					{
+					$scope.haveMeal = "false";
+					}
+			
+			angular.forEach($scope.MealType, function(obj, index){
+				$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
+				$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
+				/*if($scope.MealType[index].taxIncluded == "true"){
+					$scope.MealType[index].taxIncluded = "Yes";
+				}else{
+					$scope.MealType[index].taxIncluded = "No";
+				}*/
+					
+					
+				return;
+			});
+		});	
+		$scope.mealpolicy= {};
+		$scope.addnew = function(){
+			$scope.mealpolicy= {};
+			$scope.contacts = [];
+			$scope.mealpolicy= ({taxIncluded : "true"});
+			//$scope.cont= ({chargeType:"true"});
+			ngDialog.open({
+				template: '/assets/html/hotel_profile/create_meal_plan.html',
+				scope : $scope,
+				className: 'ngdialog-theme-default'
+			});
+			
+			
+		};
+		
+	}
+	
 	$scope.getAmenitiesInfo = function()
 	{
+		$http.get("/amenities").success(function(response){
+			$scope.amenities=response;
+		});
+		
 		$http.get('/findAmenitiesData/'+$rootScope.supplierCode).success(function(response) {
 			angular.forEach($scope.amenities, function(obj, index){
 				angular.forEach(response, function(obj1, index){
@@ -1193,6 +1290,14 @@ angular.module('travel_portal').
 		}
 		$scope.getBusinessInfo = function()
 		{
+			$http.get("/business").success(function(response){
+				$scope.business=response;
+			});
+
+			$http.get("/leisureSport").success(function(response){
+				$scope.leisureSport=response;
+			});
+			
 			$http.get('/findAmenitiesData/'+$rootScope.supplierCode).success(function(response) {
 			angular.forEach($scope.business, function(obj, index){
 				angular.forEach(response, function(obj1, index){
@@ -1329,6 +1434,11 @@ angular.module('travel_portal').
 	{
 		$scope.getBillInfo();
 	}
+	if($location.path() == "/profile7")
+	{
+		$scope.getMealInfo();
+	}
+	
 	if($location.path() == "/profile8")
 	{
 		$scope.getAmenitiesInfo();
@@ -1337,19 +1447,19 @@ angular.module('travel_portal').
 	{
 		$scope.getBusinessInfo();
 	}
-	if($location.path() == "/profile10")
+	/*if($location.path() == "/profile10")
 	{
 		$scope.getLeisureInfo();
-	}
-	if($location.path() == "/profile11")
+	}*/
+	if($location.path() == "/profile10")
 	{
 		$scope.getAreaInfo();
 	}
-	if($location.path() == "/profile12")
+	if($location.path() == "/profile11")
 	{
 		$scope.getTranAndDirInfo();
 	}
-	if($location.path() == "/profile13")
+	if($location.path() == "/profile12")
 	{
 		$scope.gethealthAndSafetyInfo();
 	}
@@ -1357,47 +1467,7 @@ angular.module('travel_portal').
 	
 	
 
-	$http.get("/MealTypeplan/"+$rootScope.supplierCode).success(function(response){
-		$scope.MealType=response;
-		console.log("-----------------");
-		console.log($scope.MealType);
-		if($scope.MealType != null )
-			{
-			$scope.mealRate = true;
-			$scope.haveMeal = "true";
-			
-			}else
-				{
-				$scope.haveMeal = "false";
-				}
-		
-		angular.forEach($scope.MealType, function(obj, index){
-			$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
-			$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
-			/*if($scope.MealType[index].taxIncluded == "true"){
-				$scope.MealType[index].taxIncluded = "Yes";
-			}else{
-				$scope.MealType[index].taxIncluded = "No";
-			}*/
-				
-				
-			return;
-		});
-	});	
-	$scope.mealpolicy= {};
-	$scope.addnew = function(){
-		$scope.mealpolicy= {};
-		$scope.contacts = [];
-		$scope.mealpolicy= ({taxIncluded : "true"});
-		//$scope.cont= ({chargeType:"true"});
-		ngDialog.open({
-			template: '/assets/html/hotel_profile/create_meal_plan.html',
-			scope : $scope,
-			className: 'ngdialog-theme-default'
-		});
-		
-		
-	};
+	
 	
 	$scope.findmap = function(find,scope){
 		console.log(find);
@@ -1842,40 +1912,7 @@ angular.module('travel_portal').
   	}
     
      
-     $http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
-			$scope.getallData=response;
-			console.log(response);
-			$rootScope.hotelName = response.hotelgeneralinfo.hotelNm;
-				
-			angular.forEach($scope.currency, function(obj, index){
-
-				if ((response.hotelgeneralinfo.currencyCode == $scope.currency[index].currencyCode)) {
-					$rootScope.currencyname = $scope.currency[index].currencyName ;					
-				};
-			});
-						
-			console.log(response.hotelgeneralinfo.isAdmin)
-			$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
-			.success(function(data){
-				if(data) {
-					console.log("----");
-					console.log(data);
-					$scope.cities = [];
-					for(var i = 0; i<data.length; i++){
-						$scope.cities.push({
-							cityCode:data[i].id,
-							cityName:data[i].name
-						});
-					}
-				} else {
-					$scope.cities.splice(0);
-				}
-			});
-			
-			$scope.generalInfo=response.hotelgeneralinfo;
-			   $rootScope.checkUser = response.hotelgeneralinfo.isAdmin; 
-			 
-		});
+   
      
     var files = null;
    $scope.selectProfileImage = function($files)
@@ -2277,6 +2314,12 @@ angular.module('travel_portal').
 angular.module('travel_portal').
 controller("manageContractsController",['$scope','notificationService','$rootScope','$http',function($scope,notificationService,$rootScope, $http){
 	
+	$(".form-validate").validate({
+        errorPlacement: function(error, element){
+            error.insertAfter(element);
+        }
+    });
+	
 	$scope.showMeals = false;
 	$scope.addMeal1 = 'no';
 	$scope.showContract = true;
@@ -2311,12 +2354,16 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		$scope.mealTypes = response;
 	});
 	
+//	   $scope.roomTypeIns = ( {chargesForChildren:"false"} );
+	
 	
 	$scope.showData = function() {
 		console.log($scope.formData.room);
 		console.log($scope.formData.fromDate);
 		console.log($scope.formData.toDate);
 		console.log($scope.currencyname);
+		
+		if($scope.formData.fromDate < $scope.formData.toDate){
 		
 		$http.get('/getRateData/'+$scope.formData.room+'/'+$scope.formData.fromDate+'/'+$scope.formData.toDate+'/'+$scope.currencyname).success(function(response){
 			console.log(response);
@@ -2349,6 +2396,11 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		});
 		$scope.isUpdated = false;
 		$scope.showSavedRates = true;
+		}else{
+			$scope.messageShow = "Please Select 'To Date' Greater Then 'From Date'";
+			$scope.link="";
+			alert("Data max");
+		}
 	};
 	
 	$scope.createNewRate = function() {
@@ -2357,6 +2409,9 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		
 		for(var i=0;i<$scope.rateObject.length;i++) {
 			$scope.rateObject.splice(i,1);
+			//$scope.rateObject.normalRate.rateDetails[i] = ( {meals:"Lunch"} );
+			$scope.rateObject.normalRate.rateDetails[i].meals = "Lunch";
+			//$scope.rateObject.normalRate.rateDetails[i].onlineMeals = "Lunch";
 			console.log(i);
 		}
 		
@@ -2377,8 +2432,11 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	$scope.isChecked = function(value,index) {
 		if(value == 'yes') {
 			$scope.rateObject.normalRate.rateDetails[index].includeMeals = true;
+			/*$scope.rateObject.normalRate.rateDetails[index].meals = "Lunch";*/
+		/*	$scope.rateObject.normalRate.rateDetails[index].onlineMeals = "Lunch";*/
 		} else {
 			$scope.rateObject.normalRate.rateDetails[index].includeMeals = false;
+			$scope.rateObject.normalRate.rateDetails[index].meals = null;
 		}
 		
 	};

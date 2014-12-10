@@ -31,15 +31,15 @@
 									FEATURES</a></li>
 							<!-- <li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
 									& SPORT</a></li> -->
-							<li><a href="#profile11" data-toggle="tab">AREA
+							<li><a href="#profile10" data-toggle="tab">AREA
 									ATTRACTIONS</a></li>
-							<li><a href="#profile12" data-toggle="tab">TRANSPORTATION
+							<li><a href="#profile11" data-toggle="tab">TRANSPORTATION
 									& DIRECTIONS</a></li>
-							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
+							<li><a href="#profile12" data-toggle="tab">HEALTH &amp;
 									SAFETY</a></li>
 						</ul>
 						<div id="myTabContent2" class="tab-content">
-							<form method="post" name="contact" ng-submit="SaveContactinfo()" role="form" class="form-horizontal">
+							<form method="post" name="contact" ng-submit="SaveContactinfo()" role="form" class="form-horizontal form-validate">
 	<div class="col-md-12">
 		<div class="col-md-12">
 			
@@ -73,32 +73,38 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Telephone:</label>
 				<div class="col-md-2 setwidth">
-					<input  type="number" name="dTelCode" data-ng-model="contactInfo.dTelCode" class="form-control" required>
-					<span class="error" ng-show="contact.dTelCode.$error.number" style="color: red;">Not valid number!</span>
+					<input  type="text" name="dTelCode" data-ng-model="contactInfo.dTelCode" class="form-control required number" required>
+					<!-- <span class="error" ng-show="contact.dTelCode.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				
 					<div class="col-md-3">
-					<input type="number" name="dTelNo" data-ng-model="contactInfo.dTelNo" class="form-control" required>
-					<span class="error" ng-show="contact.dTelNo.$error.number" style="color: red;">Not valid number!</span>
+					<input type="text" name="dTelNo" data-ng-model="contactInfo.dTelNo" class="form-control required number" required>
+					<!-- <span class="error" ng-show="contact.dTelNo.$error.number" style="color: red;">Not valid number!</span> -->
+				</div>
+				<div class="col-md-4">
+				(-Not Use character or special characters)
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Fax :</label>
 				<div class="col-md-2 setwidth">
-					<input type="number" name="dFaxCode" data-ng-model="contactInfo.dFaxCode" class="form-control" required>
-					<span class="error" ng-show="contact.dFaxCode.$error.number" style="color: red;">Not valid number!</span>
+					<input type="text" name="dFaxCode" data-ng-model="contactInfo.dFaxCode" class="form-control required number" required>
+					<!-- <span class="error" ng-show="contact.dFaxCode.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<div class="col-md-3">
-					<input type="number" name="dFaxNo" data-ng-model="contactInfo.dFaxNo" class="form-control" required>
-					<span class="error" ng-show="contact.dFaxNo.$error.number" style="color: red;">Not valid number!</span>
+					<input type="text" name="dFaxNo" data-ng-model="contactInfo.dFaxNo" class="form-control required number" required>
+					<!-- <span class="error" ng-show="contact.dFaxNo.$error.number" style="color: red;">Not valid number!</span> -->
+				</div>
+				<div class="col-md-4">
+				(-Not Use character or special characters)
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Extension: :</label>
 				<div class="col-md-9">
-					<input type="text" name="dExtNo" data-ng-model="contactInfo.dExtNo" class="form-control">
-					<span class="error" ng-show="contact.dExtNo.$error.number" style="color: red;">Not valid number!</span>
+					<input type="text" name="dExtNo" data-ng-model="contactInfo.dExtNo" class="form-control required number">
+					<!-- <span class="error" ng-show="contact.dExtNo.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 			</div>
 			
@@ -135,7 +141,7 @@
 			</div>
 			
 			<div class="form-group">
-				<label class="col-md-3 control-label">*Title:</label>
+				<label class="col-md-3 control-label">*Designation:</label>
 				<div class="col-md-9">
 					<input type="text" name="rTitle" data-ng-model="contactInfo.rTitle" class="form-control" required>
 				</div>
@@ -145,13 +151,16 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Direct Telephone:</label>
 				<div class="col-md-2 setwidth">
-					<input type="number" name="rDirectTelCode" data-ng-model="contactInfo.rDirectTelCode" class="form-control" required>
-					<span class="error" ng-show="contact.rDirectTelCode.$error.number" style="color: red;">Not valid number!</span>
+					<input type="text" name="rDirectTelCode" data-ng-model="contactInfo.rDirectTelCode" class="form-control required number" required>
+					<!-- <span class="error" ng-show="contact.rDirectTelCode.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				
 					<div class="col-md-3">
-					<input type="number" name="rDirectTelNo" data-ng-model="contactInfo.rDirectTelNo" class="form-control" required>
-					<span class="error" ng-show="contact.rDirectTelNo.$error.number" style="color: red;">Not valid number!</span>
+					<input type="text" name="rDirectTelNo" data-ng-model="contactInfo.rDirectTelNo" class="form-control required number" required>
+					<!-- <span class="error" ng-show="contact.rDirectTelNo.$error.number" style="color: red;">Not valid number!</span> -->
+				</div>
+				<div class="col-md-4">
+				(-Not Use character or special characters)
 				</div>
 			</div>
 			
@@ -177,32 +186,38 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Department Telephone:</label>
 				<div class="col-md-2 setwidth">
-					<input type="number" name="rDeptTelCode" data-ng-model="contactInfo.rDeptTelCode" class="form-control" required>
-					<span class="error" ng-show="contact.rDeptTelCode.$error.number" style="color: red;">Not valid number!</span>
+					<input type="text" name="rDeptTelCode" data-ng-model="contactInfo.rDeptTelCode" class="form-control required number" required>
+					<!-- <span class="error" ng-show="contact.rDeptTelCode.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<div class="col-md-3">
-					<input type="number" name="rDeptTelNo" data-ng-model="contactInfo.rDeptTelNo" class="form-control" required>
-					<span class="error" ng-show="contact.rDeptTelNo.$error.number" style="color: red;">Not valid number!</span>
+					<input type="text" name="rDeptTelNo" data-ng-model="contactInfo.rDeptTelNo" class="form-control required number" required>
+					<!-- <span class="error" ng-show="contact.rDeptTelNo.$error.number" style="color: red;">Not valid number!</span> -->
+				</div>
+				<div class="col-md-4">
+				(-Not Use character or special characters)
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">*Reservations Department Fax:	</label>
 				<div class="col-md-2 setwidth">
-					<input type="number" name="rDeptFaxCode" data-ng-model="contactInfo.rDeptFaxCode" class="form-control" required>
-						<span class="error" ng-show="contact.rDeptFaxCode.$error.number" style="color: red;">Not valid number!</span>
+					<input type="text" name="rDeptFaxCode" data-ng-model="contactInfo.rDeptFaxCode" class="form-control required number" required>
+					<!-- 	<span class="error" ng-show="contact.rDeptFaxCode.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<div class="col-md-3">
-					<input type="number" name="rDeptFaxNo" data-ng-model="contactInfo.rDeptFaxNo" class="form-control" required>
-					<span class="error" ng-show="contact.rDeptFaxNo.$error.number" style="color: red;">Not valid number!</span>
+					<input type="text" name="rDeptFaxNo" data-ng-model="contactInfo.rDeptFaxNo" class="form-control required number" required>
+					<!-- <span class="error" ng-show="contact.rDeptFaxNo.$error.number" style="color: red;">Not valid number!</span> -->
+				</div>
+				<div class="col-md-4">
+				(-Not Use character or special characters)
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Extension :</label>
 				<div class="col-md-9">
-					<input type="number" name="deptExtNo" data-ng-model="contactInfo.deptExtNo" class="form-control">
-					<span class="error" ng-show="contact.deptExtNo.$error.number" style="color: red;">Not valid number!</span>
+					<input type="text" name="deptExtNo" data-ng-model="contactInfo.deptExtNo" class="form-control required number">
+					<!-- <span class="error" ng-show="contact.deptExtNo.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 			</div>
 			

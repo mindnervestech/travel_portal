@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.travelportal.controllers.AllotmentController.AllotMarketVM;
+import com.travelportal.controllers.AllotmentController.CityVM;
+import com.travelportal.controllers.AllotmentController.CountryVM;
+import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.Location;
@@ -51,27 +55,45 @@ public class MarkUpController extends Controller {
 	
 	@Transactional(readOnly=true)
 	public static Result getAgent() {
-		List<AgentRegistration> aList = AgentRegistration.getAllApprovedAgent();
-		List<AgentRegistrationVM> aVms = new ArrayList<AgentRegistrationVM>();
-		for(AgentRegistration aRegistration : aList){
-			AgentRegistrationVM agRegistrationVM = new AgentRegistrationVM(aRegistration);
-			aVms.add(agRegistrationVM);
+		List<Country> aList = AgentRegistration.getAllApprovedAgent();
+		List<agentfullDataVM> group = new ArrayList<agentfullDataVM>();
+		
+		for(Country aRegistration : aList){
+			agentfullDataVM marketvm = new agentfullDataVM();
+			agentDataVM countryvm = new agentDataVM();
+			countryvm.countryCode = aRegistration.getCountryCode();
+			countryvm.countryName = aRegistration.getCountryName();
+			
+			List<AgentRegistrationVM> agentRegistrationVMs= new ArrayList<AgentRegistrationVM>();
+			List<AgentRegistration> agList = AgentRegistration.getAgentData(aRegistration.getCountryCode());
+			for (AgentRegistration _agent : agList) {
+				AgentRegistrationVM agRegist = new AgentRegistrationVM(_agent);
+				agRegist.id = _agent.getId();
+				agRegist.firstName = _agent.getFirstName();
+				agRegist.lastName = _agent.getLastName();
+				agentRegistrationVMs.add(agRegist);
+				
+			}
+			countryvm.agentDatavm = agentRegistrationVMs;
+			marketvm.agentfullData = countryvm;
+			group.add(marketvm);
 		}
-		return ok(Json.toJson(aVms));
+		return ok(Json.toJson(group));
 		
 	}
 	
-	/*@Transactional(readOnly=true)
-	public static Result getAgent() {
-		List<AgentRegistration> aList = AgentRegistration.getAllApprovedAgent();
-		List<AgentRegistrationVM> aVms = new ArrayList<>();
-		for(AgentRegistration aRegistration : aList){
-			AgentRegistrationVM agRegistrationVM = new AgentRegistrationVM(aRegistration);
-			aVms.add(agRegistrationVM);
-		}
-		return ok(Json.toJson(aVms));
-		
-	}*/
+	public static class agentfullDataVM {
+		public agentDataVM agentfullData;
+
+	}
+	public static class agentDataVM {
+		public long countryCode;
+		public String countryName;
+		public List<AgentRegistrationVM> agentDatavm;
+
+	}
+	
+	
 
 	
 	@Transactional(readOnly=true)

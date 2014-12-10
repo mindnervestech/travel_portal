@@ -11,6 +11,9 @@ public class RateDetailsVM {
 	public double rateValue;
 	public boolean includeMeals;
 	public String meals;
+	public double onlineRateValue;
+	public boolean onlineIncludeMeals;
+	public String onlineMeals;
 	
 	public RateDetailsVM() {
 		
@@ -19,6 +22,12 @@ public class RateDetailsVM {
 		this.name = person.getNumberOfPersons();
 		this.rateValue = person.getRateValue();
 		this.includeMeals = person.isMeal();
+		this.onlineRateValue = person.getOnlineRateValue();
+		this.onlineIncludeMeals = person.isOnlineIsMeal();
+		
+		if(person.getOnlineMealType() != null){
+			this.onlineMeals = person.getOnlineMealType().getMealTypeNm();
+		}
 		
 		if(person.getMealType() != null) {
 			this.meals = person.getMealType().getMealTypeNm();

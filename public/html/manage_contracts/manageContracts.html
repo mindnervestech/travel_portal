@@ -67,6 +67,7 @@
 			<div>
 						
 			<fieldset class="billinside" ng-repeat="rate in rateMeta track by $index" style="margin-top: 2%;">
+			 <form action="#" class="form-validate">
 			<a data-toggle="collapse" data-target="#demo{{$index}}" aria-expanded="true" aria-controls="demo{{$index}}" style="cursor: pointer;">
 			<legend style="width: 75%; border-bottom: none;font-size: 18;">&nbsp;&nbsp;&nbsp;&nbsp;{{rate.rateName}}</legend>
 			</a>
@@ -80,10 +81,12 @@
 							<th>Adults</th>
 							<th>Net Payable Rates</th>
 							<th>Rate Basis</th>
+							<th>Minimum B to C Online Selling Rates</th>
+							<th>Rate Basis</th>
 						</tr>
 						<tr data-ng-repeat="rateData in rate.normalRate.rateDetails track by $index">
 							<td>{{rateData.name}}</td>
-							<td><input type="number" name="rateValue{{$index}}" ng-model="rateData.rateValue" value="" size="6" min="18" max="99" required> 
+							<td><input type="number" ng-model="rateData.rateValue" value="" size="6" min="18" max="99" required> 
 							<!-- <span class="error" ng-show="contact.rateValue{{$index}}.$error.number" style="color: red;">Not valid number!</span> -->
 							</td>
 							<td>*Include Meals?
@@ -98,6 +101,22 @@
 								</div>
 								
 							</td>
+							<td><input type="number" ng-model="rateData.onlineRateValue" value="" size="6" min="18" max="99" required> 
+							<!-- <span class="error" ng-show="contact.rateValue{{$index}}.$error.number" style="color: red;">Not valid number!</span> -->
+							</td>
+							<td>*Include Meals?
+								<input type="radio" name="online{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.onlineIncludeMeals">Yes
+								<input type="radio" name="online{{rateData.name}}{{$parent.$index}}" data-ng-value="false" data-ng-model="rateData.onlineIncludeMeals">No
+								<div ng-show="rateData.onlineIncludeMeals == true">
+									<div class="col-md-6">
+										<select class="form-control" data-ng-model="rateData.onlineMeals">
+												<option data-ng-repeat="type in mealTypes">{{type.mealTypeNm}}</option>
+										</select>
+									</div>
+								</div>
+								
+							</td>
+							
 						</tr>
 						
 					</tbody>
@@ -183,6 +202,7 @@
 							<th>Adults</th>
 							<th>Net Payable Rates</th>
 							<th>Rate Basis</th>
+							
 						</tr>
 						<tr data-ng-repeat="rateData in rate.special.rateDetails track by $index">
 							<td>{{rateData.name}}</td>
@@ -278,6 +298,8 @@
 				<br>
 				<hr style="float: left;width: 100%;">
 						<input type="button" value="DELETE RATE" style="margin-top: 1%;margin-left: 84%" ng-click="deleteRate(rate.id,$index)">
+						
+						</form>
 			</fieldset>	
 			 <div ng-show="addNewButton"> 
 					  <input type="button" class="btn btn-primary" value="ADD NEW RATE" ng-click="createNewRate()" style="float:left; margin-top: 3%;margin-left: 29%;">
@@ -292,6 +314,7 @@
 			<a data-toggle="collapse" data-target="#demo1{{$index}}" aria-expanded="true" aria-controls="demo1{{$index}}" style="cursor: pointer;">
 			<legend style="width: 10%; border-bottom: none;font-size: 18;">&nbsp;&nbsp;&nbsp;&nbsp;Rate {{$index+1}}</legend>
 			</a>
+			<form action="#" class="form-validate">
 			<input type="hidden" value="{{rate.id}}" data-ng-model="selectedRatesId">
 			<div id="demo1{{$index}}" class="collapse in">
 				<div class="row" style="margin-bottom: 3%;margin-left: 2%;">
@@ -310,17 +333,33 @@
 							<th>Adults</th>
 							<th>Net Payable Rates</th>
 							<th>Rate Basis</th>
+							<th>Minimum B to C Online Selling Rates</th>
+							<th>Rate Basis</th>
 						</tr>
 						<tr data-ng-repeat="rateData in rate.normalRate.rateDetails track by $index">
 							<td>{{rateData.name}}</td>
-							<td><input type="number" ng-model="rateData.rateValue" value=""> </td>
+							<td><input type="text" name="rateVal{{$index}}" ng-model="rateData.rateValue" value="" class="form-control required number"> </td>
 							<td>*Include Meals?
 								<input type="radio" name="create{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.includeMeals">Yes
 								<input type="radio" name="create{{rateData.name}}{{$parent.$index}}" data-ng-value="false" data-ng-model="rateData.includeMeals" checked>No
 								<div ng-show="rateData.includeMeals == true">
-									<div class="col-md-6">
+									<div class="col-md-8">
 										<select class="form-control" data-ng-model="rateData.meals">
-												<option selected value="">--Choose One--</option>
+												
+												<option data-ng-repeat="type in mealTypes">{{type.mealTypeNm}}</option>
+										</select>
+									</div>
+								</div>
+								
+							</td>
+							<td><input type="number" ng-model="rateData.onlineRateValue" value=""> </td>
+							<td>*Include Meals?
+								<input type="radio" name="create1{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.onlineIncludeMeals">Yes
+								<input type="radio" name="create1{{rateData.name}}{{$parent.$index}}" data-ng-value="false" data-ng-model="rateData.onlineIncludeMeals" checked>No
+								<div ng-show="rateData.onlineIncludeMeals == true">
+									<div class="col-md-8">
+										<select class="form-control" data-ng-model="rateData.onlineMeals">
+												
 												<option data-ng-repeat="type in mealTypes">{{type.mealTypeNm}}</option>
 										</select>
 									</div>
@@ -507,6 +546,7 @@
 				</div>
 				<hr style="float: left;width: 100%;">
 				<div style="float: left;"><input type="button" value="REMOVE THIS RATE" ng-click="removeRate($index)" ng-show="showRemoveRate == true"></div>
+				</form>
 			</fieldset>	
 						<input type="button" value="ADD ADDITIONAL RATES" ng-click="addNewRate()" style="float:left; margin-top: 1%;margin-left: 1%;">
 		

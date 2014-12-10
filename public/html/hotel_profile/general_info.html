@@ -1,4 +1,4 @@
-<div class="panel panel-green">
+<div class="panel panel-green" ng-init="init()">
 	<div class="panel-heading clearfix">
 		<span class="mts pull-left">HOTEL SUPPLIER PROFILE</span>
 	</div>
@@ -29,13 +29,13 @@
 									AMENITIES</a></li>
 							<li><a href="#profile9" data-toggle="tab">BUSINESS
 									FEATURES</a></li>
-							<li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
-									& SPORT</a></li>
-							<li><a href="#profile11" data-toggle="tab">AREA
+							<!-- <li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
+									& SPORT</a></li> -->
+							<li><a href="#profile10" data-toggle="tab">AREA
 									ATTRACTIONS</a></li>
-							<li><a href="#profile12" data-toggle="tab">TRANSPORTATION
+							<li><a href="#profile11" data-toggle="tab">TRANSPORTATION
 									& DIRECTIONS</a></li>
-							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
+							<li><a href="#profile12" data-toggle="tab">HEALTH &amp;
 									SAFETY</a></li>
 						</ul>
 						<div id="myTabContent2" class="tab-content hotel-profile-tab-content">
@@ -201,7 +201,7 @@ Note: Once you click update if you made changes here, the system will log you ou
 		<hr class="mtxxl mbxxl" style="border-color: black">	
 		</div>
 		<div>	<span ng-show="generalInfoMsg" style="color: green;margin-left: 3%;">Genral Information Save Successfully</span>
-                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;">Save</button>
+                 <button type="submit" class="btn btn-primary" style="margin-left: 84%;" disabled="disabled">Save</button>
                  </div>
 	</div>
 </form>

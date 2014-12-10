@@ -18,6 +18,7 @@ import com.travelportal.domain.HearAboutUs;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.NatureOfBusiness;
 import com.travelportal.domain.Salutation;
+import com.travelportal.domain.allotment.AllotmentMarket;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -299,10 +300,16 @@ public class AgentRegistration {
 		return (List<AgentRegistration>) query.getResultList();
 	}
 	//Query q = JPA.em().createQuery("select c.fromDate,c.toDate from RateMeta c where c.roomType.roomId = :roomid and c.currency = :currencyName GROUP BY c.fromDate , c.toDate");
-	public static List<AgentRegistration> getAllApprovedAgent() {
-		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.status = 'APPROVED' GROUP BY h.country");
-		return (List<AgentRegistration>) query.getResultList();
+	public static List getAllApprovedAgent() {
+		Query query = JPA.em().createQuery("select DISTINCT h.country from AgentRegistration h where h.status = 'APPROVED'");
+		return query.getResultList();
 	}
+public static List<AgentRegistration> getAgentData(int code) {/*List<Integer> rateid*/
+			Query q = JPA.em().createQuery("select c from AgentRegistration c where c.country.countryCode = ?1");
+			q.setParameter(1, code);
+			return (List<AgentRegistration>) q.getResultList();
+	
+   }
 	
 	public static List<AgentRegistration> getAllRejectedAgent() {
 		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.status = 'REJECTED'");

@@ -31,11 +31,11 @@
 									FEATURES</a></li>
 							<!-- <li><a href="#profile10" data-toggle="tab">HOTEL LEISURE
 									& SPORT</a></li> -->
-							<li><a href="#profile11" data-toggle="tab">AREA
+							<li><a href="#profile10" data-toggle="tab">AREA
 									ATTRACTIONS</a></li>
-							<li><a href="#profile12" data-toggle="tab">TRANSPORTATION
+							<li><a href="#profile11" data-toggle="tab">TRANSPORTATION
 									& DIRECTIONS</a></li>
-							<li><a href="#profile13" data-toggle="tab">HEALTH &amp;
+							<li><a href="#profile12" data-toggle="tab">HEALTH &amp;
 									SAFETY</a></li>
 						</ul>
 						<div id="myTabContent2" class="tab-content">
@@ -94,6 +94,17 @@
 					</div>
 					</div>
 					
+								<div class="form-group">
+						<label class="col-md-5 control-label">*salutation:</label>
+						<div class="col-md-7">
+						<!-- <input type="text" name="title" data-ng-model="bill.title" class="form-control" required> -->
+						<select class="form-control" name="salutationCode" data-ng-model="bill.salutationCode" data-ng-options="salut.salutationId as salut.salutationValue for salut in salutation" required>
+							<option>--choose one--</option>
+							
+					</select>
+					</div>
+					</div>
+							
 					
 						<div class="form-group">
 				<label class="col-md-5 control-label">*Direct E-mail:</label>
@@ -206,7 +217,7 @@
 					<div class="form-group">
 						<label class="col-md-5 control-label">SWIFT Code:</label>
 						<div class="col-md-7">
-						<input type="text" name="swifiCode" data-ng-model="bill.swiftCode" class="form-control" required>
+						<input type="text" name="swiftCode" data-ng-model="bill.swiftCode" class="form-control" required>
 					</div>
 					</div>
 					</div>

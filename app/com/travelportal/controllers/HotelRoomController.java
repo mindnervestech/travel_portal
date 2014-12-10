@@ -136,6 +136,8 @@ public static void createRootDir() {
 			}
 			
 			rateDetail.includeMeals = false;
+			rateDetail.meals ="Lunch";
+			rateDetail.onlineMeals = "Lunch";
 			normal.rateDetails.add(rateDetail);
 			special.rateDetails.add(rateDetail);
 		}
@@ -216,6 +218,15 @@ public static void createRootDir() {
 					PersonRate personRate = new PersonRate();
 					personRate.setNumberOfPersons(rateDetailsVM.name);
 					personRate.setRateValue(rateDetailsVM.rateValue);
+					personRate.setOnlineRateValue(rateDetailsVM.onlineRateValue);
+					
+					if(rateDetailsVM.onlineIncludeMeals == true) {
+						personRate.setOnlineIsMeal(rateDetailsVM.onlineIncludeMeals);
+						personRate.setOnlineMealType(MealType.getmealTypeByName(rateDetailsVM.onlineMeals));
+					} else {
+						personRate.setOnlineIsMeal(rateDetailsVM.onlineIncludeMeals);
+					}
+					
 						if(rateDetailsVM.includeMeals == true) {
 							personRate.setMeal(rateDetailsVM.includeMeals);
 							personRate.setMealType(MealType.getmealTypeByName(rateDetailsVM.meals));
@@ -358,11 +369,20 @@ public static void createRootDir() {
 					PersonRate personRate = PersonRate.findByRateMetaIdAndNormal(rate.getId(),true,rateDetailsVM.name);
 					personRate.setNumberOfPersons(rateDetailsVM.name);
 					personRate.setRateValue(rateDetailsVM.rateValue);
+					personRate.setOnlineRateValue(rateDetailsVM.onlineRateValue);
 							if(rateDetailsVM.includeMeals == true) {
 								personRate.setMeal(rateDetailsVM.includeMeals);
 								personRate.setMealType(MealType.getmealTypeByName(rateDetailsVM.meals));
 							} else {
 								personRate.setMeal(rateDetailsVM.includeMeals);
+							}
+							
+
+							if(rateDetailsVM.onlineIncludeMeals == true) {
+								personRate.setOnlineIsMeal(rateDetailsVM.onlineIncludeMeals);
+								personRate.setOnlineMealType(MealType.getmealTypeByName(rateDetailsVM.onlineMeals));
+							} else {
+								personRate.setOnlineIsMeal(rateDetailsVM.onlineIncludeMeals);
 							}
 							
 							personRate.setNormal(true);

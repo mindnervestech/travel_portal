@@ -50,19 +50,19 @@ var app = angular.module('travel_portal',['ngRoute','ngDialog','jlareau.pnotify'
 		templateUrl: '/assets/html/hotel_profile/business_amenities.html',
 		controller: 'hoteProfileController'
 	})
-	.when('/profile10', {
+	/*.when('/profile10', {
 		templateUrl: '/assets/html/hotel_profile/leisure_sport.html',
 		controller: 'hoteProfileController'
-	})
-	.when('/profile11', {
+	})*/
+	.when('/profile10', {
 		templateUrl: '/assets/html/hotel_profile/area_attraction.html',
 		controller: 'hoteProfileController'
 	})
-	.when('/profile12', {
+	.when('/profile11', {
 		templateUrl: '/assets/html/hotel_profile/transportation_directions.html',
 		controller: 'hoteProfileController'
 	})
-	.when('/profile13', {
+	.when('/profile12', {
 		templateUrl: '/assets/html/hotel_profile/health_and_safety.html',
 		controller: 'hoteProfileController'
 	})
@@ -146,6 +146,9 @@ app.factory('MyHttpInterceptor', function ($q) {
 app.config(function ($httpProvider) {
    $httpProvider.interceptors.push('MyHttpInterceptor');  
 })
+
+
+
 app.directive('ngSec',function(){
 	return {
 		scope: { permission: '='},

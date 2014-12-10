@@ -311,6 +311,9 @@ public class TravelPortalUtilsController extends Controller {
 		hotelbillinginformation.setBranchName(billinginformation.getBranchName());
 		hotelbillinginformation.setAccountType(billinginformation.getAccountType());
 		hotelbillinginformation.setSwiftCode(billinginformation.getSwiftCode());
+		if(billinginformation.getSalutationCode() != null){
+			hotelbillinginformation.setSalutationCode(billinginformation.getSalutationCode().getSalutationId());
+		}
 		
 		return ok(Json.toJson(hotelbillinginformation));
 	}
