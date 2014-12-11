@@ -22,6 +22,7 @@ import play.db.jpa.Transactional;
 
 import com.travelportal.domain.City;
 import com.travelportal.domain.RatePeriod;
+import com.travelportal.domain.agent.AgentRegistration;
 
 @Entity
 @Table(name="rate_meta")
@@ -165,6 +166,10 @@ public class RateMeta {
 		 
 		 public static List<RateMeta> getrateId(List<Long> rateid) {
 				return JPA.em().createQuery("select c from RateMeta c where id IN ?1").setParameter(1, rateid).getResultList();
+			}
+		 
+		 public static RateMeta getallRateCode(long code) {
+				return (RateMeta) JPA.em().createQuery("select c from RateMeta c where id = ?1").setParameter(1, code).getSingleResult();
 			}
 	 
 	@Transactional

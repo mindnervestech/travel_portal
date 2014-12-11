@@ -198,9 +198,17 @@ public class HotelRegistration {
 		return (HotelRegistration) query.getSingleResult();
 	}
 	
+	/*public static List<HotelRegistration> getallhotelsupplier(List<Integer> list) {
+		return JPA.em().createQuery("select c from HotelRegistration c where h.id IN ?1").setParameter(1, list).getResultList();
+	}*/
+	
 	public static HotelRegistration doLogin(String email, String code, String password, String type) {
 		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.supplierCode = ?1 and h.password = ?2 and h.supplierType = ?3 and h.email = ?4 and h.status = 'APPROVED'").setParameter(1, code).setParameter(2, password).setParameter(3, type).setParameter(4, email);
 		return (HotelRegistration) query.getSingleResult();
+	}
+	
+	public static HotelRegistration getallSupplierCode(long code) {
+		return (HotelRegistration) JPA.em().createQuery("select c from HotelRegistration c where c.supplierCode = "+code).getSingleResult();
 	}
 	
 	public static HotelRegistration findSupplier(String code,String name) {

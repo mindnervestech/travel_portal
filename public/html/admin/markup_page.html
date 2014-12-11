@@ -35,13 +35,13 @@
 										
 											<div class="tab-pane active" id="step1">
 											
-											<form method="post" name="myform" ng-submit="saveBatchMarkup()" role="form" class="form-horizontal" novalidate>
+											<form method="post" name="myform" ng-submit="saveBatchMarkup()" role="form" class="form-horizontal form-validate" novalidate>
 												<div class="row">
 													<div class="form-group">
 														<div class="col-md-4">
 															<fieldset class="billBorder">
 		 
-  																<legend class="gen-img">Supplier</legend>
+  																<legend class="supplier-fild">Supplier</legend>
 															<div class="col-md-12">
 																<label><b>Supplier:</b></label><br>
 															</div>
@@ -79,7 +79,7 @@
 														<div class="col-md-4">
 														<fieldset class="billBorder">
 		 
-  																<legend class="gen-img">Agent</legend>
+  																<legend class="agent-fild">Agent</legend>
 															<div class="col-md-12">
 																<label><b>Agent:</b></label><br>
 															</div>
@@ -93,18 +93,23 @@
 														
 														</div>
 														</div>
-														
+													<!-- 	{{agent}} -->
 															<div>
 																
 
 																<div class="col-md-12 markupSize">
-																	<label ng-repeat="agentInfo in agent"
+																<div ng-repeat="agentInfo1 in agent">
+																<div class="col-md-12" style="background-color: #488c6c;color: white;">
+																<label>{{agentInfo1.countryName}}</label>
+																</div>
+																	<label ng-repeat="agentInfo in agentInfo1.agentDatavm"
 																		class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
 																		style="padding: 0px;"> <input type="checkbox" name="agent"
 																		ng-click="agentClicked($event,agentInfo)"
 																		ng-model="agentInfo.isSelected">
-																		{{agentInfo.firstName}} - {{agentInfo.id}}  /  {{agentInfo.country}}
+																		{{agentInfo.firstName}} {{agentInfo.lastName}}
 																	</label>
+																	</div>
 																</div>
 
 
@@ -118,22 +123,22 @@
 															<div class="row">
 															<div class="col-md-5">
 																<input type="radio" name="selected"
-																	data-ng-model="batchMarkup.selected" value="1">
+																	data-ng-model="batchMarkup.selected" value="1" > <!-- //class="required" -->
 																&nbsp; Percent
 															</div>
 															<div ng-show="batchMarkup.selected == 1" class="col-md-6">
 
-														<input type="number" id="percent" name="percent" data-ng-model="batchMarkup.percent"  class="form-control" required>
+														<input type="text" id="percent" name="percent" data-ng-model="batchMarkup.percent"  class="form-control required number" required>
 														</div>
 														</div>
 														<div class="row">
 														<div class="col-md-5">
 																<input type="radio" name="selected"
 																	data-ng-model="batchMarkup.selected" value="0">
-																&nbsp; Fat
+																&nbsp; Flat
 															</div>
 															<div ng-show="batchMarkup.selected == 0" class="col-md-6">
-															<input type="number" id="flat" name="flat" data-ng-model="batchMarkup.flat"  class="form-control" required>
+															<input type="text" id="flat" name="flat" data-ng-model="batchMarkup.flat"  class="form-control required number" required>
 														</div>
 														</div>
 														<div class="row">
@@ -151,22 +156,14 @@
 											</div>
 											<div class="tab-pane" id="Step2">
 											
-											<form method="post" name="myform" ng-submit="saveSpecificMarkup()" role="form" class="form-horizontal" novalidate>
+											<form method="post" name="myform" ng-submit="saveSpecificMarkup()" role="form" class="form-horizontal form-validate" novalidate>
 												<div class="row">
 													<div class="form-group">
 														<div class="col-md-4">
 															<fieldset class="billBorder">
 		 
-  																<legend class="gen-img">Supplier</legend>
-															<!-- <div class="col-md-12">
-																<label><b>Supplier:</b></label><br>
-															</div> -->
+  																<legend class="supplier-fild">Supplier</legend>
 															
-															<br>
-															<!-- <div class="col-md-12">
-															<hr class="mtxxl mbxxl" style="border-color: black;">
-															</div> -->
-
 															<div>
 																<br>
 
@@ -176,13 +173,7 @@
 			    														 <option ng-repeat=" supplierInfo in supplier" value="{{supplierInfo.code}}">{{supplierInfo.supplierName}} - Code : {{supplierInfo.code}}  /  {{supplierInfo.country}}</option>
 			    		
 			  												  	</select>
-																	<!-- <label ng-repeat="supplierInfo in supplier"
-																		class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
-																		style="padding: 0px;"> <input type="checkbox" name="supplier"
-																		ng-click="supplierClicked($event,supplierInfo)"
-																		ng-model="supplierInfo.isSelected">
-																		{{supplierInfo.supplierName}} - Code : {{supplierInfo.code}}  /  {{supplierInfo.country}}
-																	</label> -->
+																
 																</div>
 																<div class="row">
 																<div class="form-group">
@@ -192,10 +183,10 @@
 													<div class="form-group">
 																
 																<div class="col-md-4 col-md-offset-1">
-																	<a ng-click="showRate(specificMarkup.code)" style="color: blue;"><u>Show Rate</u></a>
+																	<a ng-click="showRate(specificMarkup.code)" style="color: blue;"><u style="cursor: pointer;">Show Rate</u></a>
 																</div>
 																<div class="col-md-4 col-md-offset-1">
-																	<a ng-click="showSpecials(specificMarkup.code)" style="color: blue;"><u>Show Specials</u></a>
+																	<a ng-click="showSpecials(specificMarkup.code)" style="color: blue;"><u style="cursor: pointer;">Show Specials</u></a>
 																</div>
 																</div>
 																</div>
@@ -210,7 +201,7 @@
 														<div class="col-md-4">
 														<fieldset class="billBorder">
 		 
-  																<legend class="gen-img">Agent</legend>
+  																<legend class="agent-fild">Agent</legend>
 															<div class="col-md-12">
 																<label><b>Agent:</b></label><br>
 															</div>
@@ -223,15 +214,19 @@
 																<br>
 
 																<div class="col-md-12 markupSize">
-																	<label ng-repeat="specificAgentInfo in agent"
+																<div ng-repeat="specificAgentInfo1 in agent">
+																<div class="col-md-12" style="background-color: #488c6c;color: white;">
+																<label>{{specificAgentInfo1.countryName}}</label>
+																</div>
+																	<label ng-repeat="specificAgentInfo in specificAgentInfo1.agentDatavm"
 																		class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
 																		style="padding: 0px;"> <input type="checkbox" name="agent"
 																		ng-click="specificAgentClicked($event,specificAgentInfo)"
 																		ng-model="specificAgentInfo.isSelected">
-																		{{specificAgentInfo.firstName}} - {{specificAgentInfo.id}}  /  {{specificAgentInfo.country}}
+																		{{specificAgentInfo.firstName}}  {{specificAgentInfo.lastName}}
 																	</label>
+																	</div>
 																</div>
-
 
 															</div>
 															<br>
@@ -248,17 +243,17 @@
 															</div>
 															<div ng-show="specificMarkup.specificSelected == 1" class="col-md-6">
 
-														<input type="number" id="specificPercent" name="specificPercent" data-ng-model="specificMarkup.specificPercent"  class="form-control" required>
+														<input type="text" id="specificPercent" name="specificPercent" data-ng-model="specificMarkup.specificPercent"  class="form-control required number" required>
 														</div>
 														</div>
 														<div class="row">
 														<div class="col-md-5">
 																<input type="radio" name="specificSelected"
 																	data-ng-model="specificMarkup.specificSelected" value="0">
-																&nbsp; Fat
+																&nbsp; Flat
 															</div>
 															<div ng-show="specificMarkup.specificSelected == 0" class="col-md-6">
-															<input type="number" id="specificFlat" name="specificFlat" data-ng-model="specificMarkup.specificFlat"  class="form-control" required>
+															<input type="text" id="specificFlat" name="specificFlat" data-ng-model="specificMarkup.specificFlat"  class="form-control required number" required>
 														</div>
 														</div>
 														<div class="row">
@@ -279,9 +274,9 @@
                 	<thead style="background-color: #488c6c;">
                     	<tr>
                     	<th><li style="color: white;">All&nbsp&nbsp<input type="checkbox" name="rateselectedAll" ng-model="rateselectedAll" ng-click="ratecheckAll()" /></li></th>
-                           <th><a style="color: white;">Sr.No</a></th>
-                            <th><a style="color: white;">Rate Id</a></th>
-                            <th><a style="color: white;">Rate Name</a></th>
+                           <th><a style="color: white;">Rate Name</a></th>
+                            <th><a style="color: white;">Room Type</a></th>
+                            <th><a style="color: white;">Currency</a></th>
                            <!--  <th style="width: 20%;	"><a style="color: white;">Action</a></th> --> 
                            
                             
@@ -293,9 +288,9 @@
                     		<td style="text-align: center;width: 82px;"> <input type="checkbox" name="supplierRate"
 								ng-click="rateClicked($event,rate)"
 								ng-model="rate.isSelected"></td>
-          					<td>{{$index+1}}</td>
-          					 <td>{{rate.id}}</td>
-                           <td>{{rate.rateName}}</td>
+          					<td>{{rate.rateName}}</td>
+          					 <td>{{rate.roomName}}</td>
+                           <td>{{rate.currency}}</td>
                             <!-- <td><a ng-click="DeleteDocId(doc)" style="cursor: pointer;" data-toggle="modal"><img src="/assets/images/deleteIcon.png" style="width: 14%;margin-left: 24%;"></a></td> --> 
                            
                             </tr>

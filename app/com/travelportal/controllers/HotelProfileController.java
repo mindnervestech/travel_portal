@@ -1177,7 +1177,7 @@ public class HotelProfileController extends Controller {
 				}
 				billinginfo.setAccountType(form.get("accountType"));
 				billinginfo.setBranchName(form.get("branchName"));
-				billinginfo.setSwiftCode(form.get("swifiCode"));
+				billinginfo.setSwiftCode(form.get("swiftCode"));
 				
 		        billinginfo.save();
 		    	
@@ -1208,7 +1208,7 @@ public class HotelProfileController extends Controller {
 				}
 				billinginfo.setAccountType(form.get("accountType"));
 				billinginfo.setBranchName(form.get("branchName"));
-				billinginfo.setSwiftCode(form.get("swifiCode"));
+				billinginfo.setSwiftCode(form.get("swiftCode"));
 				billinginfo.setSalutationCode(Salutation.getsalutationIdIdByCode(Integer.parseInt(form.get("salutationCode"))));
 	        billinginfo.merge();
 		    }

@@ -9,6 +9,7 @@ public class RateVM {
 	public String name;
 	public String rateName;
 	public Long roomId;
+	public String roomName;
 	public String fromDate;
 	public String toDate;
 	public String currency;
@@ -96,6 +97,13 @@ public class RateVM {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getRoomName() {
+		return roomName;
+	}
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
+	}
+	
 	/*public boolean isApplyToMarket() {
 		return applyToMarket;
 	}

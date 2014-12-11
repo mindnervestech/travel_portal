@@ -10,6 +10,12 @@ controller("ApplicationController",function($scope,$http) {
 		console.log($scope.permission);
 	};
 	
+	$(".form-validate").validate({
+        errorPlacement: function(error, element){
+            error.insertAfter(element);
+        }
+    });
+	
 });
 angular.module('travel_portal').
 controller("supplierAgreementController",['$scope','$rootScope','notificationService','$http','$filter','$upload',
@@ -2690,7 +2696,11 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 angular.module('travel_portal').
 controller("manageSuppliersController",function($scope,notificationService,$rootScope,$location, $http,ngDialog){
 		
-
+	$(".form-validate").validate({
+        errorPlacement: function(error, element){
+            error.insertAfter(element);
+        }
+    });
 		
 	
 			$scope.getData = function() {
@@ -2844,6 +2854,12 @@ controller("manageSuppliersController",function($scope,notificationService,$root
 
 angular.module('travel_portal').
 controller("manageSpecialsController",['$scope','notificationService','$filter','$rootScope','$http',function($scope,notificationService,$filter,$rootScope, $http){
+	
+	$(".form-validate").validate({
+        errorPlacement: function(error, element){
+            error.insertAfter(element);
+        }
+    });
 	
 	$scope.specialsObject = [];
 	$scope.specialsData = [];
@@ -3149,6 +3165,12 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 angular.module('travel_portal').
 controller("manageAgentController",['$scope','notificationService','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$filter,$rootScope, $http,ngDialog){
 	
+	$(".form-validate").validate({
+        errorPlacement: function(error, element){
+            error.insertAfter(element);
+        }
+    });
+	
 	$scope.getData = function() {
 	
 	   $http.get('/getApprovedAgent').success(function(response){
@@ -3262,6 +3284,13 @@ controller("manageAgentController",['$scope','notificationService','$filter','$r
 angular.module('travel_portal').
 controller("markupController",['$scope','notificationService','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$filter,$rootScope, $http,ngDialog){
 
+	
+	$(".form-validate").validate({
+        errorPlacement: function(error, element){
+            error.insertAfter(element);
+        }
+    });
+	
 	$scope.supplier_check = [];
 	$scope.agent_check = [];
 	$scope.specificAgent_check = [];
@@ -3318,7 +3347,10 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
 		$scope.agent=response;
 		console.log("+++++++++++++++=");
 		console.log($scope.agent);
+		
 	});
+	
+	
 	
 	
 	$scope.agentClicked = function(e, agentInfo) {
@@ -3345,21 +3377,25 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
 	$scope.agentcheckAll = function () {
         if ($scope.agentselectedAll) {
             $scope.agentselectedAll = false;
-            angular.forEach($scope.agent, function (agentInfo) {
+            angular.forEach($scope.agent, function (agentInfo1) {
+            angular.forEach(agentInfo1.agentDatavm, function (agentInfo) {
             	agentInfo.isSelected = $scope.agentselectedAll;
+            });
             });
             $scope.agent_check = [];
         } else {
         	
             $scope.agentselectedAll = true;
             $scope.agent_check = [];
-            $scope.i = 0;
-            angular.forEach($scope.agent, function (agentInfo, index) {
+       
+            angular.forEach($scope.agent, function (agentInfo1) {
+            angular.forEach(agentInfo1.agentDatavm, function (agentInfo, index) {
             	agentInfo.isSelected = $scope.agentselectedAll;
             	console.log(agentInfo);
-                    	$scope.agent_check.push($scope.agent[index].id);
+                    	$scope.agent_check.push(agentInfo1.agentDatavm[index].id);
                     	
                     	
+            	});
             });
         }
        
@@ -3376,6 +3412,12 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     	}
     		
     	console.log($scope.batchMarkup);
+    	
+   
+    	$http.post('/savebatchMarkup',$scope.batchMarkup).success(function(data){
+    		console.log("Success");
+    		 notificationService.success("BatchMarkup Save Successfully");
+    	});
     }
 	
 	
@@ -3403,8 +3445,10 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
 	$scope.specificAgentcheckAll = function () {
         if ($scope.specificAgentselectedAll) {
             $scope.specificAgentselectedAll = false;
-            angular.forEach($scope.agent, function (specificAgentInfo) {
+            angular.forEach($scope.agent, function (specificAgentInfo1) {
+            angular.forEach(specificAgentInfo1.agentDatavm, function (specificAgentInfo) {
             	specificAgentInfo.isSelected = $scope.specificAgentselectedAll;
+            });
             });
             $scope.specificAgent_check = [];
         } else {
@@ -3412,12 +3456,14 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
             $scope.specificAgentselectedAll = true;
             $scope.specificAgent_check = [];
             $scope.i = 0;
-            angular.forEach($scope.agent, function (specificAgentInfo, index) {
+            angular.forEach($scope.agent, function (specificAgentInfo1) {
+            angular.forEach(specificAgentInfo1.agentDatavm, function (specificAgentInfo, index) {
             	specificAgentInfo.isSelected = $scope.specificAgentselectedAll;
             	console.log(specificAgentInfo);
-                    	$scope.specificAgent_check.push($scope.agent[index].id);
+                    	$scope.specificAgent_check.push(specificAgentInfo1.agentDatavm[index].id);
                     	
                     	
+            });
             });
         }
        
@@ -3489,6 +3535,11 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     	}
     		
     	console.log($scope.specificMarkup);
+    	
+    	$http.post('/savespecificMarkup',$scope.specificMarkup).success(function(data){
+    		console.log("Success");
+    		 notificationService.success("SpecificMarkUp Save Successfully");
+    	});
     }
     
     $scope.showSpecials = function(){
