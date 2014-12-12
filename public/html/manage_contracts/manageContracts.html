@@ -86,7 +86,7 @@
 						</tr>
 						<tr data-ng-repeat="rateData in rate.normalRate.rateDetails track by $index">
 							<td>{{rateData.name}}</td>
-							<td><input type="number" ng-model="rateData.rateValue" value="" size="6" min="18" max="99" required> 
+							<td><input type="text" ng-model="rateData.rateValue" value="" required> 
 							<!-- <span class="error" ng-show="contact.rateValue{{$index}}.$error.number" style="color: red;">Not valid number!</span> -->
 							</td>
 							<td>*Include Meals?
@@ -101,7 +101,7 @@
 								</div>
 								
 							</td>
-							<td><input type="number" ng-model="rateData.onlineRateValue" value="" size="6" min="18" max="99" required> 
+							<td><input type="text" ng-model="rateData.onlineRateValue" value="" required> 
 							<!-- <span class="error" ng-show="contact.rateValue{{$index}}.$error.number" style="color: red;">Not valid number!</span> -->
 							</td>
 							<td>*Include Meals?
@@ -206,7 +206,7 @@
 						</tr>
 						<tr data-ng-repeat="rateData in rate.special.rateDetails track by $index">
 							<td>{{rateData.name}}</td>
-							<td><input type="number" ng-model="rateData.rateValue" value=""> </td>
+							<td><input type="text" ng-model="rateData.rateValue" value=""> </td>
 							<td>*Include Meals?
 								<input type="radio" name="special{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.includeMeals">Yes
 								<input type="radio" name="special{{rateData.name}}{{$parent.$index}}" data-ng-value="false" data-ng-model="rateData.includeMeals">No
@@ -352,7 +352,7 @@
 								</div>
 								
 							</td>
-							<td><input type="number" ng-model="rateData.onlineRateValue" value=""> </td>
+							<td><input type="text" ng-model="rateData.onlineRateValue" value=""> </td>
 							<td>*Include Meals?
 								<input type="radio" name="create1{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.onlineIncludeMeals">Yes
 								<input type="radio" name="create1{{rateData.name}}{{$parent.$index}}" data-ng-value="false" data-ng-model="rateData.onlineIncludeMeals" checked>No
@@ -452,7 +452,7 @@
 						</tr>
 						<tr data-ng-repeat="rateData in rate.special.rateDetails track by $index">
 							<td>{{rateData.name}}</td>
-							<td><input type="number" ng-model="rateData.rateValue" value=""> </td>
+							<td><input type="text" ng-model="rateData.rateValue" value=""> </td>
 							<td>*Include Meals?
 								<input type="radio" name="{{rateData.name}}{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="rateData.includeMeals">Yes
 								<input type="radio" name="{{rateData.name}}{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="rateData.includeMeals">No

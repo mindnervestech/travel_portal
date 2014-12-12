@@ -75,6 +75,11 @@ overflow-x: hidden;
 	 width: 83px;
 	 border-bottom: none;
 }
+
+.error{
+color:red;
+}
+
 .agent-fild{
 	 width: 60px;
 	 border-bottom: none;
