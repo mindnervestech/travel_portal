@@ -3250,9 +3250,9 @@ controller("manageAgentController",['$scope','notificationService','$filter','$r
 	$scope.approvePending = function() {
 		$scope.userId = $scope.generalInfo.id;
 		$scope.email = $scope.generalInfo.EmailAddr;
-		
+		$scope.agentCode = $scope.generalInfo.agentCode;
 		$scope.loginId = $scope.generalInfo.loginId;
-		$http.get('/approveAgent/'+$scope.userId+'/'+$scope.email).success(function(response){
+		$http.get('/approveAgent/'+$scope.userId+'/'+$scope.email+'/'+$scope.agentCode).success(function(response){
 			 notificationService.success("Approved Successfully");
 			$scope.pendingUsers.splice($scope.pendingUsers.indexOf($scope.generalInfo),1);
 			$scope.getData();
@@ -3356,7 +3356,7 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
 	$scope.agentClicked = function(e, agentInfo) {
 
 		if($(e.target).is(":checked")) {
-			$scope.agent_check.push(agentInfo.id);
+			$scope.agent_check.push(agentInfo.agentCode);
 		} else {
 			DeleteagentItem(agentInfo);
 		}
@@ -3366,7 +3366,7 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
 
 	DeleteagentItem = function(agentInfo){
 		angular.forEach($scope.agent_check, function(obj, index){
-			if ((agentInfo.id == obj)) {
+			if ((agentInfo.agentCode == obj)) {
 				$scope.agent_check.splice(index, 1);
 				return;
 			};
@@ -3392,7 +3392,7 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
             angular.forEach(agentInfo1.agentDatavm, function (agentInfo, index) {
             	agentInfo.isSelected = $scope.agentselectedAll;
             	console.log(agentInfo);
-                    	$scope.agent_check.push(agentInfo1.agentDatavm[index].id);
+                    	$scope.agent_check.push(agentInfo1.agentDatavm[index].agentCode);
                     	
                     	
             	});
@@ -3424,7 +3424,7 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     $scope.specificAgentClicked = function(e, specificAgentInfo) {
 
 		if($(e.target).is(":checked")) {
-			$scope.specificAgent_check.push(specificAgentInfo.id);
+			$scope.specificAgent_check.push(specificAgentInfo.agentCode);
 		} else {
 			DeletespecificAgentItem(specificAgentInfo);
 		}
@@ -3434,7 +3434,7 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
 
 	DeletespecificAgentItem = function(specificAgentInfo){
 		angular.forEach($scope.specificAgent_check, function(obj, index){
-			if ((specificAgentInfo.id == obj)) {
+			if ((specificAgentInfo.agentCode == obj)) {
 				$scope.specificAgent_check.splice(index, 1);
 				return;
 			};
@@ -3455,12 +3455,11 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
         	
             $scope.specificAgentselectedAll = true;
             $scope.specificAgent_check = [];
-            $scope.i = 0;
             angular.forEach($scope.agent, function (specificAgentInfo1) {
             angular.forEach(specificAgentInfo1.agentDatavm, function (specificAgentInfo, index) {
             	specificAgentInfo.isSelected = $scope.specificAgentselectedAll;
             	console.log(specificAgentInfo);
-                    	$scope.specificAgent_check.push(specificAgentInfo1.agentDatavm[index].id);
+                    	$scope.specificAgent_check.push(specificAgentInfo1.agentDatavm[index].agentCode);
                     	
                     	
             });

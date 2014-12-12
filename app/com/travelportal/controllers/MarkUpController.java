@@ -214,7 +214,7 @@ for(long agentvm : specificMarkupVM.getAgentSpecific()){
 			for(long vm : specificMarkupVM.getRateSelected()){
 				System.out.println(vm);
 				
-				SpecificMarkup specificMarkup = SpecificMarkup.findRateSupplier(agentvm,vm,specificMarkupVM.getCode());
+				SpecificMarkup specificMarkup = SpecificMarkup.findRateSupplier(AgentRegistration.getallAgentCode(agentvm),vm,specificMarkupVM.getCode());
 
 				if(specificMarkup == null)
 				{
@@ -250,7 +250,7 @@ for(long agentvm : specificMarkupVM.getAgentSpecific()){
 			
 			for(long agentvm : batMarkupVM.getAgent()){
 				System.out.println(vm);
-				BatchMarkup batchmarkup = BatchMarkup.findAgentSupplier(agentvm, vm);
+				BatchMarkup batchmarkup = BatchMarkup.findAgentSupplier(AgentRegistration.getallAgentCode(agentvm), vm);
 
 				if(batchmarkup == null)
 				{

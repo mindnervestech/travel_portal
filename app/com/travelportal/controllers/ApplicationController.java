@@ -282,6 +282,10 @@ public class ApplicationController extends Controller{
 		aRegistration.setPassword(agentVm.password);
 		aRegistration.setCommission(agentVm.commission);
 		aRegistration.setReceiveNet(agentVm.receiveNet);
+		
+		Random randomGenerator = new Random();
+		int randomInt = randomGenerator.nextInt(100000);
+		aRegistration.setAgentCode(randomInt);
 		aRegistration.setStatus("PENDING");
 				
 	

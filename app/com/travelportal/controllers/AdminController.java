@@ -185,7 +185,7 @@ public class AdminController extends Controller {
 	
 	@Transactional
 	public static Result getApprovedAgent() {
-		List<AgentRegistration> list = AgentRegistration.getAllApprovedAgent();
+		List<AgentRegistration> list = AgentRegistration.getApprovedAgent();
 		List<AgentRegistrationVM> vm = new ArrayList<>();
 		for(AgentRegistration hotel : list) {
 			System.out.println("9090909090909090909");
@@ -210,7 +210,7 @@ public class AdminController extends Controller {
 	
 	
 	@Transactional
-	public static Result approveAgent(Long id,String email) {
+	public static Result approveAgent(Long id,String email,Long agentCode) {
 		AgentRegistration register = AgentRegistration.findById(id);
 		register.setStatus("APPROVED");
 		register.merge();
@@ -274,7 +274,7 @@ public class AdminController extends Controller {
 	  			InternetAddress.parse(email));
 	  			feedback.setSubject("You Approved For travel_portal");	  			
 	  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
-	  	         messageBodyPart.setText("You Approved For travel_portal \n Your Agent Id : "+id);	  	    
+	  	         messageBodyPart.setText("You Approved For travel_portal \n Your Agent code : "+agentCode);	  	    
 	  	         Multipart multipart = new MimeMultipart();	  	    
 	  	         multipart.addBodyPart(messageBodyPart);	            
 	  	         feedback.setContent(multipart);

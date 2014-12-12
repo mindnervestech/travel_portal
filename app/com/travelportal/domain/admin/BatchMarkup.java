@@ -103,11 +103,11 @@ public class BatchMarkup {
 	}
 	
 	
-public static BatchMarkup findAgentSupplier(long agentid, long supplier) {
+public static BatchMarkup findAgentSupplier(AgentRegistration agentid, long supplier) {
     	
     	try
 		{
-		return (BatchMarkup) JPA.em().createQuery("select c from BatchMarkup c where c.supplier = ?1 and c.agent.id = ?2").setParameter(1, supplier).setParameter(2, agentid).getSingleResult();
+		return (BatchMarkup) JPA.em().createQuery("select c from BatchMarkup c where c.supplier = ?1 and c.agent.agentCode = ?2").setParameter(1, supplier).setParameter(2, agentid).getSingleResult();
 		
 		//return (SpecificMarkup) JPA.em().createQuery("select c from SpecificMarkup c where c.supplierCode = ?1 and c.agentSpecific.id = ?3 and c.rateSelected.id = ?2").setParameter(1, supplier).setParameter(2, rateid).setParameter(3, agentid).getSingleResult();
 		}

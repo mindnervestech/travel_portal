@@ -134,7 +134,7 @@ POST    /setCitySelection                        com.travelportal.controllers.Ho
 GET		/getPendingAgent			com.travelportal.controllers.AdminController.getPendingAgent
 GET		/getApprovedAgent			com.travelportal.controllers.AdminController.getApprovedAgent
 GET		/getRejectedAgent			com.travelportal.controllers.AdminController.getRejectedAgent
-GET		/approveAgent/:id/:email			com.travelportal.controllers.AdminController.approveAgent(id: Long,email:String)
+GET		/approveAgent/:id/:email/:agentCode			com.travelportal.controllers.AdminController.approveAgent(id: Long,email:String,agentCode: Long)
 GET		/rejectAgent/:id			com.travelportal.controllers.AdminController.rejectAgent(id: Long)
 GET		/pendingAgent/:id		com.travelportal.controllers.AdminController.pendingAgent(id: Long)
 

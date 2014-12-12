@@ -11,6 +11,7 @@ import com.travelportal.domain.agent.AgentRegistration;
 public class AgentRegistrationVM {
 
 	public long id;
+	public long agentCode;
 	public String title;
 	public String firstName;
 	public String lastName;
@@ -43,6 +44,7 @@ public class AgentRegistrationVM {
 	
 	public AgentRegistrationVM(AgentRegistration reg) {
 		this.id = reg.getId();
+		this.agentCode = reg.getAgentCode();
 		this.title = reg.getTitle().getSalutationValue();
 		this.firstName = reg.getFirstName();
 		this.lastName = reg.getLastName();

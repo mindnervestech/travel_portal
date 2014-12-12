@@ -1,6 +1,6 @@
 <div class="panel panel-green">
 	<div class="panel-heading clearfix">
-		<span class="mts pull-left">Manage Users</span>
+		<span class="mts pull-left">Manage Agent</span>
 	</div>
 
 	<ul class="nav nav-tabs" role="tablist" id="myTab">
@@ -32,7 +32,7 @@
 						<td>{{user.lastName}}</td>
 						<td>{{user.EmailAddr}}</td>
 						<td>{{user.country}}</td>
-						<td>{{user.id}}</td>
+						<td>{{user.agentCode}}</td>
 						<!-- <td><input type="button"  class="btn" value="Reject" ng-click="rejectUser(user.id,user)"></td> -->
 						<td><input name="" type="button" class="btn btn-primary"
 							value="View" ng-click="ApprovedUser(user)" class="btnblue"
@@ -60,7 +60,7 @@
 						<td>{{user.lastName}}</td>
 						<td>{{user.EmailAddr}}</td>
 						<td>{{user.country}}</td>
-						<td>{{user.id}}</td>
+						<td>{{user.agentCode}}</td>
 						<td><input name="" type="button" class="btn btn-primary"
 							value="View" ng-click="rejectedUser(user)" class="btnblue"
 							data-toggle="modal" /></td>
@@ -87,7 +87,7 @@
 						<td>{{user.lastName}}</td>
 						<td>{{user.EmailAddr}}</td>
 						<td>{{user.country}}</td>
-						<td>{{user.id}}</td>
+						<td>{{user.agentCode}}</td>
 						<td><input name="" type="button" class="btn btn-primary"
 							value="View" ng-click="pendingU(user)" class="btnblue"
 							data-toggle="modal" /></td>
@@ -107,6 +107,12 @@
 							<form method="post" role="form" data-ng-submit="ApprovReject()" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
+					<div class="form-group">
+										<label class="col-md-3 control-label">*Agent Code:</label>
+										<div class="col-md-8">
+											<input type="text" name="firstName" class="form-control" data-ng-model="generalInfo.agentCode" disabled="disabled">
+										</div>
+									</div>
 			<div class="form-group">
 										<label class="col-md-3 control-label">*Title:</label>
 										<div class="col-md-8">
@@ -285,6 +291,12 @@
 							<form method="post" role="form" data-ng-submit="pendingUser()" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
+							<div class="form-group">
+										<label class="col-md-3 control-label">*Agent Code:</label>
+										<div class="col-md-8">
+											<input type="text" name="firstName" class="form-control" data-ng-model="generalInfo.agentCode" disabled="disabled">
+										</div>
+									</div>
 			<div class="form-group">
 										<label class="col-md-3 control-label">*Title:</label>
 										<div class="col-md-8">
@@ -463,6 +475,12 @@
 							<form method="post" role="form" data-ng-submit="approvePending()" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
+					<div class="form-group">
+										<label class="col-md-3 control-label">*Agent Code:</label>
+										<div class="col-md-8">
+											<input type="text" name="firstName" class="form-control" data-ng-model="generalInfo.agentCode" disabled="disabled">
+										</div>
+									</div>
 			<div class="form-group">
 										<label class="col-md-3 control-label">*Title:</label>
 										<div class="col-md-8">

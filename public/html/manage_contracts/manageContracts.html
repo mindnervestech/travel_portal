@@ -67,7 +67,7 @@
 			<div>
 						
 			<fieldset class="billinside" ng-repeat="rate in rateMeta track by $index" style="margin-top: 2%;">
-			 <form action="#" class="form-validate">
+			 <form method="post" name="myform" role="form" class="form-horizontal form-validate" action="">
 			<a data-toggle="collapse" data-target="#demo{{$index}}" aria-expanded="true" aria-controls="demo{{$index}}" style="cursor: pointer;">
 			<legend style="width: 75%; border-bottom: none;font-size: 18;">&nbsp;&nbsp;&nbsp;&nbsp;{{rate.rateName}}</legend>
 			</a>
@@ -314,7 +314,9 @@
 			<a data-toggle="collapse" data-target="#demo1{{$index}}" aria-expanded="true" aria-controls="demo1{{$index}}" style="cursor: pointer;">
 			<legend style="width: 10%; border-bottom: none;font-size: 18;">&nbsp;&nbsp;&nbsp;&nbsp;Rate {{$index+1}}</legend>
 			</a>
-			<form action="#" class="form-validate">
+			
+			<form method="post" name="myform" role="form" class="form-horizontal form-validate" action="">
+			<!-- <form action="#" class="form-validate"> -->
 			<input type="hidden" value="{{rate.id}}" data-ng-model="selectedRatesId">
 			<div id="demo1{{$index}}" class="collapse in">
 				<div class="row" style="margin-bottom: 3%;margin-left: 2%;">
@@ -352,7 +354,7 @@
 								</div>
 								
 							</td>
-							<td><input type="text" ng-model="rateData.onlineRateValue" value=""> </td>
+							<td><input type="text" name="onlineRateValue{{$index}}" ng-model="rateData.onlineRateValue" value="" class="form-control required number"> </td>
 							<td>*Include Meals?
 								<input type="radio" name="create1{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.onlineIncludeMeals">Yes
 								<input type="radio" name="create1{{rateData.name}}{{$parent.$index}}" data-ng-value="false" data-ng-model="rateData.onlineIncludeMeals" checked>No
@@ -546,6 +548,7 @@
 				</div>
 				<hr style="float: left;width: 100%;">
 				<div style="float: left;"><input type="button" value="REMOVE THIS RATE" ng-click="removeRate($index)" ng-show="showRemoveRate == true"></div>
+				
 				</form>
 			</fieldset>	
 						<input type="button" value="ADD ADDITIONAL RATES" ng-click="addNewRate()" style="float:left; margin-top: 1%;margin-left: 1%;">

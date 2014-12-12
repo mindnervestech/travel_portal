@@ -3,6 +3,7 @@ package com.travelportal.vm;
 public class AgentRegisVM {
 
 	public long id;
+	public long agentCode;
 	public String title;
 	public String firstName;
 	public String lastName;
@@ -35,6 +36,14 @@ public class AgentRegisVM {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	
+	public long getAgentCode() {
+		return agentCode;
+	}
+	public void setAgentCode(long agentCode) {
+		this.agentCode = agentCode;
 	}
 	public String getTitle() {
 		return title;

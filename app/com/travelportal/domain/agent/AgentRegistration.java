@@ -30,7 +30,7 @@ public class AgentRegistration {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+	private long agentCode;
 	private String firstName;
 	private String lastName;
 	@OneToOne
@@ -74,6 +74,16 @@ public class AgentRegistration {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	
+
+	public long getAgentCode() {
+		return agentCode;
+	}
+
+	public void setAgentCode(long agentCode) {
+		this.agentCode = agentCode;
 	}
 
 	public Salutation getTitle() {
@@ -296,7 +306,7 @@ public class AgentRegistration {
 	}
 	
 	public static AgentRegistration getallAgentCode(long code) {
-		return (AgentRegistration) JPA.em().createQuery("select c from AgentRegistration c where id = ?1").setParameter(1, code).getSingleResult();
+		return (AgentRegistration) JPA.em().createQuery("select c from AgentRegistration c where c.agentCode = ?1").setParameter(1, code).getSingleResult();
 	}
 	
 	public static List<AgentRegistration> getAllPendingAgent() {
@@ -308,6 +318,12 @@ public class AgentRegistration {
 		Query query = JPA.em().createQuery("select DISTINCT h.country from AgentRegistration h where h.status = 'APPROVED'");
 		return query.getResultList();
 	}
+	
+	public static List getApprovedAgent() {
+		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.status = 'APPROVED'");
+		return query.getResultList();
+	}
+	
 public static List<AgentRegistration> getAgentData(int code) {/*List<Integer> rateid*/
 			Query q = JPA.em().createQuery("select c from AgentRegistration c where c.country.countryCode = ?1");
 			q.setParameter(1, code);
