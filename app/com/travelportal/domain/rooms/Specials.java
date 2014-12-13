@@ -98,6 +98,13 @@ public class Specials {
     	return (List<Specials>) query.getResultList();
     }
 	
+	public static List<Specials> findSpecialBySupplierCode(long code) {
+    	Query query = JPA.em().createQuery("Select s from Specials s where s.supplierCode = ?1");
+		query.setParameter(1, code);
+	
+    	return (List<Specials>) query.getResultList();
+    }
+	
 	@Transactional
     public void save() {
 		JPA.em().persist(this);

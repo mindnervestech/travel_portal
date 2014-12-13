@@ -1,8 +1,8 @@
 <div class="panel panel-green">
 	<div class="panel-heading clearfix">
-		<span class="mts pull-left">Search Supplier</span>
+		<span class="mts pull-left">MarkUp Page</span>
 	</div>
-	<div class="panel-body">
+	<div class="panel-body" ng-init="init()">
 		<div class="col-lg-12">
 			<div class="row">
 				<div class="col-lg-12">
@@ -25,10 +25,13 @@
 
 										<ul class="nav nav-pills" id="myTab" style="font-size: small;">
 											<li class="active menu-li custom_menu"><a href="#step1"
-												data-toggle="tab" style="padding: 7px 5px;">Batch Markup</a></li>
+												data-toggle="tab" style="padding: 7px 5px;"
+												ng-click="init()">Batch Markup</a></li>
 											<li class="menu-li custom_menu"><a href="#Step2"
-												data-toggle="tab" style="padding: 7px 5px;">Specific
-													Markups</a></li>
+												data-toggle="tab" style="padding: 7px 5px;"
+												ng-click="init()">Specific Markups</a></li>
+											<li class="menu-li custom_menu"><a href="#step3"
+												data-toggle="tab" style="padding: 7px 5px;">View Markup</a></li>
 
 										</ul>
 										<div class="tab-content" id="myTabContent"
@@ -45,9 +48,9 @@
 																<fieldset class="billBorder">
 
 																	<legend class="supplier-fild">Supplier</legend>
-																	<div class="col-md-12">
+																	<!-- <div class="col-md-12">
 																		<label><b>Supplier:</b></label><br>
-																	</div>
+																	</div> -->
 																	<div class="col-md-12">
 																		<li>Select All Supplier <input type="checkbox"
 																			name="supplierselect" ng-model="selectedAll"
@@ -84,8 +87,24 @@
 																<fieldset class="billBorder">
 
 																	<legend class="agent-fild">Agent</legend>
-																	<div class="col-md-12">
+																	<!-- <div class="col-md-12">
 																		<label><b>Agent:</b></label><br>
+																	</div> -->
+																	<div class="col-md-12">
+																		<label class="col-md-3 control-label">Country</label>
+																		<div class="col-md-9">
+																			<select class="form-control"
+																				data-ng-model="countryCode"
+																				ng-change="onCountryChange(country.countryCode)"
+																				data-ng-options="country.countryCode as country.countryName for country in countries"
+																				required>
+																				<option>Select Country...</option>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="col-md-12">
+																		<a ng-click="init()" style="color: blue;"><u
+																			style="cursor: pointer;">Show All Country Agent</u></a>
 																	</div>
 																	<div class="col-md-12">
 																		<li>Select All Agent <input type="checkbox"
@@ -185,7 +204,7 @@
 
 																			<select class="form-control"
 																				ng-model="specificMarkup.code"
-																				ng-change="onDateChoose(allotmentMarketallotmentMarket1)">
+																				ng-change="onDateChoose()">
 																				<option ng-repeat=" supplierInfo in supplier"
 																					value="{{supplierInfo.code}}">{{supplierInfo.supplierName}}
 																					- Code : {{supplierInfo.code}} /
@@ -200,16 +219,16 @@
 																		<div class="row">
 																			<div class="form-group">
 
-																				<div class="col-md-4 col-md-offset-1">
+																				<div class="col-md-5 col-md-offset-1">
 																					<a ng-click="showRate(specificMarkup.code)"
 																						style="color: blue;"><u
 																						style="cursor: pointer;">Show Rate</u></a>
 																				</div>
-																				<div class="col-md-4 col-md-offset-1">
+																				<!-- <div class="col-md-4 col-md-offset-1">
 																					<a ng-click="showSpecials(specificMarkup.code)"
 																						style="color: blue;"><u
 																						style="cursor: pointer;">Show Specials</u></a>
-																				</div>
+																				</div> -->
 																			</div>
 																		</div>
 
@@ -224,8 +243,25 @@
 																<fieldset class="billBorder">
 
 																	<legend class="agent-fild">Agent</legend>
-																	<div class="col-md-12">
+																	<!-- <div class="col-md-12">
 																		<label><b>Agent:</b></label><br>
+																	</div> -->
+
+																	<div class="col-md-12">
+																		<label class="col-md-3 control-label">Country</label>
+																		<div class="col-md-9">
+																			<select class="form-control"
+																				data-ng-model="countryCode"
+																				ng-change="onCountryChange(country.countryCode)"
+																				data-ng-options="country.countryCode as country.countryName for country in countries"
+																				required>
+																				<option>Select Country...</option>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="col-md-12">
+																		<a ng-click="init()" style="color: blue;"><u
+																			style="cursor: pointer;">Show All Country Agent</u></a>
 																	</div>
 																	<div class="col-md-12">
 																		<li>Select All Agent <input type="checkbox"
@@ -306,8 +342,11 @@
 													<div class="row" ng-show="showAllRate">
 														<div class="form-group">
 															<div class="col-md-12">
+																<div class="col-md-12">
+																	<label>Show Rate</label>
+																</div>
 																<table class="table" border="1"
-																	style="width: 100%; font-size: small; margin-bottom: 11%;">
+																	style="width: 100%; font-size: small;">
 																	<thead style="background-color: #488c6c;">
 																		<tr>
 																			<th><li style="color: white;">All&nbsp&nbsp<input
@@ -342,10 +381,230 @@
 														</div>
 													</div>
 
+													<!-- <div class="row" ng-show="showAllRate">
+														<div class="form-group">
+															<div class="col-md-12">
+																<div class="col-md-12">
+																	<label>Special Rate</label>
+																</div>
+																<table class="table" border="1"
+																	style="width: 100%; font-size: small; margin-bottom: 11%;">
+																	<thead style="background-color: #488c6c;">
+																		<tr>
+																			<th><li style="color: white;">All&nbsp&nbsp<input
+																					type="checkbox" name="specialrateselectedAll"
+																					ng-model="specialrateselectedAll"
+																					ng-click="specialratecheckAll()" /></li></th>
+																			<th><a style="color: white;">Promotion Name</a></th>
+																			<th><a style="color: white;">Room Type</a></th>
+																			<th><a style="color: white;">To Date</a></th>
+																			 <th style="width: 20%;	"><a style="color: white;">Action</a></th>
+
+
+																		</tr>
+																	</thead>
+																	<tbody>
+
+																		<tr ng-repeat="specialRate in supplierSpecialRate">
+																			<td style="text-align: center; width: 82px;"><input
+																				type="checkbox" name="supplierSpecialRate"
+																				ng-click="specialrateClicked($event,specialRate)"
+																				ng-model="specialRate.isSelected"></td>
+																			<td>{{specialRate.promotionName}}</td>
+																			<td>{{specialRate.roomTypes}}</td>
+																			<td>{{specialRate.toDate}}</td>
+																			<td><a ng-click="DeleteDocId(doc)" style="cursor: pointer;" data-toggle="modal"><img src="/assets/images/deleteIcon.png" style="width: 14%;margin-left: 24%;"></a></td>
+
+																		</tr>
+
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+ -->
 
 												</form>
 
 
+
+											</div>
+											<div class="tab-pane" id="step3">
+
+													<div class="row">
+														<div class="form-group">
+															<div class="col-md-4">
+																<fieldset class="billBorder">
+
+																	<legend class="supplier-fild">Supplier</legend>
+
+																	<div>
+																		<br>
+
+																		<div class="col-md-12">
+
+																			<select class="form-control"
+																				ng-model="code"
+																				ng-change="onSupplierChoose()">
+																				<option ng-repeat=" supplierInfo in supplier"
+																					value="{{supplierInfo.code}}">{{supplierInfo.supplierName}}
+																					- Code : {{supplierInfo.code}} /
+																					{{supplierInfo.country}}</option>
+
+																			</select>
+
+																		</div>
+
+
+																	</div>
+																	<br>
+
+
+																</fieldset>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="form-group">
+														</div>
+														</div>
+													<div class="row">
+														<div class="form-group">
+															<div class="col-md-12">
+															
+																<div class="tabbable">
+
+																	<ul class="nav nav-pills" id="myTab"
+																		style="font-size: small;">
+																		<li class="active menu-li custom_menu"><a
+																			href="#viewStep1" data-toggle="tab"
+																			style="padding: 7px 5px;" ng-click="batchAgent()">Batch
+																				Markup</a></li>
+																		<li class="menu-li custom_menu"><a
+																			href="#viewStep2" data-toggle="tab"
+																			style="padding: 7px 5px;">Specific
+																				Markups</a></li>
+
+																	</ul>
+																	<div class="tab-content" id="myTabContent"
+																		style="overflow: hidden;">
+
+																		<div class="tab-pane active" id="viewStep1">
+																			
+																			<form method="post" name="myform"
+													ng-submit="updaebatchMarkup()" role="form"
+													class="form-horizontal form-validate" novalidate>
+																			
+																			 <div class="row">
+														<div class="form-group">
+															<div class="col-md-12">
+																<div class="col-md-12">
+																	<label>Show Agent</label>
+																</div>
+																<table class="table" border="1"
+																	style="width: 100%; font-size: small;">
+																	<thead style="background-color: #488c6c;">
+																		<tr>
+																			
+																			<th><a style="color: white;">Agent Name</a></th>
+																			<th><a style="color: white;">Agent No</a></th>
+																			<th><a style="color: white;">Country</a></th>
+																			<th><a style="color: white;">Currency</a></th>
+																			<th><a style="color: white;">value</a></th>
+																			<th><a style="color: white;">Flat/Percent</a></th>
+																			 <th style="width: 8%;	"><a style="color: white;">Action</a></th>
+
+
+																		</tr>
+																	</thead>
+																	<tbody>
+
+																		<tr ng-repeat="supplerWise in SupplerWiseRate">
+																		
+																			<td>{{supplerWise.agent.firstName}}</td>
+																			<td>{{supplerWise.agent.agentCode}}</td>
+																			<td>{{supplerWise.agent.country.countryName}}</td>
+																			<td>{{supplerWise.agent.currency.currencyName}}</td>
+																			<td ng-if="supplerWise.selected == '0'"><div class="col-md-3"><input type="text" ng-model="supplerWise.flat"></div></td>
+																			<td ng-if="supplerWise.selected == '1'"><div class="col-md-3"><input type="text" ng-model="supplerWise.percent"></div></td>
+																			<td><select class="form-control" ng-model="supplerWise.selected" required>
+																					<option value="0">Flat</option>
+																					<option value="1">Percent</option>
+
+																				</select></td>
+																			<td style="text-align: center;"><a ng-click="updateAgentId(supplerWise)" style="cursor: pointer;" data-toggle="modal"><img src="/assets/images/savefile.jpg" style="width: 35%;"></a></td>
+
+																		</tr>
+
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div> 
+																			</form>
+																		</div>
+																		<div class="tab-pane active" id="viewStep2">
+																						<form method="post" name="myform"
+													ng-submit="updaebatchMarkup()" role="form"
+													class="form-horizontal form-validate" novalidate>
+																			
+																			 <div class="row">
+														<div class="form-group">
+															<div class="col-md-12">
+																<div class="col-md-12">
+																	<label>Show Agent an Rate</label>
+																</div>
+																<table class="table" border="1"
+																	style="width: 100%; font-size: small;">
+																	<thead style="background-color: #488c6c;">
+																		<tr>
+																			
+																			<th><a style="color: white;">Agent Name</a></th>
+																			<th><a style="color: white;">Country</a></th>
+																			<th><a style="color: white;">Rate Name</a></th>
+																			<th><a style="color: white;">Currency</a></th>
+																			<th><a style="color: white;">Date</a></th>
+																			<th><a style="color: white;">value</a></th>
+																			<th><a style="color: white;">Flat/Percent</a></th>
+																			 <th style="width: 8%;"><a style="color: white;">Action</a></th>
+
+
+																		</tr>
+																	</thead>
+																	<tbody>
+
+																		<tr ng-repeat="supplerWiseSpecific in SupplerWiseSpecificRate">
+																		
+																			<td>{{supplerWiseSpecific.agentSpecific.firstName}}</td>
+																			<td>{{supplerWiseSpecific.agentSpecific.country.countryName}}</td>
+																			<td>{{supplerWiseSpecific.rateSelected.rateName}}</td>
+																			<td>{{supplerWiseSpecific.rateSelected.currency}}</td>
+																			<td>From:{{supplerWiseSpecific.rateSelected.fromDate}} - To:{{supplerWiseSpecific.rateSelected.toDate}}</td>
+																			<td ng-if="supplerWiseSpecific.specificSelected == '0'"><input type="text" ng-model="supplerWiseSpecific.specificFlat"></td>
+																			<td ng-if="supplerWiseSpecific.specificSelected == '1'"><input type="text" ng-model="supplerWiseSpecific.specificPercent"></td>
+																			<td><select class="form-control" ng-model="supplerWiseSpecific.specificSelected" required>
+																					<option value="0">Flat</option>
+																					<option value="1">Percent</option>
+
+																				</select></td>
+																			<td style="text-align: center;"><a ng-click="updateSpecificId(supplerWiseSpecific)" style="cursor: pointer;" data-toggle="modal"><img src="/assets/images/savefile.jpg" style="width: 35%;"></a></td>
+
+																		</tr>
+
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div> 
+																			</form>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+											
 
 											</div>
 

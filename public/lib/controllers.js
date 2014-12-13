@@ -1237,12 +1237,7 @@ angular.module('travel_portal').
 			angular.forEach($scope.MealType, function(obj, index){
 				$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
 				$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
-				/*if($scope.MealType[index].taxIncluded == "true"){
-					$scope.MealType[index].taxIncluded = "Yes";
-				}else{
-					$scope.MealType[index].taxIncluded = "No";
-				}*/
-					
+								
 					
 				return;
 			});
@@ -3295,6 +3290,7 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
 	$scope.agent_check = [];
 	$scope.specificAgent_check = [];
 	$scope.rate_check = [];
+	$scope.specialrate_check = [];
 	
 	$http.get("/getSupplier").success(function(response){
 		$scope.supplier=response;
@@ -3323,6 +3319,7 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
 
 	}
 	
+	
 	$scope.suppliercheckAll = function () {
         if ($scope.selectedAll) {
             $scope.selectedAll = false;
@@ -3343,14 +3340,41 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
         	console.log($scope.supplier_check);
     };
 	
-	$http.get("/getAgent").success(function(response){
-		$scope.agent=response;
-		console.log("+++++++++++++++=");
-		console.log($scope.agent);
+	
+	$http.get("/agentCountries").success(function(response) {
+		$scope.countries = response;
+		console.log($scope.countries);
+	}); 
+	
+	$scope.init = function(){
 		
-	});
+		  $scope.agentselectedAll = false;
+		  $scope.specificAgentselectedAll = false;
+		   $scope.agent_check = [];
+		   $scope.specificAgent_check = [];
+		$http.get("/getAgent").success(function(response){
+			$scope.agent=response;
+			console.log("+++++++++++++++=");
+			console.log($scope.agent);
+			
+		});
+	}
 	
+
+	$scope.onCountryChange = function(){
+		console.log($scope.countryCode);
+		   $scope.agentselectedAll = false;
+		   $scope.specificAgentselectedAll = false;
+		   $scope.agent_check = [];
+		   $scope.specificAgent_check = [];
+		$http.get("/getAgentCountry/"+$scope.countryCode).success(function(response){
+			$scope.agent=response;
+			console.log("+++++++++++++++=");
+			console.log($scope.agent);
+			
+		});
 	
+	}
 	
 	
 	$scope.agentClicked = function(e, agentInfo) {
@@ -3476,6 +3500,11 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     		$scope.supplierRate = response;
     		console.log(response);
     	});
+    	
+    	/*$http.get("/getSpecialRate/"+code).success(function(response){
+    		$scope.supplierSpecialRate = response;
+    		console.log(response);
+    	});*/
     }
     
     
@@ -3524,9 +3553,61 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
         	console.log($scope.rate_check);
     };
     
+    
+    
+    
+  /* $scope.specialrateClicked = function(e, specialrate) {
+
+		if($(e.target).is(":checked")) {
+			$scope.specialrate_check.push(specialrate.id);
+		} else {
+			DeletespecialrateItem(specialrate);
+		}
+		console.log("//////////");
+		console.log($scope.specialrate_check);
+	}
+
+	DeletespecialrateItem = function(specialrate){
+		angular.forEach($scope.specialrate_check, function(obj, index){
+			if ((specialrate.id == obj)) {
+				$scope.specialrate_check.splice(index, 1);
+				return;
+			};
+		});
+
+	}
+	
+	 	$scope.specialratecheckAll = function () {
+        if ($scope.specialrateselectedAll) {
+            $scope.specialrateselectedAll = false;
+            angular.forEach($scope.supplierSpecialRate, function (specialrate) {
+            	specialrate.isSelected = $scope.specialrateselectedAll;
+            });
+            $scope.specialrate_check = [];
+        } else {
+        	
+            $scope.specialrateselectedAll = true;
+            $scope.specialrate_check = [];
+            $scope.i = 0;
+            angular.forEach($scope.supplierSpecialRate, function (specialrate, index) {
+            	specialrate.isSelected = $scope.specialrateselectedAll;
+            	console.log(specialrate);
+                    	$scope.specialrate_check.push($scope.supplierSpecialRate[index].id);
+                    	
+                    	
+            });
+        }
+       
+        	console.log($scope.specialrate_check);
+    };
+    */
+    
+    
+    
     $scope.saveSpecificMarkup = function(){
     	$scope.specificMarkup.rateSelected = $scope.rate_check;
     	$scope.specificMarkup.agentSpecific = $scope.specificAgent_check;
+    	//$scope.specificMarkup.specialRate =$scope.specialrate_check;
     	if($scope.specificMarkup.specificSelected == "1"){
     		delete $scope.specificMarkup.specificFlat;
     	}else{
@@ -3541,8 +3622,69 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     	});
     }
     
-    $scope.showSpecials = function(){
-    	alert("Hiiii");
+    
+    $scope.batchAgent = function(){
+    	
+    }
+    $scope.onSupplierChoose = function(){
+    	console.log($scope.code);
+    	$http.get("/getSupplerWiseRate/"+$scope.code).success(function(response){
+    		$scope.SupplerWiseRate = response;
+    		console.log(response);
+    	});
+    	
+    	$http.get("/getSupplerWiseSpecificRate/"+$scope.code).success(function(response){
+    		$scope.SupplerWiseSpecificRate = response;
+    		 angular.forEach($scope.SupplerWiseSpecificRate, function(obj, index){
+    		 
+    			 $scope.SupplerWiseSpecificRate[index].rateSelected.fromDate = $filter('date')(response[index].rateSelected.fromDate, "yyyy-MM-dd");
+    			 $scope.SupplerWiseSpecificRate[index].rateSelected.toDate = $filter('date')(response[index].rateSelected.toDate, "yyyy-MM-dd");
+    			 return;
+    		 });
+    		
+    		console.log(response);
+    	});
+    }
+    
+    $scope.selectedSpecificData = {};
+    $scope.updateSpecificId = function(supplerWiseSpecific){
+    	console.log(supplerWiseSpecific);
+    	if(supplerWiseSpecific.specificSelected == "1"){
+    		supplerWiseSpecific.specificFlat = null;
+    	}else{
+    		supplerWiseSpecific.specificPercent =null;
+    	}
+    	console.log(supplerWiseSpecific);
+    	$scope.selectedSpecificData.specificMarkupId = supplerWiseSpecific.specificMarkupId;
+    	$scope.selectedSpecificData.specificFlat = supplerWiseSpecific.specificFlat;
+    	$scope.selectedSpecificData.specificPercent = supplerWiseSpecific.specificPercent;
+    	$scope.selectedSpecificData.specificSelected = supplerWiseSpecific.specificSelected;
+    	console.log($scope.selectedSpecificData);
+    	$http.post('/UpdateSpecificMarkup',$scope.selectedSpecificData).success(function(data){
+    		console.log("Success");
+    		 notificationService.success("Update Successfully");
+    	});
+    }
+    
+    $scope.selectedData = {};
+    
+    $scope.updateAgentId = function(supplerWise){
+    	if(supplerWise.selected == "1"){
+    		supplerWise.flat = null;
+    	}else{
+    		supplerWise.percent =null;
+    	}
+    	console.log(supplerWise);
+    	$scope.selectedData.batchMarkupId = supplerWise.batchMarkupId;
+    	$scope.selectedData.flat = supplerWise.flat;
+    	$scope.selectedData.percent = supplerWise.percent;
+    	$scope.selectedData.selected = supplerWise.selected;
+    	console.log($scope.selectedData);
+    	$http.post('/UpdateBatchMarkup', $scope.selectedData).success(function(data){
+    		console.log("Success");
+    		 notificationService.success("Update Successfully");
+    	});
+    	
     }
     
 }]);

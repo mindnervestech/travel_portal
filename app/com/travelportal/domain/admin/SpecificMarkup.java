@@ -123,6 +123,18 @@ public static SpecificMarkup findRateSupplier(AgentRegistration agentid, long ra
 		}
     }
 
+public static List getAllSpecific(long supplierCode) {
+	Query query = JPA.em().createQuery("select h from SpecificMarkup h where h.supplierCode ="+supplierCode);
+	return query.getResultList();
+}
+
+public static SpecificMarkup findBySpecificId(int specificId) {
+	
+	return (SpecificMarkup) JPA.em().createQuery("select c from SpecificMarkup c where c.specificMarkupId = ?1").setParameter(1, specificId).getSingleResult();
+	
+}
+
+
 	@Transactional
     public void save() {
 		JPA.em().persist(this);

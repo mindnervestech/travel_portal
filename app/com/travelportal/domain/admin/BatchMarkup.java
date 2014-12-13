@@ -102,6 +102,10 @@ public class BatchMarkup {
 		this.percent = percent;
 	}
 	
+	public static List getAllAgent(long supplierCode) {
+		Query query = JPA.em().createQuery("select h from BatchMarkup h where h.supplier ="+supplierCode);
+		return query.getResultList();
+	}
 	
 public static BatchMarkup findAgentSupplier(AgentRegistration agentid, long supplier) {
     	
@@ -109,12 +113,19 @@ public static BatchMarkup findAgentSupplier(AgentRegistration agentid, long supp
 		{
 		return (BatchMarkup) JPA.em().createQuery("select c from BatchMarkup c where c.supplier = ?1 and c.agent.agentCode = ?2").setParameter(1, supplier).setParameter(2, agentid).getSingleResult();
 		
-		//return (SpecificMarkup) JPA.em().createQuery("select c from SpecificMarkup c where c.supplierCode = ?1 and c.agentSpecific.id = ?3 and c.rateSelected.id = ?2").setParameter(1, supplier).setParameter(2, rateid).setParameter(3, agentid).getSingleResult();
 		}
 		catch(Exception ex){
 			return null;
 		}
     }
+
+public static BatchMarkup findByBatchId(int batchId) {
+	
+	
+	return (BatchMarkup) JPA.em().createQuery("select c from BatchMarkup c where c.batchMarkupId = ?1").setParameter(1, batchId).getSingleResult();
+	
+	
+}
 	
 
 	@Transactional

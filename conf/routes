@@ -176,6 +176,13 @@ POST	/updateSpecials			com.travelportal.controllers.SupplierController.updateSpe
 
 GET   /getSupplier      com.travelportal.controllers.MarkUpController.getSupplier
 GET   /getAgent         com.travelportal.controllers.MarkUpController.getAgent
+GET   /getAgentCountry/:countryCode         com.travelportal.controllers.MarkUpController.getAgentCountry(countryCode:Long)
+GET   /getSupplerWiseRate/:supplierCode		     com.travelportal.controllers.MarkUpController.getSupplerWiseRate(supplierCode:Long)
+GET   /getSupplerWiseSpecificRate/:supplierCode		     com.travelportal.controllers.MarkUpController.getSupplerWiseSpecificRate(supplierCode:Long)
+GET   /agentCountries		   com.travelportal.controllers.MarkUpController.agentCountries
 GET   /getSupplierRate/:code			com.travelportal.controllers.MarkUpController.getSupplierRate(code:Long)
+GET   /getSpecialRate/:code 			com.travelportal.controllers.MarkUpController.getSpecialRate(code:Long)
 POST /savebatchMarkup		com.travelportal.controllers.MarkUpController.savebatchMarkup
 POST /savespecificMarkup		com.travelportal.controllers.MarkUpController.savespecificMarkup
+POST /UpdateBatchMarkup			com.travelportal.controllers.MarkUpController.UpdateBatchMarkup
+POST /UpdateSpecificMarkup			com.travelportal.controllers.MarkUpController.UpdateSpecificMarkup

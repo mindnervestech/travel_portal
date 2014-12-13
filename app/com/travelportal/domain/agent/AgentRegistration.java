@@ -318,6 +318,10 @@ public class AgentRegistration {
 		Query query = JPA.em().createQuery("select DISTINCT h.country from AgentRegistration h where h.status = 'APPROVED'");
 		return query.getResultList();
 	}
+	public static List getAllApprovedAgentByCountry(long countryCode) {
+		Query query = JPA.em().createQuery("select DISTINCT h.country from AgentRegistration h where h.status = 'APPROVED' and h.country.countryCode ="+countryCode);
+		return query.getResultList();
+	}
 	
 	public static List getApprovedAgent() {
 		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.status = 'APPROVED'");

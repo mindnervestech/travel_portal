@@ -14,6 +14,7 @@ public class SpecificMarkupVM {
 	public long code;
 	public List<Integer> agentSpecific;
 	public List<Integer> rateSelected;
+	/*public List<Integer> specialRate;*/
 	public String specificSelected;
 	public Double specificFlat;
 	public Double specificPercent;
@@ -55,8 +56,7 @@ public class SpecificMarkupVM {
 	public void setSpecificPercent(Double specificPercent) {
 		this.specificPercent = specificPercent;
 	}
-	
-	
+		
 	
 	
 	
