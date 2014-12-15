@@ -21,7 +21,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 import com.travelportal.domain.City;
-import com.travelportal.domain.RatePeriod;
+//import com.travelportal.domain.RatePeriod;
 import com.travelportal.domain.agent.AgentRegistration;
 
 @Entity

@@ -18,7 +18,7 @@
 				</div>
 		</div>
 		</div>
-		
+		<!-- <input type="text" name="rateV" ng-model="teValue" value="" class="form-control required number"> -->
 		<div class="row" style="margin-top: 3%;">
 		<div class="form-group">
 			<label class="col-md-3 control-label"><b>Please define the period :</b></label>
@@ -67,12 +67,13 @@
 			<div>
 						
 			<fieldset class="billinside" ng-repeat="rate in rateMeta track by $index" style="margin-top: 2%;">
-			 <form method="post" name="myform" role="form" class="form-horizontal form-validate" action="">
+			 <form method="post" name="myform" id="formA" role="form" class="form-horizontal form-validate" action="">
 			<a data-toggle="collapse" data-target="#demo{{$index}}" aria-expanded="true" aria-controls="demo{{$index}}" style="cursor: pointer;">
 			<legend style="width: 75%; border-bottom: none;font-size: 18;">&nbsp;&nbsp;&nbsp;&nbsp;{{rate.rateName}}</legend>
 			</a>
+			<!--  <input type="text" name="rateV" ng-model="teValue" value="" class="form-control required number"> -->
 			<div id="demo{{$index}}" class="collapse in">
-			
+			 <button ng-show="ooo" id="formBSend" type="submit" class="btn"> Submit</button>
 			<fieldset class="billinside">
 				<legend style="width: 9%; border-bottom: none;font-size: 12;"><b>Normal Rate</b></legend>
 				<table class="table">
@@ -315,8 +316,10 @@
 			<legend style="width: 10%; border-bottom: none;font-size: 18;">&nbsp;&nbsp;&nbsp;&nbsp;Rate {{$index+1}}</legend>
 			</a>
 			
-			<form method="post" name="myform" role="form" class="form-horizontal form-validate" action="">
+			<form name="myform" role="form" id="formB" class="form-horizontal form-validate" ng-submit="showData()">
 			<!-- <form action="#" class="form-validate"> -->
+			 <!--  <input type="text" name="rateV" ng-model="teValue" value="" class="form-control required number"> --> 
+			 <button ng-show="ooo" id="formBSend" type="submit" class="btn"> Submit</button>
 			<input type="hidden" value="{{rate.id}}" data-ng-model="selectedRatesId">
 			<div id="demo1{{$index}}" class="collapse in">
 				<div class="row" style="margin-bottom: 3%;margin-left: 2%;">

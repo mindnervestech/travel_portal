@@ -121,9 +121,7 @@ public static BatchMarkup findAgentSupplier(AgentRegistration agentid, long supp
 
 public static BatchMarkup findByBatchId(int batchId) {
 	
-	
 	return (BatchMarkup) JPA.em().createQuery("select c from BatchMarkup c where c.batchMarkupId = ?1").setParameter(1, batchId).getSingleResult();
-	
 	
 }
 	

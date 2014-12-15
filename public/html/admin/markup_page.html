@@ -40,7 +40,7 @@
 											<div class="tab-pane active" id="step1">
 
 												<form method="post" name="myform"
-													ng-submit="saveBatchMarkup()" role="form"
+													ng-submit="saveBatchMarkup()" id="formA" role="form"
 													class="form-horizontal form-validate" novalidate>
 													<div class="row">
 														<div class="form-group">
@@ -188,7 +188,7 @@
 											<div class="tab-pane" id="Step2">
 
 												<form method="post" name="myform"
-													ng-submit="saveSpecificMarkup()" role="form"
+													ng-submit="saveSpecificMarkup()" id="formB" role="form"
 													class="form-horizontal form-validate" novalidate>
 													<div class="row">
 														<div class="form-group">
@@ -478,7 +478,7 @@
 																		style="font-size: small;">
 																		<li class="active menu-li custom_menu"><a
 																			href="#viewStep1" data-toggle="tab"
-																			style="padding: 7px 5px;" ng-click="batchAgent()">Batch
+																			style="padding: 7px 5px;">Batch
 																				Markup</a></li>
 																		<li class="menu-li custom_menu"><a
 																			href="#viewStep2" data-toggle="tab"
@@ -486,7 +486,7 @@
 																				Markups</a></li>
 
 																	</ul>
-																	<div class="tab-content" id="myTabContent"
+																	<div class="tab-content" 
 																		style="overflow: hidden;">
 
 																		<div class="tab-pane active" id="viewStep1">
@@ -510,7 +510,7 @@
 																			<th><a style="color: white;">Agent No</a></th>
 																			<th><a style="color: white;">Country</a></th>
 																			<th><a style="color: white;">Currency</a></th>
-																			<th><a style="color: white;">value</a></th>
+																			<th style="width: 100px;"><a style="color: white;">Value</a></th>
 																			<th><a style="color: white;">Flat/Percent</a></th>
 																			 <th style="width: 8%;	"><a style="color: white;">Action</a></th>
 
@@ -525,8 +525,8 @@
 																			<td>{{supplerWise.agent.agentCode}}</td>
 																			<td>{{supplerWise.agent.country.countryName}}</td>
 																			<td>{{supplerWise.agent.currency.currencyName}}</td>
-																			<td ng-if="supplerWise.selected == '0'"><div class="col-md-3"><input type="text" ng-model="supplerWise.flat"></div></td>
-																			<td ng-if="supplerWise.selected == '1'"><div class="col-md-3"><input type="text" ng-model="supplerWise.percent"></div></td>
+																			<td ng-if="supplerWise.selected == '0'"><div><input type="text" ng-model="supplerWise.flat" class="form-control required number" style="width: 124px;"></div></td>
+																			<td ng-if="supplerWise.selected == '1'"><div><input type="text" ng-model="supplerWise.percent" class="form-control required number" style="width: 124px;"></div></td>
 																			<td><select class="form-control" ng-model="supplerWise.selected" required>
 																					<option value="0">Flat</option>
 																					<option value="1">Percent</option>
@@ -543,7 +543,7 @@
 													</div> 
 																			</form>
 																		</div>
-																		<div class="tab-pane active" id="viewStep2">
+																		<div class="tab-pane" id="viewStep2">
 																						<form method="post" name="myform"
 													ng-submit="updaebatchMarkup()" role="form"
 													class="form-horizontal form-validate" novalidate>
@@ -559,12 +559,11 @@
 																	<thead style="background-color: #488c6c;">
 																		<tr>
 																			
-																			<th><a style="color: white;">Agent Name</a></th>
-																			<th><a style="color: white;">Country</a></th>
+																			<th><a style="color: white;">Agent Name/Country</a></th>
 																			<th><a style="color: white;">Rate Name</a></th>
 																			<th><a style="color: white;">Currency</a></th>
 																			<th><a style="color: white;">Date</a></th>
-																			<th><a style="color: white;">value</a></th>
+																			<th style="width: 100px;"><a style="color: white;">Value</a></th>
 																			<th><a style="color: white;">Flat/Percent</a></th>
 																			 <th style="width: 8%;"><a style="color: white;">Action</a></th>
 
@@ -575,13 +574,12 @@
 
 																		<tr ng-repeat="supplerWiseSpecific in SupplerWiseSpecificRate">
 																		
-																			<td>{{supplerWiseSpecific.agentSpecific.firstName}}</td>
-																			<td>{{supplerWiseSpecific.agentSpecific.country.countryName}}</td>
+																			<td>{{supplerWiseSpecific.agentSpecific.firstName}} ({{supplerWiseSpecific.agentSpecific.country.countryName}})</td>
 																			<td>{{supplerWiseSpecific.rateSelected.rateName}}</td>
 																			<td>{{supplerWiseSpecific.rateSelected.currency}}</td>
-																			<td>From:{{supplerWiseSpecific.rateSelected.fromDate}} - To:{{supplerWiseSpecific.rateSelected.toDate}}</td>
-																			<td ng-if="supplerWiseSpecific.specificSelected == '0'"><input type="text" ng-model="supplerWiseSpecific.specificFlat"></td>
-																			<td ng-if="supplerWiseSpecific.specificSelected == '1'"><input type="text" ng-model="supplerWiseSpecific.specificPercent"></td>
+																			<td>{{supplerWiseSpecific.rateSelected.fromDate}} - {{supplerWiseSpecific.rateSelected.toDate}}</td>
+																			<td ng-if="supplerWiseSpecific.specificSelected == '0'"><input type="text" ng-model="supplerWiseSpecific.specificFlat" class="form-control required number" style="width: 124px;"></td>
+																			<td ng-if="supplerWiseSpecific.specificSelected == '1'"><input type="text" ng-model="supplerWiseSpecific.specificPercent" class="form-control required number" style="width: 124px;"></td>
 																			<td><select class="form-control" ng-model="supplerWiseSpecific.specificSelected" required>
 																					<option value="0">Flat</option>
 																					<option value="1">Percent</option>

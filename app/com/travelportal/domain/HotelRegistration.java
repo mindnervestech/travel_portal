@@ -207,6 +207,11 @@ public class HotelRegistration {
 		return (HotelRegistration) query.getSingleResult();
 	}
 	
+	public static HotelRegistration doLoginRef(String code) {
+		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.supplierCode = ?1 and h.status = 'APPROVED'").setParameter(1, code);
+		return (HotelRegistration) query.getSingleResult();
+	}
+	
 	public static HotelRegistration getallSupplierCode(long code) {
 		return (HotelRegistration) JPA.em().createQuery("select c from HotelRegistration c where c.supplierCode = "+code).getSingleResult();
 	}

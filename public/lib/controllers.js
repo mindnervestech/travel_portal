@@ -182,7 +182,7 @@ angular.module('travel_portal').
 		
 		$scope.selectType = function()
 		{
-			
+			$scope.allotmentMarket.currencyName = $scope.currencyname;
 
 			if($scope.allotmentMarket.roomId != null && $scope.allotmentMarket.currencyName != null)
 				{
@@ -952,7 +952,10 @@ angular.module('travel_portal').
 angular.module('travel_portal').
 	controller("hoteProfileController",function($scope, $http,$routeParams,$location,notificationService,$rootScope,$filter, $upload, ngDialog) {
 
+		
+		
 		$(".form-validate").validate({
+		//console.log("Hiiiii");
 	        errorPlacement: function(error, element){
 	            error.insertAfter(element);
 	        }
@@ -1251,6 +1254,7 @@ angular.module('travel_portal').
 			ngDialog.open({
 				template: '/assets/html/hotel_profile/create_meal_plan.html',
 				scope : $scope,
+				//controller:'hoteProfileController',
 				className: 'ngdialog-theme-default'
 			});
 			
@@ -3637,8 +3641,8 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     		$scope.SupplerWiseSpecificRate = response;
     		 angular.forEach($scope.SupplerWiseSpecificRate, function(obj, index){
     		 
-    			 $scope.SupplerWiseSpecificRate[index].rateSelected.fromDate = $filter('date')(response[index].rateSelected.fromDate, "yyyy-MM-dd");
-    			 $scope.SupplerWiseSpecificRate[index].rateSelected.toDate = $filter('date')(response[index].rateSelected.toDate, "yyyy-MM-dd");
+    			 $scope.SupplerWiseSpecificRate[index].rateSelected.fromDate = $filter('date')(response[index].rateSelected.fromDate, "yyyy/MM/dd");
+    			 $scope.SupplerWiseSpecificRate[index].rateSelected.toDate = $filter('date')(response[index].rateSelected.toDate, "yyyy/MM/dd");
     			 return;
     		 });
     		

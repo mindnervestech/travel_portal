@@ -45,8 +45,18 @@ public class ApplicationController extends Controller{
 	public static Result login() {
 		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
 		final String value = session().get("SUPPLIER");
-        if (value == null) {
-        	return ok(views.html.login.render(" "));
+        if (value != null) {
+        	HotelRegistration user = HotelRegistration.doLoginRef(value);
+        	session().put("SUPPLIER", value);
+			long code = Long.parseLong(user.getSupplierCode());
+			HashMap<String , String> permission = new HashMap<>();
+	        List<Permissions> permissions = Permissions.getPermission();
+	    
+	        for(Permissions permissions2 : permissions){
+	        	permission.put(permissions2.getName() , String.valueOf(user.getPermissions().contains(permissions2)));
+	        }
+	        System.out.println(permission);
+			return ok(home.render("Home Page", code , Json.stringify(Json.toJson(permission)))); 
         }
         return ok(views.html.login.render(" "));
         //return ok(home.render("Home Page", Long.parseLong(session().get("SUPPLIER"))));

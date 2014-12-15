@@ -37,9 +37,10 @@
 			  <div class="form-group">
 				<label class="col-md-7 col-md-offset-1"><b>Please Choose Currency:</b></label>
 				<div class="col-md-8 col-md-offset-1">
-					<select class="form-control" ng-change="onCurrencyChange()" data-ng-model="allotmentMarket.currencyName" data-ng-options="currencyname.currencyName as currencyname.currencyName for currencyname in currency" required>
+					<input type="text" data-ng-model="allotmentMarket.currencyType" value={{currencyname}} class="form-control" disabled="disabled">
+					<!-- <select class="form-control" ng-change="onCurrencyChange()" data-ng-model="allotmentMarket.currencyName" data-ng-options="currencyname.currencyName as currencyname.currencyName for currencyname in currency" required>
 						<option>Select Currency...</option>
-					</select>
+					</select> -->
 				</div>
 				</div>
 			</div>
