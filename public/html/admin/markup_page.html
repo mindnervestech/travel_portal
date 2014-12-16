@@ -187,9 +187,9 @@
 											</div>
 											<div class="tab-pane" id="Step2">
 
-												<form method="post" name="myform"
+												<form method="post" name="myform1"
 													ng-submit="saveSpecificMarkup()" id="formB" role="form"
-													class="form-horizontal form-validate" novalidate>
+													class="form-horizontal form-validate1">
 													<div class="row">
 														<div class="form-group">
 															<div class="col-md-4">
@@ -326,7 +326,7 @@
 																		<input type="text" id="specificFlat"
 																			name="specificFlat"
 																			data-ng-model="specificMarkup.specificFlat"
-																			class="form-control required number">
+																			class="form-control required number" required>
 																	</div>
 
 																</div>
@@ -381,48 +381,6 @@
 														</div>
 													</div>
 
-													<!-- <div class="row" ng-show="showAllRate">
-														<div class="form-group">
-															<div class="col-md-12">
-																<div class="col-md-12">
-																	<label>Special Rate</label>
-																</div>
-																<table class="table" border="1"
-																	style="width: 100%; font-size: small; margin-bottom: 11%;">
-																	<thead style="background-color: #488c6c;">
-																		<tr>
-																			<th><li style="color: white;">All&nbsp&nbsp<input
-																					type="checkbox" name="specialrateselectedAll"
-																					ng-model="specialrateselectedAll"
-																					ng-click="specialratecheckAll()" /></li></th>
-																			<th><a style="color: white;">Promotion Name</a></th>
-																			<th><a style="color: white;">Room Type</a></th>
-																			<th><a style="color: white;">To Date</a></th>
-																			 <th style="width: 20%;	"><a style="color: white;">Action</a></th>
-
-
-																		</tr>
-																	</thead>
-																	<tbody>
-
-																		<tr ng-repeat="specialRate in supplierSpecialRate">
-																			<td style="text-align: center; width: 82px;"><input
-																				type="checkbox" name="supplierSpecialRate"
-																				ng-click="specialrateClicked($event,specialRate)"
-																				ng-model="specialRate.isSelected"></td>
-																			<td>{{specialRate.promotionName}}</td>
-																			<td>{{specialRate.roomTypes}}</td>
-																			<td>{{specialRate.toDate}}</td>
-																			<td><a ng-click="DeleteDocId(doc)" style="cursor: pointer;" data-toggle="modal"><img src="/assets/images/deleteIcon.png" style="width: 14%;margin-left: 24%;"></a></td>
-
-																		</tr>
-
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
- -->
 
 												</form>
 
@@ -443,7 +401,7 @@
 
 																		<div class="col-md-12">
 
-																			<select class="form-control"
+																			<select class="form-control required"
 																				ng-model="code"
 																				ng-change="onSupplierChoose()">
 																				<option ng-repeat=" supplierInfo in supplier"
@@ -493,7 +451,7 @@
 																			
 																			<form method="post" name="myform"
 													ng-submit="updaebatchMarkup()" role="form"
-													class="form-horizontal form-validate" novalidate>
+													class="form-horizontal form-validate2" novalidate>
 																			
 																			 <div class="row">
 														<div class="form-group">
@@ -546,7 +504,7 @@
 																		<div class="tab-pane" id="viewStep2">
 																						<form method="post" name="myform"
 													ng-submit="updaebatchMarkup()" role="form"
-													class="form-horizontal form-validate" novalidate>
+													class="form-horizontal form-validate3" novalidate>
 																			
 																			 <div class="row">
 														<div class="form-group">

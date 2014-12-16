@@ -714,9 +714,11 @@ angular.module('travel_portal').
 		 $scope.leisure_sport_check = [];
 		 $scope.business_check = [];
 		 
-		 $http.get('/finddescripData/'+supplierCode).success(function(response) {
+		 $http.get('/finddescrip/'+supplierCode).success(function(response) {
 			
-			 $scope.description = response.description; 
+			 console.log(response);
+			 $scope.gDescription = response.generalDescription;
+			 $scope.lDescription = response.lobbyDescription;
 		 });
 		
 		 $http.get('/findAreaData/'+supplierCode).success(function(response) {
@@ -955,7 +957,12 @@ angular.module('travel_portal').
 		
 		
 		$(".form-validate").validate({
-		//console.log("Hiiiii");
+	        errorPlacement: function(error, element){
+	            error.insertAfter(element);
+	        }
+	    });
+		
+		$(".form-validates").validate({
 	        errorPlacement: function(error, element){
 	            error.insertAfter(element);
 	        }
@@ -2324,6 +2331,18 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
             error.insertAfter(element);
         }
     });
+	$(".form-validate6").validate({
+        errorPlacement: function(error, element){
+            error.insertAfter(element);
+        }
+    });
+	
+	$(".form-validate7").validate({
+        errorPlacement: function(error, element){
+            error.insertAfter(element);
+        }
+    });
+	
 	
 	$scope.showMeals = false;
 	$scope.addMeal1 = 'no';
@@ -3285,6 +3304,21 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
 
 	
 	$(".form-validate").validate({
+        errorPlacement: function(error, element){
+            error.insertAfter(element);
+        }
+    });
+	$(".form-validate1").validate({
+        errorPlacement: function(error, element){
+            error.insertAfter(element);
+        }
+    });
+	$(".form-validate2").validate({
+        errorPlacement: function(error, element){
+            error.insertAfter(element);
+        }
+    });
+	$(".form-validate3").validate({
         errorPlacement: function(error, element){
             error.insertAfter(element);
         }

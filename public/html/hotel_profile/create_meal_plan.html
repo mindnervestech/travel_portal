@@ -3,7 +3,7 @@
 
 
   <div id="testDiv3">
-<form method="post" name="mealinfoform" ng-submit="savemealplan()"
+<form method="post" name="mealinfoform" id="formA" ng-submit="savemealplan()"
 	role="form" class="form-horizontal form-validate">
 	
 	
@@ -76,7 +76,7 @@
 						<div class="col-md-2">
 							<input type="text"
 								name="rate" data-ng-model="mealpolicy.rate"
-								class="form-control meal-font-text-size required">
+								class="form-control meal-font-text-size required number">
 
 						</div>
 						<div class="col-md-2">{{currencyname}}</div>

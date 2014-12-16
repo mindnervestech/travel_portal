@@ -27,6 +27,7 @@ import views.html.index;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.travelportal.domain.HotelHealthAndSafety;
+import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.ImgPath;
 import com.travelportal.domain.InfoWiseImagesPath;
 
@@ -132,6 +133,16 @@ public static void createRootDir() {
         return ok(f);		
 		
 	}
+	
+	
+	@Transactional(readOnly=false)
+	public static Result finddescrip(long supplierCode) {
+	InfoWiseImagesPath infoImagesPath= InfoWiseImagesPath.findById(supplierCode);
+		return ok(Json.toJson(infoImagesPath));
+	
+	
+	}
+	
 	
 	@Transactional(readOnly=false)
 	public static Result saveLobbyImg() {

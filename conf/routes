@@ -118,6 +118,7 @@ POST   /saveAmenitiesServicesImg      com.travelportal.controllers.ManageHotelIm
 POST   /saveLeisureorSportsImg      com.travelportal.controllers.ManageHotelImagesController.saveLeisureorSportsImg()
 POST   /saveMapImg      com.travelportal.controllers.ManageHotelImagesController.saveMapImg()
 
+GET   /finddescrip/:supplierCode  com.travelportal.controllers.ManageHotelImagesController.finddescrip(supplierCode:Long)
 GET	  /hotel_profile/getImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getImagePath(supplierCode:Long)
 GET	  /hotel_profile/getLobbyImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getLobbyImagePath(supplierCode:Long)
 GET	  /hotel_profile/getRoomImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getRoomImagePath(supplierCode:Long)
