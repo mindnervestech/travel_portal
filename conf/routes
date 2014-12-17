@@ -189,3 +189,6 @@ POST /savebatchMarkup		com.travelportal.controllers.MarkUpController.savebatchMa
 POST /savespecificMarkup		com.travelportal.controllers.MarkUpController.savespecificMarkup
 POST /UpdateBatchMarkup			com.travelportal.controllers.MarkUpController.UpdateBatchMarkup
 POST /UpdateSpecificMarkup			com.travelportal.controllers.MarkUpController.UpdateSpecificMarkup
+
+GET  /AllDate/:fromDate/:toDate     com.travelportal.controllers.MarkUpController.AllDate(fromDate:String,toDate:String)
+

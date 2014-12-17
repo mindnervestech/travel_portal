@@ -147,8 +147,8 @@
 				<div class="form-group">
 						<label class="col-md-5 control-label">Extension:</label>
 						<div class="col-md-7">
-						<input type="number" name="dExtNo" data-ng-model="bill.dExtNo" class="form-control" >
-						<span class="error" ng-show="billinfo.dExtNo.$error.number" style="color: red;">Not valid number!</span>
+						<input type="text" name="dExtNo" data-ng-model="bill.dExtNo" class="form-control required number" >
+						<!-- <span class="error" ng-show="billinfo.dExtNo.$error.number" style="color: red;">Not valid number!</span> -->
 					</div>
 					</div>	
 					
@@ -193,7 +193,7 @@
 					<div class="form-group">
 						<label class="col-md-5 control-label">Account No.:</label>
 						<div class="col-md-7">
-						<input type="text" name="accountNo" data-ng-model="bill.accountNo" class="form-control" required>
+						<input type="text" name="accountNo" data-ng-model="bill.accountNo" class="form-control required number" required>
 					</div>
 					</div>
 					

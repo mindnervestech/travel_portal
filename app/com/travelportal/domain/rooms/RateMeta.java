@@ -143,6 +143,12 @@ public class RateMeta {
 	    	return (List<RateMeta>) query.getResultList();
 	    }
 	 
+	 
+	 public static List<RateMeta> getAllDate() {
+	    	Query query = JPA.em().createQuery("Select r from RateMeta r");
+	    	return (List<RateMeta>) query.getResultList();
+	    }
+	 
 	 public static RateMeta findById(Long id) {
 	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.id = ?1");
 			query.setParameter(1, id);

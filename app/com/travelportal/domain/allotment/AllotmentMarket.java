@@ -1,5 +1,6 @@
 package com.travelportal.domain.allotment;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -121,6 +122,16 @@ public class AllotmentMarket {
 		}
     }
 	
+	//return (AllotmentMarket) JPA.em().createNativeQuery("select * from allotmentmarket_rate_meta where rate_rate_id = '"+Code+"'").getSingleResult();
+	
+	public static AllotmentMarket getOneMarket(Long Code) {
+			
+				Query q = JPA.em().createQuery("select c from AllotmentMarket c where c.rate.id = ?1");
+				q.setParameter(1, Code);
+				
+				return(AllotmentMarket) q.getSingleResult();
+			
+	   }
 	
 	public static AllotmentMarket findByTopid() {
 		try

@@ -202,7 +202,7 @@
 
 																		<div class="col-md-12">
 
-																			<select class="form-control"
+																			<select class="form-control" onmousedown="if(this.options.length>7){this.size=7;}"  onchange='this.size=0;' onblur="this.size=0;"
 																				ng-model="specificMarkup.code"
 																				ng-change="onDateChoose()">
 																				<option ng-repeat=" supplierInfo in supplier"
@@ -401,7 +401,7 @@
 
 																		<div class="col-md-12">
 
-																			<select class="form-control required"
+																			<select class="form-control required" onmousedown="if(this.options.length>7){this.size=7;}"  onchange='this.size=0;' onblur="this.size=0;"
 																				ng-model="code"
 																				ng-change="onSupplierChoose()">
 																				<option ng-repeat=" supplierInfo in supplier"

@@ -20,7 +20,7 @@ public class RateVM {
 	public SpecialRateVM special;
 	public List<CancellationPolicyVM> cancellation = new ArrayList<CancellationPolicyVM>();
 	public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
-	
+	public AllotmentMarketVM allotmentmarket;
 	
 	
 	public Long getSupplierCode() {
@@ -85,6 +85,7 @@ public class RateVM {
 	public void setCancellation(List<CancellationPolicyVM> cancellation) {
 		this.cancellation = cancellation;
 	}
+	
 	public long getId() {
 		return id;
 	}
@@ -103,6 +104,13 @@ public class RateVM {
 	public void setRoomName(String roomName) {
 		this.roomName = roomName;
 	}
+	public AllotmentMarketVM getAllotmentmarket() {
+		return allotmentmarket;
+	}
+	public void setAllotmentmarket(AllotmentMarketVM allotmentmarket) {
+		this.allotmentmarket = allotmentmarket;
+	}
+	
 	
 	/*public boolean isApplyToMarket() {
 		return applyToMarket;
