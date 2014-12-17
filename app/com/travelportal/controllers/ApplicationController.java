@@ -78,8 +78,8 @@ public class ApplicationController extends Controller{
 		
 	}
 	
-
 	
+		
 	@Transactional
 	public static Result doAdminLogin() {
 		DynamicForm form = DynamicForm.form().bindFromRequest();

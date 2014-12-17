@@ -112,11 +112,11 @@ public class SpecificMarkup {
 		this.specificPercent = specificPercent;
 	}
 	
-public static SpecificMarkup findRateSupplier(AgentRegistration agentid, long rateid , long supplier) {
+public static SpecificMarkup findRateSupplier(AgentRegistration agentid, long supplier) {
     	
     	try
 		{
-		return (SpecificMarkup) JPA.em().createQuery("select c from SpecificMarkup c where c.supplierCode = ?1 and c.agentSpecific.agentCode = ?3 and c.rateSelected.id = ?2").setParameter(1, supplier).setParameter(2, rateid).setParameter(3, agentid).getSingleResult();
+		return (SpecificMarkup) JPA.em().createQuery("select c from SpecificMarkup c where c.supplierCode = ?1 and c.agentSpecific.agentCode = ?2").setParameter(1, supplier).setParameter(2, agentid).getSingleResult();
 		}
 		catch(Exception ex){
 			return null;

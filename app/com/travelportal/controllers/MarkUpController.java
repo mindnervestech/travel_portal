@@ -335,16 +335,19 @@ public class MarkUpController extends Controller {
 		SpecificMarkupVM specificMarkupVM = Json.fromJson(json, SpecificMarkupVM.class);
 
 		System.out.println("&^&&^&&^&^&^&^&&&^");
-		System.out.println(specificMarkupVM.getSpecificPercent());
+		System.out.println(specificMarkupVM.getRateSelected());
 		System.out.println("&^&&^&&^&^&^&^&&&^");
 		
 for(long agentvm : specificMarkupVM.getAgentSpecific()){
+	
+	SpecificMarkup specificMarkup = SpecificMarkup.findRateSupplier(AgentRegistration.getallAgentCode(agentvm),specificMarkupVM.getCode());
+	
+		if(specificMarkupVM.getRateSelected().size() != 0){
 			
-			for(long vm : specificMarkupVM.getRateSelected()){
-				System.out.println(vm);
+				for(long vm : specificMarkupVM.getRateSelected()){
 				
-				SpecificMarkup specificMarkup = SpecificMarkup.findRateSupplier(AgentRegistration.getallAgentCode(agentvm),vm,specificMarkupVM.getCode());
-
+				System.out.println(vm);
+		
 				if(specificMarkup == null)
 				{
 	 specificMarkup = new SpecificMarkup();
@@ -359,6 +362,21 @@ for(long agentvm : specificMarkupVM.getAgentSpecific()){
 				}
 		
 			}
+		}else{
+			if(specificMarkup == null)
+			{
+ specificMarkup = new SpecificMarkup();
+specificMarkup.setSpecificFlat(specificMarkupVM.getSpecificFlat());
+specificMarkup.setSpecificPercent(specificMarkupVM.getSpecificPercent());
+specificMarkup.setSpecificSelected(specificMarkupVM.getSpecificSelected());
+specificMarkup.setSupplierCode(specificMarkupVM.getCode());
+specificMarkup.setAgentSpecific(AgentRegistration.getallAgentCode(agentvm));
+//specificMarkup.setRateSelected(RateMeta.getallRateCode(null));
+	
+specificMarkup.save();
+			}
+		}
+			
 	
 	}
 		

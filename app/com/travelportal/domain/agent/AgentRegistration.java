@@ -329,7 +329,7 @@ public class AgentRegistration {
 	}
 	
 public static List<AgentRegistration> getAgentData(int code) {/*List<Integer> rateid*/
-			Query q = JPA.em().createQuery("select c from AgentRegistration c where c.country.countryCode = ?1");
+			Query q = JPA.em().createQuery("select c from AgentRegistration c where c.country.countryCode = ?1 and  c.status = 'APPROVED'");
 			q.setParameter(1, code);
 			return (List<AgentRegistration>) q.getResultList();
 	
