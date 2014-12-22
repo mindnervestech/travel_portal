@@ -144,13 +144,7 @@ public class SpecialsMarket {
 		return q.executeUpdate();
 	}
 	
-	/*public static List<SpecialsMarket> findSpecialByDate(long code) {
-    	Query query = JPA.em().createQuery("Select s.id from SpecialsMarket s where s.special.id = ?1");
-		query.setParameter(1, code);
-    	return (List<SpecialsMarket>) query.getResultList();
-    }*/
-
-	
+		
 	@Transactional
     public void save() {
 		JPA.em().persist(this);

@@ -190,5 +190,10 @@ POST /savespecificMarkup		com.travelportal.controllers.MarkUpController.savespec
 POST /UpdateBatchMarkup			com.travelportal.controllers.MarkUpController.UpdateBatchMarkup
 POST /UpdateSpecificMarkup			com.travelportal.controllers.MarkUpController.UpdateSpecificMarkup
 
-GET  /AllDate/:fromDate/:toDate     com.travelportal.controllers.MarkUpController.AllDate(fromDate:String,toDate:String)
-
+#GET  /AllDate/:fromDate/:toDate     com.travelportal.controllers.AllRateController.AllDate(fromDate:String,toDate:String)
+#GET  /ByHotelType/:supplierCode		   com.travelportal.controllers.AllRateController.ByHotelType(supplierCode:Long)
+#GET  /getByRoomType/:roomId		   com.travelportal.controllers.AllRateController.getByRoomType(roomId:Long)
+#GET  /getCountryByRate/:cityId			   com.travelportal.controllers.AllRateController.getCountryByRate(cityId:Integer)
+#GET  /getStarWiseHotel/:sId    			   com.travelportal.controllers.AllRateController.getStarWiseHotel(sId:Integer)
+GET  /ByAllArteByCodition/:supplierCode/:roomId/:fromDate/:toDate/:sId/:cityId     com.travelportal.controllers.AllRateController.ByAllArteByCodition(supplierCode:Long,roomId:Long,fromDate:String,toDate:String,sId:Integer,cityId:Integer)
+GET  /getCountryByMarket/:cityId			   com.travelportal.controllers.AllRateController.getCountryByMarket(cityId:Integer)

@@ -139,7 +139,7 @@ angular.module('travel_portal').
 				
 				$http.post('/getRates', $scope.allotmentMarket).success(function(data){
 					console.log("-------");
-					//console.log(data);
+					console.log(data);
 					if(data.length>0) {
 					
 						$scope.rate = data;
@@ -172,9 +172,9 @@ angular.module('travel_portal').
 					}
 				});
 				
-			}).error(function(response, status, headers, config) {
+			}).error(function(data, status, headers, config) {
 				console.log('ERROR');
-				
+				notificationService.error("Please Enter Required Fields");
 			});
 		}
 		
@@ -194,9 +194,9 @@ angular.module('travel_portal').
 					$scope.allotmentMarket1 =data;
 					 angular.forEach($scope.allotmentMarket1, function(obj, index){
 						 var i=0;
-							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[index][i], "yyyy-MM-dd");
+							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[index][i], "dd-MM-yyyy");
 							i++;
-							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[index][i], "yyyy-MM-dd");
+							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[index][i], "dd-MM-yyyy");
 							return;
 						});
 							
@@ -221,9 +221,9 @@ angular.module('travel_portal').
 					$scope.allotmentMarket1 =data;
 					 angular.forEach($scope.allotmentMarket1, function(obj, index){
 						 var i=0;
-							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[index][i], "yyyy-MM-dd");
+							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[index][i], "dd-MM-yyyy");
 							i++;
-							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[index][i], "yyyy-MM-dd");
+							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[index][i], "dd-MM-yyyy");
 							return;
 						});
 							
@@ -252,16 +252,28 @@ angular.module('travel_portal').
 	
 		$scope.selectstopsell = function(allot)
 		{
-			
 			allot.period = null;
 			allot.choose = null;
 			
 		}
-		
+		$scope.selectRoomAll = function(allot){
+			allot.fromDate = null;
+			allot.toDate = null;
+			allot.stopPeriod = null;
+			allot.stopChoose = null;
+		}
 		$scope.selectFreesell = function(allot)
 		{
 			allot.choose = null;
+			allot.fromDate = null;
+			allot.toDate = null;
+			allot.stopPeriod = null;
+			allot.stopChoose = null;
 			
+		}
+		$scope.selectstopfreeSale = function(allot){
+			allot.stopPeriod = null;
+			allot.stopChoose = null;
 		}
 		
 		$scope.allotmentMDeleteId = function(allot,index)
@@ -293,17 +305,31 @@ angular.module('travel_portal').
 			$scope.allotmentMarket.allotmentmarket = $scope.allotmentM;
 			$scope.allotmentMarket.supplierCode = supplierCode; 
 			console.log($scope.allotmentMarket);
+			var flag=0;
 		
+			angular.forEach($scope.allotmentMarket.allotmentmarket,function(obj,index) {
+			   if($scope.allotmentMarket.allotmentmarket[index].fromDate > $scope.allotmentMarket.allotmentmarket[index].toDate){
+				   flag=1;
+				   $("#datediffShow"+index).show();
+			   }
+			   else
+				   {
+				   $("#datediffShow"+index).hide();
+				   }
+			});
+			
 			console.log($scope.allotmentMarket.allotmentmarket[0].allocatedCities);
 			
+			if(flag == 0){
 			$http.post('/saveAllotment',$scope.allotmentMarket).success(function(data){
 				console.log('success');
-				 notificationService.success("Save Successfully");
+			 notificationService.success("Save Successfully");
 									
 			}).error(function(data, status, headers, config) {
 				console.log('ERROR');
+				notificationService.error("Please Enter Required Fields");
 			});
-		
+			}
 		}
 	
 		
@@ -318,9 +344,7 @@ angular.module('travel_portal').
 		       
 		    };
 		    
-		  		    
-		    
-		 ////////
+		
 		    
 		    $scope.selectedRatesId;
 			console.log($scope.selectedRatesId);
@@ -883,6 +907,7 @@ angular.module('travel_portal').
 											
 					}).error(function(data, status, headers, config) {
 						console.log('ERROR');
+						notificationService.error("Please Enter Required Fields");
 					});
 			    	
 			    	
@@ -1142,7 +1167,11 @@ angular.module('travel_portal').
 			$scope.generalInfo=response.hotelgeneralinfo;
 			  $rootScope.checkUser = response.hotelgeneralinfo.isAdmin; 
 			 
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
+		
 		}
 	
 	$scope.getdescription = function()
@@ -1245,8 +1274,8 @@ angular.module('travel_portal').
 					}
 			
 			angular.forEach($scope.MealType, function(obj, index){
-				$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
-				$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
+				$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "dd-MM-yyyy");
+				$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "dd-MM-yyyy");
 								
 					
 				return;
@@ -1356,8 +1385,8 @@ angular.module('travel_portal').
 			$http.get('/findHealthAndSafData/'+$rootScope.supplierCode).success(function(response) {
 				
 				  $scope.HealthSafety = response.healthAndSafetyVM;
-			       $scope.HealthSafety.expiryDate = $filter('date')(response.healthAndSafetyVM.expiryDate, "yyyy-MM-dd");
-			       $scope.HealthSafety.expiryDate1 = $filter('date')(response.healthAndSafetyVM.expiryDate1, "yyyy-MM-dd");
+			       $scope.HealthSafety.expiryDate = $filter('date')(response.healthAndSafetyVM.expiryDate, "dd-MM-yyyy");
+			       $scope.HealthSafety.expiryDate1 = $filter('date')(response.healthAndSafetyVM.expiryDate1, "dd-MM-yyyy");
 			       $scope.FirePrecaution = response.healthAndSafetyVM;
 			       $scope.ExitsAndCorridor = response.healthAndSafetyVM;
 			       $scope.AirCondition = response.healthAndSafetyVM;
@@ -1373,7 +1402,7 @@ angular.module('travel_portal').
 			      
 			       
 			       angular.forEach(response.docInfo[0].imgpath, function(obj, index){
-						response.docInfo[0].imgpath[index].datetime = $filter('date')(response.docInfo[0].imgpath[index].datetime, "yyyy-MM-dd");
+						response.docInfo[0].imgpath[index].datetime = $filter('date')(response.docInfo[0].imgpath[index].datetime, "dd-MM-yyyy");
 						return;
 					});
 			       
@@ -1546,7 +1575,7 @@ angular.module('travel_portal').
 				console.log(response);
 				
 				 angular.forEach(response.docInfo[0].imgpath, function(obj, index){
-						response.docInfo[0].imgpath[index].datetime = $filter('date')(response.docInfo[0].imgpath[index].datetime, "yyyy-MM-dd");
+						response.docInfo[0].imgpath[index].datetime = $filter('date')(response.docInfo[0].imgpath[index].datetime, "dd-MM-yyyy");
 						return;
 					});
 				 $scope.document = response.docInfo[0].imgpath;
@@ -1744,6 +1773,7 @@ angular.module('travel_portal').
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 	}
 	
@@ -1759,6 +1789,7 @@ angular.module('travel_portal').
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 		
 	}
@@ -1775,6 +1806,7 @@ angular.module('travel_portal').
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 		
 	}
@@ -1790,6 +1822,7 @@ angular.module('travel_portal').
 			 notificationService.success("Save Successfully");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 		
 	}
@@ -1806,6 +1839,7 @@ angular.module('travel_portal').
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 		
 	}
@@ -1822,6 +1856,7 @@ angular.module('travel_portal').
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 		
 	}
@@ -1838,6 +1873,7 @@ angular.module('travel_portal').
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 		
 	}
@@ -1855,6 +1891,7 @@ angular.module('travel_portal').
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 		
 	}
@@ -1871,8 +1908,9 @@ angular.module('travel_portal').
  			 notificationService.success("Save Successfully");
  			
  		}).error(function(data, status, headers, config) {
- 			console.log('ERROR');
- 		});
+			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
+		});
  		
  	}
      $scope.cctvSt = false;
@@ -1888,8 +1926,9 @@ angular.module('travel_portal').
   			 notificationService.success("Save Successfully");
   			
   		}).error(function(data, status, headers, config) {
-  			console.log('ERROR');
-  		});
+			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
+		});
   		
   	}
      $scope.saveAddition = false;
@@ -1903,8 +1942,9 @@ angular.module('travel_portal').
  			 notificationService.success("Save Successfully");
  			
  		}).error(function(data, status, headers, config) {
- 			console.log('ERROR');
- 		});
+			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
+		});
  		
  	}
      $scope.saveGasHeaters = false;
@@ -1918,8 +1958,9 @@ angular.module('travel_portal').
   			 notificationService.success("Save Successfully");
   			
   		}).error(function(data, status, headers, config) {
-  			console.log('ERROR');
-  		});
+			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
+		});
   		
   	}
     
@@ -1946,7 +1987,7 @@ angular.module('travel_portal').
            console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
    }).success(function(data, status, headers, config) {
           console.log(data[0].imgpath);
-          /*$scope.HealthSafety.expiryDate = $filter('date')(response.healthAndSafetyVM.expiryDate, "yyyy-MM-dd");*/
+          /*$scope.HealthSafety.expiryDate = $filter('date')(response.healthAndSafetyVM.expiryDate, "dd-MM-yyyy");*/
           $scope.document = data[0].imgpath;
    }); 
    }
@@ -1974,6 +2015,7 @@ angular.module('travel_portal').
 			notificationService.success("Save Successfully");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 	};
 	$scope.mealpolicy={};
@@ -1996,8 +2038,8 @@ angular.module('travel_portal').
 				console.log("+++++++");
 				console.log($scope.MealType);
 				angular.forEach($scope.MealType, function(obj, index){
-					$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "yyyy-MM-dd");
-					$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "yyyy-MM-dd");
+					$scope.MealType[index].fromPeriod = $filter('date')($scope.MealType[index].fromPeriod, "dd-MM-yyyy");
+					$scope.MealType[index].toPeriod = $filter('date')($scope.MealType[index].toPeriod, "dd-MM-yyyy");
 					return;
 				});
 			});	
@@ -2006,6 +2048,7 @@ angular.module('travel_portal').
 			//$scope.mealpolicy = [];
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 
 
@@ -2037,6 +2080,7 @@ angular.module('travel_portal').
 			 notificationService.success("Update Successfully");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 
 
@@ -2066,6 +2110,7 @@ angular.module('travel_portal').
 			 notificationService.success("Save Successfully");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 	}
 
@@ -2094,6 +2139,7 @@ angular.module('travel_portal').
 			//$scope.locationfind; 
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 	}
 
@@ -2108,6 +2154,7 @@ angular.module('travel_portal').
 			$scope.InternalInfoSuccess = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 	}
 
@@ -2149,6 +2196,7 @@ angular.module('travel_portal').
 
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 
 	}
@@ -2174,6 +2222,7 @@ angular.module('travel_portal').
 
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 
 	}
@@ -2191,6 +2240,7 @@ angular.module('travel_portal').
 
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 
 	}
@@ -2210,6 +2260,7 @@ angular.module('travel_portal').
 			//$scope.Descriptinsuccess = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 	}
 
@@ -2224,6 +2275,7 @@ angular.module('travel_portal').
 			//$scope.leisuresucess = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 	}
 	
@@ -2257,6 +2309,7 @@ angular.module('travel_portal').
 			$scope.businessSucess = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 	}
 	
@@ -2297,6 +2350,7 @@ angular.module('travel_portal').
 			//$scope.amenitiesSuccess = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 	}
 	
@@ -2583,6 +2637,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			 notificationService.error("Please enter required fields");
 		});
 	};
 	
@@ -2594,6 +2649,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			//$scope.isUpdated = true;
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 	};
 	
@@ -2841,9 +2897,9 @@ controller("manageSuppliersController",function($scope,notificationService,$root
 					notificationService.error("Supplier Not Found");
 				}
 				
-			}).error(function(data, status, headers, config){
-				console.log("error");
-				
+			}).error(function(data, status, headers, config) {
+				console.log('ERROR');
+				notificationService.error("Please Enter Required Fields");
 			});
 			
 			
@@ -2894,9 +2950,9 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 		
 		
 		 angular.forEach($scope.allperiod, function(obj, index){
-				$scope.allperiod[index].fromDate = $filter('date')(response[index].fromDate, "yyyy-MM-dd");
+				$scope.allperiod[index].fromDate = $filter('date')(response[index].fromDate, "dd-MM-yyyy");
 				
-				$scope.allperiod[index].toDate = $filter('date')(response[index].toDate, "yyyy-MM-dd");
+				$scope.allperiod[index].toDate = $filter('date')(response[index].toDate, "dd-MM-yyyy");
 				return;
 			});
 		
@@ -2990,9 +3046,9 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 				
 				
 				 angular.forEach($scope.allperiod, function(obj, index){
-						$scope.allperiod[index].fromDate = $filter('date')(response[index].fromDate, "yyyy-MM-dd");
+						$scope.allperiod[index].fromDate = $filter('date')(response[index].fromDate, "-MM-dd");
 						
-						$scope.allperiod[index].toDate = $filter('date')(response[index].toDate, "yyyy-MM-dd");
+						$scope.allperiod[index].toDate = $filter('date')(response[index].toDate, "-MM-dd");
 						return;
 					});
 				
@@ -3015,27 +3071,35 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 	$scope.savePeriod = function() {
 		$scope.specialsObject[0].supplierCode = supplierCode;
 		console.log($scope.specialsObject);
-		$http.post('/saveSpecials', {"specialsObject":$scope.specialsObject}).success(function(data){
-			console.log('success');
-			 notificationService.success("Save Successfully");
-			 $http.get("/getPeriod/"+supplierCode).success(function(response){
-					console.log('success');
-					console.log(response);
-					$scope.allperiod = response;
-					
-					
-					 angular.forEach($scope.allperiod, function(obj, index){
-							$scope.allperiod[index].fromDate = $filter('date')(response[index].fromDate, "yyyy-MM-dd");
-							
-							$scope.allperiod[index].toDate = $filter('date')(response[index].toDate, "yyyy-MM-dd");
-							return;
-						});
-					
-				});
-			
-		}).error(function(data, status, headers, config) {
-			console.log('ERROR');
-		});
+		if($scope.specialsObject[0].fromDate < $scope.specialsObject[0].toDate){
+			$http.post('/saveSpecials', {"specialsObject":$scope.specialsObject}).success(function(data){
+				console.log('success');
+				 notificationService.success("Save Successfully");
+				 $http.get("/getPeriod/"+supplierCode).success(function(response){
+						console.log('success');
+						console.log(response);
+						$scope.allperiod = response;
+						
+						
+						 angular.forEach($scope.allperiod, function(obj, index){
+								$scope.allperiod[index].fromDate = $filter('date')(response[index].fromDate, "dd-MM-yyyy");
+								
+								$scope.allperiod[index].toDate = $filter('date')(response[index].toDate, "dd-MM-yyyy");
+								return;
+							});
+						
+					});
+				
+			}).error(function(data, status, headers, config) {
+				console.log('ERROR');
+				notificationService.error("Please Enter Required Fields");
+			});
+			$("#datediffShow").hide();
+		}else
+			{
+			$("#datediffShow").show();
+			}
+		
 	}
 	
 	$scope.updatePeriod = function() {
@@ -3045,6 +3109,7 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 			 notificationService.success("Update Successfully");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
 		});
 	}
 	
@@ -3479,7 +3544,10 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     	$http.post('/savebatchMarkup',$scope.batchMarkup).success(function(data){
     		console.log("Success");
     		 notificationService.success("BatchMarkup Save Successfully");
-    	});
+    	}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
+		});
     }
 	
 	
@@ -3538,11 +3606,6 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     		$scope.supplierRate = response;
     		console.log(response);
     	});
-    	
-    	/*$http.get("/getSpecialRate/"+code).success(function(response){
-    		$scope.supplierSpecialRate = response;
-    		console.log(response);
-    	});*/
     }
     
     
@@ -3657,7 +3720,10 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     	$http.post('/savespecificMarkup',$scope.specificMarkup).success(function(data){
     		console.log("Success");
     		 notificationService.success("SpecificMarkUp Save Successfully");
-    	});
+    	}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
+		});
     }
     
     
@@ -3675,8 +3741,8 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     		$scope.SupplerWiseSpecificRate = response;
     		 angular.forEach($scope.SupplerWiseSpecificRate, function(obj, index){
     		 
-    			 $scope.SupplerWiseSpecificRate[index].rateSelected.fromDate = $filter('date')(response[index].rateSelected.fromDate, "yyyy/MM/dd");
-    			 $scope.SupplerWiseSpecificRate[index].rateSelected.toDate = $filter('date')(response[index].rateSelected.toDate, "yyyy/MM/dd");
+    			 $scope.SupplerWiseSpecificRate[index].rateSelected.fromDate = $filter('date')(response[index].rateSelected.fromDate, "dd/MM/yyyy");
+    			 $scope.SupplerWiseSpecificRate[index].rateSelected.toDate = $filter('date')(response[index].rateSelected.toDate, "dd/MM/yyyy");
     			 return;
     		 });
     		
@@ -3701,7 +3767,10 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     	$http.post('/UpdateSpecificMarkup',$scope.selectedSpecificData).success(function(data){
     		console.log("Success");
     		 notificationService.success("Update Successfully");
-    	});
+    	}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
+		});
     }
     
     $scope.selectedData = {};
@@ -3721,7 +3790,10 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     	$http.post('/UpdateBatchMarkup', $scope.selectedData).success(function(data){
     		console.log("Success");
     		 notificationService.success("Update Successfully");
-    	});
+    	}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
+		});
     	
     }
     

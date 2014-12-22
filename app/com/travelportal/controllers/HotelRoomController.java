@@ -161,7 +161,7 @@ public static void createRootDir() {
 	
 	@Transactional(readOnly=false)
     public static Result saveRate() throws ParseException {
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 				
 		Form<RateWrapper> rateWrapperForm = Form.form(RateWrapper.class).bindFromRequest();
 		List<RateVM> list = rateWrapperForm.get().rateObject;
@@ -323,7 +323,7 @@ public static void createRootDir() {
 	
 	@Transactional(readOnly=false)
     public static Result updateRateMeta() throws ParseException {
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		Form<RateWrapper> rateWrapperForm = Form.form(RateWrapper.class).bindFromRequest();
 		List<RateVM> list = rateWrapperForm.get().rateObject;
 		
@@ -484,7 +484,7 @@ public static void createRootDir() {
 	
 	@Transactional(readOnly=true)
     public static Result getRateData(Long room,String fromDate,String toDate,String currencyType) throws ParseException {
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		List<RateVM> list = new ArrayList<>();
 		List<RateMeta> rateMeta = RateMeta.searchRateMeta(currencyType, format.parse(fromDate), format.parse(toDate), room);
 		for(RateMeta rate:rateMeta) {

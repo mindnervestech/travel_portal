@@ -8,8 +8,8 @@ public class HotelmealVM {
 	public int id;
 	public int mealType;
 	public String mealPlanNm;
-	public Date fromPeriod;
-	public Date toPeriod;
+	public String fromPeriod;
+	public String toPeriod;
 	public String guestType;
 	public Double rate;
 	public long supplierCode;
@@ -45,15 +45,7 @@ public class HotelmealVM {
 	/**
 	 * @return the fromPeriod
 	 */
-	public Date getFromPeriod() {
-		return fromPeriod;
-	}
-	/**
-	 * @param fromPeriod the fromPeriod to set
-	 */
-	public void setFromPeriod(Date fromPeriod) {
-		this.fromPeriod = fromPeriod;
-	}
+	
 	
 	
 	
@@ -61,21 +53,25 @@ public class HotelmealVM {
 	public String getGuestType() {
 		return guestType;
 	}
+	public String getFromPeriod() {
+		return fromPeriod;
+	}
+	public void setFromPeriod(String fromPeriod) {
+		this.fromPeriod = fromPeriod;
+	}
+	public void setToPeriod(String toPeriod) {
+		this.toPeriod = toPeriod;
+	}
+	public String getToPeriod() {
+		return toPeriod;
+	}
 	public void setGuestType(String guestType) {
 		this.guestType = guestType;
 	}
 	/**
 	 * @return the toPeriod
 	 */
-	public Date getToPeriod() {
-		return toPeriod;
-	}
-	/**
-	 * @param toPeriod the toPeriod to set
-	 */
-	public void setToPeriod(Date toPeriod) {
-		this.toPeriod = toPeriod;
-	}
+	
 	/**
 	 * @return the rate
 	 */

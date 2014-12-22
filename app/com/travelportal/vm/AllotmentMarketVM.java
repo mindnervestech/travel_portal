@@ -14,6 +14,11 @@ public class AllotmentMarketVM {
 	public String specifyAllot;
 	public int allocation;
 	public int choose;
+	public int stopAllocation;
+	public int stopChoose;
+	public String stopPeriod;
+	public String fromDate;
+	public String toDate;
 	public List<Long> rate;
 	public String applyMarket;
 	public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
@@ -56,6 +61,36 @@ public class AllotmentMarketVM {
 		this.rate = rate;
 	}
 	
+	public int getStopAllocation() {
+		return stopAllocation;
+	}
+	public void setStopAllocation(int stopAllocation) {
+		this.stopAllocation = stopAllocation;
+	}
+	public int getStopChoose() {
+		return stopChoose;
+	}
+	public void setStopChoose(int stopChoose) {
+		this.stopChoose = stopChoose;
+	}
+	public String getStopPeriod() {
+		return stopPeriod;
+	}
+	public void setStopPeriod(String stopPeriod) {
+		this.stopPeriod = stopPeriod;
+	}
+	public String getFromDate() {
+		return fromDate;
+	}
+	public void setFromDate(String fromDate) {
+		this.fromDate = fromDate;
+	}
+	public String getToDate() {
+		return toDate;
+	}
+	public void setToDate(String toDate) {
+		this.toDate = toDate;
+	}
 	public List<AllocatedCitiesVM> getAllocatedCities() {
 		return allocatedCities;
 	}

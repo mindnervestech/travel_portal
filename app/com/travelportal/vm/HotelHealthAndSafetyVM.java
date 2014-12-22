@@ -12,8 +12,8 @@ public class HotelHealthAndSafetyVM {
 	public String haccpCertify;
 	public String recordsForFire;
 	public String recordsForHealth;
-	public Date expiryDate;
-	public Date expiryDate1;
+	public String expiryDate;
+	public String expiryDate1;
 	public long supplierCode;
 	/*------------------1.FirePrecaution--------------------*/
 	public String workingFireAlarm;
@@ -137,16 +137,17 @@ public class HotelHealthAndSafetyVM {
 	public void setRecordsForHealth(String recordsForHealth) {
 		this.recordsForHealth = recordsForHealth;
 	}
-	public Date getExpiryDate() {
+	
+	public String getExpiryDate() {
 		return expiryDate;
 	}
-	public void setExpiryDate(Date expiryDate) {
+	public void setExpiryDate(String expiryDate) {
 		this.expiryDate = expiryDate;
 	}
-	public Date getExpiryDate1() {
+	public String getExpiryDate1() {
 		return expiryDate1;
 	}
-	public void setExpiryDate1(Date expiryDate1) {
+	public void setExpiryDate1(String expiryDate1) {
 		this.expiryDate1 = expiryDate1;
 	}
 	public long getSupplierCode() {

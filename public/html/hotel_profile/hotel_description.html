@@ -40,7 +40,7 @@
 						</ul>
 						<div id="myTabContent2" class="tab-content hotel-profile-tab-content">
 							
-<form method="post" ng-submit="saveDescription()" role="form" class="form-horizontal">
+<form method="post" ng-submit="saveDescription()" role="form" class="form-horizontal form-validate"">
 	<div class="row">
 		<div class="col-md-12">
 				
@@ -61,8 +61,8 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 				<label class="col-md-3 control-label"><b>Profile description</b></label>
 				<div class="col-md-9">
 					<textarea id="message3" name="description" data-ng-model="descrip.description" name="message3" rows="6"
-						class="form-control"  placeholder="Located on Sukumvit Road. 7 min from the Queen Sirikit National Convention Centre.4 mn walk from Emporium Shopping Mall, Royal National Park and Sky train station.4 food and beverage outlets. Fitness centre. Conference and seminar facilities.The Bangkok Hotel Lotus Sukhumvit is centrally located and offers free private parking, an outdoor swimming pool and sauna.Bangkok Hotel Lotus is situated near several shopping and entertainment venues.Phrom Phong Skytrain station is a short stroll away.Rooms are fitted with air conditioning, cable television and coffee/tea making facilities.Free Wi-Fi is available. 24-hour room service is provided." >					
-						requireds</textarea>
+						class="form-control"  placeholder="Located on Sukumvit Road. 7 min from the Queen Sirikit National Convention Centre.4 mn walk from Emporium Shopping Mall, Royal National Park and Sky train station.4 food and beverage outlets. Fitness centre. Conference and seminar facilities.The Bangkok Hotel Lotus Sukhumvit is centrally located and offers free private parking, an outdoor swimming pool and sauna.Bangkok Hotel Lotus is situated near several shopping and entertainment venues.Phrom Phong Skytrain station is a short stroll away.Rooms are fitted with air conditioning, cable television and coffee/tea making facilities.Free Wi-Fi is available. 24-hour room service is provided." required>					
+						</textarea>
 				</div>
 			</div>	
 			
@@ -94,7 +94,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 			<div class="form-group col-md-12">
 				<label class="col-md-4 col-sm-12 control-label"><b>Hotel Located in</b> </label>
 				<div class="col-md-8 col-sm-12">
-					<select class="form-control" name="hotelLocation" data-ng-model="descrip.hotelLocation" data-ng-options="location.locationId as location.locationNm for location in location" style="width: 65%;float: left;" required>
+					<select class="form-control required" name="hotelLocation" data-ng-model="descrip.hotelLocation" data-ng-options="location.locationId as location.locationNm for location in location" style="width: 65%;float: left;" required>
 						<option>-- Choose One --</option>
 					</select><label class="col-md-4 control-label"  style="text-align: left;"><b>area</b></label>
 				</div>
@@ -170,7 +170,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 	<hr class="mtxxl mbxxl" style="border-color: black; float: left; width: 99%;">
 		<div col-md-12 col-sm-12>
      		<span ng-show="Descriptinsuccess" style="color: green;margin-left: 3%;">Genral Description Save Successfully</span>
-        	<button type="submit" class="btn btn-primary" style="float: right;margin-right: 20px;">Save</button>
+        	<button type="submit" class="btn btn-primary" onclick="scroll(0,0)" style="float: right;margin-right: 20px;">Save</button>
     	</div>
 	</div>
 </form>

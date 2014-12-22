@@ -52,8 +52,8 @@ public class Allotment {
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Currency currencyId;
 	
-	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private List<RateMeta> rate;
+	/*@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	private List<RateMeta> rate;*/
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<AllotmentMarket> allotmentmarket;
 	
@@ -107,13 +107,13 @@ public class Allotment {
 		this.roomId = roomId;
 	}
 
-	public List<RateMeta> getRate() {
+	/*public List<RateMeta> getRate() {
 		return rate;
 	}
 
 	public void setRate(List<RateMeta> rate) {
 		this.rate = rate;
-	}
+	}*/
 
 	public List<AllotmentMarket> getAllotmentmarket() {
 		return allotmentmarket;

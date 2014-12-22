@@ -1,7 +1,9 @@
 package com.travelportal.domain.rooms;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +25,8 @@ import play.db.jpa.Transactional;
 import com.travelportal.domain.City;
 //import com.travelportal.domain.RatePeriod;
 import com.travelportal.domain.agent.AgentRegistration;
+import com.travelportal.domain.allotment.AllotmentMarket;
+import com.travelportal.vm.RateVM;
 
 @Entity
 @Table(name="rate_meta")
@@ -117,13 +121,67 @@ public class RateMeta {
 	    	return query.getResultList();
 	    }
 	 
-	 public static List<RateMeta> getRateSupplier(Long code) {
+	
+	 public static List<RateMeta> getRateSupplier(Long supplierCode) {
 			
 	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.supplierCode = ?1");
+			query.setParameter(1, supplierCode);
+			
+	    	return query.getResultList();
+	    }
+	 
+	 public static List<RateMeta> getRateByRoom(long code) {
+			
+	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.roomType.roomId = ?1");
 			query.setParameter(1, code);
 			
 	    	return query.getResultList();
 	    }
+	 public static List<RateMeta> getRateSupplier1(Long supplierCode,Long roomId) {
+			
+	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.supplierCode = ?1 and r.roomType.roomId = ?2");
+			query.setParameter(1, supplierCode);
+			query.setParameter(2, roomId);
+			
+	    	return query.getResultList();
+	    }
+	 
+	
+	 public static List<RateMeta> getRateByCountry(Long supplierCode,Long roomId,int cityId,int sId) {
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	 List<Object[]> list =JPA.em().createNativeQuery("select * from rate_meta am,rate_meta_city arm,hotel_profile hpp where arm.rate_meta_rate_id = am.rate_id and am.supplierCode = hpp.supplier_code and arm.cities_city_code = '"+cityId+"' and am.roomType_room_id = '"+roomId+"' and am.supplierCode = '"+supplierCode+"' and hpp.startRatings_id = '"+sId+"'").getResultList();
+	
+	 List<RateMeta> list1 = new ArrayList<>();
+		
+		for(Object[] o :list) {
+		
+			RateMeta am = new RateMeta();
+			System.out.println(o);
+			am.setId(Long.parseLong(o[0].toString()));
+			am.setCurrency(o[1].toString());
+			try {
+				am.setFromDate(format.parse(o[2].toString()));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			am.setRateName(o[3].toString());
+			try {
+				am.setToDate(format.parse(o[4].toString()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			am.setRoomType(HotelRoomTypes.findById(Long.parseLong(o[5].toString())));
+			if(o[6] != null){
+			am.setSupplierCode(Long.parseLong(o[6].toString()));
+			}
+			list1.add(am);
+		}
+		
+		return list1;
+		
+	 }
 	 
 	 public static List<RateMeta> getDates(long roomid,String currencyName) {
 		
@@ -148,6 +206,7 @@ public class RateMeta {
 	    	Query query = JPA.em().createQuery("Select r from RateMeta r");
 	    	return (List<RateMeta>) query.getResultList();
 	    }
+	 
 	 
 	 public static RateMeta findById(Long id) {
 	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.id = ?1");

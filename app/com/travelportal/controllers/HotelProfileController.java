@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -162,6 +165,8 @@ public class HotelProfileController extends Controller {
 		Json.fromJson(json, HotelHealthAndSafetyVM.class);
 		HotelHealthAndSafetyVM healthAndSafetyVM = Json.fromJson(json, HotelHealthAndSafetyVM.class);
 		
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		
 		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(healthAndSafetyVM.getSupplierCode());
 		
 		if(hAndSafety == null)
@@ -176,8 +181,14 @@ public class HotelProfileController extends Controller {
 			hAndSafety.setPublicLiability(healthAndSafetyVM.getPublicLiability());
 			hAndSafety.setRecordsForFire(healthAndSafetyVM.getRecordsForFire());
 			hAndSafety.setRecordsForHealth(healthAndSafetyVM.getRecordsForHealth());
-			hAndSafety.setExpiryDate(healthAndSafetyVM.getExpiryDate());
-			hAndSafety.setExpiryDate1(healthAndSafetyVM.getExpiryDate1());
+			try {
+				hAndSafety.setExpiryDate(format.parse(healthAndSafetyVM.getExpiryDate()));
+				hAndSafety.setExpiryDate1(format.parse(healthAndSafetyVM.getExpiryDate1()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
 		
 			hAndSafety.save();
@@ -191,8 +202,14 @@ public class HotelProfileController extends Controller {
 			hAndSafety.setPublicLiability(healthAndSafetyVM.getPublicLiability());
 			hAndSafety.setRecordsForFire(healthAndSafetyVM.getRecordsForFire());
 			hAndSafety.setRecordsForHealth(healthAndSafetyVM.getRecordsForHealth());
-			hAndSafety.setExpiryDate(healthAndSafetyVM.getExpiryDate());
-			hAndSafety.setExpiryDate1(healthAndSafetyVM.getExpiryDate1());
+			try {
+				hAndSafety.setExpiryDate(format.parse(healthAndSafetyVM.getExpiryDate()));
+				hAndSafety.setExpiryDate1(format.parse(healthAndSafetyVM.getExpiryDate1()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			
 			hAndSafety.merge();
 		}
@@ -803,10 +820,17 @@ public class HotelProfileController extends Controller {
 		DynamicForm form = DynamicForm.form().bindFromRequest();
 		Json.fromJson(json, HotelmealVM.class);
 		HotelmealVM hotelmealvm = Json.fromJson(json, HotelmealVM.class);
-
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		
 		HotelMealPlan hotelmealplan = HotelMealPlan.findById(Integer.parseInt(form.get("id")));
-		hotelmealplan.setFromPeriod(hotelmealvm.getFromPeriod());
-		hotelmealplan.setToPeriod(hotelmealvm.getToPeriod());
+		try {
+			hotelmealplan.setFromPeriod(format.parse(hotelmealvm.getFromPeriod()));
+			hotelmealplan.setToPeriod(format.parse(hotelmealvm.getToPeriod()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		hotelmealplan.setMealPlanNm(hotelmealvm.getMealPlanNm());
 		hotelmealplan.setRate(hotelmealvm.getRate());
 		hotelmealplan.setSupplierCode(hotelmealvm.getSupplierCode());
@@ -843,10 +867,17 @@ public class HotelProfileController extends Controller {
 		JsonNode json = request().body().asJson();
 		Json.fromJson(json, HotelmealVM.class);
 		HotelmealVM hotelmealvm = Json.fromJson(json, HotelmealVM.class);
-
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		
 		HotelMealPlan hotelmealplan = new HotelMealPlan();
-		hotelmealplan.setFromPeriod(hotelmealvm.getFromPeriod());
-		hotelmealplan.setToPeriod(hotelmealvm.getToPeriod());
+		try {
+			hotelmealplan.setFromPeriod(format.parse(hotelmealvm.getFromPeriod()));
+			hotelmealplan.setToPeriod(format.parse(hotelmealvm.getToPeriod()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 		hotelmealplan.setMealPlanNm(hotelmealvm.getMealPlanNm());
 		hotelmealplan.setRate(hotelmealvm.getRate());
 		hotelmealplan.setSupplierCode(hotelmealvm.getSupplierCode());

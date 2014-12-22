@@ -1,7 +1,14 @@
 package com.travelportal.domain.allotment;
 
+import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,6 +47,16 @@ public class AllotmentMarket {
 	private int choose;
 	@Column(name="applyMarket")
 	private String applyMarket;
+	@Column(name="stopAllocation")
+	private int stopAllocation;
+	@Column(name="stopChoose")
+	private int stopChoose;
+	@Column(name="stopPeriod")
+	private String stopPeriod;
+	@Column(name="fromDate")
+	private Date fromDate;
+	@Column(name="toDate")
+	private Date toDate;
 	
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<RateMeta> rate;
@@ -112,6 +129,46 @@ public class AllotmentMarket {
 		this.applyMarket = applyMarket;
 	}
 
+	public int getStopAllocation() {
+		return stopAllocation;
+	}
+
+	public void setStopAllocation(int stopAllocation) {
+		this.stopAllocation = stopAllocation;
+	}
+
+	public int getStopChoose() {
+		return stopChoose;
+	}
+
+	public void setStopChoose(int stopChoose) {
+		this.stopChoose = stopChoose;
+	}
+
+	public String getStopPeriod() {
+		return stopPeriod;
+	}
+
+	public void setStopPeriod(String stopPeriod) {
+		this.stopPeriod = stopPeriod;
+	}
+
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+
 	public static AllotmentMarket findById(int Code) {
 		try
 		{
@@ -125,13 +182,82 @@ public class AllotmentMarket {
 	//return (AllotmentMarket) JPA.em().createNativeQuery("select * from allotmentmarket_rate_meta where rate_rate_id = '"+Code+"'").getSingleResult();
 	
 	public static AllotmentMarket getOneMarket(Long Code) {
-			
-				Query q = JPA.em().createQuery("select c from AllotmentMarket c where c.rate.id = ?1");
-				q.setParameter(1, Code);
+	
+				List<Object[]> list =JPA.em().createNativeQuery("select * from allotmentmarket am,allotmentmarket_rate_meta arm where arm.AllotmentMarket_allotmentMarket_Id = am.allotmentMarket_Id and arm.rate_rate_id = '"+Code+"'").getResultList();
+				AllotmentMarket am = new AllotmentMarket();
+				for(Object[] o :list) {
+					am.setAllocation(Integer.parseInt(o[1].toString()));
+					am.setAllotmentMarketId(Integer.parseInt(o[0].toString()));
+					am.setChoose(Integer.parseInt(o[2].toString()));
+					if(o[3] != null){
+					am.setPeriod(o[3].toString());
+					}
+					if(o[4] != null){		
+					am.setSpecifyAllot(o[4].toString());
+					}
+					if(o[5] != null){
+					am.setApplyMarket(o[5].toString());
+					}
+				}
 				
-				return(AllotmentMarket) q.getSingleResult();
-			
+				return am;
+	
 	   }
+	
+	public static List<AllotmentMarket> getCityWiseMarket(int cityId) {
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		List<AllotmentMarket > result = new ArrayList<AllotmentMarket>();
+		List<Object[]> list =JPA.em().createNativeQuery("select * from allotmentmarket am,allotmentmarket_city arm,allotmentmarket_rate_meta allmark where arm.AllotmentMarket_allotmentMarket_Id = am.allotmentMarket_Id and am.allotmentMarket_Id = allmark.AllotmentMarket_allotmentMarket_Id and arm.cities_city_code = '"+cityId+"'").getResultList();
+		Map<Long,Integer> map = new HashMap<Long,Integer>();
+		for(Object[] o :list) {
+			Integer index = map.get(Long.parseLong(o[0].toString()));
+			if(index == null) {
+				AllotmentMarket am = new AllotmentMarket();
+				am.setAllocation(Integer.parseInt(o[1].toString()));
+				am.setAllotmentMarketId(Integer.parseInt(o[0].toString()));
+				am.setChoose(Integer.parseInt(o[2].toString()));
+				if(o[3] != null){
+					am.setPeriod(o[3].toString());
+				}
+				if(o[4] != null){		
+					am.setSpecifyAllot(o[4].toString());
+				}
+				if(o[5] != null){
+					am.setApplyMarket(o[5].toString());
+				}
+				if(o[9] != null) {
+					am.rate = new ArrayList<RateMeta>();
+					RateMeta em  = new RateMeta();
+					em.setId(Long.parseLong(o[9].toString()));
+					em.setCurrency(o[11].toString());
+					try {
+						em.setFromDate(format.parse(o[12].toString()));
+						em.setFromDate(format.parse(o[14].toString()));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					em.setRateName(o[13].toString());
+					//em.setSupplierCode(supplierCode)
+					am.rate.add(em);
+				}
+				result.add(am);
+				map.put(Long.parseLong(o[0].toString()), result.size()-1);
+			} else {
+				AllotmentMarket am = result.get(index);
+				RateMeta em  = new RateMeta();
+				em.setId(Long.parseLong(o[9].toString()));
+				//em.setCurrency(o[11].toString());
+				am.rate.add(em);
+			}
+			
+		}
+		
+		return result;
+
+}
+	//List<AllotmentMarket> list =JPA.em().createNativeQuery("select * from allotmentmarket am,allotmentmarket_city arm,allotmentmarket_rate_meta allmark where arm.AllotmentMarket_allotmentMarket_Id = am.allotmentMarket_Id and am.allotmentMarket_Id = allmark.AllotmentMarket_allotmentMarket_Id and arm.cities_city_code = '"+cityId+"'",AllotmentMarket.class).getResultList();
+	
 	
 	public static AllotmentMarket findByTopid() {
 		try
@@ -144,20 +270,14 @@ public class AllotmentMarket {
     }
 	
 	
-public static List<AllotmentMarket> getMarketById(int MarketId,List<Integer> rateid) {/*List<Integer> rateid*/
+public static List<AllotmentMarket> getMarketById(int MarketId,List<Integer> rateid) {
 		
-		//try
-		//{
+	
 			Query q = JPA.em().createQuery("select c from AllotmentMarket c where c.allotmentMarketId = ?1");
 			q.setParameter(1, MarketId);
-			//q.setParameter(2, rateid);
-		
 		
 			return q.getResultList();
-	//	}
-	//	catch(Exception ex){
-	//		return null;
-	//	}
+	
    }
 	
 	

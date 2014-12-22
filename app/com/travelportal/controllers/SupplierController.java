@@ -70,7 +70,7 @@ public class SupplierController extends Controller {
 	
 	@Transactional(readOnly=false)
     public static Result saveSpecialsObject() throws ParseException {
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		Form<SpecialsWrapper> specialsForm = Form.form(SpecialsWrapper.class).bindFromRequest();
 		List<SpecialsVM> specialsList = specialsForm.get().specialsObject;
 		
@@ -158,7 +158,7 @@ public class SupplierController extends Controller {
 	
 	@Transactional(readOnly=false)
     public static Result updateSpecials() throws ParseException {
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		Form<SpecialsWrapper> specialsForm = Form.form(SpecialsWrapper.class).bindFromRequest();
 		List<SpecialsVM> specialsList = specialsForm.get().specialsObject;
 		
@@ -242,7 +242,7 @@ public class SupplierController extends Controller {
 	
 	@Transactional(readOnly=true)
     public static Result getSpecialsData(String fromDate,String toDate,String promotionName) throws ParseException {
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		List<SpecialsVM> list = new ArrayList<>();
 		List<Specials> specialsList = Specials.findSpecialByDate(format.parse(fromDate), format.parse(toDate),promotionName);
 		for(Specials special : specialsList) {

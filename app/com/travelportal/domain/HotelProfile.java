@@ -21,6 +21,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.travelportal.domain.allotment.AllotmentMarket;
 
 @Entity
 @Table(name="hotel_profile")
@@ -776,7 +777,16 @@ public class HotelProfile {
 		}
     }
 	
-	/*findAllData*/
+	
+
+	public static List<HotelProfile> getStarwiseHotel(int sId) {	
+	
+			Query q = JPA.em().createQuery("select c from HotelProfile c where c.startRatings.id = ?1");
+			q.setParameter(1, sId);		
+			return q.getResultList();
+   }
+	
+	
 	public static HotelProfile findAllData(Long supplierCode) {
 		return (HotelProfile) JPA.em().createQuery("select c from HotelProfile c where c.supplier_code = ?1").setParameter(1,supplierCode).getSingleResult();
 	}

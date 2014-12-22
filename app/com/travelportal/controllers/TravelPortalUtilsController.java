@@ -1,5 +1,7 @@
 package com.travelportal.controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -372,6 +374,8 @@ public class TravelPortalUtilsController extends Controller {
 		HotelHealthAndSafety hAndSafety=HotelHealthAndSafety.findById(supplierCode);
 		HotelHealthAndSafetyVM healthAndSafetyVM = new HotelHealthAndSafetyVM();
 		
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		
 		healthAndSafetyVM.setSupplierCode(hAndSafety.getSupplierCode());
 		healthAndSafetyVM.setFireRisk(hAndSafety.getFireRisk());
 		healthAndSafetyVM.setHaccpCertify(hAndSafety.getHaccpCertify());
@@ -380,8 +384,8 @@ public class TravelPortalUtilsController extends Controller {
 		healthAndSafetyVM.setPublicLiability(hAndSafety.getPublicLiability());
 		healthAndSafetyVM.setRecordsForFire(hAndSafety.getRecordsForFire());
 		healthAndSafetyVM.setRecordsForHealth(hAndSafety.getRecordsForHealth());
-		healthAndSafetyVM.setExpiryDate(hAndSafety.getExpiryDate());
-		healthAndSafetyVM.setExpiryDate1(hAndSafety.getExpiryDate1());
+		healthAndSafetyVM.setExpiryDate(format.format(hAndSafety.getExpiryDate()));
+		healthAndSafetyVM.setExpiryDate1(format.format(hAndSafety.getExpiryDate1()));
 		/*------------------1.FirePrecaution--------------------*/
 		healthAndSafetyVM.setWorkingFireAlarm(hAndSafety.getWorkingFireAlarm());
 		healthAndSafetyVM.setSmokeDetectorsInPublicArea(hAndSafety.getSmokeDetectorsInPublicArea());

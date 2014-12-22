@@ -59,7 +59,7 @@
 					occupancy level for this room?</label>
 				<div class="col-md-3">
 					<select class="form-control" onmousedown="if(this.options.length>6){this.size=6;}"  onchange='this.size=0;' onblur="this.size=0;"
-						data-ng-model="roomTypeIns.maxOccupancy">
+						data-ng-model="roomTypeIns.maxOccupancy" required>
 						<option data-ng-repeat="counter in counterArray">{{counter}}</option>
 
 					</select> <br>
@@ -70,7 +70,7 @@
 					Adult occupancy for this room?</label>
 				<div class="col-md-3">
 					<select class="form-control" onmousedown="if(this.options.length>6){this.size=6;}"  onchange='this.size=0;' onblur="this.size=0;"
-						data-ng-model="roomTypeIns.maxAdultOccupancy">
+						data-ng-model="roomTypeIns.maxAdultOccupancy" required>
 						<option data-ng-repeat="counter in counterArray">{{counter}}</option>
 					</select> <br>
 				</div>
@@ -79,8 +79,8 @@
 				<label class="col-md-4">*What is the maximum
 					Adult occupancy if sharing with children in this room?</label>
 				<div class="col-md-3">
-					<select class="form-control" onmousedown="if(this.options.length>6){this.size=6;}"  onchange='this.size=0;' onblur="this.size=0;"
-						data-ng-model="roomTypeIns.maxAdultOccSharingWithChildren">
+					<select class="form-control required number" sonmousedown="if(this.options.length>6){this.size=6;}"  onchange='this.size=0;' onblur="this.size=0;"
+						data-ng-model="roomTypeIns.maxAdultOccSharingWithChildren" required>
 						<option value="0" selected>No Child Allowed</option>
 						<option data-ng-repeat="counter in counterArray">{{counter}}</option>
 					</select> <br>
@@ -217,7 +217,7 @@
 							<div class="col-md-2">
 								<select class="form-control" data-ng-model="child.netRate" required>
 									<option>% of</option>
-									<option>add to</option>
+									<option>add to Room Rate</option>
 
 								</select>
 							</div>
@@ -333,7 +333,7 @@
 		
 
                  <div class="col-md-3 col-md-offset-7">
-                 <button type="submit" class="btn btn-primary">Save</button>
+                 <button type="submit" onclick="scroll(0,0)" class="btn btn-primary">Save</button>
                  </div>
                 
 </div>

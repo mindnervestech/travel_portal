@@ -24,11 +24,11 @@
 			<label class="col-md-3 control-label"><b>Please define the period :</b></label>
 			<div class="col-md-3">
 				<label class=" control-label"><b>From:</b></label>
-				<input id = "date" name="fromDate"  class="input-filter form-control" data-provide="datepicker" data-ng-model="formData.fromDate" data-date-autoclose="true" data-date-format="yyyy-mm-dd" style="height: 25px;" required>
+				<input id = "date" name="fromDate"  class="input-filter form-control" data-provide="datepicker" data-ng-model="formData.fromDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy" style="height: 25px;" required>
 			</div>
 			<div class="col-md-3">
 				<label class=" control-label"><b>To:</b></label>		
-                <input name="toDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="formData.toDate" data-date-autoclose="true" data-date-format="yyyy-mm-dd" style="height: 25px;" required>
+                <input name="toDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="formData.toDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy" style="height: 25px;" required>
 			</div>
                    
 		</div>
@@ -82,7 +82,7 @@
 							<th>Adults</th>
 							<th>Net Payable Rates</th>
 							<th>Rate Basis</th>
-							<th>Minimum B to C Online Selling Rates</th>
+							<th>Min B 2 C Selling Rates<br /> (Ex:on Hotel website,Agoda etc)</th>
 							<th>Rate Basis</th>
 						</tr>
 						<tr data-ng-repeat="rateData in rate.normalRate.rateDetails track by $index">
@@ -306,7 +306,7 @@
 			 <div ng-show="addNewButton"> 
 					  <input type="button" class="btn btn-primary" value="ADD NEW RATE" ng-click="createNewRate()" style="float:left; margin-top: 3%;margin-left: 29%;">
 					  </div>  	 
-					<input type="button" class="btn btn-primary" value="UPDATE RATES" style="margin-top: 3%;margin-left: 10%;" ng-show="showRateUpdate == true" ng-click="updateRateMeta()">
+					<input type="button" class="btn btn-primary" value="UPDATE RATES" style="margin-top: 3%;margin-left: 10%;" ng-show="showRateUpdate == true" onclick="scroll(0,0)" ng-click="updateRateMeta()">
 					<p style="color: green;margin-top: 5%;margin-left: 39%;" ng-show="isUpdated == true"><b>Rate updated successfully</b></p>
 			</div>
 			
@@ -339,7 +339,7 @@
 							<th>Adults</th>
 							<th>Net Payable Rates</th>
 							<th>Rate Basis</th>
-							<th>Minimum B to C Online Selling Rates</th>
+							<th>Min B 2 C Selling Rates<br /> (Ex:on Hotel website,Agoda etc)</th>
 							<th>Rate Basis</th>
 						</tr>
 						<tr data-ng-repeat="rateData in rate.normalRate.rateDetails track by $index">
@@ -559,7 +559,7 @@
 		
 				<div class="col-md-3" style="margin-top: 6%;margin-left: 12%;">
 					<input type="button" class="btn btn-success" value="GO BACK" ng-click="showContractPage()">
-					<input type="button" class="btn btn-success" value="SAVE" style="margin-left: 15%;" ng-click="saveRate()">
+					<input type="button" class="btn btn-success" value="SAVE" style="margin-left: 15%;" onclick="scroll(0,0)" ng-click="saveRate()">
 				</div>
 		</div>
 		<!-- </form> -->

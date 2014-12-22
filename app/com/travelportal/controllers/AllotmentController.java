@@ -1,10 +1,6 @@
 package com.travelportal.controllers;
 
 
-import java.io.File;
-import java.io.IOException;
-
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,49 +9,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//import org.junit.experimental.theories.internal.AllMembersSupplier;
-
-
-
-import play.Play;
-import play.data.DynamicForm;
 import play.data.Form;
-import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-//import views.html.index;
+
 import com.fasterxml.jackson.databind.JsonNode;
-import com.travelportal.controllers.HotelRoomController.CityVM;
-import com.travelportal.controllers.HotelRoomController.CountryVM;
-import com.travelportal.controllers.HotelRoomController.MarketVM;
-import com.travelportal.controllers.HotelRoomController.SelectedCityVM;
-import com.travelportal.controllers.HotelRoomController.VM;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
-import com.travelportal.domain.HotelAttractions;
-import com.travelportal.domain.HotelHealthAndSafety;
-import com.travelportal.domain.HotelMealPlan;
-import com.travelportal.domain.ImgPath;
-import com.travelportal.domain.Location;
-//import com.travelportal.domain.RatePeriod;
 import com.travelportal.domain.allotment.Allotment;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.RateMeta;
-import com.travelportal.domain.rooms.RoomAmenities;
-import com.travelportal.domain.rooms.RoomChildPolicies;
 import com.travelportal.vm.AllocatedCitiesVM;
 import com.travelportal.vm.AllotmentMarketVM;
 import com.travelportal.vm.AllotmentVM;
-import com.travelportal.vm.AreaAttractionsVM;
-import com.travelportal.vm.CurrencyVM;
+//import org.junit.experimental.theories.internal.AllMembersSupplier;
+//import views.html.index;
+//import com.sun.glass.ui.Pixels.Format;
+//import com.travelportal.domain.RatePeriod;
 //import com.travelportal.vm.RatePeriodVM;
-import com.travelportal.vm.RateVM;
-import com.travelportal.vm.RoomChildpoliciVM;
-import com.travelportal.vm.RoomtypeVM;
 
 
 
@@ -72,17 +47,7 @@ public class AllotmentController extends Controller {
 		System.out.println(rateperiod);
 	
 		return ok(Json.toJson(rateperiod));
-		//return ok();
-		/*final List<RatePeriod> rateperiod = RatePeriod.getDates(roomid,currencyid);
-		List<RatePeriodVM> periodVMs = new ArrayList<RatePeriodVM>();
-		for(RatePeriod period : rateperiod) {
-			RatePeriodVM periodVM = new RatePeriodVM();
-			periodVM.setFromPeriod(period.getFromPeriod());
-			periodVM.setToPeriod(period.getToPeriod());
-			periodVM.setId(period.getId());
-			periodVMs.add(periodVM);
-		}
-		return ok(Json.toJson(periodVMs));*/
+	
 	}
 	
 	@Transactional(readOnly=true)
@@ -91,7 +56,7 @@ public class AllotmentController extends Controller {
 		Json.fromJson(json, AllotmentVM.class);
 		AllotmentVM allVm = Json.fromJson(json, AllotmentVM.class);
 		
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		
 		List<RateMeta> ratemeta = RateMeta.getRateMeta(allVm.getCurrencyName(),format.parse(allVm.getFormPeriod()),format.parse(allVm.getToPeriod()),allVm.getRoomId());
 			
@@ -117,13 +82,10 @@ public class AllotmentController extends Controller {
 		
 		System.out.println(allVm.getFormPeriod());
 		
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		
-		
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		
 		Allotment allotment = Allotment.getRateById(allVm.getSupplierCode(),format.parse(allVm.getFormPeriod()),format.parse(allVm.getToPeriod()),allVm.getCurrencyName(),allVm.getRoomId());
 		
-      // Allotment allotment = Allotment.findById(supplierCode);
 		if(allotment==null) {
 			return ok("");
 		}
@@ -147,6 +109,15 @@ public class AllotmentController extends Controller {
 			vm.setPeriod(allMarketVM.getPeriod());
 			vm.setSpecifyAllot(allMarketVM.getSpecifyAllot());
 			vm.setApplyMarket(allMarketVM.getApplyMarket());
+			vm.setStopAllocation(allMarketVM.getStopAllocation());
+			vm.setStopChoose(allMarketVM.getStopChoose());
+			vm.setStopPeriod(allMarketVM.getStopPeriod());
+			if(allMarketVM.getFromDate() != null){
+			vm.setFromDate(format.format(allMarketVM.getFromDate()));
+			}
+			if(allMarketVM.getToDate() != null){
+			vm.setToDate(format.format(allMarketVM.getToDate()));
+			}
 			List<Long> listInt = new ArrayList<Long>();
 			for(RateMeta rate:allMarketVM.getRate()) {
 				listInt.add(Long.parseLong(String.valueOf(rate.getId())));			
@@ -166,7 +137,8 @@ public class AllotmentController extends Controller {
 	public static Result saveAllotment() throws ParseException {
 		Form<AllotmentVM> allotmentVMForm = Form.form(AllotmentVM.class).bindFromRequest();
 		AllotmentVM allotmentVM = allotmentVMForm.get();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		
 		
 		Allotment allotment = Allotment.getRateById(allotmentVM.getSupplierCode(),format.parse(allotmentVM.getFormPeriod()),format.parse(allotmentVM.getToPeriod()),allotmentVM.getCurrencyName(),allotmentVM.getRoomId());
 		System.out.println("&&&&&&&&&&&&&&&&&");
@@ -195,6 +167,16 @@ public class AllotmentController extends Controller {
 			allotmentmarket.setChoose(allotmentarketVM.getChoose());
 			allotmentmarket.setRate(RateMeta.getrateId(allotmentarketVM.getRate()));
 			allotmentmarket.setApplyMarket(allotmentarketVM.getApplyMarket());
+			allotmentmarket.setStopAllocation(allotmentarketVM.getStopAllocation());
+			allotmentmarket.setStopChoose(allotmentarketVM.getStopChoose());
+			allotmentmarket.setStopPeriod(allotmentarketVM.getStopPeriod());
+			if(allotmentarketVM.getFromDate() != null ){
+			allotmentmarket.setFromDate(format.parse(allotmentarketVM.getFromDate()));
+			}
+			if(allotmentarketVM.getToDate() != null){
+			allotmentmarket.setToDate(format.parse(allotmentarketVM.getToDate()));
+			}
+			
 			allotmentmarket.save();
 			
 		    allotment.addAllotmentmarket(allotmentmarket);
@@ -242,6 +224,10 @@ public class AllotmentController extends Controller {
 				
 				if(allotmentarketVM.getAllotmentMarketId() == 0)
 				{
+					allotment = Allotment.getRateById(allotmentVM.getSupplierCode(),format.parse(allotmentVM.getFormPeriod()),format.parse(allotmentVM.getToPeriod()),allotmentVM.getCurrencyName(),allotmentVM.getRoomId());
+					
+					if(allotment == null)
+					{
 					
 					AllotmentMarket allotmentmarket = new AllotmentMarket();
 					//System.out.println(allotmentmarket.get);
@@ -252,6 +238,15 @@ public class AllotmentController extends Controller {
 					allotmentmarket.setChoose(allotmentarketVM.getChoose());
 					allotmentmarket.setRate(RateMeta.getrateId(allotmentarketVM.getRate()));
 					allotmentmarket.setApplyMarket(allotmentarketVM.getApplyMarket());
+					allotmentmarket.setStopAllocation(allotmentarketVM.getStopAllocation());
+					allotmentmarket.setStopChoose(allotmentarketVM.getStopChoose());
+					allotmentmarket.setStopPeriod(allotmentarketVM.getStopPeriod());
+					if(allotmentarketVM.getFromDate() != null ){
+					allotmentmarket.setFromDate(format.parse(allotmentarketVM.getFromDate()));
+					}
+					if(allotmentarketVM.getToDate() != null ){
+					allotmentmarket.setToDate(format.parse(allotmentarketVM.getToDate()));
+					}
 					
 					allotmentmarket.save();
 					allotment.addAllotmentmarket(allotmentmarket);
@@ -280,6 +275,7 @@ public class AllotmentController extends Controller {
 							}
 						}
 						allotM.setCities(listCity);
+					}
 				}
 				else
 				{
@@ -291,6 +287,16 @@ public class AllotmentController extends Controller {
 					allotmentmarket.setChoose(allotmentarketVM.getChoose());
 					allotmentmarket.setRate(RateMeta.getrateId(allotmentarketVM.getRate()));
 					allotmentmarket.setApplyMarket(allotmentarketVM.getApplyMarket());
+					allotmentmarket.setStopAllocation(allotmentarketVM.getStopAllocation());
+					allotmentmarket.setStopChoose(allotmentarketVM.getStopChoose());
+					allotmentmarket.setStopPeriod(allotmentarketVM.getStopPeriod());
+					if(allotmentarketVM.getFromDate() != null ){
+					allotmentmarket.setFromDate(format.parse(allotmentarketVM.getFromDate()));
+					}
+					if(allotmentarketVM.getToDate() != null ){
+					allotmentmarket.setToDate(format.parse(allotmentarketVM.getToDate()));
+					}
+					
 					allotmentmarket.merge();
 					allotment.addAllotmentmarket(allotmentmarket);
 					System.out.println("update");
@@ -336,7 +342,7 @@ public class AllotmentController extends Controller {
 	public static Result getallotmentAllData(long supplierCode) {
 		
 		Allotment allotment = Allotment.findById(supplierCode);
-		
+		DateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
 		AllotmentVM allotmentVM = new AllotmentVM();
 		
 		allotmentVM.setAllotmentId(allotment.getAllotmentId());
@@ -360,6 +366,15 @@ public class AllotmentController extends Controller {
 			vm.setPeriod(allMarketVM.getPeriod());
 			vm.setSpecifyAllot(allMarketVM.getSpecifyAllot());
 			vm.setApplyMarket(allMarketVM.getApplyMarket());
+			vm.setStopAllocation(allMarketVM.getStopAllocation());
+			vm.setStopChoose(allMarketVM.getStopChoose());
+			vm.setStopPeriod(allMarketVM.getStopPeriod());
+			if(allMarketVM.getFromDate() != null){
+			vm.setFromDate(format1.format(allMarketVM.getFromDate()));
+			}
+			if(allMarketVM.getToDate() != null){
+			vm.setToDate(format1.format(allMarketVM.getToDate()));
+			}
 			List<Long> listInt = new ArrayList<Long>();
 			for(RateMeta rate:allMarketVM.getRate()) {
 				listInt.add(Long.parseLong(String.valueOf(rate.getId())));			

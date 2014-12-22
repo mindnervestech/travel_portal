@@ -96,34 +96,13 @@
 	
 			<legend class="allot-firldset">Allotment Market {{$index+1}}</legend>
 			
-				<!-- <div class="row">			
-			<div class="form-group">
-			<div class="col-md-12">
-			 <div class="col-md-4">
-				<label>How do you want to specify allotment?:  </label>
-				</div>
-				<div class="col-md-5">
-				
-				<div class="specify-allotment-radio">
-						<input type="radio" name="specifyAllot" ng-click="showspecifyAllot(true)" data-ng-model="allot.specifyAllot" value="parRoomtype">
-						&nbsp; Per Room Type
-					</div>
-					<div class="specify-allotment-radio">
-						<input type="radio" name="specifyAllot" ng-click="showspecifyAllot(false)" data-ng-model="allot.specifyAllot" value="perOccupancy">
-						&nbsp; Per Occupancy
-					</div> 
-				
-					</div>
-					</div>
-			</div>	
-			</div> -->
 						<div class="form-group col-md-12">	
 						
 						<div class="col-md-12">
 				
 						<div>
 						<input type="radio" data-ng-model="allot.allocation" ng-click="selectFreesell(allot)" value="1">
-						&nbsp; Free Sall
+						&nbsp; Free Sale
 						</div>
 						
 				
@@ -159,32 +138,20 @@
 						
 						</div>						
 						<br>
-						<div class="form-group col-md-12"">	
-						
-						<div class="col-md-3">
-				
-						<input type="radio" data-ng-model="allot.allocation" ng-click="selectstopsell(allot)" value="2">
-						&nbsp; Stop Sell
-												
-				
-					</div>
-													
-						
-						</div>
 						
 						<div class="form-group col-md-12"">	
 						
 						<div class="col-md-12">
 				
 						<div>
-						<input type="radio" data-ng-model="allot.allocation" value="3">
-						&nbsp; On request
+						<input type="radio" data-ng-model="allot.allocation"  ng-click="selectRoomAll(allot)" value="3">
+						&nbsp; Rooms Alloted
 						</div>
 						
 				
 					</div>
 						<div ng-show="allot.allocation == 3">
-						<label class="col-md-2 control-label">Please choose: </label>
+						<label class="col-md-2 control-label">No. of Romms Alloted: </label>
 							<div class="col-md-3">
 								<select class="form-control" data-ng-model="allot.choose" required>
 									<option>-- Choose One --</option>
@@ -239,6 +206,100 @@
 							</div>
 						
 						</div>		
+					
+							<div class="form-group col-md-12"">	
+						
+						<div class="col-md-12">
+				
+						<input type="radio" data-ng-model="allot.allocation" ng-click="selectstopsell(allot)" value="2">
+						&nbsp; Stop Sale
+												
+				
+					</div>
+							<div ng-show="allot.allocation == 2">
+							<div class="col-md-12">
+							<label class="col-md-2 control-label">from Date</label>
+							<div class="col-md-3">
+								<input name="fromoDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="allot.fromDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
+							</div>
+												
+						
+						<label class="col-md-2 control-label">To Date</label>
+							<div class="col-md-3">
+								<input name="toDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="allot.toDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
+							</div>
+							</div>
+							<label id="datediffShow{{$index}}" class="col-md-12 col-md-offset-1" style="color:red;display:none;">Select ToDate greater then FromDate </label>
+								<label class="col-md-3 control-label">Next Action After Stop Sale</label>
+								
+								<div class="col-md-12 col-md-offset-1">
+				
+										<input type="radio" data-ng-model="allot.stopAllocation" ng-click="selectstopfreeSale(allot)" value="1">
+										&nbsp; free Sale
+								</div>
+								<div class="col-md-12 col-md-offset-1">
+				
+										<input type="radio" data-ng-model="allot.stopAllocation" ng-click="selectstopsell(allot)" value="2">
+										&nbsp; Rooms Alloted
+								</div>
+								<div class="col-md-12 col-md-offset-1" ng-show="allot.stopAllocation == 2">
+								
+						<label class="col-md-2 control-label">No. of Romms Alloted: </label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="allot.stopChoose" required>
+									<option>-- Choose One --</option>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+									<option>11</option>
+									<option>12</option>
+									<option>13</option>
+									<option>14</option>
+									<option>15</option>
+									<option>16</option>
+									<option>17</option>
+									<option>18</option>
+
+
+								</select>
+							</div>
+							<label class="col-md-2 control-label">Release Period </label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="allot.stopPeriod" required>
+									<option>-- Choose One --</option>
+									<option>Same day up to check-in</option>
+									<option>Same day up to 8 PM</option>
+									<option>Same day up to 11 PM</option>
+									<option>24 hours prior to check-in</option>
+									<option>48 hours prior to check-in</option>
+									<option>72 hours prior to check-in</option>
+									<option>1 week</option>
+									<option>2 week</option>
+									<option>3 week</option>
+									<option>4 week</option>
+									<option>5 week</option>
+									<option>6 week</option>
+									<option>7 week</option>
+									<option>8 week</option>
+									<option>9 week</option>
+									<option>10 week</option>
+									<option>11 week</option>
+									<option>12 week</option>
+
+
+								</select>
+							</div>
+							</div>
+								</div>			
+						
+						</div>
 						
 						<div class="row">
 		                 <div class="col-md-6">
@@ -308,7 +369,7 @@
 		
 				<div class="col-md-3 col-md-offset-5">
 					<input type="button" class="btn btn-primary" value="Go Back" ng-click="showContractPage()">
-					<button type="submit" class="btn btn-primary">Save</button>
+					<button type="submit" onclick="scroll(0,0)" class="btn btn-primary">Save</button>
 				</div>
 		</div>
 	</div>
