@@ -207,8 +207,8 @@ public class AllotmentMarket {
 	public static List<AllotmentMarket> getCityWiseMarket(int cityId) {
 		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		List<AllotmentMarket > result = new ArrayList<AllotmentMarket>();
-		List<Object[]> list =JPA.em().createNativeQuery("select * from allotmentmarket am,allotmentmarket_city arm,allotmentmarket_rate_meta allmark where arm.AllotmentMarket_allotmentMarket_Id = am.allotmentMarket_Id and am.allotmentMarket_Id = allmark.AllotmentMarket_allotmentMarket_Id and arm.cities_city_code = '"+cityId+"'").getResultList();
-		Map<Long,Integer> map = new HashMap<Long,Integer>();
+		List<Object[]> list =JPA.em().createNativeQuery("select * from allotmentmarket am,allotmentmarket_city arm,allotmentmarket_rate_meta allmark,rate_meta rm where arm.AllotmentMarket_allotmentMarket_Id = am.allotmentMarket_Id and am.allotmentMarket_Id = allmark.AllotmentMarket_allotmentMarket_Id  and arm.cities_city_code = "+cityId+" and allmark.AllotmentMarket_allotmentMarket_Id=am.allotmentMarket_Id").getResultList();
+		Map<Long,Integer> map = new HashMap<Long,Integer>(); 
 		for(Object[] o :list) {
 			Integer index = map.get(Long.parseLong(o[0].toString()));
 			if(index == null) {
@@ -225,20 +225,20 @@ public class AllotmentMarket {
 				if(o[5] != null){
 					am.setApplyMarket(o[5].toString());
 				}
-				if(o[9] != null) {
+				if(o[14] != null) {
 					am.rate = new ArrayList<RateMeta>();
 					RateMeta em  = new RateMeta();
-					em.setId(Long.parseLong(o[9].toString()));
-					em.setCurrency(o[11].toString());
+					em.setId(Long.parseLong(o[14].toString()));
+					em.setCurrency(o[16].toString());
 					try {
-						em.setFromDate(format.parse(o[12].toString()));
-						em.setFromDate(format.parse(o[14].toString()));
+						em.setFromDate(format.parse(o[17].toString()));
+						em.setToDate(format.parse(o[19].toString()));
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					em.setRateName(o[13].toString());
-					//em.setSupplierCode(supplierCode)
+					em.setRateName(o[18].toString());
+					em.setSupplierCode(Long.parseLong(o[21].toString()));
 					am.rate.add(em);
 				}
 				result.add(am);
@@ -246,7 +246,7 @@ public class AllotmentMarket {
 			} else {
 				AllotmentMarket am = result.get(index);
 				RateMeta em  = new RateMeta();
-				em.setId(Long.parseLong(o[9].toString()));
+				em.setId(Long.parseLong(o[14].toString()));
 				//em.setCurrency(o[11].toString());
 				am.rate.add(em);
 			}

@@ -301,7 +301,9 @@
 						<input type="button" value="DELETE RATE" style="margin-top: 1%;margin-left: 84%" ng-click="deleteRate(rate.id,$index)">
 						 </div> 
 						</div>
+						
 						</form>
+						
 			</fieldset>	
 			 <div ng-show="addNewButton"> 
 					  <input type="button" class="btn btn-primary" value="ADD NEW RATE" ng-click="createNewRate()" style="float:left; margin-top: 3%;margin-left: 29%;">
@@ -327,7 +329,7 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label"><b>Rate Name:</b></label>
 							<div class="col-md-3">
-								<input type="text" data-ng-model="rate.rateName">
+								<input type="text" data-ng-model="rate.rateName" required>
 							</div>
 					</div>
 				</div>	

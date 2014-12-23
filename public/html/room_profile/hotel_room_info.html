@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="tabbable tabs-left">
-<form method="post" ng-submit="CreateRoomType()" role="form" class="form-horizontal form-validate">
+<form name="myForm" method="post" ng-submit="CreateRoomType()" role="form" class="form-horizontal form-validate">
 <div data-ng-init="initRoomTypePage()">					
 <div class="panel-body">
 	<div class="col-lg-12">
@@ -48,8 +48,10 @@
 				</div>
 				<div class="col-md-6">
 				<div class="col-md-6">
-					<input type="text" class="form-control"
-						data-ng-model="roomTypeIns.roomname" style="width: 239px;margin-left: -1px;"> <br>
+					<input type="text" name="roomname" class="form-control"
+						data-ng-model="roomTypeIns.roomname" style="width: 239px;margin-left: -1px;" required> 
+						<label id="-error" ng-show="myForm.roomname.$error.number" class="error" for="">This field is required.</label>
+						<br>
 				</div>
 				</div>
 				
@@ -58,32 +60,35 @@
 				<label class="col-md-4">*What is the maximum
 					occupancy level for this room?</label>
 				<div class="col-md-3">
-					<select class="form-control" onmousedown="if(this.options.length>6){this.size=6;}"  onchange='this.size=0;' onblur="this.size=0;"
-						data-ng-model="roomTypeIns.maxOccupancy" required>
+					<select class="form-control required number" name="maxOccupancy" onmousedown="if(this.options.length>6){this.size=6;}"  onchange='this.size=0;' onblur="this.size=0;"
+						data-ng-model="roomTypeIns.maxOccupancy">
 						<option data-ng-repeat="counter in counterArray">{{counter}}</option>
 
-					</select> <br>
+					</select>
+					<label id="-error" ng-show="myForm.maxOccupancy.$error.number" class="error" for="">This field is required.</label>
+					 <br>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-4">*What is the maximum
 					Adult occupancy for this room?</label>
 				<div class="col-md-3">
-					<select class="form-control" onmousedown="if(this.options.length>6){this.size=6;}"  onchange='this.size=0;' onblur="this.size=0;"
+					<select class="form-control required number" name="maxAdultOccupancy" onmousedown="if(this.options.length>6){this.size=6;}"  onchange='this.size=0;' onblur="this.size=0;"
 						data-ng-model="roomTypeIns.maxAdultOccupancy" required>
 						<option data-ng-repeat="counter in counterArray">{{counter}}</option>
-					</select> <br>
+					</select>
+					<label id="-error" ng-show="myForm.maxAdultOccupancy.$error.number" class="error" for="">This field is required.</label> <br>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-4">*What is the maximum
 					Adult occupancy if sharing with children in this room?</label>
 				<div class="col-md-3">
-					<select class="form-control required number" sonmousedown="if(this.options.length>6){this.size=6;}"  onchange='this.size=0;' onblur="this.size=0;"
+					<select class="form-control required number" name="maxAdultOccSharingWithChildren" onmousedown="if(this.options.length>6){this.size=6;}"  onchange='this.size=0;' onblur="this.size=0;"
 						data-ng-model="roomTypeIns.maxAdultOccSharingWithChildren" required>
-						<option value="0" selected>No Child Allowed</option>
 						<option data-ng-repeat="counter in counterArray">{{counter}}</option>
-					</select> <br>
+					</select>
+					<label id="-error" ng-show="myForm.maxAdultOccSharingWithChildren.$error.number" class="error" for="">This field is required.</label> <br>
 				</div>
 			</div>
 
@@ -233,29 +238,6 @@
 					</div>
 				 </div>
 						
-						<!-- <div class="form-group">
-							<label class="col-md-2 control-label">year:</label>
-							<div class="col-md-2">
-								<input type="text" placeholder="year" class="form-control"
-									data-ng-model="child.years"> <br>
-							</div>
-
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-3 control-label">enter zero if free:
-							</label>
-							<div class="col-md-3">
-								<select class="form-control" data-ng-model="child.netRate" required>
-									<option>% of</option>
-									<option>add to</option>
-
-								</select>
-							</div>
-							<br>
-						</div> -->
-
-						
 					</span>
 
 					</div>
@@ -277,12 +259,12 @@
 
 							<div class="chargechild">
 								<input type="radio" name="extraBed"
-									data-ng-model="roomTypeIns.extraBedAllowed" value="true"> &nbsp;
+									data-ng-model="roomTypeIns.extraBedAllowed" value="true" class="required"> &nbsp;
 								Yes
 							</div>
 							<div>
 								<input type="radio" name="extraBed"
-									data-ng-model="roomTypeIns.extraBedAllowed" value="false"> &nbsp;
+									data-ng-model="roomTypeIns.extraBedAllowed" value="false" class="required"> &nbsp;
 								No
 							</div>
 							<br>
@@ -324,7 +306,7 @@
 				  <input
   				  type="checkbox" name="services"
   				    ng-click="serviceClicked($event,amenity)"
-  				   	ng-model="amenity.isSelected">					
+  				   	ng-model="amenity.isSelected" class="required">					
    					 {{amenity.amenityNm}}</label>
     			</div>  
     			</div>

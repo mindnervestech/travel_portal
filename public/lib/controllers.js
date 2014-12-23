@@ -16,7 +16,7 @@ controller("ApplicationController",function($scope,$http) {
         }
     });
 	
-});
+}); 
 angular.module('travel_portal').
 controller("supplierAgreementController",['$scope','$rootScope','notificationService','$http','$filter','$upload',
                                          function($scope,$rootScope,notificationService, $http, $filter, $upload) {
@@ -35,6 +35,9 @@ controller("supplierAgreementController",['$scope','$rootScope','notificationSer
 		$scope.showpdf = "true";
 		$scope.uploadpdf = "false";
 	}
+	
+	
+	
 	
 	$http.get('/getPdfPath1/'+supplierCode).success(function(response){
 		console.log("***************");
@@ -87,11 +90,14 @@ controller("supplierAgreementController",['$scope','$rootScope','notificationSer
 
 
 angular.module('travel_portal').
-	controller("allotmentController",['$scope', '$http','notificationService','$rootScope','$filter','$upload','ngDialog',
-	                                         function($scope, $http,notificationService,$rootScope, $filter, $upload, ngDialog) {
+	controller("allotmentController",['$scope', '$http','notificationService','$rootScope','$filter','$upload','$cookieStore','ngDialog',
+	                                         function($scope, $http,notificationService,$rootScope, $filter, $upload,$cookieStore, ngDialog) {
 		
-		//$scope.allot=({applyMarket = "true"});		
 		
+		
+		 $scope.currencyname = $cookieStore.get('currency');		
+		
+		 
 		$http.get("/currency").success(function(response) {
 			$scope.currency = response;
 		});
@@ -977,7 +983,7 @@ angular.module('travel_portal').
 
 
 angular.module('travel_portal').
-	controller("hoteProfileController",function($scope, $http,$routeParams,$location,notificationService,$rootScope,$filter, $upload, ngDialog) {
+	controller("hoteProfileController",function($scope, $http,$routeParams,$location,notificationService,$rootScope,$filter, $upload,$cookieStore, ngDialog) {
 
 		
 		
@@ -1107,14 +1113,19 @@ angular.module('travel_portal').
 				$scope.getallData=response;
 				console.log(response);
 				$rootScope.hotelName = response.hotelgeneralinfo.hotelNm;
-					
+				 $cookieStore.put('hotelName',$rootScope.hotelName);
+				
+				
 				angular.forEach($scope.currency, function(obj, index){
 
 					if ((response.hotelgeneralinfo.currencyCode == $scope.currency[index].currencyCode)) {
-						$rootScope.currencyname = $scope.currency[index].currencyName ;					
+						$rootScope.currencyname = $scope.currency[index].currencyName ;	
+						
 					};
 				});
-							
+				 $cookieStore.put('currency',$rootScope.currencyname);
+				
+				
 				console.log(response.hotelgeneralinfo.isAdmin)
 				$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
 				.success(function(data){
@@ -1139,8 +1150,10 @@ angular.module('travel_portal').
 			});
 	}
 	
-	
-	
+	$rootScope.hotelName= $cookieStore.get('hotelName');
+	$rootScope.currencyname = $cookieStore.get('currency');		
+		
+	 
 	$scope.getgeneralinfo = function(){
 	
 		$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
@@ -2378,7 +2391,9 @@ angular.module('travel_portal').
 });
 
 angular.module('travel_portal').
-controller("manageContractsController",['$scope','notificationService','$rootScope','$http',function($scope,notificationService,$rootScope, $http){
+controller("manageContractsController",['$scope','notificationService','$rootScope','$cookieStore','$http',function($scope,notificationService,$rootScope,$cookieStore,$http){
+	
+	 $scope.currencyname = $cookieStore.get('currency');
 	
 	$(".form-validate").validate({
         errorPlacement: function(error, element){
