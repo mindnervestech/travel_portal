@@ -197,3 +197,4 @@ POST /UpdateSpecificMarkup			com.travelportal.controllers.MarkUpController.Updat
 #GET  /getStarWiseHotel/:sId    			   com.travelportal.controllers.AllRateController.getStarWiseHotel(sId:Integer)
 GET  /ByAllArteByCodition/:supplierCode/:roomId/:fromDate/:toDate/:sId/:cityId     com.travelportal.controllers.AllRateController.ByAllArteByCodition(supplierCode:Long,roomId:Long,fromDate:String,toDate:String,sId:Integer,cityId:Integer)
 GET  /getCountryByMarket/:cityId			   com.travelportal.controllers.AllRateController.getCountryByMarket(cityId:Integer)
+GET  /getHotelAmenities		com.travelportal.controllers.AllRateController.getHotelAmenities

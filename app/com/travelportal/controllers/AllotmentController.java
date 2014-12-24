@@ -92,8 +92,8 @@ public class AllotmentController extends Controller {
 		AllotmentVM allotmentVM = new AllotmentVM();
 		allotmentVM.setAllotmentId(allotment.getAllotmentId());
 		allotmentVM.setSupplierCode(allotment.getSupplierCode());
-		allotmentVM.setToPeriod(allotment.getToDate().toString());
-		allotmentVM.setFormPeriod(allotment.getFormDate().toString());
+		allotmentVM.setToPeriod(format.format(allotment.getToDate()));
+		allotmentVM.setFormPeriod(format.format(allotment.getFormDate()));
 		allotmentVM.setCurrencyName(allotment.getCurrencyId().getCurrencyName());
 		allotmentVM.setRoomId(allotment.getRoomId().getRoomId());
 		
@@ -142,6 +142,7 @@ public class AllotmentController extends Controller {
 		
 		Allotment allotment = Allotment.getRateById(allotmentVM.getSupplierCode(),format.parse(allotmentVM.getFormPeriod()),format.parse(allotmentVM.getToPeriod()),allotmentVM.getCurrencyName(),allotmentVM.getRoomId());
 		System.out.println("&&&&&&&&&&&&&&&&&");
+		System.out.println(format.parse(allotmentVM.getToPeriod()));
 		System.out.println(allotment);
 		if(allotment == null)
 		{
@@ -153,6 +154,7 @@ public class AllotmentController extends Controller {
 		allotment.setRoomId(HotelRoomTypes.getHotelRoomDetailsInfo(allotmentVM.getRoomId()));
 		allotment.setFormDate(format.parse(allotmentVM.getFormPeriod()));
 		allotment.setToDate(format.parse(allotmentVM.getToPeriod()));
+		
 		/*allotmentVM.setToPeriod(allotment.getToDate());
 		allotmentVM.setFormPeriod(allotment.getFormDate());*/
 		//allotment.setRate(Rate.getrateId(allotmentVM.getRate()));
@@ -210,24 +212,26 @@ public class AllotmentController extends Controller {
 		}
 		else
 		{
+		
 			
-			
-			allotment.setCurrencyId(Currency.getCurrencyByCode1(allotmentVM.getCurrencyName()));
+		   allotment.setCurrencyId(Currency.getCurrencyByCode1(allotmentVM.getCurrencyName()));
 			allotment.setRoomId(HotelRoomTypes.getHotelRoomDetailsInfo(allotmentVM.getRoomId()));
 			//allotment.setRate(Rate.getrateId(allotmentVM.getRate()));
+			
 			
 			
 			for(AllotmentMarketVM allotmentarketVM : allotmentVM.getAllotmentmarket())
 			{
 				System.out.println("$$$$$$$");
+				System.out.println(allotmentarketVM.getFromDate());
 				System.out.println(allotmentarketVM.getAllocatedCities().toString());
 				
 				if(allotmentarketVM.getAllotmentMarketId() == 0)
 				{
-					allotment = Allotment.getRateById(allotmentVM.getSupplierCode(),format.parse(allotmentVM.getFormPeriod()),format.parse(allotmentVM.getToPeriod()),allotmentVM.getCurrencyName(),allotmentVM.getRoomId());
+					//allotment = Allotment.getRateById(allotmentVM.getSupplierCode(),format.parse(allotmentVM.getFormPeriod()),format.parse(allotmentVM.getToPeriod()),allotmentVM.getCurrencyName(),allotmentVM.getRoomId());
 					
-					if(allotment == null)
-					{
+					//if(allotment == null)
+				//	{
 					
 					AllotmentMarket allotmentmarket = new AllotmentMarket();
 					//System.out.println(allotmentmarket.get);
@@ -275,7 +279,7 @@ public class AllotmentController extends Controller {
 							}
 						}
 						allotM.setCities(listCity);
-					}
+					//}
 				}
 				else
 				{

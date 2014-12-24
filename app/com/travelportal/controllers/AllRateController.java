@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import play.db.jpa.Transactional;
 import play.libs.Json;
@@ -14,6 +16,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import com.travelportal.domain.HotelProfile;
+import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.CancellationPolicy;
 import com.travelportal.domain.rooms.PersonRate;
@@ -21,6 +24,7 @@ import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.vm.AllotmentMarketVM;
 import com.travelportal.vm.CancellationPolicyVM;
+import com.travelportal.vm.HotelDescription;
 import com.travelportal.vm.HotelGeneralInfoVM;
 import com.travelportal.vm.NormalRateVM;
 import com.travelportal.vm.RateDetailsVM;
@@ -28,6 +32,55 @@ import com.travelportal.vm.RateVM;
 import com.travelportal.vm.SpecialRateVM;
 
 public class AllRateController extends Controller {
+	
+	/*Map<String, Object> map = new HashMap<String, Object>();
+	map.put("healthAndSafetyVM", healthAndSafetyVM);
+	map.put("docInfo", docInfo);*/
+	
+	@Transactional(readOnly = true)
+	public static Result getHotelAmenities(){
+		List<HotelDescription> list = new ArrayList<>();
+		List<HotelProfile> amenitiesList = HotelProfile.getHotel();
+		
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		for (HotelProfile  hProfile : amenitiesList) {
+			HotelDescription hoteldescription = new HotelDescription();
+			hoteldescription.setLocation1(hProfile.getlocation1());
+			hoteldescription.setLocation2(hProfile.getlocation2());
+			hoteldescription.setSupplierCode(hProfile.getSupplier_code());
+			hoteldescription.setServices(hProfile.getIntListServices());
+			
+			for(Integer integer : hProfile.getIntListServices()){
+				System.out.println(integer);
+				HotelServices hServices = HotelServices.findById(integer);
+			 Integer object = map.get(hServices.getServiceId()); //  hServices.getServiceName()
+			 if(object==null) {
+				 map.put(hServices.getServiceId() , 1);
+				 
+			 } else {
+				 map.put(hServices.getServiceId() , object+1);
+			 }
+			}
+			
+			list.add(hoteldescription);
+		}
+		return ok(Json.toJson(map));		
+	
+	}
+
+	/*
+	for(Integer integer : hProfile.getIntListServices()){
+		System.out.println(integer);
+		HotelServices hServices = HotelServices.findById(integer);
+	 Integer object = map.get(hServices.getServiceName());
+	 if(object==null) {
+		 map.put(hServices.getServiceName() , 1);
+	 } else {
+		 map.put(hServices.getServiceName() , object+1);
+	 }
+	}*/
+	
+	
 	
 	@Transactional(readOnly = true)
 	public static Result ByAllArteByCodition(Long supplierCode,Long roomId,String fromDate,String toDate,int sId,int cityId) {

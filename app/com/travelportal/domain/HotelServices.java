@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 import play.db.jpa.JPA;
@@ -73,7 +74,11 @@ public class HotelServices {
 		this.additionalInfo = additionalInfo;
 	}
 	
-	
+	public static HotelServices findById(int id) {
+    	Query query = JPA.em().createQuery("Select a from HotelServices a where a.serviceId = ?1");
+		query.setParameter(1, id);
+    	return (HotelServices) query.getSingleResult();
+    }
 	public static List<HotelServices> gethotelservice() {
 		return JPA.em().createQuery("select c from HotelServices c").getResultList();
 	}

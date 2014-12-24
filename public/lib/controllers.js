@@ -114,8 +114,8 @@ angular.module('travel_portal').
 		{
 		
 			var arr = $scope.allotmentMarket.datePeriodId.split("@");
-			$scope.allotmentMarket.formPeriod = arr[0];
-			$scope.allotmentMarket.toPeriod = arr[1];
+			$scope.allotmentMarket.formPeriod = $filter('date')(arr[0],"dd-MM-yyyy");
+			$scope.allotmentMarket.toPeriod = $filter('date')(arr[1],"dd-MM-yyyy");
 			$scope.allotmentMarket.supplierCode = supplierCode;
 			
 			console.log($scope.allotmentMarket.allotmentmarket);
@@ -129,6 +129,8 @@ angular.module('travel_portal').
 				console.log('success');
 				console.log("**********");
 				console.log(response);
+				response.formPeriod =  $filter('date')(response.formPeriod,"dd-MM-yyyy");
+				response.toPeriod =  $filter('date')(response.toPeriod,"dd-MM-yyyy");
 				console.log(response.allotmentmarket);
 				$scope.showallotent = true;
 				if(response.allotmentmarket ==  undefined){
@@ -300,6 +302,9 @@ angular.module('travel_portal').
 				});
 				$scope.allotmentM.splice(index, 1);
 				console.log('success');
+			}).error(function(data, status, headers, config) {
+				console.log('ERROR');
+				$scope.allotmentM.splice(index, 1);
 			});
 		    }
 		}
