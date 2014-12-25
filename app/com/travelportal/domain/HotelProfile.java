@@ -777,9 +777,10 @@ public class HotelProfile {
 		}
     }
 	
-	public static List<HotelProfile> getHotel() {	
+	public static List<HotelProfile> getHotel(int countryId) {	
 		
-		Query q = JPA.em().createQuery("select c from HotelProfile c");
+		Query q = JPA.em().createQuery("select c from HotelProfile c where country.countryCode= ?1");
+		q.setParameter(1,countryId);	
 		return q.getResultList();
 }
 

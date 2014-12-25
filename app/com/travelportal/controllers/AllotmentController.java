@@ -318,11 +318,11 @@ public class AllotmentController extends Controller {
 							
 							System.out.println(vm.multiSelectGroup);
 						}
-						/*if(allotmentmarket != null && allotmentmarket.getCities() != null && !allotmentmarket.getCities().isEmpty())
+						if(allotmentmarket != null && allotmentmarket.getCities() != null && !allotmentmarket.getCities().isEmpty())
 						{
 							allotmentmarket.getCities().removeAll(allotmentmarket.getCities());
 							//JPA.em().merge(rates);
-						}*/
+						}
 						List<City> listCity = new ArrayList<>();
 						for(SelectedCityVM cityvm : selectedCityVM){
 							City _city = City.getCitiByName(cityvm.name);

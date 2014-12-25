@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -145,6 +146,54 @@ public class RateMeta {
 			
 	    	return query.getResultList();
 	    }
+	 
+	 
+	 public static List<RateMeta> getRateAndHotel(Long roomId,int cityId,int sId,Date fromDate,Date toDate) {
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			String fDate = null;
+			String tDate = null;
+		
+			fDate = format.format(fromDate);
+			tDate = format.format(toDate);
+		
+		
+			System.out.println(fDate);
+		
+		 System.out.println(toDate);
+		
+	 List<Object[]> list =JPA.em().createNativeQuery("select * from rate_meta am,hotel_profile hpp where am.supplierCode = hpp.supplier_code and hpp.city_city_code = '"+cityId+"' and am.roomType_room_id = '"+roomId+"' and hpp.startRatings_id = '"+sId+"' and am.from_date <= '"+fDate+"' and am.to_date >= '"+fDate+"' and  am.from_date <= '"+tDate+"' and am.to_date >= '"+tDate+"'  ").getResultList();
+	
+	 List<RateMeta> list1 = new ArrayList<>();
+		
+		for(Object[] o :list) {
+		
+			RateMeta am = new RateMeta();
+			System.out.println(o);
+			am.setId(Long.parseLong(o[0].toString()));
+			am.setCurrency(o[1].toString());
+			try {
+				am.setFromDate(format.parse(o[2].toString()));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			am.setRateName(o[3].toString());
+			try {
+				am.setToDate(format.parse(o[4].toString()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			am.setRoomType(HotelRoomTypes.findById(Long.parseLong(o[5].toString())));
+			if(o[6] != null){
+			am.setSupplierCode(Long.parseLong(o[6].toString()));
+			}
+			list1.add(am);
+		}
+		
+		return list1;
+		
+	 }
 	 
 	
 	 public static List<RateMeta> getRateByCountry(Long supplierCode,Long roomId,int cityId,int sId) {

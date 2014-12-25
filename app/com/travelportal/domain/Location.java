@@ -59,8 +59,8 @@ public class Location {
 		this.city = city;
 	}
 	
-	public static List<Location> getLocation() {
-		return JPA.em().createQuery("select c from Location c ").getResultList();
+	public static List<Location> getLocation(int cityId) {
+		return JPA.em().createQuery("select c from Location c where c.city.cityCode = ?1").setParameter(1, cityId).getResultList();
 	}
 	
 	public static Location getlocationIdByCode(int code) {

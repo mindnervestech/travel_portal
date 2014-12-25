@@ -41,7 +41,7 @@ GET 	/currency                 	com.travelportal.controllers.TravelPortalUtilsCo
 GET 	/hotelbrands                com.travelportal.controllers.TravelPortalUtilsController.getHotelBrand()
 GET 	/starrating                	com.travelportal.controllers.TravelPortalUtilsController.getStarRatings()
 GET 	/marketrate                	com.travelportal.controllers.TravelPortalUtilsController.getMarketRate()
-GET 	/location                	com.travelportal.controllers.TravelPortalUtilsController.getLocations()
+GET 	/location/:cityId                	com.travelportal.controllers.TravelPortalUtilsController.getLocations(cityId:Integer)
 GET 	/shoppingfacility           com.travelportal.controllers.TravelPortalUtilsController.getShoppingFacility()
 GET 	/nightlife                	com.travelportal.controllers.TravelPortalUtilsController.getNightLife()
 GET 	/services                	com.travelportal.controllers.TravelPortalUtilsController.getServices()
@@ -198,3 +198,5 @@ POST /UpdateSpecificMarkup			com.travelportal.controllers.MarkUpController.Updat
 GET  /ByAllArteByCodition/:supplierCode/:roomId/:fromDate/:toDate/:sId/:cityId     com.travelportal.controllers.AllRateController.ByAllArteByCodition(supplierCode:Long,roomId:Long,fromDate:String,toDate:String,sId:Integer,cityId:Integer)
 GET  /getCountryByMarket/:cityId			   com.travelportal.controllers.AllRateController.getCountryByMarket(cityId:Integer)
 GET  /getHotelAmenities		com.travelportal.controllers.AllRateController.getHotelAmenities
+#GET  /getAmenitiesWiseHotel/:roomId/:fromDate/:toDate/:sId/:cityId/:id			   com.travelportal.controllers.AllRateController.getAmenitiesWiseHotel(roomId:Long,fromDate:String,toDate:String,sId:Integer,cityId:Integer,id:Integer)
+GET  /getAmenitiesWiseHotel			   com.travelportal.controllers.AllRateController.getAmenitiesWiseHotel()

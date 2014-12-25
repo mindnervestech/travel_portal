@@ -1113,13 +1113,17 @@ angular.module('travel_portal').
 			});
 		}
 		
+		$scope.onCityChange = function(){
+			console.log($scope.generalInfo.cityCode);
+		}
+		
 		
 		  $http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
 				$scope.getallData=response;
 				console.log(response);
 				$rootScope.hotelName = response.hotelgeneralinfo.hotelNm;
 				 $cookieStore.put('hotelName',$rootScope.hotelName);
-				
+				 $cookieStore.put('cityCode',response.hotelgeneralinfo.cityCode);
 				
 				angular.forEach($scope.currency, function(obj, index){
 
@@ -1194,8 +1198,9 @@ angular.module('travel_portal').
 	
 	$scope.getdescription = function()
 	{
+		console.log( $cookieStore.get('cityCode'));
 		$scope.location = [];
-		$http.get("/location").success(function(response) {
+		$http.get('/location/'+$cookieStore.get('cityCode')).success(function(response) {
 			for(var i =0 ; i<response.length; i++) {
 				$scope.location.push({
 					locationId:response[i].id,

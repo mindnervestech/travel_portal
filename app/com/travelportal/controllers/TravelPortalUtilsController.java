@@ -98,8 +98,8 @@ public class TravelPortalUtilsController extends Controller {
 	}
 
 	@Transactional(readOnly=true)
-	public static Result getLocations() {
-		final List<Location> location = Location.getLocation();
+	public static Result getLocations(int cityId) {
+		final List<Location> location = Location.getLocation(cityId);
 		List<Map> _location  = new ArrayList();
 		for(Location l : location){
 			Map m = new HashMap<>();
