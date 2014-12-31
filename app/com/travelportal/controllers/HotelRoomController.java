@@ -34,6 +34,7 @@ import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
 import com.travelportal.domain.InfoWiseImagesPath;
+import com.travelportal.domain.Markets;
 import com.travelportal.domain.MealType;
 import com.travelportal.domain.rooms.CancellationPolicy;
 import com.travelportal.domain.rooms.HotelRoomTypes;
@@ -45,6 +46,7 @@ import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.RoomChildPolicies;
 import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.AllocatedCitiesVM;
+import com.travelportal.vm.AllotmentVM;
 import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.HotelHealthAndSafetyVM;
 import com.travelportal.vm.NormalRateVM;
@@ -162,9 +164,10 @@ public static void createRootDir() {
 	@Transactional(readOnly=false)
     public static Result saveRate() throws ParseException {
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-				
+					
 		Form<RateWrapper> rateWrapperForm = Form.form(RateWrapper.class).bindFromRequest();
 		List<RateVM> list = rateWrapperForm.get().rateObject;
+		
 		
 		for(RateVM rate : list) {
 			//rate.isSpecialRate = true;
@@ -180,11 +183,13 @@ public static void createRootDir() {
 				
 				rateMeta.save();
 				
+				
 				RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findById(rate.roomId));
-				List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
+				
+				List<SelectedCountryVM> selectedCityVM = new ArrayList<>(); 	
 				for(AllocatedCitiesVM vm: rate.allocatedCities) {
 					if(vm.multiSelectGroup == false && vm.name != null){
-						SelectedCityVM cityVM = new SelectedCityVM();
+						SelectedCountryVM cityVM = new SelectedCountryVM();
 						cityVM.name = vm.name;
 						cityVM.ticked = vm.ticked;
 						selectedCityVM.add(cityVM);
@@ -192,15 +197,20 @@ public static void createRootDir() {
 					
 					System.out.println(vm.multiSelectGroup);
 				}
-				List<City> listCity = new ArrayList<>();
-				for(SelectedCityVM cityvm : selectedCityVM){
-					City _city = City.getCitiByName(cityvm.name);
+				List<Country> listCity = new ArrayList<>();
+				for(SelectedCountryVM cityvm : selectedCityVM){
+					Country _city = Country.getCountryByName(cityvm.name);
 					
 					if(cityvm.ticked){
 						listCity.add(_city);
 					}
 				}
-				rateObject.setCities(listCity);
+				rateObject.setCountry(listCity);
+				
+			/*	if(rate.allocatedCities.isEmpty()){
+					setCountrySelection(rateObject.getId());
+					System.out.println("hiiiiii....bye.............");
+				}*/
 				
 				RateDetails rateDetails = new RateDetails();
 				if(rate.isSpecialRate == true) {
@@ -310,7 +320,7 @@ public static void createRootDir() {
 		PersonRate.deleteAllotment(id);
 		
 		RateMeta rateMeta = RateMeta.findById(id);
-		rateMeta.getCities().removeAll(rateMeta.getCities());
+		rateMeta.getCountry().removeAll(rateMeta.getCountry());
 		
 		//rateMeta.setCities(null);
 		
@@ -344,26 +354,26 @@ public static void createRootDir() {
 				rateDetails.merge();
 				
 				RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findById(rate.roomId));
-				List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
+				List<SelectedCountryVM> selectedCountryVM = new ArrayList<>(); 	
 				for(AllocatedCitiesVM vm: rate.allocatedCities) {
 					if(vm.multiSelectGroup == false && vm.name != null){
-						SelectedCityVM cityVM = new SelectedCityVM();
-						cityVM.name = vm.name;
-						cityVM.ticked = vm.ticked;
-						selectedCityVM.add(cityVM);
+						SelectedCountryVM countryVM = new SelectedCountryVM();
+						countryVM.name = vm.name;
+						countryVM.ticked = vm.ticked;
+						selectedCountryVM.add(countryVM);
 					}
 					
 					System.out.println(vm.multiSelectGroup);
 				}
-				List<City> listCity = new ArrayList<>();
-				for(SelectedCityVM cityvm : selectedCityVM){
-					City _city = City.getCitiByName(cityvm.name);
+				List<Country> listCity = new ArrayList<>();
+				for(SelectedCountryVM countryvm : selectedCountryVM){
+					Country _city = Country.getCountryByName(countryvm.name);
 					
-					if(cityvm.ticked){
+					if(countryvm.ticked){
 						listCity.add(_city);
 					}
 				}
-				rateObject.setCities(listCity);
+				rateObject.setCountry(listCity);
 				
 				for(RateDetailsVM rateDetailsVM : rate.normalRate.rateDetails) {
 					PersonRate personRate = PersonRate.findByRateMetaIdAndNormal(rate.getId(),true,rateDetailsVM.name);
@@ -807,75 +817,75 @@ public static void createRootDir() {
 	///////
 	@Transactional(readOnly = true)
 	public static Result getMarketGroup(long id) {
-		List<Country> country = Country.getCountries();
+		List<Markets> arMarkets = Markets.getMarkets();
 		List<MarketVM> group = new ArrayList<MarketVM>();
-		for (Country c : country) {
+		for (Markets c : arMarkets) {
 			MarketVM marketvm = new MarketVM();
-			CountryVM countryvm = new CountryVM();
-			countryvm.countryCode = c.getCountryCode();
-			countryvm.countryName = c.getCountryName();
+			martektsVM marketsvm = new martektsVM();
+			marketsvm.marketCode = c.getMarketCode();
+			marketsvm.marketName = c.getMarketName();
 
-			List<CityVM> cityvm = new ArrayList<CityVM>();
-			List<City> city = City.getCities(c.getCountryCode());
-			for (City _city : city) {
+			List<CountryVM> conutryvm = new ArrayList<CountryVM>();
+			List<Country> conutry = Country.getCountry(c.getMarketCode());
+			for (Country _conutry : conutry) {
 				
-				CityVM _cityvm = new CityVM();
-				_cityvm.id = _city.getCityCode();
-				_cityvm.cityCountryCode = _city.getCountry().getCountryCode();
-				_cityvm.cityName = _city.getCityName();
+				CountryVM _conutryvm = new CountryVM();
+				_conutryvm.id = _conutry.getCountryCode();
+				_conutryvm.countryMarketCode = _conutry.getMarket().getMarketCode();
+				_conutryvm.countryName = _conutry.getCountryName();
 				if(id != 0) {
 					RateMeta rates = RateMeta.getRatesById(id);
-					for(City cty : rates.getCities()){
-						if(cty.getCityCode() == _city.getCityCode()){
-							_cityvm.tick = true;
+					for(Country cty : rates.getCountry()){
+						if(cty.getCountryCode() == _conutry.getCountryCode()){
+							_conutryvm.tick = true;
 							break;
 						}else{
-							_cityvm.tick = false;
+							_conutryvm.tick = false;
 						}
 							
 					}
 				} else {
-					_cityvm.tick = false;
+					_conutryvm.tick = false;
 				}
 				
-				cityvm.add(_cityvm);
+				conutryvm.add(_conutryvm);
 			}
-			countryvm.cityvm = cityvm;
-			marketvm.country = countryvm;
+			marketsvm.conutryvm = conutryvm;
+			marketvm.country = marketsvm;
 			group.add(marketvm);
 		}
 		return ok(Json.toJson(group));
 	}
 	
 	public static class MarketVM {
-		public CountryVM country;
+		public martektsVM country;
 
+	}
+
+	public static class martektsVM {
+		public int marketCode;
+		public String marketName;
+		public List<CountryVM> conutryvm;
 	}
 
 	public static class CountryVM {
-		public int countryCode;
-		public String countryName;
-		public List<CityVM> cityvm;
-	}
-
-	public static class CityVM {
 		public int id;
-		public int cityCountryCode;
-		public String cityName;
+		public int countryMarketCode;
+		public String countryName;
 		public boolean tick;
 
 	}
 	
-	public static class SelectedCityVM {
+	public static class SelectedCountryVM {
 
 		public String name;
-		public int countryCode;
+		public int marketCode;
 		public boolean ticked;
 
 	}
 	public static class VM {
 		public int id;
-		public List<SelectedCityVM> city = new ArrayList<SelectedCityVM>();
+		public List<SelectedCountryVM> city = new ArrayList<SelectedCountryVM>();
 	}
 	
 
@@ -888,24 +898,55 @@ public static void createRootDir() {
 		
 		VM c = Json.fromJson(jn, VM.class);
 		int ratesId  = c.id;
-		List<SelectedCityVM> city = c.city;
+		List<SelectedCountryVM> city = c.city;
 		RateMeta rates = RateMeta.getRatesById(ratesId);
 		
-		if(rates != null && rates.getCities() != null && !rates.getCities().isEmpty())
+		if(rates != null && rates.getCountry() != null && !rates.getCountry().isEmpty())
 		{
-			rates.getCities().removeAll(rates.getCities());
+			rates.getCountry().removeAll(rates.getCountry());
 			//JPA.em().merge(rates);
 		}
 		
-		List<City> listCity = new ArrayList<>();
-		for(SelectedCityVM cityvm : city){
-			City _city = City.getCitiByName(cityvm.name);
+		List<Country> listCity = new ArrayList<>();
+		for(SelectedCountryVM cityvm : city){
+			Country _city = Country.getCountryByName(cityvm.name);
 			
 			if(cityvm.ticked){
 				listCity.add(_city);
 			}
 		}
-		rates.setCities(listCity);
+		rates.setCountry(listCity);
+		return ok();
+
+	}
+
+	@Transactional(readOnly = false)
+	public static Result setCountrySelection(long id) {
+		//JsonNode json = request().body().asJson().get("id");
+		JsonNode jn = request().body().asJson();
+		//System.out.println(json.asInt());
+		//jn.as
+		
+		VM c = Json.fromJson(jn, VM.class);
+		int ratesId  = c.id;
+		List<SelectedCountryVM> city = c.city;
+		RateMeta rates = RateMeta.getRatesById(ratesId);
+		
+		if(rates != null && rates.getCountry() != null && !rates.getCountry().isEmpty())
+		{
+			rates.getCountry().removeAll(rates.getCountry());
+			//JPA.em().merge(rates);
+		}
+		
+		List<Country> listCity = new ArrayList<>();
+		for(SelectedCountryVM cityvm : city){
+			Country _city = Country.getCountryByName(cityvm.name);
+			
+			if(cityvm.ticked){
+				listCity.add(_city);
+			}
+		}
+		rates.setCountry(listCity);
 		return ok();
 
 	}

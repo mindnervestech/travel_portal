@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Query;
 
 import com.travelportal.domain.City;
+import com.travelportal.domain.Country;
 import com.travelportal.domain.allotment.AllotmentMarket;
 
 import play.db.jpa.JPA;
@@ -33,10 +34,20 @@ public class SpecialsMarket {
 	private String applyToMarket;
 	@OneToOne
 	private Specials special;
+	/*@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public List<City> cities;*/
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    public List<City> cities;
+	public List<Country> country;
 	
 	
+	
+	
+	public List<Country> getCountry() {
+		return country;
+	}
+	public void setCountry(List<Country> country) {
+		this.country = country;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -86,13 +97,7 @@ public class SpecialsMarket {
 	public void setApplyToMarket(String applyToMarket) {
 		this.applyToMarket = applyToMarket;
 	}
-	public List<City> getCities() {
-		return cities;
-	}
-	public void setCities(List<City> cities) {
-		this.cities = cities;
-	}
-	
+		
 	public static SpecialsMarket findByIdCity(long Code) {
 		try
 		{
@@ -139,8 +144,8 @@ public class SpecialsMarket {
     	return (SpecialsMarket) query.getSingleResult();
     }
 	
-	public static int deletespecialCity(long code) {
-		Query q = JPA.em().createNativeQuery("delete from specialsmarket_city where SpecialsMarket_id = '"+code+"'");
+	public static int deletespecialCountry(long code) {
+		Query q = JPA.em().createNativeQuery("delete from specialsmarket_country where SpecialsMarket_id = '"+code+"'");
 		return q.executeUpdate();
 	}
 	

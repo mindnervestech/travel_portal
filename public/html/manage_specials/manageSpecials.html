@@ -119,8 +119,8 @@
 									<td style="width: 64%;margin-left: 2%;">
 										 <label style="float: left"><b>Apply to all Markets?<br>
 			<label>(Based on Passenger Nationality)</label>
-					<input type="radio" name="applyToMarket{{$index}}" value="true" data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)">Yes
-					<input type="radio" name="applyToMarket{{$index}}" value="false" data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)">No
+					<input type="radio" name="applyToMarket{{$index}}" value="true" data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)" required>Yes
+					<input type="radio" name="applyToMarket{{$index}}" value="false" data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)" required>No
 				</b></label><br>
 				<div ng-show="market.applyToMarket == 'false'" style="margin-left: 5%;">
 					<div multi-select input-model="market.allocatedCities"
@@ -220,6 +220,7 @@
 						<label class="col-md-3 control-label"><b>Please enter the promotion name here :</b></label>
 							<div class="col-md-3">
 								<input type="text" data-ng-model="special.promotionName">
+								<label id="promotion" class="col-md-12 col-md-offset-3" style="color:red;display:none;">This field is required.</label>
 							</div>
 					</div>
 			</div>
@@ -231,6 +232,7 @@
 								<select class="form-control" data-ng-model="special.roomTypes" multiple style="height: 25%;" required>
 									 <option ng-repeat="type in rooms" value="{{type.roomType}}">{{type.roomType}}</option>
 								</select>
+								<label id="roomtypeshow" class="col-md-12 col-md-offset-3" style="color:red;display:none;">This field is required.</label>
 							</div>
 					</div>
 			</div>
@@ -278,8 +280,8 @@
 									<td>
 										 <label style="float: left"><b>Apply to all Markets?<br>
 			<label>(Based on Passenger Nationality)</label>
-					<input type="radio" name="applyToMarket{{$index}}" value='true' data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)">Yes
-					<input type="radio" name="applyToMarket{{$index}}" value='false' data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)">No
+					<input type="radio" name="applyToMarket{{$index}}" value='true' data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)" required>Yes
+					<input type="radio" name="applyToMarket{{$index}}" value='false' data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)" required>No
 				</b></label><br>
 				<div ng-show="market.applyToMarket == 'false'" style="margin-left: 5%;">
 					<div multi-select input-model="market.allocatedCities"

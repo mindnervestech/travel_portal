@@ -20,9 +20,18 @@ public class RateVM {
 	public SpecialRateVM special;
 	public List<CancellationPolicyVM> cancellation = new ArrayList<CancellationPolicyVM>();
 	public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
+	//public List<HotelProfileVM> hotelprofile = new ArrayList<HotelProfileVM>();
 	public AllotmentMarketVM allotmentmarket;
 	
 	
+	
+	
+	/*public List<HotelProfileVM> getHotelprofile() {
+		return hotelprofile;
+	}
+	public void setHotelprofile(List<HotelProfileVM> hotelprofile) {
+		this.hotelprofile = hotelprofile;
+	}*/
 	public Long getSupplierCode() {
 		return supplierCode;
 	}

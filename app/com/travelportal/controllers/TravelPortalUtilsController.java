@@ -62,7 +62,14 @@ public class TravelPortalUtilsController extends Controller {
 	@Transactional(readOnly=true)
 	public static Result getCountries() {
 		final List<Country> countries = Country.getCountries(); 
-		return ok(Json.toJson(countries));
+		List<Map> country = new ArrayList<>();
+ 		for(Country c : countries){
+ 			Map m = new HashMap<>();
+ 			m.put("countryCode", c.getCountryCode());
+ 			m.put("countryName", c.getCountryName());
+ 			country.add(m);
+		}
+		return ok(Json.toJson(country));
 	}
 
 	@Transactional(readOnly=true)

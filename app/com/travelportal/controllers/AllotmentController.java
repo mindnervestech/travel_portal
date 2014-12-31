@@ -16,9 +16,14 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.travelportal.controllers.SupplierController.CountryVM;
+import com.travelportal.controllers.SupplierController.MarketVM;
+import com.travelportal.controllers.SupplierController.SelectedCountryVM;
+import com.travelportal.controllers.SupplierController.martektsVM;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
+import com.travelportal.domain.Markets;
 import com.travelportal.domain.allotment.Allotment;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.HotelRoomTypes;
@@ -40,9 +45,9 @@ public class AllotmentController extends Controller {
 	
 	
 	@Transactional(readOnly=true)
-	public static Result getDates(long roomid,String currencyName) {
+	public static Result getDates(long roomid,String currencyName,Long supplierCode) {
 	
-		List<RateMeta> rateperiod = RateMeta.getDates(roomid, currencyName);
+		List<RateMeta> rateperiod = RateMeta.getDates(roomid, currencyName,supplierCode);
 		System.out.println("Print data");
 		System.out.println(rateperiod);
 	
@@ -187,26 +192,27 @@ public class AllotmentController extends Controller {
 		    AllotmentMarket allotM = AllotmentMarket.findByTopid();
 			System.out.println("-------------------------");
 			System.out.println(allotM.getAllotmentMarketId());
-			  List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
-				for(AllocatedCitiesVM vm: allotmentarketVM.allocatedCities) {
-					if(vm.multiSelectGroup == false && vm.name != null){
-						SelectedCityVM cityVM = new SelectedCityVM();
-						cityVM.name = vm.name;
-						cityVM.ticked = vm.ticked;
-						selectedCityVM.add(cityVM);
-					}
-					
-					System.out.println(vm.multiSelectGroup);
+			List<SelectedCountryVM> selectedCountryVM = new ArrayList<>(); 	
+			for(AllocatedCitiesVM vm: allotmentarketVM.allocatedCities) {
+				if(vm.multiSelectGroup == false && vm.name != null){
+					SelectedCountryVM cityVM = new SelectedCountryVM();
+					cityVM.name = vm.name;
+					cityVM.ticked = vm.ticked;
+					selectedCountryVM.add(cityVM);
 				}
-				List<City> listCity = new ArrayList<>();
-				for(SelectedCityVM cityvm : selectedCityVM){
-					City _city = City.getCitiByName(cityvm.name);
-					
-					if(cityvm.ticked){
-						listCity.add(_city);
-					}
+				
+				System.out.println(vm.multiSelectGroup);
+			}
+			List<Country> listCity = new ArrayList<>();
+			for(SelectedCountryVM cityvm : selectedCountryVM){
+				Country _city = Country.getCountryByName(cityvm.name);
+				
+				if(cityvm.ticked){
+					listCity.add(_city);
 				}
-				allotM.setCities(listCity);
+			}
+			allotM.setCountry(listCity);
+			
 		}
 		allotment.save();
 		}
@@ -259,26 +265,26 @@ public class AllotmentController extends Controller {
 					AllotmentMarket allotM = AllotmentMarket.findByTopid();
 					System.out.println("-------------------------");
 					System.out.println(allotM.getAllotmentMarketId());
-					  List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
-						for(AllocatedCitiesVM vm: allotmentarketVM.allocatedCities) {
-							if(vm.multiSelectGroup == false && vm.name != null){
-								SelectedCityVM cityVM = new SelectedCityVM();
-								cityVM.name = vm.name;
-								cityVM.ticked = vm.ticked;
-								selectedCityVM.add(cityVM);
-							}
-							
-							System.out.println(vm.multiSelectGroup);
+					List<SelectedCountryVM> selectedCountryVM = new ArrayList<>(); 	
+					for(AllocatedCitiesVM vm: allotmentarketVM.allocatedCities) {
+						if(vm.multiSelectGroup == false && vm.name != null){
+							SelectedCountryVM cityVM = new SelectedCountryVM();
+							cityVM.name = vm.name;
+							cityVM.ticked = vm.ticked;
+							selectedCountryVM.add(cityVM);
 						}
-						List<City> listCity = new ArrayList<>();
-						for(SelectedCityVM cityvm : selectedCityVM){
-							City _city = City.getCitiByName(cityvm.name);
-							
-							if(cityvm.ticked){
-								listCity.add(_city);
-							}
+						
+						System.out.println(vm.multiSelectGroup);
+					}
+					List<Country> listCity = new ArrayList<>();
+					for(SelectedCountryVM cityvm : selectedCountryVM){
+						Country _city = Country.getCountryByName(cityvm.name);
+						
+						if(cityvm.ticked){
+							listCity.add(_city);
 						}
-						allotM.setCities(listCity);
+					}
+					allotM.setCountry(listCity);
 					//}
 				}
 				else
@@ -307,31 +313,31 @@ public class AllotmentController extends Controller {
 					//AllotmentMarket allotM = AllotmentMarket.findByTopid();
 					//System.out.println("-------------------------");
 					//System.out.println(allotM.getAllotmentMarketId());
-					  List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
-						for(AllocatedCitiesVM vm: allotmentarketVM.allocatedCities) {
-							if(vm.multiSelectGroup == false && vm.name != null){
-								SelectedCityVM cityVM = new SelectedCityVM();
-								cityVM.name = vm.name;
-								cityVM.ticked = vm.ticked;
-								selectedCityVM.add(cityVM);
-							}
-							
-							System.out.println(vm.multiSelectGroup);
+					List<SelectedCountryVM> selectedCountryVM = new ArrayList<>(); 	
+					for(AllocatedCitiesVM vm: allotmentarketVM.allocatedCities) {
+						if(vm.multiSelectGroup == false && vm.name != null){
+							SelectedCountryVM cityVM = new SelectedCountryVM();
+							cityVM.name = vm.name;
+							cityVM.ticked = vm.ticked;
+							selectedCountryVM.add(cityVM);
 						}
-						if(allotmentmarket != null && allotmentmarket.getCities() != null && !allotmentmarket.getCities().isEmpty())
+						
+						System.out.println(vm.multiSelectGroup);
+					}
+						if(allotmentmarket != null && allotmentmarket.getCountry() != null && !allotmentmarket.getCountry().isEmpty())
 						{
-							allotmentmarket.getCities().removeAll(allotmentmarket.getCities());
+							allotmentmarket.getCountry().removeAll(allotmentmarket.getCountry());
 							//JPA.em().merge(rates);
 						}
-						List<City> listCity = new ArrayList<>();
-						for(SelectedCityVM cityvm : selectedCityVM){
-							City _city = City.getCitiByName(cityvm.name);
+						List<Country> listCity = new ArrayList<>();
+						for(SelectedCountryVM cityvm : selectedCountryVM){
+							Country _city = Country.getCountryByName(cityvm.name);
 							
 							if(cityvm.ticked){
 								listCity.add(_city);
 							}
 						}
-						allotmentmarket.setCities(listCity);
+						allotmentmarket.setCountry(listCity);
 				}
 			
 			}
@@ -398,24 +404,29 @@ public class AllotmentController extends Controller {
 	@Transactional(readOnly=false)
 	public static Result deleteAllotmentMarket(int allotMarkid,int allotid) {
 	
+		System.out.println(allotid);
 		Allotment allotment = Allotment.allotmentfindById(allotid);
 		AllotmentMarket deleteallotent = null;
+		/*	
 		for(AllotmentMarket market : allotment.getAllotmentmarket())
 		{
+			System.out.println(market.getAllotmentMarketId());
 			if(market.getAllotmentMarketId() == allotMarkid){
-				deleteallotent = market;
+			//	deleteallotent = market;
 				market.setRate(null);
-				market.setCities(null);
+				market.setCountry(null);
+				allotment.deleteMarketAllotRel(allotMarkid);
+				allotment.deleteMarketAllot(allotMarkid);
 			}			
 			
 		}
 		
-		allotment.getAllotmentmarket().remove(deleteallotent);
-		deleteallotent.delete();
-		allotment.merge();
-		return ok();
+		//allotment.getAllotmentmarket().remove(deleteallotent);
+		//deleteallotent.delete();
+	//	allotment.merge();
+		return ok();*/
 		
-		/*
+		
 		for(AllotmentMarket market : allotment.getAllotmentmarket())
 		{
 			if(market.getAllotmentMarketId() == allotMarkid){
@@ -425,108 +436,88 @@ public class AllotmentController extends Controller {
 		}
 		
 		allotment.getAllotmentmarket().remove(deleteallotent);
-		deleteallotent.cities.removeAll(deleteallotent.getCities());
+		deleteallotent.country.removeAll(deleteallotent.getCountry());
 		deleteallotent.getRate().removeAll(deleteallotent.getRate());
 		deleteallotent.merge();
 		allotment.merge();
 		deleteallotent.delete();
-		return ok();*/
+		return ok();
 	}
 	
-	/*@Transactional(readOnly=false)
-	public static Result deleteDocument(int docId,int id) {
-
-		System.out.println(docId);
-		System.out.println(id);
-		HotelHealthAndSafety healthAndSafety =HotelHealthAndSafety.HealthSafetyfindById(docId);
-		ImgPath deletePath = null;
-		for(ImgPath path : healthAndSafety.getImgpath()){
-			if(path.getImgpathId() == id);
-			deletePath = path;
-		}
-		healthAndSafety.getImgpath().remove(deletePath);
-		File currentFile = new File(deletePath.getImgpath());
-		currentFile.delete();
-		deletePath.delete();
-		
-		//healthAndSafety.setImgpath(null);
-		healthAndSafety.merge();
-		return ok();
-	}*/
-	
-///////
 	@Transactional(readOnly = true)
 	public static Result getMarketGroup(int id) {
-		List<Country> country = Country.getCountries();
-		List<AllotMarketVM> group = new ArrayList<AllotMarketVM>();
-		for (Country c : country) {
-			AllotMarketVM marketvm = new AllotMarketVM();
-			CountryVM countryvm = new CountryVM();
-			countryvm.countryCode = c.getCountryCode();
-			countryvm.countryName = c.getCountryName();
+		List<Markets> arMarkets = Markets.getMarkets();
+		List<MarketVM> group = new ArrayList<MarketVM>();
+		for (Markets c : arMarkets) {
+			MarketVM marketvm = new MarketVM();
+			martektsVM marketsvm = new martektsVM();
+			marketsvm.marketCode = c.getMarketCode();
+			marketsvm.marketName = c.getMarketName();
 
-			List<CityVM> cityvm = new ArrayList<CityVM>();
-			List<City> city = City.getCities(c.getCountryCode());
-			for (City _city : city) {
+			List<CountryVM> conutryvm = new ArrayList<CountryVM>();
+			List<Country> conutry = Country.getCountry(c.getMarketCode());
+			for (Country _conutry : conutry) {
 				
-				CityVM _cityvm = new CityVM();
-				_cityvm.id = _city.getCityCode();
-				_cityvm.cityCountryCode = _city.getCountry().getCountryCode();
-				_cityvm.cityName = _city.getCityName();
+				CountryVM _conutryvm = new CountryVM();
+				_conutryvm.id = _conutry.getCountryCode();
+				_conutryvm.countryMarketCode = _conutry.getMarket().getMarketCode();
+				_conutryvm.countryName = _conutry.getCountryName();
 				if(id != 0) {
 				AllotmentMarket alotMarket = AllotmentMarket.findById(id);
-				for(City cty : alotMarket.getCities()){
-					if(cty.getCityCode() == _city.getCityCode()){
-						_cityvm.tick = true;
+				System.out.println("*******************");
+				System.out.println(alotMarket);
+				for(Country cty : alotMarket.getCountry()){
+					if(cty.getCountryCode() == _conutry.getCountryCode()){
+						_conutryvm.tick = true;
 						break;
 					}else{
-						_cityvm.tick = false;
+						_conutryvm.tick = false;
 					}
 						
 				}
 			} else {
-				_cityvm.tick = false;
-				}
-				cityvm.add(_cityvm);
+				_conutryvm.tick = false;
 			}
-			countryvm.cityvm = cityvm;
-			marketvm.country = countryvm;
-			group.add(marketvm);
+			
+			conutryvm.add(_conutryvm);
 		}
-		return ok(Json.toJson(group));
+		marketsvm.conutryvm = conutryvm;
+		marketvm.country = marketsvm;
+		group.add(marketvm);
 	}
-	
-	public static class AllotMarketVM {
-		public CountryVM country;
+	return ok(Json.toJson(group));
+}
 
-	}
+public static class MarketVM {
+	public martektsVM country;
 
-	public static class CountryVM {
-		public int countryCode;
-		public String countryName;
-		public List<CityVM> cityvm;
-	}
+}
 
-	public static class CityVM {
-		public int id;
-		public int cityCountryCode;
-		public String cityName;
-		public boolean tick;
+public static class martektsVM {
+	public int marketCode;
+	public String marketName;
+	public List<CountryVM> conutryvm;
+}
 
-	}
-	
-	public static class SelectedCityVM {
+public static class CountryVM {
+	public int id;
+	public int countryMarketCode;
+	public String countryName;
+	public boolean tick;
 
-		public String name;
-		public int countryCode;
-		public boolean ticked;
+}
 
-	}
-	public static class VM {
-		public int id;
-		public List<SelectedCityVM> city = new ArrayList<SelectedCityVM>();
-	}
-	
+public static class SelectedCountryVM {
+
+	public String name;
+	public int marketCode;
+	public boolean ticked;
+
+}
+public static class VM {
+	public int id;
+	public List<SelectedCountryVM> city = new ArrayList<SelectedCountryVM>();
+}
 
 	@Transactional(readOnly = false)
 	public static Result setCitySelection() {
@@ -537,24 +528,24 @@ public class AllotmentController extends Controller {
 		
 		VM c = Json.fromJson(jn, VM.class);
 		int id  = c.id;
-		List<SelectedCityVM> city = c.city;
+		List<SelectedCountryVM> city = c.city;
 		AllotmentMarket alotMarket = AllotmentMarket.findById(id);
 		
-		if(alotMarket != null && alotMarket.getCities() != null && !alotMarket.getCities().isEmpty())
+		if(alotMarket != null && alotMarket.getCountry() != null && !alotMarket.getCountry().isEmpty())
 		{
-			alotMarket.getCities().removeAll(alotMarket.getCities());
+			alotMarket.getCountry().removeAll(alotMarket.getCountry());
 			//JPA.em().merge(rates);
 		}
 		
-		List<City> listCity = new ArrayList<>();
-		for(SelectedCityVM cityvm : city){
-			City _city = City.getCitiByName(cityvm.name);
+		List<Country> listCity = new ArrayList<>();
+		for(SelectedCountryVM cityvm : city){
+			Country _city = Country.getCountryByName(cityvm.name);
 			
 			if(cityvm.ticked){
 				listCity.add(_city);
 			}
 		}
-		alotMarket.setCities(listCity);
+		alotMarket.setCountry(listCity);
 		return ok();
 
 	}

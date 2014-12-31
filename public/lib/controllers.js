@@ -191,10 +191,10 @@ angular.module('travel_portal').
 		$scope.selectType = function()
 		{
 			$scope.allotmentMarket.currencyName = $scope.currencyname;
-
+			console.log(supplierCode);
 			if($scope.allotmentMarket.roomId != null && $scope.allotmentMarket.currencyName != null)
 				{
-			$http.get('/getDates/'+$scope.allotmentMarket.roomId+"/"+$scope.allotmentMarket.currencyName)
+			$http.get('/getDates/'+$scope.allotmentMarket.roomId+"/"+$scope.allotmentMarket.currencyName+"/"+supplierCode)
 			.success(function(data){
 				if(data) {
 					console.log(data);
@@ -328,10 +328,18 @@ angular.module('travel_portal').
 				   $("#datediffShow"+index).hide();
 				   }
 			});
-			
-			console.log($scope.allotmentMarket.allotmentmarket[0].allocatedCities);
+		
+			if($scope.allotmentMarket.allotmentmarket[0].applyMarket == 'true'){
+				angular.forEach($scope.allotmentMarket.allotmentmarket, function(obj1, index){
+				
+				if(obj1.allocatedCities == undefined){
+					obj1.allocatedCities = $scope.allotmentMarket.allotmentmarket.allocatedCities;
+				}
+				});	
+			}			
 			
 			if(flag == 0){
+				console.log($scope.allotmentMarket);
 			$http.post('/saveAllotment',$scope.allotmentMarket).success(function(data){
 				console.log('success');
 			 notificationService.success("Save Successfully");
@@ -386,20 +394,20 @@ angular.module('travel_portal').
 						
 							for(var i = 0; i<data.length;i++){
 								allot.allocatedCities.push({
-									name:'<strong>'+data[i].country.countryName+'</strong>',
+									name:'<strong>'+data[i].country.marketName+'</strong>',
 									multiSelectGroup:true
 								});
-								for(var j =0; j<data[i].country.cityvm.length;j++){
+								for(var j =0; j<data[i].country.conutryvm.length;j++){
 									if(allot.applyMarket == "false")
 										{
 									allot.allocatedCities.push({
-										name:data[i].country.cityvm[j].cityName,
-										ticked:data[i].country.cityvm[j].tick
+										name:data[i].country.conutryvm[j].countryName,
+										ticked:data[i].country.conutryvm[j].tick
 									});
 										}else{
 											console.log("True all tick");
 											allot.allocatedCities.push({
-											name:data[i].country.cityvm[j].cityName,
+											name:data[i].country.conutryvm[j].countryName,
 											ticked:true
 											});
 											
@@ -441,7 +449,7 @@ angular.module('travel_portal').
 							$scope.getSelectedCity.push({
                                 name:allot.allocatedCities[i].name,
                                 ticked:allot.allocatedCities[i].ticked,
-                                countryCode : allot.allocatedCities[i].countryCode
+                                countryCode : allot.allocatedCities[i].marketCode
 							});
 						}
 					}
@@ -2440,11 +2448,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	$http.get('/getRoomTypes').success(function(response){
 		console.log(response);
 		$scope.roomTypes = response;
-		
-		/*angular.forEach($scope.response, function(obj, index){
-			$scope.roomTypes[index] = response[index];
-		});
-		console.log($scope.roomTypes);*/
+	
 	});
 	
 	$http.get('/getCurrency').success(function(response){
@@ -2489,6 +2493,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 				$scope.showRateUpdate = false;
 				$scope.showPeriod = false;
 			} else {
+			//	 $scope.showMarketTable($scope.rateMeta);
 				$scope.addNewButton = "true";
 				$scope.messageShow = " ";
 				$scope.link = " ";
@@ -2649,12 +2654,20 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		
 		for(var i=0;i<$scope.rateObject.length;i++) {
 			console.log(i);
+			
 			$scope.rateObject[i].roomId = $scope.formData.room;
 			$scope.rateObject[i].fromDate = $scope.formData.fromDate;
 			$scope.rateObject[i].toDate = $scope.formData.toDate;
 			$scope.rateObject[i].currency = $scope.currencyname;
 			$scope.rateObject[i].supplierCode = supplierCode;
+			if($scope.rateObject[i].allocatedCities.length == 0)
+				{
+				 $scope.showMarketTable($scope.rateObject[i]);
+			
+				}
+		
 		}
+		console.log($scope.rateObject);
 		
 		$http.post('/saveRate', {"rateObject":$scope.rateObject}).success(function(data){
 			console.log('success');
@@ -2689,7 +2702,6 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		
 	}
 	
-	
 	////
     
     $scope.selectedRatesId;
@@ -2713,25 +2725,26 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		console.log($scope.selectedRatesId);
 		$http.get('/getMarketGroup/'+$scope.selectedRatesId)
 		.success(function(data){
+			console.log(data);
 			if(data) {
 				alloc.allocatedCities = [];
 				
 					for(var i = 0; i<data.length;i++){
 						alloc.allocatedCities.push({
-							name:'<strong>'+data[i].country.countryName+'</strong>',
+							name:'<strong>'+data[i].country.marketName+'</strong>',
 							multiSelectGroup:true
 						});
-						for(var j =0; j<data[i].country.cityvm.length;j++){
+						for(var j =0; j<data[i].country.conutryvm.length;j++){
 							if(alloc.applyToMarket == false)
 								{
 							alloc.allocatedCities.push({
-								name:data[i].country.cityvm[j].cityName,
-								ticked:data[i].country.cityvm[j].tick
+								name:data[i].country.conutryvm[j].countryName,
+								ticked:data[i].country.conutryvm[j].tick
 							});
 								}else{
 									console.log("True all tick");
 									alloc.allocatedCities.push({
-									name:data[i].country.cityvm[j].cityName,
+									name:data[i].country.conutryvm[j].countryName,
 									ticked:true
 									});
 									
@@ -2773,7 +2786,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 					$scope.getSelectedCity.push({
                         name:allot.allocatedCities[i].name,
                         ticked:allot.allocatedCities[i].ticked,
-                        countryCode : allot.allocatedCities[i].countryCode
+                        countryCode : allot.allocatedCities[i].marketCode
 					});
 				}
 			}
@@ -3045,6 +3058,9 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 				$scope.showSavedRemoveMarket = false;
 			}
 			
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+			$scope.specialsData[parentIndex].markets.splice(index,1);
 		});
 	    }
 		
@@ -3097,6 +3113,8 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 		$scope.specialsObject[0].supplierCode = supplierCode;
 		console.log($scope.specialsObject);
 		if($scope.specialsObject[0].fromDate < $scope.specialsObject[0].toDate){
+			if($scope.specialsObject[0].promotionName != null){
+				if($scope.specialsObject[0].roomTypes.length != 0){
 			$http.post('/saveSpecials', {"specialsObject":$scope.specialsObject}).success(function(data){
 				console.log('success');
 				 notificationService.success("Save Successfully");
@@ -3119,7 +3137,20 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 				console.log('ERROR');
 				notificationService.error("Please Enter Required Fields");
 			});
+			$("#roomtypeshow").hide();
+			$("#promotion").hide();
 			$("#datediffShow").hide();
+				}
+				else
+					{
+					$("#roomtypeshow").show();
+					}
+			}
+			else
+			{
+			$("#promotion").show();
+			}
+			
 		}else
 			{
 			$("#datediffShow").show();
@@ -3129,6 +3160,7 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 	
 	$scope.updatePeriod = function() {
 		$scope.specialsData[0].supplierCode = supplierCode;
+		console.log($scope.specialsData);
 		$http.post('/updateSpecials', {"specialsObject":$scope.specialsData}).success(function(data){
 			console.log('success');
 			 notificationService.success("Update Successfully");
@@ -3219,21 +3251,21 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 				
 					for(var i = 0; i<data.length;i++){
 						alloc.allocatedCities.push({
-							name:'<strong>'+data[i].country.countryName+'</strong>',
+							name:'<strong>'+data[i].country.marketName+'</strong>',
 							multiSelectGroup:true
 						});
 						
-						for(var j =0; j<data[i].country.cityvm.length;j++){
+						for(var j =0; j<data[i].country.conutryvm.length;j++){
 							if(alloc.applyToMarket == "false")
 								{
 							alloc.allocatedCities.push({
-								name:data[i].country.cityvm[j].cityName,
-								ticked:data[i].country.cityvm[j].tick
+								name:data[i].country.conutryvm[j].countryName,
+								ticked:data[i].country.conutryvm[j].tick
 							});
 								}else{
 									console.log("True all tick");
 									alloc.allocatedCities.push({
-									name:data[i].country.cityvm[j].cityName,
+									name:data[i].country.conutryvm[j].countryName,
 									ticked:true
 									});
 									

@@ -1,8 +1,10 @@
 package com.travelportal.vm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.travelportal.domain.HotelStarRatings;
+import com.travelportal.domain.rooms.RateMeta;
 
 public class HotelProfileVM {
 	
@@ -32,6 +34,16 @@ public class HotelProfileVM {
 	public String location1;
 	public String location2;
 	public String location3;
+	public List<RateVM> rate;  //= new ArrayList<RateVM>()
+	
+	
+	
+	public List<RateVM> getRate() {
+		return rate;
+	}
+	public void setRate(List<RateVM> rate) {
+		this.rate = rate;
+	}
 	public Long getSupplierCode() {
 		return supplierCode;
 	}

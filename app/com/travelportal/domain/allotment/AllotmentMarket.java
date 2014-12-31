@@ -25,6 +25,7 @@ import javax.persistence.Query;
 import javax.persistence.Table;
 
 import com.travelportal.domain.City;
+import com.travelportal.domain.Country;
 import com.travelportal.domain.rooms.RateMeta;
 
 import play.db.jpa.JPA;
@@ -61,8 +62,18 @@ public class AllotmentMarket {
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<RateMeta> rate;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    public List<City> cities;
+    public List<Country> country;
 	
+
+	
+	
+	public List<Country> getCountry() {
+		return country;
+	}
+
+	public void setCountry(List<Country> country) {
+		this.country = country;
+	}
 
 	public int getAllotmentMarketId() {
 		return allotmentMarketId;
@@ -111,14 +122,6 @@ public class AllotmentMarket {
 
 	public void setRate(List<RateMeta> rate) {
 		this.rate = rate;
-	}
-
-	public List<City> getCities() {
-		return cities;
-	}
-
-	public void setCities(List<City> cities) {
-		this.cities = cities;
 	}
 	
 	public String getApplyMarket() {
@@ -279,7 +282,8 @@ public static List<AllotmentMarket> getMarketById(int MarketId,List<Integer> rat
 			return q.getResultList();
 	
    }
-	
+
+
 	
 	
 	

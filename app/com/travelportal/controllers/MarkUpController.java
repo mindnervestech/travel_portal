@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import play.data.DynamicForm;
 import play.db.jpa.JPA;
@@ -72,8 +74,17 @@ public class MarkUpController extends Controller {
 	public static Result agentCountries() {
 		
 		List<Country> aList = AgentRegistration.getAllApprovedAgent();
-		return ok(Json.toJson(aList));
-
+		//return ok(Json.toJson(aList));
+		
+		//final List<Country> countries = Country.getCountries(); 
+		List<Map> country = new ArrayList<>();
+ 		for(Country c : aList){
+ 			Map m = new HashMap<>();
+ 			m.put("countryCode", c.getCountryCode());
+ 			m.put("countryName", c.getCountryName());
+ 			country.add(m);
+		}
+		return ok(Json.toJson(country));
 	}
 	
 	@Transactional(readOnly = true)

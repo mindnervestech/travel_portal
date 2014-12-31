@@ -6,37 +6,25 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
+import play.data.Form;
+import play.db.jpa.Transactional;
+import play.libs.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.travelportal.controllers.AllotmentController.AllotMarketVM;
-import com.travelportal.controllers.AllotmentController.CityVM;
-import com.travelportal.controllers.AllotmentController.CountryVM;
-import com.travelportal.controllers.AllotmentController.VM;
-import com.travelportal.controllers.HotelRoomController.SelectedCityVM;
-import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
-import com.travelportal.domain.Currency;
+import com.travelportal.domain.Markets;
 import com.travelportal.domain.allotment.AllotmentMarket;
-import com.travelportal.domain.rooms.CancellationPolicy;
 import com.travelportal.domain.rooms.FreeStay;
 import com.travelportal.domain.rooms.HotelRoomTypes;
-import com.travelportal.domain.rooms.PersonRate;
-import com.travelportal.domain.rooms.RateDetails;
-import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.AllocatedCitiesVM;
 import com.travelportal.vm.SpecialsMarketVM;
 import com.travelportal.vm.SpecialsVM;
 import com.travelportal.vm.SpecialsWrapper;
-
-import play.data.Form;
-import play.db.jpa.JPA;
-import play.db.jpa.Transactional;
-import play.libs.Json;
-import play.mvc.Controller;
-import play.mvc.Result;
+//import com.travelportal.controllers.HotelRoomController.SelectedCityVM;
 
 public class SupplierController extends Controller {
 
@@ -96,26 +84,26 @@ public class SupplierController extends Controller {
 				
 				//RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType));
 				 SpecialsMarket SpecM = SpecialsMarket.findByTopid();
-				List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
+				List<SelectedCountryVM> selectedCountryVM = new ArrayList<>(); 	
 				for(AllocatedCitiesVM vm: market.allocatedCities) {
 					if(vm.multiSelectGroup == false && vm.name != null){
-						SelectedCityVM cityVM = new SelectedCityVM();
+						SelectedCountryVM cityVM = new SelectedCountryVM();
 						cityVM.name = vm.name;
 						cityVM.ticked = vm.ticked;
-						selectedCityVM.add(cityVM);
+						selectedCountryVM.add(cityVM);
 					}
 					
 					System.out.println(vm.multiSelectGroup);
 				}
-				List<City> listCity = new ArrayList<>();
-				for(SelectedCityVM cityvm : selectedCityVM){
-					City _city = City.getCitiByName(cityvm.name);
+				List<Country> listCity = new ArrayList<>();
+				for(SelectedCountryVM cityvm : selectedCountryVM){
+					Country _city = Country.getCountryByName(cityvm.name);
 					
 					if(cityvm.ticked){
 						listCity.add(_city);
 					}
 				}
-				SpecM.setCities(listCity);
+				SpecM.setCountry(listCity);
 				
 			}
 		}
@@ -126,7 +114,7 @@ public class SupplierController extends Controller {
 	
 	@Transactional(readOnly=false)
     public static Result deleteMarket(long id){
-		SpecialsMarket.deletespecialCity(id);
+		SpecialsMarket.deletespecialCountry(id);
 		SpecialsMarket.deleteMarketSp(id);	
 		
 		return ok();
@@ -139,7 +127,7 @@ public class SupplierController extends Controller {
 		
 		List<SpecialsMarket> specialsList = SpecialsMarket.findBySpecialsId(id);
 		for(SpecialsMarket special : specialsList) {
-			SpecialsMarket.deletespecialCity(special.getId());
+			SpecialsMarket.deletespecialCountry(special.getId());
 			//specials.setFromDate(format.parse(spec.fromDate));
 			
 		}
@@ -173,6 +161,10 @@ public class SupplierController extends Controller {
 			
 			for(SpecialsMarketVM market: spec.markets) {
 				if(market.id == 0) {
+					System.out.println("-------------");
+					System.out.println(market.applyToMarket);
+					System.out.println(market.payDays);
+					System.out.println("-------------");
 					SpecialsMarket specialsMarket = new SpecialsMarket();
 					specialsMarket.setStayDays(market.stayDays);
 					specialsMarket.setPayDays(market.payDays);
@@ -184,26 +176,26 @@ public class SupplierController extends Controller {
 					specialsMarket.save();
 					
 					 SpecialsMarket SpecM = SpecialsMarket.findByTopid();
-						List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
+						List<SelectedCountryVM> selectedCountryVM = new ArrayList<>(); 	
 						for(AllocatedCitiesVM vm: market.allocatedCities) {
 							if(vm.multiSelectGroup == false && vm.name != null){
-								SelectedCityVM cityVM = new SelectedCityVM();
+								SelectedCountryVM cityVM = new SelectedCountryVM();
 								cityVM.name = vm.name;
 								cityVM.ticked = vm.ticked;
-								selectedCityVM.add(cityVM);
+								selectedCountryVM.add(cityVM);
 							}
 							
 							System.out.println(vm.multiSelectGroup);
 						}
-						List<City> listCity = new ArrayList<>();
-						for(SelectedCityVM cityvm : selectedCityVM){
-							City _city = City.getCitiByName(cityvm.name);
+						List<Country> listCity = new ArrayList<>();
+						for(SelectedCountryVM cityvm : selectedCountryVM){
+							Country _city = Country.getCountryByName(cityvm.name);
 							
 							if(cityvm.ticked){
 								listCity.add(_city);
 							}
 						}
-						SpecM.setCities(listCity);
+						SpecM.setCountry(listCity);
 				} else {
 					SpecialsMarket specialsMarket = SpecialsMarket.findById(market.id);
 					specialsMarket.setStayDays(market.stayDays);
@@ -211,29 +203,30 @@ public class SupplierController extends Controller {
 					specialsMarket.setTypeOfStay(market.typeOfStay);
 					specialsMarket.setCombined(market.combined);
 					specialsMarket.setMultiple(market.multiple);
+					specialsMarket.setApplyToMarket(market.applyToMarket);
 					specialsMarket.merge();
 					
 					// SpecialsMarket SpecM = SpecialsMarket.findByTopid();
-						List<SelectedCityVM> selectedCityVM = new ArrayList<>(); 	
-						for(AllocatedCitiesVM vm: market.allocatedCities) {
-							if(vm.multiSelectGroup == false && vm.name != null){
-								SelectedCityVM cityVM = new SelectedCityVM();
-								cityVM.name = vm.name;
-								cityVM.ticked = vm.ticked;
-								selectedCityVM.add(cityVM);
-							}
-							
-							System.out.println(vm.multiSelectGroup);
+					List<SelectedCountryVM> selectedCountryVM = new ArrayList<>(); 	
+					for(AllocatedCitiesVM vm: market.allocatedCities) {
+						if(vm.multiSelectGroup == false && vm.name != null){
+							SelectedCountryVM cityVM = new SelectedCountryVM();
+							cityVM.name = vm.name;
+							cityVM.ticked = vm.ticked;
+							selectedCountryVM.add(cityVM);
 						}
-						List<City> listCity = new ArrayList<>();
-						for(SelectedCityVM cityvm : selectedCityVM){
-							City _city = City.getCitiByName(cityvm.name);
-							
-							if(cityvm.ticked){
-								listCity.add(_city);
-							}
+						
+						System.out.println(vm.multiSelectGroup);
+					}
+					List<Country> listCity = new ArrayList<>();
+					for(SelectedCountryVM cityvm : selectedCountryVM){
+						Country _city = Country.getCountryByName(cityvm.name);
+						
+						if(cityvm.ticked){
+							listCity.add(_city);
 						}
-						specialsMarket.setCities(listCity);
+					}
+					specialsMarket.setCountry(listCity);
 				}
 			}
 		}
@@ -277,76 +270,77 @@ public class SupplierController extends Controller {
 	
 	@Transactional(readOnly = true)
 	public static Result getMarketGroup(long id) {
-		List<Country> country = Country.getCountries();
+		List<Markets> arMarkets = Markets.getMarkets();
 		List<MarketVM> group = new ArrayList<MarketVM>();
-		for (Country c : country) {
+		for (Markets c : arMarkets) {
 			MarketVM marketvm = new MarketVM();
-			CountryVM countryvm = new CountryVM();
-			countryvm.countryCode = c.getCountryCode();
-			countryvm.countryName = c.getCountryName();
+			martektsVM marketsvm = new martektsVM();
+			marketsvm.marketCode = c.getMarketCode();
+			marketsvm.marketName = c.getMarketName();
 
-			List<CityVM> cityvm = new ArrayList<CityVM>();
-			List<City> city = City.getCities(c.getCountryCode());
-			for (City _city : city) {
+			List<CountryVM> conutryvm = new ArrayList<CountryVM>();
+			List<Country> conutry = Country.getCountry(c.getMarketCode());
+			for (Country _conutry : conutry) {
 				
-				CityVM _cityvm = new CityVM();
-				_cityvm.id = _city.getCityCode();
-				_cityvm.cityCountryCode = _city.getCountry().getCountryCode();
-				_cityvm.cityName = _city.getCityName();
+				CountryVM _conutryvm = new CountryVM();
+				_conutryvm.id = _conutry.getCountryCode();
+				_conutryvm.countryMarketCode = _conutry.getMarket().getMarketCode();
+				_conutryvm.countryName = _conutry.getCountryName();
 				if(id != 0) {
 					SpecialsMarket alotMarket = SpecialsMarket.findByIdCity(id);
 					System.out.println("*******************");
 					System.out.println(alotMarket);
-				for(City cty : alotMarket.getCities()){
-					if(cty.getCityCode() == _city.getCityCode()){
-						_cityvm.tick = true;
-						break;
-					}else{
-						_cityvm.tick = false;
+					for(Country cty : alotMarket.getCountry()){
+						if(cty.getCountryCode() == _conutry.getCountryCode()){
+							_conutryvm.tick = true;
+							break;
+						}else{
+							_conutryvm.tick = false;
+						}
+							
 					}
-						
+				} else {
+					_conutryvm.tick = false;
 				}
-			} else {
-				_cityvm.tick = false;
-				}
-				cityvm.add(_cityvm);
+				
+				conutryvm.add(_conutryvm);
 			}
-			countryvm.cityvm = cityvm;
-			marketvm.country = countryvm;
+			marketsvm.conutryvm = conutryvm;
+			marketvm.country = marketsvm;
 			group.add(marketvm);
 		}
 		return ok(Json.toJson(group));
 	}
 	
 	public static class MarketVM {
-		public CountryVM country;
+		public martektsVM country;
 
+	}
+
+	public static class martektsVM {
+		public int marketCode;
+		public String marketName;
+		public List<CountryVM> conutryvm;
 	}
 
 	public static class CountryVM {
-		public int countryCode;
-		public String countryName;
-		public List<CityVM> cityvm;
-	}
-
-	public static class CityVM {
 		public int id;
-		public int cityCountryCode;
-		public String cityName;
+		public int countryMarketCode;
+		public String countryName;
 		public boolean tick;
 
 	}
 	
-	public static class SelectedCityVM {
+	public static class SelectedCountryVM {
 
 		public String name;
-		public int countryCode;
+		public int marketCode;
 		public boolean ticked;
 
 	}
 	public static class VM {
 		public int id;
-		public List<SelectedCityVM> city = new ArrayList<SelectedCityVM>();
+		public List<SelectedCountryVM> city = new ArrayList<SelectedCountryVM>();
 	}
 	
 
@@ -359,24 +353,26 @@ public class SupplierController extends Controller {
 		
 		VM c = Json.fromJson(jn, VM.class);
 		int id  = c.id;
-		List<SelectedCityVM> city = c.city;
+		List<SelectedCountryVM> city = c.city;
+		
 		AllotmentMarket alotMarket = AllotmentMarket.findById(id);
 		
-		if(alotMarket != null && alotMarket.getCities() != null && !alotMarket.getCities().isEmpty())
+		if(alotMarket != null && alotMarket.getCountry() != null && !alotMarket.getCountry().isEmpty())
 		{
-			alotMarket.getCities().removeAll(alotMarket.getCities());
+			alotMarket.getCountry().removeAll(alotMarket.getCountry());
 			//JPA.em().merge(rates);
 		}
 		
-		List<City> listCity = new ArrayList<>();
-		for(SelectedCityVM cityvm : city){
-			City _city = City.getCitiByName(cityvm.name);
+		List<Country> listCity = new ArrayList<>();
+		for(SelectedCountryVM cityvm : city){
+			Country _city = Country.getCountryByName(cityvm.name);
 			
 			if(cityvm.ticked){
 				listCity.add(_city);
 			}
 		}
-		alotMarket.setCities(listCity);
+
+		alotMarket.setCountry(listCity);
 		return ok();
 
 	}

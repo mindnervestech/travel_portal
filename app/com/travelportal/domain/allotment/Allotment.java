@@ -189,6 +189,16 @@ public class Allotment {
 		}
     }
 	
+	public static int deleteMarketAllotRel(int id) {
+		Query q = JPA.em().createNativeQuery("delete from allotment_allotmentmarket where allotmentmarket_allotmentMarket_Id = '"+id+"'");
+	//	query.setParameter(1, id);
+		return q.executeUpdate();
+	}
+	public static int deleteMarketAllot(int id) {
+		Query query = JPA.em().createNativeQuery("delete from allotmentmarket  where allotmentMarket_Id = '"+id+"'");
+		//query.setParameter(1, id);
+		return query.executeUpdate();
+	}
 	
 	@Transactional
     public void save() {

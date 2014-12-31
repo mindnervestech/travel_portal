@@ -96,7 +96,7 @@ POST   /savefiles       com.travelportal.controllers.HotelProfileController.save
 
 #following routes are used for fetch Allotment, 
 POST      /getallmentMarket   com.travelportal.controllers.AllotmentController.getallmentMarket()
-GET     /getDates/:roomId/:currencyName  com.travelportal.controllers.AllotmentController.getDates(roomId:Long,currencyName:String)
+GET     /getDates/:roomId/:currencyName/:supplierCode  com.travelportal.controllers.AllotmentController.getDates(roomId:Long,currencyName:String,supplierCode:Long)
 POST     /getRates         com.travelportal.controllers.AllotmentController.getRates()
 #GET     /allotmentAllData/:supplierCode   com.travelportal.controllers.AllotmentController.getallotmentAllData(supplierCode:Long)
 POST    /saveAllotment		com.travelportal.controllers.AllotmentController.saveAllotment()
@@ -200,3 +200,5 @@ GET  /getCountryByMarket/:cityId			   com.travelportal.controllers.AllRateContro
 GET  /getHotelAmenities		com.travelportal.controllers.AllRateController.getHotelAmenities
 #GET  /getAmenitiesWiseHotel/:roomId/:fromDate/:toDate/:sId/:cityId/:id			   com.travelportal.controllers.AllRateController.getAmenitiesWiseHotel(roomId:Long,fromDate:String,toDate:String,sId:Integer,cityId:Integer,id:Integer)
 GET  /getAmenitiesWiseHotel			   com.travelportal.controllers.AllRateController.getAmenitiesWiseHotel()
+GET  /getSearchHotel			   com.travelportal.controllers.AllRateController.getSearchHotel()
+GET  /getDatewiseHotel			   com.travelportal.controllers.AllRateController.getDatewiseHotel()

@@ -24,6 +24,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 import com.travelportal.domain.City;
+import com.travelportal.domain.Country;
 //import com.travelportal.domain.RatePeriod;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.allotment.AllotmentMarket;
@@ -50,6 +51,17 @@ public class RateMeta {
 	private Long supplierCode;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public List<Country> country;
+	
+	
+	
+	public List<Country> getCountry() {
+		return country;
+	}
+	public void setCountry(List<Country> country) {
+		this.country = country;
+	}
+	/*@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<City> cities;
 	
 	public List<City> getCities() {
@@ -57,7 +69,7 @@ public class RateMeta {
 	}
 	public void setCities(List<City> cities) {
 		this.cities = cities;
-	}
+	}*/
 	public Long getId() {
 		return id;
 	}
@@ -148,6 +160,160 @@ public class RateMeta {
 	    }
 	 
 	 
+	 public static List<RateMeta> getdatecheck(Long roomId,int cityId,int sId,int countryId) {
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			
+		 List<Object[]> list;
+	if(sId != 0){
+		 list =JPA.em().createNativeQuery("select * from rate_meta am,hotel_profile hpp,rate_meta_country rmcountry where am.rate_id = rmcountry.rate_meta_rate_id and am.supplierCode = hpp.supplier_code and rmcountry.country_country_code = '"+countryId+"' and hpp.city_city_code = '"+cityId+"' and am.roomType_room_id = '"+roomId+"' and hpp.startRatings_id = '"+sId+"' ").getResultList();
+		 System.out.println("Print 1 or more");
+	}else{
+		list =JPA.em().createNativeQuery("select * from rate_meta am,hotel_profile hpp,rate_meta_country rmcountry where am.rate_id = rmcountry.rate_meta_rate_id and am.supplierCode = hpp.supplier_code and rmcountry.country_country_code = '"+countryId+"' and hpp.city_city_code = '"+cityId+"' and am.roomType_room_id = '"+roomId+"'").getResultList();
+		  System.out.println("Print only 0");
+	}
+	
+	 List<RateMeta> list1 = new ArrayList<>();
+		
+		for(Object[] o :list) {
+		
+			RateMeta am = new RateMeta();
+			System.out.println(o);
+			am.setId(Long.parseLong(o[0].toString()));
+			am.setCurrency(o[1].toString());
+			try {
+				am.setFromDate(format.parse(o[2].toString()));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			am.setRateName(o[3].toString());
+			try {
+				am.setToDate(format.parse(o[4].toString()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			am.setRoomType(HotelRoomTypes.findById(Long.parseLong(o[5].toString())));
+			if(o[6] != null){
+			am.setSupplierCode(Long.parseLong(o[6].toString()));
+			}
+			list1.add(am);
+		}
+		
+		return list1;
+		
+	 }
+	 
+	 
+	 public static List<RateMeta> getHotels(Long roomId,int cityId,int sId,Date fromDate,Date toDate,int countryId) {
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			String fDate = null;
+			String tDate = null;
+		
+			fDate = format.format(fromDate);
+			tDate = format.format(toDate);
+		
+		
+			System.out.println(fDate);
+		
+		 System.out.println(toDate);
+		//String q = "select * from rate_meta am,hotel_profile hpp,rate_meta_country rmcountry where am.rate_id = rmcountry.rate_meta_rate_id and am.supplierCode = hpp.supplier_code and rmcountry.country_country_code = '"+countryId+"' and hpp.city_city_code = '"+cityId+"' and am.roomType_room_id = '"+roomId+"' and am.from_date <= '"+fDate+"' and am.to_date >= '"+fDate+"' and  am.from_date <= '"+tDate+"' and am.to_date >= '"+tDate+"'";
+		 List<Object[]> list;
+	if(sId != 0){
+		 list =JPA.em().createNativeQuery("select * from rate_meta am,hotel_profile hpp,rate_meta_country rmcountry where am.rate_id = rmcountry.rate_meta_rate_id and am.supplierCode = hpp.supplier_code and rmcountry.country_country_code = '"+countryId+"' and hpp.city_city_code = '"+cityId+"' and am.roomType_room_id = '"+roomId+"' and hpp.startRatings_id = '"+sId+"' and (am.from_date <= '"+fDate+"' and am.to_date >= '"+fDate+"' or  (am.from_date <= '"+tDate+"' and am.to_date >= '"+tDate+"' or am.to_date <= '"+tDate+"' and am.to_date >= '"+fDate+"'))").getResultList();
+		 System.out.println("Print 1 or more");
+	}else{
+		  list =JPA.em().createNativeQuery("select * from rate_meta am,hotel_profile hpp,rate_meta_country rmcountry where am.rate_id = rmcountry.rate_meta_rate_id and am.supplierCode = hpp.supplier_code and rmcountry.country_country_code = '"+countryId+"' and hpp.city_city_code = '"+cityId+"' and am.roomType_room_id = '"+roomId+"' and (am.from_date <= '"+fDate+"' and am.to_date >= '"+fDate+"' or  am.from_date <= '"+tDate+"' and am.to_date >= '"+tDate+"')").getResultList();
+		  System.out.println("Print only 0");
+	}
+	
+	 List<RateMeta> list1 = new ArrayList<>();
+		
+		for(Object[] o :list) {
+		
+			RateMeta am = new RateMeta();
+			System.out.println(o);
+			am.setId(Long.parseLong(o[0].toString()));
+			am.setCurrency(o[1].toString());
+			try {
+				am.setFromDate(format.parse(o[2].toString()));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			am.setRateName(o[3].toString());
+			try {
+				am.setToDate(format.parse(o[4].toString()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			am.setRoomType(HotelRoomTypes.findById(Long.parseLong(o[5].toString())));
+			if(o[6] != null){
+			am.setSupplierCode(Long.parseLong(o[6].toString()));
+			}
+			list1.add(am);
+		}
+		
+		return list1;
+		
+	 }
+	 
+	 public static List<RateMeta> getHotels1(Long roomId,int cityId,int sId,Date fromDate,Date toDate,int countryId,long supplier) {
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			String fDate = null;
+			String tDate = null;
+		
+			fDate = format.format(fromDate);
+			tDate = format.format(toDate);
+		
+		
+			 System.out.println("**********");
+		 System.out.println(supplier);
+		 
+		
+		 List<Object[]> list;
+	if(sId != 0){
+		 list =JPA.em().createNativeQuery("select * from rate_meta am,hotel_profile hpp,rate_meta_country rmcountry where am.rate_id = rmcountry.rate_meta_rate_id and am.supplierCode = hpp.supplier_code and am.supplierCode = '"+supplier+"' and rmcountry.country_country_code = '"+countryId+"' and hpp.city_city_code = '"+cityId+"' and am.roomType_room_id = '"+roomId+"' and hpp.startRatings_id = '"+sId+"' and (am.from_date <= '"+fDate+"' and am.to_date >= '"+fDate+"' or  (am.from_date <= '"+tDate+"' and am.to_date >= '"+tDate+"' or am.to_date <= '"+tDate+"' and am.to_date >= '"+fDate+"'))").getResultList();
+		 System.out.println("Print 1 or more");
+	}else{
+		  list =JPA.em().createNativeQuery("select * from rate_meta am,hotel_profile hpp,rate_meta_country rmcountry where am.rate_id = rmcountry.rate_meta_rate_id and am.supplierCode = hpp.supplier_code and am.supplierCode = '"+supplier+"' and rmcountry.country_country_code = '"+countryId+"' and hpp.city_city_code = '"+cityId+"' and am.roomType_room_id = '"+roomId+"' and (am.from_date <= '"+fDate+"' and am.to_date >= '"+fDate+"' or  am.from_date <= '"+tDate+"' and am.to_date >= '"+tDate+"')").getResultList();  
+		  System.out.println("Print only 0");
+	}
+	
+	 List<RateMeta> list1 = new ArrayList<>();
+		
+		for(Object[] o :list) {
+		
+			RateMeta am = new RateMeta();
+			System.out.println(o);
+			am.setId(Long.parseLong(o[0].toString()));
+			am.setCurrency(o[1].toString());
+			try {
+				am.setFromDate(format.parse(o[2].toString()));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			am.setRateName(o[3].toString());
+			try {
+				am.setToDate(format.parse(o[4].toString()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			am.setRoomType(HotelRoomTypes.findById(Long.parseLong(o[5].toString())));
+			if(o[6] != null){
+			am.setSupplierCode(Long.parseLong(o[6].toString()));
+			}
+			list1.add(am);
+		}
+		
+		return list1;
+		
+	 }
+	 
+	 
 	 public static List<RateMeta> getRateAndHotel(Long roomId,int cityId,int sId,Date fromDate,Date toDate) {
 		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			String fDate = null;
@@ -232,12 +398,13 @@ public class RateMeta {
 		
 	 }
 	 
-	 public static List<RateMeta> getDates(long roomid,String currencyName) {
+	 public static List<RateMeta> getDates(long roomid,String currencyName,Long supplierCode) {
 		
 		
-			Query q = JPA.em().createQuery("select c.fromDate,c.toDate from RateMeta c where c.roomType.roomId = :roomid and c.currency = :currencyName GROUP BY c.fromDate , c.toDate");
+			Query q = JPA.em().createQuery("select c.fromDate,c.toDate from RateMeta c where c.roomType.roomId = :roomid and c.currency = :currencyName and c.supplierCode = :supplierCode GROUP BY c.fromDate , c.toDate");
 			q.setParameter("roomid", roomid);
 			q.setParameter("currencyName", currencyName);
+			q.setParameter("supplierCode", supplierCode);
 			return q.getResultList();
 		}
 	
@@ -276,7 +443,8 @@ public class RateMeta {
 		 public static List<RateMeta> getAllRates() {
 		 return JPA.em().createQuery("Select r from RateMeta r").getResultList();
 		 }
-	 
+		 
+		
 		 
 		 public static List<RateMeta> getrateId(List<Long> rateid) {
 				return JPA.em().createQuery("select c from RateMeta c where id IN ?1").setParameter(1, rateid).getResultList();
