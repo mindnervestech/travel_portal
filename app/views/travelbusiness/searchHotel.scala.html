@@ -1,4 +1,4 @@
-
+@(hotellist: com.fasterxml.jackson.databind.JsonNode) 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <!--[if IE 8]>          <html class="ie ie8"> <![endif]-->
@@ -30,6 +30,7 @@
       <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
     <![endif]-->
 </head>
+
 <body data-ng-app="travel-business" data-ng-controller="PageController">
     
     <div id="page-wrapper">
@@ -45,7 +46,8 @@
                 </ul>
             </div>
         </div>
-        <section id="content">
+      
+        <section id="content" ng-init="init(@hotellist)">
             <div class="container">
                 <div id="main">
                     <div class="row">
@@ -154,13 +156,13 @@
                                                 <div class="form-group">
                                                     <label>check in</label>
                                                     <div class="datepicker-wrap">
-                                                        <input type="text" class="input-text full-width" placeholder="mm/dd/yy" />
+                                                        <input type="text" class="input-text full-width" placeholder="dd/mm/yy" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>check out</label>
                                                     <div class="datepicker-wrap">
-                                                        <input type="text" class="input-text full-width" placeholder="mm/dd/yy" />
+                                                        <input type="text" class="input-text full-width" placeholder="dd/mm/yy" />
                                                     </div>
                                                 </div>
                                                 <br />
@@ -195,14 +197,15 @@
                                 </ul>
                             </div>
                             <div class="hotel-list listing-style3 hotel">
-                                <article class="box">
+                                <article class="box" ng-repeat="hotelInfo in hotellistInfo">
                                     <figure class="col-sm-5 col-md-4">
-                                        <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery"><img width="270" height="160" alt="" src="http://placehold.it/270x160"></a>
+                                     <!-- <img data-ng-src="{{img}}" alt="">  -->
+                                        <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery" style="margin-bottom: 2%;"><img width="270" height="160" alt="" data-ng-src="{{hotelInfo.imgPaths}}"></a>
                                     </figure>
                                     <div class="details col-sm-7 col-md-8">
                                         <div>
                                             <div>
-                                                <h4 class="box-title">Hotel Hilton and Resorts<small><i class="soap-icon-departure yellow-color"></i> Bastille, Paris france</small></h4>
+                                                <h4 class="box-title">{{hotelInfo.hotelNm}}<small><i class="soap-icon-departure yellow-color"></i> {{hotelInfo.hotelAddr}}</small></h4>
                                                 <div class="amenities">
                                                     <i class="soap-icon-wifi circle"></i>
                                                     <i class="soap-icon-fitnessfacility circle"></i>
@@ -218,15 +221,71 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <p>Nunc cursus libero purus ac congue ar lorem cursus ut sed vitae pulvinar massa idend porta nequetiam elerisque mi id, consectetur adipi deese cing elit maus fringilla bibe endum.</p>
-                                            <div>
-                                                <span class="price"><small>AVG/NIGHT</small>$620</span>
+                                            <p>{{hotelInfo.imgDescription}}</p>
+                                           <!--  <div>
+                                                 <span class="price"><small>AVG/NIGHT</small>$620</span> 
                                                 <a class="button btn-small full-width text-center" title="" href="hotel-detailed.html">SELECT</a>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
+		 							 <div class="row">
+		 							 <div class="form-group col-sm-12 col-md-12">
+  										 <label class="col-xs-11" style="background-color: #d9d9d9;margin-left: 2%;">Rates Per Night From</label>
+  										</div>
+                                  </div>
+                                 
+                                  <div class="row" ng-repeat="roominfo in hotelInfo.hotelbyRoom">
+                                   <a ng-click="dateWiseInfo($parent.$index,$index)" style="cursor: pointer;" data-toggle="modal">
+                                    <div class="c col-sm-6 col-md-11" style="border-bottom: 1px dotted;margin-left: 3%;">
+                                         <div class="col-xs-4">
+                                         <label>{{roominfo.roomName}}  
+                                              </label>
+                                              <img src="/assets/resources/images/eye.png" style="width: 9%;">
+                                         </div>
+                                        <div class="col-xs-2" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null">
+                                         <span>
+                                         <img src="/assets/resources/images/oneMan.png" style="width: 15%;">
+                                          </span>
+                                          <span>
+                                         <label style="font-size:small;color: #7db921;margin-left: 19%;">{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg}}
+                                              </label>
+                                             </span>
+                                         </div>
+                                         <div class="col-xs-2" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg != null">
+                                         <span>
+                                         <img src="/assets/resources/images/oneMan.png" style="width: 15%;">
+                                         <img src="/assets/resources/images/oneMan.png" style="width: 15%;">
+                                         </span>
+                                          <span>
+                                         <label style="font-size:small;color: #7db921;margin-left: 19%;">{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg}}
+                                              </label>
+                                             </span>
+                                         </div>
+                                         <div class="col-xs-3" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg != null">
+                                         <span>
+                                         <img src="/assets/resources/images/oneMan.png" style="width: 10%;">
+                                         <img src="/assets/resources/images/oneMan.png" style="width: 10%;">
+                                         <img src="/assets/resources/images/oneMan.png" style="width: 10%;">
+                                        </span>
+                                        <span>
+                                         <label style="font-size:small;color: #7db921;margin-left: 19%;">{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg}}
+                                              </label>
+                                            </span>
+                                         </div>
+                                     </div>
+                                      </a>
+                                   </div>
+                                  
+                                   <!-- <div class="row">
+                                   <div class="form-group col-sm-3 col-md-3 col-md-offset-8">
+                                     <a class="button btn-small full-width text-center" style="background: #98ce44;" title="" href="hotel-detailed.html">Book Now</a>
+                                     </div>
+                                   </div> -->
+                                  	
+                                  
+                                  
                                 </article>
-                                <article class="box">
+                              <!--   <article class="box">
                                     <figure class="col-sm-5 col-md-4">
                                         <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery"><img width="270" height="160" alt="" src="http://placehold.it/270x160"></a>
                                     </figure>
@@ -504,7 +563,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </article>
+                                </article> -->
                             </div>
                             <a href="#" class="uppercase full-width button btn-large">load more listing</a>
                         </div>
@@ -516,7 +575,6 @@
         
     </div>
     @include_js()
-    
     
     <!-- Google Map Api -->
     <!-- <script type='text/javascript' src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>

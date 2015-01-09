@@ -16,14 +16,15 @@ public class RateVM {
 	public Long supplierCode;
 	public NormalRateVM normalRate;
 	public boolean isSpecialRate;
-	public boolean applyToMarket;
+	public boolean c;
 	public SpecialRateVM special;
 	public List<CancellationPolicyVM> cancellation = new ArrayList<CancellationPolicyVM>();
 	public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
 	//public List<HotelProfileVM> hotelprofile = new ArrayList<HotelProfileVM>();
 	public AllotmentMarketVM allotmentmarket;
-	
-	
+	public String date;
+	public int adult_occupancy;
+	public boolean applyToMarket;
 	
 	
 	/*public List<HotelProfileVM> getHotelprofile() {
@@ -119,6 +120,20 @@ public class RateVM {
 	public void setAllotmentmarket(AllotmentMarketVM allotmentmarket) {
 		this.allotmentmarket = allotmentmarket;
 	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public int getAdult_occupancy() {
+		return adult_occupancy;
+	}
+	public void setAdult_occupancy(int adult_occupancy) {
+		this.adult_occupancy = adult_occupancy;
+	}
+	
+	
 	
 	
 	/*public boolean isApplyToMarket() {

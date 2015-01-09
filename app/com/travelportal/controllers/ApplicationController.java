@@ -253,11 +253,21 @@ public class ApplicationController extends Controller{
 		String countryName = bindedForm.get("country");
 		List<String> cities = new ArrayList<>();
 		
-			Country country = Country.getCountryByName(countryName);
-			cities = City.getCitiesByCountry(country.getCountryCode());
-			
+		Country country = Country.getCountryByName(countryName);
+		
+		List<City> cities1 = City.getCities(country.getCountryCode());
+		
+		for(City city: cities1) {
+			cities.add(city.getCityName());
+		}
+		
 		return ok(Json.toJson(cities));
+			
+		//return ok(Json.toJson(cities));
 	}
+	
+	
+	
 	
 	
 	@Transactional

@@ -346,7 +346,7 @@ function getCountry() {
 		        $('#myCity').children().remove().end();
 		        $('#myCity').append('<option value="0">--Select city--</option>');
 		        $.each(data, function(key, value) {   
-		        	$('#myCity').append('<option value="' + value.cityName + '">' + value.cityName + '</option>'); 
+		        	$('#myCity').append('<option value="' + value + '">' + value + '</option>'); 
 		       });
 		        
 		      }

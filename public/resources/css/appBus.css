@@ -1,0 +1,15 @@
+@CHARSET "ISO-8859-1";
+.sprite_sec{
+	background: url(//resources/images/default/sprite_second_v30.png) no-repeat;
+	background: white !important;
+}
+
+.ngdialog-content{
+
+width: 731px !important;
+
+top: -120px;
+height: 650px;
+overflow-x: hidden;
+}
+

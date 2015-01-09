@@ -322,6 +322,10 @@ public class HotelRoomTypes {
 		return JPA.em().createQuery("select r from HotelRoomTypes r where r.supplierCode = ?1").setParameter(1, supplierCode).getResultList();
 	}
 	
+	public static List<HotelRoomTypes> getHotelRoomDetailsByIds(long supplierCode,long roomId) {
+		return JPA.em().createQuery("select r from HotelRoomTypes r where r.supplierCode = ?1 and r.roomId = ?2").setParameter(1, supplierCode).setParameter(2, roomId).getResultList();
+	}
+	
 	public static int getHotelRoomMaxAdultOccupancy(Long roomType) {
 		return (int) JPA.em().createQuery("select r.maxAdultOccupancy from HotelRoomTypes r where r.roomId = ?1").setParameter(1, roomType).getSingleResult();
 	}

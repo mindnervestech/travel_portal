@@ -35,7 +35,8 @@ public class HotelProfileVM {
 	public String location2;
 	public String location3;
 	public List<RateVM> rate;  //= new ArrayList<RateVM>()
-	
+	public String flag;
+	public Double avgPrice;
 	
 	
 	public List<RateVM> getRate() {
@@ -200,6 +201,19 @@ public class HotelProfileVM {
 	public void setLocation3(String location3) {
 		this.location3 = location3;
 	}
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+	public Double getAvgPrice() {
+		return avgPrice;
+	}
+	public void setAvgPrice(Double avgPrice) {
+		this.avgPrice = avgPrice;
+	}
+	
 	
 	
 	

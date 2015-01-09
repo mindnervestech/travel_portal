@@ -2478,10 +2478,12 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			
 			for(var i=0;i<$scope.rateMeta.length;i++) {
 				
-				if($scope.rateMeta[i].applyToMarket == false){
-					console.log($scope.rateMeta[i].id);
+				//if($scope.rateMeta[i].applyToMarket == false){
+				//	console.log($scope.rateMeta[i].id);
 					$scope.showMarketTable($scope.rateMeta[i]);
-				}
+				//}else{
+					
+			//	}
 				
 				}
 			/*$scope.rateData = [{meals:'Lunch'}];*/
@@ -2514,9 +2516,10 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	$scope.createNewRate = function() {
 		
 		
-		
 		for(var i=0;i<$scope.rateObject.length;i++) {
 			$scope.rateObject.splice(i,1);
+			console.log($scope.rateObject);
+			// $scope.showMarketTable($scope.rateObject[i]);
 			//$scope.rateObject.normalRate.rateDetails[i] = ( {meals:"Lunch"} );
 			$scope.rateObject.normalRate.rateDetails[i].meals = "Lunch";
 			//$scope.rateObject.normalRate.rateDetails[i].onlineMeals = "Lunch";
@@ -2526,6 +2529,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
 			$scope.rateObject.push(response);
 			console.log($scope.rateObject);
+			$scope.showMarketTable($scope.rateObject[0]);
 			$scope.messageShow = " ";
 			$scope.link = " ";
 		});
@@ -2633,6 +2637,11 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	$scope.addNewRate = function() {
 		$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
 			$scope.rateObject.push(response);
+			for(i=0;i<$scope.rateObject.length;i++){
+				$scope.showMarketTable($scope.rateObject[i]);
+			}
+			console.log($scope.rateObject);
+			
 		});
 		
 			if($scope.rateObject.length > 0) {
@@ -2660,11 +2669,11 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			$scope.rateObject[i].toDate = $scope.formData.toDate;
 			$scope.rateObject[i].currency = $scope.currencyname;
 			$scope.rateObject[i].supplierCode = supplierCode;
-			if($scope.rateObject[i].allocatedCities.length == 0)
-				{
-				 $scope.showMarketTable($scope.rateObject[i]);
+			//if($scope.rateObject[i].allocatedCities.length == 0)
+			//	{
+			//	 $scope.showMarketTable($scope.rateObject[i]);
 			
-				}
+			//	}
 		
 		}
 		console.log($scope.rateObject);
@@ -3011,6 +3020,10 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 	$scope.createNewPeriod = function() {
 		$http.get('/getSpecialsObject').success(function(response){
 			$scope.specialsObject.push(response);
+			console.log($scope.specialsObject);
+			$scope.specialsObject[0].markets[0].applyToMarket="true";
+			$scope.showMarketTable($scope.specialsObject[0].markets[0]);
+			
 			$scope.isCreateNew = true;
 			$scope.showSavedPeriods = false;
 			$scope.formData.datePeriodId = null;
@@ -3022,7 +3035,12 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 	}
 	
 	$scope.addNewMarket = function(index) {
-		$scope.specialsObject[index].markets.push({});
+		$scope.specialsObject[index].markets.push({applyToMarket:"true",id:0,allocatedCities:[]});
+		console.log($scope.specialsObject[index].markets);
+		for(var i=1;i<$scope.specialsObject[index].markets.length;i++){
+			$scope.showMarketTable($scope.specialsObject[index].markets[i]);
+		}
+		//$scope.showMarketTable($scope.specialsObject[index].markets);
 		if($scope.specialsObject[index].markets.length > 0) {
 			$scope.showRemoveMarket = true;
 		}
@@ -3112,6 +3130,17 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 	$scope.savePeriod = function() {
 		$scope.specialsObject[0].supplierCode = supplierCode;
 		console.log($scope.specialsObject);
+		
+		for(var i=0;i<$scope.specialsObject[0].markets.length;i++) {
+			
+			if($scope.specialsObject[0].markets[i].allocatedCities.length == 0)
+				{
+				 $scope.showMarketTable($scope.specialsObject[0].markets[i]);
+			
+				}
+		
+		}	
+		
 		if($scope.specialsObject[0].fromDate < $scope.specialsObject[0].toDate){
 			if($scope.specialsObject[0].promotionName != null){
 				if($scope.specialsObject[0].roomTypes.length != 0){
@@ -3182,6 +3211,9 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 			console.log(response);
 			$scope.specialsData = response;
 			console.log($scope.specialsData);
+			for(var i=1;i<$scope.specialsData[0].markets.length;i++){
+				 $scope.showMarketTable($scope.specialsData[0].markets[i]);
+			}
 			if(angular.isUndefined($scope.specialsData) || $scope.specialsData == "") {
 				$scope.messageShow = "No Period Found then";
 				$scope.link = "Add New Rate";

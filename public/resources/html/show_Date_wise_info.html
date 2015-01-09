@@ -1,0 +1,124 @@
+<!-- 
+
+	<div class="row">	
+        <div class="form-group col-sm-12 col-md-12">
+           <div class="col-xs-6">
+              <div class="col-xs-3">
+                    <label>Adult</label>
+              </div>
+              <div class="col-xs-3">
+                    <select class="form-control" name="adult" data-ng-model="searchAdult.adult" ng-change="showRate(searchAdult.adult)">
+     				<option ng-repeat="adult in roominfo.hotelRoomRateDetail[0].rateDetailsNormal" value="{{adult.adult}}">{{adult.adult}}</option>
+					</select>
+              </div>
+           </div>
+        </div>
+	</div>
+	
+	<div class="row">	
+          <div class="form-group col-sm-12 col-md-12">
+			 <div class="col-xs-4">
+			 <lable>Dates</lable>
+			 </div>
+			 <div class="col-xs-4">
+			  <lable>Rates</lable>
+			 </div>
+			 <div class="col-xs-4">
+			  <lable>Meal</lable>
+			 </div>
+          </div>
+     </div>     
+     <div class="row" ng-repeat="Dateinfo in ratedetail">	
+          <div class="form-group col-sm-12 col-md-12">
+			 <div class="col-xs-4">
+			  <lable>{{Dateinfo.date}}</lable>
+			 </div>
+			 <div class="col-xs-4">
+			 <lable>{{Dateinfo.rate}}</lable>
+			 </div>
+			 <div class="col-xs-4">
+			 <lable>{{Dateinfo.meal}}</lable>
+			 </div>
+          </div>
+     </div> 
+	<div class="row" ng-repeat="Dateinfo in hotelIF.hotelbyDate">	
+          <div class="form-group col-sm-12 col-md-12">
+			 <div class="col-xs-4">
+			  <lable>{{Dateinfo.date}}</lable>
+			 </div>
+			 <div class="col-xs-4">
+			 <lable></lable>
+			 </div>
+			 <div class="col-xs-4">
+			 <lable></lable>
+			 </div>
+          </div>
+     </div>     
+
+ <div class="form-group col-sm-12 col-md-12">
+		<input type="text" ng-model="roominfo.roomName">
+
+			
+			<button type="submit" ng-click="closeThisDialog()" class="btn btn-primary">Update</button>
+			<button type="button" ng-click="closeThisDialog()"
+				class="btn btn-primary">Close</button>
+</div>
+
+
+<div class="selector">
+                                                    <select class="full-width">
+                                                        <option value="1">01</option>
+                                                        <option value="2">02</option>
+                                                        <option value="3">03</option>
+                                                        <option value="4">04</option>
+                                                    </select><span class="custom-select full-width">01</span>
+                                                </div> -->
+
+<div id="main" class="col-md-12">
+ 
+ 			<div class="sort-by-section clearfix" style="margin-bottom: 1%;">
+                                <h2 class="sort-by-title block-sm">{{roominfo.roomName}}</h2>
+                               
+                            </div>
+ 
+		<div class="sort-by-section clearfix" style="margin-bottom: 1%;">
+                                <h4 class="sort-by-title block-sm">Adult:</h4>
+                                <ul class="sort-bar clearfix block-sm col-xs-4" style="margin-top: 1%;">
+                               <div class="selector">
+                             <select class="full-width" name="adult" data-ng-model="searchAdult.adult" ng-change="showRate(searchAdult.adult)">
+                             <option ng-repeat="adult in roominfo.hotelRoomRateDetail[0].rateDetailsNormal" value="{{adult.adult}}">{{adult.adult}}</option>
+                             </select><span class="custom-select full-width">1 Adult</span> <!-- {{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].adult}} -->
+                        </div> <!-- ratedetail.hotelbyDate[0].roomType[0].hotelRoomRateDetail[0].rateDetails -->
+                        </ul>
+                            </div>
+    
+                        <div class="image-box style12">
+                            <article class="box" ng-repeat="Dateinfo in rateDatedetail">
+                                <figure>
+                                    <span class="image-wrapper">
+                                        <img src="http://placehold.it/120x100" alt="" width="120" height="100">
+                                        <span class="opacity-wrapper"></span>
+                                    </span>
+                                </figure>
+                                <div class="details">
+                                    <h4 class="box-title">included</h4>
+                                    <p>{{Dateinfo.meal}}{{Dateinfo.date}}</p>
+                                </div>
+                                <div class="action">
+                                    <span class="price"><small>per date rate</small>{{Dateinfo.rate}}</span>
+                                </div>
+                            </article>
+                          
+                            
+                        </div>
+                        
+                        <div class="sort-by-section clearfix">
+                        <a class="button btn-small text-center col-xs-3" style="margin: 3%; background: #98ce44;" title="" href="hotel-detailed.html">Book Now</a>
+                        <a class="button btn-small text-center col-xs-3" style="margin: 3%; background: #98ce44;" title=""  ng-click="closeThisDialog()">ABCD</a>
+                        <a class="button btn-small text-center col-xs-3 col-md-offset-1" style="margin: 3%; background: #98ce44;" title=""  ng-click="closeThisDialog()">Close</a>
+                            </div>
+                    </div>
+
+
+		
+

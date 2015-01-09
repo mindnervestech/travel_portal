@@ -2,11 +2,23 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+#travelbusiness
 
 GET     /                           controllers.travelbusiness.Application.index()
-GET 	/searchHotel.html           controllers.travelbusiness.Application.searchHotel()
+#GET 	/searchHotel.html           controllers.travelbusiness.Application.searchHotel()
+#GET     /searchHotelInfo/:city/:checkIn/:checkOut/:starId/:nationalityId 	controllers.travelbusiness.Application.searchHotelInfo(city:String,checkIn:String,checkOut:String,starId:String,nationalityId:String)
+POST     /searchHotelInfo   	controllers.travelbusiness.Application.searchHotelInfo()
+GET 	/searchCountries					controllers.travelbusiness.Application.searchCountries()
+GET 	/searchNationality					controllers.travelbusiness.Application.searchNationality()
+GET 	/searchCities/:countryId			controllers.travelbusiness.Application.searchCities(countryId: Integer)
+GET 	/searchStarrating                	controllers.travelbusiness.Application.getStarRatings()
+GET	  /searchHotelInfo/getHotelImagePath/:supplierCode			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long)
+GET   /getDatewiseHotelRoom/:checkIn/:checkOut/:nationality/:supplierCode/:roomCode   controllers.travelbusiness.Application.getDatewiseHotelRoom(checkIn:String,checkOut:String,nationality:String,supplierCode:String,roomCode:String)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+
+#travelportal
 
 #Supplier Home Page
 #GET /home	com.travelportal.controllers.HotelProfileController.home()
@@ -198,10 +210,10 @@ POST /UpdateSpecificMarkup			com.travelportal.controllers.MarkUpController.Updat
 #GET  /getByRoomType/:roomId		   com.travelportal.controllers.AllRateController.getByRoomType(roomId:Long)
 #GET  /getCountryByRate/:cityId			   com.travelportal.controllers.AllRateController.getCountryByRate(cityId:Integer)
 #GET  /getStarWiseHotel/:sId    			   com.travelportal.controllers.AllRateController.getStarWiseHotel(sId:Integer)
-GET  /ByAllArteByCodition/:supplierCode/:roomId/:fromDate/:toDate/:sId/:cityId     com.travelportal.controllers.AllRateController.ByAllArteByCodition(supplierCode:Long,roomId:Long,fromDate:String,toDate:String,sId:Integer,cityId:Integer)
-GET  /getCountryByMarket/:cityId			   com.travelportal.controllers.AllRateController.getCountryByMarket(cityId:Integer)
-GET  /getHotelAmenities		com.travelportal.controllers.AllRateController.getHotelAmenities
+#GET  /ByAllArteByCodition/:supplierCode/:roomId/:fromDate/:toDate/:sId/:cityId     com.travelportal.controllers.AllRateController.ByAllArteByCodition(supplierCode:Long,roomId:Long,fromDate:String,toDate:String,sId:Integer,cityId:Integer)
+#GET  /getCountryByMarket/:cityId			   com.travelportal.controllers.AllRateController.getCountryByMarket(cityId:Integer)
+#GET  /getHotelAmenities		com.travelportal.controllers.AllRateController.getHotelAmenities
 #GET  /getAmenitiesWiseHotel/:roomId/:fromDate/:toDate/:sId/:cityId/:id			   com.travelportal.controllers.AllRateController.getAmenitiesWiseHotel(roomId:Long,fromDate:String,toDate:String,sId:Integer,cityId:Integer,id:Integer)
-GET  /getAmenitiesWiseHotel			   com.travelportal.controllers.AllRateController.getAmenitiesWiseHotel()
-GET  /getSearchHotel			   com.travelportal.controllers.AllRateController.getSearchHotel()
+#GET  /getAmenitiesWiseHotel			   com.travelportal.controllers.AllRateController.getAmenitiesWiseHotel()
+#GET  /getSearchHotel			   com.travelportal.controllers.AllRateController.getSearchHotel()
 GET  /getDatewiseHotel			   com.travelportal.controllers.AllRateController.getDatewiseHotel()

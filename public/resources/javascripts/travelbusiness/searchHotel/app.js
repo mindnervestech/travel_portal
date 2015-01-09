@@ -1,2 +1,2 @@
 'use strict';
-var travelBusiness = angular.module('travel-business', []);
+var travelBusiness = angular.module('travel-business', ['ngDialog']);

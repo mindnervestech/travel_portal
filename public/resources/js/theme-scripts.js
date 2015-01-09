@@ -393,7 +393,7 @@ function changeTraveloElementUI() {
             changeYear: false,
             /*showOtherMonths: true,*/
             minDate: minDate,
-            dateFormat: "mm/dd/yy",
+            dateFormat: "dd-mm-yy",
             dayNamesMin: ["S", "M", "T", "W", "T", "F", "S"],
             beforeShow: function(input, inst) {
                 var themeClass = tjq(input).parent().attr("class").replace("datepicker-wrap", "");
