@@ -1,16 +1,14 @@
 package com.travelportal.vm;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import com.travelportal.domain.HotelStarRatings;
-import com.travelportal.domain.rooms.RateMeta;
 
 public class SerachedRoomType {
 	
 	public Long roomId;
 	public String roomName;
 	public List<SerachedRoomRateDetail> hotelRoomRateDetail;
+	private List<RoomAmenitiesVm> amenities;
+	
 	public Long getRoomId() {
 		return roomId;
 	}
@@ -29,6 +27,12 @@ public class SerachedRoomType {
 	public void setHotelRoomRateDetail(
 			List<SerachedRoomRateDetail> hotelRoomRateDetail) {
 		this.hotelRoomRateDetail = hotelRoomRateDetail;
+	}
+	public List<RoomAmenitiesVm> getAmenities() {
+		return amenities;
+	}
+	public void setAmenities(List<RoomAmenitiesVm> amenities) {
+		this.amenities = amenities;
 	}  
 	
 	

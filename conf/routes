@@ -7,12 +7,26 @@
 GET     /                           controllers.travelbusiness.Application.index()
 #GET 	/searchHotel.html           controllers.travelbusiness.Application.searchHotel()
 #GET     /searchHotelInfo/:city/:checkIn/:checkOut/:starId/:nationalityId 	controllers.travelbusiness.Application.searchHotelInfo(city:String,checkIn:String,checkOut:String,starId:String,nationalityId:String)
+POST    /hoteldetailpage		controllers.travelbusiness.Application.hoteldetailpage()
 POST     /searchHotelInfo   	controllers.travelbusiness.Application.searchHotelInfo()
 GET 	/searchCountries					controllers.travelbusiness.Application.searchCountries()
 GET 	/searchNationality					controllers.travelbusiness.Application.searchNationality()
 GET 	/searchCities/:countryId			controllers.travelbusiness.Application.searchCities(countryId: Integer)
 GET 	/searchStarrating                	controllers.travelbusiness.Application.getStarRatings()
 GET	  /searchHotelInfo/getHotelImagePath/:supplierCode			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long)
+#Hotel Details
+GET   /searchHotelGenImg/getHotelGenImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelGenImg(supplierCode:Long)
+GET   /searchHotelServImg/getHotelServImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelServImg(supplierCode:Long)
+GET   /searchHotelRoomImg/getHotelRoomImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelRoomImg(supplierCode:Long)
+GET   /searchHotelLobbyImg/getHotelLobbyImg/:supplierCode		controllers.travelbusiness.HotelDetailsController.getHotelLobbyImg(supplierCode:Long)
+GET   /searchHotelLSImg/getHotelLSImg/:supplierCode				controllers.travelbusiness.HotelDetailsController.getHotelLSImg(supplierCode:Long)
+GET   /searchHotelMapImg/getHotelMapImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelMapImg(supplierCode:Long)
+GET   /hotelamenities                	controllers.travelbusiness.HotelDetailsController.getAmenities()
+GET   /business              	    	controllers.travelbusiness.HotelDetailsController.getBusiness()
+GET   /leisureSport             		controllers.travelbusiness.HotelDetailsController.getLeisureSport()
+
+
+GET   /findAmenitiesData/:supplierCode     controllers.travelbusiness.HotelDetailsController.findAmenitiesData(supplierCode:Long)
 GET   /getDatewiseHotelRoom/:checkIn/:checkOut/:nationality/:supplierCode/:roomCode   controllers.travelbusiness.Application.getDatewiseHotelRoom(checkIn:String,checkOut:String,nationality:String,supplierCode:String,roomCode:String)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -26,6 +40,7 @@ GET /hotel_profile/:profileId 		com.travelportal.controllers.HotelProfileControl
 #APIs for fetching seed data 
 
 GET		/signUp						com.travelportal.controllers.ApplicationController.getSignUpForm
+GET		/adminsignUp						com.travelportal.controllers.ApplicationController.getAdminForm
 GET		/agentsignUp						com.travelportal.controllers.ApplicationController.getAgentSignUpForm
 GET		/login						com.travelportal.controllers.ApplicationController.login
 GET		/agentlogin						com.travelportal.controllers.ApplicationController.agentlogin

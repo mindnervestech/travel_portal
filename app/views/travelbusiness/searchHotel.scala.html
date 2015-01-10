@@ -177,14 +177,16 @@
                             <div class="sort-by-section clearfix">
                                 <h4 class="sort-by-title block-sm">Sort results by:</h4>
                                 <ul class="sort-bar clearfix block-sm">
-                                    <li class="sort-by-name"><a class="sort-by-container" href="#"><span>name</span></a></li>
-                                    <li class="sort-by-price"><a class="sort-by-container" href="#"><span>price</span></a></li>
-                                    <li class="clearer visible-sms"></li>
+                                   <!--  <li class="sort-by-name"><a class="sort-by-container" href="#"><span>name</span></a></li> -->
+                                   
+                                    <li class="sort-by-price  active"><a class="sort-by-container" ng-click="sortData()"><span>price</span></a></li>
+                                  
+                                   <!--  <li class="clearer visible-sms"></li>
                                     <li class="sort-by-rating active"><a class="sort-by-container" href="#"><span>rating</span></a></li>
-                                    <li class="sort-by-popularity"><a class="sort-by-container" href="#"><span>popularity</span></a></li>
+                                    <li class="sort-by-popularity"><a class="sort-by-container" href="#"><span>popularity</span></a></li> --> 
                                 </ul>
                                 
-                                <ul class="swap-tiles clearfix block-sm">
+                               <!--  <ul class="swap-tiles clearfix block-sm">
                                     <li class="swap-list active">
                                         <a href="hotel-list-view.html"><i class="soap-icon-list"></i></a>
                                     </li>
@@ -194,376 +196,111 @@
                                     <li class="swap-block">
                                         <a href="hotel-block-view.html"><i class="soap-icon-block"></i></a>
                                     </li>
-                                </ul>
+                                </ul> -->
                             </div>
                             <div class="hotel-list listing-style3 hotel">
-                                <article class="box" ng-repeat="hotelInfo in hotellistInfo">
-                                    <figure class="col-sm-5 col-md-4">
+                                <article class="box" ng-repeat="hotelInfo in hotellistInfo | orderBy: sortdata" style="border: 4px solid #C8C6C6;">
+                                
+                                 
+                                    <div class="col-md-12" style="border-bottom: 4px solid #C8C6C6;">
+                                    <figure class="col-sm-5 col-md-4" style="padding-left:0;">
                                      <!-- <img data-ng-src="{{img}}" alt="">  -->
-                                        <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery" style="margin-bottom: 2%;"><img width="270" height="160" alt="" data-ng-src="{{hotelInfo.imgPaths}}"></a>
+                                        <a title="" ng-click="ShowFullImg($index)" class="hover-effect popup-gallery"><img width="270" height="160" alt="" data-ng-src="{{hotelInfo.imgPaths}}"></a>
                                     </figure>
                                     <div class="details col-sm-7 col-md-8">
                                         <div>
-                                            <div>
+                                            <div style="border-right: none;">
                                                 <h4 class="box-title">{{hotelInfo.hotelNm}}<small><i class="soap-icon-departure yellow-color"></i> {{hotelInfo.hotelAddr}}</small></h4>
-                                                <div class="amenities">
-                                                    <i class="soap-icon-wifi circle"></i>
-                                                    <i class="soap-icon-fitnessfacility circle"></i>
-                                                    <i class="soap-icon-fork circle"></i>
-                                                    <i class="soap-icon-television circle"></i>
+                                                <div class="amenities col-md-6">
+                                                <div  ng-repeat="ser in hotelInfo.services"> 
+                                            		 <div class="col-md-3" ng-if="ser.serviceId == 7">
+                                                    <i class="soap-icon-beach circle"></i>
+                                                    </div>
+                                                    <div class="col-md-3" ng-if="ser.serviceId == 19">
+                                                    <i class="soap-icon-friends circle"></i>
+                                                    </div>
+                                                    <div class="col-md-3" ng-if="ser.serviceId ==22">
+                                                    <i class="soap-icon-playplace circle"></i>
+                                                    </div>
+                                                    <div class="col-md-3" ng-if="ser.serviceId == 12">
+                                                    <i class="soap-icon-hotel circle"></i>
+                                                    </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <div class="five-stars-container">
-                                                    <span class="five-stars" style="width: 80%;"></span>
-                                                </div>
-                                                <span class="review">270 reviews</span>
-                                            </div>
+                                            <div></div>
+                                            
                                         </div>
                                         <div>
                                             <p>{{hotelInfo.imgDescription}}</p>
-                                           <!--  <div>
-                                                 <span class="price"><small>AVG/NIGHT</small>$620</span> 
-                                                <a class="button btn-small full-width text-center" title="" href="hotel-detailed.html">SELECT</a>
-                                            </div> -->
+                                             <div style="width: 150px;">
+                                                  <span class="price"><small>MIN/START</small>{{hotelInfo.minRate}}</span>  
+                                                <!-- <a class="button btn-small full-width text-center" style="background: #98ce44;" title=""  href="/hoteldetailpage">VIEW DETAILS</a> -->
+                                                 <form action="/hoteldetailpage" method="post">
+                              					        <input type="text" name="supplierCode"  value="{{hotelInfo.supplierCode}}" style="display: none;">
+                                					    <input type="text" name="checkIn" value="{{hotelInfo.checkIn}}" style="display: none;">
+                              						     <input type="text" name="checkOut" value="{{hotelInfo.checkOut}}" style="display: none;">
+                            						     <input type="text" name="nationalityCode" value="{{hotelInfo.nationality}}" style="display: none;">  
+                                                 <button type="submit" class="btn-small full-width text-center">VIEW DETAILS</button>
+                                               </form> 
+                                            </div> 
                                         </div>
                                     </div>
-		 							 <div class="row">
-		 							 <div class="form-group col-sm-12 col-md-12">
-  										 <label class="col-xs-11" style="background-color: #d9d9d9;margin-left: 2%;">Rates Per Night From</label>
-  										</div>
-                                  </div>
-                                 
-                                  <div class="row" ng-repeat="roominfo in hotelInfo.hotelbyRoom">
-                                   <a ng-click="dateWiseInfo($parent.$index,$index)" style="cursor: pointer;" data-toggle="modal">
-                                    <div class="c col-sm-6 col-md-11" style="border-bottom: 1px dotted;margin-left: 3%;">
-                                         <div class="col-xs-4">
-                                         <label>{{roominfo.roomName}}  
-                                              </label>
-                                              <img src="/assets/resources/images/eye.png" style="width: 9%;">
+		 							</div>
+		 							
+                                   <div class="row" ng-repeat="roominfo in hotelInfo.hotelbyRoom">
+                                    <div class="details col-sm-12 col-md-12" style="border-bottom: 1px solid #f5f5f5 !important;padding-bottom: 0 !important;">  
+                                    <div>
+                                         <div class="col-md-6" style="width:50% !important;border-bottom: none !important;border-right: none;">  <!-- style="width: 106px;" -->
+                                         <!-- <i class="soap-icon-check-1" style="color: #7db921;"></i> -->
+                                         <h4 class="box-title col-md-6">{{roominfo.roomName}}</h4>
+                                        <!--  <label class="col-md-6">  
+                                              </label> -->
+                                              <div class="amenities col-md-6">   
+                                             <div  ng-repeat="ameniti in roominfo.amenities"> 
+                                             <div class="col-md-3" ng-if="ameniti.amenityId == 1">
+                                                    <i class="soap-icon-wifi circle"></i>
+                                                   </div>
+                                                    <div class="col-md-3" ng-if="ameniti.amenityId == 4">
+                                                    <i class="soap-icon-fitnessfacility circle"></i>
+                                                   </div>
+                                                    <div class="col-md-3" ng-if="ameniti.amenityId == 3">
+                                                    <i class="soap-icon-fork circle"></i>
+                                                    </div>
+                                                     <div class="col-md-3" ng-if="ameniti.amenityId == 82">
+                                                    <i class="soap-icon-television circle"></i>
+                                                 </div>
+                                                    </div>  
+                                                   
+                                                </div>
                                          </div>
-                                        <div class="col-xs-2" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null">
-                                         <span>
-                                         <img src="/assets/resources/images/oneMan.png" style="width: 15%;">
-                                          </span>
-                                          <span>
-                                         <label style="font-size:small;color: #7db921;margin-left: 19%;">{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg}}
-                                              </label>
-                                             </span>
+                                         <div class="col-md-6" style="width:50% !important;border-bottom: none !important;">
+                                        <div class="col-md-4" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null">
+                                          <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg}} <span style="font-size: small;color: chocolate;">{{hotelInfo.currencyShort}}</span><small>1 PERSON</small></span>
+                                        
                                          </div>
-                                         <div class="col-xs-2" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg != null">
-                                         <span>
-                                         <img src="/assets/resources/images/oneMan.png" style="width: 15%;">
-                                         <img src="/assets/resources/images/oneMan.png" style="width: 15%;">
-                                         </span>
-                                          <span>
-                                         <label style="font-size:small;color: #7db921;margin-left: 19%;">{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg}}
-                                              </label>
-                                             </span>
+                                                                                
+                                         <div class="col-md-4"  ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg != null">
+                                        <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg}}<span style="font-size: small;color: chocolate;">{{hotelInfo.currencyShort}}</span><small>2 PERSONS</small></span>
                                          </div>
-                                         <div class="col-xs-3" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg != null">
-                                         <span>
-                                         <img src="/assets/resources/images/oneMan.png" style="width: 10%;">
-                                         <img src="/assets/resources/images/oneMan.png" style="width: 10%;">
-                                         <img src="/assets/resources/images/oneMan.png" style="width: 10%;">
-                                        </span>
-                                        <span>
-                                         <label style="font-size:small;color: #7db921;margin-left: 19%;">{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg}}
-                                              </label>
-                                            </span>
+                                         <div class="col-md-4" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg != null">
+                                         <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg}} <span style="font-size: small;color: chocolate;">{{hotelInfo.currencyShort}}</span><small>3 PERSONS</small></span>
+                                         </div>
+                                         </div>
                                          </div>
                                      </div>
-                                      </a>
                                    </div>
                                   
-                                   <!-- <div class="row">
-                                   <div class="form-group col-sm-3 col-md-3 col-md-offset-8">
-                                     <a class="button btn-small full-width text-center" style="background: #98ce44;" title="" href="hotel-detailed.html">Book Now</a>
+                                    <div class="col-md-9 col-md-offset-2">
+                                   <div class="form-group col-sm-3 col-md-3 col-md-offset-9">
+                                     <a class="button btn-small full-width text-center" ng-click="dateWiseInfo($index)" style="background: #98ce44;margin-top: 2%;margin-left: 49%;" title="">DAY-WISE VIEW</a>
                                      </div>
-                                   </div> -->
+                                   </div> 
                                   	
+                                 
                                   
-                                  
                                 </article>
-                              <!--   <article class="box">
-                                    <figure class="col-sm-5 col-md-4">
-                                        <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery"><img width="270" height="160" alt="" src="http://placehold.it/270x160"></a>
-                                    </figure>
-                                    <div class="details col-sm-7 col-md-8">
-                                        <div>
-                                            <div>
-                                                <h4 class="box-title">Forte Do Vale<small><i class="soap-icon-departure yellow-color"></i> Albufeira</small></h4>
-                                                <div class="amenities">
-                                                    <i class="soap-icon-wifi circle"></i>
-                                                    <i class="soap-icon-fitnessfacility circle"></i>
-                                                    <i class="soap-icon-fork circle"></i>
-                                                    <i class="soap-icon-television circle"></i>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="five-stars-container">
-                                                    <span class="five-stars" style="width: 80%;"></span>
-                                                </div>
-                                                <span class="review">170 reviews</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p>Nunc cursus libero purus ac congue ar lorem cursus ut sed vitae pulvinar massa idend porta nequetiam elerisque mi id, consectetur adipi deese cing elit maus fringilla bibe endum.</p>
-                                            <div>
-                                                <span class="price"><small>AVG/NIGHT</small>$120</span>
-                                                <a class="button btn-small full-width text-center" title="" href="hotel-detailed.html">SELECT</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="box">
-                                    <figure class="col-sm-5 col-md-4">
-                                        <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery"><img width="270" height="160" alt="" src="http://placehold.it/270x160"></a>
-                                    </figure>
-                                    <div class="details col-sm-7 col-md-8">
-                                        <div>
-                                            <div>
-                                                <h4 class="box-title">Gran Canaria<small><i class="soap-icon-departure yellow-color"></i> Spain</small></h4>
-                                                <div class="amenities">
-                                                    <i class="soap-icon-wifi circle"></i>
-                                                    <i class="soap-icon-fitnessfacility circle"></i>
-                                                    <i class="soap-icon-fork circle"></i>
-                                                    <i class="soap-icon-television circle"></i>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="five-stars-container">
-                                                    <span class="five-stars" style="width: 80%;"></span>
-                                                </div>
-                                                <span class="review">485 reviews</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p>Nunc cursus libero purus ac congue ar lorem cursus ut sed vitae pulvinar massa idend porta nequetiam elerisque mi id, consectetur adipi deese cing elit maus fringilla bibe endum.</p>
-                                            <div>
-                                                <span class="price"><small>AVG/NIGHT</small>$322</span>
-                                                <a class="button btn-small full-width text-center" title="" href="hotel-detailed.html">SELECT</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="box">
-                                    <figure class="col-sm-5 col-md-4">
-                                        <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery"><img width="270" height="160" alt="" src="http://placehold.it/270x160"></a>
-                                    </figure>
-                                    <div class="details col-sm-7 col-md-8">
-                                        <div>
-                                            <div>
-                                                <h4 class="box-title">Gran Canaria<small><i class="soap-icon-departure yellow-color"></i> Spain</small></h4>
-                                                <div class="amenities">
-                                                    <i class="soap-icon-wifi circle"></i>
-                                                    <i class="soap-icon-fitnessfacility circle"></i>
-                                                    <i class="soap-icon-fork circle"></i>
-                                                    <i class="soap-icon-television circle"></i>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="five-stars-container">
-                                                    <span class="five-stars" style="width: 80%;"></span>
-                                                </div>
-                                                <span class="review">485 reviews</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p>Nunc cursus libero purus ac congue ar lorem cursus ut sed vitae pulvinar massa idend porta nequetiam elerisque mi id, consectetur adipi deese cing elit maus fringilla bibe endum.</p>
-                                            <div>
-                                                <span class="price"><small>AVG/NIGHT</small>$322</span>
-                                                <a class="button btn-small full-width text-center" title="" href="hotel-detailed.html">SELECT</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="box">
-                                    <figure class="col-sm-5 col-md-4">
-                                        <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery"><img width="270" height="160" alt="" src="http://placehold.it/270x160"></a>
-                                    </figure>
-                                    <div class="details col-sm-7 col-md-8">
-                                        <div>
-                                            <div>
-                                                <h4 class="box-title">Costa Brava<small><i class="soap-icon-departure yellow-color"></i> Spain</small></h4>
-                                                <div class="amenities">
-                                                    <i class="soap-icon-wifi circle"></i>
-                                                    <i class="soap-icon-fitnessfacility circle"></i>
-                                                    <i class="soap-icon-fork circle"></i>
-                                                    <i class="soap-icon-television circle"></i>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="five-stars-container">
-                                                    <span class="five-stars" style="width: 80%;"></span>
-                                                </div>
-                                                <span class="review">423 reviews</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p>Nunc cursus libero purus ac congue ar lorem cursus ut sed vitae pulvinar massa idend porta nequetiam elerisque mi id, consectetur adipi deese cing elit maus fringilla bibe endum.</p>
-                                            <div>
-                                                <span class="price"><small>AVG/NIGHT</small>$620</span>
-                                                <a class="button btn-small full-width text-center" title="" href="hotel-detailed.html">SELECT</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="box">
-                                    <figure class="col-sm-5 col-md-4">
-                                        <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery"><img width="270" height="160" alt="" src="http://placehold.it/270x160"></a>
-                                    </figure>
-                                    <div class="details col-sm-7 col-md-8">
-                                        <div>
-                                            <div>
-                                                <h4 class="box-title">Ruzzini Palace<small><i class="soap-icon-departure yellow-color"></i> Venice</small></h4>
-                                                <div class="amenities">
-                                                    <i class="soap-icon-wifi circle"></i>
-                                                    <i class="soap-icon-fitnessfacility circle"></i>
-                                                    <i class="soap-icon-fork circle"></i>
-                                                    <i class="soap-icon-television circle"></i>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="five-stars-container">
-                                                    <span class="five-stars" style="width: 80%;"></span>
-                                                </div>
-                                                <span class="review">99 reviews</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p>Nunc cursus libero purus ac congue ar lorem cursus ut sed vitae pulvinar massa idend porta nequetiam elerisque mi id, consectetur adipi deese cing elit maus fringilla bibe endum.</p>
-                                            <div>
-                                                <span class="price"><small>AVG/NIGHT</small>$322</span>
-                                                <a class="button btn-small full-width text-center" title="" href="hotel-detailed.html">SELECT</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="box">
-                                    <figure class="col-sm-5 col-md-4">
-                                        <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery"><img width="270" height="160" alt="" src="http://placehold.it/270x160"></a>
-                                    </figure>
-                                    <div class="details col-sm-7 col-md-8">
-                                        <div>
-                                            <div>
-                                                <h4 class="box-title">Plaza Tour Eiffel<small><i class="soap-icon-departure yellow-color"></i> paris</small></h4>
-                                                <div class="amenities">
-                                                    <i class="soap-icon-wifi circle"></i>
-                                                    <i class="soap-icon-fitnessfacility circle"></i>
-                                                    <i class="soap-icon-fork circle"></i>
-                                                    <i class="soap-icon-television circle"></i>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="five-stars-container">
-                                                    <span class="five-stars" style="width: 80%;"></span>
-                                                </div>
-                                                <span class="review">112 reviews</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p>Nunc cursus libero purus ac congue ar lorem cursus ut sed vitae pulvinar massa idend porta nequetiam elerisque mi id, consectetur adipi deese cing elit maus fringilla bibe endum.</p>
-                                            <div>
-                                                <span class="price"><small>AVG/NIGHT</small>$170</span>
-                                                <a class="button btn-small full-width text-center" title="" href="hotel-detailed.html">SELECT</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="box">
-                                    <figure class="col-sm-5 col-md-4">
-                                        <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery"><img width="270" height="160" alt="" src="http://placehold.it/270x160"></a>
-                                    </figure>
-                                    <div class="details col-sm-7 col-md-8">
-                                        <div>
-                                            <div>
-                                                <h4 class="box-title">Le Ville Del Lido<small><i class="soap-icon-departure yellow-color"></i> Venice Lido</small></h4>
-                                                <div class="amenities">
-                                                    <i class="soap-icon-wifi circle"></i>
-                                                    <i class="soap-icon-fitnessfacility circle"></i>
-                                                    <i class="soap-icon-fork circle"></i>
-                                                    <i class="soap-icon-television circle"></i>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="five-stars-container">
-                                                    <span class="five-stars" style="width: 80%;"></span>
-                                                </div>
-                                                <span class="review">269 reviews</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p>Nunc cursus libero purus ac congue ar lorem cursus ut sed vitae pulvinar massa idend porta nequetiam elerisque mi id, consectetur adipi deese cing elit maus fringilla bibe endum.</p>
-                                            <div>
-                                                <span class="price"><small>AVG/NIGHT</small>$620</span>
-                                                <a class="button btn-small full-width text-center" title="" href="hotel-detailed.html">SELECT</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="box">
-                                    <figure class="col-sm-5 col-md-4">
-                                        <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery"><img width="270" height="160" alt="" src="http://placehold.it/270x160"></a>
-                                    </figure>
-                                    <div class="details col-sm-7 col-md-8">
-                                        <div>
-                                            <div>
-                                                <h4 class="box-title">Park Central<small><i class="soap-icon-departure yellow-color"></i> New York</small></h4>
-                                                <div class="amenities">
-                                                    <i class="soap-icon-wifi circle"></i>
-                                                    <i class="soap-icon-fitnessfacility circle"></i>
-                                                    <i class="soap-icon-fork circle"></i>
-                                                    <i class="soap-icon-television circle"></i>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="five-stars-container">
-                                                    <span class="five-stars" style="width: 80%;"></span>
-                                                </div>
-                                                <span class="review">78 reviews</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p>Nunc cursus libero purus ac congue ar lorem cursus ut sed vitae pulvinar massa idend porta nequetiam elerisque mi id, consectetur adipi deese cing elit maus fringilla bibe endum.</p>
-                                            <div>
-                                                <span class="price"><small>AVG/NIGHT</small>$322</span>
-                                                <a class="button btn-small full-width text-center" title="" href="hotel-detailed.html">SELECT</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="box">
-                                    <figure class="col-sm-5 col-md-4">
-                                        <a title="" href="ajax/slideshow-popup.html" class="hover-effect popup-gallery"><img width="270" height="160" alt="" src="http://placehold.it/270x160"></a>
-                                    </figure>
-                                    <div class="details col-sm-7 col-md-8">
-                                        <div>
-                                            <div>
-                                                <h4 class="box-title">Cleopatra Resort<small><i class="soap-icon-departure yellow-color"></i> England</small></h4>
-                                                <div class="amenities">
-                                                    <i class="soap-icon-wifi circle"></i>
-                                                    <i class="soap-icon-fitnessfacility circle"></i>
-                                                    <i class="soap-icon-fork circle"></i>
-                                                    <i class="soap-icon-television circle"></i>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="five-stars-container">
-                                                    <span class="five-stars" style="width: 80%;"></span>
-                                                </div>
-                                                <span class="review">585 reviews</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p>Nunc cursus libero purus ac congue ar lorem cursus ut sed vitae pulvinar massa idend porta nequetiam elerisque mi id, consectetur adipi deese cing elit maus fringilla bibe endum.</p>
-                                            <div>
-                                                <span class="price"><small>AVG/NIGHT</small>$170</span>
-                                                <a class="button btn-small full-width text-center" title="" href="hotel-detailed.html">SELECT</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article> -->
+                            
                             </div>
                             <a href="#" class="uppercase full-width button btn-large">load more listing</a>
                         </div>
@@ -613,3 +350,31 @@
 </body>
 </html>
 
+
+
+<!-- 
+
+  <div class="row" ng-repeat="roominfo in hotelInfo.hotelbyRoom">
+                                   <a ng-click="dateWiseInfo($parent.$index,$index)" style="cursor: pointer;" data-toggle="modal">
+                                    <div class="col-sm-6 col-md-11" style="margin-left: 3%;">  border-bottom: 1px dotted;
+                                         <div class="col-xs-4">
+                                         <i class="soap-icon-check-1" style="color: #7db921;"></i>
+                                         <label style="color:#01b7f2;">{{roominfo.roomName}}  
+                                              </label>
+                                               
+                                         </div>
+                                        <div class="col-xs-2" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null">
+                                          <span class="price"><small>AVG/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg}}<small>1 PERSON</small></span>
+                                        
+                                         </div>
+                                                                                
+                                         <div class="col-xs-2" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg != null">
+                                        <span class="price"><small>AVG/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg}}<small>2 PERSONS</small></span>
+                                         </div>
+                                         <div class="col-xs-3" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg != null">
+                                         <span class="price"><small>AVG/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg}}<small>3 PERSONS</small></span>
+                                         </div>
+                                     </div>
+                                      </a>
+                                   </div>
+ -->

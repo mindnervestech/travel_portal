@@ -11,6 +11,8 @@ public class SerachHotelRoomType {
 	public Long roomId;
 	public String roomName;
 	public List<SerachedRoomRateDetail> hotelRoomRateDetail;
+	private List<RoomAmenitiesVm> amenities;
+	
 	public Long getRoomId() {
 		return roomId;
 	}
@@ -29,6 +31,12 @@ public class SerachHotelRoomType {
 	public void setHotelRoomRateDetail(
 			List<SerachedRoomRateDetail> hotelRoomRateDetail) {
 		this.hotelRoomRateDetail = hotelRoomRateDetail;
+	}
+	public List<RoomAmenitiesVm> getAmenities() {
+		return amenities;
+	}
+	public void setAmenities(List<RoomAmenitiesVm> amenities) {
+		this.amenities = amenities;
 	}  
 	
 	

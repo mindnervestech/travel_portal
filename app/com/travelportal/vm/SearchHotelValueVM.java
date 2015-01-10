@@ -4,13 +4,22 @@ import javax.persistence.Column;
 
 public class SearchHotelValueVM {
 	
-	
+	public String supplierCode;
 	public String countryCode;
 	public String city;
 	public String checkIn;
 	public String checkOut;
 	public String id;
 	public String nationalityCode;
+	
+	
+	
+	public String getSupplierCode() {
+		return supplierCode;
+	}
+	public void setSupplierCode(String supplierCode) {
+		this.supplierCode = supplierCode;
+	}
 	public String getCountryCode() {
 		return countryCode;
 	}

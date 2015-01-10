@@ -211,6 +211,12 @@ public class ApplicationController extends Controller{
 	}
 	
 	@Transactional
+	public static Result getAdminForm() {
+		return ok(views.html.adminLogin.render());
+		
+	}
+	
+	@Transactional
 	public static Result getSignUpForm() {
 		
 		List<Country> countries = Country.getCountries();

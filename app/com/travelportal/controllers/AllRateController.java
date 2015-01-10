@@ -18,6 +18,8 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import com.travelportal.domain.AmenitiesType;
+import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.InfoWiseImagesPath;
@@ -27,13 +29,16 @@ import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
+import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.vm.AllotmentMarketVM;
 import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.HotelProfileVM;
 import com.travelportal.vm.HotelSearch;
+import com.travelportal.vm.HotelamenitiesVM;
 import com.travelportal.vm.NormalRateVM;
 import com.travelportal.vm.RateDetailsVM;
 import com.travelportal.vm.RateVM;
+import com.travelportal.vm.RoomAmenitiesVm;
 import com.travelportal.vm.SeaachNormalRateVM;
 import com.travelportal.vm.SearchRateDetailsVM;
 import com.travelportal.vm.SearchSpecialRateVM;
@@ -41,6 +46,7 @@ import com.travelportal.vm.SerachHotelRoomType;
 import com.travelportal.vm.SerachedHotelbyDate;
 import com.travelportal.vm.SerachedRoomRateDetail;
 import com.travelportal.vm.SerachedRoomType;
+import com.travelportal.vm.ServicesVM;
 import com.travelportal.vm.SpecialRateVM;
 
 public class AllRateController extends Controller {
@@ -67,15 +73,15 @@ public class AllRateController extends Controller {
 		String[] toDate = map1.get("toDate");
 		String[] cId = map1.get("countryId");
         String[] supplierCode = map1.get("supplierCode");
-        String[] roomcode = map1.get("roomcode");
+        //String[] roomcode = map1.get("roomcode");
         
 		Date fmDate = null;
 		Date tDate = null;
 
 		int j = 0;
 
-		List<RateMeta> rateMeta = RateMeta.getdatecheckRoom(
-				Long.parseLong(supplierCode[0]),Long.parseLong(roomcode[0]),
+		List<RateMeta> rateMeta = RateMeta.getdatecheckOneSupp(
+				Long.parseLong(supplierCode[0]),
 				Integer.parseInt(cId[0])); // Long.parseLong(roomId[0]),
 
 		for (RateMeta rate1 : rateMeta) {
@@ -104,10 +110,16 @@ public class AllRateController extends Controller {
 			Calendar todata = Calendar.getInstance();
 			todata.setTime(rate1.getToDate());
 			todata.set(Calendar.MILLISECOND, 0);
+			long dayDiff;
+			if(toDates.getTime() == formDate.getTime()){
+				dayDiff = 1;
+			}else{
+				long diff = toDates.getTime() - formDate.getTime();
 
-			long diff = toDates.getTime() - formDate.getTime();
-
-			long dayDiff = diff / (1000 * 60 * 60 * 24);
+				dayDiff = diff / (1000 * 60 * 60 * 24);
+			}
+				
+			
 
 			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 			HotelSearch hProfileVM = new HotelSearch();
@@ -125,25 +137,59 @@ public class AllRateController extends Controller {
 				hProfileVM.setSupplierCode(hAmenities.getSupplier_code());
 				hProfileVM.setHotelNm(hAmenities.getHotelName());
 				hProfileVM.setSupplierNm(hAmenities.getSupplierName());
-
+				hProfileVM.setHoteldescription(hAmenities.getHotelProfileDesc());
+				
 				if (hAmenities.getStartRatings() != null) {
 					hProfileVM.setStartRating(hAmenities.getStartRatings()
 							.getId());
 				}
+				
+				hProfileVM.currencyId = hAmenities.getCurrency().getCurrencyCode();
+				hProfileVM.currencyName = hAmenities.getCurrency().getCurrencyName();
+				String currency = hAmenities.getCurrency().getCurrencyName();
+				String[] currencySplit;
+				 currencySplit = currency.split(" - ");
+				hProfileVM.currencyShort = currencySplit[0];
+				//Set<HotelamenitiesVM> hotelamenitiesVMs;
+			//	hProfileVM.setAmenities(hAmenities.getAmenities());
+				
+				//Set<HotelAmenities> hotelamenities = hAmenities.getAmenities();
+				//hotelamenitiesVMs.add(arg0)
+				//hProfileVM.setAmenities(amenities);
+				/*for(HotelAmenities amenities : hAmenities.getAmenities())
+				{
+					HotelamenitiesVM hotelamenitiesVM=new HotelamenitiesVM();
+					hotelamenitiesVM.setAmenitiesCode());
+					
+				}*/
+				
+				
+				//hAmenities.getAmenities());
 				hProfileVM.setHotelAddr(hAmenities.getAddress());
 				hProfileVM.setCityCode(hAmenities.getCity().getCityCode());
-				hProfileVM.setServices(hAmenities.getIntListServices());
+				//hProfileVM.setServices1(hAmenities.getIntListServices());
+				
+				
+				List<ServicesVM> sList = new ArrayList<>();
+				
+				for (HotelServices hoServices : hAmenities.getServices()){
+					ServicesVM sVm=new ServicesVM();
+					sVm.setServiceId(hoServices.getServiceId());
+					sVm.setServiceName(hoServices.getServiceName());
+					sList.add(sVm);
+				}
+				hProfileVM.setServices(sList);
+				
 				hProfileVM.setCheckIn(fromDate[0]);
 				hProfileVM.setCheckOut(toDate[0]);
 				hProfileVM.setNationality(Integer.parseInt(cId[0]));
-				
 				
 				
 				for (int i = 0; i < dayDiff; i++) {
 
 					System.out.println(rate1.getSupplierCode());
 					List<HotelRoomTypes> roomType = HotelRoomTypes
-							.getHotelRoomDetailsByIds(rate1.getSupplierCode(),Long.parseLong(roomcode[0]));
+							.getHotelRoomDetails(rate1.getSupplierCode());
 					int days = c.get(Calendar.DAY_OF_WEEK)-1;
 					SerachedHotelbyDate hotelBydateVM = new SerachedHotelbyDate();
 					hotelBydateVM.setFlag("0");
@@ -169,7 +215,17 @@ public class AllRateController extends Controller {
 								//if (objectRate == null) {
 								roomtyp.setRoomId(room.getRoomId());
 								roomtyp.setRoomName(room.getRoomType());
-									
+								List<RoomAmenitiesVm> rList = new ArrayList<>();
+								
+								for (RoomAmenities roomAmenitiesVm : room.getAmenities()){
+									RoomAmenitiesVm rooAmenitiesVm = new RoomAmenitiesVm();
+									rooAmenitiesVm.setAmenityId(roomAmenitiesVm.getAmenityId());
+									rooAmenitiesVm.setAmenityNm(roomAmenitiesVm.getAmenityNm());
+									rList.add(rooAmenitiesVm);
+								}
+								
+									roomtyp.setAmenities(rList);
+								//roomtyp.setAmenities(RoomAmenities.getroomamenities(room.getAmenities()));	//room.getAmenities();
 								RateDetails rateDetails = RateDetails
 										.findByRateMetaId(rate.getId());
 
@@ -374,12 +430,118 @@ public class AllRateController extends Controller {
 				if (!hProfileVM.getHotelbyDate().isEmpty()) {
 					hotellist.add(hProfileVM);
 				}
-				return ok(Json.toJson(hProfileVM));
+				//return ok(Json.toJson(hProfileVM));
 			}
 		}
 
-				return ok(Json.toJson(null));
-		
+				//return ok(Json.toJson(null));
+		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
+		// List<SerachedRoomRateDetail> hotelRMRatelist = new ArrayList<>();
+		Map<Long, SerachedRoomRateDetail> mapRM = new HashMap<Long, SerachedRoomRateDetail>();
+		int count=0;
+		for (HotelSearch hotel : hotellist) {
+			//int newHotel=0; 
+			int dataVar = 0;
+			int countRoom = count;
+			for (SerachedHotelbyDate date : hotel.hotelbyDate) {
+				int newHotel=countRoom; 
+				dataVar++;
+				for (SerachedRoomType roomTP : date.getRoomType()) {
+					
+					Double total = 0.0;
+					Double avg = 0.0;
+					SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
+					sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
+
+					
+					SerachedRoomRateDetail sRateDetail = new SerachedRoomRateDetail();
+					// sRateDetail.normalRate = new SeaachNormalRateVM();
+					sRateDetail.rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
+
+					//sRateDetail.setAdult_occupancy(roomTP.g);
+					
+					List<SerachedRoomRateDetail> serachedRoomRateDetails = new ArrayList<>();
+					List<SearchRateDetailsVM> searchRateDetailsVMs = new ArrayList<>();
+					SerachedRoomRateDetail objectRM = mapRM.get(roomTP
+							.getRoomId());
+					if (objectRM == null) {
+						
+						count++;
+						
+						sHotelRoomType.setRoomId(roomTP.getRoomId());
+						sHotelRoomType.setRoomName(roomTP.getRoomName());
+						sHotelRoomType.setAmenities(roomTP.getAmenities());
+						
+						for (SerachedRoomRateDetail rateObj : roomTP
+								.getHotelRoomRateDetail()) {
+						
+							for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
+								SearchRateDetailsVM searchRateDetailsVM = new SearchRateDetailsVM();
+								
+								//searchRateDetailsVM.setRateValue(detailsVM.getRateValue());
+								searchRateDetailsVM
+										.setRateAvg(detailsVM.getRateValue());
+								searchRateDetailsVM.setAdult(detailsVM.getAdult());
+								searchRateDetailsVM.setMealTypeName(detailsVM.getMealTypeName());
+								searchRateDetailsVMs.add(searchRateDetailsVM);
+								sRateDetail.rateDetailsNormal.add(searchRateDetailsVM);
+								
+							}
+							sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
+						}
+						//roomTP.hotelRoomRateDetail.add(sRateDetail);
+						mapRM.put(roomTP.getRoomId(), sRateDetail);
+
+					}else {
+						List<Double> totalNo = new ArrayList<Double>();
+						int i = 0;
+						for (SearchRateDetailsVM ord : objectRM.rateDetailsNormal) {
+							totalNo.add(i, ord.rateAvg);
+							i++;
+						}
+						for (SerachedRoomRateDetail rateObj : roomTP
+								.getHotelRoomRateDetail()) {
+							
+							int x=0;
+							for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
+								
+								//hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x).rateValue = detailsVM.getRateValue();
+								
+								if(detailsVM.getRateValue() > totalNo.get(x)){
+									total= totalNo.get(x);
+								}else{
+									total= detailsVM.getRateValue();
+								}
+							
+								hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x).setRateAvg(total);
+							
+								sRateDetail.rateDetailsNormal
+										.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
+								x++;
+							}
+						}
+						//roomTP.hotelRoomRateDetail.add(sRateDetail);
+						mapRM.put(roomTP.getRoomId(), sRateDetail);
+						newHotel++;
+					}
+					sHotelRoomType.hotelRoomRateDetail.add(sRateDetail);
+					System.out.println("99");
+					System.out.println("+-----+");
+					System.out.println(avg);
+
+					 if(sHotelRoomType.roomId != null){
+					hotelRMlist.add(sHotelRoomType);
+					
+					hotel.hotelbyRoom.add(sHotelRoomType);
+					 }
+					 
+				}
+
+								 
+			}
+			return ok(Json.toJson(hotel));
+		}
+		return ok(Json.toJson(null));
 	}
 
 

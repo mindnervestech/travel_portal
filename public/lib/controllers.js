@@ -1334,9 +1334,11 @@ angular.module('travel_portal').
 	{
 		$http.get("/amenities").success(function(response){
 			$scope.amenities=response;
+			console.log($scope.amenities);
 		});
 		
 		$http.get('/findAmenitiesData/'+$rootScope.supplierCode).success(function(response) {
+			console.log(response);
 			angular.forEach($scope.amenities, function(obj, index){
 				angular.forEach(response, function(obj1, index){
 					if ((obj.amenitiesCode == obj1.amenitiesCode)) {

@@ -2,7 +2,9 @@ package com.travelportal.vm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.rooms.RateMeta;
 
@@ -12,6 +14,7 @@ public class HotelSearch {
 	public String hotelNm;
 	public String supplierNm;
 	public String hotelAddr;
+	public String hoteldescription;
 	public String imgPaths;
 	public String imgDescription;
 	public String checkIn;
@@ -20,7 +23,14 @@ public class HotelSearch {
 	public int countryCode;
 	public int cityCode;
 	public int startRating;
-	public List<Integer> services;
+	public int currencyId;
+	public String currencyName;
+	public String currencyShort;
+	public Double minRate;
+	/*public Set<HotelamenitiesVM> amenities;*/
+	public List<Integer> services1;
+	public List<ServicesVM> services;
+	
 	public List<SerachHotelRoomType> hotelbyRoom = new ArrayList<>();
 	public List<SerachedHotelbyDate> hotelbyDate; 
 	public String flag;
@@ -92,12 +102,7 @@ public class HotelSearch {
 	public void setImgDescription(String imgDescription) {
 		this.imgDescription = imgDescription;
 	}
-	public List<Integer> getServices() {
-		return services;
-	}
-	public void setServices(List<Integer> services) {
-		this.services = services;
-	}
+	
 	public String getCheckIn() {
 		return checkIn;
 	}
@@ -122,6 +127,30 @@ public class HotelSearch {
 	public void setFlag(String flag) {
 		this.flag = flag;
 	}
+	public List<Integer> getServices1() {
+		return services1;
+	}
+	public void setServices1(List<Integer> services1) {
+		this.services1 = services1;
+	}
+	public List<ServicesVM> getServices() {
+		return services;
+	}
+	public void setServices(List<ServicesVM> services) {
+		this.services = services;
+	}
+	public String getHoteldescription() {
+		return hoteldescription;
+	}
+	public void setHoteldescription(String hoteldescription) {
+		this.hoteldescription = hoteldescription;
+	}
+	/*public Set<HotelamenitiesVM> getAmenities() {
+		return amenities;
+	}
+	public void setAmenities(Set<HotelamenitiesVM> amenities) {
+		this.amenities = amenities;
+	}*/
 	
 	
 	

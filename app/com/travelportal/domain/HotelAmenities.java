@@ -26,6 +26,10 @@ public class HotelAmenities {
 	private String amenitiesNm;
 	@ManyToOne
 	private AmenitiesType amenitiesType;
+	@Column(name="amenities_icon")
+	private String amenitiesicon;
+	
+	
 	/**
 	 * @return the amenitiesCode
 	 */
@@ -67,10 +71,19 @@ public class HotelAmenities {
 		return (Location) JPA.em().createQuery("select c from Location c where locationId = ?1").setParameter(1, code).getSingleResult();
 	}*/
 	
+	public String getAmenitiesicon() {
+		return amenitiesicon;
+	}
+	public void setAmenitiesicon(String amenitiesicon) {
+		this.amenitiesicon = amenitiesicon;
+	}
+	
+	
 	public static List<HotelAmenities> getamenities(AmenitiesType amenitiescode) {
 		
 		return JPA.em().createQuery("select c from HotelAmenities c where amenitiesType = ?1"). setParameter(1,amenitiescode).getResultList();
 	}
+	
 	
 	public static Set<HotelAmenities> getallhotelamenities(List<Integer> list) {
 		List<HotelAmenities> hotelcontactinformation =  JPA.em().createQuery("select c from HotelAmenities c where amenitiesCode IN ?1").setParameter(1, list).getResultList();
