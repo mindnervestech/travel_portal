@@ -17,8 +17,10 @@ import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
 import com.travelportal.domain.HearAboutUs;
+import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelBrands;
 import com.travelportal.domain.HotelChain;
+import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.NatureOfBusiness;
@@ -28,6 +30,7 @@ import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.RateWrapper;
 import com.travelportal.vm.AgentRegisVM;
 import com.travelportal.vm.HotelSignUpVM;
+import com.travelportal.vm.PermissionsVM;
 import com.travelportal.vm.RoomtypeVM;
 
 import play.data.DynamicForm;
@@ -357,6 +360,19 @@ public class ApplicationController extends Controller{
 		register.setStatus("PENDING");
 		register.setSupplierType("Accomodation");
 		
+		List<Integer> pList = new ArrayList<>();
+		
+		pList.add(1);
+		pList.add(2);
+		pList.add(3);
+		pList.add(4);
+		pList.add(5);
+		pList.add(6);
+		pList.add(7);
+		pList.add(8);
+		
+		register.setPermissions(Permissions.getpp(pList));
+				
 		register.save();
 		
 		return ok(views.html.signupMessage.render());
