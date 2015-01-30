@@ -24,6 +24,9 @@ public class RoomAmenities {
 	@Column(name="amenity_nm")
 	private String amenityNm;
 	
+	@Column(name="amenities_icon")
+	private String amenitiesicon;
+	
 	/**
 	 * @return the amenityId
 	 */
@@ -45,10 +48,20 @@ public class RoomAmenities {
 	/**
 	 * @param amenityNm the amenityNm to set
 	 */
+	
+	
+	
+	
 	public void setAmenityNm(String amenityNm) {
 		this.amenityNm = amenityNm;
 	}
 	
+	public String getAmenitiesicon() {
+		return amenitiesicon;
+	}
+	public void setAmenitiesicon(String amenitiesicon) {
+		this.amenitiesicon = amenitiesicon;
+	}
 	public static List<RoomAmenities> getRoomAmenities() {
 		return JPA.em().createQuery("select ra from RoomAmenities ra").getResultList();
 	}

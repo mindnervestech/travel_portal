@@ -5,6 +5,8 @@ import javax.persistence.Column;
 public class RoomAmenitiesVm {
 	public int amenityId;
 	public String amenityNm;
+	public String amenitiesicon;
+	
 	public int getAmenityId() {
 		return amenityId;
 	}
@@ -16,6 +18,12 @@ public class RoomAmenitiesVm {
 	}
 	public void setAmenityNm(String amenityNm) {
 		this.amenityNm = amenityNm;
+	}
+	public String getAmenitiesicon() {
+		return amenitiesicon;
+	}
+	public void setAmenitiesicon(String amenitiesicon) {
+		this.amenitiesicon = amenitiesicon;
 	}
 	
 	

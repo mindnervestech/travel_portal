@@ -1,8 +1,11 @@
 package com.travelportal.domain;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -21,7 +24,9 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.travelportal.domain.allotment.AllotmentMarket;
+import com.travelportal.domain.rooms.HotelRoomTypes;
+import com.travelportal.domain.rooms.RateMeta;
+import com.travelportal.vm.ServicesVM;
 
 @Entity
 @Table(name="hotel_profile")
@@ -783,6 +788,7 @@ public class HotelProfile {
 		q.setParameter(1,countryId);	
 		return q.getResultList();
 }
+	
 
 	public static List<HotelProfile> getStarwiseHotel(int sId) {	
 	
@@ -794,6 +800,211 @@ public class HotelProfile {
 	
 	public static HotelProfile findAllData(Long supplierCode) {
 		return (HotelProfile) JPA.em().createQuery("select c from HotelProfile c where c.supplier_code = ?1").setParameter(1,supplierCode).getSingleResult();
+	}
+	public static HotelProfile findAllData(String supplierCode) {
+		return (HotelProfile) JPA.em().createQuery("select c from HotelProfile c where c.supplier_code = ?1").setParameter(1,supplierCode).getSingleResult();
+	}
+	
+	/*public static List<HotelProfile> findAllData1(Long supplierCode,List<Integer> service) {
+				 
+		 List<Object[]> list;
+		
+	 list = JPA.em().createNativeQuery("select * from hotel_profile hp,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ?1 and hs.services_id IN ?2 group by hp.id").setParameter(1,supplierCode).setParameter(2,service).getResultList();  // 
+	
+	 List<HotelProfile> list1 = new ArrayList<>();
+	 
+	 for(Object[] o :list) {
+		 HotelProfile am = new HotelProfile();
+		
+		 am.setAddress(o[1].toString());
+		 am.setHotelProfileDesc(o[8].toString());
+		 am.setSupplier_code(Long.parseLong(o[34].toString()));
+		 HotelProfile hAmenities1 = HotelProfile.findAllData(Long.parseLong(o[34].toString()));
+		 List<HotelServices> sList = new ArrayList<>();
+			
+			for (HotelServices hoServices : hAmenities1.getServices()){
+				HotelServices sVm=new HotelServices();
+				sVm.setServiceId(hoServices.getServiceId());
+				sVm.setServiceName(hoServices.getServiceName());
+				sList.add(sVm);
+			}
+			am.setServices(sList);
+		 
+		 am.setHotelName(o[7].toString());
+		 am.setCurrency(Currency.getCurrencyByCode(Integer.parseInt(o[25].toString())));
+		 am.setStartRatings(HotelStarRatings.getHotelRatingsById(Integer.parseInt(o[41].toString())));
+		 am.setCity(City.getCityByCode(Integer.parseInt(o[22].toString())));
+				 
+		 
+		 
+		 list1.add(am);
+		 
+	 }
+	 
+	 return list1;
+	}
+	*/
+	/*public static List<HotelProfile> findAllDataforlocation(Long supplierCode,List<Integer> location) {
+		 
+		 List<Object[]> list;
+		
+	 list = JPA.em().createNativeQuery("select * from hotel_profile hp where hp.id = ?1 and hp.location_location_id IN ?2 group by hp.id").setParameter(1,supplierCode).setParameter(2,location).getResultList();   
+	
+	 List<HotelProfile> list1 = new ArrayList<>();
+	 
+	 for(Object[] o :list) {
+		 HotelProfile am = new HotelProfile();
+		
+		 am.setAddress(o[1].toString());
+		 am.setHotelProfileDesc(o[8].toString());
+		 am.setSupplier_code(Long.parseLong(o[34].toString()));
+		 HotelProfile hAmenities1 = HotelProfile.findAllData(Long.parseLong(o[34].toString()));
+		 List<HotelServices> sList = new ArrayList<>();
+			
+			for (HotelServices hoServices : hAmenities1.getServices()){
+				HotelServices sVm=new HotelServices();
+				sVm.setServiceId(hoServices.getServiceId());
+				sVm.setServiceName(hoServices.getServiceName());
+				sList.add(sVm);
+			}
+			am.setServices(sList);
+		 
+		 am.setHotelName(o[7].toString());
+		 am.setCurrency(Currency.getCurrencyByCode(Integer.parseInt(o[25].toString())));
+		 am.setStartRatings(HotelStarRatings.getHotelRatingsById(Integer.parseInt(o[41].toString())));
+		 am.setCity(City.getCityByCode(Integer.parseInt(o[22].toString())));
+				 
+		 
+		 
+		 list1.add(am);
+		 
+	 }
+	 
+	 return list1;
+	}*/
+	
+	
+	public static List<HotelProfile> findAllDataforamenities(Long supplierCode,List<Integer> amenities,List<Integer> services,List<Integer> location) {
+		 
+		 List<Object[]> list = null;
+		 if(services.isEmpty() && amenities.isEmpty() && location.isEmpty()){
+		    list = JPA.em().createNativeQuery("select * from hotel_profile hp where hp.id = ?1").setParameter(1,supplierCode).getResultList();
+		 }
+		 if(!services.isEmpty() && !amenities.isEmpty() && !location.isEmpty()){
+			 list = JPA.em().createNativeQuery("select * from hotel_profile hp,hotel_profile_hotel_amenities ha,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ha.hotel_profile_id and hp.id = ?1 and  ha.amenities_amenities_code IN ?2 and hs.services_id IN ?3 and hp.location_location_id IN ?4 group by hp.id").setParameter(1,supplierCode).setParameter(2,amenities).setParameter(3,services).setParameter(4,location).getResultList();
+		 }
+		 
+		 if(!services.isEmpty() && !amenities.isEmpty() && location.isEmpty()){
+			 list = JPA.em().createNativeQuery("select * from hotel_profile hp,hotel_profile_hotel_amenities ha,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ha.hotel_profile_id and hp.id = ?1 and  ha.amenities_amenities_code IN ?2 and hs.services_id IN ?3 group by hp.id").setParameter(1,supplierCode).setParameter(2,amenities).setParameter(3,services).getResultList();
+		 }
+		 
+		 if(!services.isEmpty() && amenities.isEmpty() && !location.isEmpty()){
+			 list = JPA.em().createNativeQuery("select * from hotel_profile hp,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ?1 and hs.services_id IN ?2 and hp.location_location_id IN ?3 group by hp.id").setParameter(1,supplierCode).setParameter(2,services).setParameter(3,location).getResultList();
+		 }
+		 
+		 if(services.isEmpty() && !amenities.isEmpty() && !location.isEmpty()){
+			 list = JPA.em().createNativeQuery("select * from hotel_profile hp,hotel_profile_hotel_amenities ha where hp.id = ha.hotel_profile_id and hp.id = ?1 and  ha.amenities_amenities_code IN ?2 and hp.location_location_id IN ?3 group by hp.id").setParameter(1,supplierCode).setParameter(2,amenities).setParameter(3,location).getResultList();
+		 }
+		
+		 if(services.isEmpty() && !amenities.isEmpty() && location.isEmpty()){
+	      list = JPA.em().createNativeQuery("select * from hotel_profile hp,hotel_profile_hotel_amenities ha where hp.id = ha.hotel_profile_id and hp.id = ?1 and  ha.amenities_amenities_code IN ?2 group by hp.id").setParameter(1,supplierCode).setParameter(2,amenities).getResultList();   
+		 }
+		
+		 if(!services.isEmpty() && amenities.isEmpty() && location.isEmpty()){
+			 list = JPA.em().createNativeQuery("select * from hotel_profile hp,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ?1 and hs.services_id IN ?2 group by hp.id").setParameter(1,supplierCode).setParameter(2,services).getResultList();
+		 }
+		 
+		 if(!location.isEmpty() && amenities.isEmpty() && services.isEmpty()){
+			 list = JPA.em().createNativeQuery("select * from hotel_profile hp where hp.id = ?1 and hp.location_location_id IN ?2 group by hp.id").setParameter(1,supplierCode).setParameter(2,location).getResultList();
+		 }
+	 List<HotelProfile> list1 = new ArrayList<>();
+	 
+	 for(Object[] o :list) {
+		 HotelProfile am = new HotelProfile();
+		
+		 am.setAddress(o[1].toString());
+		 am.setHotelProfileDesc(o[8].toString());
+		 am.setSupplier_code(Long.parseLong(o[34].toString()));
+		 HotelProfile hAmenities1 = HotelProfile.findAllData(Long.parseLong(o[34].toString()));
+		 List<HotelServices> sList = new ArrayList<>();
+			
+			for (HotelServices hoServices : hAmenities1.getServices()){
+				HotelServices sVm=new HotelServices();
+				sVm.setServiceId(hoServices.getServiceId());
+				sVm.setServiceName(hoServices.getServiceName());
+				sList.add(sVm);
+			}
+			am.setServices(sList);
+		 
+		 am.setHotelName(o[7].toString());
+		 am.setCurrency(Currency.getCurrencyByCode(Integer.parseInt(o[25].toString())));
+		 am.setStartRatings(HotelStarRatings.getHotelRatingsById(Integer.parseInt(o[41].toString())));
+		 am.setCity(City.getCityByCode(Integer.parseInt(o[22].toString())));
+				 
+		 
+		 
+		 list1.add(am);
+		 
+	 }
+	 
+	 return list1;
+	}
+	
+	/*public static List<HotelProfile> findAllData2(Long supplierCode,List<String> service) {
+		 
+		 List<Object[]> list;
+	
+	 list = JPA.em().createNativeQuery("select * from hotel_profile hp,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ?1 and hs.services_id IN ?2 group by hp.id").setParameter(1,supplierCode).setParameter(2,service).getResultList();  // 
+	
+	 List<HotelProfile> list1 = new ArrayList<>();
+	 
+	 for(Object[] o :list) {
+		 HotelProfile am = new HotelProfile();
+			
+		 am.setAddress(o[1].toString());
+		 am.setHotelProfileDesc(o[8].toString());
+		 am.setSupplier_code(Long.parseLong(o[34].toString()));
+		 HotelProfile hAmenities1 = HotelProfile.findAllData(Long.parseLong(o[34].toString()));
+		 List<HotelServices> sList = new ArrayList<>();
+			
+			for (HotelServices hoServices : hAmenities1.getServices()){
+				HotelServices sVm=new HotelServices();
+				sVm.setServiceId(hoServices.getServiceId());
+				sVm.setServiceName(hoServices.getServiceName());
+				sList.add(sVm);
+			}
+			am.setServices(sList);
+		 
+		 am.setHotelName(o[7].toString());
+		 am.setCurrency(Currency.getCurrencyByCode(Integer.parseInt(o[25].toString())));
+		 am.setStartRatings(HotelStarRatings.getHotelRatingsById(Integer.parseInt(o[41].toString())));
+		 am.setCity(City.getCityByCode(Integer.parseInt(o[22].toString())));		 
+		 
+		 
+		 
+		 list1.add(am);
+		 
+	 }
+	 return list1;
+	}*/
+	public static List<Map> getlocationCount(List<Long> supplierCode) {  
+		 int priorityno = 1;
+		List<Object[]> list;
+		 list =JPA.em().createNativeQuery("select count(*) as total,am.location_id,am.location_nm from location am,hotel_profile ha where am.location_id = ha.location_location_id and am.priority_no ='"+priorityno+"' and ha.id IN ?1 group by am.location_id").setParameter(1,supplierCode).getResultList();
+		 
+		 List<Map> list1 = new ArrayList<>();
+		 
+		 for(Object[] o :list) {
+			 Map m = new HashMap<>();
+			 m.put("countHotelByLocation", o[0].toString());
+			 m.put("locationid", o[1].toString());
+			 m.put("locationNm", o[2].toString());
+			 list1.add(m);
+		 }
+			
+			return list1;
+			
+		
 	}
 	
 	

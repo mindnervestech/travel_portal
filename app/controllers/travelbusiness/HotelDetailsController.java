@@ -14,6 +14,7 @@ import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.InfoWiseImagesPath;
 import com.travelportal.domain.Salutation;
+import com.travelportal.domain.rooms.HotelRoomTypes;
 
 public class HotelDetailsController extends Controller {
 
@@ -101,5 +102,14 @@ public class HotelDetailsController extends Controller {
 		Set<HotelAmenities> hotelamenities = hotelProfile.getAmenities();
 		return ok(Json.toJson(hotelamenities));
 	}
-
+	
+	@Transactional(readOnly=false)
+	public static Result getHotelRoomImagePath(long roomId) {
+		
+		HotelRoomTypes hRoomTypes = HotelRoomTypes.findById(roomId);
+		File f = new File(hRoomTypes.getRoomPic());
+	    return ok(f);		
+		
+	}
+	
 }

@@ -56,6 +56,11 @@ public class HotelRoomTypes {
 	private String roomSuiteType;
 	@Column(name="twin_beds_flag")
 	private boolean twinBeds;
+	@Column(name="description")
+	private String description;
+	@Column(name="room_pic")
+	private String roomPic;
+	
 	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<RoomAmenities> amenities;
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
@@ -250,8 +255,22 @@ public class HotelRoomTypes {
 	}
 	
 	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	
 	
+	
+	
+	public String getRoomPic() {
+		return roomPic;
+	}
+	public void setRoomPic(String roomPic) {
+		this.roomPic = roomPic;
+	}
 	public static List<RoomType> getAllRoomTypes(final Long supplierCode) {
 		Query q = JPA.em().createQuery("select r.roomId, r.roomType from HotelRoomTypes r where r.supplierCode = :supplierCode ");
 		q.setParameter("supplierCode", supplierCode);

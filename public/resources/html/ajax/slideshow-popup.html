@@ -1,6 +1,8 @@
 <div class="photo-gallery style1" id="photo-gallery1" data-animation="slide" data-sync="#image-carousel1">
     <ul class="slides">
-        <li><img src="{{hotelIF.imgPaths}}" alt="" style="height: 592px;" /></li>
+    
+        <li ng-if="hotelIF.imgPaths != null"><img src="{{hotelIF.imgPaths}}" alt="" style="height: 592px;" /></li>
+        <li ng-if="roomIF.roomimgPaths != null"><img src="{{roomIF.roomimgPaths}}" alt="" style="height: 592px;" /></li>
        <!--  <li><img src="/assets/resources/images/Koala.jpg" alt="" /></li>
         <li><img src="/assets/resources/images/Koala.jpg" alt="" /></li>
         <li><img src="/assets/resources/images/Koala.jpg" alt="" /></li> -->

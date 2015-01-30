@@ -19,6 +19,9 @@ public class RoomtypeVM {
 	public String chargesForChildren;
 	public String extraBedAllowed;
 	public String roomSuiteType;
+	public String description;
+	public String roomPicture;
+	
 	public List<Integer> roomamenities;
 	public List<RoomChildpoliciVM> roomchildPolicies;
 	public Long getSupplierCode() {
@@ -110,6 +113,18 @@ public class RoomtypeVM {
 	}
 	public void setRoomchildPolicies(List<RoomChildpoliciVM> roomchildPolicies) {
 		this.roomchildPolicies = roomchildPolicies;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getRoomPicture() {
+		return roomPicture;
+	}
+	public void setRoomPicture(String roomPicture) {
+		this.roomPicture = roomPicture;
 	}
 	
 	

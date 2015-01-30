@@ -119,7 +119,7 @@ public static Result getPdfPath(long supplierCode) {
 	response().setHeader("Content-Disposition", "inline; filename="+"SupplierAgreement.pdf");
 	
 	String PdfFile = rootDir + File.separator + supplierCode +File.separator+ "SupplierAgreement"+File.separator+"SupplierAgreement.pdf";
-	System.out.println("***********");
+//	System.out.println("***********");
 	File f = new File(PdfFile);
 	
 	response().setHeader("Content-Length", ((int)f.length())+"");

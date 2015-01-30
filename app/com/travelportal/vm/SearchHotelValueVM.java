@@ -1,5 +1,7 @@
 package com.travelportal.vm;
 
+import java.util.List;
+
 import javax.persistence.Column;
 
 public class SearchHotelValueVM {
@@ -11,6 +13,10 @@ public class SearchHotelValueVM {
 	public String checkOut;
 	public String id;
 	public String nationalityCode;
+	public String sortData;
+	public List<Integer> servicesCheck;
+	public List<Integer> locationCheck;
+	public List<Integer> amenitiesCheck;
 	
 	
 	
@@ -56,6 +62,30 @@ public class SearchHotelValueVM {
 	}
 	public void setNationalityCode(String nationalityCode) {
 		this.nationalityCode = nationalityCode;
+	}
+	public List<Integer> getServicesCheck() {
+		return servicesCheck;
+	}
+	public void setServicesCheck(List<Integer> servicesCheck) {
+		this.servicesCheck = servicesCheck;
+	}
+	public List<Integer> getLocationCheck() {
+		return locationCheck;
+	}
+	public void setLocationCheck(List<Integer> locationCheck) {
+		this.locationCheck = locationCheck;
+	}
+	public List<Integer> getAmenitiesCheck() {
+		return amenitiesCheck;
+	}
+	public void setAmenitiesCheck(List<Integer> amenitiesCheck) {
+		this.amenitiesCheck = amenitiesCheck;
+	}
+	public String getSortData() {
+		return sortData;
+	}
+	public void setSortData(String sortData) {
+		this.sortData = sortData;
 	}
 	
 	

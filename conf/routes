@@ -9,11 +9,15 @@ GET     /                           controllers.travelbusiness.Application.index
 #GET     /searchHotelInfo/:city/:checkIn/:checkOut/:starId/:nationalityId 	controllers.travelbusiness.Application.searchHotelInfo(city:String,checkIn:String,checkOut:String,starId:String,nationalityId:String)
 POST    /hoteldetailpage		controllers.travelbusiness.Application.hoteldetailpage()
 POST     /searchHotelInfo   	controllers.travelbusiness.Application.searchHotelInfo()
+POST    /searchAgainHotelInfo	controllers.travelbusiness.Application.searchAgainHotelInfo()
 GET 	/searchCountries					controllers.travelbusiness.Application.searchCountries()
 GET 	/searchNationality					controllers.travelbusiness.Application.searchNationality()
 GET 	/searchCities/:countryId			controllers.travelbusiness.Application.searchCities(countryId: Integer)
 GET 	/searchStarrating                	controllers.travelbusiness.Application.getStarRatings()
 GET	  /searchHotelInfo/getHotelImagePath/:supplierCode			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long)
+#POST  /findByServices 		    controllers.travelbusiness.Application.findByServices()
+#POST  /findBylocation				    controllers.travelbusiness.Application.findBylocation()
+POST  /findHotelByData	        controllers.travelbusiness.Application.findHotelByData()
 #Hotel Details
 GET   /searchHotelGenImg/getHotelGenImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelGenImg(supplierCode:Long)
 GET   /searchHotelServImg/getHotelServImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelServImg(supplierCode:Long)
@@ -24,10 +28,12 @@ GET   /searchHotelMapImg/getHotelMapImg/:supplierCode			controllers.travelbusine
 GET   /hotelamenities                	controllers.travelbusiness.HotelDetailsController.getAmenities()
 GET   /business              	    	controllers.travelbusiness.HotelDetailsController.getBusiness()
 GET   /leisureSport             		controllers.travelbusiness.HotelDetailsController.getLeisureSport()
-
+GET	  /hoteldetailpage/getHotelRoomImagePath/:roomId			controllers.travelbusiness.HotelDetailsController.getHotelRoomImagePath(roomId:Long)
 
 GET   /findAmenitiesData/:supplierCode     controllers.travelbusiness.HotelDetailsController.findAmenitiesData(supplierCode:Long)
 GET   /getDatewiseHotelRoom/:checkIn/:checkOut/:nationality/:supplierCode/:roomCode   controllers.travelbusiness.Application.getDatewiseHotelRoom(checkIn:String,checkOut:String,nationality:String,supplierCode:String,roomCode:String)
+#GET   /getSortHotel/:checkIn/:checkOut/:nationality/:cityid/:starid/:sortData   controllers.travelbusiness.Application.getSortHotel(checkIn:String,checkOut:String,nationality:String,cityid:String,starid:String,sortData:String)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
@@ -143,6 +149,7 @@ GET   /getPdfPath1/:supplierCode			com.travelportal.controllers.SupplierAgreemen
 POST   /findSupplier  		com.travelportal.controllers.SupplierLoginthroughAdminController.getsupplierLogin()
 #following routes are used for fetch manage hotel images, 
 
+
 POST   /savegeneralImg   com.travelportal.controllers.ManageHotelImagesController.savegeneralImg()
 POST   /saveLobbyImg      com.travelportal.controllers.ManageHotelImagesController.saveLobbyImg()
 POST   /saveRoomImg      com.travelportal.controllers.ManageHotelImagesController.saveRoomImg()
@@ -159,6 +166,9 @@ GET	  /hotel_profile/getLeisureorSportsImagePath/:supplierCode			com.travelporta
 GET	  /hotel_profile/getMapImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getMapImagePath(supplierCode:Long)
  
  
+
+GET	  /hotel_profile/getRoomImagePathInroom/:roomId			com.travelportal.controllers.HotelRoomController.getRoomImagePathInroom(roomId:Long) 
+POST   /saveRoomImgs		com.travelportal.controllers.HotelRoomController.saveRoomImgs()
 GET     /getMarketGroup/:id                      com.travelportal.controllers.HotelRoomController.getMarketGroup(id:Long)
 POST    /setCitySelection                        com.travelportal.controllers.HotelRoomController.setCitySelection()
 

@@ -474,6 +474,9 @@ angular.module('travel_portal').
 		 $scope.opengeneralPic1 = true;
 		 
 		 console.log(supplierCode);
+		 
+		
+		 
 	     $scope.selectGeneralPicImage = function($generalPic)
 	     {
 	    	
@@ -822,7 +825,7 @@ angular.module('travel_portal').
 );
 
 angular.module('travel_portal').
-	controller("hoteRoomController",['$scope','notificationService','$rootScope','$http',function($scope,notificationService,$rootScope, $http){
+	controller("hoteRoomController",['$scope','notificationService','$rootScope','$upload','$http',function($scope,notificationService,$rootScope,$upload,$http){
 	    $scope.roomTypeIns = ( {chargesForChildren:"false"} );
 	    
 		$(".form-validate").validate({
@@ -844,11 +847,13 @@ angular.module('travel_portal').
 				console.log('success');
 				$scope.hotelRoomTypes = response;
 			});
-			
+			$scope.update = 0;
+			$scope.updateRoomId = 0;
 			$scope.selectType = function(){
 				
 				$http.get('/roomtypesInfo/'+$scope.roomTypeIns.roomId).success(function(response){
 					console.log(response);
+					$scope.imgRooms = "/hotel_profile/getRoomImagePathInroom/"+$scope.roomTypeIns.roomId+"?d="+new Date().getTime();
 					$scope.roomTypeIns.childAllowedFreeWithAdults = response.childAllowedFreeWithAdults; 
 					$scope.roomTypeIns.roomname = response.roomType;
 					$scope.roomTypeIns.extraBedAllowed = response.extraBedAllowed; 
@@ -856,6 +861,7 @@ angular.module('travel_portal').
 					$scope.roomTypeIns.maxAdultOccupancy = response.maxAdultOccupancy; 
 					$scope.roomTypeIns.roomType = response.roomType;
 					$scope.roomTypeIns.maxOccupancy = response.maxOccupancy; 
+					$scope.roomTypeIns.description = response.description;
 					$scope.roomTypeIns.roomSuiteType = response.roomSuiteType;
 					$scope.roomTypeIns.chargesForChildren = response.chargesForChildren;
 					 $scope.childpolicy = response.roomchildPolicies;
@@ -878,8 +884,11 @@ angular.module('travel_portal').
 					 $scope.roomamenities.push(response.amenities[i].amenityId);
 						 }
 					 console.log($scope.roomamenities);
+					 $scope.updateRoomId = response.roomId;
+					 
+					 
 				});
-				
+				$scope.update = 1;
 			}
 			
 			
@@ -902,9 +911,18 @@ angular.module('travel_portal').
 			       
 			    };
 			    
-			    $scope.createroomtypeMsg = false;
+			 			    
+			    var roomImg =null;
+				 $scope.selectRoomImage = function($roomImg){
+					 roomImg = $roomImg[0];
+				 }
 			    
+			    $scope.createroomtypeMsg = false;
+			    $scope.roomImginfo = {};
 			    $scope.CreateRoomType =function(){
+			    	
+			    	console.log($scope.update);
+			    	
 			    	$scope.roomTypeIns.supplierCode = supplierCode; //$scope.roomTypeIns;
 			    	$scope.roomTypeIns.roomchildPolicies = $scope.childpolicy;
 			    	$scope.roomTypeIns.roomamenities = $scope.roomamenities;
@@ -916,13 +934,52 @@ angular.module('travel_portal').
 			    	console.log($scope.roomTypeIns);
 			    				    	
 			    	$http.post('/hotel/saveUpdateRoomType',$scope.roomTypeIns).success(function(data){
-						console.log('success');
+						console.log(data);
+					
+						
 						$http.get("/roomtypes/"+supplierCode).success(function(response){
-							console.log('success');
+							console.log(response);
 							notificationService.success("Save Successfully");
 							$scope.hotelRoomTypes = response;
-						});
-						$scope.roomT = true;
+							
+							$scope.roomT = true;
+							var roomNo = 0;
+							
+							angular.forEach($scope.hotelRoomTypes, function(obj, index){
+								
+								 if(index == 0){
+									 roomNo = obj.roomId; 
+								 }
+								 if(roomNo < obj.roomId){
+									 roomNo = obj.roomId;
+								 }
+							 });
+							$scope.roomNo = roomNo;
+							
+							//console.log($scope.roomNo);
+							if($scope.update == 0){
+							$scope.roomImginfo.roomId = $scope.roomNo;
+							}else{
+								$scope.roomImginfo.roomId = $scope.updateRoomId;
+							}
+							$scope.roomImginfo.supplierCode = supplierCode;
+							console.log($scope.roomImginfo);
+							$scope.upload = $upload.upload({
+					             url: '/saveRoomImgs', 
+					             method:'post',
+					             data:$scope.roomImginfo,
+					             fileFormDataName: 'roomPic',
+					             file:roomImg,
+					            
+					     }).progress(function(evt) {
+					             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+					     }).success(function(data, status, headers, config) {
+					    	 console.log(data);   
+					    	
+					     }); 
+							
+						});					
+						
 											
 					}).error(function(data, status, headers, config) {
 						console.log('ERROR');
@@ -965,6 +1022,7 @@ angular.module('travel_portal').
 						 obj.isSelected=false;
 					 });
 					console.log($scope.roomTypeIns);
+					$scope.update = 0;
 				}
 			    
 			    $scope.serviceClicked = function(e, roomTypeIns) {

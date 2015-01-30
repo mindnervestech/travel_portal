@@ -1,6 +1,9 @@
 package com.travelportal.domain;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,6 +28,9 @@ public class HotelServices {
 	private String serviceName;
 	@Column(name="additional_info")
 	private String additionalInfo;
+	@Column(name="priority_no")
+	private String priorityNo;
+	
 	/**
 	 * @return the serviceId
 	 */
@@ -72,6 +78,32 @@ public class HotelServices {
 	 */
 	public void setAdditionalInfo(String additionalInfo) {
 		this.additionalInfo = additionalInfo;
+	}
+	
+		
+	public String getPriorityNo() {
+		return priorityNo;
+	}
+	public void setPriorityNo(String priorityNo) {
+		this.priorityNo = priorityNo;
+	}
+	
+	public static List<Map> getservicesCount(List<Long> supplierCode) {  
+		 int priorityno = 1;
+		List<Object[]> list;
+		 list =JPA.em().createNativeQuery("select count(*) as total,ha.id,ha.service_nm from hotel_profile_services am,services ha where am.services_id = ha.id and am.hotel_profile_id IN ?1 and ha.priority_no ='"+priorityno+"' group by  am.services_id").setParameter(1,supplierCode).getResultList();
+		 
+		 List<Map> list1 = new ArrayList<>();
+		 
+		 for(Object[] o :list) {
+			 Map m = new HashMap<>();
+			 m.put("countHotelByService", o[0].toString());
+			 m.put("servicesid", o[1].toString());
+			 m.put("servicesNm", o[2].toString());
+			 list1.add(m);
+		 }
+			
+			return list1;
 	}
 	
 	public static HotelServices findById(int id) {

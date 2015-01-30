@@ -1,4 +1,4 @@
-@(hotellist: com.fasterxml.jackson.databind.JsonNode) 
+@(hotelAllData: com.fasterxml.jackson.databind.JsonNode) 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <!--[if IE 8]>          <html class="ie ie8"> <![endif]-->
@@ -47,14 +47,14 @@
             </div>
         </div>
       
-        <section id="content" ng-init="init(@hotellist)">
+        <section id="content" ng-init="init(@hotelAllData)">
             <div class="container">
                 <div id="main">
                     <div class="row">
                         <div class="col-sm-4 col-md-3">
-                            <h4 class="search-results-title"><i class="soap-icon-search"></i><b>1,984</b> results found.</h4>
+                            <h4 class="search-results-title"><i class="soap-icon-search"></i><b>{{hotelAllData.totalHotel}}</b> results found.</h4>
                             <div class="toggle-container filters-container">
-                                <div class="panel style1 arrow-right">
+                               <!--  <div class="panel style1 arrow-right">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" href="#price-filter" class="collapsed">Price</a>
                                     </h4>
@@ -65,11 +65,11 @@
                                             <span class="min-price-label pull-left"></span>
                                             <span class="max-price-label pull-right"></span>
                                             <div class="clearer"></div>
-                                        </div><!-- end content -->
+                                        </div>end content
                                     </div>
-                                </div>
+                                </div> -->
                                 
-                                <div class="panel style1 arrow-right">
+                               <!--  <div class="panel style1 arrow-right">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" href="#rating-filter" class="collapsed">User Rating</a>
                                     </h4>
@@ -80,24 +80,19 @@
                                             <small>2458 REVIEWS</small>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 
+                               
                                 <div class="panel style1 arrow-right">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" href="#accomodation-type-filter" class="collapsed">Accomodation Type</a>
+                                        <a data-toggle="collapse" href="#accomodation-type-filter" class="collapsed">Services</a>
                                     </h4>
                                     <div id="accomodation-type-filter" class="panel-collapse collapse">
                                         <div class="panel-content">
-                                            <ul class="check-square filters-option">
-                                                <li><a href="#">All<small>(722)</small></a></li>
-                                                <li><a href="#">Hotel<small>(982)</small></a></li>
-                                                <li><a href="#">Resort<small>(127)</small></a></li>
-                                                <li class="active"><a href="#">Bed &amp; Breakfast<small>(222)</small></a></li>
-                                                <li><a href="#">Condo<small>(158)</small></a></li>
-                                                <li><a href="#">Residence<small>(439)</small></a></li>
-                                                <li><a href="#">Guest House<small>(52)</small></a></li>
+                                            <ul class="check-square filters-option" ng-repeat="hotelServices in hotelAllData.hotelServices">
+                                                <li><a id="services{{$index}}" ng-click="servicesWiseHotel($index,hotelServices.servicesid)">{{hotelServices.servicesNm}}<small>({{hotelServices.countHotelByService}})</small></a></li>
                                             </ul>
-                                            <a class="button btn-mini">MORE</a>
+                                            <a class="button btn-small" ng-click="findHotelByData()" style="background: #98ce44;">Find</a>
                                         </div>
                                     </div>
                                 </div>
@@ -106,41 +101,47 @@
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" href="#amenities-filter" class="collapsed">Amenities</a>
                                     </h4>
+                                    
                                     <div id="amenities-filter" class="panel-collapse collapse">
                                         <div class="panel-content">
-                                            <ul class="check-square filters-option">
-                                                <li><a href="#">Bathroom<small>(722)</small></a></li>
-                                                <li><a href="#">Cable tv<small>(982)</small></a></li>
-                                                <li class="active"><a href="#">air conditioning<small>(127)</small></a></li>
-                                                <li class="active"><a href="#">mini bar<small>(222)</small></a></li>
-                                                <li><a href="#">wi - fi<small>(158)</small></a></li>
-                                                <li><a href="#">pets allowed<small>(439)</small></a></li>
-                                                <li><a href="#">room service<small>(52)</small></a></li>
+                                            <ul class="check-square filters-option" ng-repeat="hotelAmenities in hotelAllData.hotelAmenities">
+                                                <li><a id="amenities{{$index}}" ng-click="amenitiesWiseHotel($index,hotelAmenities.amenitiesCode)">{{hotelAmenities.amenitiesNm}}<small>({{hotelAmenities.countHotelByamenities}})</small></a></li>
+                                                 <!-- <li ng-repeat="hotelAmenities in hotelAllData.hotelAmenities" ng-class="hotelAllData.isSelected ?'active':''"><a id="amenities{{$index}}" ng-click="amenitiesWiseHotel($index,hotelAmenities.amenitiesCode);hotelAmenities.isSelected=!hotelAmenities.isSelected">{{hotelAmenities.amenitiesNm}}<small>({{hotelAmenities.countHotelByamenities}})</small></a></li> -->
                                             </ul>
-                                            <a class="button btn-mini">MORE</a>
+                                            <a class="button btn-small" ng-click="findHotelByData()" style="background: #98ce44;">Find</a>
                                         </div>
                                     </div>
                                 </div>
-                                
                                 <div class="panel style1 arrow-right">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#language-filter" class="collapsed">Location</a>
+                                    </h4>
+                                    <div id="language-filter" class="panel-collapse collapse">
+                                        <div class="panel-content">
+                                            <ul class="check-square filters-option" ng-repeat="hotelLocation in hotelAllData.hotellocation">
+                                               <li><a id="location{{$index}}" ng-click="locationWiseHotel($index,hotelLocation.locationid)">{{hotelLocation.locationNm}}<small>({{hotelLocation.countHotelByLocation}})</small></a></li>
+                                            </ul>
+                                            <a class="button btn-small" ng-click="findHotelByData()" style="background: #98ce44;">Find</a>
+                                        </div>
+                                    </div>
+                                </div>
+                               <!--  <div class="panel style1 arrow-right">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" href="#language-filter" class="collapsed">Host Language</a>
                                     </h4>
                                     <div id="language-filter" class="panel-collapse collapse">
                                         <div class="panel-content">
                                             <ul class="check-square filters-option">
-                                                <li><a href="#">English<small>(722)</small></a></li>
                                                 <li><a href="#">Español<small>(982)</small></a></li>
                                                 <li class="active"><a href="#">Português<small>(127)</small></a></li>
                                                 <li class="active"><a href="#">Français<small>(222)</small></a></li>
                                                 <li><a href="#">Suomi<small>(158)</small></a></li>
-                                                <li><a href="#">Italiano<small>(439)</small></a></li>
-                                                <li><a href="#">Sign Language<small>(52)</small></a></li>
+                                                
                                             </ul>
                                             <a class="button btn-mini">MORE</a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 
                                 <div class="panel style1 arrow-right">
                                     <h4 class="panel-title">
@@ -148,25 +149,47 @@
                                     </h4>
                                     <div id="modify-search-panel" class="panel-collapse collapse">
                                         <div class="panel-content">
-                                            <form method="post">
+                                            <form action="/searchAgainHotelInfo" method="post">  <!-- action="/searchAgainHotelInfo"   ng-submit="searchAgainHotel()"  -->
                                                 <div class="form-group">
-                                                    <label>destination</label>
-                                                    <input type="text" class="input-text full-width" placeholder="" value="Paris" />
+                                                    <label>Country</label>
+                                                   <div class="selector">
+                                                    <select class="full-width" name="countryCode" data-ng-model="searchby.countryCode" ng-change="onCountryChange()" placeholder="Country"> 
+                                                        <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
+                                                    </select>
+                                                    
+                                      
+                                                   </div>
                                                 </div>
+                                                 <div class="form-group">
+                                                 	<label>City</label>
+                                                    <div class="selector">
+                                                    <select class="full-width" name="city" data-ng-model="searchby.city" ng-change="onCityChange()">
+                                                           <option ng-repeat="city in searchCities" value="{{city.cityCode}}">{{city.cityName}}</option>
+                                                    </select>
+                                                    </div>
+                                                 </div>
                                                 <div class="form-group">
-                                                    <label>check in</label>
+                                                    <label>Check In</label>
                                                     <div class="datepicker-wrap">
-                                                        <input type="text" class="input-text full-width" placeholder="dd/mm/yy" />
+                                                    <input type="text" name="checkIn" data-ng-model="searchby.checkIn" class="input-text full-width" placeholder="dd/mm/yyyy" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>check out</label>
-                                                    <div class="datepicker-wrap">
-                                                        <input type="text" class="input-text full-width" placeholder="dd/mm/yy" />
-                                                    </div>
+                                                   <label>Check Out</label>
+                                                   <div class="datepicker-wrap">
+                                                    <input type="text" name="checkOut" data-ng-model="searchby.checkOut" class="input-text full-width" placeholder="dd/mm/yyyy" />
+                                                   </div>
                                                 </div>
+                                                 <div class="form-group">
+                                                   <label>Nationality</label>
+                                                   <div class="selector">
+                                                    <select class="full-width"  name="nationalityCode" data-ng-model="searchby.nationalityCode" placeholder="dd/mm/yyyy">
+                                                        <option ng-repeat="nationality in searchNationality" value="{{nationality.nationalityCode}}">{{nationality.nationality}}</option>
+                                                    </select>
+                                                    </div>
+                                                 </div>
                                                 <br />
-                                                <button class="btn-medium icon-check uppercase full-width">search again</button>
+                                                <button type="submit" class="btn-medium icon-check uppercase full-width">search again</button>
                                             </form>
                                         </div>
                                     </div>
@@ -177,29 +200,13 @@
                             <div class="sort-by-section clearfix">
                                 <h4 class="sort-by-title block-sm">Sort results by:</h4>
                                 <ul class="sort-bar clearfix block-sm">
-                                   <!--  <li class="sort-by-name"><a class="sort-by-container" href="#"><span>name</span></a></li> -->
                                    
-                                    <li class="sort-by-price  active"><a class="sort-by-container" ng-click="sortData()"><span>price</span></a></li>
+                                     <li class="sort-by-price  active" ng-if="sort == 1"><a class="aTagclass" ng-click="sortData()"><span class="spanClass">price</span><span class="setIcon soap-icon-roundtriangle-bottom"></span></a></li>
+                                     <li class="sort-by-price  active" ng-if="sort == 0"><a class="aTagclass" ng-click="sortData()"><span class="spanClass">price</span><span class="setIcon soap-icon-roundtriangle-top"></span></a></li> 
                                   
-                                   <!--  <li class="clearer visible-sms"></li>
-                                    <li class="sort-by-rating active"><a class="sort-by-container" href="#"><span>rating</span></a></li>
-                                    <li class="sort-by-popularity"><a class="sort-by-container" href="#"><span>popularity</span></a></li> --> 
-                                </ul>
-                                
-                               <!--  <ul class="swap-tiles clearfix block-sm">
-                                    <li class="swap-list active">
-                                        <a href="hotel-list-view.html"><i class="soap-icon-list"></i></a>
-                                    </li>
-                                    <li class="swap-grid">
-                                        <a href="hotel-grid-view.html"><i class="soap-icon-grid"></i></a>
-                                    </li>
-                                    <li class="swap-block">
-                                        <a href="hotel-block-view.html"><i class="soap-icon-block"></i></a>
-                                    </li>
-                                </ul> -->
                             </div>
                             <div class="hotel-list listing-style3 hotel">
-                                <article class="box" ng-repeat="hotelInfo in hotellistInfo | orderBy: sortdata" style="border: 4px solid #C8C6C6;">
+                                <article class="box" ng-repeat="hotelInfo in hotellistInfo" >   <!-- style="border: 4px solid #C8C6C6;" -->
                                 
                                  
                                     <div class="col-md-12" style="border-bottom: 4px solid #C8C6C6;">
@@ -234,7 +241,7 @@
                                         <div>
                                             <p>{{hotelInfo.imgDescription}}</p>
                                              <div style="width: 150px;">
-                                                  <span class="price"><small>MIN/START</small>{{hotelInfo.minRate}}</span>  
+                                                  <span class="price"><small>MIN/START</small>{{hotelInfo.minRate}}<sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup></span>  
                                                 <!-- <a class="button btn-small full-width text-center" style="background: #98ce44;" title=""  href="/hoteldetailpage">VIEW DETAILS</a> -->
                                                  <form action="/hoteldetailpage" method="post">
                               					        <input type="text" name="supplierCode"  value="{{hotelInfo.supplierCode}}" style="display: none;">
@@ -276,15 +283,15 @@
                                          </div>
                                          <div class="col-md-6" style="width:50% !important;border-bottom: none !important;">
                                         <div class="col-md-4" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null">
-                                          <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg}} <span style="font-size: small;color: chocolate;">{{hotelInfo.currencyShort}}</span><small>1 PERSON</small></span>
+                                          <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup><small>1 PERSON</small></span>
                                         
                                          </div>
                                                                                 
                                          <div class="col-md-4"  ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg != null">
-                                        <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg}}<span style="font-size: small;color: chocolate;">{{hotelInfo.currencyShort}}</span><small>2 PERSONS</small></span>
+                                        <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup><small>2 PERSONS</small></span>
                                          </div>
                                          <div class="col-md-4" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg != null">
-                                         <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg}} <span style="font-size: small;color: chocolate;">{{hotelInfo.currencyShort}}</span><small>3 PERSONS</small></span>
+                                         <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup><small>3 PERSONS</small></span>
                                          </div>
                                          </div>
                                          </div>
@@ -292,8 +299,8 @@
                                    </div>
                                   
                                     <div class="col-md-9 col-md-offset-2">
-                                   <div class="form-group col-sm-3 col-md-3 col-md-offset-9">
-                                     <a class="button btn-small full-width text-center" ng-click="dateWiseInfo($index)" style="background: #98ce44;margin-top: 2%;margin-left: 49%;" title="">DAY-WISE VIEW</a>
+                                   <div class="form-group col-sm-3 col-md-3 col-md-offset-9" style="width: 150px;">
+                                     <a class="button btn-small full-width text-center" ng-click="dateWiseInfo($index)" style="background: #98ce44;margin-top: 2%;margin-left: 71%;" title="">DAY-WISE VIEW</a>
                                      </div>
                                    </div> 
                                   	
@@ -302,7 +309,12 @@
                                 </article>
                             
                             </div>
-                            <a href="#" class="uppercase full-width button btn-large">load more listing</a>
+                           <!--  <a href="#" class="uppercase full-width button btn-large">load more listing</a> -->
+                        
+                        <span class="dpagingright">
+                	<a href="" class="dpagingprv" ng-click="onPrev()">Prev</a>
+                	<a href="" class="dpagingnxt" ng-click="onNext()">Next</a>
+                </span>
                         </div>
                     </div>
                 </div>
@@ -347,34 +359,43 @@
             });
         });
     </script>
+    
+    <style>
+    .aTagclass {
+position: relative;
+display: block;
+}
+[class^="soap-icon"]:before, [class*=" soap-icon"]:before{
+line-height: inherit;
+}
+
+.setIcon {
+position: absolute;
+right: 0;
+top: 0;
+bottom: 0;
+height: 100%;
+width: 30px;
+background: #d9d9d9;
+content: "";
+font-size: 29px;
+padding-left: 12px;
+color: white;
+background: orange;
+padding-top: 7px;
+}
+
+.spanClass{
+background: #f5f5f5;
+height: 34px;
+padding: 0 45px 0 15px;
+line-height: 34px;
+display: block;
+color: #9e9e9e;
+    }
+    
+    </style>
 </body>
 </html>
 
 
-
-<!-- 
-
-  <div class="row" ng-repeat="roominfo in hotelInfo.hotelbyRoom">
-                                   <a ng-click="dateWiseInfo($parent.$index,$index)" style="cursor: pointer;" data-toggle="modal">
-                                    <div class="col-sm-6 col-md-11" style="margin-left: 3%;">  border-bottom: 1px dotted;
-                                         <div class="col-xs-4">
-                                         <i class="soap-icon-check-1" style="color: #7db921;"></i>
-                                         <label style="color:#01b7f2;">{{roominfo.roomName}}  
-                                              </label>
-                                               
-                                         </div>
-                                        <div class="col-xs-2" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null">
-                                          <span class="price"><small>AVG/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg}}<small>1 PERSON</small></span>
-                                        
-                                         </div>
-                                                                                
-                                         <div class="col-xs-2" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg != null">
-                                        <span class="price"><small>AVG/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg}}<small>2 PERSONS</small></span>
-                                         </div>
-                                         <div class="col-xs-3" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg != null">
-                                         <span class="price"><small>AVG/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg}}<small>3 PERSONS</small></span>
-                                         </div>
-                                     </div>
-                                      </a>
-                                   </div>
- -->

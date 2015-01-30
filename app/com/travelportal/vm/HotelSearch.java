@@ -2,11 +2,6 @@ package com.travelportal.vm;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import com.travelportal.domain.Currency;
-import com.travelportal.domain.HotelStarRatings;
-import com.travelportal.domain.rooms.RateMeta;
 
 public class HotelSearch {
 	
@@ -151,8 +146,4 @@ public class HotelSearch {
 	public void setAmenities(Set<HotelamenitiesVM> amenities) {
 		this.amenities = amenities;
 	}*/
-	
-	
-	
-	
 }

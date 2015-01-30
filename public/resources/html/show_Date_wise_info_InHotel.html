@@ -9,18 +9,31 @@
                                 <div class="filter-section gray-area clearfix">
                                      
                                         <div class="pull-right col-md-12" style="margin: 1%;">
-                                            <!-- <h5 class="pull-left no-margin col-md-3">Adult:</h5> -->
-                                             <div class="selector col-md-3">
-                            				 <select class="full-width" name="room" data-ng-model="searchroom.roomtp" ng-change="showAdult(searchroom.roomtp)">
-                          				     <option ng-repeat="roomtp in hotelIF.hotelbyRoom" value="{{roomtp.roomId}}">{{roomtp.roomName}}</option>
-                             				 </select><span class="custom-select full-width">{{hotelIF.hotelbyRoom[0].roomName}}</span>
-                                           </div> 
-                                           <div class="selector col-md-2">
-                            				 <select class="full-width" name="adult" data-ng-model="searchroom.adult" ng-change="showRate(searchroom.adult)">
-                          				     <option ng-repeat="adult in ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal" value="{{adult.adult}}">{{adult.adult}}</option>
-                             				 </select><span class="custom-select full-width">{{ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal[0].adult}}</span> 
+                                           
+                                           <div class="col-md-2">
+                                           <span>NO OF PERSON</span>
+                                           <div class="selector">
+                            				 <select class="full-width" name="adult" data-ng-model="searchroom.adult" ng-change="showRateAdultwise(searchroom.adult)">
+                          				     <option ng-repeat="adult in ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal" value="{{adult.adult}}">{{$index+1}}</option>  <!-- {{adult.adult}} -->
+                             				 </select><span class="custom-select full-width">1</span>   <!-- {{ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal[0].adult}} -->
                                            </div>
-                                            <div class="col-md-3 col-md-offset-1">
+                                           </div>
+                                           <div class="col-md-2">
+                                           <span>NO OF ROOM</span>
+                                           	 <div class="selector">
+                                                    <select class="full-width" name="noOfroom" data-ng-model="serchroom.noOfroom" ng-change="countTotal(serchroom.noOfroom)">
+                                                        <option value="1">01</option>
+                                                        <option value="2">02</option>
+                                                        <option value="3">03</option>
+                                                        <option value="4">04</option>
+                                                        <option value="5">05</option>
+                                                        <option value="6">06</option>
+                                                        <option value="7">07</option>
+                                                        <option value="8">08</option>
+                                                    </select><span class="custom-select full-width">01</span>
+                                                	</div>
+                                                </div>
+                                            <div class="col-md-3 col-md-offset-2">
                                              <span>TOTAL : </span>
                                                 <span class="price">{{total}} <sup style="font-size: small;color: chocolate;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
                                             </div>
@@ -35,7 +48,7 @@
                                                </form>
                                                 <!-- <a class="button btn-small full-width text-center" style="background: #7db921;" title=""  href="/hoteldetailpage">Book Now</a> -->
                                             </div>
-                                            <div class="col-md-2 pull-right" ng-if="flag == 1">
+                                            <div class="col-xs-2 pull-right" ng-if="flag == 1">
                                                     <button data-animation-duration="1" data-animation-type="bounce" class="full-width dark-orange animated bounce" type="button" style="-webkit-animation: 1s; visibility: visible;">ON REQUEST</button>
                                                 </div>
                                            

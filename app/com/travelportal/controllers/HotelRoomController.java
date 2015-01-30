@@ -642,6 +642,7 @@ public static void createRootDir() {
 			hotelroomTypes.setChildAllowedFreeWithAdults(roomtypeVM.getChildAllowedFreeWithAdults());
 			hotelroomTypes.setMaxAdultOccupancy(roomtypeVM.getMaxAdultOccupancy());
 			hotelroomTypes.setMaxOccupancy(roomtypeVM.getMaxOccupancy());
+			hotelroomTypes.setDescription(roomtypeVM.getDescription());
 			hotelroomTypes.setMaxAdultOccSharingWithChildren(roomtypeVM.getMaxAdultOccSharingWithChildren());
 			hotelroomTypes.setSupplierCode(roomtypeVM.getSupplierCode());
 			
@@ -673,6 +674,7 @@ public static void createRootDir() {
 			hotelroomTypes.setChildAllowedFreeWithAdults(roomtypeVM.getChildAllowedFreeWithAdults());
 			hotelroomTypes.setMaxAdultOccupancy(roomtypeVM.getMaxAdultOccupancy());
 			hotelroomTypes.setMaxOccupancy(roomtypeVM.getMaxOccupancy());
+			hotelroomTypes.setDescription(roomtypeVM.getDescription());
 			hotelroomTypes.setMaxAdultOccSharingWithChildren(roomtypeVM.getMaxAdultOccSharingWithChildren());
 			//hotelroomTypes.setSupplierCode(roomtypeVM.getSupplierCode());
 			hotelroomTypes.setAmenities(RoomAmenities.getroomamenities(roomtypeVM.getRoomamenities()));
@@ -697,6 +699,80 @@ public static void createRootDir() {
 
 	}
 	
+	
+	@Transactional(readOnly=false)
+	public static Result saveRoomImgs() throws IOException {
+		
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		
+		FilePart picture = request().body().asMultipartFormData().getFile("roomPic");
+			
+		createDir(rootDir,Long.parseLong(form.get("roomId")),Long.parseLong(form.get("supplierCode")));
+		 String fileName = picture.getFilename();
+		
+		 String ThumbnailImage = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "RoomType"+ File.separator+Long.parseLong(form.get("roomId"))+ File.separator+"Logo_thumbnail."+FilenameUtils.getExtension(fileName);
+         String originalFileName = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "RoomType"+ File.separator +Long.parseLong(form.get("roomId"))+File.separator+"Original_image."+FilenameUtils.getExtension(fileName);
+		 
+		 
+         File src = picture.getFile();
+         OutputStream out = null;
+         BufferedImage image = null;
+         File f = new File(ThumbnailImage);
+         System.out.println(originalFileName);
+         try {
+        	   
+                  BufferedImage originalImage = ImageIO.read(src);
+                        Thumbnails.of(originalImage)
+                            .size(220, 220)
+                            .toFile(f);
+                            File _f = new File(originalFileName);
+                            Thumbnails.of(originalImage).scale(1.0).
+                            toFile(_f);
+           
+        	 
+         } catch (FileNotFoundException e) {
+                 e.printStackTrace();
+         } catch (IOException e) {
+                 e.printStackTrace();
+         } finally {
+                 try {
+                         if(out != null) out.close();
+                 } catch (IOException e) {
+                         e.printStackTrace();
+                 }
+         }
+           
+ 		 System.out.println(fileName);
+ 		
+ 		HotelRoomTypes hotelroomTypes =HotelRoomTypes.findById(Long.parseLong(form.get("roomId")));
+ 		 if(hotelroomTypes != null)
+ 		 {
+ 			hotelroomTypes.setRoomPic(originalFileName); 
+ 			hotelroomTypes.merge();
+ 		 }
+ 		 
+ 		return ok(Json.toJson(hotelroomTypes));
+		
+	}
+	
+	public static void createDir(String rootDir, long roomId,long supplierCode) {
+        File file3 = new File(rootDir + File.separator+supplierCode +File.separator+ "RoomType"+File.separator+roomId);
+        if (!file3.exists()) {
+                file3.mkdirs();
+        }
+	}
+	
+	@Transactional(readOnly=false)
+	public static Result getRoomImagePathInroom(long roomId) {
+		
+		HotelRoomTypes hRoomTypes = HotelRoomTypes.findById(roomId);
+		File f = new File(hRoomTypes.getRoomPic());
+	    return ok(f);	
+		
+	}
+	
+	
+	
 	@Transactional(readOnly=true)
 	public static Result getAvailableRoomAmenities() {
 		System.out.println("getAvailableRoomAmenities");
@@ -719,7 +795,7 @@ public static void createRootDir() {
 		return ok();
 	}
 	
-	@Transactional(readOnly=false)
+	/*@Transactional(readOnly=false)
 	public static Result savegeneralImg() {
 		
 
@@ -797,7 +873,7 @@ public static void createRootDir() {
         return ok(f);
 		
 		
-	}
+	}*/
 	
 	//
 	

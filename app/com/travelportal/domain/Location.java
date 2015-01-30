@@ -22,6 +22,9 @@ public class Location {
 	private String locationNm;
 	@ManyToOne
 	private City city;
+	@Column(name="priority_no")
+	private String priorityNo;
+	
 	/**
 	 * @return the locationId
 	 */
@@ -59,6 +62,12 @@ public class Location {
 		this.city = city;
 	}
 	
+	public String getPriorityNo() {
+		return priorityNo;
+	}
+	public void setPriorityNo(String priorityNo) {
+		this.priorityNo = priorityNo;
+	}
 	public static List<Location> getLocation(int cityId) {
 		return JPA.em().createQuery("select c from Location c where c.city.cityCode = ?1").setParameter(1, cityId).getResultList();
 	}
@@ -66,5 +75,7 @@ public class Location {
 	public static Location getlocationIdByCode(int code) {
 		return (Location) JPA.em().createQuery("select c from Location c where locationId = ?1").setParameter(1, code).getSingleResult();
 	}
+	
+	 
 	
 }
