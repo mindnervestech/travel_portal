@@ -301,12 +301,12 @@
 						</div>
 						
 						<div class="row">
-		                 <div class="col-md-6">
+		                 <div class="col-md-12">
 		                 <div class="form-group">
 						<label class="col-md-7 col-md-offset-1"><b>Please Select Rate:</b></label>
-							<div class="col-md-8 col-md-offset-1">
+							<div class="col-md-10 col-md-offset-1">
 							<select class="form-control" data-ng-model="allot.rate" multiple required>
-								<option ng-repeat="rates in rate" value="{{rates.id}}" ng-selected="rates.isSelected == ($parent.$index+1)" ng-show="rates.isSelected == ($parent.$index+1) || rates.isSelected == 0" ng-click="changeIsSelected($parent.$index,$index)">{{rates.rateName}}</option>
+								<option ng-repeat="rates in rate" value="{{rates.id}}" ng-selected="rates.isSelected == ($parent.$index+1)" ng-show="rates.isSelected == ($parent.$index+1) || rates.isSelected == 0" ng-click="changeIsSelected($parent.$index,$index)">{{rates.rateName}}<span>{{rates.country}}</span></option>
 							</select>
 							</div>
 					</div>
@@ -315,7 +315,7 @@
 						
 						</div>
 					
-						 <div class="col-md-6">
+						 <!-- <div class="col-md-6">
 		                 <div class="form-group">
 		                  <div class="col-md-10">
 						<label><b>Apply to all Markets?<br>
@@ -324,8 +324,9 @@
 					<input type="radio" data-ng-model="allot.applyMarket" value="true" ng-click="showAllotmentMarketTable(allot)">Yes
 				</b></label><br>
 				</div>
-			
-				<div multi-select input-model="allot.allocatedCities"
+				{{allot.allocatedCities}}
+			<div ng-repeat="aa in allot.allocatedCities">{{aa.name}}</div>
+				<div ng-if="allot.applyMarket == 'false'" multi-select input-model="allot.allocatedCities"
 					button-label="icon name" item-label="icon name maker"
 					tick-property="ticked" orientation="vertical"
 					group-property="multiSelectGroup"
@@ -334,11 +335,11 @@
 				</div>
 				
 					
-				<!-- <div class="col-md-2 col-md-offset-9">
+				<div class="col-md-2 col-md-offset-9">
 					<input type="button" class="btn btn-success" ng-click="setSelection(allot);" value="Submit">
+				</div>
+				</div>
 				</div> -->
-				</div>
-				</div>
 							</div>
 			
 					

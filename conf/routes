@@ -5,20 +5,23 @@
 #travelbusiness
 
 GET     /                           controllers.travelbusiness.Application.index()
+#GET     /hotelBooking	     	controllers.travelbusiness.HotelDetailsController.hotelBooking()
 #GET 	/searchHotel.html           controllers.travelbusiness.Application.searchHotel()
 #GET     /searchHotelInfo/:city/:checkIn/:checkOut/:starId/:nationalityId 	controllers.travelbusiness.Application.searchHotelInfo(city:String,checkIn:String,checkOut:String,starId:String,nationalityId:String)
 POST    /hoteldetailpage		controllers.travelbusiness.Application.hoteldetailpage()
-POST     /searchHotelInfo   	controllers.travelbusiness.Application.searchHotelInfo()
+POST    /searchHotelInfo   	controllers.travelbusiness.Application.searchHotelInfo()
 POST    /searchAgainHotelInfo	controllers.travelbusiness.Application.searchAgainHotelInfo()
 GET 	/searchCountries					controllers.travelbusiness.Application.searchCountries()
 GET 	/searchNationality					controllers.travelbusiness.Application.searchNationality()
 GET 	/searchCities/:countryId			controllers.travelbusiness.Application.searchCities(countryId: Integer)
 GET 	/searchStarrating                	controllers.travelbusiness.Application.getStarRatings()
 GET	  /searchHotelInfo/getHotelImagePath/:supplierCode			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long)
+GET	   /hotelBookingpage/getHotelImagePath/:supplierCode			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long)
 #POST  /findByServices 		    controllers.travelbusiness.Application.findByServices()
 #POST  /findBylocation				    controllers.travelbusiness.Application.findBylocation()
 POST  /findHotelByData	        controllers.travelbusiness.Application.findHotelByData()
 #Hotel Details
+POST    /hotelBookingpage		controllers.travelbusiness.HotelDetailsController.hotelBookingpage()
 GET   /searchHotelGenImg/getHotelGenImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelGenImg(supplierCode:Long)
 GET   /searchHotelServImg/getHotelServImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelServImg(supplierCode:Long)
 GET   /searchHotelRoomImg/getHotelRoomImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelRoomImg(supplierCode:Long)
@@ -33,6 +36,9 @@ GET	  /hoteldetailpage/getHotelRoomImagePath/:roomId			controllers.travelbusines
 GET   /findAmenitiesData/:supplierCode     controllers.travelbusiness.HotelDetailsController.findAmenitiesData(supplierCode:Long)
 GET   /getDatewiseHotelRoom/:checkIn/:checkOut/:nationality/:supplierCode/:roomCode   controllers.travelbusiness.Application.getDatewiseHotelRoom(checkIn:String,checkOut:String,nationality:String,supplierCode:String,roomCode:String)
 #GET   /getSortHotel/:checkIn/:checkOut/:nationality/:cityid/:starid/:sortData   controllers.travelbusiness.Application.getSortHotel(checkIn:String,checkOut:String,nationality:String,cityid:String,starid:String,sortData:String)
+
+#Hotel Booking Page
+POST  /saveHotelBookingInfo  controllers.travelbusiness.HotelBookingController.saveHotelBookingInfo
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -131,16 +137,16 @@ POST   /saveUpdateCCTVstatus	 com.travelportal.controllers.HotelProfileControlle
 POST   /savefiles       com.travelportal.controllers.HotelProfileController.savefiles()
 
 #following routes are used for fetch Allotment, 
-POST      /getallmentMarket   com.travelportal.controllers.AllotmentController.getallmentMarket()
-GET     /getDates/:roomId/:currencyName/:supplierCode  com.travelportal.controllers.AllotmentController.getDates(roomId:Long,currencyName:String,supplierCode:Long)
-POST     /getRates         com.travelportal.controllers.AllotmentController.getRates()
+#POST      /getallmentMarket   com.travelportal.controllers.AllotmentController.getallmentMarket()
+#GET     /getDates/:roomId/:currencyName/:supplierCode  com.travelportal.controllers.AllotmentController.getDates(roomId:Long,currencyName:String,supplierCode:Long)
+#POST     /getRates         com.travelportal.controllers.AllotmentController.getRates()
 #GET     /allotmentAllData/:supplierCode   com.travelportal.controllers.AllotmentController.getallotmentAllData(supplierCode:Long)
-POST    /saveAllotment		com.travelportal.controllers.AllotmentController.saveAllotment()
-GET     /deleteAllotmentMarket/:allotMarkid/:allotid    com.travelportal.controllers.AllotmentController.deleteAllotmentMarket(allotMarkid:Integer,allotid:Integer)
+#POST    /saveAllotment		com.travelportal.controllers.AllotmentController.saveAllotment()
+#GET     /deleteAllotmentMarket/:allotMarkid/:allotid    com.travelportal.controllers.AllotmentController.deleteAllotmentMarket(allotMarkid:Integer,allotid:Integer)
 
 
-GET     /getAllotmentMarketGroup/:id                      com.travelportal.controllers.AllotmentController.getMarketGroup(id:Integer)
-POST    /setAllotmentCitySelection                        com.travelportal.controllers.AllotmentController.setCitySelection()
+#GET     /getAllotmentMarketGroup/:id                      com.travelportal.controllers.AllotmentController.getMarketGroup(id:Integer)
+#POST    /setAllotmentCitySelection                        com.travelportal.controllers.AllotmentController.setCitySelection()
 POST    /savepdf  			com.travelportal.controllers.SupplierAgreementController.savepdf()
 POST   /showpdf				com.travelportal.controllers.SupplierAgreementController.getshowpdf()
 GET    /hotel_profile/getPdfPath/:supplierCode			com.travelportal.controllers.SupplierAgreementController.getPdfPath(supplierCode:Long)

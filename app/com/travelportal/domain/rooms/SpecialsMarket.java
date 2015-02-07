@@ -1,5 +1,9 @@
 package com.travelportal.domain.rooms;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -137,6 +141,36 @@ public class SpecialsMarket {
 		query.setParameter(1, id);
     	return (List<SpecialsMarket>) query.getResultList();
     }
+	
+	
+	
+	public static List<SpecialsMarket> findBySpecialsIdnationality(Long specialId,int nation) { 
+		
+		 List<Object[]> list;
+		
+		list =JPA.em().createNativeQuery("select * from specialsmarket spm,specialsmarket_country spmc where spm.id = spmc.SpecialsMarket_id and spm.special_id ='"+specialId+"' and spmc.country_country_code = '"+nation+"'").getResultList();   
+		
+	 List<SpecialsMarket> list1 = new ArrayList<>();
+	
+		for(Object[] o :list) {
+			
+			SpecialsMarket spm = new SpecialsMarket();
+			
+			spm.setId(Long.parseLong(o[0].toString()));
+			spm.setCombined(Boolean.parseBoolean(o[1].toString()));
+			spm.setMultiple(Boolean.parseBoolean(o[2].toString()));
+			spm.setPayDays(o[3].toString());
+			spm.setStayDays(o[4].toString());
+			spm.setTypeOfStay(o[5].toString());
+			spm.setApplyToMarket(o[7].toString());
+			
+			list1.add(spm);
+		}
+		
+		return list1;
+		
+	 }
+	
 	
 	public static SpecialsMarket findById(Long id) {
     	Query query = JPA.em().createQuery("Select s from SpecialsMarket s where s.id = ?1");

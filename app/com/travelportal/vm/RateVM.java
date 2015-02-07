@@ -20,6 +20,7 @@ public class RateVM {
 	public SpecialRateVM special;
 	public List<CancellationPolicyVM> cancellation = new ArrayList<CancellationPolicyVM>();
 	public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
+	public List<String> allocatedCountry;
 	//public List<HotelProfileVM> hotelprofile = new ArrayList<HotelProfileVM>();
 	public AllotmentMarketVM allotmentmarket;
 	public String date;
@@ -131,6 +132,12 @@ public class RateVM {
 	}
 	public void setAdult_occupancy(int adult_occupancy) {
 		this.adult_occupancy = adult_occupancy;
+	}
+	public List<String> getAllocatedCountry() {
+		return allocatedCountry;
+	}
+	public void setAllocatedCountry(List<String> allocatedCountry) {
+		this.allocatedCountry = allocatedCountry;
 	}
 	
 	

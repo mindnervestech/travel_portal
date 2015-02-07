@@ -271,6 +271,9 @@ public class HotelRoomTypes {
 	public void setRoomPic(String roomPic) {
 		this.roomPic = roomPic;
 	}
+	
+	
+	
 	public static List<RoomType> getAllRoomTypes(final Long supplierCode) {
 		Query q = JPA.em().createQuery("select r.roomId, r.roomType from HotelRoomTypes r where r.supplierCode = :supplierCode ");
 		q.setParameter("supplierCode", supplierCode);
@@ -331,9 +334,9 @@ public class HotelRoomTypes {
 	    	return (HotelRoomTypes) query.getSingleResult();
 	    }
 	 
-	 public static List<HotelRoomTypes> findByListName(List<String> names) {
-	    Query query = JPA.em().createQuery("Select a from HotelRoomTypes a where a.roomType IN ?1");
-		query.setParameter(1, names);
+	 public static List<HotelRoomTypes> findByListName(List<Long> roomId) {
+	    Query query = JPA.em().createQuery("Select a from HotelRoomTypes a where a.roomId IN ?1");
+		query.setParameter(1, roomId);
 	    return ( List<HotelRoomTypes>) query.getResultList();
 	 }
 

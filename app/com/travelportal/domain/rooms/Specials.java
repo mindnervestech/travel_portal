@@ -1,5 +1,9 @@
 package com.travelportal.domain.rooms;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -97,6 +101,47 @@ public class Specials {
 		query.setParameter(3,promotionName);
     	return (List<Specials>) query.getResultList();
     }
+	
+	
+	public static List<Specials> findSpecialByDateandroom(Date date,Long roomId) { 
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		 String SDate = null;
+		
+			SDate = format.format(date);
+		 
+		 List<Object[]> list;
+	
+		list =JPA.em().createNativeQuery("select * from specials sp,specials_hotel_room_types sprt where sp.id = sprt.Specials_id and sprt.roomTypes_room_id = '"+roomId+"' and sp.fromDate <= '"+SDate+"' and sp.toDate >= '"+SDate+"'").getResultList();  // 
+		
+	 List<Specials> list1 = new ArrayList<>();
+		
+		for(Object[] o :list) {
+		
+			Specials sp = new Specials();
+			
+			sp.setId(Long.parseLong(o[0].toString()));
+			try {
+				sp.setFromDate(format.parse(o[1].toString()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			sp.setPromotionName(o[2].toString());
+			try {
+				sp.setToDate(format.parse(o[3].toString()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			list1.add(sp);
+		}
+		
+		return list1;
+		
+	 }
+	
 	
 	public static List<Specials> findSpecialBySupplierCode(long code) {
     	Query query = JPA.em().createQuery("Select s from Specials s where s.supplierCode = ?1");

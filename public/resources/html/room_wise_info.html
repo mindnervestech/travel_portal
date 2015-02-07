@@ -11,7 +11,7 @@
                                     <div class="col-md-12" style="padding: 9px;">
                                     <figure class="col-sm-5 col-md-4" style="padding-left:0;">
                                      <!-- <img data-ng-src="{{img}}" alt="">  -->
-                                        <a title="" ng-click="ShowFull($index)" class="hover-effect popup-gallery" style="background: gainsboro;"><img width="282" height="160" alt="" data-ng-src="{{roomIF.roomimgPaths}}"></a>
+                                        <a title="" class="hover-effect" style="background: gainsboro;"><img width="284" height="160" alt="" data-ng-src="{{roomIF.roomimgPaths}}"></a>
                                     </figure>
                                     <div class="details col-sm-7 col-md-8">
                                       
@@ -55,7 +55,7 @@
                                                 <li ng-if="roomIF.extraBedAllowed == 'true'"><label>EXTRA BED:</label>YES</li>
                                                 <li ng-if="roomIF.extraBedAllowed == 'false'"><label>EXTRA BED:</label>NO</li>
                                                 <li ng-if="roomIF.roomSuiteType == 'true'"><label>ROOM SUITE:</label>YES</li>
-                                                 <li ng-if="roomIF.roomSuiteType == 'false'"><label>ROOM SUITE:</label>NO</li>
+                                                <li ng-if="roomIF.roomSuiteType == 'false'"><label>ROOM SUITE:</label>NO</li>
                                                
                                             </ul>
                                         </div>
@@ -77,7 +77,7 @@
                                 <div class="tab-pane fade" id="room-amenities">
                                                                         
                                     <h2>Hotel Amenities</h2>
-                                    <ul class="amenities clearfix style2">
+                                    <ul class="amenities clearfix style2" style="line-height: 2.7em;">
                                     	<div  ng-repeat="roomamenities in roomIF.amenities">
                                         <li class="col-md-4 col-sm-6">  <!-- ng-if="hotelamenities.amenitiesCode == 30" -->
                                             <div class="icon-box style2"><i class="{{roomamenities.amenitiesicon}} circle"></i>{{roomamenities.amenityNm}}</div>

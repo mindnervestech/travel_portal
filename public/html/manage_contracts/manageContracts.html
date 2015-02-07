@@ -51,7 +51,7 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label"></label>
 				<div class="col-md-3">
-					<input type="submit"  class="btn btn-primary" value="SHOW ME" style="margin-left: 15%;">
+					<input type="submit"  class="btn btn-primary" value="SHOW RESULT" style="margin-left: 15%;">
 				</div>
 		</div>
 		</div>
@@ -61,12 +61,41 @@
 	
 	<div style="margin-left: 6%;"><b style="font-size: 13px;color: red;">{{messageShow}}<a ng-click="createNewRate()" href="" style="color: blue;"><u> {{link}}</u></a></b></div>
 	
+	<div ng-show="tableshow == true" style="margin-left: 45px;">
+	<table border="1" style="width: 95%;font-size: small;">
+                	<thead style="background-color: #488c6c;">
+                    	<tr>
+                           <th><a style="color: white;">Sr.No</a></th>
+                            <th><a style="color: white;">Rate Name</a></th>
+                            <th><a style="color: white;">From Date</a></th>
+                            <th><a style="color: white;">To Date</a></th>
+                            <th style="width: 43%;"><a style="color: white;">Markets</a></th>
+                            <th style="width: 6%;"><a style="color: white;">Action</a></th> 
+                            
+                        </tr>
+                    </thead>
+                	<tbody>
+                	
+                    	<tr ng-repeat="rate in rateMeta1 track by $index">
+          					<td style="padding: 5px;">{{$index+1}}</td>
+          					 <td>{{rate.rateName}}</td>
+                           <td>{{rate.fromDate}}</td>
+                           <td>{{rate.toDate}}</td>
+                           <td ng-if="rate.applyToMarket == true">All</td>
+                           <td ng-if="rate.applyToMarket == false" style="height: 49px;"><div style="width: 99%;height: 99%;margin: 0;padding: 0;overflow: auto;"><p ng-repeat="country in rate.allocatedCountry">{{country}}</p></div></td>
+                            <td><a ng-click="EditThisRate(rate)" style="cursor: pointer;" data-toggle="modal"><img src="/assets/images/editico.gif" style="width: 26%;margin-left: 24%;"></a></td> 
+                           
+                            </tr>
+                           
+                    	</tbody>
+                </table>	
+                <div class="col-md-11" style="margin-left: 6%;"><b style="font-size: 13px;color: red;"><a ng-click="createNewRate()" href="" style="color: blue;"><u class="col-md-offset-10"> Add New Rate </u></a></b></div>	
+	</div>
+	
 	<div class="panel-body" ng-show="showSavedRates == true">
-		<!-- <form name="contact" role="form" class="form-horizontal"> -->
-			
 			<div>
 						
-			<fieldset class="billinside" ng-repeat="rate in rateMeta track by $index" style="margin-top: 2%;">
+			<fieldset class="billinside" ng-repeat="rate in rateMeta" style="margin-top: 2%;">
 			<form method="post" name="myform2" id="formA" role="form" class="form-horizontal form-validate7" ng-submit="saveRate()">
 			<a data-toggle="collapse" data-target="#demo{{$index}}" aria-expanded="true" aria-controls="demo{{$index}}" style="cursor: pointer;">
 			<legend style="width: 75%; border-bottom: none;font-size: 18;">&nbsp;&nbsp;&nbsp;&nbsp;{{rate.rateName}}</legend>
@@ -292,12 +321,223 @@
 					button-label="icon name" item-label="icon name maker"
 					tick-property="ticked" orientation="vertical"
 					group-property="multiSelectGroup"
-					on-open="msOpen( data )" style="float: left;width: 78%;">
+					on-open="msOpen( data )" on-item-click="checkCountry(data)" style="float: left;width: 78%;">
 				</div>
 					
 				</div>
 				<br>
 				<hr style="float: left;width: 100%;">
+					
+					<fieldset class="billinside">
+	
+			<legend class="allot-firldset">Allotment Market</legend>
+			
+						<div class="form-group col-md-12">	
+						
+						<div class="col-md-12">
+				
+						<div>
+						<input type="radio" data-ng-model="rate.allotmentmarket.allocation" ng-click="selectFreesell(rate.allotmentmarket)" value="1">
+						&nbsp; Free Sale
+						</div>
+				
+					</div>
+						<div ng-show="rate.allotmentmarket.allocation == 1">
+							<label class="col-md-2 control-label">Release Period </label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="rate.allotmentmarket.period" required>
+									<option>-- Choose One --</option>
+									<option>Same day up to check-in</option>
+									<option>Same day up to 8 PM</option>
+									<option>Same day up to 11 PM</option>
+									<option>24 hours prior to check-in</option>
+									<option>48 hours prior to check-in</option>
+									<option>72 hours prior to check-in</option>
+									<option>1 week</option>
+									<option>2 week</option>
+									<option>3 week</option>
+									<option>4 week</option>
+									<option>5 week</option>
+									<option>6 week</option>
+									<option>7 week</option>
+									<option>8 week</option>
+									<option>9 week</option>
+									<option>10 week</option>
+									<option>11 week</option>
+									<option>12 week</option>
+
+
+								</select>
+							</div>
+							</div>
+						
+						</div>						
+						<br>
+						
+						<div class="form-group col-md-12"">	
+						
+						<div class="col-md-12">
+				
+						<div>
+						<input type="radio" data-ng-model="rate.allotmentmarket.allocation"  ng-click="selectRoomAll(rate.allotmentmarket)" value="3">
+						&nbsp; Rooms Alloted
+						</div>
+						
+				
+					</div>
+						<div ng-show="rate.allotmentmarket.allocation == 3">
+						<label class="col-md-2 control-label">No. of Romms Alloted: </label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="rate.allotmentmarket.choose" required>
+									<option>-- Choose One --</option>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+									<option>11</option>
+									<option>12</option>
+									<option>13</option>
+									<option>14</option>
+									<option>15</option>
+									<option>16</option>
+									<option>17</option>
+									<option>18</option>
+
+
+								</select>
+							</div>
+							<label class="col-md-2 control-label">Release Period </label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="rate.allotmentmarket.period" required>
+									<option>-- Choose One --</option>
+									<option>Same day up to check-in</option>
+									<option>Same day up to 8 PM</option>
+									<option>Same day up to 11 PM</option>
+									<option>24 hours prior to check-in</option>
+									<option>48 hours prior to check-in</option>
+									<option>72 hours prior to check-in</option>
+									<option>1 week</option>
+									<option>2 week</option>
+									<option>3 week</option>
+									<option>4 week</option>
+									<option>5 week</option>
+									<option>6 week</option>
+									<option>7 week</option>
+									<option>8 week</option>
+									<option>9 week</option>
+									<option>10 week</option>
+									<option>11 week</option>
+									<option>12 week</option>
+
+
+								</select>
+							</div>
+							</div>
+						
+						</div>		
+					
+							<div class="form-group col-md-12"">	
+						
+						<div class="col-md-12">
+				
+						<input type="radio" data-ng-model="rate.allotmentmarket.allocation" ng-click="selectstopsell(rate.allotmentmarket)" value="2">
+						&nbsp; Stop Sale
+												
+				
+					</div>
+							<div ng-show="rate.allotmentmarket.allocation == 2">
+							<div class="col-md-12">
+							<label class="col-md-2 control-label">from Date</label>
+							<div class="col-md-3">
+								<input name="fromoDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="rate.allotmentmarket.fromDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
+							</div>
+												
+						
+						<label class="col-md-2 control-label">To Date</label>
+							<div class="col-md-3">
+								<input name="toDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="rate.allotmentmarket.toDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
+							</div>
+							</div>
+							<label id="datediffShow{{$index}}" class="col-md-12 col-md-offset-1" style="color:red;display:none;">Select ToDate greater then FromDate </label>
+								<label class="col-md-3 control-label">Next Action After Stop Sale</label>
+								
+								<div class="col-md-12 col-md-offset-1">
+				
+										<input type="radio" data-ng-model="rate.allotmentmarket.stopAllocation" ng-click="selectstopfreeSale(rate.allotmentmarket)" value="1">
+										&nbsp; free Sale
+								</div>
+								<div class="col-md-12 col-md-offset-1">
+				
+										<input type="radio" data-ng-model="rate.allotmentmarket.stopAllocation" ng-click="selectstopsell(rate.allotmentmarket)" value="2">
+										&nbsp; Rooms Alloted
+								</div>
+								<div class="col-md-12 col-md-offset-1" ng-show="rate.allotmentmarket.stopAllocation == 2">
+								
+						<label class="col-md-2 control-label">No. of Romms Alloted: </label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="rate.allotmentmarket.stopChoose" required>
+									<option>-- Choose One --</option>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+									<option>11</option>
+									<option>12</option>
+									<option>13</option>
+									<option>14</option>
+									<option>15</option>
+									<option>16</option>
+									<option>17</option>
+									<option>18</option>
+
+
+								</select>
+							</div>
+							<label class="col-md-2 control-label">Release Period </label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="rate.allotmentmarket.stopPeriod" required>
+									<option>-- Choose One --</option>
+									<option>Same day up to check-in</option>
+									<option>Same day up to 8 PM</option>
+									<option>Same day up to 11 PM</option>
+									<option>24 hours prior to check-in</option>
+									<option>48 hours prior to check-in</option>
+									<option>72 hours prior to check-in</option>
+									<option>1 week</option>
+									<option>2 week</option>
+									<option>3 week</option>
+									<option>4 week</option>
+									<option>5 week</option>
+									<option>6 week</option>
+									<option>7 week</option>
+									<option>8 week</option>
+									<option>9 week</option>
+									<option>10 week</option>
+									<option>11 week</option>
+									<option>12 week</option>
+
+
+								</select>
+							</div>
+							</div>
+								</div>			
+						
+						</div>
+			
+		</fieldset>		
+					
 						<input type="button" value="DELETE RATE" style="margin-top: 1%;margin-left: 84%" ng-click="deleteRate(rate.id,$index)">
 						 </div> 
 						</div>
@@ -331,7 +571,26 @@
 							<div class="col-md-3">
 								<input type="text" data-ng-model="rate.rateName" required>
 							</div>
+							
+							<label style="margin-top: 2%;float: left;"><b>Apply to all Markets?<br>
+			<label>(Based on Passenger Nationality)</label>
+					<input type="radio" name="applyToRate{{$index}}" data-ng-value="true" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate)">Yes
+					<input type="radio" name="applyToRate{{$index}}" data-ng-value="false" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate)">No
+				</b></label><br>
+				<div ng-show="rate.applyToMarket == false" style="width: 45%;margin-left: 47%;float: left;">
+					<div multi-select input-model="rate.allocatedCities" 
+					button-label="icon name" item-label="icon name maker"
+					tick-property="ticked" orientation="vertical"
+					group-property="multiSelectGroup"
+					on-open="msOpen( data )"
+					on-item-click="checkCountry(data)">
+				</div>
+					
+				</div>
 					</div>
+					
+					
+				
 				</div>	
 			<fieldset class="billinside">
 				<legend style="width: 9%; border-bottom: none;font-size: 12;"><b>Normal Rate</b></legend>
@@ -538,21 +797,226 @@
 						
 			</div>
 			
-				<label style="margin-top: 2%;float: left;"><b>Apply to all Markets?<br>
-			<label>(Based on Passenger Nationality)</label>
-					<input type="radio" name="applyToRate{{$index}}" data-ng-value="true" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate)">Yes
-					<input type="radio" name="applyToRate{{$index}}" data-ng-value="false" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate)">No
-				</b></label><br>
-				<div ng-show="rate.applyToMarket == false" style="width: 45%;margin-left: 5%;float: left;">
-					<div multi-select input-model="rate.allocatedCities"
-					button-label="icon name" item-label="icon name maker"
-					tick-property="ticked" orientation="vertical"
-					group-property="multiSelectGroup"
-					on-open="msOpen( data )">
-				</div>
-					
-				</div>
+				
 				<hr style="float: left;width: 100%;">
+				
+				<div class="panel-body" > 
+		<div>
+		<div>
+		<fieldset class="billinside">
+	
+			<legend class="allot-firldset">Allotment Market</legend>
+			
+						<div class="form-group col-md-12">	
+						
+						<div class="col-md-12">
+				
+						<div>
+						<input type="radio" data-ng-model="rate.allotmentmarket.allocation" ng-click="selectFreesell(rate.allotmentmarket)" value="1">
+						&nbsp; Free Sale
+						</div>
+				
+					</div>
+						<div ng-show="rate.allotmentmarket.allocation == 1">
+							<label class="col-md-2 control-label">Release Period </label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="rate.allotmentmarket.period" required>
+									<option>-- Choose One --</option>
+									<option>Same day up to check-in</option>
+									<option>Same day up to 8 PM</option>
+									<option>Same day up to 11 PM</option>
+									<option>24 hours prior to check-in</option>
+									<option>48 hours prior to check-in</option>
+									<option>72 hours prior to check-in</option>
+									<option>1 week</option>
+									<option>2 week</option>
+									<option>3 week</option>
+									<option>4 week</option>
+									<option>5 week</option>
+									<option>6 week</option>
+									<option>7 week</option>
+									<option>8 week</option>
+									<option>9 week</option>
+									<option>10 week</option>
+									<option>11 week</option>
+									<option>12 week</option>
+
+
+								</select>
+							</div>
+							</div>
+						
+						</div>						
+						<br>
+						
+						<div class="form-group col-md-12"">	
+						
+						<div class="col-md-12">
+				
+						<div>
+						<input type="radio" data-ng-model="rate.allotmentmarket.allocation"  ng-click="selectRoomAll(rate.allotmentmarket)" value="3">
+						&nbsp; Rooms Alloted
+						</div>
+						
+				
+					</div>
+						<div ng-show="rate.allotmentmarket.allocation == 3">
+						<label class="col-md-2 control-label">No. of Romms Alloted: </label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="rate.allotmentmarket.choose" required>
+									<option>-- Choose One --</option>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+									<option>11</option>
+									<option>12</option>
+									<option>13</option>
+									<option>14</option>
+									<option>15</option>
+									<option>16</option>
+									<option>17</option>
+									<option>18</option>
+
+
+								</select>
+							</div>
+							<label class="col-md-2 control-label">Release Period </label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="rate.allotmentmarket.period" required>
+									<option>-- Choose One --</option>
+									<option>Same day up to check-in</option>
+									<option>Same day up to 8 PM</option>
+									<option>Same day up to 11 PM</option>
+									<option>24 hours prior to check-in</option>
+									<option>48 hours prior to check-in</option>
+									<option>72 hours prior to check-in</option>
+									<option>1 week</option>
+									<option>2 week</option>
+									<option>3 week</option>
+									<option>4 week</option>
+									<option>5 week</option>
+									<option>6 week</option>
+									<option>7 week</option>
+									<option>8 week</option>
+									<option>9 week</option>
+									<option>10 week</option>
+									<option>11 week</option>
+									<option>12 week</option>
+
+
+								</select>
+							</div>
+							</div>
+						
+						</div>		
+					
+							<div class="form-group col-md-12"">	
+						
+						<div class="col-md-12">
+				
+						<input type="radio" data-ng-model="rate.allotmentmarket.allocation" ng-click="selectstopsell(rate.allotmentmarket)" value="2">
+						&nbsp; Stop Sale
+												
+				
+					</div>
+							<div ng-show="rate.allotmentmarket.allocation == 2">
+							<div class="col-md-12">
+							<label class="col-md-2 control-label">from Date</label>
+							<div class="col-md-3">
+								<input name="fromoDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="rate.allotmentmarket.fromDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
+							</div>
+												
+						
+						<label class="col-md-2 control-label">To Date</label>
+							<div class="col-md-3">
+								<input name="toDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="rate.allotmentmarket.toDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
+							</div>
+							</div>
+							<label id="datediffShow{{$index}}" class="col-md-12 col-md-offset-1" style="color:red;display:none;">Select ToDate greater then FromDate </label>
+								<label class="col-md-3 control-label">Next Action After Stop Sale</label>
+								
+								<div class="col-md-12 col-md-offset-1">
+				
+										<input type="radio" data-ng-model="rate.allotmentmarket.stopAllocation" ng-click="selectstopfreeSale(rate.allotmentmarket)" value="1">
+										&nbsp; free Sale
+								</div>
+								<div class="col-md-12 col-md-offset-1">
+				
+										<input type="radio" data-ng-model="rate.allotmentmarket.stopAllocation" ng-click="selectstopsell(rate.allotmentmarket)" value="2">
+										&nbsp; Rooms Alloted
+								</div>
+								<div class="col-md-12 col-md-offset-1" ng-show="rate.allotmentmarket.stopAllocation == 2">
+								
+						<label class="col-md-2 control-label">No. of Romms Alloted: </label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="rate.allotmentmarket.stopChoose" required>
+									<option>-- Choose One --</option>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+									<option>11</option>
+									<option>12</option>
+									<option>13</option>
+									<option>14</option>
+									<option>15</option>
+									<option>16</option>
+									<option>17</option>
+									<option>18</option>
+
+
+								</select>
+							</div>
+							<label class="col-md-2 control-label">Release Period </label>
+							<div class="col-md-3">
+								<select class="form-control" data-ng-model="rate.allotmentmarket.stopPeriod" required>
+									<option>-- Choose One --</option>
+									<option>Same day up to check-in</option>
+									<option>Same day up to 8 PM</option>
+									<option>Same day up to 11 PM</option>
+									<option>24 hours prior to check-in</option>
+									<option>48 hours prior to check-in</option>
+									<option>72 hours prior to check-in</option>
+									<option>1 week</option>
+									<option>2 week</option>
+									<option>3 week</option>
+									<option>4 week</option>
+									<option>5 week</option>
+									<option>6 week</option>
+									<option>7 week</option>
+									<option>8 week</option>
+									<option>9 week</option>
+									<option>10 week</option>
+									<option>11 week</option>
+									<option>12 week</option>
+
+
+								</select>
+							</div>
+							</div>
+								</div>			
+						
+						</div>
+			
+		</fieldset>		
+		</div>
+		<hr>
+		     
+	</div>
+				
 				<div style="float: left;"><input type="button" value="REMOVE THIS RATE" ng-click="removeRate($index)" ng-show="showRemoveRate == true"></div>
 				
 				</form>

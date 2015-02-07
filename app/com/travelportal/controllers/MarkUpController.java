@@ -187,7 +187,7 @@ public class MarkUpController extends Controller {
 			specialsVM.promotionName = special.getPromotionName();
 			specialsVM.supplierCode = special.getSupplierCode();
 			for(HotelRoomTypes room : special.getRoomTypes()) {
-				specialsVM.roomTypes.add(room.getRoomType());
+				specialsVM.roomTypes.add(Long.parseLong(room.getRoomType()));
 			}
 			
 			List<SpecialsMarket> marketList = SpecialsMarket.findBySpecialsId(special.getId());

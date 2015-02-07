@@ -11,7 +11,9 @@ public class SerachedRoomType {
 	public String extraBedAllowed;
 	public String roomSuiteType;
 	public List<SerachedRoomRateDetail> hotelRoomRateDetail;
-	private List<RoomAmenitiesVm> amenities;
+	public List<RoomAmenitiesVm> amenities;
+	public List<SpecialsVM> specials;
+	public int pcount;
 	
 	public Long getRoomId() {
 		return roomId;
@@ -61,7 +63,21 @@ public class SerachedRoomType {
 	}
 	public void setRoomSuiteType(String roomSuiteType) {
 		this.roomSuiteType = roomSuiteType;
-	}  
+	}
+	public List<SpecialsVM> getSpecials() {
+		return specials;
+	}
+	public void setSpecials(List<SpecialsVM> specials) {
+		this.specials = specials;
+	}
+	public int getPcount() {
+		return pcount;
+	}
+	public void setPcount(int pcount) {
+		this.pcount = pcount;
+	}
+	
+	 
 	
 	
 	

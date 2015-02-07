@@ -21,11 +21,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NoResultException;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Query;
 import javax.persistence.Table;
 
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
+import com.travelportal.domain.rooms.CancellationPolicy;
 import com.travelportal.domain.rooms.RateMeta;
 
 import play.db.jpa.JPA;
@@ -59,21 +61,24 @@ public class AllotmentMarket {
 	@Column(name="toDate")
 	private Date toDate;
 	
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private List<RateMeta> rate;
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    public List<Country> country;
+	@OneToOne
+	private RateMeta rate;
+	
+	//@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	//private List<RateMeta> rate;
+	//@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //public List<Country> country;
 	
 
 	
 	
-	public List<Country> getCountry() {
+	/*public List<Country> getCountry() {
 		return country;
 	}
 
 	public void setCountry(List<Country> country) {
 		this.country = country;
-	}
+	}*/
 
 	public int getAllotmentMarketId() {
 		return allotmentMarketId;
@@ -115,14 +120,14 @@ public class AllotmentMarket {
 		this.choose = choose;
 	}
 		
-
+/*
 	public List<RateMeta> getRate() {
 		return rate;
 	}
 
 	public void setRate(List<RateMeta> rate) {
 		this.rate = rate;
-	}
+	}*/
 	
 	public String getApplyMarket() {
 		return applyMarket;
@@ -171,6 +176,17 @@ public class AllotmentMarket {
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
 	}
+	
+	
+	
+
+	public RateMeta getRate() {
+		return rate;
+	}
+
+	public void setRate(RateMeta rate) {
+		this.rate = rate;
+	}
 
 	public static AllotmentMarket findById(int Code) {
 		try
@@ -182,11 +198,10 @@ public class AllotmentMarket {
 		}
     }
 	
-	//return (AllotmentMarket) JPA.em().createNativeQuery("select * from allotmentmarket_rate_meta where rate_rate_id = '"+Code+"'").getSingleResult();
 	
 	public static AllotmentMarket getOneMarket(Long Code) {
-	
-				List<Object[]> list =JPA.em().createNativeQuery("select * from allotmentmarket am,allotmentmarket_rate_meta arm where arm.AllotmentMarket_allotmentMarket_Id = am.allotmentMarket_Id and arm.rate_rate_id = '"+Code+"'").getResultList();
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				List<Object[]> list =JPA.em().createNativeQuery("select * from allotmentmarket am where am.rate_rate_id = '"+Code+"'").getResultList();
 				AllotmentMarket am = new AllotmentMarket();
 				for(Object[] o :list) {
 					am.setAllocation(Integer.parseInt(o[1].toString()));
@@ -201,15 +216,74 @@ public class AllotmentMarket {
 					if(o[5] != null){
 					am.setApplyMarket(o[5].toString());
 					}
+					if(o[6]!=null){
+						am.setStopAllocation(Integer.parseInt(o[6].toString()));
+					}
+					if(o[7]!=null){
+						am.setStopChoose(Integer.parseInt(o[7].toString()));
+					}
+					if(o[8]!=null){
+						am.setStopPeriod(o[7].toString());
+					}
+					if(o[9]!=null){
+						try {
+							am.setFromDate(format.parse(o[9].toString()));
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					if(o[10]!=null){
+						try {
+							am.setToDate(format.parse(o[10].toString()));
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 				
 				return am;
 	
 	   }
 	
+	
+	public static AllotmentMarket findByRateId(Long id) {
+		Query query = JPA.em().createQuery("Select c from AllotmentMarket c where c.rate.id = ?1");
+		query.setParameter(1, id);
+    	return (AllotmentMarket) query.getSingleResult();
+	}
+	
+	public static AllotmentMarket getnationalitywiseMark(int allotId,int nationalityId) {
+		
+		
+				List<Object[]> list =JPA.em().createNativeQuery("select * from allotmentmarket am,allotmentmarket_country ac where am.allotmentMarket_Id = ac.AllotmentMarket_allotmentMarket_Id and am.allotmentMarket_Id = '"+allotId+"' and ac.country_country_code ='"+nationalityId+"'").getResultList();
+				AllotmentMarket am = new AllotmentMarket();
+				System.out.println(list);
+				if(!list.isEmpty()){
+					
+					for(Object[] o :list) {
+						am.setAllocation(Integer.parseInt(o[1].toString()));
+						am.setAllotmentMarketId(Integer.parseInt(o[0].toString()));
+						am.setChoose(Integer.parseInt(o[2].toString()));
+					}
+				
+					return am;
+				}else{
+					
+					return null;
+				}
+	
+	   }
+	
+	public static int deleteAllotmentM(long code) {
+		Query q = JPA.em().createNativeQuery("delete from allotmentmarket where rate_rate_id = '"+code+"'");
+		return q.executeUpdate();
+	}
+	
 	public static List<AllotmentMarket> getCityWiseMarket(int cityId) {
 		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		List<AllotmentMarket > result = new ArrayList<AllotmentMarket>();
+		List<AllotmentMarket> result = new ArrayList<AllotmentMarket>();
 		List<Object[]> list =JPA.em().createNativeQuery("select * from allotmentmarket am,allotmentmarket_city arm,allotmentmarket_rate_meta allmark,rate_meta rm where arm.AllotmentMarket_allotmentMarket_Id = am.allotmentMarket_Id and am.allotmentMarket_Id = allmark.AllotmentMarket_allotmentMarket_Id  and arm.cities_city_code = "+cityId+" and allmark.AllotmentMarket_allotmentMarket_Id=am.allotmentMarket_Id").getResultList();
 		Map<Long,Integer> map = new HashMap<Long,Integer>(); 
 		for(Object[] o :list) {
@@ -228,22 +302,22 @@ public class AllotmentMarket {
 				if(o[5] != null){
 					am.setApplyMarket(o[5].toString());
 				}
-				if(o[14] != null) {
-					am.rate = new ArrayList<RateMeta>();
-					RateMeta em  = new RateMeta();
-					em.setId(Long.parseLong(o[14].toString()));
-					em.setCurrency(o[16].toString());
-					try {
-						em.setFromDate(format.parse(o[17].toString()));
-						em.setToDate(format.parse(o[19].toString()));
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					em.setRateName(o[18].toString());
-					em.setSupplierCode(Long.parseLong(o[21].toString()));
-					am.rate.add(em);
-				}
+//				if(o[14] != null) {
+//					am.rate = new ArrayList<RateMeta>();
+//					RateMeta em  = new RateMeta();
+//					em.setId(Long.parseLong(o[14].toString()));
+//					em.setCurrency(o[16].toString());
+//					try {
+//						em.setFromDate(format.parse(o[17].toString()));
+//						em.setToDate(format.parse(o[19].toString()));
+//					} catch (ParseException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					em.setRateName(o[18].toString());
+//					em.setSupplierCode(Long.parseLong(o[21].toString()));
+//					am.rate.add(em);
+//				}
 				result.add(am);
 				map.put(Long.parseLong(o[0].toString()), result.size()-1);
 			} else {
@@ -251,7 +325,7 @@ public class AllotmentMarket {
 				RateMeta em  = new RateMeta();
 				em.setId(Long.parseLong(o[14].toString()));
 				//em.setCurrency(o[11].toString());
-				am.rate.add(em);
+				//am.rate.add(em);
 			}
 			
 		}
@@ -259,7 +333,6 @@ public class AllotmentMarket {
 		return result;
 
 }
-	//List<AllotmentMarket> list =JPA.em().createNativeQuery("select * from allotmentmarket am,allotmentmarket_city arm,allotmentmarket_rate_meta allmark where arm.AllotmentMarket_allotmentMarket_Id = am.allotmentMarket_Id and am.allotmentMarket_Id = allmark.AllotmentMarket_allotmentMarket_Id and arm.cities_city_code = '"+cityId+"'",AllotmentMarket.class).getResultList();
 	
 	
 	public static AllotmentMarket findByTopid() {

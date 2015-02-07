@@ -21,6 +21,7 @@ import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.AllocatedCitiesVM;
+import com.travelportal.vm.RoomType;
 import com.travelportal.vm.SpecialsMarketVM;
 import com.travelportal.vm.SpecialsVM;
 import com.travelportal.vm.SpecialsWrapper;
@@ -68,6 +69,9 @@ public class SupplierController extends Controller {
 			specials.setToDate(format.parse(spec.toDate));
 			specials.setPromotionName(spec.promotionName);
 			specials.setSupplierCode(spec.supplierCode);
+			System.out.println("+++++++++++++");
+			System.out.println(spec.roomTypes);
+			System.out.println("+++++++++++++");
 			specials.setRoomTypes(HotelRoomTypes.findByListName(spec.roomTypes));
 			specials.save();
 			
@@ -246,7 +250,10 @@ public class SupplierController extends Controller {
 			specialsVM.promotionName = special.getPromotionName();
 			specialsVM.supplierCode = special.getSupplierCode();
 			for(HotelRoomTypes room : special.getRoomTypes()) {
-				specialsVM.roomTypes.add(room.getRoomType());
+				RoomType type = new RoomType();
+				type.roomType = room.getRoomType();
+				type.roomId = room.getRoomId();
+				specialsVM.roomallInfo.add(type);
 			}
 			
 			List<SpecialsMarket> marketList = SpecialsMarket.findBySpecialsId(special.getId());
@@ -357,11 +364,11 @@ public class SupplierController extends Controller {
 		
 		AllotmentMarket alotMarket = AllotmentMarket.findById(id);
 		
-		if(alotMarket != null && alotMarket.getCountry() != null && !alotMarket.getCountry().isEmpty())
+		/*if(alotMarket != null && alotMarket.getCountry() != null && !alotMarket.getCountry().isEmpty())
 		{
 			alotMarket.getCountry().removeAll(alotMarket.getCountry());
 			//JPA.em().merge(rates);
-		}
+		}*/
 		
 		List<Country> listCity = new ArrayList<>();
 		for(SelectedCountryVM cityvm : city){
@@ -372,7 +379,7 @@ public class SupplierController extends Controller {
 			}
 		}
 
-		alotMarket.setCountry(listCity);
+		//alotMarket.setCountry(listCity);
 		return ok();
 
 	}

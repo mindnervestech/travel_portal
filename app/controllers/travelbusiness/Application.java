@@ -1,6 +1,7 @@
 package controllers.travelbusiness;
 
 import java.io.File;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import play.data.DynamicForm;
 import play.data.Form;
@@ -40,9 +42,12 @@ import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RoomAmenities;
-import com.travelportal.vm.HotelHealthAndSafetyVM;
+import com.travelportal.domain.rooms.Specials;
+import com.travelportal.domain.rooms.SpecialsMarket;
+import com.travelportal.vm.AllotmentMarketVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.RoomAmenitiesVm;
+import com.travelportal.vm.SearchAllotmentMarketVM;
 import com.travelportal.vm.SearchHotelValueVM;
 import com.travelportal.vm.SearchRateDetailsVM;
 import com.travelportal.vm.SearchSpecialRateVM;
@@ -51,14 +56,14 @@ import com.travelportal.vm.SerachedHotelbyDate;
 import com.travelportal.vm.SerachedRoomRateDetail;
 import com.travelportal.vm.SerachedRoomType;
 import com.travelportal.vm.ServicesVM;
+import com.travelportal.vm.SpecialsMarketVM;
+import com.travelportal.vm.SpecialsVM;
 public class Application extends Controller {
 
     public static Result index() {
     	PageScope.scope("number", 1);
     	return ok(home.render());
     }
-    
-    
         
     @Transactional(readOnly=true)
 	public static Result searchCountries() {
@@ -128,165 +133,98 @@ public class Application extends Controller {
     		Set<String> mapDate = new HashSet<String>();
     		
     		
-    		String[] fromDate = {searchHotelValueVM.getCheckIn()};
-    		String[] toDate = {searchHotelValueVM.getCheckOut()};
+    		String fromDate = searchHotelValueVM.getCheckIn();
+    		String toDate = searchHotelValueVM.getCheckOut();
     		//String[] sId = {searchVM.id};
-    		String[] cityId = {searchHotelValueVM.getCity()};
-    		String[] cId = {searchHotelValueVM.getNationalityCode()};*/
+    		String cityId = searchHotelValueVM.getCity();
+    		String nationalityId = searchHotelValueVM.getNationalityCode();*/
     	
     	Form<SearchHotelValueVM> HotelForm = Form.form(SearchHotelValueVM.class).bindFromRequest();
     	SearchHotelValueVM searchVM = HotelForm.get();
     		
-    		int flag = 0;
-    		
-    		
     		Map<String, Object> mapObject = new HashMap<String, Object>();
     		List<HotelSearch> hotellist = new ArrayList<>();
     		Map<Long, Long> map = new HashMap<Long, Long>();
-    		Set<String> mapDate = new HashSet<String>();
+    		long diffInpromo = 0;
     		
     		
-    		String[] fromDate = {searchVM.checkIn};
-    		String[] toDate = {searchVM.checkOut};
+    		String fromDate = searchVM.checkIn;
+    		String toDate = searchVM.checkOut;
     		//String[] sId = {searchVM.id};
-    		String[] cityId = {searchVM.city};
-    		String[] cId = {searchVM.nationalityCode};
+    		String cityId = searchVM.city;
+    		String nationalityId = searchVM.nationalityCode;
     		
     		System.out.println("(*(**(*(*()()()())(");
-    		System.out.println(fromDate[0]);
-    		System.out.println(toDate[0]);
-    		System.out.println(cId[0]);
+    		System.out.println(fromDate);
+    		System.out.println(toDate);
+    		System.out.println(nationalityId);
     		
+    		List<BigInteger> supplierId = RateMeta.getsupplierId(
+    				Integer.parseInt(cityId), 
+    				Integer.parseInt(nationalityId));  //, Integer.parseInt(sId[0])
 
-    		Date fmDate = null;
-    		Date tDate = null;
-
-    		int j = 0;
-    		
-    		List<RateMeta> rateMeta = RateMeta.getdatecheck(
-    				Integer.parseInt(cityId[0]), 
-    				Integer.parseInt(cId[0]));  //, Integer.parseInt(sId[0])
-
-    		for (RateMeta rate1 : rateMeta) {
+    		for (BigInteger supplierid : supplierId) {
 
     			Date formDate = null;
     			Date toDates = null;
     			try {
-    				formDate = format.parse(fromDate[0]);
-    				toDates = format.parse(toDate[0]);
+    				formDate = format.parse(fromDate);
+    				toDates = format.parse(toDate);
     			} catch (ParseException e) { // TODO Auto-generated catch block
     				e.printStackTrace();
     			}
 
-    			Calendar c = Calendar.getInstance();
-    			c.setTime(formDate);
-    			c.set(Calendar.MILLISECOND, 0);
+    			Calendar checkInDate = Calendar.getInstance();
+    			checkInDate.setTime(formDate);
+    			checkInDate.set(Calendar.MILLISECOND, 0);
 
-    			Calendar c1 = Calendar.getInstance();
-    			c1.setTime(toDates);
-    			c1.set(Calendar.MILLISECOND, 0);
-
-    			Calendar fromdata = Calendar.getInstance();
-    			fromdata.setTime(rate1.getFromDate());
-    			fromdata.set(Calendar.MILLISECOND, 0);
-
-    			Calendar todata = Calendar.getInstance();
-    			todata.setTime(rate1.getToDate());
-    			todata.set(Calendar.MILLISECOND, 0);
+    			
     			long dayDiff;
     			if(toDates.getTime() == formDate.getTime()){
     				dayDiff = 1;
+    				diffInpromo = dayDiff;
     			}else{
     				long diff = toDates.getTime() - formDate.getTime();
 
     				dayDiff = diff / (1000 * 60 * 60 * 24);
+    				diffInpromo = dayDiff;
     			}
 
     			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
     			HotelSearch hProfileVM = new HotelSearch();
-    			Long object = (Long) map.get(rate1.getSupplierCode());
-    			HotelProfile hAmenities = HotelProfile.findAllData(rate1
-    					.getSupplierCode());
+    			Long object = (Long) map.get(supplierid.longValue());
+    			
     			if (object == null) {
-
-    				Double total = 0.0;
-    				Double avg = 0.0;
-    				int value = 0;
-
-    				hProfileVM.setSupplierCode(hAmenities.getSupplier_code());
-    				hProfileVM.setHotelNm(hAmenities.getHotelName());
-    				hProfileVM.setSupplierNm(hAmenities.getSupplierName());
-
-    				if (hAmenities.getStartRatings() != null) {
-    					hProfileVM.setStartRating(hAmenities.getStartRatings()
-    							.getId());
-    				}
-    				hProfileVM.currencyId = hAmenities.getCurrency().getCurrencyCode();
-    				hProfileVM.currencyName = hAmenities.getCurrency().getCurrencyName();
-    				String currency = hAmenities.getCurrency().getCurrencyName();
-    				String[] currencySplit;
-    				 currencySplit = currency.split(" - ");
-    				hProfileVM.currencyShort = currencySplit[0];
-    				hProfileVM.setHotelAddr(hAmenities.getAddress());
-    				hProfileVM.setCityCode(hAmenities.getCity().getCityCode());
-    				hProfileVM.setCheckIn(fromDate[0]);
-    				hProfileVM.setCheckOut(toDate[0]);
-    				List<ServicesVM> sList = new ArrayList<>();
+    				HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
     				
-    				for (HotelServices hoServices : hAmenities.getServices()){
-    					ServicesVM sVm=new ServicesVM();
-    					sVm.setServiceId(hoServices.getServiceId());
-    					sVm.setServiceName(hoServices.getServiceName());
-    					sList.add(sVm);
-    				}
-    				hProfileVM.setServices(sList);
-    				hProfileVM.setNationality(Integer.parseInt(cId[0]));
-    				InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
-    				hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
+
+    				fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);   /* Fill Hotel info function*/
     				
-    				hProfileVM.setFlag("0");
     				for (int i = 0; i < dayDiff; i++) {
 
-    					System.out.println(rate1.getSupplierCode());
+    					System.out.println(supplierid.longValue());
     					List<HotelRoomTypes> roomType = HotelRoomTypes
-    							.getHotelRoomDetails(rate1.getSupplierCode());
-    					int days = c.get(Calendar.DAY_OF_WEEK)-1;
+    							.getHotelRoomDetails(supplierid.longValue());
+    					int days = checkInDate.get(Calendar.DAY_OF_WEEK)-1;
     					SerachedHotelbyDate hotelBydateVM = new SerachedHotelbyDate();
-    					hotelBydateVM.setDate(format.format(c.getTime()));
+    					hotelBydateVM.setDate(format.format(checkInDate.getTime()));
     					Map<Long, Long> mapRm = new HashMap<Long, Long>();
-    					Map<Long, Long> mapRate = new HashMap<Long, Long>();
     					List<SerachedRoomType> roomlist = new ArrayList<>();
     					for (HotelRoomTypes room : roomType) {
     						Long objectRm = (Long) mapRm.get(room.getRoomId());
     						if (objectRm == null) {
 
-    							List<RateMeta> rateMeta1 = RateMeta.getdatecheck1(
+    							List<RateMeta> rateMeta1 = RateMeta.getdatecheck(
     									room.getRoomId(),
-    									Integer.parseInt(cityId[0]),
-    									//Integer.parseInt(sId[0]),
-    									Integer.parseInt(cId[0]), c.getTime(),
+    									Integer.parseInt(nationalityId), checkInDate.getTime(),
     									hAmenities.getSupplier_code()); // Long.parseLong(roomId[0])
 
-    							int ib = 1;
     							List<SerachedRoomRateDetail> list = new ArrayList<>();
     							SerachedRoomType roomtyp = new SerachedRoomType();
-    							
+    							fillRoomInfo(room,roomtyp);  /*fill room info function*/
+    							specialsPromotion(roomtyp,format,Integer.parseInt(nationalityId),room.getRoomId(),checkInDate.getTime());
     							for (RateMeta rate : rateMeta1) {
-    								roomtyp.setRoomId(room.getRoomId());
-    								roomtyp.setRoomName(room.getRoomType());
-    								roomtyp.setDescription(room.getDescription());
-    								List<RoomAmenitiesVm> rList = new ArrayList<>();
     								
-    								for (RoomAmenities roomAmenitiesVm : room.getAmenities()){
-    									RoomAmenitiesVm rooAmenitiesVm = new RoomAmenitiesVm();
-    									rooAmenitiesVm.setAmenityId(roomAmenitiesVm.getAmenityId());
-    									rooAmenitiesVm.setAmenityNm(roomAmenitiesVm.getAmenityNm());
-    									rooAmenitiesVm.setAmenitiesicon(roomAmenitiesVm.getAmenitiesicon());
-    									rList.add(rooAmenitiesVm);
-    								}
-    								
-    									roomtyp.setAmenities(rList);
-    	
     									
     								RateDetails rateDetails = RateDetails
     										.findByRateMetaId(rate.getId());
@@ -294,166 +232,19 @@ public class Application extends Controller {
     								List<PersonRate> personRate = PersonRate
     										.findByRateMetaId(rate.getId());
 
-    								AllotmentMarket alloMarket = AllotmentMarket
-    										.getOneMarket(rate.getId());
+    							AllotmentMarket alloMarket = AllotmentMarket.getOneMarket(rate.getId());
 
     								SerachedRoomRateDetail rateVM = new SerachedRoomRateDetail();
     								rateVM.setAdult_occupancy(room
     										.getMaxAdultOccupancy());
     								rateVM.setId(rate.getId());
-
+    								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId);
     								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
     								
+    								SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
     								
+    								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
     								
-    								if (rateDetails.getSpecialDays() != null) {
-    									String week[] = rateDetails
-    											.getSpecialDays().split(",");
-    									for (String day : week) {
-    										StringBuilder sb = new StringBuilder(
-    												day);
-    										if (day.contains("[")) {
-    											sb.deleteCharAt(sb.indexOf("["));
-    										}
-    										if (day.contains("]")) {
-    											sb.deleteCharAt(sb.indexOf("]"));
-    										}
-    										if (day.contains(" ")) {
-    											sb.deleteCharAt(sb.indexOf(" "));
-    										}
-    										specialRateVM.weekDays.add(sb
-    												.toString());
-    										if (sb.toString().equals("Sun")) {
-    											specialRateVM.rateDay0 = true;
-    										}
-    										if (sb.toString().equals("Mon")) {
-    											specialRateVM.rateDay1 = true;
-    										}
-    										if (sb.toString().equals("Tue")) {
-    											specialRateVM.rateDay2 = true;
-    										}
-    										if (sb.toString().equals("Wed")) {
-    											specialRateVM.rateDay3 = true;
-    										}
-    										if (sb.toString().equals("Thu")) {
-    											specialRateVM.rateDay4 = true;
-    										}
-    										if (sb.toString().equals("Fri")) {
-    											specialRateVM.rateDay5 = true;
-    										}
-    										if (sb.toString().equals("Sat")) {
-    											specialRateVM.rateDay6 = true;
-    										}
-    									}
-    								}							
-    								for (PersonRate person : personRate) {
-    									
-    									if(rateDetails.isSpecialRate() == true){
-    										if(days == 0 && specialRateVM.rateDay0) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else if(days == 1 && specialRateVM.rateDay1) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else if(days == 2 && specialRateVM.rateDay2) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else if(days == 3 && specialRateVM.rateDay3) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else if(days == 4 && specialRateVM.rateDay4) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else if(days == 5 && specialRateVM.rateDay5) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else if(days == 6 && specialRateVM.rateDay6) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else{
-    											if (person.isNormal() == true) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}
-    										
-    									}else{
-    										if (person.isNormal() == true) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);
-    											vm.rateAvg = person.getRateValue(); 
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    									}
-    								}
-
-
     								list.add(rateVM);
     							
     							}
@@ -475,10 +266,10 @@ public class Application extends Controller {
     						hProfileVM.setFlag("1");
     					}
 
-    					c.add(Calendar.DATE, 1);
+    					checkInDate.add(Calendar.DATE, 1);
     				}
 
-    				map.put(rate1.getSupplierCode(), Long.parseLong("1"));
+    				map.put(supplierid.longValue(), Long.parseLong("1"));
 
     				if (!hProfileVM.getHotelbyDate().isEmpty()) {
     					hotellist.add(hProfileVM);
@@ -488,144 +279,36 @@ public class Application extends Controller {
 
     		List<Long> hotelNo = new ArrayList<>();
     		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
-    		Map<Long, SerachedRoomRateDetail> mapRM = new HashMap<Long, SerachedRoomRateDetail>();
-    		int count=0;
-    		int totalHotel =0 ;
-    		for (HotelSearch hotel : hotellist) {
-    			totalHotel++;
-    			hotelNo.add(hotel.supplierCode);
-    			int dataVar = 0;
-    			int countRoom = count;
-    			for (SerachedHotelbyDate date : hotel.hotelbyDate) {
-    				int newHotel=countRoom; 
-    				dataVar++;
-    				for (SerachedRoomType roomTP : date.getRoomType()) {
-    					
-    					Double total = 0.0;
-    					Double avg = 0.0;
-    					SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
-    					sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
-
-    					
-    					SerachedRoomRateDetail sRateDetail = new SerachedRoomRateDetail();
-    					sRateDetail.rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
-
-    					List<SerachedRoomRateDetail> serachedRoomRateDetails = new ArrayList<>();
-    					List<SearchRateDetailsVM> searchRateDetailsVMs = new ArrayList<>();
-    					SerachedRoomRateDetail objectRM = mapRM.get(roomTP
-    							.getRoomId());
-    					if (objectRM == null) {
-    						
-    						count++;
-    						
-    						sHotelRoomType.setRoomId(roomTP.getRoomId());
-    						sHotelRoomType.setRoomName(roomTP.getRoomName());
-    						sHotelRoomType.setAmenities(roomTP.getAmenities());
-    						sHotelRoomType.setDescription(roomTP.getDescription());
-    						for (SerachedRoomRateDetail rateObj : roomTP
-    								.getHotelRoomRateDetail()) {
-    						
-    							for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
-    								SearchRateDetailsVM searchRateDetailsVM = new SearchRateDetailsVM();
-    								searchRateDetailsVM
-    										.setRateAvg(detailsVM.getRateValue());
-    								searchRateDetailsVM.setAdult(detailsVM.getAdult());
-    								searchRateDetailsVM.setMealTypeName(detailsVM.mealTypeName);
-    								searchRateDetailsVMs.add(searchRateDetailsVM);
-    								sRateDetail.rateDetailsNormal
-    										.add(searchRateDetailsVM);
-
-    							}
-    							sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
-    						}
-    						mapRM.put(roomTP.getRoomId(), sRateDetail);
-
-    					}else {
-    						List<Double> totalNo = new ArrayList<Double>();
-    						int i = 0;
-    						for (SearchRateDetailsVM ord : objectRM.rateDetailsNormal) {
-    							totalNo.add(i, ord.rateAvg);
-    							i++;
-    						}
-    						for (SerachedRoomRateDetail rateObj : roomTP
-    								.getHotelRoomRateDetail()) {
-    							
-    							int x=0;
-    							for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
-    								
-    								if(detailsVM.getRateValue() > totalNo.get(x)){
-    									total= totalNo.get(x);
-    								}else{
-    									total= detailsVM.getRateValue();
-    								}
-    							
-    								hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x).setRateAvg(total);
-    							
-    								sRateDetail.rateDetailsNormal
-    										.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
-    								x++;
-    							}
-    						}
-    						mapRM.put(roomTP.getRoomId(), sRateDetail);
-    						newHotel++;
-    					}
-    					sHotelRoomType.hotelRoomRateDetail.add(sRateDetail);
-    					
-
-    					 if(sHotelRoomType.roomId != null){
-    					hotelRMlist.add(sHotelRoomType);
-    					
-    					hotel.hotelbyRoom.add(sHotelRoomType);
-    					 }
-    					 
-    				}
-    				
-    								 
-    			}
-    			
-    		}
+    		fillRoomsInHotelInfo(hotellist,hotelRMlist,hotelNo,diffInpromo); /* fill data in room in hotel object.... function*/
     		
     		List<Long> hotelCount = new ArrayList<>();
-    		Map<Integer, Integer> map2 = new HashMap<Integer, Integer>();
+    		int totalHotel = 0;
     		for(Long no:hotelNo){
+    			totalHotel++;
     			HotelProfile hProfile = HotelProfile.findAllData(no);
     			hotelCount.add(hProfile.getId());
     			
     		}
-    		List<Map> hotelAmenities = HotelAmenities.getamenitiesCount(hotelCount);
-    		List<Map> hotelLocation = HotelProfile.getlocationCount(hotelCount);
-    		List<Map> hotelServices =HotelServices.getservicesCount(hotelCount);   
     		
-    		for (HotelSearch hotel : hotellist) {
-    		double min=0.0;
-			int minStart = 0;
-			for(SerachHotelRoomType sHotelRoomType2:hotel.hotelbyRoom){
-				
-				for (SerachedRoomRateDetail roomRateDetail:sHotelRoomType2.hotelRoomRateDetail) {
-					
-					for(SearchRateDetailsVM sRD:roomRateDetail.rateDetailsNormal){
-						
-						System.out.println(sRD.adult);
-						if(sRD.adult.equals("1 Adult")){
-							if(minStart == 0){
-								min = sRD.rateAvg;
-								minStart++;
-							}
-							if(min > sRD.rateAvg){
-								min = sRD.rateAvg;
-							}
-						}
-					}
-				}
-			 }
-			hotel.minRate = min;
+    		List<Map> hotelAmenities = null;
+    		List<Map> hotelLocation = null;
+    		List<Map> hotelServices =null;
+    		if(!hotelCount.isEmpty()){
+    		 hotelAmenities = HotelAmenities.getamenitiesCount(hotelCount);
+    		 hotelLocation = HotelProfile.getlocationCount(hotelCount);
+    		 hotelServices =HotelServices.getservicesCount(hotelCount);   
     		}
+    		
+    		findMinRateInHotel(hotellist);  /* find min Rate in par Hotel function*/
 		
+    		
+    		if(!hotelCount.isEmpty()){
+    			mapObject.put("hotelAmenities", hotelAmenities);
+    			mapObject.put("hotelServices", hotelServices);
+    			mapObject.put("hotellocation",hotelLocation);
+    		}
     		mapObject.put("hotelId", hotelNo);
-    		mapObject.put("hotelAmenities", hotelAmenities);
     		mapObject.put("hotellist", hotellist);
-    		mapObject.put("hotelServices", hotelServices);
-    		mapObject.put("hotellocation",hotelLocation);
     		mapObject.put("totalHotel",totalHotel);
     		
     		JsonNode personJson = Json.toJson(mapObject);
@@ -634,164 +317,92 @@ public class Application extends Controller {
     		return ok(searchHotel.render(personJson));
     }
     
-    
+        
     @Transactional(readOnly = true)
     public static Result searchHotelInfo() {
-    	
     	
     	DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
     	
     	Form<SearchHotelValueVM> HotelForm = Form.form(SearchHotelValueVM.class).bindFromRequest();
     	SearchHotelValueVM searchVM = HotelForm.get();
     		
-    		int flag = 0;
-    		
-    		
     		Map<String, Object> mapObject = new HashMap<String, Object>();
     		List<HotelSearch> hotellist = new ArrayList<>();
     		Map<Long, Long> map = new HashMap<Long, Long>();
-    		Set<String> mapDate = new HashSet<String>();
+    		long diffInpromo = 0;
     		
+    		String fromDate = searchVM.checkIn;
+    		String toDate = searchVM.checkOut;
+    		String cityId = searchVM.city;
+    		String nationalityId = searchVM.nationalityCode;
     		
-    		String[] fromDate = {searchVM.checkIn};
-    		String[] toDate = {searchVM.checkOut};
-    		//String[] sId = {searchVM.id};
-    		String[] cityId = {searchVM.city};
-    		String[] cId = {searchVM.nationalityCode};
+    		List<BigInteger> supplierId = RateMeta.getsupplierId(
+    				Integer.parseInt(cityId), 
+    				Integer.parseInt(nationalityId));  
 
-    		Date fmDate = null;
-    		Date tDate = null;
-
-    		int j = 0;
-    		
-    		List<RateMeta> rateMeta = RateMeta.getdatecheck(
-    				Integer.parseInt(cityId[0]), 
-    				Integer.parseInt(cId[0]));  //, Integer.parseInt(sId[0])
-
-    		for (RateMeta rate1 : rateMeta) {
+    		for (BigInteger supplierid : supplierId) {
 
     			Date formDate = null;
     			Date toDates = null;
     			try {
-    				formDate = format.parse(fromDate[0]);
-    				toDates = format.parse(toDate[0]);
+    				formDate = format.parse(fromDate);
+    				toDates = format.parse(toDate);
     			} catch (ParseException e) { // TODO Auto-generated catch block
     				e.printStackTrace();
     			}
-
-    			Calendar c = Calendar.getInstance();
-    			c.setTime(formDate);
-    			c.set(Calendar.MILLISECOND, 0);
-
-    			Calendar c1 = Calendar.getInstance();
-    			c1.setTime(toDates);
-    			c1.set(Calendar.MILLISECOND, 0);
-
-    			Calendar fromdata = Calendar.getInstance();
-    			fromdata.setTime(rate1.getFromDate());
-    			fromdata.set(Calendar.MILLISECOND, 0);
-
-    			Calendar todata = Calendar.getInstance();
-    			todata.setTime(rate1.getToDate());
-    			todata.set(Calendar.MILLISECOND, 0);
+    			
+    			Calendar checkInDate = Calendar.getInstance();
+    			checkInDate.setTime(formDate);
+    			checkInDate.set(Calendar.MILLISECOND, 0);
+    			
     			long dayDiff;
     			if(toDates.getTime() == formDate.getTime()){
     				dayDiff = 1;
+    				diffInpromo = dayDiff;
     			}else{
     				long diff = toDates.getTime() - formDate.getTime();
 
     				dayDiff = diff / (1000 * 60 * 60 * 24);
+    				diffInpromo = dayDiff;
     			}
 
     			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
     			HotelSearch hProfileVM = new HotelSearch();
-    			Long object = (Long) map.get(rate1.getSupplierCode());
-    			HotelProfile hAmenities = HotelProfile.findAllData(rate1
-    					.getSupplierCode());
+    			
+    			Long object = map.get(supplierid.longValue());
     			if (object == null) {
 
-    				Double total = 0.0;
-    				Double avg = 0.0;
-    				int value = 0;
-
-    				hProfileVM.setSupplierCode(hAmenities.getSupplier_code());
-    				hProfileVM.setHotelNm(hAmenities.getHotelName());
-    				hProfileVM.setSupplierNm(hAmenities.getSupplierName());
-
-    				if (hAmenities.getStartRatings() != null) {
-    					hProfileVM.setStartRating(hAmenities.getStartRatings()
-    							.getId());
-    				}
-    				hProfileVM.currencyId = hAmenities.getCurrency().getCurrencyCode();
-    				hProfileVM.currencyName = hAmenities.getCurrency().getCurrencyName();
-    				String currency = hAmenities.getCurrency().getCurrencyName();
-    				String[] currencySplit;
-    				 currencySplit = currency.split(" - ");
-    				hProfileVM.currencyShort = currencySplit[0];
-    				hProfileVM.setHotelAddr(hAmenities.getAddress());
-    				hProfileVM.setCityCode(hAmenities.getCity().getCityCode());
-    				hProfileVM.setCheckIn(fromDate[0]);
-    				hProfileVM.setCheckOut(toDate[0]);
-    				List<ServicesVM> sList = new ArrayList<>();
+    				HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
+    				fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);   /* Fill Hotel info function*/
     				
-    				for (HotelServices hoServices : hAmenities.getServices()){
-    					ServicesVM sVm=new ServicesVM();
-    					sVm.setServiceId(hoServices.getServiceId());
-    					sVm.setServiceName(hoServices.getServiceName());
-    					sList.add(sVm);
-    				}
-    				hProfileVM.setServices(sList);
-    				hProfileVM.setNationality(Integer.parseInt(cId[0]));
-    				InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
-    				hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
-    				
-    				hProfileVM.setFlag("0");
     				for (int i = 0; i < dayDiff; i++) {
 
-    					System.out.println(rate1.getSupplierCode());
     					List<HotelRoomTypes> roomType = HotelRoomTypes
-    							.getHotelRoomDetails(rate1.getSupplierCode());
-    					int days = c.get(Calendar.DAY_OF_WEEK)-1;
+    							.getHotelRoomDetails(supplierid.longValue());
+    					int days = checkInDate.get(Calendar.DAY_OF_WEEK)-1;
     					SerachedHotelbyDate hotelBydateVM = new SerachedHotelbyDate();
-    					hotelBydateVM.setDate(format.format(c.getTime()));
+    					hotelBydateVM.setDate(format.format(checkInDate.getTime()));
     					Map<Long, Long> mapRm = new HashMap<Long, Long>();
-    					Map<Long, Long> mapRate = new HashMap<Long, Long>();
     					List<SerachedRoomType> roomlist = new ArrayList<>();
+    					
     					for (HotelRoomTypes room : roomType) {
     						Long objectRm = (Long) mapRm.get(room.getRoomId());
     						if (objectRm == null) {
 
-    							//long totalPages = Announcement.getAllAnnouncementsTotal(title, 10);
-    							//List<Announcement> allAnnouncements = Announcement.getAllAnnouncements(title, currentPage, 10, totalPages);
     							
-    							List<RateMeta> rateMeta1 = RateMeta.getdatecheck1(
+    							List<RateMeta> rateMeta1 = RateMeta.getdatecheck(
     									room.getRoomId(),
-    									Integer.parseInt(cityId[0]),
-    									//Integer.parseInt(sId[0]),
-    									Integer.parseInt(cId[0]), c.getTime(),
-    									hAmenities.getSupplier_code()); // Long.parseLong(roomId[0])
+    									Integer.parseInt(nationalityId), checkInDate.getTime(),
+    									hAmenities.getSupplier_code()); 
 
-    							int ib = 1;
     							List<SerachedRoomRateDetail> list = new ArrayList<>();
     							SerachedRoomType roomtyp = new SerachedRoomType();
     							
+    							fillRoomInfo(room,roomtyp);  /*fill room info function*/
+    							
+    							specialsPromotion(roomtyp,format,Integer.parseInt(nationalityId),room.getRoomId(),checkInDate.getTime());
+    							
     							for (RateMeta rate : rateMeta1) {
-    								roomtyp.setRoomId(room.getRoomId());
-    								roomtyp.setRoomName(room.getRoomType());
-    								roomtyp.setDescription(room.getDescription());
-    								
-    								List<RoomAmenitiesVm> rList = new ArrayList<>();
-    								
-    								for (RoomAmenities roomAmenitiesVm : room.getAmenities()){
-    									RoomAmenitiesVm rooAmenitiesVm = new RoomAmenitiesVm();
-    									rooAmenitiesVm.setAmenityId(roomAmenitiesVm.getAmenityId());
-    									rooAmenitiesVm.setAmenityNm(roomAmenitiesVm.getAmenityNm());
-    									rooAmenitiesVm.setAmenitiesicon(roomAmenitiesVm.getAmenitiesicon());
-    									rList.add(rooAmenitiesVm);
-    								}
-    								
-    									roomtyp.setAmenities(rList);
-    	
     									
     								RateDetails rateDetails = RateDetails
     										.findByRateMetaId(rate.getId());
@@ -799,166 +410,22 @@ public class Application extends Controller {
     								List<PersonRate> personRate = PersonRate
     										.findByRateMetaId(rate.getId());
 
-    								AllotmentMarket alloMarket = AllotmentMarket
-    										.getOneMarket(rate.getId());
+    								AllotmentMarket alloMarket = AllotmentMarket.getOneMarket(rate.getId());
 
     								SerachedRoomRateDetail rateVM = new SerachedRoomRateDetail();
     								rateVM.setAdult_occupancy(room
     										.getMaxAdultOccupancy());
     								rateVM.setId(rate.getId());
-
+    								
+    								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId);
+    								
+    								
     								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
     								
+    								SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
     								
+    								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
     								
-    								if (rateDetails.getSpecialDays() != null) {
-    									String week[] = rateDetails
-    											.getSpecialDays().split(",");
-    									for (String day : week) {
-    										StringBuilder sb = new StringBuilder(
-    												day);
-    										if (day.contains("[")) {
-    											sb.deleteCharAt(sb.indexOf("["));
-    										}
-    										if (day.contains("]")) {
-    											sb.deleteCharAt(sb.indexOf("]"));
-    										}
-    										if (day.contains(" ")) {
-    											sb.deleteCharAt(sb.indexOf(" "));
-    										}
-    										specialRateVM.weekDays.add(sb
-    												.toString());
-    										if (sb.toString().equals("Sun")) {
-    											specialRateVM.rateDay0 = true;
-    										}
-    										if (sb.toString().equals("Mon")) {
-    											specialRateVM.rateDay1 = true;
-    										}
-    										if (sb.toString().equals("Tue")) {
-    											specialRateVM.rateDay2 = true;
-    										}
-    										if (sb.toString().equals("Wed")) {
-    											specialRateVM.rateDay3 = true;
-    										}
-    										if (sb.toString().equals("Thu")) {
-    											specialRateVM.rateDay4 = true;
-    										}
-    										if (sb.toString().equals("Fri")) {
-    											specialRateVM.rateDay5 = true;
-    										}
-    										if (sb.toString().equals("Sat")) {
-    											specialRateVM.rateDay6 = true;
-    										}
-    									}
-    								}							
-    								for (PersonRate person : personRate) {
-    									
-    									if(rateDetails.isSpecialRate() == true){
-    										if(days == 0 && specialRateVM.rateDay0) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else if(days == 1 && specialRateVM.rateDay1) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else if(days == 2 && specialRateVM.rateDay2) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else if(days == 3 && specialRateVM.rateDay3) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else if(days == 4 && specialRateVM.rateDay4) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else if(days == 5 && specialRateVM.rateDay5) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else if(days == 6 && specialRateVM.rateDay6) {
-    											if (person.isNormal() == false) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);										
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}else{
-    											if (person.isNormal() == true) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);
-    											vm.rateAvg = person.getRateValue();
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    										}
-    										
-    									}else{
-    										if (person.isNormal() == true) {
-    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-    													person);
-    											vm.rateAvg = person.getRateValue(); 
-    											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
-    											vm.adult = person.getNumberOfPersons();
-    											rateVM.rateDetails.add(vm);
-    											}
-    									}
-    								}
-
-
     								list.add(rateVM);
     							
     							}
@@ -980,120 +447,26 @@ public class Application extends Controller {
     						hProfileVM.setFlag("1");
     					}
 
-    					c.add(Calendar.DATE, 1);
+    					checkInDate.add(Calendar.DATE, 1);
     				}
 
-    				map.put(rate1.getSupplierCode(), Long.parseLong("1"));
+    				map.put(supplierid.longValue(), Long.parseLong("1"));
 
     				if (!hProfileVM.getHotelbyDate().isEmpty()) {
     					hotellist.add(hProfileVM);
     				}
     			}
     		}
-    	
 
     		List<Long> hotelNo = new ArrayList<>();
     		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
-    		Map<Long, SerachedRoomRateDetail> mapRM = new HashMap<Long, SerachedRoomRateDetail>();
-    		int count=0;
-    		int totalHotel = 0;
-    		for (HotelSearch hotel : hotellist) {
-    			totalHotel++;
-    			hotelNo.add(hotel.supplierCode);
-    			int dataVar = 0;
-    			int countRoom = count;
-    			for (SerachedHotelbyDate date : hotel.hotelbyDate) {
-    				int newHotel=countRoom; 
-    				dataVar++;
-    				for (SerachedRoomType roomTP : date.getRoomType()) {
-    					
-    					Double total = 0.0;
-    					Double avg = 0.0;
-    					SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
-    					sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
-
-    					
-    					SerachedRoomRateDetail sRateDetail = new SerachedRoomRateDetail();
-    					sRateDetail.rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
-
-    					List<SerachedRoomRateDetail> serachedRoomRateDetails = new ArrayList<>();
-    					List<SearchRateDetailsVM> searchRateDetailsVMs = new ArrayList<>();
-    					SerachedRoomRateDetail objectRM = mapRM.get(roomTP
-    							.getRoomId());
-    					if (objectRM == null) {
-    						
-    						count++;
-    						
-    						sHotelRoomType.setRoomId(roomTP.getRoomId());
-    						sHotelRoomType.setRoomName(roomTP.getRoomName());
-    						sHotelRoomType.setDescription(roomTP.getDescription());
-    						sHotelRoomType.setAmenities(roomTP.getAmenities());
-    						for (SerachedRoomRateDetail rateObj : roomTP
-    								.getHotelRoomRateDetail()) {
-    						
-    							for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
-    								SearchRateDetailsVM searchRateDetailsVM = new SearchRateDetailsVM();
-    								searchRateDetailsVM
-    										.setRateAvg(detailsVM.getRateValue());
-    								searchRateDetailsVM.setAdult(detailsVM.getAdult());
-    								searchRateDetailsVM.setMealTypeName(detailsVM.mealTypeName);
-    								searchRateDetailsVMs.add(searchRateDetailsVM);
-    								sRateDetail.rateDetailsNormal
-    										.add(searchRateDetailsVM);
-
-    							}
-    							sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
-    						}
-    						mapRM.put(roomTP.getRoomId(), sRateDetail);
-
-    					}else {
-    						List<Double> totalNo = new ArrayList<Double>();
-    						int i = 0;
-    						for (SearchRateDetailsVM ord : objectRM.rateDetailsNormal) {
-    							totalNo.add(i, ord.rateAvg);
-    							i++;
-    						}
-    						for (SerachedRoomRateDetail rateObj : roomTP
-    								.getHotelRoomRateDetail()) {
-    							
-    							int x=0;
-    							for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
-    								
-    								if(detailsVM.getRateValue() > totalNo.get(x)){
-    									total= totalNo.get(x);
-    								}else{
-    									total= detailsVM.getRateValue();
-    								}
-    							
-    								hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x).setRateAvg(total);
-    							
-    								sRateDetail.rateDetailsNormal
-    										.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
-    								x++;
-    							}
-    						}
-    						mapRM.put(roomTP.getRoomId(), sRateDetail);
-    						newHotel++;
-    					}
-    					sHotelRoomType.hotelRoomRateDetail.add(sRateDetail);
-    					
-
-    					 if(sHotelRoomType.roomId != null){
-    					hotelRMlist.add(sHotelRoomType);
-    					
-    					hotel.hotelbyRoom.add(sHotelRoomType);
-    					 }
-    					 
-    				}
-    				
-    								 
-    			}
-    			
-    		}
+    		
+    		fillRoomsInHotelInfo(hotellist,hotelRMlist,hotelNo,diffInpromo); /* fill data in room in hotel object.... function*/
     		
     		List<Long> hotelCount = new ArrayList<>();
-    		Map<Integer, Integer> map2 = new HashMap<Integer, Integer>();
+    		int totalHotel = 0;
     		for(Long no:hotelNo){
+    			totalHotel++;
     			HotelProfile hProfile = HotelProfile.findAllData(no);
     			hotelCount.add(hProfile.getId());
     			
@@ -1107,30 +480,7 @@ public class Application extends Controller {
     		hotelServices =HotelServices.getservicesCount(hotelCount);
     		}
     		
-    		for (HotelSearch hotel : hotellist) {
-    		double min=0.0;
-			int minStart = 0;
-			for(SerachHotelRoomType sHotelRoomType2:hotel.hotelbyRoom){
-				
-				for (SerachedRoomRateDetail roomRateDetail:sHotelRoomType2.hotelRoomRateDetail) {
-					
-					for(SearchRateDetailsVM sRD:roomRateDetail.rateDetailsNormal){
-						
-						System.out.println(sRD.adult);
-						if(sRD.adult.equals("1 Adult")){
-							if(minStart == 0){
-								min = sRD.rateAvg;
-								minStart++;
-							}
-							if(min > sRD.rateAvg){
-								min = sRD.rateAvg;
-							}
-						}
-					}
-				}
-			 }
-			hotel.minRate = min;
-    		}
+    		findMinRateInHotel(hotellist);  /* find min Rate in par Hotel function*/
 		
     		if(!hotelCount.isEmpty()){
     			mapObject.put("hotelAmenities", hotelAmenities);
@@ -1156,6 +506,463 @@ public static Result getHotelImagePath(long supplierCode) {
 	
 }
 
+public static void specialsPromotion(SerachedRoomType roomtyp,DateFormat format,int nationalityId,Long roomId,Date checkInD) {
+	int count = 0;
+	List<SpecialsVM> listsp = new ArrayList<>();
+	List<Specials> specialsList = Specials.findSpecialByDateandroom(checkInD,roomId);
+	for(Specials special : specialsList) {
+		SpecialsVM specialsVM = new SpecialsVM();
+		specialsVM.id = special.getId();
+		specialsVM.fromDate = format.format(special.getFromDate());
+		specialsVM.toDate = format.format(special.getToDate());
+		specialsVM.promotionName = special.getPromotionName();
+		specialsVM.supplierCode = special.getSupplierCode();
+		    								
+	List<SpecialsMarket> marketList = SpecialsMarket.findBySpecialsIdnationality(special.getId(),nationalityId);
+		for(SpecialsMarket market : marketList) {
+			SpecialsMarketVM vm = new SpecialsMarketVM();
+			vm.combined = market.isCombined();
+			vm.multiple = market.isMultiple();
+			vm.payDays = market.getPayDays();
+			vm.stayDays = market.getStayDays();
+			vm.typeOfStay = market.getTypeOfStay();
+			vm.applyToMarket = market.getApplyToMarket();
+			vm.id = market.getId();
+				specialsVM.markets.add(vm);
+		}
+		
+		if(!specialsVM.markets.isEmpty()){
+			listsp.add(specialsVM);
+		}
+		
+	}
+	
+	roomtyp.setSpecials(listsp);
+	
+	if(!roomtyp.getSpecials().isEmpty()){
+		count++;
+		roomtyp.setPcount(count);
+	}
+}
+
+public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachHotelRoomType> hotelRMlist,List<Long> hotelNo,Long diffInpromo){
+	
+	Map<Long, List<SpecialsVM>> mapSpecials = new HashMap<Long, List<SpecialsVM>>();
+	Map<Long, Integer> promoMap = new HashMap<Long, Integer>();
+	Map<Long, SerachedRoomRateDetail> mapRM = new HashMap<Long, SerachedRoomRateDetail>();
+	int count=0;
+	
+	for (HotelSearch hotel : hotellist) {
+		hotelNo.add(hotel.supplierCode);
+		int dataVar = 0;
+		int countRoom = count;
+		List<Integer> arrayCount = new ArrayList<Integer>();
+		for (SerachedHotelbyDate date : hotel.hotelbyDate) {
+			int newHotel=countRoom; 
+			dataVar++;
+			int aCount = 0;
+			for (SerachedRoomType roomTP : date.getRoomType()) {
+				
+				Double total = 0.0;
+				//Double avg = 0.0;
+				SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
+				sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
+				
+				SerachedRoomRateDetail sRateDetail = new SerachedRoomRateDetail();
+				sRateDetail.rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
+
+				//List<SerachedRoomRateDetail> serachedRoomRateDetails = new ArrayList<>();
+				List<SearchRateDetailsVM> searchRateDetailsVMs = new ArrayList<>();
+				SerachedRoomRateDetail objectRM = mapRM.get(roomTP.getRoomId());
+				if (objectRM == null) {
+					
+					count++;
+					
+					sHotelRoomType.setRoomId(roomTP.getRoomId());
+					sHotelRoomType.setRoomName(roomTP.getRoomName());
+					sHotelRoomType.setDescription(roomTP.getDescription());
+					sHotelRoomType.setChildAllowedFreeWithAdults(roomTP.getChildAllowedFreeWithAdults());
+					sHotelRoomType.setExtraBedAllowed(roomTP.getExtraBedAllowed());
+					sHotelRoomType.setRoomSuiteType(roomTP.getRoomSuiteType());
+					arrayCount.add(aCount, roomTP.getPcount());
+					//sHotelRoomType.setSpecials(roomTP.getSpecials());
+					
+					sHotelRoomType.setAmenities(roomTP.getAmenities());
+					for (SerachedRoomRateDetail rateObj : roomTP
+							.getHotelRoomRateDetail()) {
+					
+						for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
+							SearchRateDetailsVM searchRateDetailsVM = new SearchRateDetailsVM();
+							searchRateDetailsVM
+									.setRateAvg(detailsVM.getRateValue());
+							searchRateDetailsVM.setAdult(detailsVM.getAdult());
+							searchRateDetailsVM.setMealTypeName(detailsVM.mealTypeName);
+							searchRateDetailsVMs.add(searchRateDetailsVM);
+							sRateDetail.rateDetailsNormal
+									.add(searchRateDetailsVM);
+
+						}
+						sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
+					}
+					mapRM.put(roomTP.getRoomId(), sRateDetail);
+					promoMap.put(roomTP.getRoomId(),roomTP.getPcount());
+					if(!roomTP.getSpecials().isEmpty()){
+						mapSpecials.put(roomTP.getRoomId(), (List<SpecialsVM>) roomTP.getSpecials());
+						}
+
+				}else {
+					List<Double> totalNo = new ArrayList<Double>();
+					int i = 0;
+					for (SearchRateDetailsVM ord : objectRM.rateDetailsNormal) {
+						totalNo.add(i, ord.rateAvg);
+						i++;
+					}
+					
+					int ptotal = 0;
+					ptotal = arrayCount.get(aCount) + roomTP.getPcount();
+					arrayCount.set(aCount, ptotal);
+					
+					for (SerachedRoomRateDetail rateObj : roomTP
+							.getHotelRoomRateDetail()) {
+						
+						int x=0;
+						for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
+							
+							if(detailsVM.getRateValue() > totalNo.get(x)){
+								total= totalNo.get(x);
+							}else{
+								total= detailsVM.getRateValue();
+							}
+						
+							hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x).setRateAvg(total);
+						
+							sRateDetail.rateDetailsNormal
+									.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
+							x++;
+						}
+					}
+					mapRM.put(roomTP.getRoomId(), sRateDetail);
+					promoMap.put(roomTP.getRoomId(),arrayCount.get(aCount));
+					if(!roomTP.getSpecials().isEmpty()){
+						mapSpecials.put(roomTP.getRoomId(), (List<SpecialsVM>) roomTP.getSpecials());
+						}
+					newHotel++;
+				}
+				sHotelRoomType.hotelRoomRateDetail.add(sRateDetail);
+				
+
+				 if(sHotelRoomType.roomId != null){
+				hotelRMlist.add(sHotelRoomType);
+				
+				hotel.hotelbyRoom.add(sHotelRoomType);
+				 }
+				 aCount++;
+			}
+			
+							 
+		}
+		int diffProm;
+		for(SerachHotelRoomType room:hotel.hotelbyRoom){
+			for (Entry<Long, Integer> entry : promoMap.entrySet()) {
+			if(room.getRoomId() == entry.getKey()){
+				room.setPcount(entry.getValue());
+				diffProm = (int) (diffInpromo/2);
+				if(entry.getValue() >= diffProm){
+					room.setApplyPromotion(1);
+				}else{
+					room.setApplyPromotion(0);
+				}
+			}
+		  }
+		}
+		
+		for(SerachHotelRoomType room:hotel.hotelbyRoom){
+			for (Entry<Long, List<SpecialsVM>> entry : mapSpecials.entrySet()) {
+			if(room.getRoomId() == entry.getKey()){
+				room.setSpecials(entry.getValue());
+				
+			}
+		  }
+		}
+		
+	}
+	
+}
+
+public static void allotmentmarketInfo(AllotmentMarket alloMarket,SerachedRoomRateDetail rateVM,DateFormat format,String nationalityId){
+	
+	int flag=0;
+	SearchAllotmentMarketVM Allvm = new SearchAllotmentMarketVM();
+
+	if (alloMarket != null) {
+		
+		Allvm.setAllotmentMarketId(alloMarket.getAllotmentMarketId());
+		Allvm.setAllocation(alloMarket.getAllocation());
+		Allvm.setChoose(alloMarket.getChoose());
+		Allvm.setPeriod(alloMarket.getPeriod());
+		Allvm.setSpecifyAllot(alloMarket.getSpecifyAllot());
+		Allvm.setApplyMarket(alloMarket.getApplyMarket());
+		Allvm.setStopAllocation(alloMarket.getStopAllocation());
+		Allvm.setStopPeriod(alloMarket.getStopPeriod());
+		if(alloMarket.getFromDate() != null){
+		Allvm.setFromDate(format.format(alloMarket.getFromDate()));
+		}
+		if(alloMarket.getToDate() != null){
+		Allvm.setToDate(format.format(alloMarket.getToDate()));
+		}
+		if(alloMarket.getAllocation() == 2){
+			//Allvm.setFlag(1);
+			flag = 1;
+		}
+		/*AllotmentMarket allotflag = AllotmentMarket
+				.getnationalitywiseMark(alloMarket.getAllotmentMarketId(),Integer.parseInt(nationalityId));
+		
+		if(allotflag == null){
+			flag =1;
+		}*/
+	}
+	rateVM.setFlag(flag);
+	rateVM.setAllotmentmarket(Allvm);
+}
+
+public static void fillRoomInfo(HotelRoomTypes room,SerachedRoomType roomtyp){
+	roomtyp.setRoomId(room.getRoomId());
+	roomtyp.setRoomName(room.getRoomType());
+	roomtyp.setDescription(room.getDescription());
+	roomtyp.setChildAllowedFreeWithAdults(room.getChildAllowedFreeWithAdults());
+	roomtyp.setExtraBedAllowed(room.getExtraBedAllowed());
+	roomtyp.setRoomSuiteType(room.getRoomSuiteType());
+	
+	List<RoomAmenitiesVm> rList = new ArrayList<>();
+	
+	for (RoomAmenities roomAmenitiesVm : room.getAmenities()){
+		RoomAmenitiesVm rooAmenitiesVm = new RoomAmenitiesVm();
+		rooAmenitiesVm.setAmenityId(roomAmenitiesVm.getAmenityId());
+		rooAmenitiesVm.setAmenityNm(roomAmenitiesVm.getAmenityNm());
+		rooAmenitiesVm.setAmenitiesicon(roomAmenitiesVm.getAmenitiesicon());
+		rList.add(rooAmenitiesVm);
+	}
+	
+	
+		roomtyp.setAmenities(rList);
+}
+
+public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,String fDate,String tDate,String nationality){
+	
+	hProfileVM.setSupplierCode(hAmenities.getSupplier_code());
+	hProfileVM.setHotelNm(hAmenities.getHotelName());
+	hProfileVM.setSupplierNm(hAmenities.getSupplierName());
+
+	if (hAmenities.getStartRatings() != null) {
+		hProfileVM.setStartRating(hAmenities.getStartRatings()
+				.getId());
+	}
+	hProfileVM.currencyId = hAmenities.getCurrency().getCurrencyCode();
+	hProfileVM.currencyName = hAmenities.getCurrency().getCurrencyName();
+	String currency = hAmenities.getCurrency().getCurrencyName();
+	String[] currencySplit;
+	 currencySplit = currency.split(" - ");
+	hProfileVM.currencyShort = currencySplit[0];
+	hProfileVM.setHotelAddr(hAmenities.getAddress());
+	hProfileVM.setCityCode(hAmenities.getCity().getCityCode());
+	hProfileVM.setHoteldescription(hAmenities.getHotelProfileDesc());
+	hProfileVM.setCheckIn(fDate);
+	hProfileVM.setCheckOut(tDate);
+	List<ServicesVM> sList = new ArrayList<>();
+	
+	for (HotelServices hoServices : hAmenities.getServices()){
+		ServicesVM sVm=new ServicesVM();
+		sVm.setServiceId(hoServices.getServiceId());
+		sVm.setServiceName(hoServices.getServiceName());
+		sList.add(sVm);
+	}
+	hProfileVM.setServices(sList);
+	hProfileVM.setNationality(Integer.parseInt(nationality));
+	InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
+	hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
+	
+	hProfileVM.setFlag("0");
+}
+
+public static void SpecialRateReturn(SearchSpecialRateVM specialRateVM,RateDetails rateDetails){
+	if (rateDetails.getSpecialDays() != null) {
+		String week[] = rateDetails
+				.getSpecialDays().split(",");
+		for (String day : week) {
+			StringBuilder sb = new StringBuilder(
+					day);
+			if (day.contains("[")) {
+				sb.deleteCharAt(sb.indexOf("["));
+			}
+			if (day.contains("]")) {
+				sb.deleteCharAt(sb.indexOf("]"));
+			}
+			if (day.contains(" ")) {
+				sb.deleteCharAt(sb.indexOf(" "));
+			}
+			specialRateVM.weekDays.add(sb
+					.toString());
+			if (sb.toString().equals("Sun")) {
+				specialRateVM.rateDay0 = true;
+			}
+			if (sb.toString().equals("Mon")) {
+				specialRateVM.rateDay1 = true;
+			}
+			if (sb.toString().equals("Tue")) {
+				specialRateVM.rateDay2 = true;
+			}
+			if (sb.toString().equals("Wed")) {
+				specialRateVM.rateDay3 = true;
+			}
+			if (sb.toString().equals("Thu")) {
+				specialRateVM.rateDay4 = true;
+			}
+			if (sb.toString().equals("Fri")) {
+				specialRateVM.rateDay5 = true;
+			}
+			if (sb.toString().equals("Sat")) {
+				specialRateVM.rateDay6 = true;
+			}
+		}
+	}	
+}
+
+public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRateVM specialRateVM,RateDetails rateDetails,int days,SerachedRoomRateDetail rateVM){
+	for (PersonRate person : personRate) {
+	if(rateDetails.isSpecialRate() == true){
+		if(days == 0 && specialRateVM.rateDay0) {
+			if (person.isNormal() == false) {
+			SearchRateDetailsVM vm = new SearchRateDetailsVM(
+					person);										
+			vm.rateAvg = person.getRateValue();
+			if(person.getMealType() != null){
+				vm.mealTypeName = person.getMealType().getMealTypeNm();
+				}
+			vm.adult = person.getNumberOfPersons();
+			rateVM.rateDetails.add(vm);
+			}
+		}else if(days == 1 && specialRateVM.rateDay1) {
+			if (person.isNormal() == false) {
+			SearchRateDetailsVM vm = new SearchRateDetailsVM(
+					person);										
+			vm.rateAvg = person.getRateValue();
+			if(person.getMealType() != null){
+				vm.mealTypeName = person.getMealType().getMealTypeNm();
+				}
+			vm.adult = person.getNumberOfPersons();
+			rateVM.rateDetails.add(vm);
+			}
+		}else if(days == 2 && specialRateVM.rateDay2) {
+			if (person.isNormal() == false) {
+			SearchRateDetailsVM vm = new SearchRateDetailsVM(
+					person);										
+			vm.rateAvg = person.getRateValue();
+			if(person.getMealType() != null){
+				vm.mealTypeName = person.getMealType().getMealTypeNm();
+				}
+			vm.adult = person.getNumberOfPersons();
+			rateVM.rateDetails.add(vm);
+			}
+		}else if(days == 3 && specialRateVM.rateDay3) {
+			if (person.isNormal() == false) {
+			SearchRateDetailsVM vm = new SearchRateDetailsVM(
+					person);										
+			vm.rateAvg = person.getRateValue();
+			if(person.getMealType() != null){
+				vm.mealTypeName = person.getMealType().getMealTypeNm();
+				}
+			vm.adult = person.getNumberOfPersons();
+			rateVM.rateDetails.add(vm);
+			}
+		}else if(days == 4 && specialRateVM.rateDay4) {
+			if (person.isNormal() == false) {
+			SearchRateDetailsVM vm = new SearchRateDetailsVM(
+					person);										
+			vm.rateAvg = person.getRateValue();
+			if(person.getMealType() != null){
+				vm.mealTypeName = person.getMealType().getMealTypeNm();
+				}
+			vm.adult = person.getNumberOfPersons();
+			rateVM.rateDetails.add(vm);
+			}
+		}else if(days == 5 && specialRateVM.rateDay5) {
+			if (person.isNormal() == false) {
+			SearchRateDetailsVM vm = new SearchRateDetailsVM(
+					person);										
+			vm.rateAvg = person.getRateValue();
+			if(person.getMealType() != null){
+				vm.mealTypeName = person.getMealType().getMealTypeNm();
+				}
+			vm.adult = person.getNumberOfPersons();
+			rateVM.rateDetails.add(vm);
+			}
+		}else if(days == 6 && specialRateVM.rateDay6) {
+			if (person.isNormal() == false) {
+			SearchRateDetailsVM vm = new SearchRateDetailsVM(
+					person);										
+			vm.rateAvg = person.getRateValue();
+			if(person.getMealType() != null){
+				vm.mealTypeName = person.getMealType().getMealTypeNm();
+				}
+			vm.adult = person.getNumberOfPersons();
+			rateVM.rateDetails.add(vm);
+			}
+		}else{
+			if (person.isNormal() == true) {
+			SearchRateDetailsVM vm = new SearchRateDetailsVM(
+					person);
+			vm.rateAvg = person.getRateValue();
+			if(person.getMealType() != null){
+				vm.mealTypeName = person.getMealType().getMealTypeNm();
+				}
+			vm.adult = person.getNumberOfPersons();
+			rateVM.rateDetails.add(vm);
+			}
+		}
+		
+	}else{
+		if (person.isNormal() == true) {
+			SearchRateDetailsVM vm = new SearchRateDetailsVM(
+					person);
+			vm.rateAvg = person.getRateValue(); 
+			if(person.getMealType() != null){
+				vm.mealTypeName = person.getMealType().getMealTypeNm();
+				}
+			vm.adult = person.getNumberOfPersons();
+			rateVM.rateDetails.add(vm);
+			}
+	}
+	}
+}
+public static void findMinRateInHotel(List<HotelSearch> hotellist){
+	for (HotelSearch hotel : hotellist) {
+		
+		
+
+	double min=0.0;
+	int minStart = 0;
+	for(SerachHotelRoomType sHotelRoomType2:hotel.hotelbyRoom){
+		
+		for (SerachedRoomRateDetail roomRateDetail:sHotelRoomType2.hotelRoomRateDetail) {
+			
+			for(SearchRateDetailsVM sRD:roomRateDetail.rateDetailsNormal){
+				
+				System.out.println(sRD.adult);
+				if(sRD.adult.equals("1 Adult")){
+					if(minStart == 0){
+						min = sRD.rateAvg;
+						minStart++;
+					}
+					if(min > sRD.rateAvg){
+						min = sRD.rateAvg;
+					}
+				}
+			}
+		}
+	 }
+ hotel.minRate = min;
+	}
+}
 
 
 @Transactional(readOnly=true)
@@ -1169,123 +976,72 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	SearchHotelValueVM searchHotelValueVM = Json.fromJson(json, SearchHotelValueVM.class);
 
 	
-		int flag = 0;
 		
 		Map<String, Object> mapObject = new HashMap<String, Object>();
 		List<HotelSearch> hotellist = new ArrayList<>();
 		Map<Long, Long> map = new HashMap<Long, Long>();
 		Set<String> mapDate = new HashSet<String>();
+		long diffInpromo = 0;
 		
-		//String[] serviceJson = (String[])searchHotelValueVM.getServicesCheck().toArray();
-		String[] fromDate = {searchHotelValueVM.getCheckIn()};
-		String[] toDate = {searchHotelValueVM.getCheckOut()};
-		String[] sId = {searchHotelValueVM.getId()};
-		String[] cityId = {searchHotelValueVM.getCity()};
-		String[] cId = {searchHotelValueVM.getNationalityCode()};
-	
-
-		Date fmDate = null;
-		Date tDate = null;
-
-		int j = 0;
+		String fromDate = searchHotelValueVM.getCheckIn();
+		String toDate = searchHotelValueVM.getCheckOut();
+		String cityId = searchHotelValueVM.getCity();
+		String nationalityId = searchHotelValueVM.getNationalityCode();
 		
-		List<RateMeta> rateMeta = RateMeta.getdatecheck(
-				Integer.parseInt(cityId[0]),
-				Integer.parseInt(cId[0])); // Long.parseLong(roomId[0]),, Integer.parseInt(sId[0])
+			
+		List<BigInteger> supplierId = RateMeta.getsupplierId(
+				Integer.parseInt(cityId),
+				Integer.parseInt(nationalityId));
 
-		for (RateMeta rate1 : rateMeta) {
+		for (BigInteger supplierid : supplierId) {
 
 			Date formDate = null;
 			Date toDates = null;
 			try {
-				formDate = format.parse(fromDate[0]);
-				toDates = format.parse(toDate[0]);
+				formDate = format.parse(fromDate);
+				toDates = format.parse(toDate);
 			} catch (ParseException e) { // TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			 
+			Calendar checkInDate = Calendar.getInstance();
+			checkInDate.setTime(formDate);
+			checkInDate.set(Calendar.MILLISECOND, 0);
 
 			
-			 
-			Calendar c = Calendar.getInstance();
-			c.setTime(formDate);
-			c.set(Calendar.MILLISECOND, 0);
-
-			Calendar c1 = Calendar.getInstance();
-			c1.setTime(toDates);
-			c1.set(Calendar.MILLISECOND, 0);
-
-			Calendar fromdata = Calendar.getInstance();
-			fromdata.setTime(rate1.getFromDate());
-			fromdata.set(Calendar.MILLISECOND, 0);
-
-			Calendar todata = Calendar.getInstance();
-			todata.setTime(rate1.getToDate());
-			todata.set(Calendar.MILLISECOND, 0);
 			long dayDiff;
 			if(toDates.getTime() == formDate.getTime()){
 				dayDiff = 1;
+				diffInpromo = dayDiff;
 			}else{
 				long diff = toDates.getTime() - formDate.getTime();
 
 				dayDiff = diff / (1000 * 60 * 60 * 24);
+				diffInpromo = dayDiff;
 			}
 
 			
 			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 			HotelSearch hProfileVM = new HotelSearch();
-			Long object = (Long) map.get(rate1.getSupplierCode());
+			Long object = (Long) map.get(supplierid.longValue());
 			
-			HotelProfile hProfile = HotelProfile.findAllData(rate1.getSupplierCode());
+			HotelProfile hProfile = HotelProfile.findAllData(supplierid.longValue());
 			
-			List<HotelProfile> hAmenities1 = HotelProfile.findAllDataforamenities(hProfile.getId()
-					,searchHotelValueVM.getAmenitiesCheck(),searchHotelValueVM.getServicesCheck(),searchHotelValueVM.getLocationCheck());  
 			
 			if (object == null) {
+				
+				List<HotelProfile> hAmenities1 = HotelProfile.findAllDataforamenities(hProfile.getId()
+						,searchHotelValueVM.getAmenitiesCheck(),searchHotelValueVM.getServicesCheck(),searchHotelValueVM.getLocationCheck());  
+				
 
 				for(HotelProfile hAmenities:hAmenities1){
-				Double total = 0.0;
-				Double avg = 0.0;
-				int value = 0;
-
-				hProfileVM.setSupplierCode(hAmenities.getSupplier_code());
-				hProfileVM.setHotelNm(hAmenities.getHotelName());
-				hProfileVM.setSupplierNm(hAmenities.getSupplierName());
-
-				if (hAmenities.getStartRatings() != null) {
-					hProfileVM.setStartRating(hAmenities.getStartRatings()
-							.getId());
-				}
-				hProfileVM.currencyId = hAmenities.getCurrency().getCurrencyCode();
-				hProfileVM.currencyName = hAmenities.getCurrency().getCurrencyName();
-				String currency = hAmenities.getCurrency().getCurrencyName();
-				String[] currencySplit;
-				 currencySplit = currency.split(" - ");
-				hProfileVM.currencyShort = currencySplit[0];
-				hProfileVM.setHotelAddr(hAmenities.getAddress());
-				hProfileVM.setCityCode(hAmenities.getCity().getCityCode());
-				hProfileVM.setCheckIn(fromDate[0]);
-				hProfileVM.setCheckOut(toDate[0]);
-				List<ServicesVM> sList = new ArrayList<>();
-				
-				for (HotelServices hoServices : hAmenities.getServices()){
-					ServicesVM sVm=new ServicesVM();
-					sVm.setServiceId(hoServices.getServiceId());
-					sVm.setServiceName(hoServices.getServiceName());
-					sList.add(sVm);
-				}
-				hProfileVM.setServices(sList);
-				hProfileVM.setNationality(Integer.parseInt(cId[0]));
-				InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
-				hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
-				
-				hProfileVM.setFlag("0");
-				for (int i = 0; i < dayDiff; i++) {
+					fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);   /* Fill Hotel info function*/				for (int i = 0; i < dayDiff; i++) {
 
 					List<HotelRoomTypes> roomType = HotelRoomTypes
-							.getHotelRoomDetails(rate1.getSupplierCode());
-					int days = c.get(Calendar.DAY_OF_WEEK)-1;
+							.getHotelRoomDetails(supplierid.longValue());
+					int days = checkInDate.get(Calendar.DAY_OF_WEEK)-1;
 					SerachedHotelbyDate hotelBydateVM = new SerachedHotelbyDate();
-					hotelBydateVM.setDate(format.format(c.getTime()));
+					hotelBydateVM.setDate(format.format(checkInDate.getTime()));
 					Map<Long, Long> mapRm = new HashMap<Long, Long>();
 					Map<Long, Long> mapRate = new HashMap<Long, Long>();
 					List<SerachedRoomType> roomlist = new ArrayList<>();
@@ -1293,34 +1049,20 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 						Long objectRm = (Long) mapRm.get(room.getRoomId());
 						if (objectRm == null) {
 
-							List<RateMeta> rateMeta1 = RateMeta.getdatecheck1(
+							List<RateMeta> rateMeta1 = RateMeta.getdatecheck(
 									room.getRoomId(),
-									Integer.parseInt(cityId[0]),
 									//Integer.parseInt(sId[0]),
-									Integer.parseInt(cId[0]), c.getTime(),
+									Integer.parseInt(nationalityId), checkInDate.getTime(),
 									hAmenities.getSupplier_code()); // Long.parseLong(roomId[0])
 
 							int ib = 1;
 							List<SerachedRoomRateDetail> list = new ArrayList<>();
 							SerachedRoomType roomtyp = new SerachedRoomType();
+							fillRoomInfo(room,roomtyp);  /*fill room info function*/
+							specialsPromotion(roomtyp,format,Integer.parseInt(nationalityId),room.getRoomId(),checkInDate.getTime());
 							
 							for (RateMeta rate : rateMeta1) {
-								roomtyp.setRoomId(room.getRoomId());
-								roomtyp.setRoomName(room.getRoomType());
-								roomtyp.setDescription(room.getDescription());
-								List<RoomAmenitiesVm> rList = new ArrayList<>();
 								
-								for (RoomAmenities roomAmenitiesVm : room.getAmenities()){
-									RoomAmenitiesVm rooAmenitiesVm = new RoomAmenitiesVm();
-									rooAmenitiesVm.setAmenityId(roomAmenitiesVm.getAmenityId());
-									rooAmenitiesVm.setAmenityNm(roomAmenitiesVm.getAmenityNm());
-									rooAmenitiesVm.setAmenitiesicon(roomAmenitiesVm.getAmenitiesicon());
-									rList.add(rooAmenitiesVm);
-								}
-								
-									roomtyp.setAmenities(rList);
-	
-									
 								RateDetails rateDetails = RateDetails
 										.findByRateMetaId(rate.getId());
 
@@ -1334,159 +1076,14 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 								rateVM.setAdult_occupancy(room
 										.getMaxAdultOccupancy());
 								rateVM.setId(rate.getId());
-
+								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId);
 								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
 								
+								SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
 								
+								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
 								
-								if (rateDetails.getSpecialDays() != null) {
-									String week[] = rateDetails
-											.getSpecialDays().split(",");
-									for (String day : week) {
-										StringBuilder sb = new StringBuilder(
-												day);
-										if (day.contains("[")) {
-											sb.deleteCharAt(sb.indexOf("["));
-										}
-										if (day.contains("]")) {
-											sb.deleteCharAt(sb.indexOf("]"));
-										}
-										if (day.contains(" ")) {
-											sb.deleteCharAt(sb.indexOf(" "));
-										}
-										specialRateVM.weekDays.add(sb
-												.toString());
-										if (sb.toString().equals("Sun")) {
-											specialRateVM.rateDay0 = true;
-										}
-										if (sb.toString().equals("Mon")) {
-											specialRateVM.rateDay1 = true;
-										}
-										if (sb.toString().equals("Tue")) {
-											specialRateVM.rateDay2 = true;
-										}
-										if (sb.toString().equals("Wed")) {
-											specialRateVM.rateDay3 = true;
-										}
-										if (sb.toString().equals("Thu")) {
-											specialRateVM.rateDay4 = true;
-										}
-										if (sb.toString().equals("Fri")) {
-											specialRateVM.rateDay5 = true;
-										}
-										if (sb.toString().equals("Sat")) {
-											specialRateVM.rateDay6 = true;
-										}
-									}
-								}							
-								for (PersonRate person : personRate) {
-									
-									if(rateDetails.isSpecialRate() == true){
-										if(days == 0 && specialRateVM.rateDay0) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 1 && specialRateVM.rateDay1) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 2 && specialRateVM.rateDay2) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 3 && specialRateVM.rateDay3) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 4 && specialRateVM.rateDay4) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 5 && specialRateVM.rateDay5) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 6 && specialRateVM.rateDay6) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else{
-											if (person.isNormal() == true) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}
-										
-									}else{
-										if (person.isNormal() == true) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);
-											vm.rateAvg = person.getRateValue(); 
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-									}
-								}
-
-
+							
 								list.add(rateVM);
 							
 							}
@@ -1508,10 +1105,10 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 						hProfileVM.setFlag("1");
 					}
 
-					c.add(Calendar.DATE, 1);
+					checkInDate.add(Calendar.DATE, 1);
 				}
 
-				map.put(rate1.getSupplierCode(), Long.parseLong("1"));
+				map.put(supplierid.longValue(), Long.parseLong("1"));
 
 				if (!hProfileVM.getHotelbyDate().isEmpty()) {
 					hotellist.add(hProfileVM);
@@ -1522,137 +1119,18 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
 		List<Long> hotelNo = new ArrayList<>();
 		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
-		Map<Long, SerachedRoomRateDetail> mapRM = new HashMap<Long, SerachedRoomRateDetail>();
-		int count=0;
-		int totalHotel = 0;
-		for (HotelSearch hotel : hotellist) {
-			totalHotel++;
-			
-			hotelNo.add(hotel.supplierCode);
-			int dataVar = 0;
-			int countRoom = count;
-			for (SerachedHotelbyDate date : hotel.hotelbyDate) {
-				int newHotel=countRoom; 
-				dataVar++;
-				for (SerachedRoomType roomTP : date.getRoomType()) {
-					
-					Double total = 0.0;
-					Double avg = 0.0;
-					SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
-					sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
-
-					
-					SerachedRoomRateDetail sRateDetail = new SerachedRoomRateDetail();
-					sRateDetail.rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
-
-					List<SerachedRoomRateDetail> serachedRoomRateDetails = new ArrayList<>();
-					List<SearchRateDetailsVM> searchRateDetailsVMs = new ArrayList<>();
-					SerachedRoomRateDetail objectRM = mapRM.get(roomTP
-							.getRoomId());
-					if (objectRM == null) {
-						
-						count++;
-						
-						sHotelRoomType.setRoomId(roomTP.getRoomId());
-						sHotelRoomType.setRoomName(roomTP.getRoomName());
-						sHotelRoomType.setDescription(roomTP.getDescription());
-						sHotelRoomType.setAmenities(roomTP.getAmenities());
-						for (SerachedRoomRateDetail rateObj : roomTP
-								.getHotelRoomRateDetail()) {
-						
-							for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
-								SearchRateDetailsVM searchRateDetailsVM = new SearchRateDetailsVM();
-								searchRateDetailsVM
-										.setRateAvg(detailsVM.getRateValue());
-								searchRateDetailsVM.setAdult(detailsVM.getAdult());
-								searchRateDetailsVM.setMealTypeName(detailsVM.mealTypeName);
-								searchRateDetailsVMs.add(searchRateDetailsVM);
-								sRateDetail.rateDetailsNormal
-										.add(searchRateDetailsVM);
-
-							}
-							sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
-						}
-						mapRM.put(roomTP.getRoomId(), sRateDetail);
-
-					}else {
-						List<Double> totalNo = new ArrayList<Double>();
-						int i = 0;
-						for (SearchRateDetailsVM ord : objectRM.rateDetailsNormal) {
-							totalNo.add(i, ord.rateAvg);
-							i++;
-						}
-						for (SerachedRoomRateDetail rateObj : roomTP
-								.getHotelRoomRateDetail()) {
-							
-							int x=0;
-							for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
-								
-								if(detailsVM.getRateValue() > totalNo.get(x)){
-									total= totalNo.get(x);
-								}else{
-									total= detailsVM.getRateValue();
-								}
-							
-								hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x).setRateAvg(total);
-							
-								sRateDetail.rateDetailsNormal
-										.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
-								x++;
-							}
-						}
-						mapRM.put(roomTP.getRoomId(), sRateDetail);
-						newHotel++;
-					}
-					sHotelRoomType.hotelRoomRateDetail.add(sRateDetail);
-
-					 if(sHotelRoomType.roomId != null){
-					hotelRMlist.add(sHotelRoomType);
-					
-					hotel.hotelbyRoom.add(sHotelRoomType);
-					 }
-					 
-				}
-				
-								 
-			}
-			
-		}
-		
-		
+		fillRoomsInHotelInfo(hotellist,hotelRMlist,hotelNo,diffInpromo); /* fill data in room in hotel object.... function*/
 		
 		List<Long> hotelCount = new ArrayList<>();
-		Map<Integer, Integer> map2 = new HashMap<Integer, Integer>();
+		int totalHotel = 0;
 		for(Long no:hotelNo){
+			totalHotel++;
 			HotelProfile hProfile = HotelProfile.findAllData(no);
 			hotelCount.add(hProfile.getId());
 			
 		}
-		 
 		
-		for (HotelSearch hotel : hotellist) {
-		double min=0.0;
-		int minStart = 0;
-		for(SerachHotelRoomType sHotelRoomType2:hotel.hotelbyRoom){
-			
-			for (SerachedRoomRateDetail roomRateDetail:sHotelRoomType2.hotelRoomRateDetail) {
-				
-				for(SearchRateDetailsVM sRD:roomRateDetail.rateDetailsNormal){
-					
-					if(sRD.adult.equals("1 Adult")){
-						if(minStart == 0){
-							min = sRD.rateAvg;
-							minStart++;
-						}
-						if(min > sRD.rateAvg){
-							min = sRD.rateAvg;
-						}
-					}
-				}
-			}
-		 }
-		hotel.minRate = min;
-		}
+		findMinRateInHotel(hotellist);  /* find min Rate in par Hotel function*/
 	
 		if(searchHotelValueVM.getSortData().equals("1")){
 			Collections.sort(hotellist,new HotelComparatorAsc());
@@ -1693,126 +1171,70 @@ public static class HotelComparatorDes implements Comparator<HotelSearch> {
 @Transactional(readOnly=true)
 public static Result hoteldetailpage() {
 	
-	
-	
 	Form<SearchHotelValueVM> HotelForm = Form.form(SearchHotelValueVM.class).bindFromRequest();
 	SearchHotelValueVM searchVM = HotelForm.get();
-	
 	    	
 	DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-	int flag = 0;
 
 	List<HotelSearch> hotellist = new ArrayList<>();
 	Map<String, String[]> map1 = request().queryString();
 	Map<Long, Long> map = new HashMap<Long, Long>();
-
-	Set<String> mapDate = new HashSet<String>();
+	long diffInpromo = 0;
 	
-	
-	String[] fromDate = {searchVM.checkIn};
-	String[] toDate = {searchVM.checkOut};
-	String[] cId = {searchVM.nationalityCode};
-    String[] supplierCode = {searchVM.supplierCode};
+	String fromDate = searchVM.checkIn;
+	String toDate = searchVM.checkOut;
+	String nationalityId = searchVM.nationalityCode;
+    String supplierCode = searchVM.supplierCode;
        
-	Date fmDate = null;
-	Date tDate = null;
-
-	int j = 0;
-
 	
-	List<RateMeta> rateMeta = RateMeta.getdatecheckOneSupp(
-			Long.parseLong(supplierCode[0]),
-			Integer.parseInt(cId[0])); 
+	List<BigInteger> supplierId = RateMeta.getOneSupplierId(
+			Long.parseLong(supplierCode),
+			Integer.parseInt(nationalityId)); 
 
-	for (RateMeta rate1 : rateMeta) {
+	for (BigInteger supplierid : supplierId) {
 
 		Date formDate = null;
 		Date toDates = null;
 		try {
-			formDate = format.parse(fromDate[0]);
-			toDates = format.parse(toDate[0]);
+			formDate = format.parse(fromDate);
+			toDates = format.parse(toDate);
 		} catch (ParseException e) { // TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		Calendar c = Calendar.getInstance();
-		c.setTime(formDate);
-		c.set(Calendar.MILLISECOND, 0);
-
-		Calendar c1 = Calendar.getInstance();
-		c1.setTime(toDates);
-		c1.set(Calendar.MILLISECOND, 0);
-
-		Calendar fromdata = Calendar.getInstance();
-		fromdata.setTime(rate1.getFromDate());
-		fromdata.set(Calendar.MILLISECOND, 0);
-
-		Calendar todata = Calendar.getInstance();
-		todata.setTime(rate1.getToDate());
-		todata.set(Calendar.MILLISECOND, 0);
+		Calendar checkInDate = Calendar.getInstance();
+		checkInDate.setTime(formDate);
+		checkInDate.set(Calendar.MILLISECOND, 0);
 
 		long dayDiff;
 		if(toDates.getTime() == formDate.getTime()){
 			dayDiff = 1;
+			diffInpromo = dayDiff;
 		}else{
 			long diff = toDates.getTime() - formDate.getTime();
 
 			dayDiff = diff / (1000 * 60 * 60 * 24);
+			diffInpromo = dayDiff;
 		}
 
 		List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 		HotelSearch hProfileVM = new HotelSearch();
-		Long object = (Long) map.get(rate1.getSupplierCode());
-		HotelProfile hAmenities = HotelProfile.findAllData(rate1
-				.getSupplierCode());
+		Long object = (Long) map.get(supplierid.longValue());
+		
 		if (object == null) {
-
-			Double total = 0.0;
-			Double avg = 0.0;
-			int value = 0;
-
+			HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
 			
-			
-			hProfileVM.setSupplierCode(hAmenities.getSupplier_code());
-			hProfileVM.setHotelNm(hAmenities.getHotelName());
-			hProfileVM.setSupplierNm(hAmenities.getSupplierName());
-			hProfileVM.setHoteldescription(hAmenities.getHotelProfileDesc());
-			if (hAmenities.getStartRatings() != null) {
-				hProfileVM.setStartRating(hAmenities.getStartRatings()
-						.getId());
-			}
-			hProfileVM.setHotelAddr(hAmenities.getAddress());
-			hProfileVM.setCityCode(hAmenities.getCity().getCityCode());
-			
-			
-			List<ServicesVM> sList = new ArrayList<>();
-			
-			for (HotelServices hoServices : hAmenities.getServices()){
-				ServicesVM sVm=new ServicesVM();
-				sVm.setServiceId(hoServices.getServiceId());
-				sVm.setServiceName(hoServices.getServiceName());
-				sList.add(sVm);
-			}
-			hProfileVM.setServices(sList);
-			hProfileVM.currencyId = hAmenities.getCurrency().getCurrencyCode();
-			hProfileVM.currencyName = hAmenities.getCurrency().getCurrencyName();
-			String currency = hAmenities.getCurrency().getCurrencyName();
-			String[] currencySplit;
-			 currencySplit = currency.split(" - ");
-			hProfileVM.currencyShort = currencySplit[0];
-			hProfileVM.setCheckIn(fromDate[0]);
-			hProfileVM.setCheckOut(toDate[0]);
-			hProfileVM.setNationality(Integer.parseInt(cId[0]));
+			fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);
 			
 			for (int i = 0; i < dayDiff; i++) {
 
-				System.out.println(rate1.getSupplierCode());
+				System.out.println(supplierid.longValue());
 				List<HotelRoomTypes> roomType = HotelRoomTypes
-						.getHotelRoomDetails(rate1.getSupplierCode());
-				int days = c.get(Calendar.DAY_OF_WEEK)-1;
+						.getHotelRoomDetails(supplierid.longValue());
+				int days = checkInDate.get(Calendar.DAY_OF_WEEK)-1;
 				SerachedHotelbyDate hotelBydateVM = new SerachedHotelbyDate();
 				hotelBydateVM.setFlag("0");
-				hotelBydateVM.setDate(format.format(c.getTime()));
+				hotelBydateVM.setDate(format.format(checkInDate.getTime()));
 				Map<Long, Long> mapRm = new HashMap<Long, Long>();
 				Map<Long, Long> mapRate = new HashMap<Long, Long>();
 				List<SerachedRoomType> roomlist = new ArrayList<>();
@@ -1820,34 +1242,20 @@ public static Result hoteldetailpage() {
 					Long objectRm = (Long) mapRm.get(room.getRoomId());
 					if (objectRm == null) {
 
-						List<RateMeta> rateMeta1 = RateMeta.getdatecheckRoom1(
+						List<RateMeta> rateMeta1 = RateMeta.getdatecheck(
 								room.getRoomId(),
-								Integer.parseInt(cId[0]), c.getTime(),
+								Integer.parseInt(nationalityId), checkInDate.getTime(),
 								hAmenities.getSupplier_code()); // Long.parseLong(roomId[0])
 
 						int ib = 1;
 						List<SerachedRoomRateDetail> list = new ArrayList<>();
 						SerachedRoomType roomtyp = new SerachedRoomType();
+						fillRoomInfo(room,roomtyp);  /*fill room info function*/
+						specialsPromotion(roomtyp,format,Integer.parseInt(nationalityId),room.getRoomId(),checkInDate.getTime());
 						
 						for (RateMeta rate : rateMeta1) {
-							roomtyp.setRoomId(room.getRoomId());
-							roomtyp.setRoomName(room.getRoomType());
-							roomtyp.setDescription(room.getDescription());
-							roomtyp.setChildAllowedFreeWithAdults(room.getChildAllowedFreeWithAdults());
-							roomtyp.setExtraBedAllowed(room.getExtraBedAllowed());
-							roomtyp.setRoomSuiteType(room.getRoomSuiteType());
 							
-							List<RoomAmenitiesVm> rList = new ArrayList<>();
 							
-							for (RoomAmenities roomAmenitiesVm : room.getAmenities()){
-								RoomAmenitiesVm rooAmenitiesVm = new RoomAmenitiesVm();
-								rooAmenitiesVm.setAmenityId(roomAmenitiesVm.getAmenityId());
-								rooAmenitiesVm.setAmenityNm(roomAmenitiesVm.getAmenityNm());
-								rooAmenitiesVm.setAmenitiesicon(roomAmenitiesVm.getAmenitiesicon());
-								rList.add(rooAmenitiesVm);
-							}
-							
-								roomtyp.setAmenities(rList);
 							RateDetails rateDetails = RateDetails
 									.findByRateMetaId(rate.getId());
 
@@ -1861,161 +1269,12 @@ public static Result hoteldetailpage() {
 							rateVM.setAdult_occupancy(room
 									.getMaxAdultOccupancy());
 							rateVM.setId(rate.getId());
-
+							allotmentmarketInfo(alloMarket,rateVM,format,nationalityId);
 							SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
 							
+							SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
 							
-							
-							if (rateDetails.getSpecialDays() != null) {
-								String week[] = rateDetails
-										.getSpecialDays().split(",");
-								for (String day : week) {
-									StringBuilder sb = new StringBuilder(
-											day);
-									if (day.contains("[")) {
-										sb.deleteCharAt(sb.indexOf("["));
-									}
-									if (day.contains("]")) {
-										sb.deleteCharAt(sb.indexOf("]"));
-									}
-									if (day.contains(" ")) {
-										sb.deleteCharAt(sb.indexOf(" "));
-									}
-									specialRateVM.weekDays.add(sb
-											.toString());
-									if (sb.toString().equals("Sun")) {
-										specialRateVM.rateDay0 = true;
-									}
-									if (sb.toString().equals("Mon")) {
-										specialRateVM.rateDay1 = true;
-									}
-									if (sb.toString().equals("Tue")) {
-										specialRateVM.rateDay2 = true;
-									}
-									if (sb.toString().equals("Wed")) {
-										specialRateVM.rateDay3 = true;
-									}
-									if (sb.toString().equals("Thu")) {
-										specialRateVM.rateDay4 = true;
-									}
-									if (sb.toString().equals("Fri")) {
-										specialRateVM.rateDay5 = true;
-									}
-									if (sb.toString().equals("Sat")) {
-										specialRateVM.rateDay6 = true;
-									}
-								}
-							}							
-							for (PersonRate person : personRate) {
-								
-								if(rateDetails.isSpecialRate() == true){
-									if(days == 0 && specialRateVM.rateDay0) {
-										if (person.isNormal() == false) {
-										SearchRateDetailsVM vm = new SearchRateDetailsVM(
-												person);										
-										vm.rateAvg = person.getRateValue();
-										if(person.getMealType() != null){
-										vm.mealTypeName = person.getMealType().getMealTypeNm();
-										}
-										vm.adult = person.getNumberOfPersons();
-										rateVM.rateDetails.add(vm);
-										}
-									}else if(days == 1 && specialRateVM.rateDay1) {
-										if (person.isNormal() == false) {
-										SearchRateDetailsVM vm = new SearchRateDetailsVM(
-												person);										
-										vm.rateAvg = person.getRateValue();
-										if(person.getMealType() != null){
-										vm.mealTypeName = person.getMealType().getMealTypeNm();
-										}
-										vm.adult = person.getNumberOfPersons();
-										rateVM.rateDetails.add(vm);
-										}
-									}else if(days == 2 && specialRateVM.rateDay2) {
-										if (person.isNormal() == false) {
-										SearchRateDetailsVM vm = new SearchRateDetailsVM(
-												person);										
-										vm.rateAvg = person.getRateValue();
-										if(person.getMealType() != null){
-										vm.mealTypeName = person.getMealType().getMealTypeNm();
-										}
-										vm.adult = person.getNumberOfPersons();
-										rateVM.rateDetails.add(vm);
-										}
-									}else if(days == 3 && specialRateVM.rateDay3) {
-										if (person.isNormal() == false) {
-										SearchRateDetailsVM vm = new SearchRateDetailsVM(
-												person);										
-										vm.rateAvg = person.getRateValue();
-										if(person.getMealType() != null){
-										vm.mealTypeName = person.getMealType().getMealTypeNm();
-										}
-										vm.adult = person.getNumberOfPersons();
-										rateVM.rateDetails.add(vm);
-										}
-									}else if(days == 4 && specialRateVM.rateDay4) {
-										if (person.isNormal() == false) {
-										SearchRateDetailsVM vm = new SearchRateDetailsVM(
-												person);										
-										vm.rateAvg = person.getRateValue();
-										if(person.getMealType() != null){
-										vm.mealTypeName = person.getMealType().getMealTypeNm();
-										}
-										vm.adult = person.getNumberOfPersons();
-										rateVM.rateDetails.add(vm);
-										}
-									}else if(days == 5 && specialRateVM.rateDay5) {
-										if (person.isNormal() == false) {
-										SearchRateDetailsVM vm = new SearchRateDetailsVM(
-												person);										
-										vm.rateAvg = person.getRateValue();
-										if(person.getMealType() != null){
-										vm.mealTypeName = person.getMealType().getMealTypeNm();
-										}
-										vm.adult = person.getNumberOfPersons();
-										rateVM.rateDetails.add(vm);
-										}
-									}else if(days == 6 && specialRateVM.rateDay6) {
-										if (person.isNormal() == false) {
-										SearchRateDetailsVM vm = new SearchRateDetailsVM(
-												person);										
-										vm.rateAvg = person.getRateValue();
-										if(person.getMealType() != null){
-										vm.mealTypeName = person.getMealType().getMealTypeNm();
-										}
-										vm.adult = person.getNumberOfPersons();
-										rateVM.rateDetails.add(vm);
-										}
-									}else{
-										if (person.isNormal() == true) {
-										SearchRateDetailsVM vm = new SearchRateDetailsVM(
-												person);
-										vm.rateAvg = person.getRateValue();
-										if(person.getMealType() != null){
-										vm.mealTypeName = person.getMealType().getMealTypeNm();
-										}
-										vm.adult = person.getNumberOfPersons();
-										rateVM.rateDetails.add(vm);
-										}
-									}
-									
-								}else{
-									
-																			
-									if (person.isNormal() == true) {
-										SearchRateDetailsVM vm = new SearchRateDetailsVM(
-												person);
-										vm.rateAvg = person.getRateValue(); 
-										if(person.getMealType() != null){
-										vm.mealTypeName = person.getMealType().getMealTypeNm();
-										}
-										vm.adult = person.getNumberOfPersons();
-										rateVM.rateDetails.add(vm);
-										}
-								}
-								
-							
-							}
+							personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
 
 							list.add(rateVM);
 							
@@ -2037,10 +1296,10 @@ public static Result hoteldetailpage() {
 					hotelBydateVM.setFlag("1");
 				}
 				Datelist.add(hotelBydateVM);
-				c.add(Calendar.DATE, 1);
+				checkInDate.add(Calendar.DATE, 1);
 			}
 
-			map.put(rate1.getSupplierCode(), Long.parseLong("1"));
+			map.put(supplierid.longValue(), Long.parseLong("1"));
 
 			if (!hProfileVM.getHotelbyDate().isEmpty()) {
 				hotellist.add(hProfileVM);
@@ -2052,125 +1311,10 @@ public static Result hoteldetailpage() {
 	Map<Long, SerachedRoomRateDetail> mapRM = new HashMap<Long, SerachedRoomRateDetail>();
 	int count=0;
 	for (HotelSearch hotel : hotellist) {
-		int dataVar = 0;
-		int countRoom = count;
-		for (SerachedHotelbyDate date : hotel.hotelbyDate) {
-			int newHotel=countRoom; 
-			dataVar++;
-			for (SerachedRoomType roomTP : date.getRoomType()) {
+		fillRoomsInHotelInfo1(hotel, hotelRMlist, count, mapRM ,diffInpromo); /* fill data in room in hotel object.... function*/
 				
-				Double total = 0.0;
-				Double avg = 0.0;
-				SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
-				sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
-
+		findMinRateInHotel(hotellist);
 				
-				SerachedRoomRateDetail sRateDetail = new SerachedRoomRateDetail();
-				sRateDetail.rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
-
-				List<SerachedRoomRateDetail> serachedRoomRateDetails = new ArrayList<>();
-				List<SearchRateDetailsVM> searchRateDetailsVMs = new ArrayList<>();
-				SerachedRoomRateDetail objectRM = mapRM.get(roomTP
-						.getRoomId());
-				if (objectRM == null) {
-					
-					count++;
-					
-					sHotelRoomType.setRoomId(roomTP.getRoomId());
-					sHotelRoomType.setRoomName(roomTP.getRoomName());
-					sHotelRoomType.setAmenities(roomTP.getAmenities());
-					sHotelRoomType.setDescription(roomTP.getDescription());
-					sHotelRoomType.setChildAllowedFreeWithAdults(roomTP.getChildAllowedFreeWithAdults());
-					sHotelRoomType.setExtraBedAllowed(roomTP.getExtraBedAllowed());
-					sHotelRoomType.setRoomSuiteType(roomTP.getRoomSuiteType());
-					//roomtyp.setChildAllowedFreeWithAdults(room.getChildAllowedFreeWithAdults());
-					//roomtyp.setExtraBedAllowed(room.getExtraBedAllowed());
-					//roomtyp.setRoomSuiteType(room.getRoomSuiteType());
-					
-					for (SerachedRoomRateDetail rateObj : roomTP
-							.getHotelRoomRateDetail()) {
-					
-						for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
-							SearchRateDetailsVM searchRateDetailsVM = new SearchRateDetailsVM();
-							
-							searchRateDetailsVM
-									.setRateAvg(detailsVM.getRateValue());
-							searchRateDetailsVM.setAdult(detailsVM.getAdult());
-							searchRateDetailsVM.setMealTypeName(detailsVM.getMealTypeName());
-							searchRateDetailsVMs.add(searchRateDetailsVM);
-							sRateDetail.rateDetailsNormal
-									.add(searchRateDetailsVM);
-
-						}
-						sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
-					}
-					mapRM.put(roomTP.getRoomId(), sRateDetail);
-
-				}else {
-					List<Double> totalNo = new ArrayList<Double>();
-					int i = 0;
-					for (SearchRateDetailsVM ord : objectRM.rateDetailsNormal) {
-						totalNo.add(i, ord.rateAvg);
-						i++;
-					}
-					for (SerachedRoomRateDetail rateObj : roomTP
-							.getHotelRoomRateDetail()) {
-						
-						int x=0;
-						for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
-							
-							if(detailsVM.getRateValue() > totalNo.get(x)){
-								total= totalNo.get(x);
-							}else{
-								total= detailsVM.getRateValue();
-							}
-						
-							hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x).setRateAvg(total);
-						
-							sRateDetail.rateDetailsNormal
-									.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
-							x++;
-						}
-					}
-					mapRM.put(roomTP.getRoomId(), sRateDetail);
-					newHotel++;
-				}
-				sHotelRoomType.hotelRoomRateDetail.add(sRateDetail);
-				
-
-				 if(sHotelRoomType.roomId != null){
-				hotelRMlist.add(sHotelRoomType);
-				hotel.hotelbyRoom.add(sHotelRoomType);
-				 }
-				 
-			}
-							 
-		}
-		
-		for (HotelSearch hotel1 : hotellist) {
-			double min=0.0;
-			int minStart = 0;
-			for(SerachHotelRoomType sHotelRoomType2:hotel.hotelbyRoom){
-				
-				for (SerachedRoomRateDetail roomRateDetail:sHotelRoomType2.hotelRoomRateDetail) {
-					
-					for(SearchRateDetailsVM sRD:roomRateDetail.rateDetailsNormal){
-						
-						if(sRD.adult.equals("1 Adult")){
-							if(minStart == 0){
-								min = sRD.rateAvg;
-								minStart++;
-							}
-							if(min > sRD.rateAvg){
-								min = sRD.rateAvg;
-							}
-						}
-					}
-				}
-			 }
-			hotel.minRate = min;
-			}
-		
 		JsonNode onehotelJson = Json.toJson(hotel);
 		return ok(hotelDetails.render(onehotelJson));
 	}
@@ -2179,610 +1323,74 @@ public static Result hoteldetailpage() {
 }
 
 
-
-/*@Transactional(readOnly = true)
-public static Result getSortHotel(String checkIn,String checkOut,String nationality,String cityid,String starid,String sortData) {
-	
-	DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-	
-		
-		int flag = 0;
-
-		List<HotelSearch> hotellist = new ArrayList<>();
-		Map<Long, Long> map = new HashMap<Long, Long>();
-		Set<String> mapDate = new HashSet<String>();
-		
-		String[] fromDate = {checkIn};
-		String[] toDate = {checkOut};
-		//String[] sId = {starid};
-		String[] cityId = {cityid};
-		String[] cId = {nationality};
-
-		Date fmDate = null;
-		Date tDate = null;
-
-		int j = 0;
-		
-		List<RateMeta> rateMeta = RateMeta.getdatecheck(
-				Integer.parseInt(cityId[0]),
-				Integer.parseInt(cId[0])); // Long.parseLong(roomId[0]), , Integer.parseInt(sId[0])
-
-		for (RateMeta rate1 : rateMeta) {
-
-			Date formDate = null;
-			Date toDates = null;
-			try {
-				formDate = format.parse(fromDate[0]);
-				toDates = format.parse(toDate[0]);
-			} catch (ParseException e) { // TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			Calendar c = Calendar.getInstance();
-			c.setTime(formDate);
-			c.set(Calendar.MILLISECOND, 0);
-
-			Calendar c1 = Calendar.getInstance();
-			c1.setTime(toDates);
-			c1.set(Calendar.MILLISECOND, 0);
-
-			Calendar fromdata = Calendar.getInstance();
-			fromdata.setTime(rate1.getFromDate());
-			fromdata.set(Calendar.MILLISECOND, 0);
-
-			Calendar todata = Calendar.getInstance();
-			todata.setTime(rate1.getToDate());
-			todata.set(Calendar.MILLISECOND, 0);
-			long dayDiff;
-			if(toDates.getTime() == formDate.getTime()){
-				dayDiff = 1;
-			}else{
-				long diff = toDates.getTime() - formDate.getTime();
-
-				dayDiff = diff / (1000 * 60 * 60 * 24);
-			}
-
-			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
-			HotelSearch hProfileVM = new HotelSearch();
-			Long object = (Long) map.get(rate1.getSupplierCode());
-			HotelProfile hAmenities = HotelProfile.findAllData(rate1
-					.getSupplierCode());
-			if (object == null) {
-
-				Double total = 0.0;
-				Double avg = 0.0;
-				int value = 0;
-
-				hProfileVM.setSupplierCode(hAmenities.getSupplier_code());
-				hProfileVM.setHotelNm(hAmenities.getHotelName());
-				hProfileVM.setSupplierNm(hAmenities.getSupplierName());
-
-				if (hAmenities.getStartRatings() != null) {
-					hProfileVM.setStartRating(hAmenities.getStartRatings()
-							.getId());
-				}
-				hProfileVM.currencyId = hAmenities.getCurrency().getCurrencyCode();
-				hProfileVM.currencyName = hAmenities.getCurrency().getCurrencyName();
-				String currency = hAmenities.getCurrency().getCurrencyName();
-				String[] currencySplit;
-				 currencySplit = currency.split(" - ");
-				hProfileVM.currencyShort = currencySplit[0];
-				hProfileVM.setHotelAddr(hAmenities.getAddress());
-				hProfileVM.setCityCode(hAmenities.getCity().getCityCode());
-				hProfileVM.setCheckIn(fromDate[0]);
-				hProfileVM.setCheckOut(toDate[0]);
-				List<ServicesVM> sList = new ArrayList<>();
-				
-				for (HotelServices hoServices : hAmenities.getServices()){
-					ServicesVM sVm=new ServicesVM();
-					sVm.setServiceId(hoServices.getServiceId());
-					sVm.setServiceName(hoServices.getServiceName());
-					sList.add(sVm);
-				}
-				hProfileVM.setServices(sList);
-				hProfileVM.setNationality(Integer.parseInt(cId[0]));
-				InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
-				hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
-				
-				hProfileVM.setFlag("0");
-				for (int i = 0; i < dayDiff; i++) {
-
-					System.out.println(rate1.getSupplierCode());
-					List<HotelRoomTypes> roomType = HotelRoomTypes
-							.getHotelRoomDetails(rate1.getSupplierCode());
-					int days = c.get(Calendar.DAY_OF_WEEK)-1;
-					SerachedHotelbyDate hotelBydateVM = new SerachedHotelbyDate();
-					hotelBydateVM.setDate(format.format(c.getTime()));
-					Map<Long, Long> mapRm = new HashMap<Long, Long>();
-					Map<Long, Long> mapRate = new HashMap<Long, Long>();
-					List<SerachedRoomType> roomlist = new ArrayList<>();
-					for (HotelRoomTypes room : roomType) {
-						Long objectRm = (Long) mapRm.get(room.getRoomId());
-						if (objectRm == null) {
-
-							List<RateMeta> rateMeta1 = RateMeta.getdatecheck1(
-									room.getRoomId(),
-									Integer.parseInt(cityId[0]),
-								//	Integer.parseInt(sId[0]),
-									Integer.parseInt(cId[0]), c.getTime(),
-									hAmenities.getSupplier_code()); // Long.parseLong(roomId[0])
-
-							int ib = 1;
-							List<SerachedRoomRateDetail> list = new ArrayList<>();
-							SerachedRoomType roomtyp = new SerachedRoomType();
-							
-							for (RateMeta rate : rateMeta1) {
-								roomtyp.setRoomId(room.getRoomId());
-								roomtyp.setRoomName(room.getRoomType());
-								roomtyp.setDescription(room.getDescription());
-								List<RoomAmenitiesVm> rList = new ArrayList<>();
-								
-								for (RoomAmenities roomAmenitiesVm : room.getAmenities()){
-									RoomAmenitiesVm rooAmenitiesVm = new RoomAmenitiesVm();
-									rooAmenitiesVm.setAmenityId(roomAmenitiesVm.getAmenityId());
-									rooAmenitiesVm.setAmenityNm(roomAmenitiesVm.getAmenityNm());
-									rooAmenitiesVm.setAmenitiesicon(roomAmenitiesVm.getAmenitiesicon());
-									rList.add(rooAmenitiesVm);
-								}
-								
-									roomtyp.setAmenities(rList);
-	
-									
-								RateDetails rateDetails = RateDetails
-										.findByRateMetaId(rate.getId());
-
-								List<PersonRate> personRate = PersonRate
-										.findByRateMetaId(rate.getId());
-
-								AllotmentMarket alloMarket = AllotmentMarket
-										.getOneMarket(rate.getId());
-
-								SerachedRoomRateDetail rateVM = new SerachedRoomRateDetail();
-								rateVM.setAdult_occupancy(room
-										.getMaxAdultOccupancy());
-								rateVM.setId(rate.getId());
-
-								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
-								
-								
-								
-								if (rateDetails.getSpecialDays() != null) {
-									String week[] = rateDetails
-											.getSpecialDays().split(",");
-									for (String day : week) {
-										StringBuilder sb = new StringBuilder(
-												day);
-										if (day.contains("[")) {
-											sb.deleteCharAt(sb.indexOf("["));
-										}
-										if (day.contains("]")) {
-											sb.deleteCharAt(sb.indexOf("]"));
-										}
-										if (day.contains(" ")) {
-											sb.deleteCharAt(sb.indexOf(" "));
-										}
-										specialRateVM.weekDays.add(sb
-												.toString());
-										if (sb.toString().equals("Sun")) {
-											specialRateVM.rateDay0 = true;
-										}
-										if (sb.toString().equals("Mon")) {
-											specialRateVM.rateDay1 = true;
-										}
-										if (sb.toString().equals("Tue")) {
-											specialRateVM.rateDay2 = true;
-										}
-										if (sb.toString().equals("Wed")) {
-											specialRateVM.rateDay3 = true;
-										}
-										if (sb.toString().equals("Thu")) {
-											specialRateVM.rateDay4 = true;
-										}
-										if (sb.toString().equals("Fri")) {
-											specialRateVM.rateDay5 = true;
-										}
-										if (sb.toString().equals("Sat")) {
-											specialRateVM.rateDay6 = true;
-										}
-									}
-								}							
-								for (PersonRate person : personRate) {
-									
-									if(rateDetails.isSpecialRate() == true){
-										if(days == 0 && specialRateVM.rateDay0) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 1 && specialRateVM.rateDay1) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 2 && specialRateVM.rateDay2) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 3 && specialRateVM.rateDay3) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 4 && specialRateVM.rateDay4) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 5 && specialRateVM.rateDay5) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 6 && specialRateVM.rateDay6) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else{
-											if (person.isNormal() == true) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}
-										
-									}else{
-										if (person.isNormal() == true) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);
-											vm.rateAvg = person.getRateValue(); 
-											if(person.getMealType() != null){
-												vm.mealTypeName = person.getMealType().getMealTypeNm();
-												}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-									}
-								}
-
-
-								list.add(rateVM);
-							
-							}
-							mapRm.put(room.getRoomId(), Long.parseLong("1"));
-							roomtyp.setHotelRoomRateDetail(list);
-							if(!roomtyp.hotelRoomRateDetail.isEmpty()){
-							roomlist.add(roomtyp);
-							}
-						}
-						
-						hProfileVM.setHotelbyDate(Datelist);
-					}
-					
-					hotelBydateVM.setRoomType(roomlist);
-					
-					if (!hotelBydateVM.getRoomType().isEmpty()) {
-						Datelist.add(hotelBydateVM);
-					}else{
-						hProfileVM.setFlag("1");
-					}
-
-					c.add(Calendar.DATE, 1);
-				}
-
-				map.put(rate1.getSupplierCode(), Long.parseLong("1"));
-
-				if (!hProfileVM.getHotelbyDate().isEmpty()) {
-					hotellist.add(hProfileVM);
-				}
-			}
-		}
-
-		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
-		Map<Long, SerachedRoomRateDetail> mapRM = new HashMap<Long, SerachedRoomRateDetail>();
-		int count=0;
-		for (HotelSearch hotel : hotellist) {
-			//int newHotel=0; 
-			int dataVar = 0;
-			int countRoom = count;
-			for (SerachedHotelbyDate date : hotel.hotelbyDate) {
-				int newHotel=countRoom; 
-				dataVar++;
-				for (SerachedRoomType roomTP : date.getRoomType()) {
-					
-					Double total = 0.0;
-					Double avg = 0.0;
-					SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
-					sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
-
-					
-					SerachedRoomRateDetail sRateDetail = new SerachedRoomRateDetail();
-					sRateDetail.rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
-
-					List<SerachedRoomRateDetail> serachedRoomRateDetails = new ArrayList<>();
-					List<SearchRateDetailsVM> searchRateDetailsVMs = new ArrayList<>();
-					SerachedRoomRateDetail objectRM = mapRM.get(roomTP
-							.getRoomId());
-					if (objectRM == null) {
-						
-						count++;
-						
-						sHotelRoomType.setRoomId(roomTP.getRoomId());
-						sHotelRoomType.setRoomName(roomTP.getRoomName());
-						sHotelRoomType.setDescription(roomTP.getDescription());
-						sHotelRoomType.setAmenities(roomTP.getAmenities());
-						for (SerachedRoomRateDetail rateObj : roomTP
-								.getHotelRoomRateDetail()) {
-						
-							for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
-								SearchRateDetailsVM searchRateDetailsVM = new SearchRateDetailsVM();
-								searchRateDetailsVM
-										.setRateAvg(detailsVM.getRateValue());
-								searchRateDetailsVM.setAdult(detailsVM.getAdult());
-								searchRateDetailsVM.setMealTypeName(detailsVM.mealTypeName);
-								searchRateDetailsVMs.add(searchRateDetailsVM);
-								sRateDetail.rateDetailsNormal
-										.add(searchRateDetailsVM);
-
-							}
-							sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
-						}
-						mapRM.put(roomTP.getRoomId(), sRateDetail);
-
-					}else {
-						List<Double> totalNo = new ArrayList<Double>();
-						int i = 0;
-						for (SearchRateDetailsVM ord : objectRM.rateDetailsNormal) {
-							totalNo.add(i, ord.rateAvg);
-							i++;
-						}
-						for (SerachedRoomRateDetail rateObj : roomTP
-								.getHotelRoomRateDetail()) {
-							
-							int x=0;
-							for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
-								
-								if(detailsVM.getRateValue() > totalNo.get(x)){
-									total= totalNo.get(x);
-								}else{
-									total= detailsVM.getRateValue();
-								}
-							
-								hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x).setRateAvg(total);
-							
-								sRateDetail.rateDetailsNormal
-										.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
-								x++;
-							}
-						}
-						mapRM.put(roomTP.getRoomId(), sRateDetail);
-						newHotel++;
-					}
-					sHotelRoomType.hotelRoomRateDetail.add(sRateDetail);
-					
-
-					 if(sHotelRoomType.roomId != null){
-					hotelRMlist.add(sHotelRoomType);
-					
-					hotel.hotelbyRoom.add(sHotelRoomType);
-					 }
-					 
-				}
-				
-								 
-			}
-			
-		}
-		
-		for (HotelSearch hotel : hotellist) {
-		double min=0.0;
-		int minStart = 0;
-		for(SerachHotelRoomType sHotelRoomType2:hotel.hotelbyRoom){
-			
-			for (SerachedRoomRateDetail roomRateDetail:sHotelRoomType2.hotelRoomRateDetail) {
-				
-				for(SearchRateDetailsVM sRD:roomRateDetail.rateDetailsNormal){
-					
-					System.out.println(sRD.adult);
-					if(sRD.adult.equals("1 Adult")){
-						if(minStart == 0){
-							min = sRD.rateAvg;
-							minStart++;
-						}
-						if(min > sRD.rateAvg){
-							min = sRD.rateAvg;
-						}
-					}
-				}
-			}
-		 }
-		hotel.minRate = min;
-		}
-		
-	if(sortData.equals("1")){
-		Collections.sort(hotellist,new HotelComparatorAsc());
-	}else{
-		Collections.sort(hotellist,new HotelComparatorDes());
-	}
-		
-	return ok(Json.toJson(hotellist));
-
-}
-*/
-
-
-
 @Transactional(readOnly = true)
 	public static Result getDatewiseHotelRoom(String checkIn,String checkOut,String nationality,String supplierCode1,String roomCode) {
 
 	
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-		int flag = 0;
-
+		
 		List<HotelSearch> hotellist = new ArrayList<>();
 		Map<String, String[]> map1 = request().queryString();
 		Map<Long, Long> map = new HashMap<Long, Long>();
-	
-		Set<String> mapDate = new HashSet<String>();
+		long diffInpromo = 0;
 		
-		 System.out.println("_+_+_+_+_++_+_+_");
-	        System.out.println(checkIn);
-	        System.out.println(supplierCode1);
-	        System.out.println(checkOut);
-	        System.out.println(nationality);
-	        System.out.println(roomCode);
-		
-		String[] fromDate = {checkIn};
-		String[] toDate = {checkOut};
-		String[] cId = {nationality};
-        String[] supplierCode = {supplierCode1};
-        String[] roomcode = {roomCode};
+		String fromDate = checkIn;
+		String toDate = checkOut;
+		String nationalityId = nationality;
+        String supplierCode = supplierCode1;
+        String roomcode = roomCode;
         
-		Date fmDate = null;
-		Date tDate = null;
+		
+		List<BigInteger> supplierId = RateMeta.getsupplierIdwiseRoom(
+				Long.parseLong(supplierCode),Long.parseLong(roomcode),
+				Integer.parseInt(nationalityId)); // Long.parseLong(roomId[0]),
 
-		int j = 0;
-
-		List<RateMeta> rateMeta = RateMeta.getdatecheckRoom(
-				Long.parseLong(supplierCode[0]),Long.parseLong(roomcode[0]),
-				Integer.parseInt(cId[0])); // Long.parseLong(roomId[0]),
-
-		for (RateMeta rate1 : rateMeta) {
+		for (BigInteger supplierid : supplierId) {
 
 			Date formDate = null;
 			Date toDates = null;
 			try {
-				formDate = format.parse(fromDate[0]);
-				toDates = format.parse(toDate[0]);
+				formDate = format.parse(fromDate);
+				toDates = format.parse(toDate);
 			} catch (ParseException e) { // TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			Calendar c = Calendar.getInstance();
-			c.setTime(formDate);
-			c.set(Calendar.MILLISECOND, 0);
+			Calendar checkInDate = Calendar.getInstance();
+			checkInDate.setTime(formDate);
+			checkInDate.set(Calendar.MILLISECOND, 0);
 
-			Calendar c1 = Calendar.getInstance();
-			c1.setTime(toDates);
-			c1.set(Calendar.MILLISECOND, 0);
-
-			Calendar fromdata = Calendar.getInstance();
-			fromdata.setTime(rate1.getFromDate());
-			fromdata.set(Calendar.MILLISECOND, 0);
-
-			Calendar todata = Calendar.getInstance();
-			todata.setTime(rate1.getToDate());
-			todata.set(Calendar.MILLISECOND, 0);
+			
 
 			long dayDiff;
 			if(toDates.getTime() == formDate.getTime()){
 				dayDiff = 1;
+				diffInpromo = dayDiff;
 			}else{
 				long diff = toDates.getTime() - formDate.getTime();
 
 				dayDiff = diff / (1000 * 60 * 60 * 24);
+				diffInpromo = dayDiff;
 			}
 
 			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 			HotelSearch hProfileVM = new HotelSearch();
-			Long object = (Long) map.get(rate1.getSupplierCode());
-			HotelProfile hAmenities = HotelProfile.findAllData(rate1
-					.getSupplierCode());
+			Long object = (Long) map.get(supplierid.longValue());
+			
 			if (object == null) {
-
-				Double total = 0.0;
-				Double avg = 0.0;
-				int value = 0;
-
+				HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());	
 				
-				
-				hProfileVM.setSupplierCode(hAmenities.getSupplier_code());
-				hProfileVM.setHotelNm(hAmenities.getHotelName());
-				hProfileVM.setSupplierNm(hAmenities.getSupplierName());
-
-				if (hAmenities.getStartRatings() != null) {
-					hProfileVM.setStartRating(hAmenities.getStartRatings()
-							.getId());
-				}
-				hProfileVM.setHotelAddr(hAmenities.getAddress());
-				hProfileVM.setCityCode(hAmenities.getCity().getCityCode());
-				//hProfileVM.setServices(hAmenities.getIntListServices());
-				List<ServicesVM> sList = new ArrayList<>();
-				for (HotelServices hoServices : hAmenities.getServices()){
-					ServicesVM sVm=new ServicesVM();
-					sVm.setServiceId(hoServices.getServiceId());
-					sVm.setServiceName(hoServices.getServiceName());
-					sList.add(sVm);
-				}
-				hProfileVM.setServices(sList);
-				hProfileVM.currencyId = hAmenities.getCurrency().getCurrencyCode();
-				hProfileVM.currencyName = hAmenities.getCurrency().getCurrencyName();
-				String currency = hAmenities.getCurrency().getCurrencyName();
-				String[] currencySplit;
-				 currencySplit = currency.split(" - ");
-				hProfileVM.currencyShort = currencySplit[0];
-				
-				hProfileVM.setCheckIn(fromDate[0]);
-				hProfileVM.setCheckOut(toDate[0]);
-				hProfileVM.setNationality(Integer.parseInt(cId[0]));
+				fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);
 				
 				for (int i = 0; i < dayDiff; i++) {
 
-					System.out.println(rate1.getSupplierCode());
+					System.out.println(supplierid.longValue());
 					List<HotelRoomTypes> roomType = HotelRoomTypes
-							.getHotelRoomDetailsByIds(rate1.getSupplierCode(),Long.parseLong(roomcode[0]));
-					int days = c.get(Calendar.DAY_OF_WEEK)-1;
+							.getHotelRoomDetailsByIds(supplierid.longValue(),Long.parseLong(roomcode));
+					int days = checkInDate.get(Calendar.DAY_OF_WEEK)-1;
 					SerachedHotelbyDate hotelBydateVM = new SerachedHotelbyDate();
 					hotelBydateVM.setFlag("0");
-					hotelBydateVM.setDate(format.format(c.getTime()));
+					hotelBydateVM.setDate(format.format(checkInDate.getTime()));
 					Map<Long, Long> mapRm = new HashMap<Long, Long>();
 					Map<Long, Long> mapRate = new HashMap<Long, Long>();
 					List<SerachedRoomType> roomlist = new ArrayList<>();
@@ -2790,30 +1398,19 @@ public static Result getSortHotel(String checkIn,String checkOut,String national
 						Long objectRm = (Long) mapRm.get(room.getRoomId());
 						if (objectRm == null) {
 
-							List<RateMeta> rateMeta1 = RateMeta.getdatecheckRoom1(
+							List<RateMeta> rateMeta1 = RateMeta.getdatecheck(
 									room.getRoomId(),
-									Integer.parseInt(cId[0]), c.getTime(),
+									Integer.parseInt(nationalityId), checkInDate.getTime(),
 									hAmenities.getSupplier_code()); // Long.parseLong(roomId[0])
 
 							int ib = 1;
 							List<SerachedRoomRateDetail> list = new ArrayList<>();
 							SerachedRoomType roomtyp = new SerachedRoomType();
+							fillRoomInfo(room,roomtyp);  /*fill room info function*/
+							specialsPromotion(roomtyp,format,Integer.parseInt(nationalityId),room.getRoomId(),checkInDate.getTime());
 							
 							for (RateMeta rate : rateMeta1) {
-								roomtyp.setRoomId(room.getRoomId());
-								roomtyp.setRoomName(room.getRoomType());
-								roomtyp.setDescription(room.getDescription());
-								List<RoomAmenitiesVm> rList = new ArrayList<>();
 								
-								for (RoomAmenities roomAmenitiesVm : room.getAmenities()){
-									RoomAmenitiesVm rooAmenitiesVm = new RoomAmenitiesVm();
-									rooAmenitiesVm.setAmenityId(roomAmenitiesVm.getAmenityId());
-									rooAmenitiesVm.setAmenityNm(roomAmenitiesVm.getAmenityNm());
-									rooAmenitiesVm.setAmenitiesicon(roomAmenitiesVm.getAmenitiesicon());
-									rList.add(rooAmenitiesVm);
-								}
-								
-									roomtyp.setAmenities(rList);
 								RateDetails rateDetails = RateDetails
 										.findByRateMetaId(rate.getId());
 
@@ -2827,161 +1424,15 @@ public static Result getSortHotel(String checkIn,String checkOut,String national
 								rateVM.setAdult_occupancy(room
 										.getMaxAdultOccupancy());
 								rateVM.setId(rate.getId());
+								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId);
+								
 								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
 								
+								SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
+								
+								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
 								
 								
-								if (rateDetails.getSpecialDays() != null) {
-									String week[] = rateDetails
-											.getSpecialDays().split(",");
-									for (String day : week) {
-										StringBuilder sb = new StringBuilder(
-												day);
-										if (day.contains("[")) {
-											sb.deleteCharAt(sb.indexOf("["));
-										}
-										if (day.contains("]")) {
-											sb.deleteCharAt(sb.indexOf("]"));
-										}
-										if (day.contains(" ")) {
-											sb.deleteCharAt(sb.indexOf(" "));
-										}
-										specialRateVM.weekDays.add(sb
-												.toString());
-										if (sb.toString().equals("Sun")) {
-											specialRateVM.rateDay0 = true;
-										}
-										if (sb.toString().equals("Mon")) {
-											specialRateVM.rateDay1 = true;
-										}
-										if (sb.toString().equals("Tue")) {
-											specialRateVM.rateDay2 = true;
-										}
-										if (sb.toString().equals("Wed")) {
-											specialRateVM.rateDay3 = true;
-										}
-										if (sb.toString().equals("Thu")) {
-											specialRateVM.rateDay4 = true;
-										}
-										if (sb.toString().equals("Fri")) {
-											specialRateVM.rateDay5 = true;
-										}
-										if (sb.toString().equals("Sat")) {
-											specialRateVM.rateDay6 = true;
-										}
-									}
-								}							
-								for (PersonRate person : personRate) {
-									
-									if(rateDetails.isSpecialRate() == true){
-										if(days == 0 && specialRateVM.rateDay0) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-											vm.mealTypeName = person.getMealType().getMealTypeNm();
-											}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 1 && specialRateVM.rateDay1) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-											vm.mealTypeName = person.getMealType().getMealTypeNm();
-											}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 2 && specialRateVM.rateDay2) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-											vm.mealTypeName = person.getMealType().getMealTypeNm();
-											}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 3 && specialRateVM.rateDay3) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-											vm.mealTypeName = person.getMealType().getMealTypeNm();
-											}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 4 && specialRateVM.rateDay4) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-											vm.mealTypeName = person.getMealType().getMealTypeNm();
-											}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 5 && specialRateVM.rateDay5) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-											vm.mealTypeName = person.getMealType().getMealTypeNm();
-											}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else if(days == 6 && specialRateVM.rateDay6) {
-											if (person.isNormal() == false) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);										
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-											vm.mealTypeName = person.getMealType().getMealTypeNm();
-											}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}else{
-											if (person.isNormal() == true) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);
-											vm.rateAvg = person.getRateValue();
-											if(person.getMealType() != null){
-											vm.mealTypeName = person.getMealType().getMealTypeNm();
-											}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-										}
-										
-									}else{
-										
-																				
-										if (person.isNormal() == true) {
-											SearchRateDetailsVM vm = new SearchRateDetailsVM(
-													person);
-											vm.rateAvg = person.getRateValue(); 
-											if(person.getMealType() != null){
-											vm.mealTypeName = person.getMealType().getMealTypeNm();
-											}
-											vm.adult = person.getNumberOfPersons();
-											rateVM.rateDetails.add(vm);
-											}
-									}
-									
-								
-								}
-
 								list.add(rateVM);
 								
 							}
@@ -3002,10 +1453,10 @@ public static Result getSortHotel(String checkIn,String checkOut,String national
 						hotelBydateVM.setFlag("1");
 					}
 					Datelist.add(hotelBydateVM);
-					c.add(Calendar.DATE, 1);
+					checkInDate.add(Calendar.DATE, 1);
 				}
 
-				map.put(rate1.getSupplierCode(), Long.parseLong("1"));
+				map.put(supplierid.longValue(), Long.parseLong("1"));
 
 				if (!hProfileVM.getHotelbyDate().isEmpty()) {
 					hotellist.add(hProfileVM);
@@ -3014,102 +1465,157 @@ public static Result getSortHotel(String checkIn,String checkOut,String national
 		}
 
 		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
+		
 		Map<Long, SerachedRoomRateDetail> mapRM = new HashMap<Long, SerachedRoomRateDetail>();
 		int count=0;
 		for (HotelSearch hotel : hotellist) {
-			int dataVar = 0;
-			int countRoom = count;
-			for (SerachedHotelbyDate date : hotel.hotelbyDate) {
-				int newHotel=countRoom; 
-				dataVar++;
-				for (SerachedRoomType roomTP : date.getRoomType()) {
-					
-					Double total = 0.0;
-					Double avg = 0.0;
-					SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
-					sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
-
-					
-					SerachedRoomRateDetail sRateDetail = new SerachedRoomRateDetail();
-					sRateDetail.rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
-
-					List<SerachedRoomRateDetail> serachedRoomRateDetails = new ArrayList<>();
-					List<SearchRateDetailsVM> searchRateDetailsVMs = new ArrayList<>();
-					SerachedRoomRateDetail objectRM = mapRM.get(roomTP
-							.getRoomId());
-					if (objectRM == null) {
-						
-						count++;
-						
-						sHotelRoomType.setRoomId(roomTP.getRoomId());
-						sHotelRoomType.setRoomName(roomTP.getRoomName());
-						sHotelRoomType.setAmenities(roomTP.getAmenities());
-						sHotelRoomType.setDescription(roomTP.getDescription());
-						for (SerachedRoomRateDetail rateObj : roomTP
-								.getHotelRoomRateDetail()) {
-						
-							for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
-								SearchRateDetailsVM searchRateDetailsVM = new SearchRateDetailsVM();
-								
-								searchRateDetailsVM
-										.setRateAvg(detailsVM.getRateValue());
-								searchRateDetailsVM.setAdult(detailsVM.getAdult());
-								searchRateDetailsVM.setMealTypeName(detailsVM.getMealTypeName());
-								searchRateDetailsVMs.add(searchRateDetailsVM);
-								sRateDetail.rateDetailsNormal
-										.add(searchRateDetailsVM);
-
-							}
-							sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
-						}
-						mapRM.put(roomTP.getRoomId(), sRateDetail);
-
-					}else {
-						List<Double> totalNo = new ArrayList<Double>();
-						int i = 0;
-						for (SearchRateDetailsVM ord : objectRM.rateDetailsNormal) {
-							totalNo.add(i, ord.rateAvg);
-							i++;
-						}
-						for (SerachedRoomRateDetail rateObj : roomTP
-								.getHotelRoomRateDetail()) {
-							
-							int x=0;
-							for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
-								
-								if(detailsVM.getRateValue() > totalNo.get(x)){
-									total= totalNo.get(x);
-								}else{
-									total= detailsVM.getRateValue();
-								}
-							
-								hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x).setRateAvg(total);
-							
-								sRateDetail.rateDetailsNormal
-										.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
-								x++;
-							}
-						}
-						mapRM.put(roomTP.getRoomId(), sRateDetail);
-						newHotel++;
-					}
-					sHotelRoomType.hotelRoomRateDetail.add(sRateDetail);
-					
-
-					 if(sHotelRoomType.roomId != null){
-					hotelRMlist.add(sHotelRoomType);
-					
-					hotel.hotelbyRoom.add(sHotelRoomType);
-					 }
-					 
-				}
-
-								 
-			}
+			
+			fillRoomsInHotelInfo1(hotel, hotelRMlist, count, mapRM , diffInpromo); /* fill data in room in hotel object.... function*/
+		
 			return ok(Json.toJson(hotel));
 		}
 		return ok(Json.toJson(null));
 	}
+
+
+public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoomType> hotelRMlist,int count, Map<Long, SerachedRoomRateDetail> mapRM,Long diffInpromo){
+	
+	Map<Long, List<SpecialsVM>> mapSpecials = new HashMap<Long, List<SpecialsVM>>();
+	Map<Long, Integer> promoMap = new HashMap<Long, Integer>();
+		int dataVar = 0;
+		int countRoom = count;
+		List<Integer> arrayCount = new ArrayList<Integer>();
+		for (SerachedHotelbyDate date : hotel.hotelbyDate) {
+			int newHotel=countRoom; 
+			dataVar++;
+			int aCount = 0;
+			for (SerachedRoomType roomTP : date.getRoomType()) {
+				
+				Double total = 0.0;
+				//Double avg = 0.0;
+				SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
+				sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
+
+				
+				SerachedRoomRateDetail sRateDetail = new SerachedRoomRateDetail();
+				sRateDetail.rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
+
+				//List<SerachedRoomRateDetail> serachedRoomRateDetails = new ArrayList<>();
+				List<SearchRateDetailsVM> searchRateDetailsVMs = new ArrayList<>();
+				SerachedRoomRateDetail objectRM = mapRM.get(roomTP
+						.getRoomId());
+				if (objectRM == null) {
+					
+					count++;
+					
+					sHotelRoomType.setRoomId(roomTP.getRoomId());
+					sHotelRoomType.setRoomName(roomTP.getRoomName());
+					sHotelRoomType.setDescription(roomTP.getDescription());
+					sHotelRoomType.setChildAllowedFreeWithAdults(roomTP.getChildAllowedFreeWithAdults());
+					sHotelRoomType.setExtraBedAllowed(roomTP.getExtraBedAllowed());
+					sHotelRoomType.setRoomSuiteType(roomTP.getRoomSuiteType());
+					arrayCount.add(aCount, roomTP.getPcount());
+					
+					sHotelRoomType.setAmenities(roomTP.getAmenities());
+					for (SerachedRoomRateDetail rateObj : roomTP
+							.getHotelRoomRateDetail()) {
+					
+						for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
+							SearchRateDetailsVM searchRateDetailsVM = new SearchRateDetailsVM();
+							searchRateDetailsVM
+									.setRateAvg(detailsVM.getRateValue());
+							searchRateDetailsVM.setAdult(detailsVM.getAdult());
+							searchRateDetailsVM.setMealTypeName(detailsVM.mealTypeName);
+							searchRateDetailsVMs.add(searchRateDetailsVM);
+							sRateDetail.rateDetailsNormal
+									.add(searchRateDetailsVM);
+
+						}
+						sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
+					}
+					mapRM.put(roomTP.getRoomId(), sRateDetail);
+					promoMap.put(roomTP.getRoomId(),roomTP.getPcount());
+					if(roomTP.getSpecials() != null){
+						mapSpecials.put(roomTP.getRoomId(), (List<SpecialsVM>) roomTP.getSpecials());
+						}
+
+				}else {
+					List<Double> totalNo = new ArrayList<Double>();
+					int i = 0;
+					for (SearchRateDetailsVM ord : objectRM.rateDetailsNormal) {
+						totalNo.add(i, ord.rateAvg);
+						i++;
+					}
+					
+					int ptotal = 0;
+					ptotal = arrayCount.get(aCount) + roomTP.getPcount();
+					arrayCount.set(aCount, ptotal);
+					
+					for (SerachedRoomRateDetail rateObj : roomTP
+							.getHotelRoomRateDetail()) {
+						
+						int x=0;
+						for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
+							
+							if(detailsVM.getRateValue() > totalNo.get(x)){
+								total= totalNo.get(x);
+							}else{
+								total= detailsVM.getRateValue();
+							}
+						
+							hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x).setRateAvg(total);
+						
+							sRateDetail.rateDetailsNormal
+									.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
+							x++;
+						}
+					}
+					mapRM.put(roomTP.getRoomId(), sRateDetail);
+					promoMap.put(roomTP.getRoomId(),arrayCount.get(aCount));
+					if(roomTP.getSpecials()!= null){
+						mapSpecials.put(roomTP.getRoomId(), (List<SpecialsVM>) roomTP.getSpecials());
+						}
+					newHotel++;
+				}
+				sHotelRoomType.hotelRoomRateDetail.add(sRateDetail);
+				
+
+				 if(sHotelRoomType.roomId != null){
+				hotelRMlist.add(sHotelRoomType);
+				
+				hotel.hotelbyRoom.add(sHotelRoomType);
+				 }
+				 aCount++;
+			}
+			
+							 
+		}
+		int diffProm;
+		for(SerachHotelRoomType room:hotel.hotelbyRoom){
+			for (Entry<Long, Integer> entry : promoMap.entrySet()) {
+			if(room.getRoomId() == entry.getKey()){
+				room.setPcount(entry.getValue());
+				diffProm = (int) (diffInpromo/2);
+				if(entry.getValue() >= diffProm){
+					room.setApplyPromotion(1);
+				}else{
+					room.setApplyPromotion(0);
+				}
+			}
+		  }
+		}
+		
+		for(SerachHotelRoomType room:hotel.hotelbyRoom){
+			for (Entry<Long, List<SpecialsVM>> entry : mapSpecials.entrySet()) {
+			if(room.getRoomId() == entry.getKey()){
+				room.setSpecials(entry.getValue());
+				
+			}
+		  }
+		}
+
+	
+}
 
 
 

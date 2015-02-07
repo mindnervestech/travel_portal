@@ -25,6 +25,7 @@ public class HotelSearch {
 	/*public Set<HotelamenitiesVM> amenities;*/
 	public List<Integer> services1;
 	public List<ServicesVM> services;
+	public HotelBookingDetailsVM hotelBookingDetails;
 	
 	public List<SerachHotelRoomType> hotelbyRoom = new ArrayList<>();
 	public List<SerachedHotelbyDate> hotelbyDate; 
@@ -146,4 +147,12 @@ public class HotelSearch {
 	public void setAmenities(Set<HotelamenitiesVM> amenities) {
 		this.amenities = amenities;
 	}*/
+	public HotelBookingDetailsVM getHotelBookingDetails() {
+		return hotelBookingDetails;
+	}
+	public void setHotelBookingDetails(HotelBookingDetailsVM hotelBookingDetails) {
+		this.hotelBookingDetails = hotelBookingDetails;
+	}
+	
+	
 }

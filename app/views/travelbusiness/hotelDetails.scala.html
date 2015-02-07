@@ -91,47 +91,13 @@
                                 <div id="steet-view-tab" class="tab-pane fade" style="height: 500px;">
                                     
                                 </div>
-                                <div id="calendar-tab" class="tab-pane fade">
-                                    <label>SELECT MONTH</label>
-                                    <div class="col-sm-6 col-md-4 no-float no-padding">
-                                        <div class="selector">
-                                            <select class="full-width" id="select-month">
-                                                <option value="2014-6">June 2014</option>
-                                                <option value="2014-7">July 2014</option>
-                                                <option value="2014-8">August 2014</option>
-                                                <option value="2014-9">September 2014</option>
-                                                <option value="2014-10">October 2014</option>
-                                                <option value="2014-11">November 2014</option>
-                                                <option value="2014-12">December 2014</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                            <div class="calendar"></div>
-                                            <div class="calendar-legend">
-                                                <label class="available">available</label>
-                                                <label class="unavailable">unavailable</label>
-                                                <label class="past">past</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <p class="description">
-                                                The calendar is updated every five minutes and is only an approximation of availability.
-<br /><br />
-Some hosts set custom pricing for certain days on their calendar, like weekends or holidays. The rates listed are per day and do not include any cleaning fee or rates for extra people the host may have for this listing. Please refer to the listing's Description tab for more details.
-<br /><br />
-We suggest that you contact the host to confirm availability and rates before submitting a reservation request.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div id="hotel-features" class="tab-container">
                             <ul class="tabs">
-                                <li class="active"><a href="#hotel-descr" data-toggle="tab">Description</a></li>
-                                <li><a href="#hotel-availability" data-toggle="tab" ng-click="availability()">Availability</a></li>
+                                <li><a href="#hotel-descr" data-toggle="tab">Description</a></li>
+                                <li class="active"><a href="#hotel-availability" data-toggle="tab" ng-click="availability()">Availability</a></li>
                                 <li><a href="#hotel-amenities" data-toggle="tab"  ng-click="hotel_amenities()">Hotel Amenities</a></li>
                                <!--  <li><a href="#hotel-reviews" data-toggle="tab">Reviews</a></li>
                                 <li><a href="#hotel-faqs" data-toggle="tab">FAQs</a></li> -->
@@ -139,48 +105,8 @@ We suggest that you contact the host to confirm availability and rates before su
                                 <li><a href="#hotel-sport-amenities" data-toggle="tab" ng-click="sport_amenities()">Leisure & Sport Amenities</a></li>
                             </ul>
                             <div class="tab-content">
-                            	<div class="tab-pane fade in active" id="hotel-descr">
-                                    <!-- <div class="intro table-wrapper full-width hidden-table-sms">
-                                        <div class="col-sm-5 col-lg-4 features table-cell">
-                                            <ul>
-                                                <li><label>hotel type:</label>4 star</li>
-                                                <li><label>Extra people:</label>No Charge</li>
-                                                <li><label>Minimum Stay:</label>2 nights</li>
-                                                <li><label>Security Deposit:</label>$279</li>
-                                                <li><label>Country:</label>France</li>
-                                                <li><label>City:</label>Paris</li>
-                                                <li><label>Neighborhood:</label>République</li>
-                                                <li><label>Cancellation:</label>strict</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-7 col-lg-8 table-cell testimonials">
-                                            <div class="testimonial style1">
-                                                
-                                            <div class="testimonial-viewport" style="overflow: hidden; position: relative;"><ul class="slides " style="width: 600%; -webkit-transition: 0s; transition: 0s; -webkit-transform: translate3d(0px, 0px, 0px); transform: translate3d(0px, 0px, 0px);">
-                                                    <li class="testimonial-active-slide" style="width: 473px; float: left; display: block; height: 173px;">
-                                                        <p class="description">Always enjoyed my stay with Hilton Hotel and Resorts, top class room service and rooms have great outside views and luxury assessories. Thanks for great experience.</p>
-                                                        <div class="author clearfix">
-                                                            <a href="#"><img src="http://placehold.it/270x270" alt="" width="74" height="74" draggable="false"></a>
-                                                            <h5 class="name">Jessica Brown<small>guest</small></h5>
-                                                        </div>
-                                                    </li>
-                                                    <li style="width: 473px; float: left; display: block; height: 173px;">
-                                                        <p class="description">Always enjoyed my stay with Hilton Hotel and Resorts, top class room service and rooms have great outside views and luxury assessories. Thanks for great experience.</p>
-                                                        <div class="author clearfix">
-                                                            <a href="#"><img src="http://placehold.it/270x270" alt="" width="74" height="74" draggable="false"></a>
-                                                            <h5 class="name">Lisa Kimberly<small>guest</small></h5>
-                                                        </div>
-                                                    </li>
-                                                    <li style="width: 473px; float: left; display: block; height: 173px;">
-                                                        <p class="description">Always enjoyed my stay with Hilton Hotel and Resorts, top class room service and rooms have great outside views and luxury assessories. Thanks for great experience.</p>
-                                                        <div class="author clearfix">
-                                                            <a href="#"><img src="http://placehold.it/270x270" alt="" width="74" height="74" draggable="false"></a>
-                                                            <h5 class="name">Jessica Brown<small>guest</small></h5>
-                                                        </div>
-                                                    </li>
-                                                </ul></div><ol class="testimonial-control-nav testimonial-control-paging"><li><a class="testimonial-active">1</a></li><li><a>2</a></li><li><a>3</a></li></ol></div>
-                                        </div>
-                                    </div> -->
+                            	<div class="tab-pane fade" id="hotel-descr">
+                                   
                                     <div class="long-description">
                                         <h2>About {{hotel.hotelNm}}</h2>
                                         <p>
@@ -188,7 +114,7 @@ We suggest that you contact the host to confirm availability and rates before su
                                         </p>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="hotel-availability">
+                                <div class="tab-pane fade in active" id="hotel-availability">
                                
                                     <!-- <div class="update-search clearfix">
                                                                                
@@ -289,7 +215,7 @@ We suggest that you contact the host to confirm availability and rates before su
                                     <div class="col-md-12" style="border-bottom: 2px solid #C8C6C6;">
                                     <figure class="col-sm-5 col-md-4" style="padding-left:0;">
                                      <!-- <img data-ng-src="{{img}}" alt="">  -->
-                                        <a title="" ng-click="ShowFull($index)" class="hover-effect popup-gallery" style="background: gainsboro;"><img width="270" height="160" alt="" data-ng-src="{{roomInfo.roomimgPaths}}"></a>
+                                        <a title="" ng-click="ShowFull($index)" class="hover-effect " style="background: gainsboro;"><img width="270" height="160" alt="" data-ng-src="{{roomInfo.roomimgPaths}}"></a>  <!-- popup-gallery -->
                                         <!-- <a title="" ng-click="ShowFullImg($index)" class="hover-effect popup-gallery"><img width="270" height="160" alt="" data-ng-src="{{hotelInfo.imgPaths}}"></a> -->
                                     </figure>
                                     <div class="details col-sm-7 col-md-8">
@@ -626,7 +552,22 @@ We suggest that you contact the host to confirm availability and rates before su
                     </div>
                     <div class="sidebar col-md-3">
                     <article class="detailed-logo">
-                           <h2>Hotel info</h2> 
+                     <figure>
+                                <img width="114" height="85" src="{{GenImg}}" alt="">
+                            </figure>
+                          <div class="details">
+                                <h2 class="box-title">{{hotel.hotelNm}}<small><i class="soap-icon-departure yellow-color"></i><span class="fourty-space">{{hotel.hotelAddr}}</span></small></h2>
+                                 <span class="price clearfix">
+                                    <small class="pull-left">Min/start</small>
+                                    <span class="pull-right">{{hotel.minRate}}<sup style="font-size: small;color: chocolate;top: -3px;">{{hotel.currencyShort}}</sup></span>
+                                </span> 
+                               <!--  <div class="feedback clearfix">
+                                    <div title="" class="five-stars-container" data-toggle="tooltip" data-placement="bottom" data-original-title="4 stars"><span class="five-stars" style="width: 80%;"></span></div>
+                                    <span class="review pull-right">270 reviews</span>
+                                </div>-->
+                                <p class="description">{{hotel.imgDescription}}</p>
+                             <!--   <a class="button yellow full-width uppercase btn-small">add to wishlist</a> -->
+                            </div>
                         </article>
                         <div class="travelo-box contact-box">
                             <h4>Need Travelo Help?</h4>

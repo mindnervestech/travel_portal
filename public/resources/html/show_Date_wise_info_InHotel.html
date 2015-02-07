@@ -37,20 +37,26 @@
                                              <span>TOTAL : </span>
                                                 <span class="price">{{total}} <sup style="font-size: small;color: chocolate;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
                                             </div>
-                                           <div class="col-md-2 pull-right" ng-if="flag == 0">
+                                            
+                                           <div class="col-md-2 pull-right" >
                                                  <!-- <span class="price"><small>AVG/NIGHT</small>$620</span>  -->
-                                                 <form action="/hoteldetailpage" method="post">
-                              					        <input type="text" name="supplierCode"  value="{{hotelIF.supplierCode}}" style="display: none;">
-                                					    <input type="text" name="checkIn" value="{{hotelIF.checkIn}}" style="display: none;">
-                              						     <input type="text" name="checkOut" value="{{hotelIF.checkOut}}" style="display: none;">
-                            						     <input type="text" name="nationalityCode" value="{{hotelIF.nationality}}" style="display: none;">  
-                                                 <button type="submit" class="full-width text-center">Book Now</button>
+                                                 <form action="/hotelBookingpage" method="post">
+                              					        <input type="text" name="supplierCode"  value="{{ratedetail.supplierCode}}" style="display: none;">
+                                					    <input type="text" name="checkIn" value="{{ratedetail.checkIn}}" style="display: none;">
+                              						     <input type="text" name="checkOut" value="{{ratedetail.checkOut}}" style="display: none;">
+                            						     <input type="text" name="nationalityCode" value="{{ratedetail.nationality}}" style="display: none;">
+                            						      <input type="text" name="roomId" value="{{ratedetail.hotelbyRoom[0].roomId}}" style="display: none;">
+                            						      <input type="text" name="adult" value="{{searchroom.adult}}" style="display: none;">
+                            						      <input type="text" name="noOfroom" value="{{serchroom.noOfroom}}" style="display: none;">  
+                            						      <input type="text" name="total" value="{{total}}" style="display: none;">  
+                                                 <button type="submit" class="full-width text-center" ng-if="flag == 0">Book Now</button>
+                                                 <button type="submit" class="full-width dark-orange text-center" ng-if="flag == 1">ON REQUEST</button>
                                                </form>
                                                 <!-- <a class="button btn-small full-width text-center" style="background: #7db921;" title=""  href="/hoteldetailpage">Book Now</a> -->
                                             </div>
-                                            <div class="col-xs-2 pull-right" ng-if="flag == 1">
+                                            <!-- <div class="col-xs-2 pull-right" ng-if="flag == 1">
                                                     <button data-animation-duration="1" data-animation-type="bounce" class="full-width dark-orange animated bounce" type="button" style="-webkit-animation: 1s; visibility: visible;">ON REQUEST</button>
-                                                </div>
+                                                </div> -->
                                            
                                         </div>
                                 </div>
@@ -67,9 +73,9 @@
                                         <dl class="info">
                                             <dt>Rate</dt>
                                             <dd>{{Dateinfo.rate}} {{ratedetail.currencyShort}}</dd>
-                                            <dt>Included</dt>
+                                            <dt ng-if="Dateinfo.meal != null">Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
-                                            <dd ng-if="Dateinfo.meal == null">--"--</dd>
+                                            <!-- <dd ng-if="Dateinfo.meal == null">--"--</dd> -->
                                         </dl>
                                        <!--  <button class="btn-mini status">Book Now</button> -->
                                     </div>

@@ -17,6 +17,10 @@ public class SearchHotelValueVM {
 	public List<Integer> servicesCheck;
 	public List<Integer> locationCheck;
 	public List<Integer> amenitiesCheck;
+	public String roomId;
+	public String total;
+	public String adult;
+	public String noOfroom;
 	
 	
 	
@@ -87,8 +91,31 @@ public class SearchHotelValueVM {
 	public void setSortData(String sortData) {
 		this.sortData = sortData;
 	}
-	
-	
+	public String getRoomId() {
+		return roomId;
+	}
+	public void setRoomId(String roomId) {
+		this.roomId = roomId;
+	}
+	public String getTotal() {
+		return total;
+	}
+	public void setTotal(String total) {
+		this.total = total;
+	}
+	public String getAdult() {
+		return adult;
+	}
+	public void setAdult(String adult) {
+		this.adult = adult;
+	}
+	public String getNoOfroom() {
+		return noOfroom;
+	}
+	public void setNoOfroom(String noOfroom) {
+		this.noOfroom = noOfroom;
+	}
+		
 	
 	
 }

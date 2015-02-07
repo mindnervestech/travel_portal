@@ -212,7 +212,7 @@
                                     <div class="col-md-12" style="border-bottom: 4px solid #C8C6C6;">
                                     <figure class="col-sm-5 col-md-4" style="padding-left:0;">
                                      <!-- <img data-ng-src="{{img}}" alt="">  -->
-                                        <a title="" ng-click="ShowFullImg($index)" class="hover-effect popup-gallery"><img width="270" height="160" alt="" data-ng-src="{{hotelInfo.imgPaths}}"></a>
+                                        <a title="" ng-click="ShowFullImg($index)" class="hover-effect "><img width="270" height="160" alt="" data-ng-src="{{hotelInfo.imgPaths}}"></a>   <!-- popup-gallery -->
                                     </figure>
                                     <div class="details col-sm-7 col-md-8">
                                         <div>
@@ -221,9 +221,10 @@
                                                 <div class="amenities col-md-6">
                                                 <div  ng-repeat="ser in hotelInfo.services"> 
                                             		 <div class="col-md-3" ng-if="ser.serviceId == 7">
-                                                    <i class="soap-icon-beach circle"></i>
+                                                    <i class="soap-icon-beach circle" tooltip="soap-icon-beach circle"></i>
                                                     </div>
-                                                    <div class="col-md-3" ng-if="ser.serviceId == 19">
+                                                    <div class="col-md-3" rel="tooltip" tooltip="{{hotelInfo.hotelNm}}" ng-if="ser.serviceId == 19">
+                                                   
                                                     <i class="soap-icon-friends circle"></i>
                                                     </div>
                                                     <div class="col-md-3" ng-if="ser.serviceId ==22">
@@ -242,14 +243,13 @@
                                             <p>{{hotelInfo.imgDescription}}</p>
                                              <div style="width: 150px;">
                                                   <span class="price"><small>MIN/START</small>{{hotelInfo.minRate}}<sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup></span>  
-                                                <!-- <a class="button btn-small full-width text-center" style="background: #98ce44;" title=""  href="/hoteldetailpage">VIEW DETAILS</a> -->
-                                                 <form action="/hoteldetailpage" method="post">
+                                                <!--  <form action="/hoteldetailpage" method="post">
                               					        <input type="text" name="supplierCode"  value="{{hotelInfo.supplierCode}}" style="display: none;">
                                 					    <input type="text" name="checkIn" value="{{hotelInfo.checkIn}}" style="display: none;">
                               						     <input type="text" name="checkOut" value="{{hotelInfo.checkOut}}" style="display: none;">
                             						     <input type="text" name="nationalityCode" value="{{hotelInfo.nationality}}" style="display: none;">  
                                                  <button type="submit" class="btn-small full-width text-center">VIEW DETAILS</button>
-                                               </form> 
+                                               </form>  -->
                                             </div> 
                                         </div>
                                     </div>
@@ -260,9 +260,7 @@
                                     <div>
                                          <div class="col-md-6" style="width:50% !important;border-bottom: none !important;border-right: none;">  <!-- style="width: 106px;" -->
                                          <!-- <i class="soap-icon-check-1" style="color: #7db921;"></i> -->
-                                         <h4 class="box-title col-md-6">{{roominfo.roomName}}</h4>
-                                        <!--  <label class="col-md-6">  
-                                              </label> -->
+                                         <h4 class="box-title col-md-6">{{roominfo.roomName}}<span ng-if="roominfo.applyPromotion == 1"><a ng-click="showPromotion(roominfo)"><i class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span></h4>
                                               <div class="amenities col-md-6">   
                                              <div  ng-repeat="ameniti in roominfo.amenities"> 
                                              <div class="col-md-3" ng-if="ameniti.amenityId == 1">
@@ -298,9 +296,17 @@
                                      </div>
                                    </div>
                                   
-                                    <div class="col-md-9 col-md-offset-2">
-                                   <div class="form-group col-sm-3 col-md-3 col-md-offset-9" style="width: 150px;">
-                                     <a class="button btn-small full-width text-center" ng-click="dateWiseInfo($index)" style="background: #98ce44;margin-top: 2%;margin-left: 71%;" title="">DAY-WISE VIEW</a>
+                                    <div class="col-md-9 col-md-offset-3">
+                                   <div class="form-group col-sm-3 col-md-3 col-md-offset-9" style="margin-top: 4px;">
+                                     <!-- <a class="button btn-small full-width text-center" ng-click="dateWiseInfo($index)" style="background: #98ce44;margin-top: 2%;margin-left: 71%;" title="">DAY-WISE VIEW</a> -->
+                                      <form action="/hoteldetailpage" method="post">
+                              					        <input type="text" name="supplierCode"  value="{{hotelInfo.supplierCode}}" style="display: none;">
+                                					    <input type="text" name="checkIn" value="{{hotelInfo.checkIn}}" style="display: none;">
+                              						     <input type="text" name="checkOut" value="{{hotelInfo.checkOut}}" style="display: none;">
+                            						     <input type="text" name="nationalityCode" value="{{hotelInfo.nationality}}" style="display: none;">  
+                                                 <button type="submit" class="btn-small full-width text-center">VIEW DETAILS</button>
+                                               </form> 
+                                     
                                      </div>
                                    </div> 
                                   	
@@ -311,10 +317,10 @@
                             </div>
                            <!--  <a href="#" class="uppercase full-width button btn-large">load more listing</a> -->
                         
-                        <span class="dpagingright">
+                      <!--   <span class="dpagingright">
                 	<a href="" class="dpagingprv" ng-click="onPrev()">Prev</a>
                 	<a href="" class="dpagingnxt" ng-click="onNext()">Next</a>
-                </span>
+                </span> -->
                         </div>
                     </div>
                 </div>

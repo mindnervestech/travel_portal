@@ -1,0 +1,222 @@
+@(hotel: com.fasterxml.jackson.databind.JsonNode)
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!--[if IE 8]>          <html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>          <html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->  <html> <!--<![endif]-->
+<head>
+    <!-- Page Title -->
+    <title>Travelo | Responsive HTML5 Travel Template</title>
+    
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Travelo | Responsive HTML5 Travel Template">
+    <meta name="author" content="SoapTheme">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	@include_css()
+    
+    <!-- CSS for IE -->
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" type="text/css" href="assets/resources/css/ie.css" />
+    <![endif]-->
+    
+    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script type='text/javascript' src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+</head>
+
+<body data-ng-app="travel-business" data-ng-controller="hotelBookingController">
+    
+    <div id="page-wrapper">
+        @header()
+        <div class="page-title-container">
+            <div class="container">
+                <div class="page-title pull-left">
+                    <h2 class="entry-title">Hotel Detailed</h2>
+                </div>
+                <ul class="breadcrumbs pull-right">
+                    <li><a href="#">HOME</a></li>
+                    <li class="active">HOTEL DETAILED</li>
+                </ul>
+            </div>
+        </div>
+      
+       <section id="content" ng-init="init(@hotel)">  
+            <div class="container">
+                <div class="row">
+                 <div id="main" class="col-sms-6 col-sm-8 col-md-9">
+                        <div class="booking-section travelo-box">
+                            
+                            <form class="booking-form" method="post" data-ng-submit="savetravellerinfo()">
+                                <div class="person-information">
+                                    <h2>Booking Information</h2>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 col-md-5">
+                                            <label>traveller first name</label>
+                                            <input type="text" data-ng-model="traveller.firstname" class="input-text full-width" value="" placeholder="" required>
+                                        </div>
+                                        <div class="col-sm-6 col-md-5">
+                                            <label>traveller last name</label>
+                                            <input type="text" data-ng-model="traveller.lastname" class="input-text full-width" value="" placeholder="" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 col-md-5">
+                                            <label>traveller email address</label>
+                                            <input type="email" data-ng-model="traveller.email" class="input-text full-width" value="" placeholder="" required>
+                                        </div>
+                                         <div class="col-sm-6 col-md-5">
+                                            <label>traveller Phone number</label>
+                                            <input type="text" data-ng-model="traveller.phnaumber" class="input-text full-width" value="" placeholder="" required>
+                                        </div>
+                                    
+                                    </div>
+                                     <div class="form-group row">
+                                        <div class="col-sm-6 col-md-5">
+                                            <label>Country code</label>
+                                            <div class="selector">
+                                                <select class="full-width" name="countryCode" data-ng-model="traveller.country" ng-change="onCountryChange()" placeholder="Country" > 
+                                                        <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-5">
+                                            <label>Addresss</label>
+                                            <textarea data-ng-model="traveller.address" class="input-text full-width" value="" placeholder="" required></textarea>
+                                        </div>
+                                    </div> 
+                                    <!-- <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"> I want to receive <span class="skin-color">Travelo</span> promotional offers in the future
+                                            </label>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <hr>
+                             
+                                <div class="form-group row">
+                                    <div class="col-sm-6 col-md-5">
+                                        <button type="submit" class="full-width btn-large">CONFIRM BOOKING</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                   <div class="sidebar col-sms-6 col-sm-4 col-md-3">
+                        <div class="booking-details travelo-box">
+                            <h4>Booking Details</h4>
+                            <article class="image-box hotel listing-style1">
+                                <figure class="clearfix">
+                                    <a href="hotel-detailed.html" class="hover-effect middle-block" style="position: relative;"><img class="middle-item" width="270" height="160" alt=""  data-ng-src="{{hotel.imgPaths}}" style="position: absolute; top: 50%; margin-top: -37.5px; left: 50%; margin-left: -63.5px;"></a>
+                                    <div class="travel-title">
+                                        <h5 class="box-title">{{hotel.hotelNm}}<small>{{hotel.hotelAddr}}</small></h5>
+                                       <!--  <a href="hotel-detailed.html" class="button">EDIT</a> -->
+                                    </div>
+                                </figure>
+                                <div class="details">
+                                    <div class="feedback">
+                                        <div data-placement="bottom" data-toggle="tooltip" class="five-stars-container" title="" data-original-title="4 stars"><span style="width: 80%;" class="five-stars"></span></div>
+                                        <span class="review">270 reviews</span>
+                                    </div>
+                                    <div class="constant-column-3 timing clearfix">
+                                        <div class="check-in">
+                                            <label>Check in</label>
+                                            <span>NOV 30, 2013<br>11 AM</span>
+                                        </div>
+                                        <div class="duration text-center">
+                                            <i class="soap-icon-clock"></i>
+                                            <span>2 Nights</span>
+                                        </div>
+                                        <div class="check-out">
+                                            <label>Check out</label>
+                                            <span>DEC 02, 2013<br>2 PM</span>
+                                        </div>
+                                    </div>
+                                    <div class="guest">
+                                        <small class="uppercase">1 Standard family room for <span class="skin-color">3 Persons</span></small>
+                                    </div>
+                                </div>
+                            </article>
+                            
+                            <h4>Other Details</h4>
+                            <dl class="other-details">
+                                <dt class="feature">room Type:</dt><dd class="value">{{hotel.hotelbyRoom[0].roomName}}</dd>
+                                <dt class="feature">No Of Room:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}}</dd>
+                                <dt class="feature">Total Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.total}}<sup style="color: chocolate;top: -2px;" class="ng-binding">{{hotel.currencyShort}}</sup></dd>
+                                <!-- <dt class="feature">taxes and fees:</dt><dd class="value">$10</dd> -->
+                                <dt class="total-price">Total Price</dt><dd class="total-price-value">{{hotel.hotelBookingDetails.total}}<sup style="color: chocolate;top: -2px;" class="ng-binding">{{hotel.currencyShort}}</sup></dd>
+                            </dl>
+                        </div>
+                        
+                        <div class="travelo-box contact-box">
+                            <h4>Need Travelo Help?</h4>
+                            <p>We would be more than happy to help you. Our team advisor are 24/7 at your service to help you.</p>
+                            <address class="contact-details">
+                                <span class="contact-phone"><i class="soap-icon-phone"></i> 1-800-123-HELLO</span>
+                                <br>
+                                <a class="contact-email" href="#">helravelocom</a>
+                            </address>
+                        </div>
+                    </div>
+            </div>
+          </div>
+        </section>
+                        
+        
+        
+    </div>
+    @include_js()
+    
+    <!-- Google Map Api -->
+    <!-- <script type='text/javascript' src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
+    <script type="text/javascript" src="js/gmap3.min.js"></script> -->
+
+
+    <script type="text/javascript" src="assets/resources/javascripts/travelbusiness/searchHotel/app.js"></script>
+	<script type="text/javascript" src="assets/resources/javascripts/travelbusiness/searchHotel/controller.js"></script>
+	
+    <script type="text/javascript">
+        tjq(document).ready(function() {
+            tjq("#price-range").slider({
+                range: true,
+                min: 0,
+                max: 1000,
+                values: [ 100, 800 ],
+                slide: function( event, ui ) {
+                    tjq(".min-price-label").html( "$" + ui.values[ 0 ]);
+                    tjq(".max-price-label").html( "$" + ui.values[ 1 ]);
+                }
+            });
+            tjq(".min-price-label").html( "$" + tjq("#price-range").slider( "values", 0 ));
+            tjq(".max-price-label").html( "$" + tjq("#price-range").slider( "values", 1 ));
+            
+            tjq("#rating").slider({
+                range: "min",
+                value: 40,
+                min: 0,
+                max: 50,
+                slide: function( event, ui ) {
+                    
+                }
+            });
+        });
+    </script>
+    <style>
+    [class^="soap-icon"]:before, [class*=" soap-icon"]:before{
+		line-height: inherit;
+		}
+     #booking .booking-info .info{
+               width: 110px !important;
+        }
+  </style>
+</body>
+</html>
+  

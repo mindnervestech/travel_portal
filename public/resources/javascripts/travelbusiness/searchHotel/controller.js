@@ -141,19 +141,7 @@ $http.get("/searchCountries").success(function(response) {
 			   $scope.sort = 0;
 		   }
 		   console.log($scope.sort);
-		   /*$http.get('/getSortHotel/'+$scope.hotellistInfo[0].checkIn+"/"+$scope.hotellistInfo[0].checkOut+"/"+$scope.hotellistInfo[0].nationality+"/"+$scope.hotellistInfo[0].cityCode+"/"+$scope.hotellistInfo[0].startRating+"/"+$scope.sort)
-			.success(function(response){
-				
-				$scope.hotellistInfo = response;
-				angular.forEach(response, function(obj, index){ ///hotel_profile
-					$scope.img = "/searchHotelInfo/getHotelImagePath/"+response[index].supplierCode+"?d="+new Date().getTime();
-					$scope.hotellistInfo[index].imgPaths = $scope.img;
-								
-				});
-				console.log($scope.hotellistInfo);
-			});*/
-		   
-		   
+		  		   
 		   console.log($scope.hotellistInfo);
 			$scope.findHotelData.checkIn = $scope.hotelAllData.hotellist[0].checkIn;
 			$scope.findHotelData.checkOut = $scope.hotelAllData.hotellist[0].checkOut;
@@ -200,7 +188,19 @@ $http.get("/searchCountries").success(function(response) {
 	}
 	
 	
-	$scope.dateWiseInfo = function(index){
+	$scope.showPromotion = function(roominfo){
+		
+		$scope.roomPromotion=roominfo;
+		
+		ngDialog.open({
+			template: '/assets/resources/html/promotionInfo.html',
+			scope : $scope,
+			//controller:'hoteProfileController',
+			className: 'ngdialog-theme-default'
+		});
+	}
+	
+/*	$scope.dateWiseInfo = function(index){
 		console.log(index);
 		$scope.hotelIF = $scope.hotellistInfo[index];
 		console.log($scope.hotelIF);
@@ -278,9 +278,9 @@ $http.get("/searchCountries").success(function(response) {
 			//controller:'hoteProfileController',
 			className: 'ngdialog-theme-default'
 		});
-	}
+	}*/
 	
-	$scope.showAdult=function(roomid){
+	/*$scope.showAdult=function(roomid){
 		$scope.rateDatedetail = [];
 		
 		$http.get('/getDatewiseHotelRoom/'+$scope.hotelIF.checkIn+"/"+$scope.hotelIF.checkOut+"/"+$scope.hotelIF.nationality+"/"+$scope.hotelIF.supplierCode+"/"+roomid)
@@ -348,10 +348,10 @@ $http.get("/searchCountries").success(function(response) {
 	
 		
 		
-	}
+	}*/
 	
 	
-	$scope.showRate=function(adultValue){
+	/*$scope.showRate=function(adultValue){
 				
 		$scope.rateDatedetail = [];
 		var total = 0;
@@ -404,7 +404,7 @@ $http.get("/searchCountries").success(function(response) {
 		console.log($scope.rateDatedetail);
 		console.log($scope.total);
 		
-	}
+	}*/
 	
 	$scope.services_check = [];
 	$scope.servicesWiseHotel = function(index,servicesid){
@@ -475,10 +475,11 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.findHotelData.checkOut = $scope.hotelAllData.hotellist[0].checkOut;
 		$scope.findHotelData.city = $scope.hotelAllData.hotellist[0].cityCode;
 		$scope.findHotelData.nationalityCode = $scope.hotelAllData.hotellist[0].nationality;
-		$scope.findHotelData.id = $scope.hotelAllData.hotellist[0].startRating;
+		//$scope.findHotelData.id = $scope.hotelAllData.hotellist[0].startRating;
 		$scope.findHotelData.amenitiesCheck = $scope.amenities_check;
 		$scope.findHotelData.servicesCheck = $scope.services_check;
 		$scope.findHotelData.locationCheck = $scope.location_check;
+		$scope.findHotelData.sortData = $scope.sort;
 		
 			console.log($scope.findHotelData);
 		
@@ -610,7 +611,7 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 	
 	$scope.availability = function(){
 		
-		$scope.rateDatedetail = [];
+		/*$scope.rateDatedetail = [];
 		$http.get('/getDatewiseHotelRoom/'+$scope.hotel.checkIn+"/"+$scope.hotel.checkOut+"/"+$scope.hotel.nationality+"/"+$scope.hotel.supplierCode+"/"+$scope.hotel.hotelbyRoom[0].roomId)
 		.success(function(response){
 			console.log(response);
@@ -676,7 +677,7 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
-		});
+		});*/
 	}
 	
 	
@@ -695,12 +696,16 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 			$scope.date = arr[2];
 			console.log("------");
 			console.log(value.flag);
-			if(value.flag == 1){
+			/*if(value.flag == 1){
 				flag = value.flag;
 				console.log(value.flag);
-				}
+				}*/
 			angular.forEach(value.roomType,function(value1,key1){
 				angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
+					if(value2.flag == 1){
+						flag = value2.flag;
+						console.log(value2.flag);
+					}
 					angular.forEach(value2.rateDetails,function(value3,key3){
 						console.log(value.currencyShort);
 						if(value3.adult == adultValue){
@@ -763,13 +768,17 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 				$scope.date = arr[2];
 				console.log("------");
 				console.log(value.flag);
-				if(value.flag == 1){
+				/*if(value.flag == 1){
 					console.log(value.flag);
 				flag = value.flag;
 				console.log(value.flag);
-				}
+				}*/
 				angular.forEach(value.roomType,function(value1,key1){					
 					angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
+						if(value2.flag == 1){
+							flag = value2.flag;
+						}
+						console.log(flag);
 						angular.forEach(value2.rateDetails,function(value3,key3){
 							console.log(value.currencyShort);
 							if(value3.adult == "1 Adult"){
@@ -854,21 +863,49 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 			className: 'ngdialog-theme-default'
 		});
 	}
-	//c
-	/*currentPage = 1;
 	
-	$scope.onNext = function() {
-		if(currentPage < totalPages) {
-			currentPage++;
-			$scope.searchAnnouncements(currentPage);
-		}
-	};
-	$scope.onPrev = function() {
-		if(currentPage > 1) {
-			currentPage--;
-			$scope.searchAnnouncements(currentPage);
-		}
-	};*/
 	
 });
 
+
+travelBusiness.controller('hotelBookingController', function ($scope,$http,$filter,ngDialog) {
+	
+	$scope.init = function(hotel){
+		$scope.hotel = hotel;
+		
+		angular.forEach(hotel.hotelbyRoom, function(obj, index){ 
+			$scope.Img = "/hotelBookingpage/getHotelImagePath/"+hotel.supplierCode+"?d="+new Date().getTime();
+			$scope.hotel.imgPaths = $scope.Img;
+						
+		});
+		console.log($scope.hotel);
+		console.log(hotel);
+	}
+	
+	$http.get("/searchCountries").success(function(response) {
+		
+		$scope.searchCountries = response;
+	}); 
+	
+	$scope.savetravellerinfo = function(){
+		console.log($scope.traveller);
+		$scope.hotel.hotelBookingDetails.travellerfirstname = $scope.traveller.firstname;
+		$scope.hotel.hotelBookingDetails.travellerlastname = $scope.traveller.lastname;
+		$scope.hotel.hotelBookingDetails.travelleraddress = $scope.traveller.address;
+		$scope.hotel.hotelBookingDetails.travellercountry = $scope.traveller.country;
+		$scope.hotel.hotelBookingDetails.travellerphnaumber = $scope.traveller.phnaumber;
+		$scope.hotel.hotelBookingDetails.travelleremail = $scope.traveller.email;
+		//$scope.hotel.hotelbyDate = null;
+		console.log($scope.hotel);
+		
+		$http.post('/saveHotelBookingInfo',$scope.hotel).success(function(data){
+    		console.log("Success");
+    		// notificationService.success("BatchMarkup Save Successfully");
+    	}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+			//notificationService.error("Please Enter Required Fields");
+		});
+	}
+	
+
+});	

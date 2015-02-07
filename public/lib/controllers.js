@@ -88,7 +88,7 @@ controller("supplierAgreementController",['$scope','$rootScope','notificationSer
 }]
 );
 
-
+/*
 angular.module('travel_portal').
 	controller("allotmentController",['$scope', '$http','notificationService','$rootScope','$filter','$upload','$cookieStore','ngDialog',
 	                                         function($scope, $http,notificationService,$rootScope, $filter, $upload,$cookieStore, ngDialog) {
@@ -425,7 +425,7 @@ angular.module('travel_portal').
 				});
 			}
 			
-			/*$scope.applyToAll = function(allot){
+			$scope.applyToAll = function(allot){
 				console.log(allot);
 				for(var i = 0; i<allot.allocatedCities.length;i++){
 					if(allot.allocatedCities[i].multiSelectGroup == undefined ){
@@ -437,7 +437,7 @@ angular.module('travel_portal').
 					$scope.setSelection(allot);
 				}
 				
-			}*/
+			}
 			
 			
 			$scope.setSelection = function(allot) {
@@ -463,7 +463,7 @@ angular.module('travel_portal').
 	     
 		}]
 );
-
+*/
 
 angular.module('travel_portal').
 	controller("ManageHotelImageController",['$scope', '$http','notificationService','$rootScope','$filter','$upload','ngDialog',
@@ -474,8 +474,6 @@ angular.module('travel_portal').
 		 $scope.opengeneralPic1 = true;
 		 
 		 console.log(supplierCode);
-		 
-		
 		 
 	     $scope.selectGeneralPicImage = function($generalPic)
 	     {
@@ -2469,7 +2467,7 @@ angular.module('travel_portal').
 });
 
 angular.module('travel_portal').
-controller("manageContractsController",['$scope','notificationService','$rootScope','$cookieStore','$http',function($scope,notificationService,$rootScope,$cookieStore,$http){
+controller("manageContractsController",['$scope','notificationService','$rootScope','$cookieStore','$filter','$http',function($scope,notificationService,$rootScope,$cookieStore,$filter,$http){
 	
 	 $scope.currencyname = $cookieStore.get('currency');
 	
@@ -2522,44 +2520,59 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	});
 	
 //	   $scope.roomTypeIns = ( {chargesForChildren:"false"} );
-	
+	$scope.rateMeta = [];
 	
 	$scope.showData = function() {
+		$scope.rateMeta = [];
+		$scope.addNewButton = "false";
+		$scope.showRateUpdate = false;
 		console.log($scope.formData.room);
+		console.log($scope.currencyname);
 		console.log($scope.formData.fromDate);
 		console.log($scope.formData.toDate);
-		console.log($scope.currencyname);
 		
-		if($scope.formData.fromDate < $scope.formData.toDate){
+		var arr = $scope.formData.toDate.split("-");
+		var tDate = (arr[1]+"/"+arr[0]+"/"+arr[2])
+		var arr1 = $scope.formData.fromDate.split("-");
+		var fDate = (arr1[1]+"/"+arr1[0]+"/"+arr1[2])
+	
+	
+		 var toDate = Date.parse(tDate);
+         var fromDate = Date.parse(fDate);
+    
+		
+		if(fromDate < toDate){
 		
 		$http.get('/getRateData/'+$scope.formData.room+'/'+$scope.formData.fromDate+'/'+$scope.formData.toDate+'/'+$scope.currencyname).success(function(response){
 			console.log(response);
-			$scope.rateMeta = response;
+			$scope.rateMeta1 = response;
 			
-			for(var i=0;i<$scope.rateMeta.length;i++) {
+			for(var i=0;i<$scope.rateMeta1.length;i++) {
 				
 				//if($scope.rateMeta[i].applyToMarket == false){
 				//	console.log($scope.rateMeta[i].id);
-					$scope.showMarketTable($scope.rateMeta[i]);
+					$scope.showMarketTable($scope.rateMeta1[i]);
 				//}else{
 					
 			//	}
 				
 				}
 			/*$scope.rateData = [{meals:'Lunch'}];*/
-			console.log($scope.rateMeta);
-			if(angular.isUndefined($scope.rateMeta) || $scope.rateMeta == "") {
+			console.log($scope.rateMeta1);
+			if(angular.isUndefined($scope.rateMeta1) || $scope.rateMeta1 == "") {
 				$scope.messageShow = "No Rate Found For This Period please";
 				$scope.link = "Add New Rate";
 				$scope.addNewButton = "false";
 				$scope.showRateUpdate = false;
+				$scope.tableshow = false;
 				$scope.showPeriod = false;
 			} else {
 			//	 $scope.showMarketTable($scope.rateMeta);
-				$scope.addNewButton = "true";
+				//$scope.addNewButton = "true";
 				$scope.messageShow = " ";
 				$scope.link = " ";
-				$scope.showRateUpdate = true;
+				$scope.tableshow = true;
+				//$scope.showRateUpdate = true;
 				$scope.showPeriod = false;
 			}
 			 
@@ -2572,6 +2585,16 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			alert("Data max");
 		}
 	};
+	
+	$scope.EditThisRate = function(rate){
+		console.log(rate);
+		$scope.tableshow = false;
+		$scope.addNewButton = "true";
+		$scope.showRateUpdate = true;
+		console.log($scope.rateMeta);
+		$scope.rateMeta[0] = rate;
+		console.log($scope.rateMeta);
+	}
 	
 	$scope.createNewRate = function() {
 		
@@ -2593,6 +2616,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			$scope.messageShow = " ";
 			$scope.link = " ";
 		});
+		$scope.tableshow = false;
 		$scope.showPeriod = true;
 	};
 	
@@ -2717,9 +2741,38 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			$scope.showRemoveRate = false;
 		}
 	};
-	
+	$scope.selectstopsell = function(allot)
+	{
+		console.log(allot);
+		allot.period = null;
+		allot.choose = null;
+		
+	}
+	$scope.selectRoomAll = function(allot){
+		console.log(allot);
+		allot.fromDate = null;
+		allot.toDate = null;
+		allot.stopPeriod = null;
+		allot.stopChoose = null;
+	}
+	$scope.selectFreesell = function(allot)
+	{
+		console.log(allot);
+		allot.choose = null;
+		allot.fromDate = null;
+		allot.toDate = null;
+		allot.stopPeriod = null;
+		allot.stopChoose = null;
+		
+	}
+	$scope.selectstopfreeSale = function(allot){
+		console.log(allot);
+		allot.stopPeriod = null;
+		allot.stopChoose = null;
+	}
 	$scope.saveRate = function() {
 		console.log($scope.rateObject);
+		console.log($scope.rateMeta1);
 		
 		for(var i=0;i<$scope.rateObject.length;i++) {
 			console.log(i);
@@ -2736,8 +2789,26 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			//	}
 		
 		}
+		var flag = 0;
 		console.log($scope.rateObject);
-		
+		 angular.forEach($scope.rateObject, function(value, key){
+			 angular.forEach(value.allocatedCities, function(value1, key1){
+				 angular.forEach($scope.rateMeta1,function(value2, key2){
+					 angular.forEach(value2.allocatedCountry,function(value3, key3){
+					 
+				 if(value1.ticked == true){
+					 console.log(value1.name);
+					 console.log(value3);
+					 if(value1.name == value3){
+						flag = 1; 
+					 }
+				 	}
+				   });
+				 });
+			  });
+			});
+		 console.log(flag);
+		if(flag == 0){
 		$http.post('/saveRate', {"rateObject":$scope.rateObject}).success(function(data){
 			console.log('success');
 			 notificationService.success("Save Successfully");
@@ -2746,10 +2817,34 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			console.log('ERROR');
 			 notificationService.error("Please enter required fields");
 		});
+		}else{
+			notificationService.error("Rate already Exist For This Market");
+		}
 	};
 	
 	$scope.updateRateMeta = function() {
 		console.log($scope.rateMeta);
+		var flag = 0;
+		 angular.forEach($scope.rateMeta, function(value, key){
+			 angular.forEach(value.allocatedCities, function(value1, key1){
+				 angular.forEach($scope.rateMeta1,function(value2, key2){
+					 if(value.id != value2.id){
+					 angular.forEach(value2.allocatedCountry,function(value3, key3){
+					
+		 		 if(value1.ticked == true){
+					
+					 if(value1.name == value3){
+						flag = 1; 
+					 }
+				 	}
+				   });
+				}	 
+				 });
+			  });
+			});
+		
+		 console.log(flag);
+			if(flag == 0){
 		$http.post('/updateRateMeta', {"rateObject":$scope.rateMeta}).success(function(data){
 			console.log('success');
 			 notificationService.success("Update Successfully");
@@ -2758,6 +2853,9 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
 		});
+	  }else{
+			notificationService.error("Rate already Exist For This Market");
+		}
 	};
 	
 	$scope.deleteRate = function(id,index) {
@@ -2765,13 +2863,34 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	    if (r == true) {
 	    	$http.get('/deleteRate/'+id).success(function(response){			
 				$scope.rateMeta.splice(index,1);
+				$scope.addNewButton = "false";
+				$scope.showRateUpdate = false;
 			});
 	        alert("Delete Successfully !");
 	    }	
 		
 	}
 	
-	////
+	$scope.checkCountry = function(data){
+		console.log(data);
+		
+		var flag = 0;
+		
+		 angular.forEach($scope.rateMeta1,function(value, key){
+			 angular.forEach(value.allocatedCountry,function(value1, key1){
+				 if(value1 == data.name && data.ticked == true){
+					 
+					 flag = 1;
+				 }
+			 });
+		 });
+		if(flag == 1){
+			data.ticked = false;
+			
+			 notificationService.error("Rate already Exist For This Market");
+		}
+		
+	}
     
     $scope.selectedRatesId;
 	console.log($scope.selectedRatesId);
@@ -3078,6 +3197,7 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 	
 	
 	$scope.createNewPeriod = function() {
+		$scope.specialsObject = [];
 		$http.get('/getSpecialsObject').success(function(response){
 			$scope.specialsObject.push(response);
 			console.log($scope.specialsObject);
@@ -3201,7 +3321,15 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 		
 		}	
 		
-		if($scope.specialsObject[0].fromDate < $scope.specialsObject[0].toDate){
+		var arr = $scope.specialsObject[0].toDate.split("-");
+		var tDate = (arr[1]+"/"+arr[0]+"/"+arr[2])
+		var arr1 = $scope.specialsObject[0].fromDate.split("-");
+		var fDate = (arr1[1]+"/"+arr1[0]+"/"+arr1[2])
+	
+		 var toDate = Date.parse(tDate);
+         var fromDate = Date.parse(fDate);
+		
+		if(fromDate < toDate){
 			if($scope.specialsObject[0].promotionName != null){
 				if($scope.specialsObject[0].roomTypes.length != 0){
 			$http.post('/saveSpecials', {"specialsObject":$scope.specialsObject}).success(function(data){
@@ -3249,6 +3377,11 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 	
 	$scope.updatePeriod = function() {
 		$scope.specialsData[0].supplierCode = supplierCode;
+		//$scope.specialsData[0].
+		console.log($scope.rooms);
+		/*if($scope.specialsData[0].roomTypes == []){
+			
+		}*/
 		console.log($scope.specialsData);
 		$http.post('/updateSpecials', {"specialsObject":$scope.specialsData}).success(function(data){
 			console.log('success');
@@ -3270,6 +3403,8 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 		$http.get('/getSpecialsData/'+$scope.formData.fromDate+'/'+$scope.formData.toDate+'/'+$scope.formData.promotionName).success(function(response){
 			console.log(response);
 			$scope.specialsData = response;
+			//$scope.specialsData[0].roomTypes = [];
+			//$scope.specialsData[0].roomTypes = $scope.specialsData[0].roomallInfo;
 			console.log($scope.specialsData);
 			for(var i=1;i<$scope.specialsData[0].markets.length;i++){
 				 $scope.showMarketTable($scope.specialsData[0].markets[i]);
@@ -3300,8 +3435,18 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 				var i,j,k;
 				for(i=0;i<$scope.specialsData.length;i++) {
 					for(j=0;j<$scope.rooms.length;j++) {
-						for(k=0;k<$scope.specialsData[i].roomTypes.length;k++) {
-							if($scope.rooms[j].roomType == $scope.specialsData[i].roomTypes[k]) {
+						for(k=0;k<$scope.specialsData[i].roomallInfo.length;k++) {
+							
+								$scope.rooms[j].isSelected = false;
+							
+						};
+					};
+				};
+				
+				for(i=0;i<$scope.specialsData.length;i++) {
+					for(j=0;j<$scope.rooms.length;j++) {
+						for(k=0;k<$scope.specialsData[i].roomallInfo.length;k++) {
+							if($scope.rooms[j].roomId == $scope.specialsData[i].roomallInfo[k].roomId) {
 								$scope.rooms[j].isSelected = true;
 							}
 						};
@@ -3312,7 +3457,9 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 			
 			console.log($scope.rooms);
 		});
+	
 	}
+	
 	
 	
 	$scope.selectedRatesId;
@@ -3688,7 +3835,6 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     	}
     		
     	console.log($scope.batchMarkup);
-    	
    
     	$http.post('/savebatchMarkup',$scope.batchMarkup).success(function(data){
     		console.log("Success");
@@ -3947,3 +4093,8 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     }
     
 }]);
+
+
+
+//RateMeta rates = RateMeta.getRatesById(id);
+//for(Country cty : rates.getCountry()){

@@ -1,5 +1,6 @@
 package com.travelportal.controllers;
 
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,12 +11,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.math.BigInt;
 
 import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelProfile;
@@ -27,8 +30,13 @@ import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RoomAmenities;
+import com.travelportal.domain.rooms.Specials;
+import com.travelportal.domain.rooms.SpecialsMarket;
+import com.travelportal.vm.AllotmentMarketVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.RoomAmenitiesVm;
+import com.travelportal.vm.RoomType;
+import com.travelportal.vm.SearchAllotmentMarketVM;
 import com.travelportal.vm.SearchRateDetailsVM;
 import com.travelportal.vm.SearchSpecialRateVM;
 import com.travelportal.vm.SerachHotelRoomType;
@@ -36,43 +44,38 @@ import com.travelportal.vm.SerachedHotelbyDate;
 import com.travelportal.vm.SerachedRoomRateDetail;
 import com.travelportal.vm.SerachedRoomType;
 import com.travelportal.vm.ServicesVM;
+import com.travelportal.vm.SpecialsMarketVM;
+import com.travelportal.vm.SpecialsVM;
 
 public class AllRateController extends Controller {
 
 	@Transactional(readOnly = true)
     public static Result getDatewiseHotel() {
     	DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-    	  	
     		
     	int flag = 0;
 
+    	long diffInpromo = 0;
+    	
     	Map<String, Object> mapObject = new HashMap<String, Object>();
     	List<HotelSearch> hotellist = new ArrayList<>();
 		Map<String, String[]> map1 = request().queryString();
 		Map<Long, Long> map = new HashMap<Long, Long>();
 	
-		//Map<Long, Long> mapRate = new HashMap<Long, Long>();
 		Set<String> mapDate = new HashSet<String>();
-		// String[] roomId = map1.get("roomId");
-		System.out.println("_+_+_++_");
-		System.out.println(map1.get("10-01-2015"));
-		String[] fromDate ={"10-01-2015"};
-		String[] toDate = {"13-01-2015"};
+		System.out.println(map1.get("10-02-2015"));
+		String[] fromDate ={"10-02-2015"};
+		String[] toDate = {"14-02-2015"};
 		String[] cId = {"2"};
-		String[] sId =  {"1"};
+		//String[] sId =  {"1"};
 		String[] cityId = {"1"};
 
-    		Date fmDate = null;
-    		Date tDate = null;
-
-    		int j = 0;
-    		
-    		List<RateMeta> rateMeta = RateMeta.getdatecheck(
+    	    		
+    		List<BigInteger> rateMeta = RateMeta.getsupplierId(
     				Integer.parseInt(cityId[0]),
     				Integer.parseInt(cId[0])); // Long.parseLong(roomId[0]),  Integer.parseInt(sId[0]),
 
-    		for (RateMeta rate1 : rateMeta) {
-
+    		for (BigInteger rate1 : rateMeta) {
     			Date formDate = null;
     			Date toDates = null;
     			try {
@@ -86,36 +89,24 @@ public class AllRateController extends Controller {
     			c.setTime(formDate);
     			c.set(Calendar.MILLISECOND, 0);
 
-    			Calendar c1 = Calendar.getInstance();
-    			c1.setTime(toDates);
-    			c1.set(Calendar.MILLISECOND, 0);
-
-    			Calendar fromdata = Calendar.getInstance();
-    			fromdata.setTime(rate1.getFromDate());
-    			fromdata.set(Calendar.MILLISECOND, 0);
-
-    			Calendar todata = Calendar.getInstance();
-    			todata.setTime(rate1.getToDate());
-    			todata.set(Calendar.MILLISECOND, 0);
+    			
     			long dayDiff;
     			if(toDates.getTime() == formDate.getTime()){
     				dayDiff = 1;
+    				diffInpromo = dayDiff;
     			}else{
     				long diff = toDates.getTime() - formDate.getTime();
 
     				dayDiff = diff / (1000 * 60 * 60 * 24);
+    				diffInpromo = dayDiff;
     			}
 
     			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
     			HotelSearch hProfileVM = new HotelSearch();
-    			Long object = (Long) map.get(rate1.getSupplierCode());
-    			HotelProfile hAmenities = HotelProfile.findAllData(rate1
-    					.getSupplierCode());
+    			Long object = map.get(rate1.longValue());
+    			HotelProfile hAmenities = HotelProfile.findAllData(rate1.longValue());
     			if (object == null) {
 
-    				Double total = 0.0;
-    				Double avg = 0.0;
-    				int value = 0;
 
     				hProfileVM.setSupplierCode(hAmenities.getSupplier_code());
     				hProfileVM.setHotelNm(hAmenities.getHotelName());
@@ -149,11 +140,12 @@ public class AllRateController extends Controller {
     				hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
     				
     				hProfileVM.setFlag("0");
+    				
+    				
     				for (int i = 0; i < dayDiff; i++) {
-
-    					System.out.println(rate1.getSupplierCode());
+    					
     					List<HotelRoomTypes> roomType = HotelRoomTypes
-    							.getHotelRoomDetails(rate1.getSupplierCode());
+    							.getHotelRoomDetails(rate1.longValue());
     					int days = c.get(Calendar.DAY_OF_WEEK)-1;
     					SerachedHotelbyDate hotelBydateVM = new SerachedHotelbyDate();
     					hotelBydateVM.setDate(format.format(c.getTime()));
@@ -161,12 +153,13 @@ public class AllRateController extends Controller {
     					Map<Long, Long> mapRate = new HashMap<Long, Long>();
     					List<SerachedRoomType> roomlist = new ArrayList<>();
     					for (HotelRoomTypes room : roomType) {
+    						int count=0;
     						Long objectRm = (Long) mapRm.get(room.getRoomId());
+    						//
     						if (objectRm == null) {
 
-    							List<RateMeta> rateMeta1 = RateMeta.getdatecheck1(
+    							List<RateMeta> rateMeta1 = RateMeta.getdatecheck(
     									room.getRoomId(),
-    									Integer.parseInt(cityId[0]),
     									//Integer.parseInt(sId[0]),
     									Integer.parseInt(cId[0]), c.getTime(),
     									hAmenities.getSupplier_code()); // Long.parseLong(roomId[0])
@@ -174,6 +167,40 @@ public class AllRateController extends Controller {
     							int ib = 1;
     							List<SerachedRoomRateDetail> list = new ArrayList<>();
     							SerachedRoomType roomtyp = new SerachedRoomType();
+    							
+    							List<SpecialsVM> listsp = new ArrayList<>();
+    							List<Specials> specialsList = Specials.findSpecialByDateandroom(c.getTime(),room.getRoomId());
+    							for(Specials special : specialsList) {
+    								SpecialsVM specialsVM = new SpecialsVM();
+    								specialsVM.id = special.getId();
+    								specialsVM.fromDate = format.format(special.getFromDate());
+    								specialsVM.toDate = format.format(special.getToDate());
+    								specialsVM.promotionName = special.getPromotionName();
+    								specialsVM.supplierCode = special.getSupplierCode();
+    								    								
+    							List<SpecialsMarket> marketList = SpecialsMarket.findBySpecialsIdnationality(special.getId(),Integer.parseInt(cId[0]));
+    								for(SpecialsMarket market : marketList) {
+    									SpecialsMarketVM vm = new SpecialsMarketVM();
+    									vm.combined = market.isCombined();
+    									vm.multiple = market.isMultiple();
+    									vm.payDays = market.getPayDays();
+    									vm.stayDays = market.getStayDays();
+    									vm.typeOfStay = market.getTypeOfStay();
+    									vm.applyToMarket = market.getApplyToMarket();
+    									vm.id = market.getId();
+    										specialsVM.markets.add(vm);
+    								}
+    								if(!specialsVM.markets.isEmpty()){
+    								listsp.add(specialsVM);
+    								}
+    								
+    							}
+    							roomtyp.setSpecials(listsp);
+    							 
+    							if(!roomtyp.getSpecials().isEmpty()){
+    								count++;
+    								roomtyp.setPcount(count);
+    	    					}
     							
     							for (RateMeta rate : rateMeta1) {
     								roomtyp.setRoomId(room.getRoomId());
@@ -199,16 +226,46 @@ public class AllRateController extends Controller {
 
     								AllotmentMarket alloMarket = AllotmentMarket
     										.getOneMarket(rate.getId());
+    								int flag1=0;
+    								SearchAllotmentMarketVM Allvm = new SearchAllotmentMarketVM();
 
+    								if (alloMarket != null) {
+    									
+    									Allvm.setAllotmentMarketId(alloMarket.getAllotmentMarketId());
+    									Allvm.setAllocation(alloMarket.getAllocation());
+    									Allvm.setChoose(alloMarket.getChoose());
+    									Allvm.setPeriod(alloMarket.getPeriod());
+    									Allvm.setSpecifyAllot(alloMarket.getSpecifyAllot());
+    									Allvm.setApplyMarket(alloMarket.getApplyMarket());
+    									Allvm.setStopAllocation(alloMarket.getStopAllocation());
+    									Allvm.setStopPeriod(alloMarket.getStopPeriod());
+    									if(alloMarket.getFromDate() != null){
+    									Allvm.setFromDate(format.format(alloMarket.getFromDate()));
+    									}
+    									if(alloMarket.getToDate() != null){
+    									Allvm.setToDate(format.format(alloMarket.getToDate()));
+    									}
+    									if(alloMarket.getAllocation() == 2){
+    										//Allvm.setFlag(1);
+    										flag1 =1;
+    									}
+    									/*AllotmentMarket allotflag = AllotmentMarket
+        										.getnationalitywiseMark(alloMarket.getAllotmentMarketId(),Integer.parseInt(cId[0]));
+    									
+    									if(allotflag == null){
+    										//Allvm.setFlag(1);
+    										flag1 =1;
+    									}*/
+    								}
+    								
     								SerachedRoomRateDetail rateVM = new SerachedRoomRateDetail();
     								rateVM.setAdult_occupancy(room
     										.getMaxAdultOccupancy());
     								rateVM.setId(rate.getId());
-
+    								rateVM.setFlag(flag1);
+    								rateVM.setAllotmentmarket(Allvm);
+    								    								
     								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
-    								
-    								
-    								
     								if (rateDetails.getSpecialDays() != null) {
     									String week[] = rateDetails
     											.getSpecialDays().split(",");
@@ -249,8 +306,6 @@ public class AllRateController extends Controller {
     										}
     									}
     								}							
-    								System.out.println("&^%^&%$^%$^");
-    								System.out.println(specialRateVM.rateDay6);
     								for (PersonRate person : personRate) {
     									
     									if(rateDetails.isSpecialRate() == true){
@@ -260,8 +315,8 @@ public class AllRateController extends Controller {
     													person);										
     											vm.rateAvg = person.getRateValue();
     											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
+    											vm.mealTypeName = person.getMealType().getMealTypeNm();
+    											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
     											}
@@ -271,8 +326,8 @@ public class AllRateController extends Controller {
     													person);										
     											vm.rateAvg = person.getRateValue();
     											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
+    											vm.mealTypeName = person.getMealType().getMealTypeNm();
+    											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
     											}
@@ -282,8 +337,8 @@ public class AllRateController extends Controller {
     													person);										
     											vm.rateAvg = person.getRateValue();
     											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
+    											vm.mealTypeName = person.getMealType().getMealTypeNm();
+    											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
     											}
@@ -293,8 +348,8 @@ public class AllRateController extends Controller {
     													person);										
     											vm.rateAvg = person.getRateValue();
     											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
+    											vm.mealTypeName = person.getMealType().getMealTypeNm();
+    											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
     											}
@@ -304,8 +359,8 @@ public class AllRateController extends Controller {
     													person);										
     											vm.rateAvg = person.getRateValue();
     											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
+    											vm.mealTypeName = person.getMealType().getMealTypeNm();
+    											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
     											}
@@ -315,8 +370,8 @@ public class AllRateController extends Controller {
     													person);										
     											vm.rateAvg = person.getRateValue();
     											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
+    											vm.mealTypeName = person.getMealType().getMealTypeNm();
+    											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
     											}
@@ -326,8 +381,8 @@ public class AllRateController extends Controller {
     													person);										
     											vm.rateAvg = person.getRateValue();
     											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
+    											vm.mealTypeName = person.getMealType().getMealTypeNm();
+    											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
     											}
@@ -337,32 +392,56 @@ public class AllRateController extends Controller {
     													person);
     											vm.rateAvg = person.getRateValue();
     											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
+    											vm.mealTypeName = person.getMealType().getMealTypeNm();
+    											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
     											}
     										}
     										
     									}else{
+    																				
     										if (person.isNormal() == true) {
     											SearchRateDetailsVM vm = new SearchRateDetailsVM(
     													person);
     											vm.rateAvg = person.getRateValue(); 
     											if(person.getMealType() != null){
-    												vm.mealTypeName = person.getMealType().getMealTypeNm();
-    												}
+    											vm.mealTypeName = person.getMealType().getMealTypeNm();
+    											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
     											}
     									}
-    								}
+    									
+    									
+    									if (person.isNormal() == true) {
+    										SearchRateDetailsVM vm = new SearchRateDetailsVM(
+    												person);
+    										vm.rateAvg = person.getRateValue(); 
+    										rateVM.rateDetails.add(vm);
+    										//normalRateVM.rateDetails.add(vm);
+    										if (person.getNumberOfPersons().equals(
+    												"1 Adult")) {
+    											
+    										
+    										}
+    									}
 
+    									if (person.isNormal() == false) {
+    										SearchRateDetailsVM vm = new SearchRateDetailsVM(
+    												person);										
+    										vm.rateAvg = person.getRateValue();
+    										specialRateVM.rateDetails.add(vm);
+    										
+    									}
+
+    								}
 
     								list.add(rateVM);
     							
     							}
     							mapRm.put(room.getRoomId(), Long.parseLong("1"));
+    							
     							roomtyp.setHotelRoomRateDetail(list);
     							if(!roomtyp.hotelRoomRateDetail.isEmpty()){
     							roomlist.add(roomtyp);
@@ -382,32 +461,42 @@ public class AllRateController extends Controller {
 
     					c.add(Calendar.DATE, 1);
     				}
-
-    				map.put(rate1.getSupplierCode(), Long.parseLong("1"));
+    				
+    				map.put(rate1.longValue(), Long.parseLong("1"));
 
     				if (!hProfileVM.getHotelbyDate().isEmpty()) {
     					hotellist.add(hProfileVM);
     				}
     			}
     		}
+    		Map<Long, Integer> promoMap = new HashMap<Long, Integer>();
+    		
+    		//List<SpecialsVM> listsp = new ArrayList<>();
     		List<Long> hotelNo = new ArrayList<>();
     		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
     		Map<Long, SerachedRoomRateDetail> mapRM = new HashMap<Long, SerachedRoomRateDetail>();
+    		Map<Long, List<SpecialsVM>> mapSpecials = new HashMap<Long, List<SpecialsVM>>();
     		int count=0;
     		for (HotelSearch hotel : hotellist) {
     			
     			hotelNo.add(hotel.supplierCode);
     			
+    			
     			//int newHotel=0; 
     			int dataVar = 0;
     			int countRoom = count;
+    			List<Integer> arrayCount = new ArrayList<Integer>();
     			for (SerachedHotelbyDate date : hotel.hotelbyDate) {
     				int newHotel=countRoom; 
     				dataVar++;
+    				int aCount = 0;
+    			//	int arrayCount[] = {0};
+    				
     				for (SerachedRoomType roomTP : date.getRoomType()) {
     					
     					Double total = 0.0;
     					Double avg = 0.0;
+    					
     					SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
     					sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
 
@@ -417,15 +506,20 @@ public class AllRateController extends Controller {
 
     					List<SerachedRoomRateDetail> serachedRoomRateDetails = new ArrayList<>();
     					List<SearchRateDetailsVM> searchRateDetailsVMs = new ArrayList<>();
-    					SerachedRoomRateDetail objectRM = mapRM.get(roomTP
-    							.getRoomId());
-    					if (objectRM == null) {
+    					SerachedRoomRateDetail objectRM = mapRM.get(roomTP.getRoomId());
+    					//Integer objectRateforP = promoMap.get(roomTP.getRoomId());
+    				//	List<SpecialsVM> objectSpecials = mapSpecials.get(roomTP.getRoomId());
+    					 if (objectRM == null) {
     						
     						count++;
-    						
+    					
     						sHotelRoomType.setRoomId(roomTP.getRoomId());
     						sHotelRoomType.setRoomName(roomTP.getRoomName());
     						sHotelRoomType.setAmenities(roomTP.getAmenities());
+    						sHotelRoomType.setSpecials(roomTP.getSpecials());
+    					
+    						arrayCount.add(aCount, roomTP.getPcount());
+    					
     						for (SerachedRoomRateDetail rateObj : roomTP
     								.getHotelRoomRateDetail()) {
     						
@@ -443,6 +537,10 @@ public class AllRateController extends Controller {
     							sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
     						}
     						mapRM.put(roomTP.getRoomId(), sRateDetail);
+    						promoMap.put(roomTP.getRoomId(),roomTP.getPcount());
+    						if(!roomTP.getSpecials().isEmpty()){
+    						mapSpecials.put(roomTP.getRoomId(), (List<SpecialsVM>) roomTP.getSpecials());
+    						}
 
     					}else {
     						List<Double> totalNo = new ArrayList<Double>();
@@ -451,6 +549,13 @@ public class AllRateController extends Controller {
     							totalNo.add(i, ord.rateAvg);
     							i++;
     						}
+    						System.out.println("+++++++++++++++ Count 1 ++++++++++++++++++++++++++++++++");
+    						int ptotal = 0;
+    						
+    						ptotal = arrayCount.get(aCount) + roomTP.getPcount();
+    						
+    						arrayCount.set(aCount, ptotal);
+    						
     						for (SerachedRoomRateDetail rateObj : roomTP
     								.getHotelRoomRateDetail()) {
     							
@@ -471,23 +576,52 @@ public class AllRateController extends Controller {
     							}
     						}
     						mapRM.put(roomTP.getRoomId(), sRateDetail);
+    						promoMap.put(roomTP.getRoomId(),arrayCount.get(aCount));
+    						if(!roomTP.getSpecials().isEmpty()){
+        						mapSpecials.put(roomTP.getRoomId(), (List<SpecialsVM>) roomTP.getSpecials());
+        						}
+    						
     						newHotel++;
     					}
-    					sHotelRoomType.hotelRoomRateDetail.add(sRateDetail);
-    					System.out.println("99");
-    					System.out.println("+-----+");
-    					System.out.println(avg);
-
-    					 if(sHotelRoomType.roomId != null){
-    					hotelRMlist.add(sHotelRoomType);
     					
-    					hotel.hotelbyRoom.add(sHotelRoomType);
-    					 }
-    					 
+    					
+    					sHotelRoomType.hotelRoomRateDetail.add(sRateDetail);
+    				
+
+    					if(sHotelRoomType.roomId != null){	
+    						hotelRMlist.add(sHotelRoomType);
+    						hotel.hotelbyRoom.add(sHotelRoomType);
+    					}
+    					aCount++;
     				}
     				
     								 
     			}
+    			int diffProm;
+    			for(SerachHotelRoomType room:hotel.hotelbyRoom){
+    				for (Entry<Long, Integer> entry : promoMap.entrySet()) {
+    				if(room.getRoomId() == entry.getKey()){
+    					room.setPcount(entry.getValue());
+    					diffProm = (int) (diffInpromo/2);
+        				if(entry.getValue() >= diffProm){
+        					room.setApplyPromotion(1);
+        				}else{
+        					room.setApplyPromotion(0);
+        				}
+    				}
+    			  }
+    			}
+    			for(SerachHotelRoomType room:hotel.hotelbyRoom){
+    				for (Entry<Long, List<SpecialsVM>> entry : mapSpecials.entrySet()) {
+    				if(room.getRoomId() == entry.getKey()){
+    					room.setSpecials(entry.getValue());
+    					
+    				}
+    			  }
+    			}
+    		/*	for (Entry<Long, Integer> entry : promoMap.entrySet()) {
+    			    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+    			}*/
     			
     		}
     		
@@ -498,15 +632,15 @@ public class AllRateController extends Controller {
     			hotelCount.add(hProfile.getId());
     			
     		}
-    		List<Map> hotelAmenities = HotelAmenities.getamenitiesCount(hotelCount);
+    		/*List<Map> hotelAmenities = HotelAmenities.getamenitiesCount(hotelCount);
     		
     		List<Map> hotelLocation = HotelProfile.getlocationCount(hotelCount);
     		
-    		List<Map> hotelServices =HotelServices.getservicesCount(hotelCount);   		
+    		List<Map> hotelServices =HotelServices.getservicesCount(hotelCount);   	*/	
     		
     		//return ok(Json.toJson(abc));
     		
-    		for (HotelSearch hotel : hotellist) {
+    		/*for (HotelSearch hotel : hotellist) {
     		double min=0.0;
 			int minStart = 0;
 			for(SerachHotelRoomType sHotelRoomType2:hotel.hotelbyRoom){
@@ -515,7 +649,6 @@ public class AllRateController extends Controller {
 					
 					for(SearchRateDetailsVM sRD:roomRateDetail.rateDetailsNormal){
 						
-						System.out.println(sRD.adult);
 						if(sRD.adult.equals("1 Adult")){
 							if(minStart == 0){
 								min = sRD.rateAvg;
@@ -529,17 +662,17 @@ public class AllRateController extends Controller {
 				}
 			 }
 			hotel.minRate = min;
-    		}
+    		}*/
 		
     		//Collections.sort(hotellist,new HotelComparator());
     		
     		//JsonNode personJson = Json.toJson(hotellist);
     		mapObject.put("hotelId", hotelNo);
-    		mapObject.put("hotelAmenities", hotelAmenities);
-    		mapObject.put("hotellocation",hotelLocation);
-    		mapObject.put("HotelServ",hotelServices);
+    		//mapObject.put("hotelAmenities", hotelAmenities);
+    		//mapObject.put("hotellocation",hotelLocation);
+    		//mapObject.put("HotelServ",hotelServices);
     		mapObject.put("hotellist", hotellist);
-    		return ok(Json.toJson(mapObject));
+    		return ok(Json.toJson(hotellist));
     	//return ok(Json.toJson(hotellist));
     		//return ok(Json.toJson(hotelLocation));
     }
