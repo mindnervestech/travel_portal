@@ -33,17 +33,21 @@ import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelProfile;
+import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.InfoWiseImagesPath;
+import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
+import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
+import com.travelportal.vm.AgentRegistrationVM;
 import com.travelportal.vm.AllotmentMarketVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.RoomAmenitiesVm;
@@ -61,8 +65,26 @@ import com.travelportal.vm.SpecialsVM;
 public class Application extends Controller {
 
     public static Result index() {
+    	
+    	/*Form<SearchHotelValueVM> HotelForm = Form.form(SearchHotelValueVM.class).bindFromRequest();
+    	SearchHotelValueVM searchVM = HotelForm.get();
+    	
+    	System.out.println(searchVM.password);*/
+    	
     	PageScope.scope("number", 1);
     	return ok(home.render());
+    }
+    
+    @Transactional(readOnly=true)
+    public static Result checkAgentinfo(String loginID,String password,String agentId){
+    	
+    	AgentRegistration agent = AgentRegistration.findagentinfo(loginID, password, agentId);
+		if(agent != null) {
+			AgentRegistrationVM aVm=new AgentRegistrationVM(agent);
+			return ok(Json.toJson(aVm));
+		}
+		return ok(Json.toJson("0"));
+    	
     }
         
     @Transactional(readOnly=true)
@@ -238,7 +260,7 @@ public class Application extends Controller {
     								rateVM.setAdult_occupancy(room
     										.getMaxAdultOccupancy());
     								rateVM.setId(rate.getId());
-    								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId);
+    								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
     								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
     								
     								SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
@@ -263,7 +285,7 @@ public class Application extends Controller {
     					if (!hotelBydateVM.getRoomType().isEmpty()) {
     						Datelist.add(hotelBydateVM);
     					}else{
-    						hProfileVM.setFlag("1");
+    						//hProfileVM.setFlag("1");
     					}
 
     					checkInDate.add(Calendar.DATE, 1);
@@ -417,7 +439,7 @@ public class Application extends Controller {
     										.getMaxAdultOccupancy());
     								rateVM.setId(rate.getId());
     								
-    								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId);
+    								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
     								
     								
     								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
@@ -444,7 +466,7 @@ public class Application extends Controller {
     					if (!hotelBydateVM.getRoomType().isEmpty()) {
     						Datelist.add(hotelBydateVM);
     					}else{
-    						hProfileVM.setFlag("1");
+    						//hProfileVM.setFlag("1");
     					}
 
     					checkInDate.add(Calendar.DATE, 1);
@@ -667,7 +689,9 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 			if(room.getRoomId() == entry.getKey()){
 				room.setPcount(entry.getValue());
 				diffProm = (int) (diffInpromo/2);
-				if(entry.getValue() >= diffProm){
+				if(entry.getValue() == 0 && diffProm == 0){
+					room.setApplyPromotion(0);
+				}else if(entry.getValue() >= diffProm){
 					room.setApplyPromotion(1);
 				}else{
 					room.setApplyPromotion(0);
@@ -675,6 +699,9 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 			}
 		  }
 		}
+		
+		
+		
 		
 		for(SerachHotelRoomType room:hotel.hotelbyRoom){
 			for (Entry<Long, List<SpecialsVM>> entry : mapSpecials.entrySet()) {
@@ -689,9 +716,10 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 	
 }
 
-public static void allotmentmarketInfo(AllotmentMarket alloMarket,SerachedRoomRateDetail rateVM,DateFormat format,String nationalityId){
+public static void allotmentmarketInfo(AllotmentMarket alloMarket,SerachedRoomRateDetail rateVM,DateFormat format,String nationalityId,Long rateid,Date CurrDate){
 	
 	int flag=0;
+	int aRoom=0;
 	SearchAllotmentMarketVM Allvm = new SearchAllotmentMarketVM();
 
 	if (alloMarket != null) {
@@ -711,17 +739,28 @@ public static void allotmentmarketInfo(AllotmentMarket alloMarket,SerachedRoomRa
 		Allvm.setToDate(format.format(alloMarket.getToDate()));
 		}
 		if(alloMarket.getAllocation() == 2){
-			//Allvm.setFlag(1);
 			flag = 1;
 		}
-		/*AllotmentMarket allotflag = AllotmentMarket
-				.getnationalitywiseMark(alloMarket.getAllotmentMarketId(),Integer.parseInt(nationalityId));
+		if(alloMarket.getAllocation() == 3){
+			RoomAllotedRateWise rAllotedRateWise= RoomAllotedRateWise.findByRateIdandDate(rateid, CurrDate);
+			System.out.println("++++++++++++++++++++++");
+			if(rAllotedRateWise != null){
+				
+				aRoom = alloMarket.getChoose() - rAllotedRateWise.getRoomCount();
+				if(aRoom < 1){
+					flag = 1;
+				}
+				
+		   }else{
+			   aRoom = alloMarket.getChoose();
+		   }
+		}
 		
-		if(allotflag == null){
-			flag =1;
-		}*/
 	}
 	rateVM.setFlag(flag);
+	//if(flag != 1){
+		rateVM.setAvailableRoom(aRoom);
+	//}
 	rateVM.setAllotmentmarket(Allvm);
 }
 
@@ -781,7 +820,7 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
 	hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
 	
-	hProfileVM.setFlag("0");
+	//hProfileVM.setFlag("0");
 }
 
 public static void SpecialRateReturn(SearchSpecialRateVM specialRateVM,RateDetails rateDetails){
@@ -1076,7 +1115,7 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 								rateVM.setAdult_occupancy(room
 										.getMaxAdultOccupancy());
 								rateVM.setId(rate.getId());
-								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId);
+								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
 								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
 								
 								SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
@@ -1102,7 +1141,7 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 					if (!hotelBydateVM.getRoomType().isEmpty()) {
 						Datelist.add(hotelBydateVM);
 					}else{
-						hProfileVM.setFlag("1");
+					//	hProfileVM.setFlag("1");
 					}
 
 					checkInDate.add(Calendar.DATE, 1);
@@ -1269,7 +1308,7 @@ public static Result hoteldetailpage() {
 							rateVM.setAdult_occupancy(room
 									.getMaxAdultOccupancy());
 							rateVM.setId(rate.getId());
-							allotmentmarketInfo(alloMarket,rateVM,format,nationalityId);
+							allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
 							SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
 							
 							SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
@@ -1424,7 +1463,7 @@ public static Result hoteldetailpage() {
 								rateVM.setAdult_occupancy(room
 										.getMaxAdultOccupancy());
 								rateVM.setId(rate.getId());
-								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId);
+								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
 								
 								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
 								

@@ -36,6 +36,7 @@ import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
+import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
@@ -280,7 +281,7 @@ public static Result hotelBookingpage() {
 							rateVM.setAdult_occupancy(room
 									.getMaxAdultOccupancy());
 							rateVM.setId(rate.getId());
-							allotmentmarketInfo(alloMarket,rateVM,format,nationalityId);
+							allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
 							SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
 							
 							SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
@@ -390,7 +391,7 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
 	hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
 	
-	hProfileVM.setFlag("0");
+	//hProfileVM.setFlag("0");
 }
 
 public static void SpecialRateReturn(SearchSpecialRateVM specialRateVM,RateDetails rateDetails){
@@ -714,8 +715,8 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 
 	
 }
-public static void allotmentmarketInfo(AllotmentMarket alloMarket,SerachedRoomRateDetail rateVM,DateFormat format,String nationalityId){
-	
+public static void allotmentmarketInfo(AllotmentMarket alloMarket,SerachedRoomRateDetail rateVM,DateFormat format,String nationalityId,Long rateid,Date CurrDate){
+	int aRoom= 0;
 	int flag=0;
 	SearchAllotmentMarketVM Allvm = new SearchAllotmentMarketVM();
 
@@ -739,14 +740,25 @@ public static void allotmentmarketInfo(AllotmentMarket alloMarket,SerachedRoomRa
 			//Allvm.setFlag(1);
 			flag = 1;
 		}
-		/*AllotmentMarket allotflag = AllotmentMarket
-				.getnationalitywiseMark(alloMarket.getAllotmentMarketId(),Integer.parseInt(nationalityId));
+		if(alloMarket.getAllocation() == 3){
+			RoomAllotedRateWise rAllotedRateWise= RoomAllotedRateWise.findByRateIdandDate(rateid, CurrDate);
+			System.out.println("++++++++++++++++++++++");
+			if(rAllotedRateWise != null){
+				
+				aRoom = alloMarket.getChoose() - rAllotedRateWise.getRoomCount();
+				if(aRoom < 1){
+					flag = 1;
+				}
+				
+		   }else{
+			   aRoom = alloMarket.getChoose();
+		   }
+		}
 		
-		if(allotflag == null){
-			flag =1;
-		}*/
 	}
 	rateVM.setFlag(flag);
+	//if(flag != 1){
+		rateVM.setAvailableRoom(aRoom);
 	rateVM.setAllotmentmarket(Allvm);
 }
 

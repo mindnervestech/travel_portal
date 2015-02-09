@@ -21,6 +21,9 @@ public class SearchHotelValueVM {
 	public String total;
 	public String adult;
 	public String noOfroom;
+	public String loginID;
+	public String password;
+	public String agentId;
 	
 	
 	
@@ -114,6 +117,24 @@ public class SearchHotelValueVM {
 	}
 	public void setNoOfroom(String noOfroom) {
 		this.noOfroom = noOfroom;
+	}
+	public String getLoginID() {
+		return loginID;
+	}
+	public void setLoginID(String loginID) {
+		this.loginID = loginID;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getAgentId() {
+		return agentId;
+	}
+	public void setAgentId(String agentId) {
+		this.agentId = agentId;
 	}
 		
 	

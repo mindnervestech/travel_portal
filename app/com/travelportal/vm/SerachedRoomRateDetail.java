@@ -15,6 +15,7 @@ public class SerachedRoomRateDetail {
 	public SearchAllotmentMarketVM allotmentmarket;
 	//public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
 	public int flag;
+	public int availableRoom;
 	
 	
 	public int adult_occupancy;
@@ -80,6 +81,12 @@ public class SerachedRoomRateDetail {
 	}
 	public void setFlag(int flag) {
 		this.flag = flag;
+	}
+	public int getAvailableRoom() {
+		return availableRoom;
+	}
+	public void setAvailableRoom(int availableRoom) {
+		this.availableRoom = availableRoom;
 	}
 	
 	

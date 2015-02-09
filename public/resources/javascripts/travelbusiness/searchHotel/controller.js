@@ -1,5 +1,38 @@
-travelBusiness.controller('HomePageController', function ($scope,$http,$filter) {
+travelBusiness.controller('HomePageController', function ($scope,$http,$filter,ngDialog) {
 
+	$scope.loginSuccess = 0;
+	$scope.errorMsg = false;
+	$scope.loginAgent = function(){
+		
+		ngDialog.open({
+			template: '/assets/resources/html/loginAgent.html',
+			scope : $scope,
+			//controller:'hoteProfileController',
+			className: 'ngdialog-theme-default'
+		});
+	}
+	
+	$scope.loginAgentcheck = function(loginAgentinfo){
+	
+		console.log(loginAgentinfo);  
+		$http.get('/checkAgentinfo/'+loginAgentinfo.loginID+'/'+loginAgentinfo.password+'/'+loginAgentinfo.agentId).success(function(response){
+			console.log(response);
+			
+			if(response == 0){
+				$scope.loginSuccess = 0;
+				$scope.errorMsg = true;
+			}else{
+				$scope.Agentresponse = response;
+				$scope.loginSuccess = 1;
+				$scope.errorMsg = false;
+				ngDialog.close();
+			}
+			console.log($scope.loginSuccess);
+		});
+		
+	}
+	
+	
 	$http.get("/searchCountries").success(function(response) {
 		
 		$scope.searchCountries = response;
@@ -609,79 +642,11 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 		});
 	}
 	
-	$scope.availability = function(){
+	
+	
+	$scope.showRateAdultwise=function(adultValue,roomNo){
 		
-		/*$scope.rateDatedetail = [];
-		$http.get('/getDatewiseHotelRoom/'+$scope.hotel.checkIn+"/"+$scope.hotel.checkOut+"/"+$scope.hotel.nationality+"/"+$scope.hotel.supplierCode+"/"+$scope.hotel.hotelbyRoom[0].roomId)
-		.success(function(response){
-			console.log(response);
-			$scope.ratedetail = response;
-			console.log($scope.ratedetail);
-			var total = 0;
-			var flag =0;
-			angular.forEach($scope.ratedetail.hotelbyDate,function(value,key){
-				
-				var arr = value.date.split("-");
-				var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
-				$scope.datevalue1 = $filter('date')(new Date(datevalue), "EEE,MMM,dd,yyyy");
-				var arr = $scope.datevalue1.split(",");
-				$scope.day = arr[0];
-				$scope.month = arr[1];
-				$scope.date = arr[2];
-				console.log("------");
-				console.log(value.flag);
-				if(value.flag == 1){
-					flag = value.flag;
-					console.log(value.flag);
-					}
-				angular.forEach(value.roomType,function(value1,key1){					
-					angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
-						angular.forEach(value2.rateDetails,function(value3,key3){
-							console.log(value.currencyShort);
-							if(value3.adult == "1 Adult"){
-								total = total+value3.rateValue;
-								$scope.rateDatedetail.push({
-									rate:value3.rateValue,
-									meal:value3.mealTypeName,
-									flag:value.flag,
-									currency:value.currencyShort,
-									fulldate:value.date,
-									day:$scope.day,
-								    month:$scope.month,
-								    date:$scope.date
-									
-								});
-							}							
-						});
-					  });
-					
-				    });
-				if(value.roomType.length == "0"){
-					$scope.rateDatedetail.push({
-						flag:value.flag,
-						fulldate:value.date,
-						currency:value.currencyShort,
-						day:$scope.day,
-						month:$scope.month,
-						date:$scope.date
-						
-					});
-				}
-			     });
-			
-			$scope.total = total;
-			$scope.flag = flag;
-			console.log($scope.rateDatedetail);
-			console.log(total);
-			console.log(flag);
-			
-		}).error(function(data, status, headers, config) {
-			console.log('ERROR');
-		});*/
-	}
-	
-	
-	$scope.showRateAdultwise=function(adultValue){
+		console.log(roomNo);
 		
 		$scope.rateDatedetail = [];
 		var total = 0;
@@ -704,7 +669,14 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 				angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
 					if(value2.flag == 1){
 						flag = value2.flag;
-						console.log(value2.flag);
+					}
+					
+					if(value2.allotmentmarket.allocation == 3){
+						if(value2.availableRoom < roomNo){
+							flag = 1;
+						}else{
+							flag = 0;
+						}
 					}
 					angular.forEach(value2.rateDetails,function(value3,key3){
 						console.log(value.currencyShort);
@@ -736,8 +708,13 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 			}
 		     });
 		
+		
 		$scope.total = total;
 		$scope.totalParPerson = total;
+		if(roomNo != undefined){
+			$scope.total = $scope.totalParPerson * roomNo;
+		}
+	
 		$scope.flag = flag;
 		console.log($scope.rateDatedetail);
 		console.log($scope.total);
@@ -748,6 +725,7 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 	$scope.dateWiseInfo = function(roomid){
 				
 		console.log($scope.hotel);
+		
 			$scope.rateDatedetail = [];
 		
 		$http.get('/getDatewiseHotelRoom/'+$scope.hotel.checkIn+"/"+$scope.hotel.checkOut+"/"+$scope.hotel.nationality+"/"+$scope.hotel.supplierCode+"/"+roomid)
@@ -768,17 +746,19 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 				$scope.date = arr[2];
 				console.log("------");
 				console.log(value.flag);
-				/*if(value.flag == 1){
-					console.log(value.flag);
-				flag = value.flag;
-				console.log(value.flag);
-				}*/
+				
 				angular.forEach(value.roomType,function(value1,key1){					
 					angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
 						if(value2.flag == 1){
 							flag = value2.flag;
 						}
-						console.log(flag);
+						/*if(value2.allotmentmarket.allocation == 3){
+							if(value2.availableRoom < roomNo){
+								flag = 1;
+							}else{
+								flag = 0;
+							}
+						}*/
 						angular.forEach(value2.rateDetails,function(value3,key3){
 							console.log(value.currencyShort);
 							if(value3.adult == "1 Adult"){
@@ -833,8 +813,43 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 	
 	$scope.countTotal = function(roomNo){
 		console.log(roomNo);
+		console.log($scope.ratedetail);
 		console.log($scope.totalParPerson);
 		$scope.total = $scope.totalParPerson * roomNo;
+		
+		var flag = 0;
+		angular.forEach($scope.ratedetail.hotelbyDate,function(value,key){
+			
+			angular.forEach(value.roomType,function(value1,key1){
+				angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
+					if(value2.flag == 1){
+						flag = value2.flag;
+						console.log(value2.flag);
+					}
+					if(value2.allotmentmarket.allocation == 3){
+						if(value2.availableRoom < roomNo){
+							flag = 1;
+						}else{
+							flag = 0;
+						}
+					}
+					
+				  });
+			    });
+			   });
+		
+		$scope.flag = flag;
+		
+		console.log(flag);
+		
+		
+		
+		/*angular.forEach(value2.rateDetails,function(value3,key3){
+			console.log(value.currencyShort);
+			
+		});*/
+		
+		
 	}
 	
 	$scope.ShowFull = function(index){

@@ -29,6 +29,7 @@ import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
+import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
@@ -63,9 +64,8 @@ public class AllRateController extends Controller {
 		Map<Long, Long> map = new HashMap<Long, Long>();
 	
 		Set<String> mapDate = new HashSet<String>();
-		System.out.println(map1.get("10-02-2015"));
-		String[] fromDate ={"10-02-2015"};
-		String[] toDate = {"14-02-2015"};
+		String[] fromDate ={"10-04-2015"};
+		String[] toDate = {"14-04-2015"};
 		String[] cId = {"2"};
 		//String[] sId =  {"1"};
 		String[] cityId = {"1"};
@@ -139,7 +139,7 @@ public class AllRateController extends Controller {
     				InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
     				hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
     				
-    				hProfileVM.setFlag("0");
+    				//hProfileVM.setFlag("0");
     				
     				
     				for (int i = 0; i < dayDiff; i++) {
@@ -227,8 +227,10 @@ public class AllRateController extends Controller {
     								AllotmentMarket alloMarket = AllotmentMarket
     										.getOneMarket(rate.getId());
     								int flag1=0;
+    								int aRoom = 0;
     								SearchAllotmentMarketVM Allvm = new SearchAllotmentMarketVM();
 
+    								
     								if (alloMarket != null) {
     									
     									Allvm.setAllotmentMarketId(alloMarket.getAllotmentMarketId());
@@ -249,6 +251,22 @@ public class AllRateController extends Controller {
     										//Allvm.setFlag(1);
     										flag1 =1;
     									}
+    									if(alloMarket.getAllocation() == 3){
+    										RoomAllotedRateWise rAllotedRateWise= RoomAllotedRateWise.findByRateIdandDate(rate.getId(), c.getTime());
+    									
+    										if(rAllotedRateWise != null){
+    										System.out.println(rAllotedRateWise.getRoomCount());
+    										
+    										aRoom = alloMarket.getChoose() - rAllotedRateWise.getRoomCount();
+    										System.out.println("++++++++++++++++++++++");
+    										System.out.println(aRoom);
+    										if(aRoom < 1){
+    											System.out.println("aRoom NOt AAA");
+    											flag1 = 1;
+    										}
+    										
+    										}
+    									}
     									/*AllotmentMarket allotflag = AllotmentMarket
         										.getnationalitywiseMark(alloMarket.getAllotmentMarketId(),Integer.parseInt(cId[0]));
     									
@@ -263,6 +281,9 @@ public class AllRateController extends Controller {
     										.getMaxAdultOccupancy());
     								rateVM.setId(rate.getId());
     								rateVM.setFlag(flag1);
+    								if(flag1 != 1){
+    									rateVM.setAvailableRoom(aRoom);
+    								}
     								rateVM.setAllotmentmarket(Allvm);
     								    								
     								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
@@ -456,7 +477,7 @@ public class AllRateController extends Controller {
     					if (!hotelBydateVM.getRoomType().isEmpty()) {
     						Datelist.add(hotelBydateVM);
     					}else{
-    						hProfileVM.setFlag("1");
+    						//hProfileVM.setFlag("1");
     					}
 
     					c.add(Calendar.DATE, 1);

@@ -11,6 +11,8 @@ import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.HotelStarRatings;
+import com.travelportal.domain.rooms.RateMeta;
+import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.SearchHotelValueVM;
 import com.travelportal.vm.SearchRateDetailsVM;
@@ -115,7 +117,20 @@ public class HotelBookingController extends Controller {
 		if(flag == 1){
 			hBookingDetails.setRoom_status("on request");
 		}else{
-			hBookingDetails.setRoom_status("available");
+			for(SerachedHotelbyDate date:searchVM.hotelbyDate){
+				if(date.roomType != null){
+				for(SerachedRoomType roomTP:date.roomType){
+					for(SerachedRoomRateDetail rateObj:roomTP.hotelRoomRateDetail){
+						if(rateObj.availableRoom < Integer.parseInt(searchVM.hotelBookingDetails.getNoOfroom())){
+							hBookingDetails.setRoom_status("on request");
+						}else{
+							hBookingDetails.setRoom_status("available");
+						}
+					}
+				}
+			}
+			}
+			
 		}
 		
 		
@@ -143,6 +158,45 @@ public class HotelBookingController extends Controller {
 		}
 			hBookingDates.setBookingId(hBookingDetails.findBookingId());
 			hBookingDates.save();
+			
+			RoomAllotedRateWise rAllotedRateWise = null;
+			//if(flag == 1){
+			if(date.roomType != null){
+				for(SerachedRoomType roomTP:date.roomType){
+					for(SerachedRoomRateDetail rateObj:roomTP.hotelRoomRateDetail){
+						if(rateObj.allotmentmarket.allocation == 3){
+							
+							try {
+								rAllotedRateWise= RoomAllotedRateWise.findByRateIdandDate(rateObj.id, format.parse(date.getDate()));
+								} catch (ParseException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							if(rAllotedRateWise == null){
+								RoomAllotedRateWise rWise=new RoomAllotedRateWise();
+								try {
+									rWise.setAllowedRateDate(format.parse(date.getDate()));
+								} catch (ParseException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								rWise.setRate(RateMeta.findById(rateObj.id));
+								rWise.setRoomCount(Integer.parseInt(searchVM.hotelBookingDetails.getNoOfroom()));
+								rWise.save();
+								
+								
+							}else{
+								int rcount =  rAllotedRateWise.getRoomCount() + Integer.parseInt(searchVM.hotelBookingDetails.noOfroom);
+								rAllotedRateWise.setRoomCount(rcount);
+								rAllotedRateWise.merge();
+							}
+							
+						}
+					
+					}
+			}
+		}
+		// }
 			
 		}
 		

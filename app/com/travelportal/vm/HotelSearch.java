@@ -29,7 +29,7 @@ public class HotelSearch {
 	
 	public List<SerachHotelRoomType> hotelbyRoom = new ArrayList<>();
 	public List<SerachedHotelbyDate> hotelbyDate; 
-	public String flag;
+	//public String flag;
 	
 	public Long getSupplierCode() {
 		return supplierCode;
@@ -117,12 +117,12 @@ public class HotelSearch {
 	public void setNationality(int nationality) {
 		this.nationality = nationality;
 	}
-	public String getFlag() {
+	/*public String getFlag() {
 		return flag;
 	}
 	public void setFlag(String flag) {
 		this.flag = flag;
-	}
+	}*/
 	public List<Integer> getServices1() {
 		return services1;
 	}

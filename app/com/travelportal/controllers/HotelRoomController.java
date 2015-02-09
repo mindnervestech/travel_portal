@@ -46,6 +46,7 @@ import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RateWrapper;
+import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.RoomChildPolicies;
 import com.travelportal.domain.rooms.SpecialsMarket;
@@ -222,6 +223,14 @@ public static void createRootDir() {
     				aDateOnRate.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
     				aDateOnRate.save();
     				
+    				/*if(rate.allotmentmarket.allocation == 3){
+    					RoomAllotedRateWise rAllotedRateWise = new RoomAllotedRateWise();
+    					rAllotedRateWise.setAllowedRateDate(c.getTime());
+    					rAllotedRateWise.setRoomCount(rate.allotmentmarket.choose);
+    					rAllotedRateWise.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
+    					rAllotedRateWise.save();
+    				}*/
+    				
     			c.add(Calendar.DATE, 1);
     				
     			}
@@ -269,6 +278,7 @@ public static void createRootDir() {
 				allotmentmarket.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
 				
 				allotmentmarket.save();
+				
 				
 				RateDetails rateDetails = new RateDetails();
 				if(rate.isSpecialRate == true) {
@@ -414,6 +424,9 @@ public static void createRootDir() {
 				allotmentmarket.setStopAllocation(rate.allotmentmarket.stopAllocation);
 				allotmentmarket.setStopChoose(rate.allotmentmarket.stopChoose);
 				allotmentmarket.setStopPeriod(rate.allotmentmarket.stopPeriod);
+				
+			    RoomAllotedRateWise rAllotedRateWise = RoomAllotedRateWise.findByRateId(rate.getId()); 
+			    
 				/*if(rate.allotmentmarket.fromDate != null ){
 				allotmentmarket.setFromDate(format.parse(rate.allotmentmarket.fromDate));
 				}else{

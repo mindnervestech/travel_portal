@@ -86,6 +86,7 @@ public class ApplicationController extends Controller{
 	@Transactional
 	public static Result doAdminLogin() {
 		DynamicForm form = DynamicForm.form().bindFromRequest();
+		System.out.println(form.get("name"));
 		try {
 			AdminUser adminUser = AdminUser.doLogin(form.get("name"),form.get("pass"));
 			
@@ -314,7 +315,7 @@ public class ApplicationController extends Controller{
 		
 		Random randomGenerator = new Random();
 		int randomInt = randomGenerator.nextInt(100000);
-		aRegistration.setAgentCode(randomInt);
+		aRegistration.setAgentCode(Integer.toString(randomInt));
 		aRegistration.setStatus("PENDING");
 				
 	

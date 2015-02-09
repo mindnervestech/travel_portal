@@ -11,7 +11,7 @@ import com.travelportal.domain.agent.AgentRegistration;
 public class AgentRegistrationVM {
 
 	public long id;
-	public long agentCode;
+	public String agentCode;
 	public String title;
 	public String firstName;
 	public String lastName;

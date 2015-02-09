@@ -13,6 +13,7 @@ POST    /searchHotelInfo   	controllers.travelbusiness.Application.searchHotelIn
 POST    /searchAgainHotelInfo	controllers.travelbusiness.Application.searchAgainHotelInfo()
 GET 	/searchCountries					controllers.travelbusiness.Application.searchCountries()
 GET 	/searchNationality					controllers.travelbusiness.Application.searchNationality()
+GET     /checkAgentinfo/:loginID/:password/:agentId			controllers.travelbusiness.Application.checkAgentinfo(loginID:String,password:String,agentId:String)
 GET 	/searchCities/:countryId			controllers.travelbusiness.Application.searchCities(countryId: Integer)
 GET 	/searchStarrating                	controllers.travelbusiness.Application.getStarRatings()
 GET	  /searchHotelInfo/getHotelImagePath/:supplierCode			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long)

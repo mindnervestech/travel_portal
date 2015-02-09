@@ -13,7 +13,7 @@
                                            <div class="col-md-2">
                                            <span>NO OF PERSON</span>
                                            <div class="selector">
-                            				 <select class="full-width" name="adult" data-ng-model="searchroom.adult" ng-change="showRateAdultwise(searchroom.adult)">
+                            				 <select class="full-width" name="adult" data-ng-model="searchroom.adult" ng-change="showRateAdultwise(searchroom.adult,serchroom.noOfroom)">
                           				     <option ng-repeat="adult in ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal" value="{{adult.adult}}">{{$index+1}}</option>  <!-- {{adult.adult}} -->
                              				 </select><span class="custom-select full-width">1</span>   <!-- {{ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal[0].adult}} -->
                                            </div>
@@ -63,7 +63,7 @@
                                 <div class="col-md-12" style="background-color: white;height: 325px !important;overflow: auto;">
                                 <div class="booking-history col-md-4" ng-repeat="Dateinfo in rateDatedetail">
                                 
-                                 <div class="booking-info clearfix" ng-if="Dateinfo.flag == 0">
+                                 <div class="booking-info clearfix" ng-if="flag == 0"> <!--  Dateinfo.flag == 0   -->
                                         <div class="date">
                                             <label class="month">{{Dateinfo.month}}</label>
                                             <label class="date">{{Dateinfo.date}}</label>
@@ -80,7 +80,7 @@
                                        <!--  <button class="btn-mini status">Book Now</button> -->
                                     </div>
                                                                   
-                                    <div class="booking-info clearfix cancelled" ng-if="Dateinfo.flag == 1">
+                                    <div class="booking-info clearfix cancelled" ng-if="flag == 1">  <!-- Dateinfo.flag == 1  -->
                                         <div class="date">
                                             <label class="month">{{Dateinfo.month}}</label>
                                             <label class="date">{{Dateinfo.date}}</label>
