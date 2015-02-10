@@ -17,7 +17,7 @@ GET     /checkAgentinfo/:loginID/:password/:agentId			controllers.travelbusiness
 GET 	/searchCities/:countryId			controllers.travelbusiness.Application.searchCities(countryId: Integer)
 GET 	/searchStarrating                	controllers.travelbusiness.Application.getStarRatings()
 GET	  /searchHotelInfo/getHotelImagePath/:supplierCode			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long)
-#GET	   /hotelBookingpage/getHotelImagePath/:supplierCode			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long)
+GET	   /hotelBookingpage/getHotelImagePath/:supplierCode			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long)
 #POST  /findByServices 		    controllers.travelbusiness.Application.findByServices()
 #POST  /findBylocation				    controllers.travelbusiness.Application.findBylocation()
 POST  /findHotelByData	        controllers.travelbusiness.Application.findHotelByData()
@@ -62,11 +62,11 @@ POST	/register					com.travelportal.controllers.ApplicationController.doRegister
 POST    /agentregister				com.travelportal.controllers.ApplicationController.agentRegister
 GET		/adminLogin					com.travelportal.controllers.ApplicationController.adminLogin
 POST	/doAdminLogin				com.travelportal.controllers.ApplicationController.doAdminLogin
-#GET 	/doAdminLogin				com.travelportal.controllers.ApplicationController.adminLogin
+GET 	/doAdminLogin				com.travelportal.controllers.ApplicationController.adminLogin
 POST	/doAgentLogin				com.travelportal.controllers.ApplicationController.doAgentLogin
 GET		/adminLogout				com.travelportal.controllers.ApplicationController.adminLogout
 POST	/hotel_profile				com.travelportal.controllers.ApplicationController.doSupplierLogin
-#GET 	/hotel_profile				com.travelportal.controllers.ApplicationController.login
+GET 	/hotel_profile				com.travelportal.controllers.ApplicationController.login
 GET		/supplierLogout				com.travelportal.controllers.ApplicationController.supplierLogout
 GET    /supplierfind/:supplierCode/:supplierName  com.travelportal.controllers.SupplierLoginthroughAdminController.getfindSupplier(supplierCode:String,supplierName:String)
 

@@ -645,7 +645,9 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 	
 	
 	$scope.showRateAdultwise=function(adultValue,roomNo){
-		
+		if(roomNo == undefined){
+			roomNo = 1;
+		}
 		console.log(roomNo);
 		
 		$scope.rateDatedetail = [];
@@ -827,10 +829,9 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 						console.log(value2.flag);
 					}
 					if(value2.allotmentmarket.allocation == 3){
+						console.log(value2.availableRoom);
 						if(value2.availableRoom < roomNo){
 							flag = 1;
-						}else{
-							flag = 0;
 						}
 					}
 					

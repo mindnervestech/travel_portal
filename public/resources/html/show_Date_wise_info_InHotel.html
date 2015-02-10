@@ -75,7 +75,6 @@
                                             <dd>{{Dateinfo.rate}} {{ratedetail.currencyShort}}</dd>
                                             <dt ng-if="Dateinfo.meal != null">Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
-                                            <!-- <dd ng-if="Dateinfo.meal == null">--"--</dd> -->
                                         </dl>
                                        <!--  <button class="btn-mini status">Book Now</button> -->
                                     </div>
@@ -90,9 +89,9 @@
                                         <dl class="info">
                                             <dt>Rate</dt>
                                             <dd>{{Dateinfo.rate}}  {{ratedetail.currencyShort}}</dd>
-                                            <dt>Included</dt>
+                                            <dt ng-if="Dateinfo.meal != null">Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
-                                            <dd ng-if="Dateinfo.meal == null">--"--</dd>
+                                             <!-- <label style="color: #ff3e3e;">Room Not Available</label> -->
                                         </dl>
                                         <!-- <button class="btn-mini status">CANCELLED</button> -->
                                     </div>

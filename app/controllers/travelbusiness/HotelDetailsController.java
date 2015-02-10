@@ -169,44 +169,38 @@ public static Result hotelBookingpage() {
 	List<HotelSearch> hotellist = new ArrayList<>();
 	Map<String, String[]> map1 = request().queryString();
 	Map<Long, Long> map = new HashMap<Long, Long>();
-	long diffInpromo = 0;
 	
 	String fromDate = searchVM.checkIn;
 	String toDate = searchVM.checkOut;
 	String nationalityId = searchVM.nationalityCode;
     String supplierCode = searchVM.supplierCode;
    
+    Date formDate = null;
+	Date toDates = null;
+	try {
+		formDate = format.parse(fromDate);
+		toDates = format.parse(toDate);
+	} catch (ParseException e) { // TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	  
+    long diffInpromo = 0;
+	long dayDiff = 0;
 	
+	dayDiff = findDateDiff(toDates,formDate,dayDiff);
+	diffInpromo = dayDiff;
+    
+    
 	List<BigInteger> supplierId = RateMeta.getOneSupplierId(
 			Long.parseLong(supplierCode),
 			Integer.parseInt(nationalityId)); 
 
 	for (BigInteger supplierid : supplierId) {
 
-		Date formDate = null;
-		Date toDates = null;
-		try {
-			formDate = format.parse(fromDate);
-			toDates = format.parse(toDate);
-		} catch (ParseException e) { // TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		Calendar checkInDate = Calendar.getInstance();
 		checkInDate.setTime(formDate);
 		checkInDate.set(Calendar.MILLISECOND, 0);
-
-		long dayDiff;
-		if(toDates.getTime() == formDate.getTime()){
-			dayDiff = 1;
-			diffInpromo = dayDiff;
-		}else{
-			long diff = toDates.getTime() - formDate.getTime();
-
-			dayDiff = diff / (1000 * 60 * 60 * 24);
-			diffInpromo = dayDiff;
-		}
-
+		
 		List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 		HotelSearch hProfileVM = new HotelSearch();
 		Long object = (Long) map.get(supplierid.longValue());
@@ -334,6 +328,15 @@ public static Result hotelBookingpage() {
 	
 }
 
+public static long findDateDiff(Date toDates, Date formDate, long dayDiff){
+	if(toDates.getTime() == formDate.getTime()){
+	return dayDiff = 1;
+	}else{
+		long diff = toDates.getTime() - formDate.getTime();
+
+		return dayDiff = diff / (1000 * 60 * 60 * 24);
+	}
+}
 
 public static void fillRoomInfo(HotelRoomTypes room,SerachedRoomType roomtyp){
 	roomtyp.setRoomId(room.getRoomId());

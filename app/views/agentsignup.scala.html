@@ -39,6 +39,27 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 <script src='@routes.Assets.at("app/js/prettify.js")'></script>
 <script src='@routes.Assets.at("app/js/jquery.slimscroll.min.js")'></script>
 
+<style>
+.progress .progress-bar{
+box-shadow: none !important;
+background-color: #01b7f2;
+}
+
+.portlet.portlet-green > .portlet-header{
+background: #01b7f2;
+color: #ffffff;
+}
+
+#rootwizard-custom-circle li.active a, #rootwizard-custom-circle li.active p, #rootwizard-custom-circle li.active i{
+color: #fdb714;
+}
+
+#rootwizard-custom-circle li.active{
+background-color: #fff;
+border: 3px solid #fdb714;
+}
+
+</style>
 
 <!--loading bootstrap js-->
 <script
@@ -776,8 +797,8 @@ function getpaymentMode(){
 							'<option value="0">--Select city--</option>');
 					$.each(data, function(key, value) {
 						$('#myCity').append(
-								'<option value="' + value.cityName + '">'
-										+ value.cityName + '</option>');
+								'<option value="' + value + '">'
+										+ value + '</option>');
 					});
 
 				}

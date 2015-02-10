@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import play.data.DynamicForm;
 import play.data.Form;
@@ -33,7 +33,6 @@ import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelProfile;
-import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.InfoWiseImagesPath;
@@ -48,7 +47,6 @@ import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.AgentRegistrationVM;
-import com.travelportal.vm.AllotmentMarketVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.RoomAmenitiesVm;
 import com.travelportal.vm.SearchAllotmentMarketVM;
@@ -167,50 +165,40 @@ public class Application extends Controller {
     		Map<String, Object> mapObject = new HashMap<String, Object>();
     		List<HotelSearch> hotellist = new ArrayList<>();
     		Map<Long, Long> map = new HashMap<Long, Long>();
-    		long diffInpromo = 0;
-    		
     		
     		String fromDate = searchVM.checkIn;
     		String toDate = searchVM.checkOut;
     		//String[] sId = {searchVM.id};
     		String cityId = searchVM.city;
     		String nationalityId = searchVM.nationalityCode;
+    	
+    		Date formDate = null;
+			Date toDates = null;
+			try {
+				formDate = format.parse(fromDate);
+				toDates = format.parse(toDate);
+			} catch (ParseException e) { // TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			long diffInpromo = 0;
+			long dayDiff = 0;
+			
+			dayDiff = findDateDiff(toDates,formDate,dayDiff);
+			diffInpromo = dayDiff;
+			
+			DateWiseSortFunction(hotellist,toDate,fromDate,dayDiff,cityId,nationalityId,map,format,formDate);
     		
-    		System.out.println("(*(**(*(*()()()())(");
-    		System.out.println(fromDate);
-    		System.out.println(toDate);
-    		System.out.println(nationalityId);
-    		
-    		List<BigInteger> supplierId = RateMeta.getsupplierId(
+    		/*List<BigInteger> supplierId = RateMeta.getsupplierId(
     				Integer.parseInt(cityId), 
     				Integer.parseInt(nationalityId));  //, Integer.parseInt(sId[0])
 
     		for (BigInteger supplierid : supplierId) {
 
-    			Date formDate = null;
-    			Date toDates = null;
-    			try {
-    				formDate = format.parse(fromDate);
-    				toDates = format.parse(toDate);
-    			} catch (ParseException e) { // TODO Auto-generated catch block
-    				e.printStackTrace();
-    			}
 
     			Calendar checkInDate = Calendar.getInstance();
     			checkInDate.setTime(formDate);
     			checkInDate.set(Calendar.MILLISECOND, 0);
-
-    			
-    			long dayDiff;
-    			if(toDates.getTime() == formDate.getTime()){
-    				dayDiff = 1;
-    				diffInpromo = dayDiff;
-    			}else{
-    				long diff = toDates.getTime() - formDate.getTime();
-
-    				dayDiff = diff / (1000 * 60 * 60 * 24);
-    				diffInpromo = dayDiff;
-    			}
 
     			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
     			HotelSearch hProfileVM = new HotelSearch();
@@ -220,7 +208,7 @@ public class Application extends Controller {
     				HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
     				
 
-    				fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);   /* Fill Hotel info function*/
+    				fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);    Fill Hotel info function
     				
     				for (int i = 0; i < dayDiff; i++) {
 
@@ -243,7 +231,7 @@ public class Application extends Controller {
 
     							List<SerachedRoomRateDetail> list = new ArrayList<>();
     							SerachedRoomType roomtyp = new SerachedRoomType();
-    							fillRoomInfo(room,roomtyp);  /*fill room info function*/
+    							fillRoomInfo(room,roomtyp);  fill room info function
     							specialsPromotion(roomtyp,format,Integer.parseInt(nationalityId),room.getRoomId(),checkInDate.getTime());
     							for (RateMeta rate : rateMeta1) {
     								
@@ -263,9 +251,9 @@ public class Application extends Controller {
     								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
     								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
     								
-    								SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
+    								SpecialRateReturn(specialRateVM,rateDetails); Special Rate Return function
     								
-    								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
+    								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM);  person Rate return function
     								
     								list.add(rateVM);
     							
@@ -297,7 +285,7 @@ public class Application extends Controller {
     					hotellist.add(hProfileVM);
     				}
     			}
-    		}
+    		}*/
 
     		List<Long> hotelNo = new ArrayList<>();
     		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
@@ -339,7 +327,8 @@ public class Application extends Controller {
     		return ok(searchHotel.render(personJson));
     }
     
-        
+    
+    
     @Transactional(readOnly = true)
     public static Result searchHotelInfo() {
     	
@@ -351,134 +340,28 @@ public class Application extends Controller {
     		Map<String, Object> mapObject = new HashMap<String, Object>();
     		List<HotelSearch> hotellist = new ArrayList<>();
     		Map<Long, Long> map = new HashMap<Long, Long>();
-    		long diffInpromo = 0;
     		
     		String fromDate = searchVM.checkIn;
     		String toDate = searchVM.checkOut;
     		String cityId = searchVM.city;
     		String nationalityId = searchVM.nationalityCode;
     		
-    		List<BigInteger> supplierId = RateMeta.getsupplierId(
-    				Integer.parseInt(cityId), 
-    				Integer.parseInt(nationalityId));  
-
-    		for (BigInteger supplierid : supplierId) {
-
-    			Date formDate = null;
-    			Date toDates = null;
-    			try {
-    				formDate = format.parse(fromDate);
-    				toDates = format.parse(toDate);
-    			} catch (ParseException e) { // TODO Auto-generated catch block
-    				e.printStackTrace();
-    			}
-    			
-    			Calendar checkInDate = Calendar.getInstance();
-    			checkInDate.setTime(formDate);
-    			checkInDate.set(Calendar.MILLISECOND, 0);
-    			
-    			long dayDiff;
-    			if(toDates.getTime() == formDate.getTime()){
-    				dayDiff = 1;
-    				diffInpromo = dayDiff;
-    			}else{
-    				long diff = toDates.getTime() - formDate.getTime();
-
-    				dayDiff = diff / (1000 * 60 * 60 * 24);
-    				diffInpromo = dayDiff;
-    			}
-
-    			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
-    			HotelSearch hProfileVM = new HotelSearch();
-    			
-    			Long object = map.get(supplierid.longValue());
-    			if (object == null) {
-
-    				HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
-    				fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);   /* Fill Hotel info function*/
-    				
-    				for (int i = 0; i < dayDiff; i++) {
-
-    					List<HotelRoomTypes> roomType = HotelRoomTypes
-    							.getHotelRoomDetails(supplierid.longValue());
-    					int days = checkInDate.get(Calendar.DAY_OF_WEEK)-1;
-    					SerachedHotelbyDate hotelBydateVM = new SerachedHotelbyDate();
-    					hotelBydateVM.setDate(format.format(checkInDate.getTime()));
-    					Map<Long, Long> mapRm = new HashMap<Long, Long>();
-    					List<SerachedRoomType> roomlist = new ArrayList<>();
-    					
-    					for (HotelRoomTypes room : roomType) {
-    						Long objectRm = (Long) mapRm.get(room.getRoomId());
-    						if (objectRm == null) {
-
-    							
-    							List<RateMeta> rateMeta1 = RateMeta.getdatecheck(
-    									room.getRoomId(),
-    									Integer.parseInt(nationalityId), checkInDate.getTime(),
-    									hAmenities.getSupplier_code()); 
-
-    							List<SerachedRoomRateDetail> list = new ArrayList<>();
-    							SerachedRoomType roomtyp = new SerachedRoomType();
-    							
-    							fillRoomInfo(room,roomtyp);  /*fill room info function*/
-    							
-    							specialsPromotion(roomtyp,format,Integer.parseInt(nationalityId),room.getRoomId(),checkInDate.getTime());
-    							
-    							for (RateMeta rate : rateMeta1) {
-    									
-    								RateDetails rateDetails = RateDetails
-    										.findByRateMetaId(rate.getId());
-
-    								List<PersonRate> personRate = PersonRate
-    										.findByRateMetaId(rate.getId());
-
-    								AllotmentMarket alloMarket = AllotmentMarket.getOneMarket(rate.getId());
-
-    								SerachedRoomRateDetail rateVM = new SerachedRoomRateDetail();
-    								rateVM.setAdult_occupancy(room
-    										.getMaxAdultOccupancy());
-    								rateVM.setId(rate.getId());
-    								
-    								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
-    								
-    								
-    								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
-    								
-    								SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
-    								
-    								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
-    								
-    								list.add(rateVM);
-    							
-    							}
-    							mapRm.put(room.getRoomId(), Long.parseLong("1"));
-    							roomtyp.setHotelRoomRateDetail(list);
-    							if(!roomtyp.hotelRoomRateDetail.isEmpty()){
-    							roomlist.add(roomtyp);
-    							}
-    						}
-    						
-    						hProfileVM.setHotelbyDate(Datelist);
-    					}
-    					
-    					hotelBydateVM.setRoomType(roomlist);
-    					
-    					if (!hotelBydateVM.getRoomType().isEmpty()) {
-    						Datelist.add(hotelBydateVM);
-    					}else{
-    						//hProfileVM.setFlag("1");
-    					}
-
-    					checkInDate.add(Calendar.DATE, 1);
-    				}
-
-    				map.put(supplierid.longValue(), Long.parseLong("1"));
-
-    				if (!hProfileVM.getHotelbyDate().isEmpty()) {
-    					hotellist.add(hProfileVM);
-    				}
-    			}
-    		}
+    		Date formDate = null;
+			Date toDates = null;
+			try {
+				formDate = format.parse(fromDate);
+				toDates = format.parse(toDate);
+			} catch (ParseException e) { // TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			long diffInpromo = 0;
+			long dayDiff = 0;
+			
+			dayDiff = findDateDiff(toDates,formDate,dayDiff);
+			diffInpromo = dayDiff;
+			    		
+			DateWiseSortFunction(hotellist,toDate,fromDate,dayDiff,cityId,nationalityId,map,format,formDate);
 
     		List<Long> hotelNo = new ArrayList<>();
     		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
@@ -528,7 +411,124 @@ public static Result getHotelImagePath(long supplierCode) {
 	
 }
 
-public static void specialsPromotion(SerachedRoomType roomtyp,DateFormat format,int nationalityId,Long roomId,Date checkInD) {
+
+public static long findDateDiff(Date toDates, Date formDate, long dayDiff){
+	if(toDates.getTime() == formDate.getTime()){
+	return dayDiff = 1;
+	}else{
+		long diff = toDates.getTime() - formDate.getTime();
+
+		return dayDiff = diff / (1000 * 60 * 60 * 24);
+	}
+}
+
+public static void DateWiseSortFunction(List<HotelSearch> hotellist,String toDate,String fromDate,long dayDiff,String cityId,String nationalityId,Map<Long, Long> map,DateFormat format,Date formDate){
+    
+	List<BigInteger> supplierId = RateMeta.getsupplierId(
+			Integer.parseInt(cityId), 
+			Integer.parseInt(nationalityId));  
+
+	for (BigInteger supplierid : supplierId) {
+
+		Calendar checkInDate = Calendar.getInstance();
+		checkInDate.setTime(formDate);
+		checkInDate.set(Calendar.MILLISECOND, 0);
+
+		List<SerachedHotelbyDate> Datelist = new ArrayList<>();
+		HotelSearch hProfileVM = new HotelSearch();
+		
+		Long object = map.get(supplierid.longValue());
+		if (object == null) {
+
+			HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
+			fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);   /* Fill Hotel info function*/
+			
+			for (int i = 0; i < dayDiff; i++) {
+
+				List<HotelRoomTypes> roomType = HotelRoomTypes
+						.getHotelRoomDetails(supplierid.longValue());
+				int days = checkInDate.get(Calendar.DAY_OF_WEEK)-1;
+				SerachedHotelbyDate hotelBydateVM = new SerachedHotelbyDate();
+				hotelBydateVM.setDate(format.format(checkInDate.getTime()));
+				Map<Long, Long> mapRm = new HashMap<Long, Long>();
+				List<SerachedRoomType> roomlist = new ArrayList<>();
+				
+				for (HotelRoomTypes room : roomType) {
+					Long objectRm = (Long) mapRm.get(room.getRoomId());
+					if (objectRm == null) {
+
+						
+						List<RateMeta> rateMeta1 = RateMeta.getdatecheck(
+								room.getRoomId(),
+								Integer.parseInt(nationalityId), checkInDate.getTime(),
+								hAmenities.getSupplier_code()); 
+
+						List<SerachedRoomRateDetail> list = new ArrayList<>();
+						SerachedRoomType roomtyp = new SerachedRoomType();
+						
+						fillRoomInfo(room,roomtyp);  /*fill room info function*/
+						
+						specialsPromotion(roomtyp,format,Integer.parseInt(nationalityId),room.getRoomId(),checkInDate.getTime());
+						
+						for (RateMeta rate : rateMeta1) {
+								
+							RateDetails rateDetails = RateDetails
+									.findByRateMetaId(rate.getId());
+
+							List<PersonRate> personRate = PersonRate
+									.findByRateMetaId(rate.getId());
+
+							AllotmentMarket alloMarket = AllotmentMarket.getOneMarket(rate.getId());
+
+							SerachedRoomRateDetail rateVM = new SerachedRoomRateDetail();
+							rateVM.setAdult_occupancy(room
+									.getMaxAdultOccupancy());
+							rateVM.setId(rate.getId());
+							
+							allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
+							
+							
+							SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
+							
+							SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
+							
+							personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
+							
+							list.add(rateVM);
+						
+						}
+						mapRm.put(room.getRoomId(), Long.parseLong("1"));
+						roomtyp.setHotelRoomRateDetail(list);
+						if(!roomtyp.hotelRoomRateDetail.isEmpty()){
+						roomlist.add(roomtyp);
+						}
+					}
+					
+					hProfileVM.setHotelbyDate(Datelist);
+				}
+				
+				hotelBydateVM.setRoomType(roomlist);
+				
+				if (!hotelBydateVM.getRoomType().isEmpty()) {
+					Datelist.add(hotelBydateVM);
+				}else{
+					//hProfileVM.setFlag("1");
+				}
+
+				checkInDate.add(Calendar.DATE, 1);
+			}
+
+			map.put(supplierid.longValue(), Long.parseLong("1"));
+
+			if (!hProfileVM.getHotelbyDate().isEmpty()) {
+				hotellist.add(hProfileVM);
+			}
+		}
+	}
+	
+}
+
+public static void specialsPromotion(SerachedRoomType roomtyp, DateFormat format, int nationalityId, Long roomId, Date checkInD) {
 	int count = 0;
 	List<SpecialsVM> listsp = new ArrayList<>();
 	List<Specials> specialsList = Specials.findSpecialByDateandroom(checkInD,roomId);
@@ -1020,13 +1020,26 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		List<HotelSearch> hotellist = new ArrayList<>();
 		Map<Long, Long> map = new HashMap<Long, Long>();
 		Set<String> mapDate = new HashSet<String>();
-		long diffInpromo = 0;
 		
 		String fromDate = searchHotelValueVM.getCheckIn();
 		String toDate = searchHotelValueVM.getCheckOut();
 		String cityId = searchHotelValueVM.getCity();
 		String nationalityId = searchHotelValueVM.getNationalityCode();
 		
+		Date formDate = null;
+		Date toDates = null;
+		try {
+			formDate = format.parse(fromDate);
+			toDates = format.parse(toDate);
+		} catch (ParseException e) { // TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		long diffInpromo = 0;
+		long dayDiff = 0;
+		
+		dayDiff = findDateDiff(toDates,formDate,dayDiff);
+		diffInpromo = dayDiff;
 			
 		List<BigInteger> supplierId = RateMeta.getsupplierId(
 				Integer.parseInt(cityId),
@@ -1034,31 +1047,10 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
 		for (BigInteger supplierid : supplierId) {
 
-			Date formDate = null;
-			Date toDates = null;
-			try {
-				formDate = format.parse(fromDate);
-				toDates = format.parse(toDate);
-			} catch (ParseException e) { // TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			 
+
 			Calendar checkInDate = Calendar.getInstance();
 			checkInDate.setTime(formDate);
 			checkInDate.set(Calendar.MILLISECOND, 0);
-
-			
-			long dayDiff;
-			if(toDates.getTime() == formDate.getTime()){
-				dayDiff = 1;
-				diffInpromo = dayDiff;
-			}else{
-				long diff = toDates.getTime() - formDate.getTime();
-
-				dayDiff = diff / (1000 * 60 * 60 * 24);
-				diffInpromo = dayDiff;
-			}
-
 			
 			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 			HotelSearch hProfileVM = new HotelSearch();
@@ -1184,7 +1176,6 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	
 	return ok(Json.toJson(mapObject));
 	
-	
 }
 
 
@@ -1194,7 +1185,6 @@ public static class HotelComparatorAsc implements Comparator<HotelSearch> {
 	public int compare(HotelSearch arg0, HotelSearch arg1) {
 		return arg0.minRate.doubleValue() > arg1.minRate.doubleValue() ? -1 : arg0.minRate.doubleValue() < arg1.minRate.doubleValue()?1:0;
 	}
-	
 }
 public static class HotelComparatorDes implements Comparator<HotelSearch> {
 
@@ -1202,10 +1192,7 @@ public static class HotelComparatorDes implements Comparator<HotelSearch> {
 	public int compare(HotelSearch arg0, HotelSearch arg1) {
 		return arg0.minRate.doubleValue() < arg1.minRate.doubleValue() ? -1 : arg0.minRate.doubleValue() > arg1.minRate.doubleValue()?1:0;
 	}
-	
-	
 }
-
 
 @Transactional(readOnly=true)
 public static Result hoteldetailpage() {
@@ -1218,13 +1205,26 @@ public static Result hoteldetailpage() {
 	List<HotelSearch> hotellist = new ArrayList<>();
 	Map<String, String[]> map1 = request().queryString();
 	Map<Long, Long> map = new HashMap<Long, Long>();
-	long diffInpromo = 0;
 	
 	String fromDate = searchVM.checkIn;
 	String toDate = searchVM.checkOut;
 	String nationalityId = searchVM.nationalityCode;
     String supplierCode = searchVM.supplierCode;
        
+    Date formDate = null;
+	Date toDates = null;
+	try {
+		formDate = format.parse(fromDate);
+		toDates = format.parse(toDate);
+	} catch (ParseException e) { // TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+	long diffInpromo = 0;
+	long dayDiff = 0;
+	
+	dayDiff = findDateDiff(toDates,formDate,dayDiff);
+	diffInpromo = dayDiff;
 	
 	List<BigInteger> supplierId = RateMeta.getOneSupplierId(
 			Long.parseLong(supplierCode),
@@ -1232,29 +1232,9 @@ public static Result hoteldetailpage() {
 
 	for (BigInteger supplierid : supplierId) {
 
-		Date formDate = null;
-		Date toDates = null;
-		try {
-			formDate = format.parse(fromDate);
-			toDates = format.parse(toDate);
-		} catch (ParseException e) { // TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		Calendar checkInDate = Calendar.getInstance();
 		checkInDate.setTime(formDate);
 		checkInDate.set(Calendar.MILLISECOND, 0);
-
-		long dayDiff;
-		if(toDates.getTime() == formDate.getTime()){
-			dayDiff = 1;
-			diffInpromo = dayDiff;
-		}else{
-			long diff = toDates.getTime() - formDate.getTime();
-
-			dayDiff = diff / (1000 * 60 * 60 * 24);
-			diffInpromo = dayDiff;
-		}
 
 		List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 		HotelSearch hProfileVM = new HotelSearch();
@@ -1364,14 +1344,12 @@ public static Result hoteldetailpage() {
 
 @Transactional(readOnly = true)
 	public static Result getDatewiseHotelRoom(String checkIn,String checkOut,String nationality,String supplierCode1,String roomCode) {
-
 	
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		
 		List<HotelSearch> hotellist = new ArrayList<>();
 		Map<String, String[]> map1 = request().queryString();
 		Map<Long, Long> map = new HashMap<Long, Long>();
-		long diffInpromo = 0;
 		
 		String fromDate = checkIn;
 		String toDate = checkOut;
@@ -1379,6 +1357,20 @@ public static Result hoteldetailpage() {
         String supplierCode = supplierCode1;
         String roomcode = roomCode;
         
+        Date formDate = null;
+		Date toDates = null;
+		try {
+			formDate = format.parse(fromDate);
+			toDates = format.parse(toDate);
+		} catch (ParseException e) { // TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		long diffInpromo = 0;
+		long dayDiff = 0;
+		
+		dayDiff = findDateDiff(toDates,formDate,dayDiff);
+		diffInpromo = dayDiff;
 		
 		List<BigInteger> supplierId = RateMeta.getsupplierIdwiseRoom(
 				Long.parseLong(supplierCode),Long.parseLong(roomcode),
@@ -1386,32 +1378,10 @@ public static Result hoteldetailpage() {
 
 		for (BigInteger supplierid : supplierId) {
 
-			Date formDate = null;
-			Date toDates = null;
-			try {
-				formDate = format.parse(fromDate);
-				toDates = format.parse(toDate);
-			} catch (ParseException e) { // TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
 			Calendar checkInDate = Calendar.getInstance();
 			checkInDate.setTime(formDate);
 			checkInDate.set(Calendar.MILLISECOND, 0);
-
 			
-
-			long dayDiff;
-			if(toDates.getTime() == formDate.getTime()){
-				dayDiff = 1;
-				diffInpromo = dayDiff;
-			}else{
-				long diff = toDates.getTime() - formDate.getTime();
-
-				dayDiff = diff / (1000 * 60 * 60 * 24);
-				diffInpromo = dayDiff;
-			}
-
 			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 			HotelSearch hProfileVM = new HotelSearch();
 			Long object = (Long) map.get(supplierid.longValue());
@@ -1534,7 +1504,6 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 				//Double avg = 0.0;
 				SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
 				sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
-
 				
 				SerachedRoomRateDetail sRateDetail = new SerachedRoomRateDetail();
 				sRateDetail.rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
@@ -1635,7 +1604,9 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 			if(room.getRoomId() == entry.getKey()){
 				room.setPcount(entry.getValue());
 				diffProm = (int) (diffInpromo/2);
-				if(entry.getValue() >= diffProm){
+				if(entry.getValue() == 0 && diffProm == 0){
+					room.setApplyPromotion(0);
+				}else if(entry.getValue() >= diffProm){
 					room.setApplyPromotion(1);
 				}else{
 					room.setApplyPromotion(0);
@@ -1652,10 +1623,8 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 			}
 		  }
 		}
-
 	
 }
-
 
 
 }

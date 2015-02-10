@@ -121,8 +121,12 @@ public class HotelBookingController extends Controller {
 				if(date.roomType != null){
 				for(SerachedRoomType roomTP:date.roomType){
 					for(SerachedRoomRateDetail rateObj:roomTP.hotelRoomRateDetail){
+						if(rateObj.allotmentmarket.allocation == 3){
 						if(rateObj.availableRoom < Integer.parseInt(searchVM.hotelBookingDetails.getNoOfroom())){
 							hBookingDetails.setRoom_status("on request");
+						}else{
+							hBookingDetails.setRoom_status("available");
+						}
 						}else{
 							hBookingDetails.setRoom_status("available");
 						}
@@ -136,6 +140,7 @@ public class HotelBookingController extends Controller {
 		
 		hBookingDetails.save();
 		
+		int applyforroom = 0;
 		
 		for(SerachedHotelbyDate date:searchVM.hotelbyDate){
 			HotelBookingDates hBookingDates=new HotelBookingDates();
@@ -159,45 +164,58 @@ public class HotelBookingController extends Controller {
 			hBookingDates.setBookingId(hBookingDetails.findBookingId());
 			hBookingDates.save();
 			
-			RoomAllotedRateWise rAllotedRateWise = null;
+			
 			//if(flag == 1){
 			if(date.roomType != null){
 				for(SerachedRoomType roomTP:date.roomType){
 					for(SerachedRoomRateDetail rateObj:roomTP.hotelRoomRateDetail){
 						if(rateObj.allotmentmarket.allocation == 3){
-							
-							try {
-								rAllotedRateWise= RoomAllotedRateWise.findByRateIdandDate(rateObj.id, format.parse(date.getDate()));
-								} catch (ParseException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							if(rAllotedRateWise == null){
-								RoomAllotedRateWise rWise=new RoomAllotedRateWise();
-								try {
-									rWise.setAllowedRateDate(format.parse(date.getDate()));
-								} catch (ParseException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								rWise.setRate(RateMeta.findById(rateObj.id));
-								rWise.setRoomCount(Integer.parseInt(searchVM.hotelBookingDetails.getNoOfroom()));
-								rWise.save();
-								
-								
-							}else{
-								int rcount =  rAllotedRateWise.getRoomCount() + Integer.parseInt(searchVM.hotelBookingDetails.noOfroom);
-								rAllotedRateWise.setRoomCount(rcount);
-								rAllotedRateWise.merge();
-							}
-							
-						}
-					
-					}
-			}
+							//if(rateObj.availableRoom >= Integer.parseInt(searchVM.hotelBookingDetails.getNoOfroom())){
+							if(rateObj.availableRoom < Integer.parseInt(searchVM.hotelBookingDetails.getNoOfroom())){
+								applyforroom = 1;
+						}	
+					 }
+				 }
+			 }
+		  }
 		}
-		// }
-			
+		
+		if(applyforroom != 1){
+			RoomAllotedRateWise rAllotedRateWise = null;
+			for(SerachedHotelbyDate date:searchVM.hotelbyDate){
+				if(date.roomType != null){
+					for(SerachedRoomType roomTP:date.roomType){
+						for(SerachedRoomRateDetail rateObj:roomTP.hotelRoomRateDetail){
+							if(rateObj.allotmentmarket.allocation == 3){
+								try {
+									rAllotedRateWise= RoomAllotedRateWise.findByRateIdandDate(rateObj.id, format.parse(date.getDate()));
+									} catch (ParseException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								if(rAllotedRateWise == null){
+									RoomAllotedRateWise rWise=new RoomAllotedRateWise();
+									try {
+										rWise.setAllowedRateDate(format.parse(date.getDate()));
+									} catch (ParseException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									rWise.setRate(RateMeta.findById(rateObj.id));
+									rWise.setRoomCount(Integer.parseInt(searchVM.hotelBookingDetails.getNoOfroom()));
+									rWise.save();
+									
+									
+								}else{
+									int rcount =  rAllotedRateWise.getRoomCount() + Integer.parseInt(searchVM.hotelBookingDetails.noOfroom);
+									rAllotedRateWise.setRoomCount(rcount);
+									rAllotedRateWise.merge();
+								}
+							}
+						}	
+					}
+				}
+			}
 		}
 		
 		return ok();

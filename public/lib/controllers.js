@@ -3307,6 +3307,11 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 		
 	}
 	
+	$scope.checkCountry = function(data){
+		console.log(data);
+	}
+	
+	
 	$scope.savePeriod = function() {
 		$scope.specialsObject[0].supplierCode = supplierCode;
 		console.log($scope.specialsObject);

@@ -1,39 +1,17 @@
 @(hotel: com.fasterxml.jackson.databind.JsonNode) 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<!--[if IE 8]>          <html class="ie ie8"> <![endif]-->
-<!--[if IE 9]>          <html class="ie ie9"> <![endif]-->
-<!--[if gt IE 9]><!-->  <html> <!--<![endif]-->
+  <html> 
 <head>
-    <!-- Page Title -->
     <title>Travelo | Responsive HTML5 Travel Template</title>
-    
-    <!-- Meta Tags -->
     <meta charset="utf-8">
     <meta name="keywords" content="HTML5 Template" />
     <meta name="description" content="Travelo | Responsive HTML5 Travel Template">
     <meta name="author" content="SoapTheme">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
 	@include_css()
-    
-    <!-- CSS for IE -->
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" type="text/css" href="assets/resources/css/ie.css" />
-    <![endif]-->
-    
-    
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script type='text/javascript' src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-      <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
-    <![endif]-->
 </head>
-
 <body data-ng-app="travel-business" data-ng-controller="hotelDetailsController">
-    
     <div id="page-wrapper">
         @header()
         <div class="page-title-container">
@@ -42,12 +20,11 @@
                     <h2 class="entry-title">Hotel Detailed</h2>
                 </div>
                 <ul class="breadcrumbs pull-right">
-                    <li><a href="#">HOME</a></li>
+                    <li><a href="/">HOME</a></li>
                     <li class="active">HOTEL DETAILED</li>
                 </ul>
             </div>
         </div>
-      
        <section id="content" ng-init="init(@hotel)">
             <div class="container">
                 <div class="row">
@@ -55,10 +32,6 @@
                         <div class="tab-container style1" id="hotel-main-content">
                             <ul class="tabs">
                                 <li class="active"><a data-toggle="tab" href="#photos-tab">photos</a></li>
-                               <!--  <li><a data-toggle="tab" href="#map-tab">map</a></li>
-                                <li><a data-toggle="tab" href="#steet-view-tab">street view</a></li>
-                                <li><a data-toggle="tab" href="#calendar-tab">calendar</a></li> -->
-                                <!-- <li class="pull-right"><a class="button btn-small yellow-bg white-color" href="#">TRAVEL GUIDE</a></li> -->
                             </ul>
                             <div class="tab-content">
                                 <div id="photos-tab" class="tab-pane fade in active">
@@ -70,7 +43,6 @@
                                             <li><img src="{{LobbyImg}}" alt="" /></li>
                                             <li><img src="{{MapImg}}" alt="" /></li>
                                             <li><img src="{{LSImg}}" alt="" /></li>
-                                            
                                         </ul>
                                     </div>
                                     <div class="image-carousel style1" data-animation="slide" data-item-width="70" data-item-margin="10" data-sync="#photos-tab .photo-gallery">
@@ -81,17 +53,13 @@
                                             <li><img src="{{LobbyImg}}" alt="" /></li>
                                             <li><img src="{{MapImg}}" alt="" /></li>
                                             <li><img src="{{LSImp}}" alt="" /></li>
-                                           
                                         </ul>
                                     </div>
                                 </div>
                                 <div id="map-tab" class="tab-pane fade">
-                                    
                                 </div>
                                 <div id="steet-view-tab" class="tab-pane fade" style="height: 500px;">
-                                    
                                 </div>
-                                
                             </div>
                         </div>
                         <div id="hotel-features" class="tab-container">
@@ -106,7 +74,6 @@
                             </ul>
                             <div class="tab-content">
                             	<div class="tab-pane fade" id="hotel-descr">
-                                   
                                     <div class="long-description">
                                         <h2>About {{hotel.hotelNm}}</h2>
                                         <p>
@@ -115,103 +82,9 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade in active" id="hotel-availability">
-                               
-                                    <!-- <div class="update-search clearfix">
-                                                                               
-                                        <div class="col-md-6">
-                                            <h4 class="title">Search</h4>
-                                            <div class="row">
-                                                <div class="col-xs-6">
-                                                    <label>ROOMS</label>
-                                                    <div class="selector">
-                                                        
-                                                         <select class="full-width" name="room" data-ng-model="searchroom.roomtp" ng-change="showAdultRoomView(searchroom.roomtp)">
-                          				     <option ng-repeat="roomtp in hotel.hotelbyRoom" value="{{roomtp.roomId}}">{{roomtp.roomName}}</option>
-                             				 </select><span class="custom-select full-width">{{hotel.hotelbyRoom[0].roomName}}</span> 
-                                                        
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-6">
-                                                    <label>ADULTS</label>
-                                                    <div class="selector">
-                                                       <select class="full-width" name="adult" data-ng-model="searchroom.adult" ng-change="showRateAdultwise(searchroom.adult)">
-                          				    			 <option ng-repeat="adult in ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal" value="{{adult.adult}}">{{adult.adult}}</option>
-                             							 </select><span class="custom-select full-width">{{ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal[0].adult}}</span>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-md-6">
-                                            <h4 class="visible-md visible-lg">&nbsp;</h4>
-                                            <label class="visible-md visible-lg">&nbsp;</label>
-                                            <div class="row">
-                                            <div class="col-xs-6">
-                                                   <div class="col-xs-6">
-                                                    <label>TOTAL : </label>
-                                                   </div>
-                                                   <div class="col-xs-6">
-                                                      <span class="price">{{total}} <span style="font-size: small;color: chocolate;">{{ratedetail.currencyShort}}</span></span>
-                                                   </div> 
-                                                </div>
-                                                <div class="col-xs-6" ng-if="flag == 0">
-                                                    <button data-animation-duration="1" data-animation-type="bounce" class="full-width icon-check animated bounce" type="submit" style="-webkit-animation: 1s; visibility: visible;">BOOK NOW</button>
-                                                </div>
-                                                 <div class="col-xs-6" ng-if="flag == 1">
-                                                    <button data-animation-duration="1" data-animation-type="bounce" class="full-width dark-orange btn-small animated bounce" type="button" style="-webkit-animation: 1s; visibility: visible;">ON REQUEST</button>
-                                                </div>
-                                                 
-                                            </div>
-                                        </div>
-                                    </div> -->
                                     <h2>Available Rooms</h2>
-                                     <!-- <div id="booking" class="tab-pane fade active in">
-                                     <div class="col-md-12">   height: 325px !important;overflow: auto;
-                                <div class="booking-history col-md-4" ng-repeat="Dateinfo in rateDatedetail">
-                                
-                                 <div class="booking-info clearfix" ng-if="Dateinfo.flag == 0">
-                                        <div class="date">
-                                            <label class="month">{{Dateinfo.month}}</label>
-                                            <label class="date">{{Dateinfo.date}}</label>
-                                            <label class="day">{{Dateinfo.day}}</label>
-                                        </div>
-                                                                                                                     
-                                        <dl class="info">
-                                            <dt>Rate</dt>
-                                            <dd>{{Dateinfo.rate}}  {{ratedetail.currencyShort}}</dd>
-                                            <dt>Included</dt>
-                                            <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
-                                            <dd ng-if="Dateinfo.meal == null">--"--</dd>
-                                        </dl>
-                                        <button class="btn-mini status">Book Now</button>
-                                    </div>
-                                                                  
-                                    <div class="booking-info clearfix cancelled" ng-if="Dateinfo.flag == 1">
-                                        <div class="date">
-                                            <label class="month">{{Dateinfo.month}}</label>
-                                            <label class="date">{{Dateinfo.date}}</label>
-                                            <label class="day">{{Dateinfo.day}}</label>
-                                        </div>
-                                                                              
-                                        <dl class="info">   style="width: 110px !important;"
-                                            <dt>Rate</dt>
-                                            <dd>{{Dateinfo.rate}}  {{ratedetail.currencyShort}}</dd>
-                                            <dt>Included</dt>
-                                            <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
-                                            <dd ng-if="Dateinfo.meal == null">--"--</dd>
-                                        </dl>
-                                        <button class="btn-mini status">CANCELLED</button>
-                                    </div>
-                                 
-                                </div>
-								</div>
-								</div> -->
-                                    
                                     <div class="hotel-list listing-style3 hotel">
                                     <article class="box" style="border: 2px solid #C8C6C6;" ng-repeat="roomInfo in hotel.hotelbyRoom">   <!-- ng-repeat="hotelInfo in hotellistInfo" -->
-                                
-                                 
                                     <div class="col-md-12" style="border-bottom: 2px solid #C8C6C6;">
                                     <figure class="col-sm-5 col-md-4" style="padding-left:0;">
                                      <!-- <img data-ng-src="{{img}}" alt="">  -->
@@ -222,22 +95,6 @@
                                         <div>
                                             <div style="border-right: none;" class="col-md-12">
                                                 <h4 class="box-title"><span class="col-md-11">{{roomInfo.roomName}}</span><small class="col-md-5" style="color: #01b7f2;padding-right: 1px;width: 83px;">MAX GUESTS:</small><small class="col-md-4" style="padding-left: 1px;">{{roomInfo.hotelRoomRateDetail[0].adult_occupancy}} PERSONS</small></h4>
-                                                <!-- <div class="amenities col-md-5">
-                                                <div  ng-repeat="ameni in roomInfo.amenities"> 
-                                            	  <div class="col-md-3" ng-if="ameni.amenityId == 1">
-                                                    <i class="soap-icon-wifi circle"></i>
-                                                    </div>
-                                                    <div class="col-md-3" ng-if="ameni.amenityId == 4">
-                                                    <i class="soap-icon-fitnessfacility circle"></i>
-                                                    </div> 
-                                                    <div class="col-md-3" ng-if="ameni.amenityId == 3">
-                                                    <i class="soap-icon-fork circle"></i>
-                                                    </div>
-                                                    <div class="col-md-3" ng-if="ameni.amenityId == 82">
-                                                    <i class="soap-icon-television circle"></i>
-                                                    </div>
-                                                    </div>
-                                                </div> -->
                                             </div>
                                             <div style="padding-left: 0;padding-bottom: 0;">
                                                <div class="amenities col-md-12" style="width: 141px;">
@@ -256,23 +113,16 @@
                                                     </div>
                                                     </div>
                                                 </div>
-                                            
                                             </div>
-                                            
                                         </div>
                                         <div>
                                             <p>{{roomInfo.description}}</p>
                                              <div style="width: 150px;">
-                                                  <!-- <span class="price"><small>MIN/START</small>{{hotel.minRate}}<sup style="font-size: small;color: chocolate;top: -3px;">{{hotel.currencyShort}}</sup></span> -->  
-                                                <!-- <a class="button btn-small full-width text-center" style="background: #98ce44;" title=""  href="/hoteldetailpage">VIEW DETAILS</a> -->
-                                                   
                                                  <a class="button btn-small full-width text-center" ng-click="roomWiseInfo(roomInfo)" style="background: #98ce44;">ROOM DETAILS</a>
-                                               
                                             </div> 
                                         </div>
                                     </div>
 		 							</div>
-		 							
                                    <div class="row" ng-repeat="adultRate in roomInfo.hotelRoomRateDetail[0].rateDetailsNormal" style="margin-bottom: 1px;">
                                     <div class="details col-sm-12 col-md-12" style="padding-bottom: 0;padding-top: 0;">  
                                     <div style="border-bottom: 1px solid #f5f5f5 !important;float: left;width: 98%;margin-top: 5px;">
@@ -300,40 +150,27 @@
                                                     <i class="soap-icon-television circle"></i>
                                                  </div>
                                                     </div>  
-                                                   
                                                 </div>
                                          </div>
                                          <div class="col-md-6" style="width:50% !important;border-bottom: none !important;">
                                         <div class="col-md-4"> <!-- ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null" -->
                                           <span class="price"><small>MIN/NIGHT</small>{{adultRate.rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotel.currencyShort}}</sup><small>1 PERSON</small></span>
-                                        
                                          </div>
-                                                                                
                                          <div class="col-md-4"  ng-if="adultRate.mealTypeName != null">
                                         <span class="price"><small>Included</small><sup style="font-size: small;color: chocolate;top: 9px;">{{adultRate.mealTypeName}}</sup></span>
                                          </div> 
-                                        <!--  <div class="col-md-4" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg != null">
-                                         <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup><small>3 PERSONS</small></span>
-                                         </div> -->
                                          </div>
                                          </div>
                                      </div>
                                    </div>
-                                  
                                      <div class="col-md-9 col-md-offset-2">
                                    <div class="form-group col-sm-3 col-md-3 col-md-offset-9">
                                      <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomInfo.roomId)" style="background: #98ce44;margin-top: 2%;margin-left: 49%;" title="">BOOK NOW</a>
                                      </div>
                                    </div>  
-                                  	
-                                 
-                                  
                                 </article>
-                                    
                                    </div> 
-                                    
                                 </div>
-                                
                                 <div class="tab-pane fade" id="hotel-amenities">
                                                                         
                                     <h2>Hotel Amenities</h2>
@@ -345,7 +182,6 @@
                                         </div>
                                     </ul>
                                 </div>
-                                
                                 <div class="tab-pane fade" id="hotel-reviews">
                                     <div class="intro table-wrapper full-width hidden-table-sms">
                                         <div class="rating table-cell col-sm-4">
@@ -450,7 +286,6 @@
                                             </h4>
                                             <div class="panel-collapse collapse" id="question1">
                                                 <div class="panel-content">
-                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -480,7 +315,6 @@
                                             </h4>
                                             <div class="panel-collapse collapse" id="question4">
                                                 <div class="panel-content">
-                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -490,7 +324,6 @@
                                             </h4>
                                             <div class="panel-collapse collapse" id="question5">
                                                 <div class="panel-content">
-                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -500,7 +333,6 @@
                                             </h4>
                                             <div class="panel-collapse collapse" id="question6">
                                                 <div class="panel-content">
-                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -510,45 +342,33 @@
                                             </h4>
                                             <div class="panel-collapse collapse" id="question7">
                                                 <div class="panel-content">
-                                                    
                                                 </div>
                                             </div>
                                         </div>
-                                        
                                     </div>
                                 </div>
                              	<div class="tab-pane fade" id="hotel-business-amenities">
-                                                                         
                                     <h2>Hotel Business Amenities</h2>
                                     <ul class="amenities clearfix style2">
                                     	<div  ng-repeat="Bamenities in business_check">
-                                       
                                         <li class="col-md-4 col-sm-6" >   <!--  ng-if="Bamenities.amenitiesCode == 4" -->
                                             <div class="icon-box style2"><i class="{{Bamenities.amenitiesIcon}} circle"></i>{{Bamenities.amenitiesName}}</div>
                                         </li>
-                                                                         
                                         </div>
                                     </ul>
                              	</div>
                              	<div class="tab-pane fade" id="hotel-sport-amenities">
-                                                                         
                                     <h2>Hotel Sport Amenities</h2>
                                     <ul class="amenities clearfix style2">
                                     	<div  ng-repeat="lsportamenities in leisure_sport_check">
-                                       
                                         <li class="col-md-4 col-sm-6">  
                                             <div class="icon-box style2" style="margin-top: 4%;"><i class="{{lsportamenities.amenitiesIcon}} circle"></i>{{lsportamenities.amenitiesName}}</div>
                                         </li>
-                                                 
                                         </div>
                                     </ul>
                              	</div>
-                             	
                         	</div>
-                        	
-                        	
                         </div>	
-                        
                     </div>
                     <div class="sidebar col-md-3">
                     <article class="detailed-logo">
@@ -561,12 +381,7 @@
                                     <small class="pull-left">Min/start</small>
                                     <span class="pull-right">{{hotel.minRate}}<sup style="font-size: small;color: chocolate;top: -3px;">{{hotel.currencyShort}}</sup></span>
                                 </span> 
-                               <!--  <div class="feedback clearfix">
-                                    <div title="" class="five-stars-container" data-toggle="tooltip" data-placement="bottom" data-original-title="4 stars"><span class="five-stars" style="width: 80%;"></span></div>
-                                    <span class="review pull-right">270 reviews</span>
-                                </div>-->
                                 <p class="description">{{hotel.imgDescription}}</p>
-                             <!--   <a class="button yellow full-width uppercase btn-small">add to wishlist</a> -->
                             </div>
                         </article>
                         <div class="travelo-box contact-box">
@@ -580,56 +395,18 @@
                         </div>
                         <div class="travelo-box">
                             <h4>Similar Listings</h4>
-                            
                         </div>
                         <div class="travelo-box book-with-us-box">
                             <h4>Why Book with us?</h4>
-                            
                         </div>
                     </div>
             </div>
           </div>
         </section>
-                        
-        
-        
     </div>
     @include_js()
-    
-    <!-- Google Map Api -->
-    <!-- <script type='text/javascript' src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
-    <script type="text/javascript" src="js/gmap3.min.js"></script> -->
-
-
     <script type="text/javascript" src="assets/resources/javascripts/travelbusiness/searchHotel/app.js"></script>
 	<script type="text/javascript" src="assets/resources/javascripts/travelbusiness/searchHotel/controller.js"></script>
-	
-   <!--  <script type="text/javascript">
-        tjq(document).ready(function() {
-            tjq("#price-range").slider({
-                range: true,
-                min: 0,
-                max: 1000,
-                values: [ 100, 800 ],
-                slide: function( event, ui ) {
-                    tjq(".min-price-label").html( "$" + ui.values[ 0 ]);
-                    tjq(".max-price-label").html( "$" + ui.values[ 1 ]);
-                }
-            });
-            tjq(".min-price-label").html( "$" + tjq("#price-range").slider( "values", 0 ));
-            tjq(".max-price-label").html( "$" + tjq("#price-range").slider( "values", 1 ));
-            
-            tjq("#rating").slider({
-                range: "min",
-                value: 40,
-                min: 0,
-                max: 50,
-                slide: function( event, ui ) {
-                    
-                }
-            });
-        });
-    </script> -->
     <style>
     [class^="soap-icon"]:before, [class*=" soap-icon"]:before{
 		line-height: inherit;

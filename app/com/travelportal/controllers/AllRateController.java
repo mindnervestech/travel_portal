@@ -70,37 +70,42 @@ public class AllRateController extends Controller {
 		//String[] sId =  {"1"};
 		String[] cityId = {"1"};
 
+		
+		Date formDate = null;
+		Date toDates = null;
+		try {
+			formDate = format.parse(fromDate[0]);
+			toDates = format.parse(toDate[0]);
+		} catch (ParseException e) { // TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
+		long dayDiff;
+		if(toDates.getTime() == formDate.getTime()){
+			dayDiff = 1;
+			diffInpromo = dayDiff;
+		}else{
+			long diff = toDates.getTime() - formDate.getTime();
+
+			dayDiff = diff / (1000 * 60 * 60 * 24);
+			diffInpromo = dayDiff;
+		}
+		
     	    		
     		List<BigInteger> rateMeta = RateMeta.getsupplierId(
     				Integer.parseInt(cityId[0]),
     				Integer.parseInt(cId[0])); // Long.parseLong(roomId[0]),  Integer.parseInt(sId[0]),
 
     		for (BigInteger rate1 : rateMeta) {
-    			Date formDate = null;
-    			Date toDates = null;
-    			try {
-    				formDate = format.parse(fromDate[0]);
-    				toDates = format.parse(toDate[0]);
-    			} catch (ParseException e) { // TODO Auto-generated catch block
-    				e.printStackTrace();
-    			}
+    			
 
     			Calendar c = Calendar.getInstance();
     			c.setTime(formDate);
     			c.set(Calendar.MILLISECOND, 0);
 
     			
-    			long dayDiff;
-    			if(toDates.getTime() == formDate.getTime()){
-    				dayDiff = 1;
-    				diffInpromo = dayDiff;
-    			}else{
-    				long diff = toDates.getTime() - formDate.getTime();
-
-    				dayDiff = diff / (1000 * 60 * 60 * 24);
-    				diffInpromo = dayDiff;
-    			}
-
     			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
     			HotelSearch hProfileVM = new HotelSearch();
     			Long object = map.get(rate1.longValue());
