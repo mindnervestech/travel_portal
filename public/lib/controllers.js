@@ -1224,7 +1224,7 @@ angular.module('travel_portal').
 	}
 	
 	$rootScope.hotelName= $cookieStore.get('hotelName');
-	$rootScope.currencyname = $cookieStore.get('currency');		
+	//$rootScope.currencyname = $cookieStore.get('currency');		
 		
 	 
 	$scope.getgeneralinfo = function(){
@@ -3311,7 +3311,7 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 		console.log(data);
 	}
 	
-	
+	$scope.checkDatesandcountry = {}
 	$scope.savePeriod = function() {
 		$scope.specialsObject[0].supplierCode = supplierCode;
 		console.log($scope.specialsObject);
@@ -3323,8 +3323,27 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 				 $scope.showMarketTable($scope.specialsObject[0].markets[i]);
 			
 				}
+		}
 		
-		}	
+		var arraycountry = [];
+		var count=0;
+		angular.forEach($scope.specialsObject[0].markets,function(value,key){
+			angular.forEach(value.allocatedCities,function(value1,key1){
+				if(value1.ticked == true){
+					arraycountry[count] = value1.name;
+					count++;
+				} 
+			});
+		});
+			/*console.log(arraycountry);
+			 $http.get("/checkPeriod/"+supplierCode+'/'+tDate,).success(function(response){
+				 
+			 });*/
+	  /*$http.post('/UpdateSpecificMarkup',$scope.selectedSpecificData).success(function(data){
+		  
+	  });*/
+			 
+		
 		
 		var arr = $scope.specialsObject[0].toDate.split("-");
 		var tDate = (arr[1]+"/"+arr[0]+"/"+arr[2])

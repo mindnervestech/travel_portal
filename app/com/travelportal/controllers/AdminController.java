@@ -87,7 +87,7 @@ public class AdminController extends Controller {
 		
 			
 		HotelProfile hotelProfile = new HotelProfile();
-		
+		System.out.println(register.getHotelName());
 		hotelProfile.setSupplier_code(Long.parseLong(register.getSupplierCode()));
 		hotelProfile.setHotelName(register.getHotelName());
 		hotelProfile.setSupplierName(register.getSupplierName());
@@ -115,7 +115,7 @@ public class AdminController extends Controller {
 		}
 		
 		
-		final String username=Play.application().configuration().getString("username");
+	/*	final String username=Play.application().configuration().getString("username");
 	        final String password=Play.application().configuration().getString("password");
 	        
 	 		Properties props = new Properties();
@@ -146,7 +146,7 @@ public class AdminController extends Controller {
 	  		     Transport.send(feedback);
 	       		} catch (MessagingException e) {
 	  			  throw new RuntimeException(e);
-	  		}
+	  		}*/
 	 		
 	 			
 		return ok();
