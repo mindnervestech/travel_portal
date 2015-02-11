@@ -20,7 +20,7 @@ import play.db.jpa.Transactional;
 //import com.travelportal.domain.RatePeriod;
 
 @Entity
-@Table(name="applicable_DateOnRate")
+@Table(name="applicable_dateonrate")
 public class ApplicableDateOnRate {
 
 	@Column(name="Date_id")
