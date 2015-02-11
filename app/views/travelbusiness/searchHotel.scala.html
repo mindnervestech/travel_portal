@@ -125,24 +125,7 @@
                                         </div>
                                     </div>
                                 </div>
-                               <!--  <div class="panel style1 arrow-right">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" href="#language-filter" class="collapsed">Host Language</a>
-                                    </h4>
-                                    <div id="language-filter" class="panel-collapse collapse">
-                                        <div class="panel-content">
-                                            <ul class="check-square filters-option">
-                                                <li><a href="#">Español<small>(982)</small></a></li>
-                                                <li class="active"><a href="#">Português<small>(127)</small></a></li>
-                                                <li class="active"><a href="#">Français<small>(222)</small></a></li>
-                                                <li><a href="#">Suomi<small>(158)</small></a></li>
-                                                
-                                            </ul>
-                                            <a class="button btn-mini">MORE</a>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                
+                                                              
                                 <div class="panel style1 arrow-right">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" href="#modify-search-panel" class="collapsed">Modify Search</a>
@@ -156,8 +139,7 @@
                                                     <select class="full-width" name="countryCode" data-ng-model="searchby.countryCode" ng-change="onCountryChange()" placeholder="Country"> 
                                                         <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
                                                     </select>
-                                                    
-                                      
+                                                   
                                                    </div>
                                                 </div>
                                                  <div class="form-group">
@@ -208,7 +190,6 @@
                             <div class="hotel-list listing-style3 hotel">
                                 <article class="box" ng-repeat="hotelInfo in hotellistInfo" >   <!-- style="border: 4px solid #C8C6C6;" -->
                                 
-                                 
                                     <div class="col-md-12" style="border-bottom: 4px solid #C8C6C6;">
                                     <figure class="col-sm-5 col-md-4" style="padding-left:0;">
                                      <!-- <img data-ng-src="{{img}}" alt="">  -->
@@ -243,13 +224,7 @@
                                             <p>{{hotelInfo.imgDescription}}</p>
                                              <div style="width: 150px;">
                                                   <span class="price"><small>MIN/START</small>{{hotelInfo.minRate}}<sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup></span>  
-                                                <!--  <form action="/hoteldetailpage" method="post">
-                              					        <input type="text" name="supplierCode"  value="{{hotelInfo.supplierCode}}" style="display: none;">
-                                					    <input type="text" name="checkIn" value="{{hotelInfo.checkIn}}" style="display: none;">
-                              						     <input type="text" name="checkOut" value="{{hotelInfo.checkOut}}" style="display: none;">
-                            						     <input type="text" name="nationalityCode" value="{{hotelInfo.nationality}}" style="display: none;">  
-                                                 <button type="submit" class="btn-small full-width text-center">VIEW DETAILS</button>
-                                               </form>  -->
+                                               
                                             </div> 
                                         </div>
                                     </div>
@@ -306,15 +281,10 @@
                             						     <input type="text" name="nationalityCode" value="{{hotelInfo.nationality}}" style="display: none;">  
                                                  <button type="submit" class="btn-small full-width text-center">VIEW DETAILS</button>
                                                </form> 
-                                     
-                                     </div>
+                                         </div>
                                    </div> 
-                                  	
-                                 
-                                  
                                 </article>
-                            
-                            </div>
+                             </div>
                            <!--  <a href="#" class="uppercase full-width button btn-large">load more listing</a> -->
                         
                       <!--   <span class="dpagingright">
@@ -326,16 +296,11 @@
                 </div>
             </div>
         </section>
-        
-        
-    </div>
-    @include_js()
-    
+      </div>
+    @include_js()   
     <!-- Google Map Api -->
     <!-- <script type='text/javascript' src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
     <script type="text/javascript" src="js/gmap3.min.js"></script> -->
-
-
     <script type="text/javascript" src="assets/resources/javascripts/travelbusiness/searchHotel/app.js"></script>
 	<script type="text/javascript" src="assets/resources/javascripts/travelbusiness/searchHotel/controller.js"></script>
 	
