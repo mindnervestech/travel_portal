@@ -34,7 +34,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 @Entity
-@Table(name="AllotmentMarket")
+@Table(name="allotmentmarket")
 public class AllotmentMarket {
 	
 	@Column(name="allotmentMarket_Id")

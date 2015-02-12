@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Query;
+import javax.persistence.Table;
 
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
@@ -26,6 +27,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 @Entity
+@Table(name="specialsmarket")
 public class SpecialsMarket {
 
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1117,7 +1117,9 @@ public class HotelProfileController extends Controller {
 			hotelprivatecontacts.setMainContactTelCode(Integer.parseInt(form.get("dTelCode")));
 			hotelprivatecontacts.setMainContactFaxNo(Integer.parseInt(form.get("dFaxNo")));
 			hotelprivatecontacts.setMainContactFaxCode(Integer.parseInt(form.get("dFaxCode")));
+			if(form.get("dExtNo") != null){
 			hotelprivatecontacts.setMainContactExt(Integer.parseInt(form.get("dExtNo")));
+			}
 			hotelprivatecontacts.setMainContactEmailAddr(form.get("dEmailAddr"));
 			hotelprivatecontacts.setTollFreeNo(form.get("dTollFreeTelNo"));
 			hotelprivatecontacts.setReservationSameAsMainContact(form.get("reservationDetailSame"));
@@ -1130,7 +1132,9 @@ public class HotelProfileController extends Controller {
 			hotelprivatecontacts.setDeptFaxNo(Integer.parseInt(form.get("rDeptFaxNo")));
 			hotelprivatecontacts.setDeptFaxCode(Integer.parseInt(form.get("rDeptFaxCode")));
 			hotelprivatecontacts.setDeptExtNo(Integer.parseInt(form.get("rExtNo")));
+			if(form.get("deptExtNo") != null){
 			hotelprivatecontacts.setReservationContactExt(Integer.parseInt(form.get("deptExtNo")));
+			}
 			hotelprivatecontacts.setReservationContactEmailAddr(form.get("rEmailAddr"));
 			hotelprivatecontacts.setSalutation_salutation_id(Salutation.getsalutationIdIdByCode(Integer.parseInt(form.get("salutationCode"))));
 

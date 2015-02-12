@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Query;
+import javax.persistence.Table;
 
 import com.travelportal.domain.City;
 
@@ -22,6 +23,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 @Entity
+@Table(name="specials")
 public class Specials {
 
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
