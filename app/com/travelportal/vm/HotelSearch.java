@@ -18,6 +18,7 @@ public class HotelSearch {
 	public int countryCode;
 	public int cityCode;
 	public int startRating;
+	public int stars;
 	public int currencyId;
 	public String currencyName;
 	public String currencyShort;
@@ -26,6 +27,7 @@ public class HotelSearch {
 	public List<Integer> services1;
 	public List<ServicesVM> services;
 	public HotelBookingDetailsVM hotelBookingDetails;
+	public long datediff;
 	
 	public List<SerachHotelRoomType> hotelbyRoom = new ArrayList<>();
 	public List<SerachedHotelbyDate> hotelbyDate; 
@@ -152,6 +154,19 @@ public class HotelSearch {
 	}
 	public void setHotelBookingDetails(HotelBookingDetailsVM hotelBookingDetails) {
 		this.hotelBookingDetails = hotelBookingDetails;
+	}
+
+	public long getDatediff() {
+		return datediff;
+	}
+	public void setDatediff(long datediff) {
+		this.datediff = datediff;
+	}
+	public int getStars() {
+		return stars;
+	}
+	public void setStars(int stars) {
+		this.stars = stars;
 	}
 	
 	

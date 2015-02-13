@@ -64,14 +64,17 @@
                         </div>
                         <div id="hotel-features" class="tab-container">
                             <ul class="tabs">
-                                <li><a href="#hotel-descr" data-toggle="tab">Description</a></li>
                                 <li class="active"><a href="#hotel-availability" data-toggle="tab" ng-click="availability()">Availability</a></li>
-                                <li><a href="#hotel-amenities" data-toggle="tab"  ng-click="hotel_amenities()">Hotel Amenities</a></li>                              
+                                <li><a href="#hotel-descr" data-toggle="tab">Description</a></li>
+                                <li><a href="#hotel-amenities" data-toggle="tab"  ng-click="hotel_amenities()">Hotel Amenities</a></li>
+                               <!--  <li><a href="#hotel-reviews" data-toggle="tab">Reviews</a></li>
+                                <li><a href="#hotel-faqs" data-toggle="tab">FAQs</a></li> -->
                                 <li><a href="#hotel-business-amenities" data-toggle="tab" ng-click="business_amenities()">Business Amenities</a></li>
                                 <li><a href="#hotel-sport-amenities" data-toggle="tab" ng-click="sport_amenities()">Leisure & Sport Amenities</a></li>
                             </ul>
                             <div class="tab-content">
                             	<div class="tab-pane fade" id="hotel-descr">
+                                   
                                     <div class="long-description">
                                         <h2>About {{hotel.hotelNm}}</h2>
                                         <p>
@@ -115,6 +118,7 @@
                                             <p>{{roomInfo.description}}</p>
                                              <div style="width: 150px;">
                                                  <a class="button btn-small full-width text-center" ng-click="roomWiseInfo(roomInfo)" style="background: #98ce44;">ROOM DETAILS</a>
+												 <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"><i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span>
                                             </div> 
                                         </div>
                                     </div>
@@ -122,7 +126,8 @@
                                    <div class="row" ng-repeat="adultRate in roomInfo.hotelRoomRateDetail[0].rateDetailsNormal" style="margin-bottom: 1px;">
                                     <div class="details col-sm-12 col-md-12" style="padding-bottom: 0;padding-top: 0;">  
                                     <div style="border-bottom: 1px solid #f5f5f5 !important;float: left;width: 98%;margin-top: 5px;">
-                                         <div class="col-md-6" style="width:50% !important;border-bottom: none !important;border-right: none;">  <!-- style="width: 106px;" -->                                        
+                                         <div class="col-md-6" style="width:50% !important;border-bottom: none !important;border-right: none;">  <!-- style="width: 106px;" -->
+                                         <!-- <i class="soap-icon-check-1" style="color: #7db921;"></i> -->
                                          <h4 class="box-title col-md-6" ng-if="adultRate.adult == '1 Adult'" style="margin-top: 15px;"><span>1 GUESTS</span></h4>
                                          <h4 class="box-title col-md-6" ng-if="adultRate.adult == '2 Adults'" style="margin-top: 15px;"><span>2 GUESTS</span></h4>
                                          <h4 class="box-title col-md-6" ng-if="adultRate.adult == '3 Adults'" style="margin-top: 15px;"><span>3 GUESTS</span></h4>
@@ -373,6 +378,11 @@
                                     <small class="pull-left">Min/start</small>
                                     <span class="pull-right">{{hotel.minRate}}<sup style="font-size: small;color: chocolate;top: -3px;">{{hotel.currencyShort}}</sup></span>
                                 </span> 
+                                 <div class="feedback clearfix">
+                                 <div star-rating rating-value="hotel.stars" max="hotel.stars" on-rating-selected=""></div>
+                                   <!--  <div title="" class="five-stars-container" data-toggle="tooltip" data-placement="bottom" data-original-title="4 stars"><span class="five-stars" style="width: {{hotel.startRatingWidth}}%;"></span></div> -->
+                                   <!--  <span class="review pull-right">270 reviews</span> -->
+                                </div>
                                 <p class="description">{{hotel.imgDescription}}</p>
                             </div>
                         </article>

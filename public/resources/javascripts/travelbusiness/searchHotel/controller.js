@@ -83,7 +83,7 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 
 travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDialog) {
 	
-
+	$scope.rating = 2;
 	
 	$scope.init = function(hotelAllData){
 		
@@ -130,6 +130,11 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.searchNationality = response;
 	}); 
 	
+	
+	  $scope.rateFunction = function(rating) {
+	    alert("Rating selected - " + rating);
+	  };
+	
 	$scope.searchAgainHotel = function(){
 		console.log($scope.searchby);
 		
@@ -162,10 +167,49 @@ $http.get("/searchCountries").success(function(response) {
 			console.log('ERROR');
 		});
 	}
-	
-	
-	
 	$scope.sort = 1;
+	$scope.sortByStar = 1;
+	$scope.sortRating = function(){
+		console.log("HIiiii");
+		
+		 if($scope.sortByStar == 0){
+			   $scope.sortByStar = 1;
+		   }else{
+			   $scope.sortByStar = 0;
+		   }
+		  
+		  		   
+		   console.log($scope.hotellistInfo);
+			$scope.findHotelData.checkIn = $scope.hotelAllData.hotellist[0].checkIn;
+			$scope.findHotelData.checkOut = $scope.hotelAllData.hotellist[0].checkOut;
+			$scope.findHotelData.city = $scope.hotelAllData.hotellist[0].cityCode;
+			$scope.findHotelData.nationalityCode = $scope.hotelAllData.hotellist[0].nationality;
+			//$scope.findHotelData.id = $scope.hotelAllData.hotellist[0].startRating;
+			$scope.findHotelData.amenitiesCheck = $scope.amenities_check;
+			$scope.findHotelData.servicesCheck = $scope.services_check;
+			$scope.findHotelData.locationCheck = $scope.location_check;
+			$scope.findHotelData.sortByRating = $scope.sortByStar;
+			$scope.findHotelData.sortData = $scope.sort;
+			
+				console.log($scope.findHotelData);
+			
+			$http.post('/findHotelByData', $scope.findHotelData).success(function(data){
+				console.log('success');
+				console.log(data);
+				$scope.hotellistInfo = data.hotellist;
+				angular.forEach(data.hotellist, function(obj, index){ 
+					$scope.img = "/searchHotelInfo/getHotelImagePath/"+data.hotellist[index].supplierCode+"?d="+new Date().getTime();
+					$scope.hotellistInfo[index].imgPaths = $scope.img;
+								
+				});
+				$scope.hotelAllData.totalHotel = data.totalHotel;
+				console.log($scope.hotellistInfo);
+				
+			}).error(function(data, status, headers, config) {
+				console.log('ERROR');
+			});
+	}
+	
 	   $scope.sortData = function(){
 		   if($scope.sort == 0){
 			   $scope.sort = 1;
@@ -180,10 +224,11 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.findHotelData.checkOut = $scope.hotelAllData.hotellist[0].checkOut;
 			$scope.findHotelData.city = $scope.hotelAllData.hotellist[0].cityCode;
 			$scope.findHotelData.nationalityCode = $scope.hotelAllData.hotellist[0].nationality;
-			$scope.findHotelData.id = $scope.hotelAllData.hotellist[0].startRating;
+			//$scope.findHotelData.id = $scope.hotelAllData.hotellist[0].startRating;
 			$scope.findHotelData.amenitiesCheck = $scope.amenities_check;
 			$scope.findHotelData.servicesCheck = $scope.services_check;
 			$scope.findHotelData.locationCheck = $scope.location_check;
+			$scope.findHotelData.sortByRating = $scope.sortByStar;
 			$scope.findHotelData.sortData = $scope.sort;
 			
 				console.log($scope.findHotelData);
@@ -880,6 +925,20 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 		});
 	}
 	
+     $scope.showPromotion = function(roominfo){
+		
+		$scope.roomPromotion=roominfo;
+		
+		console.log($scope.roomPromotion);
+		
+		ngDialog.open({
+			template: '/assets/resources/html/promotionInfo.html',
+			scope : $scope,
+			//controller:'hoteProfileController',
+			className: 'ngdialog-theme-default'
+		});
+	}
+	
 	
 });
 
@@ -896,6 +955,14 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 		});
 		console.log($scope.hotel);
 		console.log(hotel);
+		
+		var arr = hotel.checkIn.split("-");
+		var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+		$scope.checkIn = $filter('date')(new Date(datevalue), "MMM dd,yyyy");
+		var arr1 = hotel.checkOut.split("-");
+		var datevalue1 = (arr1[1]+"/"+arr1[0]+"/"+arr1[2])
+		$scope.checkOut = $filter('date')(new Date(datevalue1), "MMM dd,yyyy");
+		console.log($scope.checkIn);
 	}
 	
 	$http.get("/searchCountries").success(function(response) {

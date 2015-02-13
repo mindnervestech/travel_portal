@@ -123,21 +123,21 @@
                                 </figure>
                                 <div class="details">
                                     <div class="feedback">
-                                        <div data-placement="bottom" data-toggle="tooltip" class="five-stars-container" title="" data-original-title="4 stars"><span style="width: 80%;" class="five-stars"></span></div>
-                                        <span class="review">270 reviews</span>
+                                        <div star-rating rating-value="hotel.stars" max="hotel.stars" on-rating-selected=""></div>
+                                        <!-- <span class="review">270 reviews</span> -->
                                     </div>
                                     <div class="constant-column-3 timing clearfix">
                                         <div class="check-in">
                                             <label>Check in</label>
-                                            <span>NOV 30, 2013<br>11 AM</span>
+                                            <span>{{checkIn}}</span>
                                         </div>
                                         <div class="duration text-center">
                                             <i class="soap-icon-clock"></i>
-                                            <span>2 Nights</span>
+                                            <span>{{hotel.datediff}} Nights</span>
                                         </div>
                                         <div class="check-out">
                                             <label>Check out</label>
-                                            <span>DEC 02, 2013<br>2 PM</span>
+                                            <span>{{checkOut}}</span>
                                         </div>
                                     </div>
                                     <div class="guest">

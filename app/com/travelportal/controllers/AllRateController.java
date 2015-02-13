@@ -580,6 +580,14 @@ public class AllRateController extends Controller {
     						
     						ptotal = arrayCount.get(aCount) + roomTP.getPcount();
     						
+    						for (SpecialsVM specialObj : roomTP.specials){
+    							for (SpecialsMarketVM marketObj : specialObj.markets){
+    								if(diffInpromo < Integer.parseInt(marketObj.stayDays)){
+    									ptotal = 1;
+    								}
+    							}
+    						}
+    						
     						arrayCount.set(aCount, ptotal);
     						
     						for (SerachedRoomRateDetail rateObj : roomTP

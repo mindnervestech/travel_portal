@@ -441,7 +441,7 @@ public static void DateWiseSortFunction(List<HotelSearch> hotellist,String toDat
 		if (object == null) {
 
 			HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
-			fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);   /* Fill Hotel info function*/
+			fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId,dayDiff);   /* Fill Hotel info function*/
 			
 			for (int i = 0; i < dayDiff; i++) {
 
@@ -642,6 +642,13 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 					
 					int ptotal = 0;
 					ptotal = arrayCount.get(aCount) + roomTP.getPcount();
+					for (SpecialsVM specialObj : roomTP.specials){
+						for (SpecialsMarketVM marketObj : specialObj.markets){
+							if(diffInpromo < Integer.parseInt(marketObj.stayDays)){
+								ptotal = 1;
+							}
+						}
+					}
 					arrayCount.set(aCount, ptotal);
 					
 					for (SerachedRoomRateDetail rateObj : roomTP
@@ -786,7 +793,7 @@ public static void fillRoomInfo(HotelRoomTypes room,SerachedRoomType roomtyp){
 		roomtyp.setAmenities(rList);
 }
 
-public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,String fDate,String tDate,String nationality){
+public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,String fDate,String tDate,String nationality,long dayDiff){
 	
 	hProfileVM.setSupplierCode(hAmenities.getSupplier_code());
 	hProfileVM.setHotelNm(hAmenities.getHotelName());
@@ -795,6 +802,7 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	if (hAmenities.getStartRatings() != null) {
 		hProfileVM.setStartRating(hAmenities.getStartRatings()
 				.getId());
+		hProfileVM.setStars(hAmenities.getStartRatings().getStarRating());
 	}
 	hProfileVM.currencyId = hAmenities.getCurrency().getCurrencyCode();
 	hProfileVM.currencyName = hAmenities.getCurrency().getCurrencyName();
@@ -807,6 +815,7 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	hProfileVM.setHoteldescription(hAmenities.getHotelProfileDesc());
 	hProfileVM.setCheckIn(fDate);
 	hProfileVM.setCheckOut(tDate);
+	hProfileVM.setDatediff(dayDiff);
 	List<ServicesVM> sList = new ArrayList<>();
 	
 	for (HotelServices hoServices : hAmenities.getServices()){
@@ -1066,7 +1075,7 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 				
 
 				for(HotelProfile hAmenities:hAmenities1){
-					fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);   /* Fill Hotel info function*/				for (int i = 0; i < dayDiff; i++) {
+					fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId,dayDiff);   /* Fill Hotel info function*/				for (int i = 0; i < dayDiff; i++) {
 
 					List<HotelRoomTypes> roomType = HotelRoomTypes
 							.getHotelRoomDetails(supplierid.longValue());
@@ -1164,9 +1173,15 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		findMinRateInHotel(hotellist);  /* find min Rate in par Hotel function*/
 	
 		if(searchHotelValueVM.getSortData().equals("1")){
-			Collections.sort(hotellist,new HotelComparatorAsc());
+			Collections.sort(hotellist,new HotelComparatorByRateAsc());
 		}else{
-			Collections.sort(hotellist,new HotelComparatorDes());
+			Collections.sort(hotellist,new HotelComparatorByRateDes());
+		}
+		
+		if(searchHotelValueVM.getSortByRating().equals("1")){
+			Collections.sort(hotellist,new HotelComparatorByRatingAsc());
+		}else{
+			Collections.sort(hotellist,new HotelComparatorByRatingDes());
 		}
 		
 	
@@ -1179,18 +1194,32 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 }
 
 
-public static class HotelComparatorAsc implements Comparator<HotelSearch> {
+public static class HotelComparatorByRateAsc implements Comparator<HotelSearch> {
 
 	@Override
 	public int compare(HotelSearch arg0, HotelSearch arg1) {
 		return arg0.minRate.doubleValue() > arg1.minRate.doubleValue() ? -1 : arg0.minRate.doubleValue() < arg1.minRate.doubleValue()?1:0;
 	}
 }
-public static class HotelComparatorDes implements Comparator<HotelSearch> {
+public static class HotelComparatorByRateDes implements Comparator<HotelSearch> {
 
 	@Override
 	public int compare(HotelSearch arg0, HotelSearch arg1) {
 		return arg0.minRate.doubleValue() < arg1.minRate.doubleValue() ? -1 : arg0.minRate.doubleValue() > arg1.minRate.doubleValue()?1:0;
+	}
+}
+public static class HotelComparatorByRatingAsc implements Comparator<HotelSearch> {
+
+	@Override
+	public int compare(HotelSearch arg0, HotelSearch arg1) {
+		return arg0.startRating > arg1.startRating ? -1 : arg0.startRating < arg1.startRating?1:0;
+	}
+}
+public static class HotelComparatorByRatingDes implements Comparator<HotelSearch> {
+
+	@Override
+	public int compare(HotelSearch arg0, HotelSearch arg1) {
+		return arg0.startRating < arg1.startRating ? -1 : arg0.startRating > arg1.startRating?1:0;
 	}
 }
 
@@ -1243,7 +1272,7 @@ public static Result hoteldetailpage() {
 		if (object == null) {
 			HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
 			
-			fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);
+			fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId,dayDiff);
 			
 			for (int i = 0; i < dayDiff; i++) {
 
@@ -1389,7 +1418,7 @@ public static Result hoteldetailpage() {
 			if (object == null) {
 				HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());	
 				
-				fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);
+				fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId,dayDiff);
 				
 				for (int i = 0; i < dayDiff; i++) {
 
@@ -1557,6 +1586,13 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 					
 					int ptotal = 0;
 					ptotal = arrayCount.get(aCount) + roomTP.getPcount();
+					for (SpecialsVM specialObj : roomTP.specials){
+						for (SpecialsMarketVM marketObj : specialObj.markets){
+							if(diffInpromo < Integer.parseInt(marketObj.stayDays)){
+								ptotal = 1;
+							}
+						}
+					}
 					arrayCount.set(aCount, ptotal);
 					
 					for (SerachedRoomRateDetail rateObj : roomTP

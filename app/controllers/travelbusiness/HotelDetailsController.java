@@ -208,7 +208,7 @@ public static Result hotelBookingpage() {
 		if (object == null) {
 			HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
 			
-			fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);
+			fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId,dayDiff);
 			
             //List<hotelBookingDetails> hotelBookingDetails=new ArrayList<hotelBookingDetails>();
 			
@@ -360,7 +360,7 @@ public static void fillRoomInfo(HotelRoomTypes room,SerachedRoomType roomtyp){
 		roomtyp.setAmenities(rList);
 }
 
-public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,String fDate,String tDate,String nationality){
+public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,String fDate,String tDate,String nationality,long dayDiff){
 	
 	hProfileVM.setSupplierCode(hAmenities.getSupplier_code());
 	hProfileVM.setHotelNm(hAmenities.getHotelName());
@@ -369,6 +369,7 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	if (hAmenities.getStartRatings() != null) {
 		hProfileVM.setStartRating(hAmenities.getStartRatings()
 				.getId());
+		hProfileVM.setStars(hAmenities.getStartRatings().getStarRating());
 	}
 	hProfileVM.currencyId = hAmenities.getCurrency().getCurrencyCode();
 	hProfileVM.currencyName = hAmenities.getCurrency().getCurrencyName();
@@ -381,6 +382,7 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	hProfileVM.setHoteldescription(hAmenities.getHotelProfileDesc());
 	hProfileVM.setCheckIn(fDate);
 	hProfileVM.setCheckOut(tDate);
+	hProfileVM.setDatediff(dayDiff);
 	List<ServicesVM> sList = new ArrayList<>();
 	
 	for (HotelServices hoServices : hAmenities.getServices()){

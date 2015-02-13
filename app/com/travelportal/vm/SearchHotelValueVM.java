@@ -14,6 +14,7 @@ public class SearchHotelValueVM {
 	public String id;
 	public String nationalityCode;
 	public String sortData;
+	public String sortByRating;
 	public List<Integer> servicesCheck;
 	public List<Integer> locationCheck;
 	public List<Integer> amenitiesCheck;
@@ -135,6 +136,12 @@ public class SearchHotelValueVM {
 	}
 	public void setAgentId(String agentId) {
 		this.agentId = agentId;
+	}
+	public String getSortByRating() {
+		return sortByRating;
+	}
+	public void setSortByRating(String sortByRating) {
+		this.sortByRating = sortByRating;
 	}
 		
 	

@@ -18,6 +18,8 @@ public class HotelStarRatings {
 	private int id;
 	@Column(name="start_rating_txt")
 	private String starRatingTxt;
+	@Column(name="start_rating")
+	private int starRating;
 	
 	public int getId() {
 		return id;
@@ -37,7 +39,14 @@ public class HotelStarRatings {
 		return starRatingTxt;
 	}
 	
+   
 	
+	public int getStarRating() {
+		return starRating;
+	}
+	public void setStarRating(int starRating) {
+		this.starRating = starRating;
+	}
 	public static List<HotelStarRatings> gethotelStarratings() {
 		return JPA.em().createQuery("select c from HotelStarRatings c ").getResultList();
 	}

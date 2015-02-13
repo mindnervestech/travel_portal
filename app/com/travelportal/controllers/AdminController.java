@@ -87,7 +87,7 @@ public class AdminController extends Controller {
 		
 			
 		HotelProfile hotelProfile = new HotelProfile();
-		System.out.println(register.getHotelName());
+		
 		hotelProfile.setSupplier_code(Long.parseLong(register.getSupplierCode()));
 		hotelProfile.setHotelName(register.getHotelName());
 		hotelProfile.setSupplierName(register.getSupplierName());

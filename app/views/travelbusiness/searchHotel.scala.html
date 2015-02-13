@@ -199,11 +199,13 @@
                         <div class="col-sm-8 col-md-9">
                             <div class="sort-by-section clearfix">
                                 <h4 class="sort-by-title block-sm">Sort results by:</h4>
-                                <ul class="sort-bar clearfix block-sm">
+                              <ul class="sort-bar clearfix block-sm"> 
                                    
                                      <li class="sort-by-price  active" ng-if="sort == 1"><a class="aTagclass" ng-click="sortData()"><span class="spanClass">price</span><span class="setIcon soap-icon-roundtriangle-bottom"></span></a></li>
-                                     <li class="sort-by-price  active" ng-if="sort == 0"><a class="aTagclass" ng-click="sortData()"><span class="spanClass">price</span><span class="setIcon soap-icon-roundtriangle-top"></span></a></li> 
-                                  
+                                     <li class="sort-by-price  active" ng-if="sort == 0"><a class="aTagclass" ng-click="sortData()"><span class="spanClass">price</span><span class="setIcon soap-icon-roundtriangle-top"></span></a></li>
+                                       <li class="sort-by-price  active" ng-if="sortByStar == 1"><a class="aTagclass" ng-click="sortRating()"><span class="spanClass">rating</span><span class="setIcon soap-icon-roundtriangle-bottom"></span></a></li>
+                                     <li class="sort-by-price  active" ng-if="sortByStar == 0"><a class="aTagclass" ng-click="sortRating()"><span class="spanClass">rating</span><span class="setIcon soap-icon-roundtriangle-top"></span></a></li> 
+                                  </ul>
                             </div>
                             <div class="hotel-list listing-style3 hotel">
                                 <article class="box" ng-repeat="hotelInfo in hotellistInfo" >   <!-- style="border: 4px solid #C8C6C6;" -->
@@ -216,27 +218,29 @@
                                     </figure>
                                     <div class="details col-sm-7 col-md-8">
                                         <div>
-                                            <div style="border-right: none;">
+                                            <div>   <!-- style="border-right: none;" -->
                                                 <h4 class="box-title">{{hotelInfo.hotelNm}}<small><i class="soap-icon-departure yellow-color"></i> {{hotelInfo.hotelAddr}}</small></h4>
                                                 <div class="amenities col-md-6">
                                                 <div  ng-repeat="ser in hotelInfo.services"> 
                                             		 <div class="col-md-3" ng-if="ser.serviceId == 7">
-                                                    <i class="soap-icon-beach circle" tooltip="soap-icon-beach circle"></i>
+                                                    <i title="Beach Resort" class="soap-icon-beach circle" tooltip="soap-icon-beach circle"></i>
                                                     </div>
                                                     <div class="col-md-3" rel="tooltip" tooltip="{{hotelInfo.hotelNm}}" ng-if="ser.serviceId == 19">
                                                    
-                                                    <i class="soap-icon-friends circle"></i>
+                                                    <i title="Family Style" class="soap-icon-friends circle"></i>
                                                     </div>
                                                     <div class="col-md-3" ng-if="ser.serviceId ==22">
-                                                    <i class="soap-icon-playplace circle"></i>
+                                                    <i title="Golf Resort" class="soap-icon-playplace circle"></i>
                                                     </div>
                                                     <div class="col-md-3" ng-if="ser.serviceId == 12">
-                                                    <i class="soap-icon-hotel circle"></i>
+                                                    <i title="City hotel" class="soap-icon-hotel circle"></i>
                                                     </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div></div>
+                                            <div >
+                                           <div star-rating rating-value="hotelInfo.stars" max="hotelInfo.stars" on-rating-selected=""></div>
+                                            </div>
                                             
                                         </div>
                                         <div>
@@ -260,20 +264,20 @@
                                     <div>
                                          <div class="col-md-6" style="width:50% !important;border-bottom: none !important;border-right: none;">  <!-- style="width: 106px;" -->
                                          <!-- <i class="soap-icon-check-1" style="color: #7db921;"></i> -->
-                                         <h4 class="box-title col-md-6">{{roominfo.roomName}}<span ng-if="roominfo.applyPromotion == 1"><a ng-click="showPromotion(roominfo)"><i class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span></h4>
+                                         <h4 class="box-title col-md-6">{{roominfo.roomName}}<span ng-if="roominfo.applyPromotion == 1"><a ng-click="showPromotion(roominfo)"><i title="Special Promotion" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span></h4>
                                               <div class="amenities col-md-6">   
                                              <div  ng-repeat="ameniti in roominfo.amenities"> 
                                              <div class="col-md-3" ng-if="ameniti.amenityId == 1">
-                                                    <i class="soap-icon-wifi circle"></i>
+                                                    <i title="24-hour food and beverage outlet" class="soap-icon-wifi circle"></i>
                                                    </div>
                                                     <div class="col-md-3" ng-if="ameniti.amenityId == 4">
-                                                    <i class="soap-icon-fitnessfacility circle"></i>
+                                                    <i title="Fitness Facility" class="soap-icon-fitnessfacility circle"></i>
                                                    </div>
-                                                    <div class="col-md-3" ng-if="ameniti.amenityId == 3">
-                                                    <i class="soap-icon-fork circle"></i>
+                                                    <div class="col-md-3" ng-if="ameniti.amenityId == 86">
+                                                    <i title="Kitchen Facilities (Utensils, Crockery Etc)" class="soap-icon-fork circle"></i>
                                                     </div>
-                                                     <div class="col-md-3" ng-if="ameniti.amenityId == 82">
-                                                    <i class="soap-icon-television circle"></i>
+                                                     <div  class="col-md-3" ng-if="ameniti.amenityId == 82">
+                                                    <i title="Interactive web TV" class="soap-icon-television circle"></i>
                                                  </div>
                                                     </div>  
                                                    
