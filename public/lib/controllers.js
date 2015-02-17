@@ -3401,11 +3401,15 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 	
 	$scope.updatePeriod = function() {
 		$scope.specialsData[0].supplierCode = supplierCode;
-		//$scope.specialsData[0].
 		console.log($scope.rooms);
-		/*if($scope.specialsData[0].roomTypes == []){
-			
-		}*/
+		if($scope.specialsData[0].roomTypes.length == 0){
+		angular.forEach($scope.specialsData,function(value,key){
+			angular.forEach(value.roomallInfo,function(value1,key1){
+				$scope.specialsData[0].roomTypes[key1] = value1.roomId;
+			});
+		});
+		}
+		
 		console.log($scope.specialsData);
 		$http.post('/updateSpecials', {"specialsObject":$scope.specialsData}).success(function(data){
 			console.log('success');

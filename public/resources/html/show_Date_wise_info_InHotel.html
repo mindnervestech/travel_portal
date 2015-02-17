@@ -91,7 +91,8 @@
                                             <dd>{{Dateinfo.rate}}  {{ratedetail.currencyShort}}</dd>
                                             <dt ng-if="Dateinfo.meal != null">Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
-                                             <!-- <label style="color: #ff3e3e;">Room Not Available</label> -->
+                                             <label ng-show="Dateinfo.flag == 1" style="color: #ff3e3e;">Room Not Available</label>
+                                             <label ng-show="Dateinfo.flag == 0" style="color: #7db921;">Room Available</label> 
                                         </dl>
                                         <!-- <button class="btn-mini status">CANCELLED</button> -->
                                     </div>

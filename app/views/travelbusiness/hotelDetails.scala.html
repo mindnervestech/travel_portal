@@ -118,7 +118,7 @@
                                             <p>{{roomInfo.description}}</p>
                                              <div style="width: 150px;">
                                                  <a class="button btn-small full-width text-center" ng-click="roomWiseInfo(roomInfo)" style="background: #98ce44;">ROOM DETAILS</a>
-												 <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"><i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span>
+												 <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"> Special Promotion<!-- <i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i> --></a></span>
                                             </div> 
                                         </div>
                                     </div>
@@ -413,6 +413,9 @@
 		}
      #booking .booking-info .info{
                width: 110px !important;
+        }
+        #loading-id{
+         display: none;
         }
   </style>
 </body>
