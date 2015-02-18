@@ -66,6 +66,7 @@ public class HotelBookingDetails {
 	private String room_status;
 	private Long agentId;
 	private String agentNm;
+	private String agentCompanyNm;
 	private long totalNightStay;
 	
 	public Long getSupplierCode() {
@@ -251,9 +252,12 @@ public class HotelBookingDetails {
 		this.totalNightStay = totalNightStay;
 	}
 	
-	
-	
-	
+	public String getAgentCompanyNm() {
+		return agentCompanyNm;
+	}
+	public void setAgentCompanyNm(String agentCompanyNm) {
+		this.agentCompanyNm = agentCompanyNm;
+	}
 	public String getAgentNm() {
 		return agentNm;
 	}
@@ -269,7 +273,7 @@ public class HotelBookingDetails {
     	
     	String sql="";
     	if(!agentNm.equals("1")){
-    		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentNm = ?4 and a.supplierCode = ?1 and a.room_status = 'available' ORDER BY a.checkIn DESC";
+    		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentCompanyNm = ?4 and a.supplierCode = ?1 and a.room_status = 'available' ORDER BY a.checkIn DESC";
     	}else{
     		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.supplierCode = ?1 and a.room_status = 'available' ORDER BY a.checkIn DESC";
     	}
@@ -297,7 +301,7 @@ public class HotelBookingDetails {
     	
     	String sql="";
     	if(!agentNm.equals("1")){
-    		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentNm = ?4 and a.supplierCode = ?1 and a.room_status = 'on request' ORDER BY a.checkIn DESC";
+    		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentCompanyNm = ?4 and a.supplierCode = ?1 and a.room_status = 'on request' ORDER BY a.checkIn DESC";
     	}else{
     		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.supplierCode = ?1 and a.room_status = 'on request' ORDER BY a.checkIn DESC";
     	}
@@ -325,7 +329,7 @@ public class HotelBookingDetails {
     	
     	String sql="";
     
-    		sql = "Select a from HotelBookingDetails a where a.agentNm = ?2 and a.supplierCode = ?1 and a.room_status = 'on request' ORDER BY a.checkIn DESC";
+    		sql = "Select a from HotelBookingDetails a where a.agentCompanyNm = ?2 and a.supplierCode = ?1 and a.room_status = 'on request' ORDER BY a.checkIn DESC";
     	
     	if(currentPage >= 1 && currentPage <= totalPages) {
 			start = (currentPage*rowsPerPage)-rowsPerPage;
@@ -348,7 +352,7 @@ public class HotelBookingDetails {
     	
     	String sql="";
     
-    		sql = "Select a from HotelBookingDetails a where a.agentNm = ?2 and a.supplierCode = ?1 and a.room_status = 'available' ORDER BY a.checkIn DESC";
+    		sql = "Select a from HotelBookingDetails a where a.agentCompanyNm = ?2 and a.supplierCode = ?1 and a.room_status = 'available' ORDER BY a.checkIn DESC";
     	
     	if(currentPage >= 1 && currentPage <= totalPages) {
 			start = (currentPage*rowsPerPage)-rowsPerPage;
@@ -413,7 +417,7 @@ public class HotelBookingDetails {
 		long totalPages = 0, size;
 	
 		if(!agentNm.equals("1")){
-			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentNm = ?4 and a.supplierCode = ?1 and a.room_status = 'on request'").setParameter(1, supplierCode).setParameter(2, fromDate).setParameter(3, toDate).setParameter(4, agentNm).getSingleResult();  
+			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentCompanyNm = ?4 and a.supplierCode = ?1 and a.room_status = 'on request'").setParameter(1, supplierCode).setParameter(2, fromDate).setParameter(3, toDate).setParameter(4, agentNm).getSingleResult();  
 		}else{
 			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.supplierCode = ?1 and a.room_status = 'on request'").setParameter(1, supplierCode).setParameter(2, fromDate).setParameter(3, toDate).getSingleResult();   
 		}
@@ -432,7 +436,7 @@ public class HotelBookingDetails {
 		long totalPages = 0, size;
 	
 		if(!agentNm.equals("1")){
-			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentNm = ?4 and a.supplierCode = ?1 and a.room_status = 'available'").setParameter(1, supplierCode).setParameter(2, fromDate).setParameter(3, toDate).setParameter(4, agentNm).getSingleResult();  
+			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentCompanyNm = ?4 and a.supplierCode = ?1 and a.room_status = 'available'").setParameter(1, supplierCode).setParameter(2, fromDate).setParameter(3, toDate).setParameter(4, agentNm).getSingleResult();  
 		}else{
 			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.supplierCode = ?1 and a.room_status = 'available'").setParameter(1, supplierCode).setParameter(2, fromDate).setParameter(3, toDate).getSingleResult();   
 		}
@@ -451,7 +455,7 @@ public class HotelBookingDetails {
 		long totalPages = 0, size;
 	
 		
-			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentNm = ?2 and a.supplierCode = ?1 and a.room_status = 'available'").setParameter(1, supplierCode).setParameter(2, agentNm).getSingleResult();  
+			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentCompanyNm = ?2 and a.supplierCode = ?1 and a.room_status = 'available'").setParameter(1, supplierCode).setParameter(2, agentNm).getSingleResult();  
 		
     	
     	totalPages = size/rowsPerPage;
@@ -468,7 +472,7 @@ public class HotelBookingDetails {
 		long totalPages = 0, size;
 	
 		
-			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentNm = ?2 and a.supplierCode = ?1 and a.room_status = 'on request'").setParameter(1, supplierCode).setParameter(2, agentNm).getSingleResult();  
+			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentCompanyNm = ?2 and a.supplierCode = ?1 and a.room_status = 'on request'").setParameter(1, supplierCode).setParameter(2, agentNm).getSingleResult();  
 		
     	
     	totalPages = size/rowsPerPage;

@@ -30,7 +30,7 @@
 					<input id = "date" name="toDate"  class="input-filter form-control" data-provide="datepicker" data-ng-model="selectData.toDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy" required>
 				</div>
 				<div class="col-md-2">
-					<label>Agent Name :</label>
+					<label>Agent Company Name :</label>
 				</div>
 				<div class="col-md-2">
 					<input type="text" id="agentName" name="agentNm" data-ng-model="selectData.agentNm" class="form-control">
@@ -62,8 +62,8 @@
                                  <th style="width: 55px;"><a style="color: white;">No Of Room</a></th>
                                  <th style="width: 83px;"><a style="color: white;">Total</a></th>
                                  <th><a style="color: white;">Adult</a></th>
-                                 <th><a style="color: white;">Agent First Name</a></th>
-                                 <!-- <th><a style="color: white;">Agent Last Name</a></th> -->
+                                  <th><a style="color: white;">Agent Company Name</a></th> 
+                                 <th><a style="color: white;">Agent Name</a></th>
                                  <!--  <th><a style="color: white;">Supplier</a></th> -->
                             <th><a style="color: white;">Action</a></th> 
                            
@@ -82,10 +82,10 @@
                               <td>{{book.noOfroom}}</td>
                                <td>{{book.total}}</td>
                            <td>{{book.adult}}</td>
+                            <td>{{book.agent[0].companyName}}</td> 
                             <td>{{book.agent[0].firstName}}</td>
-                          <!--   <td>{{book.agent[0].lastName}}</td> -->
                           <!--   <td>{{book.supplierCode}}</td> -->
-                            <td><a ng-click="showDetails(book)" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 19px;"></span></a></td> 
+                            <td><a ng-click="showDetails(book)" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 0px;"></span></a></td> 
                            
                             </tr>
                            

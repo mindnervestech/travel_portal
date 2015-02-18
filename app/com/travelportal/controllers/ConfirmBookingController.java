@@ -27,36 +27,36 @@ import play.mvc.Result;
 public class ConfirmBookingController extends Controller {
 
 	@Transactional(readOnly=true)
-	public static Result getbookingInfo(long supplierCode,int currentPage,String fromDate,String toDate,String agentNm) {
+	public static Result getbookingInfo(long supplierCode,int currentPage,String fromDate,String toDate,String agentcompanyNm) {
 		
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
     	 List<HotelBookDetailsVM> aDetailsVMs =  new ArrayList<>();
     		long totalPages = 0;
     		List<HotelBookingDetails> hoteDetails = null;
     		
-    		if(fromDate.equals("1") && toDate.equals("1") && agentNm.equals("1")){
+    		if(fromDate.equals("1") && toDate.equals("1") && agentcompanyNm.equals("1")){
     		
     			totalPages = HotelBookingDetails.getAllBookingTotal(5, supplierCode);
     			hoteDetails = HotelBookingDetails.getfindBysupplier(supplierCode, currentPage, 5, totalPages);
     		}else if(!fromDate.equals("1") && !toDate.equals("1")){
     			try {
-    				totalPages = HotelBookingDetails.getAllBookingTotalDateWise(5 , supplierCode , format.parse(fromDate) , format.parse(toDate) , agentNm);
+    				totalPages = HotelBookingDetails.getAllBookingTotalDateWise(5 , supplierCode , format.parse(fromDate) , format.parse(toDate) , agentcompanyNm);
     			} catch (ParseException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
     			}
     		
     		try {
-    			hoteDetails = HotelBookingDetails.getfindBysupplierDateWise(supplierCode, format.parse(fromDate) , format.parse(toDate), currentPage, 5, totalPages ,agentNm);
+    			hoteDetails = HotelBookingDetails.getfindBysupplierDateWise(supplierCode, format.parse(fromDate) , format.parse(toDate), currentPage, 5, totalPages ,agentcompanyNm);
     		} catch (ParseException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
-    		}else if(fromDate.equals("1") && toDate.equals("1") && !agentNm.equals("1")){
+    		}else if(fromDate.equals("1") && toDate.equals("1") && !agentcompanyNm.equals("1")){
     			
-    				totalPages = HotelBookingDetails.getAllBookingTotalDateWiseAgentWise(5 , supplierCode , agentNm);
+    				totalPages = HotelBookingDetails.getAllBookingTotalDateWiseAgentWise(5 , supplierCode , agentcompanyNm);
     		
-    			hoteDetails = HotelBookingDetails.getfindBysupplierDateWiseAgentWise(supplierCode, currentPage, 5, totalPages ,agentNm);
+    			hoteDetails = HotelBookingDetails.getfindBysupplierDateWiseAgentWise(supplierCode, currentPage, 5, totalPages ,agentcompanyNm);
     		
     		}
 			
@@ -83,6 +83,7 @@ public class ConfirmBookingController extends Controller {
 			agRegisVM.setAgentCode(agent.getAgentCode());
 			agRegisVM.setFirstName(agent.getFirstName());
 			agRegisVM.setLastName(agent.getLastName());
+			agRegisVM.setCompanyName(agent.getCompanyName());
 			
 			aList.add(agRegisVM);
 			hDetailsVM.setAgent(aList);
@@ -156,9 +157,7 @@ public class ConfirmBookingController extends Controller {
 				totalPages = HotelBookingDetails.getAllonrequestTotalDateWiseAgentWise(5 , supplierCode , agentNm);
 		
 			hoteDetails = HotelBookingDetails.getfindBysupplierDateWiseAgentWiseonrequest(supplierCode, currentPage, 5, totalPages ,agentNm);
-		
 		}
-		
 		
 		for(HotelBookingDetails hBookingDetails:hoteDetails){
 			
@@ -183,7 +182,7 @@ public class ConfirmBookingController extends Controller {
 			agRegisVM.setAgentCode(agent.getAgentCode());
 			agRegisVM.setFirstName(agent.getFirstName());
 			agRegisVM.setLastName(agent.getLastName());
-			
+			agRegisVM.setCompanyName(agent.getCompanyName());
 			aList.add(agRegisVM);
 			hDetailsVM.setAgent(aList);
 			}

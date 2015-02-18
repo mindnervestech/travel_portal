@@ -170,7 +170,7 @@ public static void createRootDir() {
         	   
                   BufferedImage originalImage = ImageIO.read(src);
                         Thumbnails.of(originalImage)
-                            .size(220, 220)
+                            .size(420, 420)
                             .toFile(f);
                             File _f = new File(originalFileName);
                             Thumbnails.of(originalImage).scale(1.0).
