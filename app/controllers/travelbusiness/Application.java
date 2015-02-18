@@ -77,7 +77,9 @@ public class Application extends Controller {
     public static Result checkAgentinfo(String loginID,String password,String agentId){
     	
     	AgentRegistration agent = AgentRegistration.findagentinfo(loginID, password, agentId);
+    	session().put("agent", agent.getAgentCode());
 		if(agent != null) {
+			System.out.println("SESSION VALUE   "+session().get("agent"));
 			AgentRegistrationVM aVm=new AgentRegistrationVM(agent);
 			return ok(Json.toJson(aVm));
 		}

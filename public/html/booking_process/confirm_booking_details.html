@@ -1,0 +1,454 @@
+<div class="panel panel-green">
+	<div class="panel-heading clearfix">
+		<span class="mts pull-left">MarkUp Page</span>
+	</div>
+	<div class="panel-body" ng-init="init()">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="tabbable tabs-left">
+
+						<div id="myTabContent2">
+
+
+							<div class="row">
+								<div class="col-md-12">
+									<script type="text/javascript">
+										$('#myTab a').click(function(e) {
+											e.preventDefault();
+											$(this).tab('show');
+										})
+									</script>
+									<style>
+</style>
+									<div class="tabbable">
+
+										<ul class="nav nav-pills" id="myTab" style="font-size: small;">
+											<li class="active menu-li custom_menu"><a href="#step1"
+												data-toggle="tab" style="padding: 7px 5px;">Booking Info</a></li>
+											<li class="menu-li custom_menu"><a href="#Step2"
+												data-toggle="tab" style="padding: 7px 5px;"
+												ng-click="showdateWiseView(bookinfo.id)">Date Wise Booking Info</a></li>
+
+										</ul>
+										<div class="tab-content" id="myTabContent"
+											style="overflow: hidden;">
+
+											<div class="tab-pane active" id="step1">
+												<form name="myForm" method="post"  role="form" class="form-horizontal form-validate">
+					
+<div class="panel-body">
+	<div class="col-lg-12">
+		<div class="row">
+			
+					
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Check In Date</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="checkIn" data-ng-model="bookinfo.checkIn"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				<div class="col-md-2">
+				<label>Check In Date</label>
+				</div>
+				<div class="col-md-4">
+				<input type="text" name="checkOut" data-ng-model="bookinfo.checkOut"
+							class="form-control meal-font-text-size" required>
+							</div>
+				</div>
+				</div>
+				
+			</div>
+			<!-- <div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Check In Date</label>
+				</div>
+				<div class="col-md-5">
+				<input type="text" name="checkOut" data-ng-model="bookinfo.checkOut"
+							class="form-control meal-font-text-size" required>
+							</div>
+				</div>
+				
+			</div> -->
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>City</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="City" data-ng-model="bookinfo.cityNm"
+							class="form-control meal-font-text-size" required>
+				</div>
+				<div class="col-md-2">
+				<label>Nationality</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="nationalityNm" data-ng-model="bookinfo.nationalityNm"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<!-- <div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Nationality</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="nationalityNm" data-ng-model="bookinfo.nationalityNm"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div> -->
+			<!-- <div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Room Type</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="roomNm" data-ng-model="bookinfo.roomNm"
+							class="form-control meal-font-text-size" required>
+				</div>
+				<div class="col-md-2">
+				<label>No of Person</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="adult" data-ng-model="bookinfo.adult"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div> -->
+			<!-- <div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>No of Person</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="adult" data-ng-model="bookinfo.adult"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div> -->
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Traveller First Name</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="travellerfirstname" data-ng-model="bookinfo.travellerfirstname"
+							class="form-control meal-font-text-size" required>
+				</div>
+				<div class="col-md-2">
+				<label>Traveller Last Name</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="travellerlastname" data-ng-model="bookinfo.travellerlastname"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<!-- <div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Traveller Last Name</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="travellerlastname" data-ng-model="bookinfo.travellerlastname"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div> -->
+			
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Traveller Address</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="travelleraddress" data-ng-model="bookinfo.travelleraddress"
+							class="form-control meal-font-text-size" required>
+				</div>
+				<div class="col-md-2">
+				<label>Traveller Ph Number</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="travellerphnaumber" data-ng-model="bookinfo.travellerphnaumber"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<!-- <div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Traveller Ph Number</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="travellerphnaumber" data-ng-model="bookinfo.travellerphnaumber"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div> -->
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Traveller Email</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="travelleremail" data-ng-model="bookinfo.travelleremail"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group" ng-show="bookinfo.promotionname != null">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Promotion Name</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="promotionname" data-ng-model="bookinfo.promotionname"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group" ng-show="bookinfo.promotionname != null">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Stay Days In Promotion</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="stayDays_inpromotion" data-ng-model="bookinfo.stayDays_inpromotion"
+							class="form-control meal-font-text-size" required>
+				</div>
+				<div class="col-md-2">
+				<label>Pay Days In Promotion</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="payDays_inpromotion" data-ng-model="bookinfo.payDays_inpromotion"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			 <div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Agent First Name</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="noOfroom" data-ng-model="bookinfo.agent[0].firstName"
+							class="form-control meal-font-text-size" required>
+				</div>
+				<div class="col-md-2">
+				<label>Agent Last Name</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="total" data-ng-model="bookinfo.agent[0].lastName"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div> 
+			<!-- <div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Total</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="total" data-ng-model="bookinfo.total"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div> -->
+			
+						
+    			</div>
+    			
+    			
+</div>
+		
+
+                
+
+</form>
+											</div>
+											<div class="tab-pane" id="Step2">
+											
+											<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Room Type : </label>
+				</div>
+				<div class="col-md-4">
+				<label>{{bookinfo.roomNm}}</label>
+				
+				</div>
+				<div class="col-md-2">
+				<label>No of Person : </label>
+				</div>
+				<div class="col-md-4">
+				<label>{{bookinfo.adult}}</label>
+					
+				</div>
+				</div>
+				
+			</div>
+			
+			<div class="form-group">
+		
+				<div class="col-md-12" style="margin-bottom: 25px;">
+				<div class="col-md-2">
+				<label>No Of Room : </label>
+				</div>
+				<div class="col-md-4">
+				<label>{{bookinfo.noOfroom}}</label>
+				
+				</div>
+				<div class="col-md-2">
+				<label>Total</label>
+				</div>
+				<div class="col-md-4">
+				<label>{{bookinfo.total}}</label>
+					
+				</div>
+				</div>
+				
+			</div>
+		
+											 <div class="col-md-12" style="background-color: white;height: 325px !important;overflow: auto;">
+                                <div class="booking-history col-md-4" ng-repeat="Dateinfo in rateDatewise">
+                                
+                                 <div class="booking-info clearfix"> <!--  Dateinfo.flag == 0   -->
+                                        <div class="date">
+                                           <label class="month">{{Dateinfo.month}}</label>
+                                            <label class="date">{{Dateinfo.date}}</label>
+                                            <label class="day">{{Dateinfo.day}}</label>
+                                        </div>
+                                                                                                                     
+                                        <dl class="info">
+                                            <dt>Rate</dt>
+                                            <dd>{{Dateinfo.rate}} {{ratedetail.currencyShort}}</dd>
+                                            <dt ng-if="Dateinfo.meal != null">Included</dt>
+                                            <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
+                                        </dl>
+                                       <!--  <button class="btn-mini status">Book Now</button> -->
+                                    </div>
+                                                                  
+                                  <!--   <div class="booking-info clearfix cancelled" ng-if="flag == 1">  Dateinfo.flag == 1 
+                                        <div class="date">
+                                            <label class="month">{{Dateinfo.month}}</label>
+                                            <label class="date">{{Dateinfo.date}}</label>
+                                            <label class="day">{{Dateinfo.day}}</label>
+                                        </div>
+                                                                         
+                                        <dl class="info">
+                                            <dt>Rate</dt>
+                                            <dd>{{Dateinfo.rate}}  {{ratedetail.currencyShort}}</dd>
+                                            <dt ng-if="Dateinfo.meal != null">Included</dt>
+                                            <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
+                                             <label ng-show="Dateinfo.flag == 1" style="color: #ff3e3e;">Room Not Available</label>
+                                             <label ng-show="Dateinfo.flag == 0" style="color: #7db921;">Room Available</label> 
+                                        </dl>
+                                        <button class="btn-mini status">CANCELLED</button>
+                                    </div> -->
+                                   
+                                </div>
+								</div>
+						</div>
+						<div class="form-group">
+		    	<div class="col-md-2">
+					 <button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
+				</div>
+		    </div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<style>
+.ngdialog-content {
+width: 809px !important;
+}
+.booking-info:last-child{
+		border-bottom: 1px solid #f5f5f5;
+}
+.booking-info{
+	border-top: 1px solid #f5f5f5;
+	padding: 10px;
+}
+
+.booking-info div.date{
+	width: 72px;
+height: 72px;
+background: #f5f5f5;
+text-align: center;
+float: left;
+margin-right: 20px;
+}
+.booking-info div.date > .month{
+		background: #e44049;
+height: 20px;
+line-height: 20px;
+font-size: 0.8333em;
+color: #fff;
+}
+.booking-info div.date > *{
+	margin: 0;
+display: block;
+}
+.booking-info div.date > .date{
+	font-size: 2em;
+line-height: 1em;
+color: #e44049;
+font-weight: bold;
+margin-top: 6px;
+}
+.booking-info div.date > .day{
+	font-size: 0.8333em;
+font-weight: normal;
+line-height: 1.25em;
+}
+.meal-font-text-size{
+font-size: 12px;
+}
+
+
+</style>

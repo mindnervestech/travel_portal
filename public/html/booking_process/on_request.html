@@ -1,0 +1,90 @@
+<div class="panel panel-green">
+	<div class="panel-heading clearfix">
+		<span class="mts pull-left">On Request</span>
+		</div>
+	<div class="panel-body">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="tabbable tabs-left">
+<form name="myForm" method="post" ng-submit="CreateRoomType()" role="form" class="form-horizontal form-validate">
+<div data-ng-init="initRoomTypePage()">					
+<div class="panel-body">
+	<div class="col-lg-12">
+		<div class="row">
+			
+					
+			<div class="form-group">
+	
+				<div class="col-md-8">
+				<div class="col-md-2">
+				<label>Start Date</label>
+				</div>
+				<div class="col-md-4">
+					<input id = "date" name="fromDate"  class="input-filter form-control" data-provide="datepicker" data-ng-model="selectData.fromDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy" required>
+				</div>
+				<div class="col-md-2">
+					<label>End Date</label>s
+				</div>
+				<div class="col-md-4">
+					<input id = "date" name="toDate"  class="input-filter form-control" data-provide="datepicker" data-ng-model="selectData.toDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy" required>
+				</div>
+				</div>
+				<div class="col-md-2">
+					 <button type="button" ng-click="showoOnRequestDataDateWise(selectData)" class="btn btn-primary">Show</button>
+				</div>
+				
+			</div>
+						
+    			</div>
+    			<div class="form-group">
+    			<table border="1" style="width: 100%;font-size: small;">
+                	<thead style="background-color: #488c6c;">
+                    	<tr>
+                           <th><a style="color: white;">Sr.No</a></th>
+                            <th><a style="color: white;">Check In</a></th>
+                            <th><a style="color: white;">Check Out</a></th>
+                              <th><a style="color: white;">nationality</a></th>
+                                <th><a style="color: white;">Traveller FirstName</a></th>
+                                <th><a style="color: white;">Traveller LastName</a></th>
+                                 <th><a style="color: white;">adult</a></th>
+                            <th><a style="color: white;">Action</a></th> 
+                           
+                            
+                        </tr>
+                    </thead>
+                	<tbody>
+                	
+                    	<tr ng-repeat="request in onrequestinfo">
+          					<td>{{$index+1}}</td>
+          					 <td>{{request.checkIn}}</td>
+                           <td>{{request.checkOut}}</td>
+                           <td>{{request.nationalityNm}}</td>
+                           <td>{{request.travellerfirstname}}</td>
+                             <td>{{request.travellerlastname}}</td>
+                           <td>{{request.adult}}</td>
+                            <td><a ng-click="showDetails(request)" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 27px;"></span></a></td> 
+                           
+                            </tr>
+                           
+                    	</tbody>
+                </table>		
+    			
+    			</div>
+    			<!-- <hr class="mtxxl mbxxl" style="border-color: black;"> -->
+</div>
+		
+
+                <!--  <div class="col-md-3 col-md-offset-7">
+                 <button type="submit" onclick="scroll(0,0)" class="btn btn-primary">Save</button>
+                 </div> -->
+                
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+

@@ -1,0 +1,254 @@
+<div class="panel panel-green">
+	<div class="panel-heading clearfix">
+		<span class="mts pull-left">On Request Details</span>
+	</div>
+	<div class="panel-body">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="tabbable tabs-left">
+<form name="myForm" method="post" role="form" class="form-horizontal form-validate">
+<div>					
+<div class="panel-body">
+	<div class="col-lg-12">
+		<div class="row">
+			
+					
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Check In Date</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="checkIn" data-ng-model="requestinfo.checkIn"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Check In Date</label>
+				</div>
+				<div class="col-md-5">
+				<input type="text" name="checkOut" data-ng-model="requestinfo.checkOut"
+							class="form-control meal-font-text-size" required>
+							</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>City</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="City" data-ng-model="requestinfo.cityNm"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Nationality</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="nationalityNm" data-ng-model="requestinfo.nationalityNm"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Room Type</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="roomNm" data-ng-model="requestinfo.roomNm"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>No of Person</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="adult" data-ng-model="requestinfo.adult"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Traveller First Name</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="travellerfirstname" data-ng-model="requestinfo.travellerfirstname"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Traveller Last Name</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="travellerlastname" data-ng-model="requestinfo.travellerlastname"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Traveller Last Name</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="travellerlastname" data-ng-model="requestinfo.travellerlastname"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Traveller Address</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="travelleraddress" data-ng-model="requestinfo.travelleraddress"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Traveller Ph Number</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="travellerphnaumber" data-ng-model="requestinfo.travellerphnaumber"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Traveller Email</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="travelleremail" data-ng-model="requestinfo.travelleremail"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group" ng-show="bookinfo.promotionname != null">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Promotion Name</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="promotionname" data-ng-model="requestinfo.promotionname"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group" ng-show="requestinfo.promotionname != null">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Stay Days In Promotion</label>
+				</div>
+				<div class="col-md-3">
+					<input type="text" name="stayDays_inpromotion" data-ng-model="requestinfo.stayDays_inpromotion"
+							class="form-control meal-font-text-size" required>
+				</div>
+				<div class="col-md-2">
+				<label>Pay Days In Promotion</label>
+				</div>
+				<div class="col-md-3">
+					<input type="text" name="payDays_inpromotion" data-ng-model="requestinfo.payDays_inpromotion"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>No Of Room</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="noOfroom" data-ng-model="requestinfo.noOfroom"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-3">
+				<label>Total</label>
+				</div>
+				<div class="col-md-5">
+					<input type="text" name="total" data-ng-model="requestinfo.total"
+							class="form-control meal-font-text-size" required>
+				</div>
+				</div>
+				
+			</div>
+			
+			<div class="form-group">
+		    	<div class="col-md-2">
+					 <button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
+				</div>
+		    </div>
+						
+    			</div>
+    			
+    			
+</div>
+		
+
+                
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+

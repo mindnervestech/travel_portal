@@ -306,6 +306,9 @@ public class AgentRegistration {
 	public static AgentRegistration getallAgentCode(long code) {
 		return (AgentRegistration) JPA.em().createQuery("select c from AgentRegistration c where c.agentCode = ?1").setParameter(1, code).getSingleResult();
 	}
+	public static AgentRegistration getAgentCode(String code) {
+		return (AgentRegistration) JPA.em().createQuery("select c from AgentRegistration c where c.agentCode = ?1").setParameter(1, code).getSingleResult();
+	}
 	
 	public static List<AgentRegistration> getAllPendingAgent() {
 		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.status = 'PENDING'");

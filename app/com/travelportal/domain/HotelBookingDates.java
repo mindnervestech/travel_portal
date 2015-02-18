@@ -1,6 +1,7 @@
 package com.travelportal.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,8 @@ public class HotelBookingDates {
 	
 	private Date bookingDate;
 	private Double bookDateRate;
-
+	private String mealtypeName;
+	
 	@OneToOne
 	private HotelBookingDetails bookingId;
 
@@ -54,12 +56,25 @@ public class HotelBookingDates {
 	
 	
 
+	public String getMealtypeName() {
+		return mealtypeName;
+	}
+
+	public void setMealtypeName(String mealtypeName) {
+		this.mealtypeName = mealtypeName;
+	}
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	
+	public static List<HotelBookingDates> getDateBybookingId(long id) {
+		return JPA.em().createQuery("select c from HotelBookingDates c where c.bookingId.id = ?1").setParameter(1, id).getResultList();
 	}
 
 	@Transactional

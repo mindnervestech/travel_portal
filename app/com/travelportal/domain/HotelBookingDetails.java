@@ -1,5 +1,7 @@
 package com.travelportal.domain;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -56,11 +58,14 @@ public class HotelBookingDetails {
 	private Country travellercountry;
 	private String travellerphnaumber;
 	private Long roomId;
+	private String roomName;
 	private String promotionname;
 	private int stayDays_inpromotion;
 	private int payDays_inpromotion;
 	private String typeOfStay_inpromotion;
 	private String room_status;
+	private Long agentId;
+	private long totalNightStay;
 	
 	public Long getSupplierCode() {
 		return supplierCode;
@@ -221,10 +226,144 @@ public class HotelBookingDetails {
 	public void setHotelAddr(String hotelAddr) {
 		this.hotelAddr = hotelAddr;
 	}
+	
+	public String getRoomName() {
+		return roomName;
+	}
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
+	}
+	
+	
+	public Long getAgentId() {
+		return agentId;
+	}
+	public void setAgentId(Long agentId) {
+		this.agentId = agentId;
+	}
+	
+	
+	public long getTotalNightStay() {
+		return totalNightStay;
+	}
+	public void setTotalNightStay(long totalNightStay) {
+		this.totalNightStay = totalNightStay;
+	}
 	public static HotelBookingDetails findBookingId() {
 	    	return (HotelBookingDetails) JPA.em().createQuery("select c from HotelBookingDetails c where c.id = (select max(a.id) from HotelBookingDetails a)").getSingleResult();
 	    }
 	
+	public static List<HotelBookingDetails> getfindBysupplierDateWise(long supplierCode,Date fromDate,Date toDate,int currentPage, int rowsPerPage,long totalPages) {
+		int  start=0;
+    	
+    	String sql="";
+    	
+    		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.supplierCode = ?1 and a.room_status = 'available' ORDER BY a.checkIn DESC";
+    	
+    	if(currentPage >= 1 && currentPage <= totalPages) {
+			start = (currentPage*rowsPerPage)-rowsPerPage;
+		}
+		if(currentPage>totalPages && totalPages!=0) {
+			currentPage--;
+			start = (int) ((totalPages*rowsPerPage)-rowsPerPage); 
+		}
+    	Query q = JPA.em().createQuery(sql).setFirstResult(start).setMaxResults(rowsPerPage);
+		
+    	q.setParameter(1, supplierCode);
+   		q.setParameter(2, fromDate);
+   		q.setParameter(3, toDate);
+	
+		return (List<HotelBookingDetails>)q.getResultList();
+		
+	}
+	
+	public static List<HotelBookingDetails> getfindBysupplier(long supplierCode,int currentPage, int rowsPerPage,long totalPages) {
+		int  start=0;
+    	
+    	String sql="";
+    		sql = "Select a from HotelBookingDetails a where a.supplierCode = ?1 and a.room_status = 'available' ORDER BY a.checkIn DESC";
+
+    		if(currentPage >= 1 && currentPage <= totalPages) {
+			start = (currentPage*rowsPerPage)-rowsPerPage;
+		}
+		if(currentPage>totalPages && totalPages!=0) {
+			currentPage--;
+			start = (int) ((totalPages*rowsPerPage)-rowsPerPage); 
+		}
+    	Query q = JPA.em().createQuery(sql).setFirstResult(start).setMaxResults(rowsPerPage);
+		
+    	q.setParameter(1, supplierCode);
+    		
+		return (List<HotelBookingDetails>)q.getResultList();
+		
+	}
+	
+	
+	
+	@Transactional
+    public static long getAllBookingTotalDateWise(int rowsPerPage,long supplierCode,Date fromDate,Date toDate) {
+		long totalPages = 0, size;
+    		size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.supplierCode = ?1 and a.room_status = 'available'").setParameter(1, supplierCode).setParameter(2, fromDate).setParameter(3, toDate).getSingleResult();
+    	
+    	
+    	totalPages = size/rowsPerPage;
+		
+    	if(size % rowsPerPage > 0) {
+			totalPages++;
+		}
+    	System.out.println("total pages ::"+totalPages);
+    	return totalPages;
+    }
+	
+	@Transactional
+    public static long getAllBookingTotal(int rowsPerPage,long supplierCode) {
+		long totalPages = 0, size;
+    		size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.supplierCode = ?1 and a.room_status = 'available'").setParameter(1, supplierCode).getSingleResult();
+    	
+    	totalPages = size/rowsPerPage;
+		
+    	if(size % rowsPerPage > 0) {
+			totalPages++;
+		}
+    	System.out.println("total pages ::"+totalPages);
+    	return totalPages;
+    }
+	
+	 @Transactional
+	    public static List<HotelBookingDetails> getAllAnnouncements(int currentPage, int rowsPerPage, long totalPages) {
+	    	int  start=0;
+	    	
+	    	String sql="";
+	    		sql = "Select a from HotelBookingDetails a";
+			
+	    	if(currentPage >= 1 && currentPage <= totalPages) {
+				start = (currentPage*rowsPerPage)-rowsPerPage;
+			}
+			if(currentPage>totalPages && totalPages!=0) {
+				currentPage--;
+				start = (int) ((totalPages*rowsPerPage)-rowsPerPage); 
+			}
+	    	Query q = JPA.em().createQuery(sql).setFirstResult(start).setMaxResults(rowsPerPage);
+			
+			/*if(!title.trim().equals("")) {
+				q.setParameter(1, "%"+title+"%");
+			}*/
+		
+			return (List<HotelBookingDetails>)q.getResultList();
+	    }
+	    
+	
+	public static List<HotelBookingDetails> getfindBysupplierDatewise(Date fromDate,Date toDate,long supplierCode) {
+		return JPA.em().createQuery("select c from HotelBookingDetails c where c.checkIn BETWEEN ?2 and ?3 and c.checkOut BETWEEN ?2 and ?3 and c.supplierCode = ?1 and c.room_status = 'available'").setParameter(1, supplierCode).setParameter(2, fromDate).setParameter(3, toDate).getResultList();
+	}
+	
+	public static List<HotelBookingDetails> getfindBysupplierOnRequest(long supplierCode) {
+		return JPA.em().createQuery("select c from HotelBookingDetails c where c.supplierCode = ?1 and c.room_status = 'on request' ORDER BY c.checkIn DESC").setParameter(1, supplierCode).setMaxResults(10).getResultList();
+	}
+	
+	public static List<HotelBookingDetails> getfindBysupplierDatewiseOnRequest(Date fromDate,Date toDate,long supplierCode) {
+		return JPA.em().createQuery("select c from HotelBookingDetails c where c.checkIn BETWEEN ?2 and ?3 and c.checkOut BETWEEN ?2 and ?3 and c.supplierCode = ?1 and c.room_status = 'on request'").setParameter(1, supplierCode).setParameter(2, fromDate).setParameter(3, toDate).getResultList();
+	}
 	
 	
 	public String getRoom_status() {

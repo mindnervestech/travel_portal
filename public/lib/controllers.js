@@ -4122,7 +4122,166 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     
 }]);
 
+angular.module('travel_portal').
+controller("confirmbookingController",['$scope','notificationService','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$filter,$rootScope, $http,ngDialog){
+		
+	$scope.title = " ";
+	$scope.pageNumber;
+	$scope.pageSize;
+	$scope.fromData = "1";
+	$scope.toDate="1";
+	var currentPage = 1;
+	var totalPages;
+		
+	$http.get("/getAnnouncements/"+currentPage).success(function(response){
+		
+		console.log(response);
+		//$scope.bookinginfo = response;
+	});
+	
+	console.log(supplierCode);
+	$http.get("/getbookingInfo/"+supplierCode+"/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate).success(function(response){
+		
+		console.log(response);
+		totalPages = response.totalPages;
+		currentPage = response.currentPage;
+		$scope.pageNumber = response.currentPage;
+		$scope.pageSize = response.totalPages;
+		$scope.bookinginfo = response.results;
+		if(totalPages == 0) {
+			$scope.pageNumber = 0;
+		}
+		
+	});
+	
+	$scope.showBookingDataDateWise = function(selectDate){
+		console.log(selectDate);
+		$http.get("/getbookingInfo/"+supplierCode+"/"+currentPage+"/"+selectDate.fromDate+"/"+selectDate.toDate).success(function(response){
+			$scope.fromData = selectDate.fromDate;
+			$scope.toDate = selectDate.toDate;
+			console.log(response);
+			totalPages = response.totalPages;
+			currentPage = response.currentPage;
+			$scope.pageNumber = response.currentPage;
+			$scope.pageSize = response.totalPages;
+			$scope.bookinginfo = response.results;
+			if(totalPages == 0) {
+				$scope.pageNumber = 0;
+			}
+		});
+	}
+	
+	$scope.showDetails = function(book){
+		console.log(book);
+		$scope.bookinfo = book;
+		ngDialog.open({
+			template: '/assets/html/booking_process/confirm_booking_details.html',
+			scope : $scope,
+			//controller:'hoteProfileController',
+			className: 'ngdialog-theme-default'
+		});
+	}
+	
+	$scope.rateDatewise = [];
+	$scope.showdateWiseView = function(bookId){
+		console.log(bookId);
+		$scope.rateDatewise = [];
+		$http.get("/getbookDateWise/"+bookId).success(function(response){
+			console.log(response);
+			//$scope.bookinginfo = response;
+			
+		
+			angular.forEach(response,function(value,key){
+			var arr = value.cdate.split("-");
+			var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+			$scope.datevalue1 = $filter('date')(new Date(datevalue), "EEE,MMM,dd,yyyy");
+			var arr = $scope.datevalue1.split(",");
+			$scope.day = arr[0];
+			$scope.month = arr[1];
+			$scope.date = arr[2];
+			
+			$scope.rateDatewise.push({
+				day:$scope.day,
+			    month:$scope.month,
+			    date:$scope.date,
+			    rate:value.rate,
+			    meal:value.mealtype
+				
+			});
+			
+			});
+						
+			console.log($scope.rateDatewise);
+		});
+	}
+	
+	$scope.onNext = function() {
+		if(currentPage < totalPages) {
+			currentPage++;
+			$scope.searchBooking(currentPage);
+		}
+	};
+	$scope.onPrev = function() {
+		if(currentPage > 1) {
+			currentPage--;
+			$scope.searchBooking(currentPage);
+		}
+	};
+	
+	$scope.searchBooking = function(page) {
+		currentPage = page;
+		if(angular.isUndefined($scope.title) || $scope.title=="") {
+			console.log('inside function');
+			$scope.title = " ";
+		}
+		
+		currentPage = page;
+		console.log(currentPage);
+		$http.get("/getbookingInfo/"+supplierCode+"/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate).success(function(response){
+			
+			console.log(response);
+			totalPages = response.totalPages;
+			currentPage = response.currentPage;
+			$scope.pageNumber = response.currentPage;
+			$scope.pageSize = response.totalPages;
+			$scope.bookinginfo = response.results;
+			if(totalPages == 0) {
+				$scope.pageNumber = 0;
+			}
+			
+		});
+	};
+	
+}]);
 
 
-//RateMeta rates = RateMeta.getRatesById(id);
-//for(Country cty : rates.getCountry()){
+angular.module('travel_portal').
+controller("onrequestController",['$scope','notificationService','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$filter,$rootScope, $http,ngDialog){
+		
+	console.log(supplierCode);
+	$http.get("/getonrequestInfo/"+supplierCode).success(function(response){
+		
+		console.log(response);
+		$scope.onrequestinfo = response;
+	});
+	
+	$scope.showoOnRequestDataDateWise = function(selectDate){
+		console.log(selectDate);
+		$http.get("/getonrequestInfoDateWise/"+selectDate.fromDate+"/"+selectDate.toDate+"/"+supplierCode).success(function(response){
+			console.log(response);
+			$scope.onrequestinfo = response;
+		});
+	}
+	
+	$scope.showDetails = function(request){
+		console.log(request);
+		$scope.requestinfo = request;
+		ngDialog.open({
+			template: '/assets/html/booking_process/on_request_details.html',
+			scope : $scope,
+			//controller:'hoteProfileController',
+			className: 'ngdialog-theme-default'
+		});
+	}
+	
+}]);	

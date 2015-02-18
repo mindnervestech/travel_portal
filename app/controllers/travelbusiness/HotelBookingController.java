@@ -11,8 +11,10 @@ import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.HotelStarRatings;
+import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
+import com.travelportal.vm.AgentRegistrationVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.SearchHotelValueVM;
 import com.travelportal.vm.SearchRateDetailsVM;
@@ -43,13 +45,16 @@ public class HotelBookingController extends Controller {
 		
 		Form<HotelSearch> HotelForm = Form.form(HotelSearch.class).bindFromRequest();
 		HotelSearch searchVM = HotelForm.get();
-				
+		System.out.println("_+_+_+_+_+_+_+_+_+_+_+_");
+		System.out.println("SESSION VALUE   "+session().get("agent"));
+		System.out.println("_+_+_+_+_+_+_+_+_+_+_+_");
 		HotelBookingDetails hBookingDetails=new HotelBookingDetails();
 		hBookingDetails.setHotelNm(searchVM.getHotelNm());
 		hBookingDetails.setHotelAddr(searchVM.getHotelAddr());
 		hBookingDetails.setSupplierCode(searchVM.getSupplierCode());
-		
+		hBookingDetails.setAgentId(Long.parseLong(session().get("agent")));
 		hBookingDetails.setSupplierNm(searchVM.getSupplierNm());
+		hBookingDetails.setTotalNightStay(searchVM.getDatediff());
 		try {
 			hBookingDetails.setCheckIn(format.parse(searchVM.getCheckIn()));
 		} catch (ParseException e) {
@@ -84,11 +89,17 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setTravellercountry(Country.getCountryByCode(Integer.parseInt(searchVM.hotelBookingDetails.getTravellercountry())));
 		hBookingDetails.setTravellerphnaumber(searchVM.hotelBookingDetails.getTravellerphnaumber());
 		
-		
+		/*AgentRegistration agent = AgentRegistration.findagentinfo(loginID, password, agentId);
+    	session().put("agent", agent.getAgentCode());
+		if(agent != null) {
+			System.out.println("SESSION VALUE   "+session().get("agent"));
+			AgentRegistrationVM aVm=new AgentRegistrationVM(agent);
+		}*/
 		//(searchVM.hotelBookingDetails.getTravellerphnaumber()));
 		
 		for(SerachHotelRoomType byRoom:searchVM.hotelbyRoom){
 			hBookingDetails.setRoomId(byRoom.roomId);
+			hBookingDetails.setRoomName(byRoom.roomName);
 			if(byRoom.specials != null){
 			for(SpecialsVM speci:byRoom.specials){
 				hBookingDetails.setPromotionname(speci.promotionName);
@@ -156,6 +167,7 @@ public class HotelBookingController extends Controller {
 					
 					for(SearchRateDetailsVM detailsVM:rateObj.rateDetails){
 						hBookingDates.setBookDateRate(detailsVM.rateValue);
+						hBookingDates.setMealtypeName(detailsVM.mealTypeName);
 					}
 					
 				}

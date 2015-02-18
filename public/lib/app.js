@@ -115,6 +115,15 @@ var app = angular.module('travel_portal',['ngRoute','ngDialog','jlareau.pnotify'
 		templateUrl: '/assets/html/admin/markup_page.html',
 		controller: 'markupController'
 	})
+	.when('/confirmBooking', {
+		templateUrl: '/assets/html/booking_process/confirm_booking.html',
+		controller: 'confirmbookingController'
+	})
+	.when('/onRequest', {
+		templateUrl: '/assets/html/booking_process/on_request.html',
+		controller: 'onrequestController'
+	})
+	
 	
 });
 
@@ -174,4 +183,5 @@ app.directive('ngSec',function(){
 	}
 	}
 	});
+
 
