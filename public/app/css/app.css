@@ -202,3 +202,44 @@ background-color: #488c6c;
 border: 1px solid #ddd;
 border-bottom-color: transparent;
 }     
+
+.booking-info:last-child{
+		border-bottom: 1px solid #f5f5f5;
+}
+.booking-info{
+	border-top: 1px solid #f5f5f5;
+	padding: 10px;
+}
+
+.booking-info div.date{
+	width: 72px;
+height: 72px;
+background: #f5f5f5;
+text-align: center;
+float: left;
+margin-right: 20px;
+}
+.booking-info div.date > .month{
+		background: #e44049;
+height: 20px;
+line-height: 20px;
+font-size: 0.8333em;
+color: #fff;
+}
+.booking-info div.date > *{
+	margin: 0;
+display: block;
+}
+.booking-info div.date > .date{
+	font-size: 2em;
+line-height: 1em;
+color: #e44049;
+font-weight: bold;
+margin-top: 6px;
+}
+.booking-info div.date > .day{
+	font-size: 0.8333em;
+font-weight: normal;
+line-height: 1.25em;
+}
+

@@ -15,39 +15,55 @@
 			
 					
 			<div class="form-group">
-	
-				<div class="col-md-8">
+			
+				<div class="col-md-9">
 				<div class="col-md-2">
-				<label>Start Date</label>
+				<label>Start Date :</label>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-2">
 					<input id = "date" name="fromDate"  class="input-filter form-control" data-provide="datepicker" data-ng-model="selectData.fromDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy" required>
 				</div>
 				<div class="col-md-2">
-					<label>End Date</label>s
+					<label>End Date :</label>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-2">
 					<input id = "date" name="toDate"  class="input-filter form-control" data-provide="datepicker" data-ng-model="selectData.toDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy" required>
+				</div>
+				<div class="col-md-2">
+					<label>Agent Name :</label>
+				</div>
+				<div class="col-md-2">
+					<input type="text" id="agentName" name="agentNm" data-ng-model="selectData.agentNm" class="form-control">
 				</div>
 				</div>
 				<div class="col-md-2">
 					 <button type="button" ng-click="showoOnRequestDataDateWise(selectData)" class="btn btn-primary">Show</button>
 				</div>
 				
+			</div> 
+			<div class="form-group"  ng-show="flag == 1"> 
+			<div class="col-md-2">
+			</div>
+				<label style="color: red;">to date greater than from date</label>
 			</div>
 						
     			</div>
     			<div class="form-group">
-    			<table border="1" style="width: 100%;font-size: small;">
+    			<table border="1" style="width: 100%;font-size: small;text-align: center;">
                 	<thead style="background-color: #488c6c;">
                     	<tr>
                            <th><a style="color: white;">Sr.No</a></th>
                             <th><a style="color: white;">Check In</a></th>
                             <th><a style="color: white;">Check Out</a></th>
-                              <th><a style="color: white;">nationality</a></th>
-                                <th><a style="color: white;">Traveller FirstName</a></th>
-                                <th><a style="color: white;">Traveller LastName</a></th>
-                                 <th><a style="color: white;">adult</a></th>
+                              <th><a style="color: white;">Nationality</a></th>
+                                <th><a style="color: white;">Night-Stay</a></th>
+                                <th><a style="color: white;">Room type</a></th>
+                                 <th><a style="color: white;">No Of Room</a></th>
+                                 <th><a style="color: white;">Total</a></th>
+                                 <th><a style="color: white;">Adult</a></th>
+                                 <th><a style="color: white;">Agent First Name</a></th>
+                                 <!-- <th><a style="color: white;">Agent Last Name</a></th> -->
+                                  <th><a style="color: white;">Supplier</a></th>
                             <th><a style="color: white;">Action</a></th> 
                            
                             
@@ -59,17 +75,28 @@
           					<td>{{$index+1}}</td>
           					 <td>{{request.checkIn}}</td>
                            <td>{{request.checkOut}}</td>
-                           <td>{{request.nationalityNm}}</td>
-                           <td>{{request.travellerfirstname}}</td>
-                             <td>{{request.travellerlastname}}</td>
+                            <td>{{request.nationalityNm}}</td>
+                           <td>{{request.totalNightStay}}</td>
+                             <td>{{request.roomNm}}</td>
+                              <td>{{request.noOfroom}}</td>
+                               <td>{{request.total}}</td>
                            <td>{{request.adult}}</td>
-                            <td><a ng-click="showDetails(request)" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 27px;"></span></a></td> 
+                            <td>{{request.agent[0].firstName}}</td>
+                          <!--   <td>{{book.agent[0].lastName}}</td> -->
+                            <td>{{request.supplierCode}}</td>
+                            <td><a ng-click="showDetails(request)" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 19px;"></span></a></td> 
                            
                             </tr>
                            
                     	</tbody>
                 </table>		
-    			
+    			 <section class="dpaging">
+            	<h4>{{pageNumber}}/{{pageSize}}</h4>
+            	<span class="dpagingright">
+                	<a href="" class="dpagingprv" ng-click="onPrev()">Prev</a>
+                	<a href="" class="dpagingnxt" ng-click="onNext()">Next</a>
+                </span>
+            </section>
     			</div>
     			<!-- <hr class="mtxxl mbxxl" style="border-color: black;"> -->
 </div>
@@ -87,4 +114,8 @@
 </div>
 </div>
 </div>
-
+<style>
+	th{
+  		text-align: center;
+	}
+</style>

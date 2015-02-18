@@ -53,6 +53,8 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setHotelAddr(searchVM.getHotelAddr());
 		hBookingDetails.setSupplierCode(searchVM.getSupplierCode());
 		hBookingDetails.setAgentId(Long.parseLong(session().get("agent")));
+		AgentRegistration agRegistration = AgentRegistration.getallAgentCode(Long.parseLong(session().get("agent")));
+		hBookingDetails.setAgentNm(agRegistration.getFirstName());
 		hBookingDetails.setSupplierNm(searchVM.getSupplierNm());
 		hBookingDetails.setTotalNightStay(searchVM.getDatediff());
 		try {

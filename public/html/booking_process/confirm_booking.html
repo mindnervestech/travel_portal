@@ -15,12 +15,7 @@
 			
 					
 			<div class="form-group">
-		<!-- 	<div class="col-md-3"> -->
-			<!-- <div  class="col-md-12">
-				<label>Select Date</label>
-				</div> -->
-				
-				<!-- </div> -->
+			
 				<div class="col-md-9">
 				<div class="col-md-2">
 				<label>Start Date :</label>
@@ -38,35 +33,38 @@
 					<label>Agent Name :</label>
 				</div>
 				<div class="col-md-2">
-					<input type="text" id="agentName" name="agentNm" data-ng-model="selectData.agentNm" placeholder="Agent Name" class="form-control">
+					<input type="text" id="agentName" name="agentNm" data-ng-model="selectData.agentNm" class="form-control">
 				</div>
 				</div>
 				<div class="col-md-2">
 					 <button type="button" ng-click="showBookingDataDateWise(selectData)" class="btn btn-primary">Show</button>
 				</div>
 				
+			</div> 
+			<div class="form-group"  ng-show="flag == 1"> 
+			<div class="col-md-2">
+			</div>
+				<label style="color: red;">to date greater than from date</label>
 			</div>
 						
     			</div>
-    			<!-- <section class="dadsrchdiv">
-                	<input name="title" type="text" ng-model="title" class="" style="height:1%;" ng-keyup="$event.keyCode == 13 ? searchAnnouncements(1) : null"><input name="" type="button" class="btngray" value="Search" ng-click="searchAnnouncements(1)">
-                </section> -->
+    			
     			<div class="form-group">
-    			<table border="1" style="width: 100%;font-size: small;">
+    			<table border="1" style="width: 100%;font-size: small;text-align: center;">
                 	<thead style="background-color: #488c6c;">
                     	<tr>
                            <th><a style="color: white;">Sr.No</a></th>
-                            <th><a style="color: white;">Check In</a></th>
-                            <th><a style="color: white;">Check Out</a></th>
+                            <th style="width: 91px;"><a style="color: white;">Check In</a></th>
+                            <th style="width: 91px;"><a style="color: white;">Check Out</a></th>
                               <th><a style="color: white;">Nationality</a></th>
-                                <th><a style="color: white;">Night-Stay</a></th>
+                                <th style="width: 56px;"><a style="color: white;">Night-Stay</a></th>
                                 <th><a style="color: white;">Room type</a></th>
-                                 <th><a style="color: white;">No Of Room</a></th>
-                                 <th><a style="color: white;">Total</a></th>
+                                 <th style="width: 55px;"><a style="color: white;">No Of Room</a></th>
+                                 <th style="width: 83px;"><a style="color: white;">Total</a></th>
                                  <th><a style="color: white;">Adult</a></th>
                                  <th><a style="color: white;">Agent First Name</a></th>
-                                 <th><a style="color: white;">Agent Last Name</a></th>
-                                  <th><a style="color: white;">Supplier</a></th>
+                                 <!-- <th><a style="color: white;">Agent Last Name</a></th> -->
+                                 <!--  <th><a style="color: white;">Supplier</a></th> -->
                             <th><a style="color: white;">Action</a></th> 
                            
                             
@@ -85,8 +83,8 @@
                                <td>{{book.total}}</td>
                            <td>{{book.adult}}</td>
                             <td>{{book.agent[0].firstName}}</td>
-                            <td>{{book.agent[0].lastName}}</td>
-                            <td>{{book.supplierCode}}</td>
+                          <!--   <td>{{book.agent[0].lastName}}</td> -->
+                          <!--   <td>{{book.supplierCode}}</td> -->
                             <td><a ng-click="showDetails(book)" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 19px;"></span></a></td> 
                            
                             </tr>
@@ -117,4 +115,8 @@
 </div>
 </div>
 </div>
-
+<style>
+	th{
+  		text-align: center;
+	}
+</style>

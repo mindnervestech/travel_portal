@@ -252,8 +252,8 @@ GET  /getDatewiseHotel			   com.travelportal.controllers.AllRateController.getDa
 
 #following routes are used for confirm booking
 
-GET  /getbookingInfo/:supplierCode/:currentPage/:fromDate/:toDate		com.travelportal.controllers.ConfirmBookingController.getbookingInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String)
-#GET  /getbookingInfoDateWise/:fromDate/:toDate/:supplierCode/:currentPage    com.travelportal.controllers.ConfirmBookingController.getbookingInfoDateWise(fromDate:String,toDate:String,supplierCode:Long,currentPage :Integer)
-GET  /getonrequestInfo/:supplierCode      com.travelportal.controllers.ConfirmBookingController.getonrequestInfo(supplierCode:Long)
-GET  /getonrequestInfoDateWise/:fromDate/:toDate/:supplierCode    com.travelportal.controllers.ConfirmBookingController.getonrequestInfoDateWise(fromDate:String,toDate:String,supplierCode:Long)
+GET  /getbookingInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	com.travelportal.controllers.ConfirmBookingController.getbookingInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)
+#GET  /getbookingInfoDateWise/:fromDate/:toDate/:supplierCode/:currentPage       com.travelportal.controllers.ConfirmBookingController.getbookingInfoDateWise(fromDate:String,toDate:String,supplierCode:Long,currentPage :Integer)
+GET  /getonrequestInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm          com.travelportal.controllers.ConfirmBookingController.getonrequestInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)
+#GET  /getonrequestInfoDateWise/:fromDate/:toDate/:supplierCode    com.travelportal.controllers.ConfirmBookingController.getonrequestInfoDateWise(fromDate:String,toDate:String,supplierCode:Long)
 GET  /getbookDateWise/:id			com.travelportal.controllers.ConfirmBookingController.getbookDateWise(id:Long)

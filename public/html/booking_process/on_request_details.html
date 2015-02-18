@@ -1,14 +1,43 @@
 <div class="panel panel-green">
 	<div class="panel-heading clearfix">
 		<span class="mts pull-left">On Request Details</span>
+	
 	</div>
 	<div class="panel-body">
 		<div class="col-lg-12">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="tabbable tabs-left">
-<form name="myForm" method="post" role="form" class="form-horizontal form-validate">
-<div>					
+
+						<div id="myTabContent2">
+
+
+							<div class="row">
+								<div class="col-md-12">
+									<script type="text/javascript">
+										$('#myTab a').click(function(e) {
+											e.preventDefault();
+											$(this).tab('show');
+										})
+									</script>
+									<style>
+</style>
+									<div class="tabbable">
+
+										<ul class="nav nav-pills" id="myTab" style="font-size: small;">
+											<li class="active menu-li custom_menu"><a href="#step1"
+												data-toggle="tab" style="padding: 7px 5px;">Booking Info</a></li>
+											<li class="menu-li custom_menu"><a href="#Step2"
+												data-toggle="tab" style="padding: 7px 5px;"
+												ng-click="showdateWiseView(requestinfo.id)">Date Wise Booking Info</a></li>
+
+										</ul>
+										<div class="tab-content" id="myTabContent"
+											style="overflow: hidden;">
+
+											<div class="tab-pane active" id="step1">
+												<form name="myForm" method="post"  role="form" class="form-horizontal form-validate">
+					
 <div class="panel-body">
 	<div class="col-lg-12">
 		<div class="row">
@@ -17,168 +46,97 @@
 			<div class="form-group">
 		
 				<div class="col-md-12">
-				<div class="col-md-3">
+				<div class="col-md-2">
 				<label>Check In Date</label>
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-4">
 					<input type="text" name="checkIn" data-ng-model="requestinfo.checkIn"
-							class="form-control meal-font-text-size" required>
+							class="form-control meal-font-text-size" disabled="disabled" required style="width: 179px;margin-left: 10px;">
 				</div>
-				</div>
-				
-			</div>
-			<div class="form-group">
-		
-				<div class="col-md-12">
-				<div class="col-md-3">
+				<div class="col-md-2">
 				<label>Check In Date</label>
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-4">
 				<input type="text" name="checkOut" data-ng-model="requestinfo.checkOut"
-							class="form-control meal-font-text-size" required>
+							class="form-control meal-font-text-size" disabled="disabled" required style="width: 175px;padding-left: 10px;">
 							</div>
 				</div>
+				</div>
 				
 			</div>
+			
 			<div class="form-group">
 		
 				<div class="col-md-12">
-				<div class="col-md-3">
+				<div class="col-md-2">
 				<label>City</label>
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-4">
 					<input type="text" name="City" data-ng-model="requestinfo.cityNm"
-							class="form-control meal-font-text-size" required>
+							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
-				</div>
-				
-			</div>
-			<div class="form-group">
-		
-				<div class="col-md-12">
-				<div class="col-md-3">
+				<div class="col-md-2">
 				<label>Nationality</label>
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-4">
 					<input type="text" name="nationalityNm" data-ng-model="requestinfo.nationalityNm"
-							class="form-control meal-font-text-size" required>
+							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
 				
 			</div>
+			
 			<div class="form-group">
 		
 				<div class="col-md-12">
-				<div class="col-md-3">
-				<label>Room Type</label>
-				</div>
-				<div class="col-md-5">
-					<input type="text" name="roomNm" data-ng-model="requestinfo.roomNm"
-							class="form-control meal-font-text-size" required>
-				</div>
-				</div>
-				
-			</div>
-			<div class="form-group">
-		
-				<div class="col-md-12">
-				<div class="col-md-3">
-				<label>No of Person</label>
-				</div>
-				<div class="col-md-5">
-					<input type="text" name="adult" data-ng-model="requestinfo.adult"
-							class="form-control meal-font-text-size" required>
-				</div>
-				</div>
-				
-			</div>
-			<div class="form-group">
-		
-				<div class="col-md-12">
-				<div class="col-md-3">
+				<div class="col-md-2">
 				<label>Traveller First Name</label>
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-4">
 					<input type="text" name="travellerfirstname" data-ng-model="requestinfo.travellerfirstname"
-							class="form-control meal-font-text-size" required>
+							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
-				</div>
-				
-			</div>
-			<div class="form-group">
-		
-				<div class="col-md-12">
-				<div class="col-md-3">
+				<div class="col-md-2">
 				<label>Traveller Last Name</label>
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-4">
 					<input type="text" name="travellerlastname" data-ng-model="requestinfo.travellerlastname"
-							class="form-control meal-font-text-size" required>
+							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
 				
 			</div>
+						
 			<div class="form-group">
 		
 				<div class="col-md-12">
-				<div class="col-md-3">
-				<label>Traveller Last Name</label>
-				</div>
-				<div class="col-md-5">
-					<input type="text" name="travellerlastname" data-ng-model="requestinfo.travellerlastname"
-							class="form-control meal-font-text-size" required>
-				</div>
-				</div>
-				
-			</div>
-			<div class="form-group">
-		
-				<div class="col-md-12">
-				<div class="col-md-3">
+				<div class="col-md-2">
 				<label>Traveller Address</label>
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-4">
 					<input type="text" name="travelleraddress" data-ng-model="requestinfo.travelleraddress"
-							class="form-control meal-font-text-size" required>
+							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
-				</div>
-				
-			</div>
-			<div class="form-group">
-		
-				<div class="col-md-12">
-				<div class="col-md-3">
+				<div class="col-md-2">
 				<label>Traveller Ph Number</label>
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-4">
 					<input type="text" name="travellerphnaumber" data-ng-model="requestinfo.travellerphnaumber"
-							class="form-control meal-font-text-size" required>
+							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
 				
 			</div>
+			
 			<div class="form-group">
 		
 				<div class="col-md-12">
-				<div class="col-md-3">
+				<div class="col-md-2">
 				<label>Traveller Email</label>
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-4">
 					<input type="text" name="travelleremail" data-ng-model="requestinfo.travelleremail"
-							class="form-control meal-font-text-size" required>
-				</div>
-				</div>
-				
-			</div>
-			<div class="form-group" ng-show="bookinfo.promotionname != null">
-		
-				<div class="col-md-12">
-				<div class="col-md-3">
-				<label>Promotion Name</label>
-				</div>
-				<div class="col-md-5">
-					<input type="text" name="promotionname" data-ng-model="requestinfo.promotionname"
-							class="form-control meal-font-text-size" required>
+							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
 				
@@ -186,56 +144,57 @@
 			<div class="form-group" ng-show="requestinfo.promotionname != null">
 		
 				<div class="col-md-12">
-				<div class="col-md-3">
+				<div class="col-md-2">
+				<label>Promotion Name</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="promotionname" data-ng-model="requestinfo.promotionname"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group" ng-show="requestinfo.promotionname != null">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
 				<label>Stay Days In Promotion</label>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<input type="text" name="stayDays_inpromotion" data-ng-model="requestinfo.stayDays_inpromotion"
-							class="form-control meal-font-text-size" required>
+							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				<div class="col-md-2">
 				<label>Pay Days In Promotion</label>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<input type="text" name="payDays_inpromotion" data-ng-model="requestinfo.payDays_inpromotion"
-							class="form-control meal-font-text-size" required>
+							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
 				
 			</div>
-			<div class="form-group">
+			 <div class="form-group">
 		
 				<div class="col-md-12">
-				<div class="col-md-3">
-				<label>No Of Room</label>
+				<div class="col-md-2">
+				<label>Agent First Name</label>
 				</div>
-				<div class="col-md-5">
-					<input type="text" name="noOfroom" data-ng-model="requestinfo.noOfroom"
-							class="form-control meal-font-text-size" required>
+				<div class="col-md-4">
+					<input type="text" name="noOfroom" data-ng-model="requestinfo.agent[0].firstName"
+							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
+				<div class="col-md-2">
+				<label>Agent Last Name</label>
 				</div>
-				
-			</div>
-			<div class="form-group">
-		
-				<div class="col-md-12">
-				<div class="col-md-3">
-				<label>Total</label>
-				</div>
-				<div class="col-md-5">
-					<input type="text" name="total" data-ng-model="requestinfo.total"
-							class="form-control meal-font-text-size" required>
+				<div class="col-md-4">
+					<input type="text" name="total" data-ng-model="requestinfo.agent[0].lastName"
+							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
 				
-			</div>
-			
-			<div class="form-group">
-		    	<div class="col-md-2">
-					 <button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
-				</div>
-		    </div>
-						
+			</div> 
+									
     			</div>
     			
     			
@@ -243,12 +202,120 @@
 		
 
                 
-</div>
+
 </form>
-</div>
-</div>
-</div>
-</div>
-</div>
+											</div>
+											<div class="tab-pane" id="Step2">
+											
+											<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Room Type : </label>
+				</div>
+				<div class="col-md-4">
+				<label>{{requestinfo.roomNm}}</label>
+				
+				</div>
+				<div class="col-md-2">
+				<label>No of Person : </label>
+				</div>
+				<div class="col-md-4">
+				<label>{{requestinfo.adult}}</label>
+					
+				</div>
+				</div>
+				
+			</div>
+			
+			<div class="form-group">
+		
+				<div class="col-md-12" style="margin-bottom: 25px;">
+				<div class="col-md-2">
+				<label>No Of Room : </label>
+				</div>
+				<div class="col-md-4">
+				<label>{{requestinfo.noOfroom}}</label>
+				
+				</div>
+				<div class="col-md-2">
+				<label>Total</label>
+				</div>
+				<div class="col-md-4">
+				<label>{{requestinfo.total}}</label>
+					
+				</div>
+				</div>
+				
+			</div>
+		
+											 <div class="col-md-12" style="background-color: white;height: 325px !important;overflow: auto;">
+                                <div class="booking-history col-md-4" ng-repeat="Dateinfo in rateDatewise">
+                                
+                                 <div class="booking-info clearfix"> <!--  Dateinfo.flag == 0   -->
+                                        <div class="date">
+                                           <label class="month">{{Dateinfo.month}}</label>
+                                            <label class="date">{{Dateinfo.date}}</label>
+                                            <label class="day">{{Dateinfo.day}}</label>
+                                        </div>
+                                                                                                                     
+                                        <dl class="info">
+                                            <dt>Rate</dt>
+                                            <dd>{{Dateinfo.rate}} {{ratedetail.currencyShort}}</dd>
+                                            <dt ng-if="Dateinfo.meal != null">Included</dt>
+                                            <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
+                                        </dl>
+                                       <!--  <button class="btn-mini status">Book Now</button> -->
+                                    </div>
+                                                                  
+                                  <!--   <div class="booking-info clearfix cancelled" ng-if="flag == 1">  Dateinfo.flag == 1 
+                                        <div class="date">
+                                            <label class="month">{{Dateinfo.month}}</label>
+                                            <label class="date">{{Dateinfo.date}}</label>
+                                            <label class="day">{{Dateinfo.day}}</label>
+                                        </div>
+                                                                         
+                                        <dl class="info">
+                                            <dt>Rate</dt>
+                                            <dd>{{Dateinfo.rate}}  {{ratedetail.currencyShort}}</dd>
+                                            <dt ng-if="Dateinfo.meal != null">Included</dt>
+                                            <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
+                                             <label ng-show="Dateinfo.flag == 1" style="color: #ff3e3e;">Room Not Available</label>
+                                             <label ng-show="Dateinfo.flag == 0" style="color: #7db921;">Room Available</label> 
+                                        </dl>
+                                        <button class="btn-mini status">CANCELLED</button>
+                                    </div> -->
+                                   
+                                </div>
+								</div>
+						</div>
+						<div class="form-group">
+		    	<div class="col-md-2">
+					 <button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
+				</div>
+		    </div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
 </div>
 
+<style>
+.ngdialog-content {
+width: 809px !important;
+}
+
+.meal-font-text-size{
+font-size: 12px;
+}
+
+
+</style>
