@@ -15,9 +15,12 @@ public class RateVM {
 	public String currency;
 	public Long supplierCode;
 	public NormalRateVM normalRate;
-	public boolean isSpecialRate;
+	public double isSpecialRate;
+	public double isSpecialDaysRate;
 	public boolean c;
 	public SpecialRateVM special;
+	//specialDaysRateVM
+	public List<SpecialDaysRateVM> specialDaysRate = new ArrayList<SpecialDaysRateVM>();
 	public List<CancellationPolicyVM> cancellation = new ArrayList<CancellationPolicyVM>();
 	public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
 	public List<String> allocatedCountry;
@@ -28,12 +31,6 @@ public class RateVM {
 	public boolean applyToMarket;
 	
 	
-	/*public List<HotelProfileVM> getHotelprofile() {
-		return hotelprofile;
-	}
-	public void setHotelprofile(List<HotelProfileVM> hotelprofile) {
-		this.hotelprofile = hotelprofile;
-	}*/
 	public Long getSupplierCode() {
 		return supplierCode;
 	}
@@ -78,12 +75,7 @@ public class RateVM {
 	public void setNormalRate(NormalRateVM normalRate) {
 		this.normalRate = normalRate;
 	}
-	public boolean getIsSpecialRate() {
-		return isSpecialRate;
-	}
-	public void setIsSpecialRate(boolean isSpecialRate) {
-		this.isSpecialRate = isSpecialRate;
-	}
+
 	public SpecialRateVM getSpecial() {
 		return special;
 	}
@@ -139,6 +131,26 @@ public class RateVM {
 	public void setAllocatedCountry(List<String> allocatedCountry) {
 		this.allocatedCountry = allocatedCountry;
 	}
+	
+	public List<SpecialDaysRateVM> getSpecialDaysRate() {
+		return specialDaysRate;
+	}
+	public void setSpecialDaysRate(List<SpecialDaysRateVM> specialDaysRate) {
+		this.specialDaysRate = specialDaysRate;
+	}
+	public double getIsSpecialRate() {
+		return isSpecialRate;
+	}
+	public void setIsSpecialRate(double isSpecialRate) {
+		this.isSpecialRate = isSpecialRate;
+	}
+	public double getIsSpecialDaysRate() {
+		return isSpecialDaysRate;
+	}
+	public void setIsSpecialDaysRate(double isSpecialDaysRate) {
+		this.isSpecialDaysRate = isSpecialDaysRate;
+	}
+	
 	
 	
 	

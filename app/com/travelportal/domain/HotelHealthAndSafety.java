@@ -27,24 +27,39 @@ public class HotelHealthAndSafety {
 	
 	@Column(name="public_liability")
 	private String publicLiability;
+	@Column(name="publicLiability_expiry_date")
+	private Date publicLiabilityexpiryDate;
 	@Column(name="fire_risk")
 	private String fireRisk;
+	@Column(name="fireRisk_expiry_date")
+	private Date fireRiskexpiryDate;
 	@Column(name="local_tourist")
 	private String localTourist;
+	@Column(name="localTourist_expiry_date")
+	private Date localTouristexpiryDate;
 	@Column(name="internal_fire")
 	private String internalFire;
+	@Column(name="internalFire_expiry_date")
+	private Date internalFireexpiryDate;
 	@Column(name="haccp_certify")
 	private String haccpCertify;
+	@Column(name="haccpCertify_expiry_date")
+	private Date haccpCertifyexpiryDate;
 	@Column(name="records_for_fire")
 	private String recordsForFire;
+	@Column(name="recordsForFire_expiry_date")
+	private Date recordsForFireexpiryDate;
 	@Column(name="records_for_health")
 	private String recordsForHealth;
-	@Column(name="expiry_date")
+	@Column(name="recordsForHealth_expiry_date")
+	private Date recordsForHealthexpiryDate;
+	/*@Column(name="expiry_date")
 	private Date expiryDate;
 	@Column(name="expiry_date1")
-	private Date expiryDate1;
+	private Date expiryDate1;*/
 	@Column(name="supplier_code")
 	private long supplierCode;
+	
 	/*----------------------1.FirePrecaution-----------------*/
 	@Column(name="working_Fire_Alarm")
 	private String workingFireAlarm;
@@ -239,7 +254,49 @@ public class HotelHealthAndSafety {
 	public void setRecordsForHealth(String recordsForHealth) {
 		this.recordsForHealth = recordsForHealth;
 	}
-	public Date getExpiryDate() {
+	public Date getPublicLiabilityexpiryDate() {
+		return publicLiabilityexpiryDate;
+	}
+	public void setPublicLiabilityexpiryDate(Date publicLiabilityexpiryDate) {
+		this.publicLiabilityexpiryDate = publicLiabilityexpiryDate;
+	}
+	public Date getFireRiskexpiryDate() {
+		return fireRiskexpiryDate;
+	}
+	public void setFireRiskexpiryDate(Date fireRiskexpiryDate) {
+		this.fireRiskexpiryDate = fireRiskexpiryDate;
+	}
+	public Date getLocalTouristexpiryDate() {
+		return localTouristexpiryDate;
+	}
+	public void setLocalTouristexpiryDate(Date localTouristexpiryDate) {
+		this.localTouristexpiryDate = localTouristexpiryDate;
+	}
+	public Date getInternalFireexpiryDate() {
+		return internalFireexpiryDate;
+	}
+	public void setInternalFireexpiryDate(Date internalFireexpiryDate) {
+		this.internalFireexpiryDate = internalFireexpiryDate;
+	}
+	public Date getHaccpCertifyexpiryDate() {
+		return haccpCertifyexpiryDate;
+	}
+	public void setHaccpCertifyexpiryDate(Date haccpCertifyexpiryDate) {
+		this.haccpCertifyexpiryDate = haccpCertifyexpiryDate;
+	}
+	public Date getRecordsForFireexpiryDate() {
+		return recordsForFireexpiryDate;
+	}
+	public void setRecordsForFireexpiryDate(Date recordsForFireexpiryDate) {
+		this.recordsForFireexpiryDate = recordsForFireexpiryDate;
+	}
+	public Date getRecordsForHealthexpiryDate() {
+		return recordsForHealthexpiryDate;
+	}
+	public void setRecordsForHealthexpiryDate(Date recordsForHealthexpiryDate) {
+		this.recordsForHealthexpiryDate = recordsForHealthexpiryDate;
+	}
+	/*public Date getExpiryDate() {
 		return expiryDate;
 	}
 	public void setExpiryDate(Date expiryDate) {
@@ -250,7 +307,7 @@ public class HotelHealthAndSafety {
 	}
 	public void setExpiryDate1(Date expiryDate1) {
 		this.expiryDate1 = expiryDate1;
-	}
+	}*/
 	public long getSupplierCode() {
 		return supplierCode;
 	}

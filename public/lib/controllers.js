@@ -1186,7 +1186,9 @@ angular.module('travel_portal').
 				$scope.getallData=response;
 				console.log(response);
 				$rootScope.hotelName = response.hotelgeneralinfo.hotelNm;
-				 $cookieStore.put('hotelName',$rootScope.hotelName);
+				$rootScope.hotelAddress =  response.hotelgeneralinfo.hotelAddr;
+				$cookieStore.put('hotelName',$rootScope.hotelName);
+				$cookieStore.put('hotelAddress',$rootScope.hotelAddress);
 				 $cookieStore.put('cityCode',response.hotelgeneralinfo.cityCode);
 				
 				angular.forEach($scope.currency, function(obj, index){
@@ -1224,9 +1226,8 @@ angular.module('travel_portal').
 	}
 	
 	$rootScope.hotelName= $cookieStore.get('hotelName');
-	//$rootScope.currencyname = $cookieStore.get('currency');		
-		
-	 
+	$rootScope.hotelAddress= $cookieStore.get('hotelAddress');
+	
 	$scope.getgeneralinfo = function(){
 	
 		$http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
@@ -2471,6 +2472,17 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	
 	 $scope.currencyname = $cookieStore.get('currency');
 	
+	 var nowTemp = new Date();
+	 var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+	 
+	 console.log(now);
+	 
+	
+	/* $scope.textclick = function(){
+		 rateData.rateValue = "";
+		
+	 }*/
+	
 	$(".form-validate").validate({
         errorPlacement: function(error, element){
             error.insertAfter(element);
@@ -2536,16 +2548,17 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		var arr1 = $scope.formData.fromDate.split("-");
 		var fDate = (arr1[1]+"/"+arr1[0]+"/"+arr1[2])
 	
-	
 		 var toDate = Date.parse(tDate);
          var fromDate = Date.parse(fDate);
-    
 		
 		if(fromDate < toDate){
 		
 		$http.get('/getRateData/'+$scope.formData.room+'/'+$scope.formData.fromDate+'/'+$scope.formData.toDate+'/'+$scope.currencyname).success(function(response){
 			console.log(response);
 			$scope.rateMeta1 = response;
+			console.log($scope.rateMeta1);
+			$scope.fdate = $scope.formData.fromDate;
+			$scope.tdate = $scope.formData.toDate;
 			
 			for(var i=0;i<$scope.rateMeta1.length;i++) {
 				
@@ -2587,7 +2600,53 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	};
 	
 	$scope.EditThisRate = function(rate){
+		
 		console.log(rate);
+		$scope.fdate = rate.fromDate;
+		$scope.tdate = rate.toDate;
+		
+		console.log($scope.fdate);
+		console.log($scope.tdate);
+		
+		if(rate.special.rateDetails.length == 0){
+			$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
+				$scope.rateObject.push(response);
+				console.log(response);
+				angular.forEach($scope.rateObject, function(obj, index){
+					rate.special.rateDetails = $scope.rateObject[index].special.rateDetails;
+					rate.special.cancellation  = $scope.rateObject[index].special.cancellation;
+					
+				});
+				
+			    
+			});
+		}
+		
+		if(rate.specialDaysRate.length == 0){
+			$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
+				$scope.rateObject.push(response);
+				console.log(response);
+				angular.forEach($scope.rateObject, function(obj, index){
+					angular.forEach(obj.specialDaysRate, function(obj1, index1){
+						console.log(obj1);
+						rate.specialDaysRate[index1] = obj1;
+						rate.specialDaysRate[index1].cancellation = obj1.cancellation;
+						rate.specialDaysRate[index1].rateDetails = obj1.rateDetails;
+					});
+				});
+				
+			    
+			});
+		}
+		console.log(rate);
+		/*$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
+			$scope.rateObject.push(response);
+			console.log($scope.rateObject);
+			$scope.showMarketTable($scope.rateObject[0]);
+			$scope.messageShow = " ";
+			$scope.link = " ";
+		});*/
+		
 		$scope.tableshow = false;
 		$scope.addNewButton = "true";
 		$scope.showRateUpdate = true;
@@ -2610,6 +2669,11 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		}
 		
 		$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
+			
+			console.log(response.normalRate.rateDetails);
+/*angular.forEach(response, function(value, key){
+				
+			});*/
 			$scope.rateObject.push(response);
 			console.log($scope.rateObject);
 			$scope.showMarketTable($scope.rateObject[0]);
@@ -2714,8 +2778,47 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		$scope.rateObject[index].special.cancellation.push({});
 	};
 	
+	/*$scope.addNewRuleSpecialDaysRate = function(index) {
+		console.log(index);
+		$scope.rateObject[index].specialDaysRate.push({});
+	};*/
+	
+	$scope.addNewRuleforSpecialRatecancel = function(index,pindex) {
+		$scope.rateMeta[pindex].specialDaysRate[index].cancellation.push({});
+	};
 	$scope.addNewRuleforSpecialRateMeta = function(index) {
 		$scope.rateMeta[index].special.cancellation.push({});
+	};
+	
+	$scope.addNewSpecial = function(index) {
+		console.log(index);
+		$http.get('/getSpecialObject/'+$scope.formData.room).success(function(response){
+			$scope.rateObject[index].specialDaysRate.push(response);
+
+			console.log($scope.rateObject[index].specialDaysRate);
+			console.log(response);
+		
+		});
+//		
+//			if($scope.rateObject.length > 0) {
+//				$scope.showRemoveRate = true;
+//			}
+			
+	};
+	
+	$scope.addNewSpecialInUpdate = function(index) {
+		console.log(index);
+		$http.get('/getSpecialObject/'+$scope.formData.room).success(function(response){
+			$scope.rateMeta[0].specialDaysRate.push(response);
+
+			console.log(response);
+		
+		});
+//		
+//			if($scope.rateObject.length > 0) {
+//				$scope.showRemoveRate = true;
+//			}
+			
 	};
 	
 	$scope.addNewRate = function() {
@@ -2789,6 +2892,25 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			//	}
 		
 		}
+		
+		 $scope.showDate = false;
+		/*var flag1 = 0;
+		 angular.forEach($scope.rateObject, function(value, key){
+			 angular.forEach(value.specialDaysRate, function(value1, key1){
+				 var arr = value1.tospecial.split("-");
+					var tDate = (arr[1]+"/"+arr[0]+"/"+arr[2])
+					var arr1 = value1.fromspecial.split("-");
+					var fDate = (arr1[1]+"/"+arr1[0]+"/"+arr1[2])
+					 var toDate = Date.parse(tDate);
+			         var fromDate = Date.parse(fDate);
+					
+					if(fromDate > toDate){
+					     flag1 = 1;
+					     $scope.showDate = true;
+					}
+			 });
+		 });*/
+		
 		var flag = 0;
 		console.log($scope.rateObject);
 		 angular.forEach($scope.rateObject, function(value, key){
@@ -2801,6 +2923,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 					 console.log(value3);
 					 if(value1.name == value3){
 						flag = 1; 
+						
 					 }
 				 	}
 				   });
@@ -2824,24 +2947,34 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	
 	$scope.updateRateMeta = function() {
 		console.log($scope.rateMeta);
+		console.log($scope.rateMeta1);
 		var flag = 0;
-		 angular.forEach($scope.rateMeta, function(value, key){
-			 angular.forEach(value.allocatedCities, function(value1, key1){
-				 angular.forEach($scope.rateMeta1,function(value2, key2){
-					 if(value.id != value2.id){
-					 angular.forEach(value2.allocatedCountry,function(value3, key3){
-					
-		 		 if(value1.ticked == true){
-					
-					 if(value1.name == value3){
-						flag = 1; 
-					 }
-				 	}
-				   });
-				}	 
-				 });
-			  });
-			});
+		$http.get('/getRateRang/'+$scope.rateMeta[0].fromDate+"/"+$scope.rateMeta[0].toDate+"/"+$scope.rateMeta[0].roomId+"/"+supplierCode)
+		.success(function(response){
+			console.log(response);
+			$scope.rateMeta1 = response;
+			
+			 angular.forEach($scope.rateMeta, function(value, key){
+				 angular.forEach(value.allocatedCities, function(value1, key1){
+					 angular.forEach($scope.rateMeta1,function(value2, key2){
+						 if(value.id != value2.id){
+						 angular.forEach(value2.allocatedCountry,function(value3, key3){
+						if(value1.name == value3){
+							if(value1.ticked == true){
+								
+								 if(value1.name == value3){
+									flag = 1; 
+								 }
+							 	}
+						  }
+			 		 
+					   });
+					}	 
+					 });
+				  });
+				});
+		});
+		
 		
 		 console.log(flag);
 			if(flag == 0){
@@ -4435,4 +4568,371 @@ controller("onrequestController",['$scope','notificationService','$filter','$roo
 		});
 	}
 	
+	$scope.rejectBooking = function(id){
+		
+		console.log(id);
+		$http.get("/getRejectBooking/"+id).success(function(response){
+			
+			notificationService.success("Reject Booking");
+			ngDialog.close();
+			$http.get("/getonrequestInfo/"+supplierCode+"/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.agentNm).success(function(response){
+				
+				console.log(response);
+				totalPages = response.totalPages;
+				currentPage = response.currentPage;
+				$scope.pageNumber = response.currentPage;
+				$scope.pageSize = response.totalPages;
+				$scope.onrequestinfo = response.results;
+				if(totalPages == 0) {
+					$scope.pageNumber = 0;
+				}
+				
+			});
+			
+			//$scope.pendingUsers.splice($scope.pendingUsers.indexOf($scope.generalInfo),1);
+		});
+			
+	}
+	$scope.confBooking = function(id){
+		
+		console.log(id);
+		$http.get("/getconfBooking/"+id).success(function(response){
+			
+			notificationService.success("Confirmed Booking");
+			ngDialog.close();
+			$http.get("/getonrequestInfo/"+supplierCode+"/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.agentNm).success(function(response){
+				
+				console.log(response);
+				totalPages = response.totalPages;
+				currentPage = response.currentPage;
+				$scope.pageNumber = response.currentPage;
+				$scope.pageSize = response.totalPages;
+				$scope.onrequestinfo = response.results;
+				if(totalPages == 0) {
+					$scope.pageNumber = 0;
+				}
+				
+			});
+		});
+	}
+	
 }]);	
+
+angular.module('travel_portal').
+controller("confirmbookingController",['$scope','notificationService','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$filter,$rootScope, $http,ngDialog){
+		
+	$scope.pageNumber;
+	$scope.pageSize;
+	$scope.fromData = "1";
+	$scope.toDate="1";
+	$scope.agentNm = "1";
+	var currentPage = 1;
+	var totalPages;
+	$scope.flag = 0;
+		
+	
+	console.log(supplierCode);
+	$http.get("/getbookingInfo/"+supplierCode+"/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.agentNm).success(function(response){
+		
+		console.log(response);
+		totalPages = response.totalPages;
+		currentPage = response.currentPage;
+		$scope.pageNumber = response.currentPage;
+		$scope.pageSize = response.totalPages;
+		$scope.bookinginfo = response.results;
+		if(totalPages == 0) {
+			$scope.pageNumber = 0;
+		}
+		
+	});
+	
+	$scope.showBookingDataDateWise = function(selectDate){
+		console.log(selectDate);
+		if(selectDate.agentNm == undefined || selectDate.agentNm == ""){
+			$scope.agentNm = "1";
+		}else{
+			$scope.agentNm = selectDate.agentNm;
+		}
+		if(selectDate.fromDate == undefined || selectDate.fromDate == "" && selectDate.toDate == undefined || selectDate.toDate == ""){
+			$scope.fromData ="1";
+			$scope.toDate = "1";
+			$scope.flag  = 0;
+		}else{
+			$scope.fromData = selectDate.fromDate;
+			$scope.toDate = selectDate.toDate;
+			var arr = $scope.toDate.split("-");
+			var tDate = (arr[1]+"/"+arr[0]+"/"+arr[2])
+			var arr1 =$scope.fromData.split("-");
+			var fDate = (arr1[1]+"/"+arr1[0]+"/"+arr1[2])
+		
+			 var toDate = Date.parse(tDate);
+	         var fromDate = Date.parse(fDate);
+			
+			if(fromDate < toDate){
+				$scope.flag  = 0;
+			}else{
+				$scope.flag = 1;
+			}
+		}
+				
+		
+		$http.get("/getbookingInfo/"+supplierCode+"/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.agentNm).success(function(response){
+		
+			console.log(response);
+			totalPages = response.totalPages;
+			currentPage = response.currentPage;
+			$scope.pageNumber = response.currentPage;
+			$scope.pageSize = response.totalPages;
+			$scope.bookinginfo = response.results;
+			if(totalPages == 0) {
+				$scope.pageNumber = 0;
+			}
+		});
+	}
+	
+	$scope.showDetails = function(book){
+		console.log(book);
+		$scope.bookinfo = book;
+		ngDialog.open({
+			template: '/assets/html/booking_process/confirm_booking_details.html',
+			scope : $scope,
+			//controller:'hoteProfileController',
+			className: 'ngdialog-theme-default'
+		});
+	}
+	
+	$scope.rateDatewise = [];
+	$scope.showdateWiseView = function(bookId){
+		console.log(bookId);
+		$scope.rateDatewise = [];
+		$http.get("/getbookDateWise/"+bookId).success(function(response){
+			console.log(response);
+			//$scope.bookinginfo = response;
+			
+		
+			angular.forEach(response,function(value,key){
+			var arr = value.cdate.split("-");
+			var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+			$scope.datevalue1 = $filter('date')(new Date(datevalue), "EEE,MMM,dd,yyyy");
+			var arr = $scope.datevalue1.split(",");
+			$scope.day = arr[0];
+			$scope.month = arr[1];
+			$scope.date = arr[2];
+			
+			$scope.rateDatewise.push({
+				day:$scope.day,
+			    month:$scope.month,
+			    date:$scope.date,
+			    rate:value.rate,
+			    meal:value.mealtype
+				
+			});
+			
+			});
+						
+			console.log($scope.rateDatewise);
+		});
+	}
+	
+	$scope.onNext = function() {
+		if(currentPage < totalPages) {
+			currentPage++;
+			$scope.searchBooking(currentPage);
+		}
+	};
+	$scope.onPrev = function() {
+		if(currentPage > 1) {
+			currentPage--;
+			$scope.searchBooking(currentPage);
+		}
+	};
+	
+	$scope.searchBooking = function(page) {
+		currentPage = page;
+		/*if(angular.isUndefined($scope.title) || $scope.title=="") {
+			console.log('inside function');
+			$scope.title = " ";
+		}*/
+		
+		currentPage = page;
+		console.log(currentPage);
+		$http.get("/getbookingInfo/"+supplierCode+"/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.agentNm).success(function(response){
+			
+			console.log(response);
+			totalPages = response.totalPages;
+			currentPage = response.currentPage;
+			$scope.pageNumber = response.currentPage;
+			$scope.pageSize = response.totalPages;
+			$scope.bookinginfo = response.results;
+			if(totalPages == 0) {
+				$scope.pageNumber = 0;
+			}
+			
+		});
+	};
+	
+}]);
+
+
+angular.module('travel_portal').
+controller("rejectController",['$scope','notificationService','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$filter,$rootScope, $http,ngDialog){
+		
+	
+	$scope.pageNumber;
+	$scope.pageSize;
+	$scope.fromData = "1";
+	$scope.toDate="1";
+	$scope.agentNm = "1";
+	var currentPage = 1;
+	var totalPages;
+	$scope.flag = 0;
+		
+	
+	console.log(supplierCode);
+	$http.get("/getrejectInfo/"+supplierCode+"/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.agentNm).success(function(response){
+		
+		console.log(response);
+		totalPages = response.totalPages;
+		currentPage = response.currentPage;
+		$scope.pageNumber = response.currentPage;
+		$scope.pageSize = response.totalPages;
+		$scope.rejectinfo = response.results;
+		if(totalPages == 0) {
+			$scope.pageNumber = 0;
+		}
+		
+	});
+	
+
+	$scope.onNext = function() {
+		if(currentPage < totalPages) {
+			currentPage++;
+			$scope.searchreject(currentPage);
+		}
+	};
+	$scope.onPrev = function() {
+		if(currentPage > 1) {
+			currentPage--;
+			$scope.searchreject(currentPage);
+		}
+	};
+	
+	$scope.searchreject = function(page) {
+		currentPage = page;
+		/*if(angular.isUndefined($scope.title) || $scope.title=="") {
+			console.log('inside function');
+			$scope.title = " ";
+		}*/
+		
+		currentPage = page;
+		console.log(currentPage);
+		$http.get("/getrejectInfo/"+supplierCode+"/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.agentNm).success(function(response){
+			
+			console.log(response);
+			totalPages = response.totalPages;
+			currentPage = response.currentPage;
+			$scope.pageNumber = response.currentPage;
+			$scope.pageSize = response.totalPages;
+			$scope.rejectinfo = response.results;
+			if(totalPages == 0) {
+				$scope.pageNumber = 0;
+			}
+			
+		});
+	};
+	
+	$scope.showRejectDataDateWise = function(selectDate){
+		console.log(selectDate);
+		if(selectDate.agentNm == undefined || selectDate.agentNm == ""){
+			$scope.agentNm = "1";
+		}else{
+			$scope.agentNm = selectDate.agentNm;
+		}
+		if(selectDate.fromDate == undefined || selectDate.fromDate == "" && selectDate.toDate == undefined || selectDate.toDate == ""){
+			$scope.fromData ="1";
+			$scope.toDate = "1";
+			$scope.flag  = 0;
+		}else{
+			$scope.fromData = selectDate.fromDate;
+			$scope.toDate = selectDate.toDate;
+			var arr = $scope.toDate.split("-");
+			var tDate = (arr[1]+"/"+arr[0]+"/"+arr[2])
+			var arr1 =$scope.fromData.split("-");
+			var fDate = (arr1[1]+"/"+arr1[0]+"/"+arr1[2])
+		
+			 var toDate = Date.parse(tDate);
+	         var fromDate = Date.parse(fDate);
+			
+			if(fromDate < toDate){
+				$scope.flag  = 0;
+			}else{
+				$scope.flag = 1;
+			}
+		}
+				
+		
+		$http.get("/getrejectInfo/"+supplierCode+"/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.agentNm).success(function(response){
+		
+			console.log(response);
+			totalPages = response.totalPages;
+			currentPage = response.currentPage;
+			$scope.pageNumber = response.currentPage;
+			$scope.pageSize = response.totalPages;
+			$scope.rejectinfo = response.results;
+			if(totalPages == 0) {
+				$scope.pageNumber = 0;
+			}
+		});
+	}
+	
+	$scope.rateDatewise = [];
+	$scope.showdateWiseView = function(reject){
+		console.log(reject);
+		$scope.rateDatewise = [];
+		$http.get("/getbookDateWise/"+reject).success(function(response){
+			console.log(response);
+			//$scope.bookinginfo = response;
+			
+		
+			angular.forEach(response,function(value,key){
+			var arr = value.cdate.split("-");
+			var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+			$scope.datevalue1 = $filter('date')(new Date(datevalue), "EEE,MMM,dd,yyyy");
+			var arr = $scope.datevalue1.split(",");
+			$scope.day = arr[0];
+			$scope.month = arr[1];
+			$scope.date = arr[2];
+			
+			$scope.rateDatewise.push({
+				day:$scope.day,
+			    month:$scope.month,
+			    date:$scope.date,
+			    rate:value.rate,
+			    meal:value.mealtype
+				
+			});
+			
+			});
+						
+			console.log($scope.rateDatewise);
+		});
+	}
+	
+	
+	
+	$scope.showDetails = function(reject){
+		console.log(reject);
+		$scope.rejectedinfo = reject;
+		ngDialog.open({
+			template: '/assets/html/booking_process/reject_booking_details.html',
+			scope : $scope,
+			//controller:'hoteProfileController',
+			className: 'ngdialog-theme-default'
+		});
+	}
+	
+	
+	
+	
+}]);	
+

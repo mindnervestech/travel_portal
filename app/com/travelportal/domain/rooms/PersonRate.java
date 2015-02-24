@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Query;
 import javax.persistence.Table;
@@ -40,12 +39,16 @@ public class PersonRate {
 	private MealType onlineMealType;
 	@OneToOne
 	private RateMeta rate;
-	private boolean isNormal;
+	@Column(name="findNormal")
+	private double isNormal;
 	
-	public boolean isNormal() {
+	
+	
+	
+	public double getIsNormal() {
 		return isNormal;
 	}
-	public void setNormal(boolean isNormal) {
+	public void setIsNormal(double isNormal) {
 		this.isNormal = isNormal;
 	}
 	public Long getId() {
@@ -105,17 +108,23 @@ public class PersonRate {
 		this.onlineMealType = onlineMealType;
 	}
 	public static List<PersonRate> findByRateMetaId(Long id) {
-    	Query query = JPA.em().createQuery("Select p from PersonRate p where p.rate.id = ?1");
+    	Query query = JPA.em().createQuery("Select p from PersonRate p where p.rate.id = ?1 ORDER BY p.isNormal DESC");
 		query.setParameter(1, id);
     	return (List<PersonRate>) query.getResultList();
     }
 	
-	public static PersonRate findByRateMetaIdAndNormal(Long id,boolean isNormal,String numberOfPersons) {
-    	Query query = JPA.em().createQuery("Select p from PersonRate p where p.rate.id = ?1 and p.isNormal = ?2 and p.numberOfPersons = ?3");
+	public static PersonRate findByRateMetaIdAndNormal(Long id,Double isNormal,String numberOfPersons) {
+		
+		try{
+		Query query = JPA.em().createQuery("Select p from PersonRate p where p.rate.id = ?1 and p.isNormal = ?2 and p.numberOfPersons = ?3");
 		query.setParameter(1, id);
 		query.setParameter(2, isNormal);
 		query.setParameter(3, numberOfPersons);
     	return (PersonRate) query.getSingleResult();
+		}
+		catch(Exception ex){
+			return null;
+		}
     }
 	
 	public static int deleteByRateMetaId(Long id) {

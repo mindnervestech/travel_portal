@@ -13,6 +13,7 @@
 	href='@routes.Assets.at("app/vendors/bootstrap/css/bootstrap.min.css")'>
 <!--LOADING STYLESHEET FOR PAGE-->
 <!--Loading style vendors-->
+
 <link type="text/css" rel="stylesheet"
 	href='@routes.Assets.at("app/vendors/animate.css/animate.css")'>
 <link type="text/css" rel="stylesheet"
@@ -29,16 +30,17 @@
 	class="style-change color-change">
 <link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/style-responsive.css")'>
 <link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/app.css")'>
+
 <script src='@routes.Assets.at("bower_components/jquery/jquery.min.js")'></script>
 
     </head>
-    <body style="background-color: white;">
+    <body style="background-color: white;" ng-controller="ApplicationController">
     	<div class="panel panel-green">
 						<div class="panel-heading clearfix">
 							<span class="mts pull-left">Signup</span>
 						</div>
 					</div>
-    	<form action="/register" method="post">
+    	<form name="myForm" action="/register"  onsubmit="return validateForm()" method="post">
     	<table class="table" style="margin-left: 20%;">
 		<tr>
 		<td>	
@@ -302,8 +304,8 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label"><b>*Password:</b></label>
 							<div class="col-md-9">
-								<input type="password" name="password" required>
-								<label>(minimum 6 characters)</label>
+								<input type="password" onclick="click()" name="password" required>
+								<label>(minimum 8 characters)</label>
 							</div>
 					</div>
 				</div>	
@@ -364,6 +366,25 @@ function isChain(value) {
 		$("#chainSelect").css("display","none");
 		$("#chainSelect2").css("display","none");
 	}
+}
+function click(){
+	
+	//var textLength = password.value.length;
+	console.log('textLength');
+}
+
+function validateForm() {
+	 var pass = document.forms["myForm"]["password"].value;
+	 var vpass = document.forms["myForm"]["verify"].value;
+	// console.log(x.length);
+	    if (pass.length < 8) {
+	       alert("enter password greater than 8 characters");
+	        return false;
+	   }
+	    if(pass != vpass){
+	    	alert("password and v");
+	        return false;
+	    }
 }
 
 </script>

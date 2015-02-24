@@ -42,6 +42,7 @@ import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
+import com.travelportal.domain.rooms.RateSpecialDays;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.Specials;
@@ -191,105 +192,7 @@ public class Application extends Controller {
 			
 			DateWiseSortFunction(hotellist,toDate,fromDate,dayDiff,cityId,nationalityId,map,format,formDate);
     		
-    		/*List<BigInteger> supplierId = RateMeta.getsupplierId(
-    				Integer.parseInt(cityId), 
-    				Integer.parseInt(nationalityId));  //, Integer.parseInt(sId[0])
-
-    		for (BigInteger supplierid : supplierId) {
-
-
-    			Calendar checkInDate = Calendar.getInstance();
-    			checkInDate.setTime(formDate);
-    			checkInDate.set(Calendar.MILLISECOND, 0);
-
-    			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
-    			HotelSearch hProfileVM = new HotelSearch();
-    			Long object = (Long) map.get(supplierid.longValue());
-    			
-    			if (object == null) {
-    				HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
-    				
-
-    				fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId);    Fill Hotel info function
-    				
-    				for (int i = 0; i < dayDiff; i++) {
-
-    					System.out.println(supplierid.longValue());
-    					List<HotelRoomTypes> roomType = HotelRoomTypes
-    							.getHotelRoomDetails(supplierid.longValue());
-    					int days = checkInDate.get(Calendar.DAY_OF_WEEK)-1;
-    					SerachedHotelbyDate hotelBydateVM = new SerachedHotelbyDate();
-    					hotelBydateVM.setDate(format.format(checkInDate.getTime()));
-    					Map<Long, Long> mapRm = new HashMap<Long, Long>();
-    					List<SerachedRoomType> roomlist = new ArrayList<>();
-    					for (HotelRoomTypes room : roomType) {
-    						Long objectRm = (Long) mapRm.get(room.getRoomId());
-    						if (objectRm == null) {
-
-    							List<RateMeta> rateMeta1 = RateMeta.getdatecheck(
-    									room.getRoomId(),
-    									Integer.parseInt(nationalityId), checkInDate.getTime(),
-    									hAmenities.getSupplier_code()); // Long.parseLong(roomId[0])
-
-    							List<SerachedRoomRateDetail> list = new ArrayList<>();
-    							SerachedRoomType roomtyp = new SerachedRoomType();
-    							fillRoomInfo(room,roomtyp);  fill room info function
-    							specialsPromotion(roomtyp,format,Integer.parseInt(nationalityId),room.getRoomId(),checkInDate.getTime());
-    							for (RateMeta rate : rateMeta1) {
-    								
-    									
-    								RateDetails rateDetails = RateDetails
-    										.findByRateMetaId(rate.getId());
-
-    								List<PersonRate> personRate = PersonRate
-    										.findByRateMetaId(rate.getId());
-
-    							AllotmentMarket alloMarket = AllotmentMarket.getOneMarket(rate.getId());
-
-    								SerachedRoomRateDetail rateVM = new SerachedRoomRateDetail();
-    								rateVM.setAdult_occupancy(room
-    										.getMaxAdultOccupancy());
-    								rateVM.setId(rate.getId());
-    								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
-    								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
-    								
-    								SpecialRateReturn(specialRateVM,rateDetails); Special Rate Return function
-    								
-    								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM);  person Rate return function
-    								
-    								list.add(rateVM);
-    							
-    							}
-    							mapRm.put(room.getRoomId(), Long.parseLong("1"));
-    							roomtyp.setHotelRoomRateDetail(list);
-    							if(!roomtyp.hotelRoomRateDetail.isEmpty()){
-    							roomlist.add(roomtyp);
-    							}
-    						}
-    						
-    						hProfileVM.setHotelbyDate(Datelist);
-    					}
-    					
-    					hotelBydateVM.setRoomType(roomlist);
-    					
-    					if (!hotelBydateVM.getRoomType().isEmpty()) {
-    						Datelist.add(hotelBydateVM);
-    					}else{
-    						//hProfileVM.setFlag("1");
-    					}
-
-    					checkInDate.add(Calendar.DATE, 1);
-    				}
-
-    				map.put(supplierid.longValue(), Long.parseLong("1"));
-
-    				if (!hProfileVM.getHotelbyDate().isEmpty()) {
-    					hotellist.add(hProfileVM);
-    				}
-    			}
-    		}*/
-
-    		List<Long> hotelNo = new ArrayList<>();
+    	 		List<Long> hotelNo = new ArrayList<>();
     		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
     		fillRoomsInHotelInfo(hotellist,hotelRMlist,hotelNo,diffInpromo); /* fill data in room in hotel object.... function*/
     		
@@ -476,7 +379,9 @@ public static void DateWiseSortFunction(List<HotelSearch> hotellist,String toDat
 								
 							RateDetails rateDetails = RateDetails
 									.findByRateMetaId(rate.getId());
-
+							
+							List<RateSpecialDays> reDays = RateSpecialDays.findByRateMetaId(rate.getId());
+							
 							List<PersonRate> personRate = PersonRate
 									.findByRateMetaId(rate.getId());
 
@@ -494,7 +399,7 @@ public static void DateWiseSortFunction(List<HotelSearch> hotellist,String toDat
 							
 							SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
 							
-							personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
+							personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM, reDays, format, checkInDate); /* person Rate return function*/
 							
 							list.add(rateVM);
 						
@@ -877,11 +782,65 @@ public static void SpecialRateReturn(SearchSpecialRateVM specialRateVM,RateDetai
 	}	
 }
 
-public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRateVM specialRateVM,RateDetails rateDetails,int days,SerachedRoomRateDetail rateVM){
+public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRateVM specialRateVM,RateDetails rateDetails,int days,SerachedRoomRateDetail rateVM, List<RateSpecialDays> reDays, DateFormat format,Calendar checkInDate){
+	int findrate = 0;
 	for (PersonRate person : personRate) {
-	if(rateDetails.isSpecialRate() == true){
+		
+		if (person.getIsNormal() > 2) {
+			
+			for(RateSpecialDays rDays:reDays){
+				
+				if(rDays.getIsSpecialdaysRate() > 2){
+					Date sformDate = null;
+					Date stoDates = null;
+					try {
+						sformDate = format.parse(rDays.getFromspecialDate());
+						stoDates = format.parse(rDays.getTospecialDate());
+					} catch (ParseException e) { // TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					long sdayDiff;
+					if(stoDates.getTime() == sformDate.getTime()){
+						sdayDiff = 1;
+						//diffInpromo = sdayDiff;
+					}else{
+						long sdiff = stoDates.getTime() - sformDate.getTime();
+
+						sdayDiff = sdiff / (1000 * 60 * 60 * 24);
+						//diffInpromo = sdayDiff;
+					}
+
+			    	Calendar specialfromDate = Calendar.getInstance();
+			    	specialfromDate.setTime(sformDate);
+			    	specialfromDate.set(Calendar.MILLISECOND, 0);
+
+					for (int j = 0; j < sdayDiff; j++) {
+    					
+						if(checkInDate.getTime().equals(specialfromDate.getTime())){
+							if (person.getIsNormal() == rDays.getIsSpecialdaysRate()) {
+								SearchRateDetailsVM vm = new SearchRateDetailsVM(
+										person);
+								vm.rateAvg = person.getRateValue(); 
+								if(person.getMealType() != null){
+								vm.mealTypeName = person.getMealType().getMealTypeNm();
+								}
+								vm.adult = person.getNumberOfPersons();
+								rateVM.rateDetails.add(vm);
+								}
+							findrate = 1;
+						}
+    					specialfromDate.add(Calendar.DATE, 1);
+					}
+					
+				}
+				
+			}
+		}
+		
+	if(rateDetails.getIsSpecialRate() == 1.0 && findrate == 0){
 		if(days == 0 && specialRateVM.rateDay0) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -892,7 +851,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 1 && specialRateVM.rateDay1) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -903,7 +862,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 2 && specialRateVM.rateDay2) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -914,7 +873,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 3 && specialRateVM.rateDay3) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -925,7 +884,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 4 && specialRateVM.rateDay4) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -936,7 +895,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 5 && specialRateVM.rateDay5) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -947,7 +906,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 6 && specialRateVM.rateDay6) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -958,7 +917,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else{
-			if (person.isNormal() == true) {
+			if (person.getIsNormal() == 0) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);
 			vm.rateAvg = person.getRateValue();
@@ -971,7 +930,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 		}
 		
 	}else{
-		if (person.isNormal() == true) {
+		if (person.getIsNormal() == 0 && findrate == 0) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);
 			vm.rateAvg = person.getRateValue(); 
@@ -1108,6 +1067,8 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 								RateDetails rateDetails = RateDetails
 										.findByRateMetaId(rate.getId());
 
+								List<RateSpecialDays> reDays = RateSpecialDays.findByRateMetaId(rate.getId());
+								
 								List<PersonRate> personRate = PersonRate
 										.findByRateMetaId(rate.getId());
 
@@ -1123,7 +1084,7 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 								
 								SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
 								
-								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
+								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM, reDays, format, checkInDate); /* person Rate return function*/
 								
 							
 								list.add(rateVM);
@@ -1309,6 +1270,8 @@ public static Result hoteldetailpage() {
 							RateDetails rateDetails = RateDetails
 									.findByRateMetaId(rate.getId());
 
+							List<RateSpecialDays> reDays = RateSpecialDays.findByRateMetaId(rate.getId());
+							
 							List<PersonRate> personRate = PersonRate
 									.findByRateMetaId(rate.getId());
 
@@ -1324,7 +1287,7 @@ public static Result hoteldetailpage() {
 							
 							SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
 							
-							personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
+							personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM, reDays, format, checkInDate); /* person Rate return function*/
 
 							list.add(rateVM);
 							
@@ -1453,6 +1416,8 @@ public static Result hoteldetailpage() {
 								
 								RateDetails rateDetails = RateDetails
 										.findByRateMetaId(rate.getId());
+								
+								List<RateSpecialDays> reDays = RateSpecialDays.findByRateMetaId(rate.getId());
 
 								List<PersonRate> personRate = PersonRate
 										.findByRateMetaId(rate.getId());
@@ -1470,7 +1435,7 @@ public static Result hoteldetailpage() {
 								
 								SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
 								
-								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
+								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM, reDays, format, checkInDate); /* person Rate return function*/
 								
 								
 								list.add(rateVM);

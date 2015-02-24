@@ -193,8 +193,9 @@ GET		/pendingAgent/:id		com.travelportal.controllers.AdminController.pendingAgen
 #following routes are used for fetch room details, Add Room Type and Edit Room Type
 #home screen for edit
 
-
+GET    /getRateRang/:fromDate/:toDate/:roomId/:supplierCode   com.travelportal.controllers.HotelRoomController.getRateRang(fromDate:String,toDate:String,roomId:Long,supplierCode:Long)
 GET		/getRateObject/:room			com.travelportal.controllers.HotelRoomController.getRateObject(room:Long)
+GET    /getSpecialObject/:room			com.travelportal.controllers.HotelRoomController.getSpecialObject(room:Long)
 GET		/getMealTypes			com.travelportal.controllers.HotelRoomController.getMealTypes
 GET		/getCurrency			com.travelportal.controllers.HotelRoomController.getCurrency
 GET		/getRoomTypes			com.travelportal.controllers.HotelRoomController.getAllRoomTypes
@@ -257,3 +258,6 @@ GET  /getbookingInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	
 GET  /getonrequestInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm          com.travelportal.controllers.ConfirmBookingController.getonrequestInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)
 #GET  /getonrequestInfoDateWise/:fromDate/:toDate/:supplierCode    com.travelportal.controllers.ConfirmBookingController.getonrequestInfoDateWise(fromDate:String,toDate:String,supplierCode:Long)
 GET  /getbookDateWise/:id			com.travelportal.controllers.ConfirmBookingController.getbookDateWise(id:Long)
+GET  /getRejectBooking/:id       com.travelportal.controllers.ConfirmBookingController.getRejectBooking(id:Long)
+GET  /getconfBooking/:id       com.travelportal.controllers.ConfirmBookingController.getconfBooking(id:Long)
+GET  /getrejectInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	com.travelportal.controllers.ConfirmBookingController.getrejectInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)

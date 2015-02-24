@@ -36,6 +36,7 @@ import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
+import com.travelportal.domain.rooms.RateSpecialDays;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.Specials;
@@ -264,6 +265,8 @@ public static Result hotelBookingpage() {
 							
 							RateDetails rateDetails = RateDetails
 									.findByRateMetaId(rate.getId());
+							
+							List<RateSpecialDays> reDays = RateSpecialDays.findByRateMetaId(rate.getId());
 
 							List<PersonRate> personRate = PersonRate
 									.findByRateMetaId(rate.getId());
@@ -280,7 +283,7 @@ public static Result hotelBookingpage() {
 							
 							SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
 							
-							personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM); /* person Rate return function*/
+							personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM, reDays, format, checkInDate); /* person Rate return function*/
 
 							list.add(rateVM);
 							
@@ -442,11 +445,65 @@ public static void SpecialRateReturn(SearchSpecialRateVM specialRateVM,RateDetai
 	}	
 }
 
-public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRateVM specialRateVM,RateDetails rateDetails,int days,SerachedRoomRateDetail rateVM){
+public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRateVM specialRateVM,RateDetails rateDetails,int days,SerachedRoomRateDetail rateVM, List<RateSpecialDays> reDays, DateFormat format,Calendar checkInDate){
+	int findrate = 0;
 	for (PersonRate person : personRate) {
-	if(rateDetails.isSpecialRate() == true){
+		
+		if (person.getIsNormal() > 2) {
+			
+			for(RateSpecialDays rDays:reDays){
+				
+				if(rDays.getIsSpecialdaysRate() > 2){
+					Date sformDate = null;
+					Date stoDates = null;
+					try {
+						sformDate = format.parse(rDays.getFromspecialDate());
+						stoDates = format.parse(rDays.getTospecialDate());
+					} catch (ParseException e) { // TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					long sdayDiff;
+					if(stoDates.getTime() == sformDate.getTime()){
+						sdayDiff = 1;
+						//diffInpromo = sdayDiff;
+					}else{
+						long sdiff = stoDates.getTime() - sformDate.getTime();
+
+						sdayDiff = sdiff / (1000 * 60 * 60 * 24);
+						//diffInpromo = sdayDiff;
+					}
+
+			    	Calendar specialfromDate = Calendar.getInstance();
+			    	specialfromDate.setTime(sformDate);
+			    	specialfromDate.set(Calendar.MILLISECOND, 0);
+
+					for (int j = 0; j < sdayDiff; j++) {
+    					
+						if(checkInDate.getTime().equals(specialfromDate.getTime())){
+							if (person.getIsNormal() == rDays.getIsSpecialdaysRate()) {
+								SearchRateDetailsVM vm = new SearchRateDetailsVM(
+										person);
+								vm.rateAvg = person.getRateValue(); 
+								if(person.getMealType() != null){
+								vm.mealTypeName = person.getMealType().getMealTypeNm();
+								}
+								vm.adult = person.getNumberOfPersons();
+								rateVM.rateDetails.add(vm);
+								}
+							findrate = 1;
+						}
+    					specialfromDate.add(Calendar.DATE, 1);
+					}
+					
+				}
+				
+			}
+		}
+		
+	if(rateDetails.getIsSpecialRate() == 1.0  && findrate == 0){
 		if(days == 0 && specialRateVM.rateDay0) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -457,7 +514,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 1 && specialRateVM.rateDay1) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -468,7 +525,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 2 && specialRateVM.rateDay2) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -479,7 +536,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 3 && specialRateVM.rateDay3) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -490,7 +547,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 4 && specialRateVM.rateDay4) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -501,7 +558,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 5 && specialRateVM.rateDay5) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -512,7 +569,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 6 && specialRateVM.rateDay6) {
-			if (person.isNormal() == false) {
+			if (person.getIsNormal() == 1) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);										
 			vm.rateAvg = person.getRateValue();
@@ -523,7 +580,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			rateVM.rateDetails.add(vm);
 			}
 		}else{
-			if (person.isNormal() == true) {
+			if (person.getIsNormal() == 0) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);
 			vm.rateAvg = person.getRateValue();
@@ -536,7 +593,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 		}
 		
 	}else{
-		if (person.isNormal() == true) {
+		if (person.getIsNormal() == 0  && findrate == 0) {
 			SearchRateDetailsVM vm = new SearchRateDetailsVM(
 					person);
 			vm.rateAvg = person.getRateValue(); 

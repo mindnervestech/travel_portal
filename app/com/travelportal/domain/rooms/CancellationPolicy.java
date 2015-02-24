@@ -31,12 +31,14 @@ public class CancellationPolicy {
 	private String percentage;
 	@OneToOne
 	private RateMeta rate;
-	private boolean isNormal;
+	private double isNormal;
 	
-	public boolean isNormal() {
+	
+	
+	public double getIsNormal() {
 		return isNormal;
 	}
-	public void setNormal(boolean isNormal) {
+	public void setIsNormal(double isNormal) {
 		this.isNormal = isNormal;
 	}
 	public Long getId() {
@@ -87,6 +89,13 @@ public class CancellationPolicy {
 		query.setParameter(1, id);
 		query.setParameter(2, isNormal);
     	return (List<CancellationPolicy>) query.getResultList();
+    }
+	
+	public static CancellationPolicy findByRateMetaIdAndNormalrate(Long id,Double isNormal) {
+    	Query query = JPA.em().createQuery("Select c from CancellationPolicy c where c.rate.id = ?1 and c.isNormal = ?2");
+		query.setParameter(1, id);
+		query.setParameter(2, isNormal);
+    	return (CancellationPolicy) query.getSingleResult();
     }
 	
 	public static CancellationPolicy findById(Long id) {

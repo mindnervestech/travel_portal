@@ -123,6 +123,10 @@ var app = angular.module('travel_portal',['ngRoute','ngDialog','jlareau.pnotify'
 		templateUrl: '/assets/html/booking_process/on_request.html',
 		controller: 'onrequestController'
 	})
+	.when('/rejected', {
+		templateUrl: '/assets/html/booking_process/rejected_booking.html',
+		controller: 'rejectController'
+	})
 	
 	
 });

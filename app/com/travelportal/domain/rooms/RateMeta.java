@@ -43,10 +43,10 @@ public class RateMeta {
 	private String rateName;
 	@OneToOne
 	private HotelRoomTypes roomType;
-	@Column(name="from_date")
+	/*@Column(name="from_date")
 	private Date fromDate;
 	@Column(name="to_date")
-	private Date toDate;
+	private Date toDate;*/
 	@Column(name="currency")
 	private String currency;
 	@Column(name="supplierCode")
@@ -98,7 +98,7 @@ public class RateMeta {
 	public void setRoomType(HotelRoomTypes roomType) {
 		this.roomType = roomType;
 	}
-	public Date getFromDate() {
+	/*public Date getFromDate() {
 		return fromDate;
 	}
 	public void setFromDate(Date fromDate) {
@@ -109,7 +109,7 @@ public class RateMeta {
 	}
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
-	}
+	}*/
 	public String getCurrency() {
 		return currency;
 	}
@@ -356,22 +356,12 @@ public class RateMeta {
 			RateMeta am = new RateMeta();
 			am.setId(Long.parseLong(o[0].toString()));
 			am.setCurrency(o[1].toString());
-			/*try {
-				am.setFromDate(format.parse(o[2].toString()));
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}*/
-			am.setRateName(o[3].toString());
-			/*try {
-				am.setToDate(format.parse(o[4].toString()));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/			
-			am.setRoomType(HotelRoomTypes.findById(Long.parseLong(o[5].toString())));
-			if(o[6] != null){
-			am.setSupplierCode(Long.parseLong(o[6].toString()));
+			
+			am.setRateName(o[2].toString());
+				
+			am.setRoomType(HotelRoomTypes.findById(Long.parseLong(o[3].toString())));
+			if(o[4] != null){
+			am.setSupplierCode(Long.parseLong(o[4].toString()));
 			}
 			list1.add(am);
 		}
@@ -399,26 +389,44 @@ public class RateMeta {
 			RateMeta am = new RateMeta();
 			am.setId(Long.parseLong(o[0].toString()));
 			am.setCurrency(o[1].toString());
-			am.setRateName(o[3].toString());
+			am.setRateName(o[2].toString());
 			
-			
-			
-			/*try {
-				am.setFromDate(format.parse(o[2].toString()));
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+		
+			am.setRoomType(HotelRoomTypes.findById(Long.parseLong(o[3].toString())));
+			if(o[4] != null){
+			am.setSupplierCode(Long.parseLong(o[4].toString()));
 			}
+			list1.add(am);
+		}
+		
+		return list1;
+		
+	 }
+	 
+	 public static List<RateMeta> getRatecheckdateWiseSupplier(Long supplierCode,Long roomId, Date date) {  //,int sId
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		 String SDate = null;
+		
+			SDate = format.format(date);
+		 
+		 List<Object[]> list;
+	
+		list =JPA.em().createNativeQuery("select * from rate_meta am,applicable_dateonrate ad where am.rate_id = ad.rate_rate_id and am.roomType_room_id = '"+roomId+"' and am.supplierCode= '"+supplierCode+"' and ad.Date_selected = '"+SDate+"'").getResultList();   
+		
+	 List<RateMeta> list1 = new ArrayList<>();
+		
+		for(Object[] o :list) {
+		
+			RateMeta am = new RateMeta();
+			am.setId(Long.parseLong(o[0].toString()));
+			am.setCurrency(o[1].toString());
+			am.setRateName(o[2].toString());
 			
-			try {
-				am.setToDate(format.parse(o[4].toString()));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		*/	
-			am.setRoomType(HotelRoomTypes.findById(Long.parseLong(o[5].toString())));
-			if(o[6] != null){
-			am.setSupplierCode(Long.parseLong(o[6].toString()));
+		
+			am.setRoomType(HotelRoomTypes.findById(Long.parseLong(o[3].toString())));
+			if(o[4] != null){
+			am.setSupplierCode(Long.parseLong(o[4].toString()));
 			}
 			list1.add(am);
 		}

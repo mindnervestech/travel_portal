@@ -40,8 +40,8 @@ function calcRoute() {
 google.maps.event.addDomListener(window, 'load', initialize());
 
     </script>
-    
-     <input type="text" id="start" ng-model="generalInfo.hotelAddr" disabled="disabled" required>
+   
+     <input type="text" id="start" ng-model="hotelAddress" disabled="disabled" required>
 		 <input type="text" id="end" ng-model="loactionAddr" disabled="disabled" required>
 		   <button onclick="calcRoute()" class="btn btn-primary">Show me Direction</button> 
      <div id="map-canvas" style="height: 450px;"></div>		

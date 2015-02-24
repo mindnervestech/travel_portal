@@ -1,7 +1,7 @@
 <div class="panel panel-green">
 	<div class="panel-heading clearfix">
-		<span class="mts pull-left">On Request</span>
-		</div>
+		<span class="mts pull-left">Rejected Booking</span>
+	</div>
 	<div class="panel-body">
 		<div class="col-lg-12">
 			<div class="row">
@@ -37,7 +37,7 @@
 				</div>
 				</div>
 				<div class="col-md-2">
-					 <button type="button" ng-click="showoOnRequestDataDateWise(selectData)" class="btn btn-primary">Show</button>
+					 <button type="button" ng-click="showRejectDataDateWise(selectData)" class="btn btn-primary">Show</button>
 				</div>
 				
 			</div> 
@@ -48,6 +48,7 @@
 			</div>
 						
     			</div>
+    			
     			<div class="form-group">
     			<table border="1" style="width: 100%;font-size: small;text-align: center;">
                 	<thead style="background-color: #488c6c;">
@@ -61,9 +62,9 @@
                                  <th style="width: 55px;"><a style="color: white;">No Of Room</a></th>
                                  <th style="width: 83px;"><a style="color: white;">Total</a></th>
                                  <th><a style="color: white;">Adult</a></th>
-                                 <th><a style="color: white;">Agent Company Name</a></th> 
-                                 <th><a style="color: white;">Agent First Name</a></th>
-                                <!--   <th><a style="color: white;">Supplier</a></th> -->
+                                  <th><a style="color: white;">Agent Company Name</a></th> 
+                                 <th><a style="color: white;">Agent Name</a></th>
+                                 <!--  <th><a style="color: white;">Supplier</a></th> -->
                             <th><a style="color: white;">Action</a></th> 
                            
                             
@@ -71,20 +72,20 @@
                     </thead>
                 	<tbody>
                 	
-                    	<tr ng-repeat="request in onrequestinfo">
+                    	<tr ng-repeat="reject in rejectinfo">
           					<td>{{$index+1}}</td>
-          					 <td>{{request.checkIn}}</td>
-                           <td>{{request.checkOut}}</td>
-                            <td>{{request.nationalityNm}}</td>
-                           <td>{{request.totalNightStay}}</td>
-                             <td>{{request.roomNm}}</td>
-                              <td>{{request.noOfroom}}</td>
-                               <td>{{request.total}}</td>
-                           <td>{{request.adult}}</td>
-                            <td>{{request.agent[0].companyName}}</td>
-                            <td>{{request.agent[0].firstName}}</td>
-                            <!-- <td>{{request.supplierCode}}</td> -->
-                            <td><a ng-click="showDetails(request)" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 0px;"></span></a></td> 
+          					 <td>{{reject.checkIn}}</td>
+                           <td>{{reject.checkOut}}</td>
+                           <td>{{reject.nationalityNm}}</td>
+                           <td>{{reject.totalNightStay}}</td>
+                             <td>{{reject.roomNm}}</td>
+                              <td>{{reject.noOfroom}}</td>
+                               <td>{{reject.total}}</td>
+                           <td>{{reject.adult}}</td>
+                            <td>{{reject.agent[0].companyName}}</td> 
+                            <td>{{reject.agent[0].firstName}}</td>
+                          <!--   <td>{{book.supplierCode}}</td> -->
+                            <td><a ng-click="showDetails(reject)" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 0px;"></span></a></td> 
                            
                             </tr>
                            

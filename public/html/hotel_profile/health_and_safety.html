@@ -80,8 +80,8 @@
 					<div class="col-md-12">
 					
 		                <div class="form-group">
-							<label class="col-md-7 col-md-offset-1">Public Liability or indemnity insurance:</label>
-								<div class="col-md-3">
+							<label class="col-md-5 col-md-offset-1">Public Liability or indemnity insurance:</label>
+								<div class="col-md-2">
 				
 									<div class="chargechild">
 									<input type="radio" name="publicLiability" data-ng-model="HealthSafety.publicLiability" value="true">
@@ -92,11 +92,18 @@
 									&nbsp; No
 									</div> 
 								</div>
+								<div ng-if="HealthSafety.publicLiability == 'true'">
+								<label class="col-md-2 control-label"> Expiry Date:</label>
+								<div class="col-md-2">
+                   					<input id = "date" name="expiryDate" data-ng-model="HealthSafety.publicLiabilityexpiryDate" class="input-filter form-control" data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" style="height: 25px;font-size: 11px;"  required>
+					
+								</div>
+								</div>
 			             </div>	
-			             
+			           			             
 			              <div class="form-group">
-							<label class="col-md-7 col-md-offset-1">Fire Risk Assessment / Certificate:</label>
-								<div class="col-md-3">
+							<label class="col-md-5 col-md-offset-1">Fire Risk Assessment / Certificate:</label>
+								<div class="col-md-2">
 				
 									<div class="chargechild">
 									<input type="radio" name="fireRisk" data-ng-model="HealthSafety.fireRisk" value="true">
@@ -107,11 +114,18 @@
 									&nbsp; No
 									</div> 
 								</div>
+								<div ng-if="HealthSafety.fireRisk == 'true'">
+								<label class="col-md-2 control-label"> Expiry Date:</label>
+								<div class="col-md-2">
+                   					<input id = "date" name="expiryDate" data-ng-model="HealthSafety.fireRiskexpiryDate" class="input-filter form-control" data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" style="height: 25px;font-size: 11px;" required>
+					
+								</div>
+								</div>
 			             </div>	
-			             
+			           			             
 			              <div class="form-group">
-							<label class="col-md-7 col-md-offset-1">Local Tourist authority license:</label>
-								<div class="col-md-3">
+							<label class="col-md-5 col-md-offset-1">Local Tourist authority license:</label>
+								<div class="col-md-2">
 				
 									<div class="chargechild">
 									<input type="radio" name="localTourist" data-ng-model="HealthSafety.localTourist" value="true">
@@ -122,11 +136,18 @@
 									&nbsp; No
 									</div> 
 								</div>
+								<div ng-if="HealthSafety.localTourist == 'true'">
+								<label class="col-md-2 control-label"> Expiry Date:</label>
+								<div class="col-md-2">
+                   					<input id = "date" name="expiryDate" data-ng-model="HealthSafety.localTouristexpiryDate" class="input-filter form-control" data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" style="height: 25px;font-size: 11px;" required>
+					
+								</div>
+								</div>
 			             </div>	
-			             
+			            			             
 			              <div class="form-group">
-							<label class="col-md-7 col-md-offset-1">Internal fire alarm testing logs:</label>
-								<div class="col-md-3">
+							<label class="col-md-5 col-md-offset-1">Internal fire alarm testing logs:</label>
+								<div class="col-md-2">
 				
 									<div class="chargechild">
 									<input type="radio" name="internalFire" data-ng-model="HealthSafety.internalFire" value="true">
@@ -137,11 +158,18 @@
 									&nbsp; No
 									</div> 
 								</div>
+								<div ng-if="HealthSafety.internalFire == 'true'">
+								<label class="col-md-2 control-label"> Expiry Date:</label>
+								<div class="col-md-2">
+                   					<input id = "date" name="expiryDate" data-ng-model="HealthSafety.internalFireexpiryDate" class="input-filter form-control" data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" style="height: 25px;font-size: 11px;" required>
+					
+								</div>
+								</div>
 			             </div>	
 			             
 			              <div class="form-group">
-							<label class="col-md-7 col-md-offset-1">HACCP certificate:</label>
-								<div class="col-md-3">
+							<label class="col-md-5 col-md-offset-1">HACCP certificate:</label>
+								<div class="col-md-2">
 				
 									<div class="chargechild">
 									<input type="radio" name="haccpCertify" data-ng-model="HealthSafety.haccpCertify" value="true">
@@ -152,11 +180,19 @@
 									&nbsp; No
 									</div> 
 								</div>
+								<div ng-if="HealthSafety.haccpCertify == 'true'">
+								<label class="col-md-2 control-label"> Expiry Date:</label>
+								<div class="col-md-2">
+                   					<input id = "date" name="expiryDate" data-ng-model="HealthSafety.haccpCertifyexpiryDate" class="input-filter form-control" data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" style="height: 25px;font-size: 11px;" required>
+					
+								</div>
+								</div>
 			             </div>		
 			             
+			            		             
 			              <div class="form-group">
-							<label class="col-md-7 col-md-offset-1">Staff training records for fire evacuation procedures:</label>
-								<div class="col-md-3">
+							<label class="col-md-5 col-md-offset-1">Staff training records for fire evacuation procedures:</label>
+								<div class="col-md-2">
 				
 									<div class="chargechild">
 									<input type="radio" name="recordsForFire" data-ng-model="HealthSafety.recordsForFire" value="true">
@@ -167,11 +203,18 @@
 									&nbsp; No
 									</div> 
 								</div>
-			             </div>		
-			             
+								<div ng-if="HealthSafety.recordsForFire == 'true'">
+								<label class="col-md-2 control-label"> Expiry Date:</label>
+								<div class="col-md-2">
+                   					<input id = "date" name="expiryDate" data-ng-model="HealthSafety.recordsForFireexpiryDate" class="input-filter form-control" data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" style="height: 25px;font-size: 11px;" required>
+					
+								</div>
+								</div>
+			             </div>	
+			            			             
 			              <div class="form-group">
-							<label class="col-md-7 col-md-offset-1">Staff training records for health & hygiene:</label>
-								<div class="col-md-3">
+							<label class="col-md-5 col-md-offset-1">Staff training records for health & hygiene:</label>
+								<div class="col-md-2">
 				
 									<div class="chargechild">
 									<input type="radio" name="recordsForHealth" data-ng-model="HealthSafety.recordsForHealth" value="true">
@@ -182,11 +225,18 @@
 									&nbsp; No
 									</div> 
 								</div>
+								<div ng-if="HealthSafety.recordsForHealth == 'true'">
+								<label class="col-md-2 control-label"> Expiry Date:</label>
+								<div class="col-md-2">
+                   					<input id = "date" name="expiryDate" data-ng-model="HealthSafety.recordsForHealthexpiryDate" class="input-filter form-control" data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" style="height: 25px;font-size: 11px;" required>
+					
+							 	</div>
+								</div>
 			             </div>		
+			            			             
+			            <!--  <hr class="mtxxl mbxxl" style="border-color: black;"> -->
 			             
-			             <hr class="mtxxl mbxxl" style="border-color: black;">
-			             
-			             <div class="form-group">
+			           <!--   <div class="form-group">
 							<label class="col-md-3 control-label"> Expiry Date:</label>
 								<div class="col-md-4">
                    					<input id = "date" name="expiryDate" data-ng-model="HealthSafety.expiryDate" class="input-filter form-control" data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" style="height: 25px;font-size: 11px;" required>
@@ -200,7 +250,7 @@
                    					<input id = "date" name="expiryDate1" data-ng-model="HealthSafety.expiryDate1" class="input-filter form-control" data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" style="height: 25px;font-size: 11px;" required>
 					
 								</div>
-						 </div> 
+						 </div>  -->
 						 
 						 <hr class="mtxxl mbxxl" style="border-color: black;">
 		

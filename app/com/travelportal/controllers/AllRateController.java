@@ -29,6 +29,7 @@ import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
+import com.travelportal.domain.rooms.RateSpecialDays;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.Specials;
@@ -66,7 +67,7 @@ public class AllRateController extends Controller {
 		Set<String> mapDate = new HashSet<String>();
 		String[] fromDate ={"10-04-2015"};
 		String[] toDate = {"14-04-2015"};
-		String[] cId = {"2"};
+		String[] cId = {"5"};
 		//String[] sId =  {"1"};
 		String[] cityId = {"1"};
 
@@ -133,19 +134,16 @@ public class AllRateController extends Controller {
     				hProfileVM.setCheckOut(toDate[0]);
     				List<ServicesVM> sList = new ArrayList<>();
     				
-    				for (HotelServices hoServices : hAmenities.getServices()){
+    				/*for (HotelServices hoServices : hAmenities.getServices()){
     					ServicesVM sVm=new ServicesVM();
     					sVm.setServiceId(hoServices.getServiceId());
     					sVm.setServiceName(hoServices.getServiceName());
     					sList.add(sVm);
-    				}
+    				}*/
     				hProfileVM.setServices(sList);
     				hProfileVM.setNationality(Integer.parseInt(cId[0]));
     				InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
     				hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
-    				
-    				//hProfileVM.setFlag("0");
-    				
     				
     				for (int i = 0; i < dayDiff; i++) {
     					
@@ -158,6 +156,7 @@ public class AllRateController extends Controller {
     					Map<Long, Long> mapRate = new HashMap<Long, Long>();
     					List<SerachedRoomType> roomlist = new ArrayList<>();
     					for (HotelRoomTypes room : roomType) {
+    						
     						int count=0;
     						Long objectRm = (Long) mapRm.get(room.getRoomId());
     						//
@@ -211,7 +210,7 @@ public class AllRateController extends Controller {
     								roomtyp.setRoomId(room.getRoomId());
     								roomtyp.setRoomName(room.getRoomType());
     								
-    								List<RoomAmenitiesVm> rList = new ArrayList<>();
+    								/*List<RoomAmenitiesVm> rList = new ArrayList<>();
     								
     								for (RoomAmenities roomAmenitiesVm : room.getAmenities()){
     									RoomAmenitiesVm rooAmenitiesVm = new RoomAmenitiesVm();
@@ -220,17 +219,18 @@ public class AllRateController extends Controller {
     									rList.add(rooAmenitiesVm);
     								}
     								
-    									roomtyp.setAmenities(rList);
+    									roomtyp.setAmenities(rList);*/
     	
     									
     								RateDetails rateDetails = RateDetails
     										.findByRateMetaId(rate.getId());
+    								
+    								List<RateSpecialDays> reDays = RateSpecialDays.findByRateMetaId(rate.getId());
 
     								List<PersonRate> personRate = PersonRate
     										.findByRateMetaId(rate.getId());
 
-    								AllotmentMarket alloMarket = AllotmentMarket
-    										.getOneMarket(rate.getId());
+    								AllotmentMarket alloMarket = AllotmentMarket.getOneMarket(rate.getId());
     								int flag1=0;
     								int aRoom = 0;
     								SearchAllotmentMarketVM Allvm = new SearchAllotmentMarketVM();
@@ -272,13 +272,13 @@ public class AllRateController extends Controller {
     										
     										}
     									}
-    									/*AllotmentMarket allotflag = AllotmentMarket
+    									AllotmentMarket allotflag = AllotmentMarket
         										.getnationalitywiseMark(alloMarket.getAllotmentMarketId(),Integer.parseInt(cId[0]));
     									
     									if(allotflag == null){
     										//Allvm.setFlag(1);
     										flag1 =1;
-    									}*/
+    									}
     								}
     								
     								SerachedRoomRateDetail rateVM = new SerachedRoomRateDetail();
@@ -331,12 +331,67 @@ public class AllRateController extends Controller {
     											specialRateVM.rateDay6 = true;
     										}
     									}
-    								}							
+    								}		
+    								int findrate = 0;
     								for (PersonRate person : personRate) {
     									
-    									if(rateDetails.isSpecialRate() == true){
+    									if (person.getIsNormal() > 2) {
+    										
+    										for(RateSpecialDays rDays:reDays){
+    											
+    											if(rDays.getIsSpecialdaysRate() > 2){
+    												Date sformDate = null;
+        											Date stoDates = null;
+        											try {
+        												sformDate = format.parse(rDays.getFromspecialDate());
+        												stoDates = format.parse(rDays.getTospecialDate());
+        											} catch (ParseException e) { // TODO Auto-generated catch block
+        												e.printStackTrace();
+        											}
+        											
+        											long sdayDiff;
+        											if(stoDates.getTime() == sformDate.getTime()){
+        												sdayDiff = 1;
+        												//diffInpromo = sdayDiff;
+        											}else{
+        												long sdiff = stoDates.getTime() - sformDate.getTime();
+
+        												sdayDiff = sdiff / (1000 * 60 * 60 * 24);
+        												//diffInpromo = sdayDiff;
+        											}
+
+        									    	Calendar specialfromDate = Calendar.getInstance();
+        									    	specialfromDate.setTime(sformDate);
+        									    	specialfromDate.set(Calendar.MILLISECOND, 0);
+
+        											for (int j = 0; j < sdayDiff; j++) {
+        						    					
+        												if(c.getTime().equals(specialfromDate.getTime())){
+        													if (person.getIsNormal() == rDays.getIsSpecialdaysRate()) {
+        		    											SearchRateDetailsVM vm = new SearchRateDetailsVM(
+        		    													person);
+        		    											vm.rateAvg = person.getRateValue(); 
+        		    											if(person.getMealType() != null){
+        		    											vm.mealTypeName = person.getMealType().getMealTypeNm();
+        		    											}
+        		    											vm.adult = person.getNumberOfPersons();
+        		    											rateVM.rateDetails.add(vm);
+        		    											}
+        													findrate = 1;
+        												}
+        						    					specialfromDate.add(Calendar.DATE, 1);
+        											}
+    												
+    											}
+    											
+    										}
+    										
+    										
+    									}
+    									
+    									if(rateDetails.getIsSpecialRate() == 1.0 && findrate == 0){
     										if(days == 0 && specialRateVM.rateDay0) {
-    											if (person.isNormal() == false) {
+    											if (person.getIsNormal() == 1) {
     											SearchRateDetailsVM vm = new SearchRateDetailsVM(
     													person);										
     											vm.rateAvg = person.getRateValue();
@@ -347,7 +402,7 @@ public class AllRateController extends Controller {
     											rateVM.rateDetails.add(vm);
     											}
     										}else if(days == 1 && specialRateVM.rateDay1) {
-    											if (person.isNormal() == false) {
+    											if (person.getIsNormal() == 1) {
     											SearchRateDetailsVM vm = new SearchRateDetailsVM(
     													person);										
     											vm.rateAvg = person.getRateValue();
@@ -358,7 +413,7 @@ public class AllRateController extends Controller {
     											rateVM.rateDetails.add(vm);
     											}
     										}else if(days == 2 && specialRateVM.rateDay2) {
-    											if (person.isNormal() == false) {
+    											if (person.getIsNormal() == 1) {
     											SearchRateDetailsVM vm = new SearchRateDetailsVM(
     													person);										
     											vm.rateAvg = person.getRateValue();
@@ -369,7 +424,7 @@ public class AllRateController extends Controller {
     											rateVM.rateDetails.add(vm);
     											}
     										}else if(days == 3 && specialRateVM.rateDay3) {
-    											if (person.isNormal() == false) {
+    											if (person.getIsNormal() == 1) {
     											SearchRateDetailsVM vm = new SearchRateDetailsVM(
     													person);										
     											vm.rateAvg = person.getRateValue();
@@ -380,7 +435,7 @@ public class AllRateController extends Controller {
     											rateVM.rateDetails.add(vm);
     											}
     										}else if(days == 4 && specialRateVM.rateDay4) {
-    											if (person.isNormal() == false) {
+    											if (person.getIsNormal() == 1) {
     											SearchRateDetailsVM vm = new SearchRateDetailsVM(
     													person);										
     											vm.rateAvg = person.getRateValue();
@@ -391,7 +446,7 @@ public class AllRateController extends Controller {
     											rateVM.rateDetails.add(vm);
     											}
     										}else if(days == 5 && specialRateVM.rateDay5) {
-    											if (person.isNormal() == false) {
+    											if (person.getIsNormal() == 1) {
     											SearchRateDetailsVM vm = new SearchRateDetailsVM(
     													person);										
     											vm.rateAvg = person.getRateValue();
@@ -402,7 +457,7 @@ public class AllRateController extends Controller {
     											rateVM.rateDetails.add(vm);
     											}
     										}else if(days == 6 && specialRateVM.rateDay6) {
-    											if (person.isNormal() == false) {
+    											if (person.getIsNormal() == 1) {
     											SearchRateDetailsVM vm = new SearchRateDetailsVM(
     													person);										
     											vm.rateAvg = person.getRateValue();
@@ -413,7 +468,7 @@ public class AllRateController extends Controller {
     											rateVM.rateDetails.add(vm);
     											}
     										}else{
-    											if (person.isNormal() == true) {
+    											if (person.getIsNormal() == 0) {
     											SearchRateDetailsVM vm = new SearchRateDetailsVM(
     													person);
     											vm.rateAvg = person.getRateValue();
@@ -427,7 +482,7 @@ public class AllRateController extends Controller {
     										
     									}else{
     																				
-    										if (person.isNormal() == true) {
+    										if (person.getIsNormal() == 0 && findrate == 0) {
     											SearchRateDetailsVM vm = new SearchRateDetailsVM(
     													person);
     											vm.rateAvg = person.getRateValue(); 
@@ -440,7 +495,7 @@ public class AllRateController extends Controller {
     									}
     									
     									
-    									if (person.isNormal() == true) {
+    									/*if (person.getIsNormal() == 0) {
     										SearchRateDetailsVM vm = new SearchRateDetailsVM(
     												person);
     										vm.rateAvg = person.getRateValue(); 
@@ -451,16 +506,16 @@ public class AllRateController extends Controller {
     											
     										
     										}
-    									}
+    									}*/
 
-    									if (person.isNormal() == false) {
+    									/*if (person.getIsNormal() == 1) {
     										SearchRateDetailsVM vm = new SearchRateDetailsVM(
     												person);										
     										vm.rateAvg = person.getRateValue();
     										specialRateVM.rateDetails.add(vm);
     										
-    									}
-
+    									}*/
+    									
     								}
 
     								list.add(rateVM);
@@ -507,7 +562,6 @@ public class AllRateController extends Controller {
     			
     			hotelNo.add(hotel.supplierCode);
     			
-    			
     			//int newHotel=0; 
     			int dataVar = 0;
     			int countRoom = count;
@@ -541,7 +595,7 @@ public class AllRateController extends Controller {
     					
     						sHotelRoomType.setRoomId(roomTP.getRoomId());
     						sHotelRoomType.setRoomName(roomTP.getRoomName());
-    						sHotelRoomType.setAmenities(roomTP.getAmenities());
+    						//sHotelRoomType.setAmenities(roomTP.getAmenities());
     						sHotelRoomType.setSpecials(roomTP.getSpecials());
     					
     						arrayCount.add(aCount, roomTP.getPcount());
@@ -653,9 +707,7 @@ public class AllRateController extends Controller {
     				}
     			  }
     			}
-    		/*	for (Entry<Long, Integer> entry : promoMap.entrySet()) {
-    			    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-    			}*/
+    		
     			
     		}
     		

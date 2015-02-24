@@ -391,8 +391,36 @@ public class TravelPortalUtilsController extends Controller {
 		healthAndSafetyVM.setPublicLiability(hAndSafety.getPublicLiability());
 		healthAndSafetyVM.setRecordsForFire(hAndSafety.getRecordsForFire());
 		healthAndSafetyVM.setRecordsForHealth(hAndSafety.getRecordsForHealth());
-		healthAndSafetyVM.setExpiryDate(format.format(hAndSafety.getExpiryDate()));
-		healthAndSafetyVM.setExpiryDate1(format.format(hAndSafety.getExpiryDate1()));
+		
+		if(hAndSafety.getFireRiskexpiryDate() != null){
+		healthAndSafetyVM.fireRiskexpiryDate = format.format(hAndSafety.getFireRiskexpiryDate());
+		}
+		
+		if(hAndSafety.getHaccpCertifyexpiryDate() != null){
+		healthAndSafetyVM.haccpCertify=format.format(hAndSafety.getHaccpCertifyexpiryDate());
+		}
+		
+		if(hAndSafety.getInternalFireexpiryDate() != null){
+		healthAndSafetyVM.internalFireexpiryDate=format.format(hAndSafety.getInternalFireexpiryDate());
+		}
+		
+		if(hAndSafety.getLocalTouristexpiryDate() != null){
+		healthAndSafetyVM.localTouristexpiryDate=format.format(hAndSafety.getLocalTouristexpiryDate());
+		}
+		
+		if(hAndSafety.getPublicLiabilityexpiryDate() != null){
+		healthAndSafetyVM.publicLiabilityexpiryDate=format.format(hAndSafety.getPublicLiabilityexpiryDate());
+		}
+		
+		if(hAndSafety.getRecordsForFireexpiryDate() != null){
+		healthAndSafetyVM.recordsForFireexpiryDate = format.format(hAndSafety.getRecordsForFireexpiryDate());
+		}
+		
+		if(hAndSafety.getRecordsForHealthexpiryDate() != null){
+		healthAndSafetyVM.recordsForHealthexpiryDate = format.format(hAndSafety.getRecordsForHealthexpiryDate());
+		}
+		//healthAndSafetyVM.setExpiryDate(format.format(hAndSafety.getExpiryDate()));
+		//healthAndSafetyVM.setExpiryDate1(format.format(hAndSafety.getExpiryDate1()));
 		/*------------------1.FirePrecaution--------------------*/
 		healthAndSafetyVM.setWorkingFireAlarm(hAndSafety.getWorkingFireAlarm());
 		healthAndSafetyVM.setSmokeDetectorsInPublicArea(hAndSafety.getSmokeDetectorsInPublicArea());

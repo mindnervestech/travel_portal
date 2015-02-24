@@ -3,17 +3,26 @@ package com.travelportal.vm;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+
 public class HotelHealthAndSafetyVM {
 	
 	public String publicLiability;
+	public String publicLiabilityexpiryDate;
 	public String fireRisk;
+	public String fireRiskexpiryDate;
 	public String localTourist;
+	public String localTouristexpiryDate;
 	public String internalFire;
+	public String internalFireexpiryDate;
 	public String haccpCertify;
+	public String haccpCertifyexpiryDate;
 	public String recordsForFire;
+	public String recordsForFireexpiryDate;
 	public String recordsForHealth;
-	public String expiryDate;
-	public String expiryDate1;
+	public String recordsForHealthexpiryDate;
+	//public String expiryDate;
+	//public String expiryDate1;
 	public long supplierCode;
 	/*------------------1.FirePrecaution--------------------*/
 	public String workingFireAlarm;
@@ -138,18 +147,6 @@ public class HotelHealthAndSafetyVM {
 		this.recordsForHealth = recordsForHealth;
 	}
 	
-	public String getExpiryDate() {
-		return expiryDate;
-	}
-	public void setExpiryDate(String expiryDate) {
-		this.expiryDate = expiryDate;
-	}
-	public String getExpiryDate1() {
-		return expiryDate1;
-	}
-	public void setExpiryDate1(String expiryDate1) {
-		this.expiryDate1 = expiryDate1;
-	}
 	public long getSupplierCode() {
 		return supplierCode;
 	}

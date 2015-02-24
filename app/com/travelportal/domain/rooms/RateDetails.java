@@ -22,7 +22,7 @@ public class RateDetails {
 	@OneToOne
 	private RateMeta rate;
 	@Column(name="is_special_rate")
-	private boolean isSpecialRate;
+	private double isSpecialRate;
 	@Column(name="special_days")
 	private String specialDays;
 	private boolean applyToMarket;
@@ -45,10 +45,11 @@ public class RateDetails {
 	public void setRate(RateMeta rate) {
 		this.rate = rate;
 	}
-	public boolean isSpecialRate() {
+	
+	public double getIsSpecialRate() {
 		return isSpecialRate;
 	}
-	public void setSpecialRate(boolean isSpecialRate) {
+	public void setIsSpecialRate(double isSpecialRate) {
 		this.isSpecialRate = isSpecialRate;
 	}
 	public String getSpecialDays() {
@@ -59,6 +60,7 @@ public class RateDetails {
 	}
 	
 	public static RateDetails findByRateMetaId(Long id) {
+		
     	Query query = JPA.em().createQuery("Select a from RateDetails a where a.rate.id = ?1");
 		query.setParameter(1, id);
     	return (RateDetails) query.getSingleResult();

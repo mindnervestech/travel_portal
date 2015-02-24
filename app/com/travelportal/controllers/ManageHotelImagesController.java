@@ -79,7 +79,7 @@ public static void createRootDir() {
         	   
                   BufferedImage originalImage = ImageIO.read(src);
                         Thumbnails.of(originalImage)
-                            .size(220, 220)
+                           .size(680, 680)
                             .toFile(f);
                             File _f = new File(originalFileName);
                             Thumbnails.of(originalImage).scale(1.0).
@@ -104,13 +104,13 @@ public static void createRootDir() {
  		 {
  		infowiseimagesPath = new InfoWiseImagesPath();
  		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
- 		infowiseimagesPath.setGeneralPicture(originalFileName);
+ 		infowiseimagesPath.setGeneralPicture(ThumbnailImage);
  		infowiseimagesPath.setGeneralDescription(form.get("description"));
  		infowiseimagesPath.save();
  		 }
  		 else
  		 {
- 			infowiseimagesPath.setGeneralPicture(originalFileName);
+ 			infowiseimagesPath.setGeneralPicture(ThumbnailImage);
  			infowiseimagesPath.setGeneralDescription(form.get("description"));
  	 		infowiseimagesPath.merge();
  		 }
@@ -170,7 +170,7 @@ public static void createRootDir() {
         	   
                   BufferedImage originalImage = ImageIO.read(src);
                         Thumbnails.of(originalImage)
-                            .size(420, 420)
+                            .size(680, 680)
                             .toFile(f);
                             File _f = new File(originalFileName);
                             Thumbnails.of(originalImage).scale(1.0).
@@ -195,13 +195,13 @@ public static void createRootDir() {
  		 {
  		infowiseimagesPath = new InfoWiseImagesPath();
  		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
- 		infowiseimagesPath.setHotel_Lobby(originalFileName);
+ 		infowiseimagesPath.setHotel_Lobby(ThumbnailImage);
  		infowiseimagesPath.setLobbyDescription(form.get("description"));
  		infowiseimagesPath.save();
  		 }
  		 else
  		 {
- 			infowiseimagesPath.setHotel_Lobby(originalFileName);
+ 			infowiseimagesPath.setHotel_Lobby(ThumbnailImage);
  			infowiseimagesPath.setLobbyDescription(form.get("description"));
  	 		infowiseimagesPath.merge();
  		 }
@@ -251,7 +251,7 @@ public static void createRootDir() {
         	   
                   BufferedImage originalImage = ImageIO.read(src);
                         Thumbnails.of(originalImage)
-                            .size(220, 220)
+                           .size(680, 680)
                             .toFile(f);
                             File _f = new File(originalFileName);
                             Thumbnails.of(originalImage).scale(1.0).
@@ -276,13 +276,13 @@ public static void createRootDir() {
  		 {
  		infowiseimagesPath = new InfoWiseImagesPath();
  		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
- 		infowiseimagesPath.setHotelRoom(originalFileName);
+ 		infowiseimagesPath.setHotelRoom(ThumbnailImage);
  		infowiseimagesPath.setRoomDescription(form.get("description"));
  		infowiseimagesPath.save();
  		 }
  		 else
  		 {
- 			infowiseimagesPath.setHotelRoom(originalFileName);
+ 			infowiseimagesPath.setHotelRoom(ThumbnailImage);
  			infowiseimagesPath.setRoomDescription(form.get("description"));
  	 		infowiseimagesPath.merge();
  		 }
@@ -331,7 +331,7 @@ public static void createRootDir() {
         	   
                   BufferedImage originalImage = ImageIO.read(src);
                         Thumbnails.of(originalImage)
-                            .size(220, 220)
+                            .size(680, 680)
                             .toFile(f);
                             File _f = new File(originalFileName);
                             Thumbnails.of(originalImage).scale(1.0).
@@ -356,13 +356,13 @@ public static void createRootDir() {
  		 {
  		infowiseimagesPath = new InfoWiseImagesPath();
  		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
- 		infowiseimagesPath.setAmenitiesServices(originalFileName);
+ 		infowiseimagesPath.setAmenitiesServices(ThumbnailImage);
  		infowiseimagesPath.setAmenitiesDescription(form.get("description"));
  		infowiseimagesPath.save();
  		 }
  		 else
  		 {
- 			infowiseimagesPath.setAmenitiesServices(originalFileName);
+ 			infowiseimagesPath.setAmenitiesServices(ThumbnailImage);
  			infowiseimagesPath.setAmenitiesDescription(form.get("description"));
  	 		infowiseimagesPath.merge();
  		 }
@@ -414,7 +414,7 @@ public static void createRootDir() {
         	   
                   BufferedImage originalImage = ImageIO.read(src);
                         Thumbnails.of(originalImage)
-                            .size(220, 220)
+                           .size(680, 680)
                             .toFile(f);
                             File _f = new File(originalFileName);
                             Thumbnails.of(originalImage).scale(1.0).
@@ -439,13 +439,13 @@ public static void createRootDir() {
  		 {
  		infowiseimagesPath = new InfoWiseImagesPath();
  		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
- 		infowiseimagesPath.setLeisureSports(originalFileName);
+ 		infowiseimagesPath.setLeisureSports(ThumbnailImage);
  		infowiseimagesPath.setLeisureDescription(form.get("description"));
  		infowiseimagesPath.save();
  		 }
  		 else
  		 {
- 			infowiseimagesPath.setLeisureSports(originalFileName);
+ 			infowiseimagesPath.setLeisureSports(ThumbnailImage);
  			infowiseimagesPath.setLeisureDescription(form.get("description"));
  	 		infowiseimagesPath.merge();
  		 }
@@ -497,7 +497,7 @@ public static void createRootDir() {
         	   
                   BufferedImage originalImage = ImageIO.read(src);
                         Thumbnails.of(originalImage)
-                            .size(220, 220)
+                            .size(680, 680)
                             .toFile(f);
                             File _f = new File(originalFileName);
                             Thumbnails.of(originalImage).scale(1.0).
@@ -522,13 +522,13 @@ public static void createRootDir() {
  		 {
  		infowiseimagesPath = new InfoWiseImagesPath();
  		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
- 		infowiseimagesPath.setMap_image(originalFileName);
+ 		infowiseimagesPath.setMap_image(ThumbnailImage);
  		infowiseimagesPath.setMapDescription(form.get("description"));
  		infowiseimagesPath.save();
  		 }
  		 else
  		 {
- 			infowiseimagesPath.setMap_image(originalFileName);
+ 			infowiseimagesPath.setMap_image(ThumbnailImage);
  			infowiseimagesPath.setMapDescription(form.get("description"));
  	 		infowiseimagesPath.merge();
  		 }

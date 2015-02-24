@@ -284,16 +284,16 @@
                                                 </div>
                                          </div>
                                          <div class="col-md-6" style="width:50% !important;border-bottom: none !important;">
-                                        <div class="col-md-4" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null">
-                                          <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup><small>1 PERSON</small></span>
-                                        
+                                       <div ng-repeat="rateShow in roominfo.hotelRoomRateDetail[0].rateDetailsNormal">
+                                        <div class="col-md-4" ng-if="rateShow.rateAvg != null && rateShow.adult == '1 Adult'">
+                                          <span class="price"><small>MIN/NIGHT</small>{{rateShow.rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup><small>1 PERSON</small></span>
                                          </div>
-                                                                                
-                                         <div class="col-md-4"  ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg != null">
-                                        <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[1].rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup><small>2 PERSONS</small></span>
+                                         <div class="col-md-4"  ng-if="rateShow.rateAvg != null && rateShow.adult == '2 Adults'">
+                                        <span class="price"><small>MIN/NIGHT</small>{{rateShow.rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup><small>2 PERSONS</small></span>
                                          </div>
-                                         <div class="col-md-4" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg != null">
-                                         <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup><small>3 PERSONS</small></span>
+                                         <div class="col-md-4" ng-if="rateShow.rateAvg != null && rateShow.adult == '3 Adults'">
+                                         <span class="price"><small>MIN/NIGHT</small>{{rateShow.rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup><small>3 PERSONS</small></span>
+                                         </div>
                                          </div>
                                          </div>
                                          </div>

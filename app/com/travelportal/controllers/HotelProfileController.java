@@ -181,13 +181,76 @@ public class HotelProfileController extends Controller {
 			hAndSafety.setPublicLiability(healthAndSafetyVM.getPublicLiability());
 			hAndSafety.setRecordsForFire(healthAndSafetyVM.getRecordsForFire());
 			hAndSafety.setRecordsForHealth(healthAndSafetyVM.getRecordsForHealth());
+		
+			if(healthAndSafetyVM.fireRiskexpiryDate != null){
+				try {
+					hAndSafety.setFireRiskexpiryDate(format.parse(healthAndSafetyVM.fireRiskexpiryDate));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(healthAndSafetyVM.haccpCertifyexpiryDate != null){
 			try {
+				hAndSafety.setHaccpCertifyexpiryDate(format.parse(healthAndSafetyVM.haccpCertifyexpiryDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
+			if(healthAndSafetyVM.internalFireexpiryDate != null){
+			try {
+				hAndSafety.setInternalFireexpiryDate(format.parse(healthAndSafetyVM.internalFireexpiryDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
+			if(healthAndSafetyVM.localTouristexpiryDate != null){
+			try {
+				hAndSafety.setLocalTouristexpiryDate(format.parse(healthAndSafetyVM.localTouristexpiryDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
+			if(healthAndSafetyVM.publicLiabilityexpiryDate != null){
+			try {
+				hAndSafety.setPublicLiabilityexpiryDate(format.parse(healthAndSafetyVM.publicLiabilityexpiryDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
+			if(healthAndSafetyVM.recordsForFireexpiryDate != null){
+			try {
+				hAndSafety.setRecordsForFireexpiryDate(format.parse(healthAndSafetyVM.recordsForFireexpiryDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
+			if(healthAndSafetyVM.recordsForHealthexpiryDate != null){
+			try {
+				hAndSafety.setRecordsForHealthexpiryDate(format.parse(healthAndSafetyVM.recordsForHealthexpiryDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			//hAndSafety.setf
+			/*try {
 				hAndSafety.setExpiryDate(format.parse(healthAndSafetyVM.getExpiryDate()));
 				hAndSafety.setExpiryDate1(format.parse(healthAndSafetyVM.getExpiryDate1()));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			
 			hAndSafety.setSupplierCode(healthAndSafetyVM.getSupplierCode());
 		
@@ -202,13 +265,76 @@ public class HotelProfileController extends Controller {
 			hAndSafety.setPublicLiability(healthAndSafetyVM.getPublicLiability());
 			hAndSafety.setRecordsForFire(healthAndSafetyVM.getRecordsForFire());
 			hAndSafety.setRecordsForHealth(healthAndSafetyVM.getRecordsForHealth());
+			
+			if(healthAndSafetyVM.fireRiskexpiryDate != null){
+				try {
+					hAndSafety.setFireRiskexpiryDate(format.parse(healthAndSafetyVM.fireRiskexpiryDate));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(healthAndSafetyVM.haccpCertifyexpiryDate != null){
 			try {
+				hAndSafety.setHaccpCertifyexpiryDate(format.parse(healthAndSafetyVM.haccpCertifyexpiryDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
+			if(healthAndSafetyVM.internalFireexpiryDate != null){
+			try {
+				hAndSafety.setInternalFireexpiryDate(format.parse(healthAndSafetyVM.internalFireexpiryDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
+			if(healthAndSafetyVM.localTouristexpiryDate != null){
+			try {
+				hAndSafety.setLocalTouristexpiryDate(format.parse(healthAndSafetyVM.localTouristexpiryDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
+			if(healthAndSafetyVM.publicLiabilityexpiryDate != null){
+			try {
+				hAndSafety.setPublicLiabilityexpiryDate(format.parse(healthAndSafetyVM.publicLiabilityexpiryDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
+			if(healthAndSafetyVM.recordsForFireexpiryDate != null){
+			try {
+				hAndSafety.setRecordsForFireexpiryDate(format.parse(healthAndSafetyVM.recordsForFireexpiryDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
+			if(healthAndSafetyVM.recordsForHealthexpiryDate != null){
+			try {
+				hAndSafety.setRecordsForHealthexpiryDate(format.parse(healthAndSafetyVM.recordsForHealthexpiryDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
+			/*try {
 				hAndSafety.setExpiryDate(format.parse(healthAndSafetyVM.getExpiryDate()));
 				hAndSafety.setExpiryDate1(format.parse(healthAndSafetyVM.getExpiryDate1()));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			
 			
 			hAndSafety.merge();

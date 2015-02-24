@@ -1,7 +1,6 @@
 <div class="panel panel-green">
 	<div class="panel-heading clearfix">
-		<span class="mts pull-left">On Request Details</span>
-	
+		<span class="mts pull-left">Rejected Booking</span>
 	</div>
 	<div class="panel-body">
 		<div class="col-lg-12">
@@ -29,7 +28,7 @@
 												data-toggle="tab" style="padding: 7px 5px;">Booking Info</a></li>
 											<li class="menu-li custom_menu"><a href="#Step2"
 												data-toggle="tab" style="padding: 7px 5px;"
-												ng-click="showdateWiseView(requestinfo.id)">Date Wise Booking Info</a></li>
+												ng-click="showdateWiseView(rejectedinfo.id)">Date Wise Booking Info</a></li>
 
 										</ul>
 										<div class="tab-content" id="myTabContent"
@@ -50,14 +49,14 @@
 				<label>Check In Date</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="checkIn" data-ng-model="requestinfo.checkIn"
+					<input type="text" name="checkIn" data-ng-model="rejectedinfo.checkIn"
 							class="form-control meal-font-text-size" disabled="disabled" required style="width: 179px;margin-left: 10px;">
 				</div>
 				<div class="col-md-2">
 				<label>Check In Date</label>
 				</div>
 				<div class="col-md-4">
-				<input type="text" name="checkOut" data-ng-model="requestinfo.checkOut"
+				<input type="text" name="checkOut" data-ng-model="rejectedinfo.checkOut"
 							class="form-control meal-font-text-size" disabled="disabled" required style="width: 175px;padding-left: 10px;">
 							</div>
 				</div>
@@ -72,14 +71,14 @@
 				<label>City</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="City" data-ng-model="requestinfo.cityNm"
+					<input type="text" name="City" data-ng-model="rejectedinfo.cityNm"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				<div class="col-md-2">
 				<label>Nationality</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="nationalityNm" data-ng-model="requestinfo.nationalityNm"
+					<input type="text" name="nationalityNm" data-ng-model="rejectedinfo.nationalityNm"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
@@ -93,14 +92,14 @@
 				<label>Traveller First Name</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="travellerfirstname" data-ng-model="requestinfo.travellerfirstname"
+					<input type="text" name="travellerfirstname" data-ng-model="rejectedinfo.travellerfirstname"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				<div class="col-md-2">
 				<label>Traveller Last Name</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="travellerlastname" data-ng-model="requestinfo.travellerlastname"
+					<input type="text" name="travellerlastname" data-ng-model="rejectedinfo.travellerlastname"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
@@ -114,14 +113,14 @@
 				<label>Traveller Address</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="travelleraddress" data-ng-model="requestinfo.travelleraddress"
+					<input type="text" name="travelleraddress" data-ng-model="rejectedinfo.travelleraddress"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				<div class="col-md-2">
 				<label>Traveller Ph Number</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="travellerphnaumber" data-ng-model="requestinfo.travellerphnaumber"
+					<input type="text" name="travellerphnaumber" data-ng-model="rejectedinfo.travellerphnaumber"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
@@ -135,40 +134,40 @@
 				<label>Traveller Email</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="travelleremail" data-ng-model="requestinfo.travelleremail"
+					<input type="text" name="travelleremail" data-ng-model="rejectedinfo.travelleremail"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
 				
 			</div>
-			<div class="form-group" ng-show="requestinfo.promotionname != null">
+			<div class="form-group" ng-show="rejectedinfo.promotionname != null">
 		
 				<div class="col-md-12">
 				<div class="col-md-2">
 				<label>Promotion Name</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="promotionname" data-ng-model="requestinfo.promotionname"
+					<input type="text" name="promotionname" data-ng-model="rejectedinfo.promotionname"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
 				
 			</div>
-			<div class="form-group" ng-show="requestinfo.promotionname != null">
+			<div class="form-group" ng-show="rejectedinfo.promotionname != null">
 		
 				<div class="col-md-12">
 				<div class="col-md-2">
 				<label>Stay Days In Promotion</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="stayDays_inpromotion" data-ng-model="requestinfo.stayDays_inpromotion"
+					<input type="text" name="stayDays_inpromotion" data-ng-model="rejectedinfo.stayDays_inpromotion"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				<div class="col-md-2">
 				<label>Pay Days In Promotion</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="payDays_inpromotion" data-ng-model="requestinfo.payDays_inpromotion"
+					<input type="text" name="payDays_inpromotion" data-ng-model="rejectedinfo.payDays_inpromotion"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
@@ -181,14 +180,14 @@
 				<label>Agent First Name</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="noOfroom" data-ng-model="requestinfo.agent[0].firstName"
+					<input type="text" name="noOfroom" data-ng-model="rejectedinfo.agent[0].firstName"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				<div class="col-md-2">
 				<label>Agent Last Name</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="total" data-ng-model="requestinfo.agent[0].lastName"
+					<input type="text" name="total" data-ng-model="rejectedinfo.agent[0].lastName"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
@@ -214,14 +213,14 @@
 				<label>Room Type : </label>
 				</div>
 				<div class="col-md-4">
-				<label>{{requestinfo.roomNm}}</label>
+				<label>{{rejectedinfo.roomNm}}</label>
 				
 				</div>
 				<div class="col-md-2">
 				<label>No of Person : </label>
 				</div>
 				<div class="col-md-4">
-				<label>{{requestinfo.adult}}</label>
+				<label>{{rejectedinfo.adult}}</label>
 					
 				</div>
 				</div>
@@ -235,14 +234,14 @@
 				<label>No Of Room : </label>
 				</div>
 				<div class="col-md-4">
-				<label>{{requestinfo.noOfroom}}</label>
+				<label>{{rejectedinfo.noOfroom}}</label>
 				
 				</div>
 				<div class="col-md-2">
 				<label>Total</label>
 				</div>
 				<div class="col-md-4">
-				<label>{{requestinfo.total}}</label>
+				<label>{{rejectedinfo.total}}</label>
 					
 				</div>
 				</div>
@@ -267,21 +266,13 @@
                                         </dl>
                                        <!--  <button class="btn-mini status">Book Now</button> -->
                                     </div>
-                                   
+                               
                                 </div>
 								</div>
 						</div>
 						<div class="form-group">
 		    	<div class="col-md-2">
 					 <button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
-				</div>
-				<div class="col-md-2">
-					 <button type="button" ng-click="rejectBooking(requestinfo.id)" class="btn btn-primary">Raject Booking</button>
-				</div>
-				<div class="col-md-2">
-				</div>
-				<div class="col-md-2">
-					 <button type="button" ng-click="confBooking(requestinfo.id)" class="btn btn-primary">Confirmed Booking</button>
 				</div>
 		    </div>
 										</div>

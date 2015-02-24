@@ -226,11 +226,11 @@ public class MarkUpController extends Controller {
 
 			RateVM rateVM = new RateVM();
 			rateVM.setCurrency(rate.getCurrency());
-			rateVM.setFromDate(format.format(rate.getFromDate()));
-			rateVM.setToDate(format.format(rate.getToDate()));
+			/*rateVM.setFromDate(format.format(rate.getFromDate()));
+			rateVM.setToDate(format.format(rate.getToDate()));*/
 			rateVM.setRoomId(rate.getRoomType().getRoomId());
 			rateVM.setRoomName(rate.getRoomType().getRoomType());
-			rateVM.setIsSpecialRate(rateDetails.isSpecialRate());
+			rateVM.setIsSpecialRate(rateDetails.getIsSpecialRate());
 			rateVM.setRateName(rate.getRateName());
 			rateVM.setId(rate.getId());
 			rateVM.applyToMarket = rateDetails.isApplyToMarket();
@@ -240,12 +240,12 @@ public class MarkUpController extends Controller {
 
 			for (PersonRate person : personRate) {
 
-				if (person.isNormal() == true) {
+				if (person.getIsNormal() == 0) {
 					RateDetailsVM vm = new RateDetailsVM(person);
 					normalRateVM.rateDetails.add(vm);
 				}
 
-				if (person.isNormal() == false) {
+				if (person.getIsNormal() == 1) {
 					RateDetailsVM vm = new RateDetailsVM(person);
 					specialRateVM.rateDetails.add(vm);
 				}
@@ -291,11 +291,11 @@ public class MarkUpController extends Controller {
 			}
 
 			for (CancellationPolicy cancel : cancellation) {
-				if (cancel.isNormal() == true) {
+				if (cancel.getIsNormal() == 0) {
 					CancellationPolicyVM vm = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm);
 				}
-				if (cancel.isNormal() == false) {
+				if (cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm = new CancellationPolicyVM(cancel);
 					specialRateVM.cancellation.add(vm);
 				}
