@@ -2670,10 +2670,25 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		
 		$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
 			
-			console.log(response.normalRate.rateDetails);
-/*angular.forEach(response, function(value, key){
-				
-			});*/
+			
+           angular.forEach(response.normalRate.rateDetails, function(value, key){
+				value.onlineRateValue = null;
+				value.rateValue = null;
+			});
+           
+           angular.forEach(response.special.rateDetails, function(value, key){
+				value.onlineRateValue = null;
+				value.rateValue = null;
+			});
+           
+           angular.forEach(response.specialDaysRate, function(value, key){
+        	   angular.forEach(value.rateDetails, function(value1, key1){
+				value1.onlineRateValue = null;
+				value1.rateValue = null;
+        	   });
+			});
+           
+         console.log(response);
 			$scope.rateObject.push(response);
 			console.log($scope.rateObject);
 			$scope.showMarketTable($scope.rateObject[0]);
@@ -2793,6 +2808,10 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	$scope.addNewSpecial = function(index) {
 		console.log(index);
 		$http.get('/getSpecialObject/'+$scope.formData.room).success(function(response){
+			 angular.forEach(response.rateDetails, function(value, key){
+				 value.rateDetails = null;
+				 value.rateValue = null;
+			 });
 			$scope.rateObject[index].specialDaysRate.push(response);
 
 			console.log($scope.rateObject[index].specialDaysRate);
@@ -2823,6 +2842,24 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	
 	$scope.addNewRate = function() {
 		$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
+			console.log(response);
+			
+			 angular.forEach(response.normalRate.rateDetails, function(value, key){
+				 value.onlineRateValue = null;
+				 value.rateValue = null;
+			 });
+			 angular.forEach(response.special.rateDetails, function(value, key){
+				 value.onlineRateValue = null;
+				 value.rateValue = null;
+			 });
+			 
+			 angular.forEach(response.specialDaysRate, function(value, key){
+			 angular.forEach(value.rateDetails, function(value1, key1){
+				 value1.onlineRateValue = null;
+				 value1.rateValue = null;
+			 });
+			 });
+			
 			$scope.rateObject.push(response);
 			for(i=0;i<$scope.rateObject.length;i++){
 				$scope.showMarketTable($scope.rateObject[i]);

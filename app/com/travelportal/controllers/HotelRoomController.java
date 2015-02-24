@@ -144,12 +144,10 @@ public static void createRootDir() {
 			specialDaysRateVM.rateDetails.add(rateDetail);
 		}
 		
-		
 		CancellationPolicyVM cancel = new CancellationPolicyVM();
 		
 		cancel.penaltyCharge = true;
 		specialDaysRateVM.cancellation.add(cancel);
-		
 		
 		return ok(Json.toJson(specialDaysRateVM));
 		
@@ -176,6 +174,7 @@ public static void createRootDir() {
 			rateDetail.onlineMeals = "Lunch";
 			normal.rateDetails.add(rateDetail);
 			special.rateDetails.add(rateDetail);
+			
 			specialDaysRateVM.rateDetails.add(rateDetail);
 		}
 		
@@ -184,6 +183,7 @@ public static void createRootDir() {
 		
 		cancel.penaltyCharge = true;
 		specialDaysRateVM.cancellation.add(cancel);
+		
 		special.cancellation.add(cancel);
 		
 		RateVM rateVM = new RateVM();
