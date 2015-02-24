@@ -83,6 +83,8 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 
 travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDialog) {
 	
+	$scope.sort = 1;
+	$scope.sortByStar = 1;
 		
 	$scope.init = function(hotelAllData){
 		
@@ -161,8 +163,7 @@ $http.get("/searchCountries").success(function(response) {
 			console.log('ERROR');
 		});
 	}
-	$scope.sort = 1;
-	$scope.sortByStar = 1;
+	
 	$scope.sortRating = function(){
 		console.log("HIiiii");
 		
@@ -171,8 +172,7 @@ $http.get("/searchCountries").success(function(response) {
 		   }else{
 			   $scope.sortByStar = 0;
 		   }
-		  
-		  		   
+				   
 		   console.log($scope.hotellistInfo);
 			$scope.findHotelData.checkIn = $scope.hotelAllData.hotellist[0].checkIn;
 			$scope.findHotelData.checkOut = $scope.hotelAllData.hotellist[0].checkOut;

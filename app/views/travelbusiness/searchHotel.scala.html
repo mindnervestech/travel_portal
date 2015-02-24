@@ -92,7 +92,7 @@
                                             <ul class="check-square filters-option" ng-repeat="hotelServices in hotelAllData.hotelServices">
                                                 <li><a id="services{{$index}}" ng-click="servicesWiseHotel($index,hotelServices.servicesid)">{{hotelServices.servicesNm}}<small>({{hotelServices.countHotelByService}})</small></a></li>
                                             </ul>
-                                            <a class="button btn-small" ng-click="findHotelByData()" style="background: #98ce44;">Find</a>
+                                            <a class="button btn-small" ng-click="sortRating()" style="background: #98ce44;">Find</a>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@
                                                 <li><a id="amenities{{$index}}" ng-click="amenitiesWiseHotel($index,hotelAmenities.amenitiesCode)">{{hotelAmenities.amenitiesNm}}<small>({{hotelAmenities.countHotelByamenities}})</small></a></li>
                                                  <!-- <li ng-repeat="hotelAmenities in hotelAllData.hotelAmenities" ng-class="hotelAllData.isSelected ?'active':''"><a id="amenities{{$index}}" ng-click="amenitiesWiseHotel($index,hotelAmenities.amenitiesCode);hotelAmenities.isSelected=!hotelAmenities.isSelected">{{hotelAmenities.amenitiesNm}}<small>({{hotelAmenities.countHotelByamenities}})</small></a></li> -->
                                             </ul>
-                                            <a class="button btn-small" ng-click="findHotelByData()" style="background: #98ce44;">Find</a>
+                                            <a class="button btn-small" ng-click="sortRating()" style="background: #98ce44;">Find</a>
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                                             <ul class="check-square filters-option" ng-repeat="hotelLocation in hotelAllData.hotellocation">
                                                <li><a id="location{{$index}}" ng-click="locationWiseHotel($index,hotelLocation.locationid)">{{hotelLocation.locationNm}}<small>({{hotelLocation.countHotelByLocation}})</small></a></li>
                                             </ul>
-                                            <a class="button btn-small" ng-click="findHotelByData()" style="background: #98ce44;">Find</a>
+                                            <a class="button btn-small" ng-click="sortRating()" style="background: #98ce44;">Find</a>
                                         </div>
                                     </div>
                                 </div>

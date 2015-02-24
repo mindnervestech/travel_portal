@@ -964,8 +964,8 @@
 							<td>{{rateData.name}}</td>
 							<td><input type="text" ng-model="rateData.rateValue" onkeypress="javascript:return isNumber (event)" value=""> </td>
 							<td>*Include Meals?
-								<input type="radio" name="{{rateData.name}}{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="rateData.includeMeals">Yes
-								<input type="radio" name="{{rateData.name}}{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="rateData.includeMeals">No
+								<input type="radio" name="{{rateData.name}}{{$parent.$index}}{{$index}}{{$index}}" data-ng-value="true" data-ng-model="rateData.includeMeals">Yes
+								<input type="radio" name="{{rateData.name}}{{$parent.$index}}{{$index}}{{$index}}" data-ng-value="false" data-ng-model="rateData.includeMeals">No
 								<div ng-show="rateData.includeMeals == true">
 									<div class="col-md-6">
 										<select class="form-control" data-ng-model="rateData.meals">
@@ -998,7 +998,7 @@
 									<Label>The penalty charges will be: </Label>
 								</td>
 								<td>
-									<input type="radio" name="policyNight{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="cancel.penaltyCharge" checked>
+									<input type="radio" name="policyNight{{$parent.$index}}{{$index}}{{$index}}" data-ng-value="true" data-ng-model="cancel.penaltyCharge" checked>
 								</td>
 								<td>
 									<div class="col-md-12">
@@ -1008,7 +1008,7 @@
 										</div>
 								</td>
 								<td>
-									<input type="radio" name="policyNight{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="cancel.penaltyCharge">
+									<input type="radio" name="policyNight{{$parent.$index}}{{$index}}{{$index}}" data-ng-value="false" data-ng-model="cancel.penaltyCharge">
 								</td>
 								<td>
 									<label>% of total stay</label>
