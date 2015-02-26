@@ -1195,7 +1195,7 @@ angular.module('travel_portal').
 		}
 		
 		
-		  $http.get('/findAllData/'+$rootScope.supplierCode).success(function(response) {
+		  $http.get('/findAllData/'+supplierCode).success(function(response) {
 				$scope.getallData=response;
 				console.log(response);
 				$rootScope.hotelName = response.hotelgeneralinfo.hotelNm;

@@ -80,11 +80,9 @@ public class AdminController extends Controller {
 		register.setStatus("APPROVED");
 		register.merge();
 		
-		
 		HotelProfile hotelp = HotelProfile.findById(supplierCode);
 		
 		if(hotelp == null){			
-		
 			
 		HotelProfile hotelProfile = new HotelProfile();
 		
@@ -115,6 +113,38 @@ public class AdminController extends Controller {
 		}
 		
 		
+		/*final String username=Play.application().configuration().getString("username");
+	        final String password=Play.application().configuration().getString("password");
+	        
+	 		Properties props = new Properties();
+	 		props.put("mail.smtp.auth", "true");
+	 		props.put("mail.smtp.starttls.enable", "true");
+	 		props.put("mail.smtp.host", "smtp.gmail.com");
+	 		props.put("mail.smtp.port", "587");
+	  
+	 		Session session = Session.getInstance(props,
+	 		  new javax.mail.Authenticator() {
+	 			protected PasswordAuthentication getPasswordAuthentication() {
+	 				return new PasswordAuthentication(username, password);
+	 			}
+	 		  });
+	  
+	 		try{
+	 		   
+	  			Message feedback = new MimeMessage(session);
+	  			feedback.setFrom(new InternetAddress(username));
+	  			feedback.setRecipients(Message.RecipientType.TO,
+	  			InternetAddress.parse(email));
+	  			feedback.setSubject("You Approved For travel_portal");	  			
+	  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
+	  	         messageBodyPart.setText("You Approved For travel_portal \n Your Supplier Code : "+supplierCode);	  	    
+	  	         Multipart multipart = new MimeMultipart();	  	    
+	  	         multipart.addBodyPart(messageBodyPart);	            
+	  	         feedback.setContent(multipart);
+	  		     Transport.send(feedback);
+	       		} catch (MessagingException e) {
+	  			  throw new RuntimeException(e);
+	  		}*/
 	 		
 	 			
 		return ok();
@@ -218,7 +248,39 @@ public class AdminController extends Controller {
 		}
 		*/
 		
-	
+		/*final String username=Play.application().configuration().getString("username");
+	        final String password=Play.application().configuration().getString("password");
+	        
+	 		Properties props = new Properties();
+	 		props.put("mail.smtp.auth", "true");
+	 		props.put("mail.smtp.starttls.enable", "true");
+	 		props.put("mail.smtp.host", "smtp.gmail.com");
+	 		props.put("mail.smtp.port", "587");
+	  
+	 		Session session = Session.getInstance(props,
+	 		  new javax.mail.Authenticator() {
+	 			protected PasswordAuthentication getPasswordAuthentication() {
+	 				return new PasswordAuthentication(username, password);
+	 			}
+	 		  });
+	  
+	 		try{
+	 		   
+	  			Message feedback = new MimeMessage(session);
+	  			feedback.setFrom(new InternetAddress(username));
+	  			feedback.setRecipients(Message.RecipientType.TO,
+	  			InternetAddress.parse(email));
+	  			feedback.setSubject("You Approved For travel_portal");	  			
+	  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
+	  	         messageBodyPart.setText("You Approved For travel_portal \n Your Agent code : "+agentCode);	  	    
+	  	         Multipart multipart = new MimeMultipart();	  	    
+	  	         multipart.addBodyPart(messageBodyPart);	            
+	  	         feedback.setContent(multipart);
+	  		     Transport.send(feedback);
+	       		} catch (MessagingException e) {
+	  			  throw new RuntimeException(e);
+	  		}*/
+	 		
 	 			
 		return ok();
 	}
