@@ -265,3 +265,4 @@ GET  /getbookDateWise/:id			com.travelportal.controllers.ConfirmBookingControlle
 GET  /getRejectBooking/:id       com.travelportal.controllers.ConfirmBookingController.getRejectBooking(id:Long)
 GET  /getconfBooking/:id       com.travelportal.controllers.ConfirmBookingController.getconfBooking(id:Long)
 GET  /getrejectInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	com.travelportal.controllers.ConfirmBookingController.getrejectInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)
+GET  /getcancelInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	com.travelportal.controllers.ConfirmBookingController.getcancelInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)

@@ -472,10 +472,11 @@ public class TravelPortalUtilsController extends Controller {
 		healthAndSafetyVM.setSuperviseTheKidClub(hAndSafety.getSuperviseTheKidClub());
 		healthAndSafetyVM.setQualityChecksOfEquipmentAndFurniture(hAndSafety.getQualityChecksOfEquipmentAndFurniture());
 		
+		if(hAndSafety.getMonthkid() != null){
 		String[] monthchild = hAndSafety.getMonthkid().split(",");
 		List lchild = Arrays.asList(monthchild);
 		healthAndSafetyVM.setMonthkid(lchild);
-		
+		}
 		/*----------------------------------8.Swimming Pool --------------------------------------------*/
 		
 		healthAndSafetyVM.setPoolRulesAndRegulation(hAndSafety.getPoolRulesAndRegulation());
@@ -493,10 +494,11 @@ public class TravelPortalUtilsController extends Controller {
 		healthAndSafetyVM.setRecordsKept(hAndSafety.getRecordsKept());
 		healthAndSafetyVM.setHeatedPoolInTheProperty(hAndSafety.getHeatedPoolInTheProperty());
 		
+		if(hAndSafety.getMonthOperational() != null){
 		String[] monthOperation = hAndSafety.getMonthOperational().split(",");
 		List loperation = Arrays.asList(monthOperation);
 		healthAndSafetyVM.setMonthOperational(loperation);
-		
+		}
 		
 		/*------------------------9.Gas Water Heaters--------------------------------------------*/
 		healthAndSafetyVM.setGasWaterHeaters(hAndSafety.getGasWaterHeaters());
@@ -505,10 +507,11 @@ public class TravelPortalUtilsController extends Controller {
 		healthAndSafetyVM.setServicing(hAndSafety.getServicing());
 		healthAndSafetyVM.setMaintenance(hAndSafety.getMaintenance());
 		/*-------------------------------------------------------------------*/
-		
+		if(hAndSafety.getCctvArea() != null){
 		String[] area = hAndSafety.getCctvArea().split(",");
 		List larea = Arrays.asList(area);
 		healthAndSafetyVM.setCctvArea(larea);
+		}
 		/*-------------------------11. Additional info---------------------------*/
 		healthAndSafetyVM.setAdditionalInformationOrComments(hAndSafety.getAdditionalInformationOrComments());
 		healthAndSafetyVM.setName(hAndSafety.getName());

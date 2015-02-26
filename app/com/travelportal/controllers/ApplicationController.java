@@ -320,7 +320,8 @@ public class ApplicationController extends Controller{
 				
 	
 		aRegistration.save();
-		return ok(views.html.agentLogin.render());
+		//return ok(views.html.agentLogin.render());
+		return ok(views.html.travelbusiness.home.render());
 		
 	}
 	
@@ -376,7 +377,7 @@ public class ApplicationController extends Controller{
 				
 		register.save();
 		
-		return ok(views.html.signupMessage.render());
+		return ok(views.html.login.render(" "));
 	}
 	
 }

@@ -754,6 +754,21 @@ angular.module('travel_portal').
 		 
 		 
 		 /*------------------------View Web Page------------------------------*/
+		 
+
+			$http.get("/amenities").success(function(response){
+				$scope.amenities=response;
+			});
+
+			$http.get("/business").success(function(response){
+				$scope.business=response;
+			});
+
+			$http.get("/leisureSport").success(function(response){
+				$scope.leisureSport=response;
+			});
+		 
+		 
 		 $scope.amenities_check = [];
 		 $scope.leisure_sport_check = [];
 		 $scope.business_check = [];
@@ -780,7 +795,8 @@ angular.module('travel_portal').
 					});
 				});
 			});
-			
+		 console.log($scope.amenities);
+			console.log($scope.amenities_check);
 		 
 				$http.get('/findAmenitiesData/'+supplierCode).success(function(response) {
 				angular.forEach($scope.leisureSport, function(obj, index){
@@ -791,7 +807,7 @@ angular.module('travel_portal').
 					});
 				});
 				});
-			
+			console.log($scope.leisure_sport_check);
 			
 				$http.get('/findAmenitiesData/'+supplierCode).success(function(response) {
 				angular.forEach($scope.business, function(obj, index){
@@ -805,18 +821,6 @@ angular.module('travel_portal').
 			});
 		
 		 			
-			
-			$http.get("/amenities").success(function(response){
-				$scope.amenities=response;
-			});
-
-			$http.get("/business").success(function(response){
-				$scope.business=response;
-			});
-
-			$http.get("/leisureSport").success(function(response){
-				$scope.leisureSport=response;
-			});
 			
 	     
 		}]
@@ -930,7 +934,14 @@ angular.module('travel_portal').
 			    		}
 			    	
 			    	console.log($scope.roomTypeIns);
-			    				    	
+			    	var flag = 0;
+			    	angular.forEach($scope.roomTypeIns.roomchildPolicies, function(obj, index){
+			    		if(obj.years == undefined && obj.years == null){
+			    			flag = 1;
+			    		}
+			    	});
+			    	
+			    	if(flag == 0){
 			    	$http.post('/hotel/saveUpdateRoomType',$scope.roomTypeIns).success(function(data){
 						console.log(data);
 					
@@ -983,7 +994,9 @@ angular.module('travel_portal').
 						console.log('ERROR');
 						notificationService.error("Please Enter Required Fields");
 					});
-			    	
+			    	}else{
+			    		notificationService.error("Please Enter Required Fields");
+			    	}
 			    	
 			    }
 			  
@@ -1227,6 +1240,11 @@ angular.module('travel_portal').
 	
 	$rootScope.hotelName= $cookieStore.get('hotelName');
 	$rootScope.hotelAddress= $cookieStore.get('hotelAddress');
+	$rootScope.currencyname = $cookieStore.get('currency');
+	var arr = $rootScope.currencyname.split("-");
+	$rootScope.currencyShotcut = arr[0];
+	 $cookieStore.put('currencyShotcut',$rootScope.currencyShotcut);
+	 $rootScope.currencyShotcut = $cookieStore.get('currencyShotcut');
 	
 	$scope.getgeneralinfo = function(){
 	
@@ -2076,6 +2094,12 @@ angular.module('travel_portal').
    }).progress(function(evt) {
            console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
    }).success(function(data, status, headers, config) {
+	   
+	   angular.forEach(data[0].imgpath, function(obj, index){
+		   obj.datetime = $filter('date')(obj.datetime, "dd-MM-yyyy");
+	   });
+	   
+	   //data[0].imgpath.datetime = $filter('date')($scope.MealType[index].fromPeriod, "dd-MM-yyyy");
           console.log(data[0].imgpath);
           /*$scope.HealthSafety.expiryDate = $filter('date')(response.healthAndSafetyVM.expiryDate, "dd-MM-yyyy");*/
           $scope.document = data[0].imgpath;
@@ -2185,6 +2209,18 @@ angular.module('travel_portal').
 		console.log("//////////");
 		$scope.area.areaInfo = $scope.formArr;
 		console.log($scope.area);
+		
+		/*angular.forEach(, function(obj, index){
+			
+		});	*/
+		var flag = 0;
+		console.log($scope.area.areaInfo[0]);
+		if($scope.area.areaInfo[0].name == "" || $scope.area.areaInfo[0].name == null){
+			flag = 1;
+		}
+		
+		
+		if(flag == 0){
 		$http.post('/saveattraction',$scope.area).success(function(data){
 			console.log('success');
 			if(data == "yes")
@@ -2202,6 +2238,9 @@ angular.module('travel_portal').
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
 		});
+	 }else{
+		 notificationService.error("Please Enter Required Fields");
+	 }
 	}
 
 

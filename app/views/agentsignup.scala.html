@@ -796,9 +796,10 @@ function getpaymentMode(){
 					$('#myCity').append(
 							'<option value="0">--Select city--</option>');
 					$.each(data, function(key, value) {
+						console.log(value);
 						$('#myCity').append(
 								'<option value="' + value + '">'
-										+ valueplay + '</option>');
+										+ value + '</option>');
 					});
 
 				}

@@ -62,16 +62,16 @@
 						<label class="col-md-2 control-label">* Adult Rate:</label>
 						<div class="col-md-2">
 							<input type="text" name="rate" data-ng-model="mealdata.rate"
-								class="form-control meal-font-text-size" required>
+								class="form-control meal-font-text-size" onkeypress="javascript:return isNumber (event)" required>
 						</div>
-						{{currencyname}} <br>
+						{{currencyShotcut}} <br>
 						<br>
 					</div>
 
 					<div class="form-group">
 						<div>
 							<label class="col-md-2 control-label">Include Tax? </label>
-							<div class="col-md-2">
+							<div class="col-md-3">
 
 								<div class="chargechild">
 									<input type="radio" name="val" ng-click="ShowTax(true)"
@@ -92,7 +92,7 @@
 							<label class="col-md-1 control-label">*Tax:</label>
 							<div class="col-md-2">
 								<input type="text" name="taxvalue"
-									data-ng-model="mealdata.taxvalue"
+									data-ng-model="mealdata.taxvalue" onkeypress="javascript:return isNumber (event)"
 									class="form-control meal-font-text-size">
 							</div>
 
@@ -100,7 +100,7 @@
 								<select class="form-control meal-font-text-size"
 									data-ng-model="mealdata.taxtype">
 									<option>%</option>
-									<option>{{currencyname}}</option>
+									<option>{{currencyShotcut}}</option>
 								</select>
 							</div>
 						</div>
@@ -184,10 +184,10 @@
 								<label class="col-md-3 control-label">*Rate:</label>
 								<div class="col-md-4">
 									<input type="text" name="charge" data-ng-model="cont.charge"
-										class="form-control meal-font-text-size" required>
+										class="form-control meal-font-text-size" onkeypress="javascript:return isNumber (event)" required>
 								</div>
 								<div  class="col-md-4">
-									<label>{{currencyname}}</label>
+									<label>{{currencyShotcut}}</label>
 								</div>
 							</div>
 						</div>
@@ -217,7 +217,7 @@
 									<label class="col-md-1 control-label">*Tax:</label>
 									<div class="col-md-2">
 										<input type="text" name="taxvalue"
-											data-ng-model="cont.childtaxvalue"
+											data-ng-model="cont.childtaxvalue" onkeypress="javascript:return isNumber (event)"
 											class="form-control meal-font-text-size">
 									</div>
 
@@ -225,7 +225,7 @@
 										<select class="form-control meal-font-text-size"
 											data-ng-model="cont.childtaxtype">
 											<option>%</option>
-											<option>{{currencyname}}</option>
+											<option>{{currencyShotcut}}</option>
 										</select>
 									</div>
 								</div>
@@ -270,3 +270,15 @@
 
 </form>
 
+<script type="text/javascript">
+    
+    function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    }    
+   
+    
+</script>
