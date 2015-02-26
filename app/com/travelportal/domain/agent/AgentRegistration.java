@@ -352,14 +352,13 @@ public static List<AgentRegistration> getAgentData(int code) {/*List<Integer> ra
 	}
 	
 	public static AgentRegistration findagentinfo(String loginID,String password,String agentId) {
-		try
-		{  
+		 
+		try{
 			Query query = JPA.em().createQuery("select a from AgentRegistration a where a.loginId = ?1 and a.password = ?2 and a.agentCode = ?3 and a.status = 'APPROVED'").setParameter(1, loginID).setParameter(2, password).setParameter(3, agentId);
-		return (AgentRegistration) query.getSingleResult();
-		}
-		catch(Exception ex){
+			return (AgentRegistration) query.getSingleResult();
+		}catch(Exception ex){
 				return null;
-		}
+			}
 	}
 	
 

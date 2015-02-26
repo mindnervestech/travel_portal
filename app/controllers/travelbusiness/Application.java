@@ -74,16 +74,20 @@ public class Application extends Controller {
     	return ok(home.render());
     }
     
-    @Transactional(readOnly=true)
+    @Transactional(readOnly=false)
     public static Result checkAgentinfo(String loginID,String password,String agentId){
     	
     	AgentRegistration agent = AgentRegistration.findagentinfo(loginID, password, agentId);
     	session().put("agent", agent.getAgentCode());
+    	System.out.println("--------8**************8------------");
+    	System.out.println(agent);
+    	System.out.println("--------8**************8------------");
 		if(agent != null) {
 			System.out.println("SESSION VALUE   "+session().get("agent"));
 			AgentRegistrationVM aVm=new AgentRegistrationVM(agent);
 			return ok(Json.toJson(aVm));
 		}
+		
 		return ok(Json.toJson("0"));
     	
     }

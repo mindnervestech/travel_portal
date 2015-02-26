@@ -211,6 +211,7 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 			if(response == 0){
 				$scope.loginSuccess = 0;
 				$scope.errorMsg = true;
+				console.log($scope.errorMsg);
 			}else{
 				$scope.Agentresponse = response;
 				$scope.AgentId = $scope.Agentresponse.agentCode;

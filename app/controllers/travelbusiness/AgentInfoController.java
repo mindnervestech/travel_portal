@@ -101,9 +101,6 @@ public class AgentInfoController extends Controller {
 			map.put("currentPage", currentPage);
 			map.put("results", aDetailsVMs);
 			
-			
-			
-			
 			JsonNode onehotelJson = Json.toJson(map);
 			return ok(agentBookingInfo.render(onehotelJson));
 			//return ok(agentBookingInfo.render());
