@@ -356,7 +356,7 @@ public class MarkUpController extends Controller {
 		
 for(long agentvm : specificMarkupVM.getAgentSpecific()){
 	
-	SpecificMarkup specificMarkup = SpecificMarkup.findRateSupplier(AgentRegistration.getallAgentCode(agentvm),specificMarkupVM.getCode());
+	SpecificMarkup specificMarkup = SpecificMarkup.findRateSupplier(AgentRegistration.getAgentCode(String.valueOf(agentvm)),specificMarkupVM.getCode());
 	
 		if(specificMarkupVM.getRateSelected().size() != 0){
 			
@@ -371,7 +371,7 @@ for(long agentvm : specificMarkupVM.getAgentSpecific()){
 	specificMarkup.setSpecificPercent(specificMarkupVM.getSpecificPercent());
 	specificMarkup.setSpecificSelected(specificMarkupVM.getSpecificSelected());
 	specificMarkup.setSupplierCode(specificMarkupVM.getCode());
-	specificMarkup.setAgentSpecific(AgentRegistration.getallAgentCode(agentvm));
+	specificMarkup.setAgentSpecific(AgentRegistration.getAgentCode(String.valueOf(agentvm)));
 	specificMarkup.setRateSelected(RateMeta.getallRateCode(vm));
 		
 	specificMarkup.save();
@@ -386,7 +386,7 @@ specificMarkup.setSpecificFlat(specificMarkupVM.getSpecificFlat());
 specificMarkup.setSpecificPercent(specificMarkupVM.getSpecificPercent());
 specificMarkup.setSpecificSelected(specificMarkupVM.getSpecificSelected());
 specificMarkup.setSupplierCode(specificMarkupVM.getCode());
-specificMarkup.setAgentSpecific(AgentRegistration.getallAgentCode(agentvm));
+specificMarkup.setAgentSpecific(AgentRegistration.getAgentCode(String.valueOf(agentvm)));
 //specificMarkup.setRateSelected(RateMeta.getallRateCode(null));
 	
 specificMarkup.save();
@@ -413,7 +413,7 @@ specificMarkup.save();
 			
 			for(long agentvm : batMarkupVM.getAgent()){
 				System.out.println(vm);
-				BatchMarkup batchmarkup = BatchMarkup.findAgentSupplier(AgentRegistration.getallAgentCode(agentvm), vm);
+				BatchMarkup batchmarkup = BatchMarkup.findAgentSupplier(AgentRegistration.getAgentCode(String.valueOf(agentvm)), vm);
 
 				if(batchmarkup == null)
 				{
@@ -423,7 +423,7 @@ specificMarkup.save();
 		batchmarkup.setSelected(batMarkupVM.getSelected());
 		//batchmarkup.setSupplier(HotelRegistration.getallSupplierCode(vm));
 		batchmarkup.setSupplier(vm);
-		batchmarkup.setAgent(AgentRegistration.getallAgentCode(agentvm));
+		batchmarkup.setAgent(AgentRegistration.getAgentCode(String.valueOf(agentvm)));
 		
 		batchmarkup.save();
 				}
