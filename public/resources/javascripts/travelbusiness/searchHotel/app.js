@@ -1,5 +1,5 @@
 'use strict';
-var travelBusiness = angular.module('travel-business', ['ngDialog']);
+var travelBusiness = angular.module('travel-business', ['ngDialog','ngCookies']);
 
 travelBusiness.factory('MyHttpInterceptor', function ($q) {
     return {

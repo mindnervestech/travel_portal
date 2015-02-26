@@ -1,8 +1,8 @@
 <div class="panel panel-green">
-	<div class="panel-heading clearfix">
-		<span class="mts pull-left">OnRequest Booking Details</span>
+	<!-- <div class="panel-heading clearfix">
+		<span class="mts pull-left">On Request Details</span>
 	
-	</div>
+	</div> -->
 	<div class="panel-body">
 		<div class="col-lg-12">
 			<div class="row">
@@ -29,7 +29,7 @@
 												data-toggle="tab" style="padding: 7px 5px;">Booking Info</a></li>
 											<li class="menu-li custom_menu"><a href="#Step2"
 												data-toggle="tab" style="padding: 7px 5px;"
-												ng-click="showdateWiseView(requestinfo.id)">Date Wise Booking Info</a></li>
+												ng-click="showdateWiseView(agentinfo.id)">Date Wise Booking Info</a></li>
 
 										</ul>
 										<div class="tab-content" id="myTabContent"
@@ -50,14 +50,14 @@
 				<label>Check In Date</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="checkIn" data-ng-model="requestinfo.checkIn"
+					<input type="text" name="checkIn" data-ng-model="agentinfo.checkIn"
 							class="form-control meal-font-text-size" disabled="disabled" required style="width: 179px;margin-left: 10px;">
 				</div>
 				<div class="col-md-2">
 				<label>Check In Date</label>
 				</div>
 				<div class="col-md-4">
-				<input type="text" name="checkOut" data-ng-model="requestinfo.checkOut"
+				<input type="text" name="checkOut" data-ng-model="agentinfo.checkOut"
 							class="form-control meal-font-text-size" disabled="disabled" required style="width: 175px;padding-left: 10px;">
 							</div>
 				</div>
@@ -72,14 +72,14 @@
 				<label>City</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="City" data-ng-model="requestinfo.cityNm"
+					<input type="text" name="City" data-ng-model="agentinfo.cityNm"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				<div class="col-md-2">
 				<label>Nationality</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="nationalityNm" data-ng-model="requestinfo.nationalityNm"
+					<input type="text" name="nationalityNm" data-ng-model="agentinfo.nationalityNm"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
@@ -93,14 +93,14 @@
 				<label>Traveller First Name</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="travellerfirstname" data-ng-model="requestinfo.travellerfirstname"
+					<input type="text" name="travellerfirstname" data-ng-model="agentinfo.travellerfirstname"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				<div class="col-md-2">
 				<label>Traveller Last Name</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="travellerlastname" data-ng-model="requestinfo.travellerlastname"
+					<input type="text" name="travellerlastname" data-ng-model="agentinfo.travellerlastname"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
@@ -114,14 +114,14 @@
 				<label>Traveller Address</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="travelleraddress" data-ng-model="requestinfo.travelleraddress"
+					<input type="text" name="travelleraddress" data-ng-model="agentinfo.travelleraddress"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				<div class="col-md-2">
 				<label>Traveller Ph Number</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="travellerphnaumber" data-ng-model="requestinfo.travellerphnaumber"
+					<input type="text" name="travellerphnaumber" data-ng-model="agentinfo.travellerphnaumber"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
@@ -135,40 +135,40 @@
 				<label>Traveller Email</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="travelleremail" data-ng-model="requestinfo.travelleremail"
+					<input type="text" name="travelleremail" data-ng-model="agentinfo.travelleremail"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
 				
 			</div>
-			<div class="form-group" ng-show="requestinfo.promotionname != null">
+			<div class="form-group" ng-show="agentinfo.promotionname != null">
 		
 				<div class="col-md-12">
 				<div class="col-md-2">
 				<label>Promotion Name</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="promotionname" data-ng-model="requestinfo.promotionname"
+					<input type="text" name="promotionname" data-ng-model="agentinfo.promotionname"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
 				
 			</div>
-			<div class="form-group" ng-show="requestinfo.promotionname != null">
+			<div class="form-group" ng-show="agentinfo.promotionname != null">
 		
 				<div class="col-md-12">
 				<div class="col-md-2">
 				<label>Stay Days In Promotion</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="stayDays_inpromotion" data-ng-model="requestinfo.stayDays_inpromotion"
+					<input type="text" name="stayDays_inpromotion" data-ng-model="agentinfo.stayDays_inpromotion"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				<div class="col-md-2">
 				<label>Pay Days In Promotion</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="payDays_inpromotion" data-ng-model="requestinfo.payDays_inpromotion"
+					<input type="text" name="payDays_inpromotion" data-ng-model="agentinfo.payDays_inpromotion"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
@@ -181,14 +181,14 @@
 				<label>Agent First Name</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="noOfroom" data-ng-model="requestinfo.agent[0].firstName"
+					<input type="text" name="noOfroom" data-ng-model="agentinfo.agent[0].firstName"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				<div class="col-md-2">
 				<label>Agent Last Name</label>
 				</div>
 				<div class="col-md-4">
-					<input type="text" name="total" data-ng-model="requestinfo.agent[0].lastName"
+					<input type="text" name="total" data-ng-model="agentinfo.agent[0].lastName"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				</div>
@@ -206,7 +206,7 @@
 </form>
 											</div>
 											<div class="tab-pane" id="Step2">
-											
+												<div id="booking">
 											<div class="form-group">
 		
 				<div class="col-md-12">
@@ -214,14 +214,14 @@
 				<label>Room Type : </label>
 				</div>
 				<div class="col-md-4">
-				<label>{{requestinfo.roomNm}}</label>
+				<label>{{agentinfo.roomNm}}</label>
 				
 				</div>
 				<div class="col-md-2">
 				<label>No of Person : </label>
 				</div>
 				<div class="col-md-4">
-				<label>{{requestinfo.adult}}</label>
+				<label>{{agentinfo.adult}}</label>
 					
 				</div>
 				</div>
@@ -235,20 +235,20 @@
 				<label>No Of Room : </label>
 				</div>
 				<div class="col-md-4">
-				<label>{{requestinfo.noOfroom}}</label>
+				<label>{{agentinfo.noOfroom}}</label>
 				
 				</div>
 				<div class="col-md-2">
 				<label>Total</label>
 				</div>
 				<div class="col-md-4">
-				<label>{{requestinfo.total}}</label>
+				<label>{{agentinfo.total}}</label>
 					
 				</div>
 				</div>
 				
 			</div>
-		
+	
 											 <div class="col-md-12" style="background-color: white;height: 325px !important;overflow: auto;">
                                 <div class="booking-history col-md-4" ng-repeat="Dateinfo in rateDatewise">
                                 
@@ -270,19 +270,18 @@
                                    
                                 </div>
 								</div>
+								</div>
 						</div>
 						<div class="form-group">
 		    	<div class="col-md-2">
 					 <button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
 				</div>
 				<div class="col-md-2">
-					 <button type="button" ng-click="rejectBooking(requestinfo.id)" class="btn btn-primary">Raject Booking</button>
+					 <button type="button" ng-click="cancelbooking(agentinfo.id)" class="btn btn-primary">Cancel booking</button>
 				</div>
 				<div class="col-md-2">
 				</div>
-				<div class="col-md-2">
-					 <button type="button" ng-click="confBooking(requestinfo.id)" class="btn btn-primary">Confirmed Booking</button>
-				</div>
+				
 		    </div>
 										</div>
 										
@@ -300,7 +299,7 @@
 
 <style>
 .ngdialog-content {
-width: 809px !important;
+width: 959px !important;
 }
 
 .meal-font-text-size{

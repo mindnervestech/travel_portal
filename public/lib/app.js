@@ -128,6 +128,10 @@ var app = angular.module('travel_portal',['ngRoute','ngDialog','jlareau.pnotify'
 		controller: 'rejectController'
 	})
 	
+	.when('/cancel', {
+		templateUrl: '/assets/html/booking_process/cancel_booking.html',
+		controller: 'cancelController'
+	})
 	
 });
 

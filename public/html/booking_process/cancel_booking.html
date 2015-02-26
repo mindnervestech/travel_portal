@@ -1,6 +1,6 @@
 <div class="panel panel-green">
 	<div class="panel-heading clearfix">
-		<span class="mts pull-left">OnRequest Booking</span>
+		<span class="mts pull-left">Cancel Booking</span>
 		</div>
 	<div class="panel-body">
 		<div class="col-lg-12">
@@ -37,7 +37,7 @@
 				</div>
 				</div>
 				<div class="col-md-2">
-					 <button type="button" ng-click="showoOnRequestDataDateWise(selectData)" class="btn btn-primary">Show</button>
+					 <button type="button" ng-click="showCancelDataDateWise(selectData)" class="btn btn-primary">Show</button>
 				</div>
 				
 			</div> 
@@ -71,20 +71,20 @@
                     </thead>
                 	<tbody>
                 	
-                    	<tr ng-repeat="request in onrequestinfo">
+                    	<tr ng-repeat="cancel in cancelinfo">
           					<td>{{$index+1}}</td>
-          					 <td>{{request.checkIn}}</td>
-                           <td>{{request.checkOut}}</td>
-                            <td>{{request.nationalityNm}}</td>
-                           <td>{{request.totalNightStay}}</td>
-                             <td>{{request.roomNm}}</td>
-                              <td>{{request.noOfroom}}</td>
-                               <td>{{request.total}}</td>
-                           <td>{{request.adult}}</td>
-                            <td>{{request.agent[0].companyName}}</td>
-                            <td>{{request.agent[0].firstName}}</td>
+          					 <td>{{cancel.checkIn}}</td>
+                           <td>{{cancel.checkOut}}</td>
+                            <td>{{cancel.nationalityNm}}</td>
+                           <td>{{cancel.totalNightStay}}</td>
+                             <td>{{cancel.roomNm}}</td>
+                              <td>{{cancel.noOfroom}}</td>
+                               <td>{{cancel.total}}</td>
+                           <td>{{cancel.adult}}</td>
+                            <td>{{cancel.agent[0].companyName}}</td>
+                            <td>{{cancel.agent[0].firstName}}</td>
                             <!-- <td>{{request.supplierCode}}</td> -->
-                            <td><a ng-click="showDetails(request)" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 0px;"></span></a></td> 
+                            <td><a ng-click="showDetails(cancel)" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 0px;"></span></a></td> 
                            
                             </tr>
                            

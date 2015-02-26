@@ -11,26 +11,22 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.travelbusiness.home;
 import views.html.travelbusiness.hotelBookingInfo;
-import views.html.travelbusiness.hotelDetails;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.mnt.travelbusiness.helper.PageScope;
 import com.travelportal.domain.AmenitiesType;
 import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.InfoWiseImagesPath;
-import com.travelportal.domain.Salutation;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;

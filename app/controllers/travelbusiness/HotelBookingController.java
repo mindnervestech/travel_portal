@@ -4,7 +4,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import play.data.Form;
+import play.db.jpa.Transactional;
+import play.mvc.Controller;
+import play.mvc.Result;
+
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
@@ -14,9 +18,7 @@ import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
-import com.travelportal.vm.AgentRegistrationVM;
 import com.travelportal.vm.HotelSearch;
-import com.travelportal.vm.SearchHotelValueVM;
 import com.travelportal.vm.SearchRateDetailsVM;
 import com.travelportal.vm.SerachHotelRoomType;
 import com.travelportal.vm.SerachedHotelbyDate;
@@ -24,13 +26,6 @@ import com.travelportal.vm.SerachedRoomRateDetail;
 import com.travelportal.vm.SerachedRoomType;
 import com.travelportal.vm.SpecialsMarketVM;
 import com.travelportal.vm.SpecialsVM;
-
-import play.data.DynamicForm;
-import play.data.Form;
-import play.db.jpa.Transactional;
-import play.libs.Json;
-import play.mvc.Controller;
-import play.mvc.Result;
 
 public class HotelBookingController extends Controller {
 
@@ -45,9 +40,7 @@ public class HotelBookingController extends Controller {
 		
 		Form<HotelSearch> HotelForm = Form.form(HotelSearch.class).bindFromRequest();
 		HotelSearch searchVM = HotelForm.get();
-		System.out.println("_+_+_+_+_+_+_+_+_+_+_+_");
-		System.out.println("SESSION VALUE   "+session().get("agent"));
-		System.out.println("_+_+_+_+_+_+_+_+_+_+_+_");
+		
 		HotelBookingDetails hBookingDetails=new HotelBookingDetails();
 		hBookingDetails.setHotelNm(searchVM.getHotelNm());
 		hBookingDetails.setHotelAddr(searchVM.getHotelAddr());

@@ -1,4 +1,189 @@
-travelBusiness.controller('HomePageController', function ($scope,$http,$filter,ngDialog) {
+
+
+travelBusiness.controller('AgentBookingController', function ($scope,$http,$filter,ngDialog,$cookieStore) {
+	
+	
+	$scope.pageNumber;
+	$scope.pageSize;
+	$scope.fromData = "1";
+	$scope.toDate="1";
+	$scope.status = "1";
+	var currentPage = 1;
+	var totalPages;
+	$scope.flag = 0;
+	
+	$scope.init = function(hotelAllData){
+				
+		console.log(hotelAllData);
+		
+		totalPages = hotelAllData.totalPages;
+		currentPage = hotelAllData.currentPage;
+		$scope.pageNumber = hotelAllData.currentPage;
+		$scope.pageSize = hotelAllData.totalPages;
+		$scope.agentBook = hotelAllData.results;
+		if(totalPages == 0) {
+			$scope.pageNumber = 0;
+		}
+		
+	}
+	
+	$scope.onNext = function() {
+		if(currentPage < totalPages) {
+			currentPage++;
+			$scope.searchagent(currentPage);
+		}
+	};
+	$scope.onPrev = function() {
+		if(currentPage > 1) {
+			currentPage--;
+			$scope.searchagent(currentPage);
+		}
+	};
+	
+	$scope.searchagent = function(page) {
+		currentPage = page;
+		/*if(angular.isUndefined($scope.title) || $scope.title=="") {
+			console.log('inside function');
+			$scope.title = " ";
+		}*/
+		
+		currentPage = page;
+		console.log(currentPage);
+		$http.get("/getagentInfo/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.status).success(function(response){
+			
+			console.log(response);
+			totalPages = response.totalPages;
+			currentPage = response.currentPage;
+			$scope.pageNumber = response.currentPage;
+			$scope.pageSize = response.totalPages;
+			$scope.agentBook = response.results;
+			if(totalPages == 0) {
+				$scope.pageNumber = 0;
+			}
+			
+		});
+	};
+	
+	
+	
+	$scope.showoAgentDataDateWise = function(selectDate){
+		console.log(selectDate);
+		if(selectDate.status == undefined || selectDate.status == ""){
+			$scope.status = "1";
+		}else{
+			$scope.status = selectDate.status;
+		}
+		if(selectDate.fromDate == undefined || selectDate.fromDate == "" && selectDate.toDate == undefined || selectDate.toDate == ""){
+			$scope.fromData ="1";
+			$scope.toDate = "1";
+			$scope.flag  = 0;
+		}else{
+			$scope.fromData = selectDate.fromDate;
+			$scope.toDate = selectDate.toDate;
+			var arr = $scope.toDate.split("-");
+			var tDate = (arr[1]+"/"+arr[0]+"/"+arr[2])
+			var arr1 =$scope.fromData.split("-");
+			var fDate = (arr1[1]+"/"+arr1[0]+"/"+arr1[2])
+		
+			 var toDate = Date.parse(tDate);
+	         var fromDate = Date.parse(fDate);
+			
+			if(fromDate < toDate){
+				$scope.flag  = 0;
+			}else{
+				$scope.flag = 1;
+			}
+		}
+				
+		
+		$http.get("/getagentInfo/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.status).success(function(response){
+		
+			console.log(response);
+			totalPages = response.totalPages;
+			currentPage = response.currentPage;
+			$scope.pageNumber = response.currentPage;
+			$scope.pageSize = response.totalPages;
+			$scope.agentBook = response.results;
+			if(totalPages == 0) {
+				$scope.pageNumber = 0;
+			}
+		});
+	}
+	
+	
+	$scope.rateDatewise = [];
+	$scope.showdateWiseView = function(agent){
+		console.log(agent);
+		$scope.rateDatewise = [];
+		$http.get("/getbookDateWise/"+agent).success(function(response){
+			console.log(response);
+			//$scope.bookinginfo = response;
+			
+		
+			angular.forEach(response,function(value,key){
+			var arr = value.cdate.split("-");
+			var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+			$scope.datevalue1 = $filter('date')(new Date(datevalue), "EEE,MMM,dd,yyyy");
+			var arr = $scope.datevalue1.split(",");
+			$scope.day = arr[0];
+			$scope.month = arr[1];
+			$scope.date = arr[2];
+			
+			$scope.rateDatewise.push({
+				day:$scope.day,
+			    month:$scope.month,
+			    date:$scope.date,
+			    rate:value.rate,
+			    meal:value.mealtype
+				
+			});
+			
+			});
+						
+			console.log($scope.rateDatewise);
+		});
+	}
+	
+	
+	
+	$scope.showDetails = function(agentinfo){
+		//console.log(agent);
+		$scope.agentinfo = agentinfo;
+		ngDialog.open({
+			template: '/assets/resources/html/agent_booking_details.html',
+			scope : $scope,
+			//controller:'hoteProfileController',
+			className: 'ngdialog-theme-default'
+		});
+	}
+	
+	$scope.cancelbooking = function(agentId){
+		console.log(agentId);
+		$http.get("/getbookingcancel/"+agentId).success(function(response){
+			
+			//notificationService.success("Confirmed Booking");
+			ngDialog.close();
+			$http.get("/getagentInfo/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.status).success(function(response){
+				
+				console.log(response);
+				totalPages = response.totalPages;
+				currentPage = response.currentPage;
+				$scope.pageNumber = response.currentPage;
+				$scope.pageSize = response.totalPages;
+				$scope.agentBook = response.results;
+				if(totalPages == 0) {
+					$scope.pageNumber = 0;
+				}
+				
+			});
+		});
+		
+	}
+	
+	
+});
+
+travelBusiness.controller('HomePageController', function ($scope,$http,$filter,ngDialog,$cookieStore) {
 
 	$scope.loginSuccess = 0;
 	$scope.errorMsg = false;
@@ -12,6 +197,11 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 		});
 	}
 	
+	/*$scope.AgentBookingInfo = function(){
+		console.log("HIii");
+		window.location("AgentBookingInfo/");
+	}*/
+	
 	$scope.loginAgentcheck = function(loginAgentinfo){
 	
 		console.log(loginAgentinfo);  
@@ -23,6 +213,10 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 				$scope.errorMsg = true;
 			}else{
 				$scope.Agentresponse = response;
+				$scope.AgentId = $scope.Agentresponse.agentCode;
+				$scope.AgentCompany = $scope.Agentresponse.companyName;
+				$cookieStore.put('AgentId',$scope.AgentId);
+				$cookieStore.put('AgentCompany',$scope.AgentCompany);
 				$scope.loginSuccess = 1;
 				$scope.errorMsg = false;
 				ngDialog.close();
@@ -77,12 +271,18 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 		console.log(response);
 		$scope.searchNationality = response;
 	}); 
+
 	
 });
 
 
-travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDialog) {
+travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDialog,$cookieStore) {
 	
+		
+	$scope.AgentId = $cookieStore.get('AgentId');
+	$scope.AgentCompany = $cookieStore.get('AgentCompany');
+	
+	console.log($scope.AgentCompany);
 	$scope.sort = 1;
 	$scope.sortByStar = 1;
 		
