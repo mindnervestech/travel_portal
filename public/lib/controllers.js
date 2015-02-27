@@ -1257,10 +1257,6 @@ angular.module('travel_portal').
 	
 	$rootScope.currencyname = $cookieStore.get('currency');
 	
-	var arr = $rootScope.currencyname.split(" - ");
-	$rootScope.currencyShotcut = arr[0];
-	 $cookieStore.put('currencyShotcut',$rootScope.currencyShotcut);
-	 $rootScope.currencyShotcut = $cookieStore.get('currencyShotcut');
 	
 	$scope.getgeneralinfo = function(){
 	
