@@ -1,4 +1,18 @@
 
+
+angular.module('travel_portal').
+controller("LoginController",function($scope,$http) {
+	
+	
+	$scope.forgotpass = function() {
+		
+		console.log("HHHIIIIIIIIIIII");
+	};
+
+	
+}); 
+
+
 angular.module('travel_portal').
 controller("ApplicationController",function($scope,$http) {
 	
@@ -1240,7 +1254,13 @@ angular.module('travel_portal').
 	
 	$rootScope.hotelName= $cookieStore.get('hotelName');
 	$rootScope.hotelAddress= $cookieStore.get('hotelAddress');
+	
 	$rootScope.currencyname = $cookieStore.get('currency');
+	
+	var arr = $rootScope.currencyname.split(" - ");
+	$rootScope.currencyShotcut = arr[0];
+	 $cookieStore.put('currencyShotcut',$rootScope.currencyShotcut);
+	 $rootScope.currencyShotcut = $cookieStore.get('currencyShotcut');
 	
 	$scope.getgeneralinfo = function(){
 	

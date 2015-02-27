@@ -2,7 +2,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="travel_portal">
 <head><title>Sign In | Extras</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,7 +30,7 @@
     <link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/style-responsive.css")'>
     <link rel="shortcut icon" href="images/favicon.ico">
 </head>
-<body id="signin-page" style="height: 539px;">
+<body id="signin-page" style="height: 539px;" ng-controller="LoginController">
 <div class="page-form">
 	
     <form id="loginForm" action="/hotel_profile" method="post" class="form">
@@ -70,12 +70,15 @@
             <div class="clearfix"></div>
             <div class="forget-password"><h4>Forgotten your Password?</h4>
 
-                <p>no worries, click <a href='#' class='btn-forgot-pwd'>here</a> to reset your password.</p></div>
+                <p>no worries, click <a ng-click="forgotpass()" class='btn-forgot-pwd'>here</a> to reset your password.</p></div>
             <hr>
             <p>Don't have an account? <a id="btn-register" href="/signUp">Register Now</a></p></div>
              <p style="margin-left: 21px;">Admin Page <a id="btn-register" href="/adminsignUp" style="color: #dc6767;">Admin Page</a></p></div>
     </form>
 </div>
+<!-- <script
+	src='@routes.Assets.at("bower_components/angular/angular.min.js")'></script>
+ -->
 <script src='@routes.Assets.at("app/js/jquery-1.10.2.min.js")'></script>
 <script src='@routes.Assets.at("app/js/jquery-migrate-1.2.1.min.js")'></script>
 	<script src='@routes.Assets.at("app/js/jquery-ui.js")'></script>
@@ -91,59 +94,3 @@
 </html>
 
 
-<!-- 
-<!DOCTYPE html>
-
-	<html>
-    <head>
-        <title></title>
-        <link type="text/css" rel="stylesheet"
-	href='@routes.Assets.at("app/vendors/bootstrap/css/bootstrap.min.css")'>
-   
-    <script src='@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")'></script>
-    </head>
-    <body> 
-	
-				<div style="margin-left: 30%;margin-top: 16%;margin-right: 30%;">
-					<p style="color: red;margin-left: 44%;">@error</p>
-					 <form id="loginForm" action="/hotel_profile" method="post">
-						<table class="table">
-							<tr>
-								<th>Supplier Login</th>
-								<th></th>
-							</tr>
-							<tr>
-								<td><label>Email</label></td>
-								<td><input type="email" name="email" required></td>
-							</tr>
-							<tr>
-								<td><label>Password</label></td>
-								<td><input type="password" name="pass" required></td>
-							</tr>
-							<tr>
-								<td><label>Supplier Code</label></td>
-								<td><input type="text" name="code" required></td>
-							</tr>
-							<tr>
-								<td><label>Supplier Type</label></td>
-								<td>
-									<select name="type" required>
-										<option value="Accomodation">Accomodation</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td><input type="submit" value="Login" class="btn btn-primary"> </td>
-							</tr>
-							<tr>
-								<td>
-								</td>
-								<td><a href="/signUp">Supplier SignUp</a></td>
-								<td><a href="/adminsignUp">Admin Page</a></td>
-							</tr>
-						</table>
-						</form>
-					</div>	
-    </body>
-</html> -->
