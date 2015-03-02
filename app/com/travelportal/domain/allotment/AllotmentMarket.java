@@ -201,7 +201,7 @@ public class AllotmentMarket {
 	
 	public static AllotmentMarket getOneMarket(Long Code) {
 		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-				List<Object[]> list =JPA.em().createNativeQuery("select * from allotmentmarket am where am.rate_rate_id = '"+Code+"'").getResultList();
+				List<Object[]> list =JPA.em().createNativeQuery("select am.allotmentMarket_Id,am.allocation,am.choose,am.period,am.specifyAllot,am.applyMarket,am.stopAllocation,am.stopChoose,am.stopPeriod,am.fromDate,am.toDate from allotmentmarket am where am.rate_rate_id = '"+Code+"'").getResultList();
 				AllotmentMarket am = new AllotmentMarket();
 				for(Object[] o :list) {
 					am.setAllocation(Integer.parseInt(o[1].toString()));
@@ -257,7 +257,7 @@ public class AllotmentMarket {
 	public static AllotmentMarket getnationalitywiseMark(int allotId,int nationalityId) {
 		
 		
-				List<Object[]> list =JPA.em().createNativeQuery("select * from allotmentmarket am,allotmentmarket_country ac where am.allotmentMarket_Id = ac.AllotmentMarket_allotmentMarket_Id and am.allotmentMarket_Id = '"+allotId+"' and ac.country_country_code ='"+nationalityId+"'").getResultList();
+				List<Object[]> list =JPA.em().createNativeQuery("select am.allotmentMarket_Id,am.allocation,am.choose from allotmentmarket am,allotmentmarket_country ac where am.allotmentMarket_Id = ac.AllotmentMarket_allotmentMarket_Id and am.allotmentMarket_Id = '"+allotId+"' and ac.country_country_code ='"+nationalityId+"'").getResultList();
 				AllotmentMarket am = new AllotmentMarket();
 				System.out.println(list);
 				if(!list.isEmpty()){
@@ -302,22 +302,7 @@ public class AllotmentMarket {
 				if(o[5] != null){
 					am.setApplyMarket(o[5].toString());
 				}
-//				if(o[14] != null) {
-//					am.rate = new ArrayList<RateMeta>();
-//					RateMeta em  = new RateMeta();
-//					em.setId(Long.parseLong(o[14].toString()));
-//					em.setCurrency(o[16].toString());
-//					try {
-//						em.setFromDate(format.parse(o[17].toString()));
-//						em.setToDate(format.parse(o[19].toString()));
-//					} catch (ParseException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					em.setRateName(o[18].toString());
-//					em.setSupplierCode(Long.parseLong(o[21].toString()));
-//					am.rate.add(em);
-//				}
+
 				result.add(am);
 				map.put(Long.parseLong(o[0].toString()), result.size()-1);
 			} else {
