@@ -8,6 +8,7 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.travelbusiness.afterBookingpage;
 
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
@@ -129,6 +130,7 @@ public class HotelBookingController extends Controller {
 				for(SerachedRoomType roomTP:date.roomType){
 					for(SerachedRoomRateDetail rateObj:roomTP.hotelRoomRateDetail){
 						if(rateObj.allotmentmarket.allocation == 3){
+							hBookingDetails.setRate(RateMeta.findById(rateObj.id));
 						if(rateObj.availableRoom < Integer.parseInt(searchVM.hotelBookingDetails.getNoOfroom())){
 							hBookingDetails.setRoom_status("on request");
 						}else{
@@ -226,7 +228,7 @@ public class HotelBookingController extends Controller {
 			}
 		}
 		
-		return ok();
+		return ok(afterBookingpage.render());
 		
 	}
 	 

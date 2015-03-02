@@ -805,6 +805,19 @@ public class HotelProfile {
 		return (HotelProfile) JPA.em().createQuery("select c from HotelProfile c where c.supplier_code = ?1").setParameter(1,supplierCode).getSingleResult();
 	}
 	
+	public static HotelProfile findByEmail(String email) {
+		try
+		{
+    	Query query = JPA.em().createQuery("Select a from HotelProfile a where a.hotelEmailAddr = ?1");
+		query.setParameter(1, email);
+    	return (HotelProfile) query.getSingleResult();
+		}
+		catch(Exception ex){
+			return null;
+		}
+	}
+	
+	
 	/*public static List<HotelProfile> findAllData1(Long supplierCode,List<Integer> service) {
 				 
 		 List<Object[]> list;

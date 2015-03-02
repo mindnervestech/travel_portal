@@ -78,13 +78,11 @@ public class Application extends Controller {
     public static Result checkAgentinfo(String loginID,String password,String agentId){
     	
     	AgentRegistration agent = AgentRegistration.findagentinfo(loginID, password, agentId);
-    	session().put("agent", agent.getAgentCode());
-    	System.out.println("--------8**************8------------");
-    	System.out.println(agent);
-    	System.out.println("--------8**************8------------");
+   
 		if(agent != null) {
 			System.out.println("SESSION VALUE   "+session().get("agent"));
 			AgentRegistrationVM aVm=new AgentRegistrationVM(agent);
+			session().put("agent", agent.getAgentCode());
 			return ok(Json.toJson(aVm));
 		}
 		
@@ -396,7 +394,7 @@ public static void DateWiseSortFunction(List<HotelSearch> hotellist,String toDat
 									.getMaxAdultOccupancy());
 							rateVM.setId(rate.getId());
 							
-							allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
+							allotmentmarketInfo(alloMarket,rateVM,nationalityId,rate.getId(),checkInDate.getTime());
 							
 							
 							SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
@@ -634,8 +632,8 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 	
 }
 
-public static void allotmentmarketInfo(AllotmentMarket alloMarket,SerachedRoomRateDetail rateVM,DateFormat format,String nationalityId,Long rateid,Date CurrDate){
-	
+public static void allotmentmarketInfo(AllotmentMarket alloMarket,SerachedRoomRateDetail rateVM,String nationalityId,Long rateid,Date CurrDate){
+	DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	int flag=0;
 	int aRoom=0;
 	SearchAllotmentMarketVM Allvm = new SearchAllotmentMarketVM();
@@ -1083,7 +1081,7 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 								rateVM.setAdult_occupancy(room
 										.getMaxAdultOccupancy());
 								rateVM.setId(rate.getId());
-								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
+								allotmentmarketInfo(alloMarket,rateVM,nationalityId,rate.getId(),checkInDate.getTime());
 								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
 								
 								SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
@@ -1286,7 +1284,7 @@ public static Result hoteldetailpage() {
 							rateVM.setAdult_occupancy(room
 									.getMaxAdultOccupancy());
 							rateVM.setId(rate.getId());
-							allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
+							allotmentmarketInfo(alloMarket,rateVM,nationalityId,rate.getId(),checkInDate.getTime());
 							SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
 							
 							SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
@@ -1433,7 +1431,7 @@ public static Result hoteldetailpage() {
 								rateVM.setAdult_occupancy(room
 										.getMaxAdultOccupancy());
 								rateVM.setId(rate.getId());
-								allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
+								allotmentmarketInfo(alloMarket,rateVM,nationalityId,rate.getId(),checkInDate.getTime());
 								
 								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
 								

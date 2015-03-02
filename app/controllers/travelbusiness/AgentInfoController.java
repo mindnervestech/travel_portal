@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.agent.AgentRegistration;
+import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.vm.AgentRegisVM;
+import com.travelportal.vm.BookingDatesVM;
 import com.travelportal.vm.HotelBookDetailsVM;
 
 import play.db.jpa.Transactional;
@@ -213,9 +216,25 @@ public class AgentInfoController extends Controller {
 	  
 	  @Transactional
 		public static Result getbookingcancel(long id){
+		  int count= 0;
 			HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingById(id);
-			hBookingDetails.setRoom_status("cancel");
-			hBookingDetails.merge();
+			/*hBookingDetails.setRoom_status("cancel");
+			hBookingDetails.merge();*/
+			
+			List<HotelBookingDates> hotelBookingDates = HotelBookingDates.getDateBybookingId(id);
+			//RoomAllotedRateWise rateWise = RoomAllotedRateWise.findByRateId(hBookingDetails.getRate().getId());
+			for(HotelBookingDates hDates:hotelBookingDates){
+				RoomAllotedRateWise rateWise = RoomAllotedRateWise.findByRateIdandDate(hBookingDetails.getRate().getId(), hDates.getBookingDate());
+				if(rateWise != null){
+					count = rateWise.getRoomCount() - hBookingDetails.getNoOfroom();
+					rateWise.setRoomCount(count);
+					rateWise.merge();
+					
+				}
+				
+			}
+			
+			
 			return ok();
 			
 		}

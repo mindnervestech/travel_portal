@@ -1,16 +1,39 @@
 
-
 angular.module('travel_portal').
-controller("LoginController",function($scope,$http) {
-	
+controller("LoginController",['$scope', '$http','notificationService','$rootScope','$filter','$upload','ngDialog',
+	                                         function($scope, $http,notificationService, $rootScope,  $filter, $upload, ngDialog) {
 	
 	$scope.forgotpass = function() {
-		
-		console.log("HHHIIIIIIIIIIII");
-	};
-
+		console.log("HIII bye");
+		//$scope.loactionAddr = find.locationAddr;
+		ngDialog.open({
+			template: '/assets/html/hotel_profile/forgot_password.html',
+			scope : $scope,
+			className: 'ngdialog-theme-default'				
+		});
 	
-}); 
+	};
+	
+	
+	$scope.getpassword = function(email){
+		console.log(email);
+		
+		$http.get('/getpassword/'+email).success(function(response){
+			if(response == 0){
+				$scope.flag = 0;
+				ngDialog.close();
+			}else{
+				$scope.flag = 1;
+				
+			}
+			
+			console.log("ok");
+		});
+				
+	} 
+
+}]
+);
 
 
 angular.module('travel_portal').
@@ -102,382 +125,6 @@ controller("supplierAgreementController",['$scope','$rootScope','notificationSer
 }]
 );
 
-/*
-angular.module('travel_portal').
-	controller("allotmentController",['$scope', '$http','notificationService','$rootScope','$filter','$upload','$cookieStore','ngDialog',
-	                                         function($scope, $http,notificationService,$rootScope, $filter, $upload,$cookieStore, ngDialog) {
-		
-		
-		
-		 $scope.currencyname = $cookieStore.get('currency');		
-		
-		 
-		$http.get("/currency").success(function(response) {
-			$scope.currency = response;
-		});
-		console.log(supplierCode);
-		$http.get("/roomtypes/"+supplierCode).success(function(response){
-			console.log('success');
-			$scope.hotelRoomTypes = response;
-		});
-		
-		
-		$scope.showallotent =false;
-		
-		$scope.searchAllotment = function()
-		{
-		
-			var arr = $scope.allotmentMarket.datePeriodId.split("@");
-			$scope.allotmentMarket.formPeriod = $filter('date')(arr[0],"dd-MM-yyyy");
-			$scope.allotmentMarket.toPeriod = $filter('date')(arr[1],"dd-MM-yyyy");
-			$scope.allotmentMarket.supplierCode = supplierCode;
-			
-			console.log($scope.allotmentMarket.allotmentmarket);
-			console.log($scope.allotmentM);
-			$scope.allotmentM = [];
-			if($scope.allotmentMarket.allotmentmarket !=  undefined){
-				delete $scope.allotmentMarket.allotmentmarket;
-			}
-			console.log($scope.allotmentMarket);
-			$http.post('/getallmentMarket', $scope.allotmentMarket).success(function(response){
-				console.log('success');
-				console.log("**********");
-				console.log(response);
-				response.formPeriod =  $filter('date')(response.formPeriod,"dd-MM-yyyy");
-				response.toPeriod =  $filter('date')(response.toPeriod,"dd-MM-yyyy");
-				console.log(response.allotmentmarket);
-				$scope.showallotent = true;
-				if(response.allotmentmarket ==  undefined){
-					$scope.allotmentM.push({applyMarket:"true"});
-					$scope.showAllotmentMarketTable($scope.allotmentM);
-				}else{
-					for(var i=0;i<response.allotmentmarket.length;i++) {
-						//if(response.allotmentmarket[i].applyMarket == "false"){
-						$scope.showAllotmentMarketTable(response.allotmentmarket[i]);
-						//}
-					}
-				}
-							
-				
-				$http.post('/getRates', $scope.allotmentMarket).success(function(data){
-					console.log("-------");
-					console.log(data);
-					if(data.length>0) {
-					
-						$scope.rate = data;
-					
-						angular.forEach($scope.rate,function(value,key) { 
-							value.isSelected =0;
-						});
-						if(response!="") {
-							$scope.allotmentMarket = response;
-							console.log($scope.allotmentM);
-							$scope.allotmentM = response.allotmentmarket;
-							console.log($scope.allotmentM);
-							for(var i=0;i<$scope.allotmentM.length;i++) {
-								angular.forEach($scope.allotmentM[i].rate,function(value1,key1) {
-									angular.forEach($scope.rate,function(value,key) {
-										console.log("rate id :"+value.id);
-										console.log("allot id :"+value1.id);
-										if(value1==value.id) {
-											value.isSelected = i+1;
-										}
-									});
-								});
-							}
-							$scope.allotmentM.allotmentId = response.allotmentId;
-						    $scope.allotmentId = response.allotmentId;
-						}
-						
-					} else {
-						
-					}
-				});
-				
-			}).error(function(data, status, headers, config) {
-				console.log('ERROR');
-				notificationService.error("Please Enter Required Fields");
-			});
-		}
-		
-		
-		
-		$scope.selectType = function()
-		{
-			$scope.allotmentMarket.currencyName = $scope.currencyname;
-			console.log(supplierCode);
-			if($scope.allotmentMarket.roomId != null && $scope.allotmentMarket.currencyName != null)
-				{
-			$http.get('/getDates/'+$scope.allotmentMarket.roomId+"/"+$scope.allotmentMarket.currencyName+"/"+supplierCode)
-			.success(function(data){
-				if(data) {
-					console.log(data);
-					
-					$scope.allotmentMarket1 =data;
-					 angular.forEach($scope.allotmentMarket1, function(obj, index){
-						 var i=0;
-							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[index][i], "dd-MM-yyyy");
-							i++;
-							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[index][i], "dd-MM-yyyy");
-							return;
-						});
-							
-					console.log($scope.allotmentMarket1);
-				       
-				} 
-			});
-				}
-		}
-		
-		$scope.onCurrencyChange = function(){
-			
-		console.log($scope.allotmentMarket.roomId); 
-		console.log($scope.allotmentMarket.currencyName);
-		
-		if($scope.allotmentMarket.roomId != null && $scope.allotmentMarket.currencyName != null)
-			{
-			$http.get('/getDates/'+$scope.allotmentMarket.roomId+"/"+$scope.allotmentMarket.currencyName)
-			.success(function(data){
-				if(data) {
-					console.log(data);
-					$scope.allotmentMarket1 =data;
-					 angular.forEach($scope.allotmentMarket1, function(obj, index){
-						 var i=0;
-							$scope.allotmentMarket1[index].fromPeriod = $filter('date')(data[index][i], "dd-MM-yyyy");
-							i++;
-							$scope.allotmentMarket1[index].toPeriod = $filter('date')(data[index][i], "dd-MM-yyyy");
-							return;
-						});
-							
-					console.log($scope.allotmentMarket1);
-				       
-				} 
-			});
-			}
-				
-		
-		
-		}
-		
-		
-		
-		$scope.changeIsSelected = function(pIndex,index) {
-			if($scope.rate[index].isSelected == 0) {
-				$scope.rate[index].isSelected = pIndex+1;
-			} else {
-				$scope.rate[index].isSelected = 0;
-			}
-		};
-		
-		
-		
-	
-		$scope.selectstopsell = function(allot)
-		{
-			allot.period = null;
-			allot.choose = null;
-			
-		}
-		$scope.selectRoomAll = function(allot){
-			allot.fromDate = null;
-			allot.toDate = null;
-			allot.stopPeriod = null;
-			allot.stopChoose = null;
-		}
-		$scope.selectFreesell = function(allot)
-		{
-			allot.choose = null;
-			allot.fromDate = null;
-			allot.toDate = null;
-			allot.stopPeriod = null;
-			allot.stopChoose = null;
-			
-		}
-		$scope.selectstopfreeSale = function(allot){
-			allot.stopPeriod = null;
-			allot.stopChoose = null;
-		}
-		
-		$scope.allotmentMDeleteId = function(allot,index)
-		{
-			console.log(allot);
-			var r = confirm("Do You Want To Delete!");
-		    if (r == true) {
-			$http.get('/deleteAllotmentMarket/'+allot.allotmentMarketId+'/'+ $scope.allotmentId)
-			.success(function(){
-				angular.forEach($scope.allotmentM[index].rate,function(value1,key1) {
-					angular.forEach($scope.rate,function(value,key) {
-						console.log("rate id :"+value.id);
-						console.log("allot id :"+value1.id);
-						if(value1==value.id) {
-							value.isSelected = 0;
-						}
-					});
-				});
-				$scope.allotmentM.splice(index, 1);
-				console.log('success');
-			}).error(function(data, status, headers, config) {
-				console.log('ERROR');
-				$scope.allotmentM.splice(index, 1);
-			});
-		    }
-		}
-		
-		
-		$scope.saveallotment = function()
-		{
-			
-			$scope.allotmentMarket.allotmentmarket = $scope.allotmentM;
-			$scope.allotmentMarket.supplierCode = supplierCode; 
-			console.log($scope.allotmentMarket);
-			var flag=0;
-		
-			angular.forEach($scope.allotmentMarket.allotmentmarket,function(obj,index) {
-			   if($scope.allotmentMarket.allotmentmarket[index].fromDate > $scope.allotmentMarket.allotmentmarket[index].toDate){
-				   flag=1;
-				   $("#datediffShow"+index).show();
-			   }
-			   else
-				   {
-				   $("#datediffShow"+index).hide();
-				   }
-			});
-		
-			if($scope.allotmentMarket.allotmentmarket[0].applyMarket == 'true'){
-				angular.forEach($scope.allotmentMarket.allotmentmarket, function(obj1, index){
-				
-				if(obj1.allocatedCities == undefined){
-					obj1.allocatedCities = $scope.allotmentMarket.allotmentmarket.allocatedCities;
-				}
-				});	
-			}			
-			
-			if(flag == 0){
-				console.log($scope.allotmentMarket);
-			$http.post('/saveAllotment',$scope.allotmentMarket).success(function(data){
-				console.log('success');
-			 notificationService.success("Save Successfully");
-									
-			}).error(function(data, status, headers, config) {
-				console.log('ERROR');
-				notificationService.error("Please Enter Required Fields");
-			});
-			}
-		}
-	
-		
-		 $scope.allotmentM = [];
-		  $scope.allotmentM.push( {  } );
-		 
-		 $scope.newallotmentM = function($event){
-		        $scope.allotmentM.push( {applyMarket:"true"} );
-		        $scope.showAllotmentMarketTable($scope.allotmentM);
-		        $event.preventDefault();
-		     
-		       
-		    };
-		    
-		
-		    
-		    $scope.selectedRatesId;
-			console.log($scope.selectedRatesId);
-		
-			$scope.msClose;
-			$scope.getSelectedCity = [];
-			
-			$scope.showAllotmentMarketTable = function(allot) {
-					
-				console.log(allot);
-			
-				if(angular.isUndefined(allot.allotmentMarketId)) {
-					$scope.selectedRatesId = 0;
-				} else {
-					$scope.selectedRatesId = allot.allotmentMarketId;
-				}
-				
-				
-				
-				$scope.getSelectedCity.splice(0);
-				
-				console.log($scope.selectedRatesId);
-				
-				$http.get('/getAllotmentMarketGroup/'+$scope.selectedRatesId)
-				.success(function(data){
-					if(data) {
-						allot.allocatedCities = [];
-						
-							for(var i = 0; i<data.length;i++){
-								allot.allocatedCities.push({
-									name:'<strong>'+data[i].country.marketName+'</strong>',
-									multiSelectGroup:true
-								});
-								for(var j =0; j<data[i].country.conutryvm.length;j++){
-									if(allot.applyMarket == "false")
-										{
-									allot.allocatedCities.push({
-										name:data[i].country.conutryvm[j].countryName,
-										ticked:data[i].country.conutryvm[j].tick
-									});
-										}else{
-											console.log("True all tick");
-											allot.allocatedCities.push({
-											name:data[i].country.conutryvm[j].countryName,
-											ticked:true
-											});
-											
-											}
-								
-								}
-								allot.allocatedCities.push({
-									multiSelectGroup:false
-								});
-							}
-												
-							console.log(allot.allocatedCities);
-								
-					} 
-				});
-			}
-			
-			$scope.applyToAll = function(allot){
-				console.log(allot);
-				for(var i = 0; i<allot.allocatedCities.length;i++){
-					if(allot.allocatedCities[i].multiSelectGroup == undefined ){
-						allot.allocatedCities[i].ticked = true;
-					}
-				}
-				console.log($scope.selectedRatesId);
-				if($scope.selectedRatesId != 0) {
-					$scope.setSelection(allot);
-				}
-				
-			}
-			
-			
-			$scope.setSelection = function(allot) {
-				
-				$scope.getSelectedCity.splice(0);
-				console.log(allot)
-					for(var i = 0; i<allot.allocatedCities.length;i++){
-						if(allot.allocatedCities[i].multiSelectGroup == undefined ){
-							$scope.getSelectedCity.push({
-                                name:allot.allocatedCities[i].name,
-                                ticked:allot.allocatedCities[i].ticked,
-                                countryCode : allot.allocatedCities[i].marketCode
-							});
-						}
-					}
-					$http.post('/setAllotmentCitySelection',{city:$scope.getSelectedCity,id:$scope.selectedRatesId})
-					.success(function(data){
-						$scope.flag = false;
-						
-					});
-				
-			};
-	     
-		}]
-);
-*/
 
 angular.module('travel_portal').
 	controller("ManageHotelImageController",['$scope', '$http','notificationService','$rootScope','$filter','$upload','ngDialog',
@@ -1226,7 +873,10 @@ angular.module('travel_portal').
 					};
 				});
 				 $cookieStore.put('currency',$rootScope.currencyname);
-				
+					$rootScope.currencyname = $cookieStore.get('currency');
+					var arr = $rootScope.currencyname.split(" - ");
+					$rootScope.currencyShotcut = arr[0];
+					 $cookieStore.put('currencyShotcut',$rootScope.currencyShotcut);
 				
 				console.log(response.hotelgeneralinfo.isAdmin)
 				$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
@@ -1257,6 +907,8 @@ angular.module('travel_portal').
 	
 	$rootScope.currencyname = $cookieStore.get('currency');
 	
+	
+	 $rootScope.currencyShotcut = $cookieStore.get('currencyShotcut');
 	
 	$scope.getgeneralinfo = function(){
 	
@@ -1293,29 +945,9 @@ angular.module('travel_portal').
 	
 	$scope.getdescription = function()
 	{
-		console.log( $cookieStore.get('cityCode'));
-		$scope.location = [];
-		$http.get('/location/'+$cookieStore.get('cityCode')).success(function(response) {
-			for(var i =0 ; i<response.length; i++) {
-				$scope.location.push({
-					locationId:response[i].id,
-					locationNm:response[i].name
-				});
-			}
-			
-		}); 
-
-		$http.get("/shoppingfacility").success(function(response) {
-			$scope.shoppingfacility = response;
-		}); 
-
-		$http.get("/nightlife").success(function(response) {
-			$scope.nightlife = response;
-		}); 
-		
 		$http.get("/services").success(function(response) {
 			$scope.services = response;
-		}); 
+		});
 		
 		$http.get('/finddescripData/'+$rootScope.supplierCode).success(function(response) {
 			$scope.descrip = response;
@@ -1331,6 +963,29 @@ angular.module('travel_portal').
 				});
 			});
 		});
+		
+		console.log( $cookieStore.get('cityCode'));
+		$scope.location = [];
+		$http.get('/location/'+$cookieStore.get('cityCode')).success(function(response) {
+			for(var i =0 ; i<response.length; i++) {
+				$scope.location.push({
+					locationId:response[i].id,
+					locationNm:response[i].name
+				});
+			}
+			
+		}); 
+
+		
+		$http.get("/shoppingfacility").success(function(response) {
+			$scope.shoppingfacility = response;
+		}); 
+
+		$http.get("/nightlife").success(function(response) {
+			$scope.nightlife = response;
+		}); 
+		
+		
 	}
 	$scope.getInternalInfo = function()
 	{

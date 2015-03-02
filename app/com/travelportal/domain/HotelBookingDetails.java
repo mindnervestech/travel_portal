@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Query;
 import javax.persistence.Table;
 
@@ -68,6 +69,8 @@ public class HotelBookingDetails {
 	private String agentNm;
 	private String agentCompanyNm;
 	private long totalNightStay;
+	@OneToOne
+	private RateMeta rate;
 	
 	public Long getSupplierCode() {
 		return supplierCode;
@@ -263,6 +266,15 @@ public class HotelBookingDetails {
 	}
 	public void setAgentNm(String agentNm) {
 		this.agentNm = agentNm;
+	}
+	
+	
+	
+	public RateMeta getRate() {
+		return rate;
+	}
+	public void setRate(RateMeta rate) {
+		this.rate = rate;
 	}
 	public static HotelBookingDetails findBookingId() {
 	    	return (HotelBookingDetails) JPA.em().createQuery("select c from HotelBookingDetails c where c.id = (select max(a.id) from HotelBookingDetails a)").getSingleResult();

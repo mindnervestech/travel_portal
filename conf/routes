@@ -60,6 +60,7 @@ GET		/signUp						com.travelportal.controllers.ApplicationController.getSignUpFo
 GET		/adminsignUp						com.travelportal.controllers.ApplicationController.getAdminForm
 GET		/agentsignUp						com.travelportal.controllers.ApplicationController.getAgentSignUpForm
 GET		/login						com.travelportal.controllers.ApplicationController.login
+GET    /getpassword/:email					com.travelportal.controllers.ApplicationController.getpassword(email: String)
 GET		/agentlogin						com.travelportal.controllers.ApplicationController.agentlogin
 POST	/getCityOfCountry			com.travelportal.controllers.ApplicationController.getCityOfCountry
 POST	/register					com.travelportal.controllers.ApplicationController.doRegister

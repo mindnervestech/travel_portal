@@ -1,23 +1,40 @@
 package com.travelportal.controllers;
 
-import java.security.acl.Permission;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.persistence.NoResultException;
-import javax.persistence.OneToOne;
+
+import play.Play;
+import play.data.DynamicForm;
+import play.data.Form;
+import play.db.jpa.Transactional;
+import play.libs.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
+import views.html.home;
 
 import com.travelportal.domain.AdminUser;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
 import com.travelportal.domain.HearAboutUs;
-import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelBrands;
 import com.travelportal.domain.HotelChain;
 import com.travelportal.domain.HotelProfile;
@@ -27,20 +44,9 @@ import com.travelportal.domain.NatureOfBusiness;
 import com.travelportal.domain.Permissions;
 import com.travelportal.domain.Salutation;
 import com.travelportal.domain.agent.AgentRegistration;
-import com.travelportal.domain.rooms.RateWrapper;
 import com.travelportal.vm.AgentRegisVM;
 import com.travelportal.vm.HotelSignUpVM;
-import com.travelportal.vm.PermissionsVM;
-import com.travelportal.vm.RoomtypeVM;
 
-import play.data.DynamicForm;
-import play.data.Form;
-import play.db.jpa.Transactional;
-import play.libs.Json;
-import play.mvc.Controller;
-import play.mvc.Result;
-import scala.Array;
-import views.html.home;
 
 public class ApplicationController extends Controller{
 
@@ -378,6 +384,16 @@ public class ApplicationController extends Controller{
 		register.save();
 		
 		return ok(views.html.login.render(" "));
+	}
+	
+	
+	
+	@Transactional
+	public static Result getpassword(String email) {
+		System.out.println(email);
+		HotelProfile hProfile = HotelProfile.findByEmail(email);
+	
+		return ok(Json.toJson(flag));
 	}
 	
 }
