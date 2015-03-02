@@ -1211,7 +1211,7 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 });
 
 
-travelBusiness.controller('hotelBookingController', function ($scope,$http,$filter,ngDialog) {
+travelBusiness.controller('hotelBookingController', function ($scope,$http,$filter,ngDialog,notificationService,$window) {
 	
 	$scope.init = function(hotel){
 		$scope.hotel = hotel;
@@ -1249,12 +1249,18 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 		//$scope.hotel.hotelbyDate = null;
 		console.log($scope.hotel);
 		
+		
+		
+		
 		$http.post('/saveHotelBookingInfo',$scope.hotel).success(function(data){
-    		console.log("Success");
-    		// notificationService.success("BatchMarkup Save Successfully");
+			 notificationService.success("Room Book Successfully");
+			console.log("Success");
+    		
+    		 $window.location.replace("http://localhost:9000/");
+    		
     	}).error(function(data, status, headers, config) {
 			console.log('ERROR');
-			//notificationService.error("Please Enter Required Fields");
+			notificationService.error("Please Enter Required Fields");
 		});
 	}
 	
