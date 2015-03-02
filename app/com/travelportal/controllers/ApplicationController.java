@@ -392,7 +392,14 @@ public class ApplicationController extends Controller{
 	public static Result getpassword(String email) {
 		System.out.println(email);
 		HotelProfile hProfile = HotelProfile.findByEmail(email);
-	
+		int flag = 0;
+		if(hProfile != null){
+
+ 		flag= 0;
+ 		
+		}else{
+			flag=1;
+		}
 		return ok(Json.toJson(flag));
 	}
 	
