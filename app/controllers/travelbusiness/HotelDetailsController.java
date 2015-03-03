@@ -59,7 +59,17 @@ public class HotelDetailsController extends Controller {
 
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath
 				.findById(supplierCode);
-		File f = new File(infowiseimagesPath.getGeneralPicture());
+		File f = null;
+		if(infowiseimagesPath != null){
+			if(infowiseimagesPath.getGeneralPicture() != null){
+			
+		 f = new File(infowiseimagesPath.getGeneralPicture());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}else{
+			    f = new File("C:\\mypath\\default\\logo.jpg");
+		}
 		return ok(f);
 
 	}
@@ -69,7 +79,18 @@ public class HotelDetailsController extends Controller {
 
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath
 				.findById(supplierCode);
-		File f = new File(infowiseimagesPath.getAmenitiesServices());
+		
+		File f = null;
+		if(infowiseimagesPath != null){
+			if(infowiseimagesPath.getAmenitiesServices() != null){
+			
+		 f = new File(infowiseimagesPath.getAmenitiesServices());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}else{
+			    f = new File("C:\\mypath\\default\\logo.jpg");
+		}
 		return ok(f);
 
 	}
@@ -79,7 +100,18 @@ public class HotelDetailsController extends Controller {
 
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath
 				.findById(supplierCode);
-		File f = new File(infowiseimagesPath.getHotelRoom());
+		
+		File f = null;
+		if(infowiseimagesPath != null){
+			if(infowiseimagesPath.getHotelRoom() != null){
+			
+		 f = new File(infowiseimagesPath.getHotelRoom());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}else{
+			    f = new File("C:\\mypath\\default\\logo.jpg");
+		}
 		return ok(f);
 
 	}
@@ -89,7 +121,17 @@ public class HotelDetailsController extends Controller {
 
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath
 				.findById(supplierCode);
-		File f = new File(infowiseimagesPath.getHotel_Lobby());
+		File f = null;
+		if(infowiseimagesPath != null){
+			if(infowiseimagesPath.getHotel_Lobby() != null){
+			
+		 f = new File(infowiseimagesPath.getHotel_Lobby());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}else{
+			    f = new File("C:\\mypath\\default\\logo.jpg");
+		}
 		return ok(f);
 
 	}
@@ -99,7 +141,17 @@ public class HotelDetailsController extends Controller {
 
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath
 				.findById(supplierCode);
-		File f = new File(infowiseimagesPath.getLeisureSports());
+		File f = null;
+		if(infowiseimagesPath != null){
+			if(infowiseimagesPath.getLeisureSports() != null){
+			
+		 f = new File(infowiseimagesPath.getLeisureSports());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}else{
+			    f = new File("C:\\mypath\\default\\logo.jpg");
+		}
 		return ok(f);
 
 	}
@@ -109,7 +161,17 @@ public class HotelDetailsController extends Controller {
 
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath
 				.findById(supplierCode);
-		File f = new File(infowiseimagesPath.getMap_image());
+		File f = null;
+		if(infowiseimagesPath != null){
+			if(infowiseimagesPath.getMap_image() != null){
+			
+		 f = new File(infowiseimagesPath.getMap_image());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}else{
+			    f = new File("C:\\mypath\\default\\logo.jpg");
+		}
 		return ok(f);
 
 	}

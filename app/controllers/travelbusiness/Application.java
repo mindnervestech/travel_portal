@@ -344,8 +344,19 @@ public class Application extends Controller {
 public static Result getHotelImagePath(long supplierCode) {
 	
 	InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-	File f = new File(infowiseimagesPath.getGeneralPicture());
-    return ok(f);		
+	File f = null;
+	if(infowiseimagesPath != null){
+		if(infowiseimagesPath.getGeneralPicture() != null){
+			f = new File(infowiseimagesPath.getGeneralPicture());
+			
+		}else{
+			f = new File("C:\\mypath\\default\\logo.jpg");
+		}
+	}else{
+		f = new File("C:\\mypath\\default\\logo.jpg");
+	}
+	return ok(f);
+    		
 	
 }
 
@@ -1171,7 +1182,8 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		}
 		
 		findMinRateInHotel(hotellist);  /* find min Rate in par Hotel function*/
-	
+		System.out.println("\\\\\\\\\\\\///////////");
+		System.out.println(searchHotelValueVM.getSortData());
 		if(searchHotelValueVM.getSortData().equals("1")){
 			Collections.sort(hotellist,new HotelComparatorByRateAsc());
 		}else{

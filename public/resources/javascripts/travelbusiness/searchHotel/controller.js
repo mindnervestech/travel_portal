@@ -309,8 +309,7 @@ travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDia
 	$scope.AgentCompany = $cookieStore.get('AgentCompany');
 	
 	console.log($scope.AgentCompany);
-	$scope.sort = 1;
-	$scope.sortByStar = 1;
+	
 		
 	$scope.init = function(hotelAllData){
 		
@@ -389,6 +388,8 @@ $http.get("/searchCountries").success(function(response) {
 			console.log('ERROR');
 		});
 	}
+	$scope.sort = 1;
+	$scope.sortByStar = 1;
 	
 	$scope.sortRating = function(){
 		console.log("HIiiii");
