@@ -577,10 +577,10 @@
 								<input name="fromoDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="rate.allotmentmarket.fromDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
 							</div>
 												
-						
+				
 						<label class="col-md-2 control-label">To Date</label>
 							<div class="col-md-3">
-								<input name="toDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="rate.allotmentmarket.toDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
+								<input name="toDate" class="input-filter form-control" data-provide="datepicker" data-date-start-date="{{rate.allotmentmarket.fromDate}}" data-ng-model="rate.allotmentmarket.toDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
 							</div>
 							</div>
 							<label id="datediffShow{{$index}}" class="col-md-12 col-md-offset-1" style="color:red;display:none;">Select ToDate greater then FromDate </label>
@@ -1176,10 +1176,9 @@
 								<input name="fromoDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="rate.allotmentmarket.fromDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
 							</div>
 												
-						
 						<label class="col-md-2 control-label">To Date</label>
 							<div class="col-md-3">
-								<input name="toDate" class="input-filter form-control" data-provide="datepicker" data-ng-model="rate.allotmentmarket.toDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
+								<input name="toDate" class="input-filter form-control" data-provide="datepicker" data-date-start-date="{{rate.allotmentmarket.fromDate}}" data-ng-model="rate.allotmentmarket.toDate" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
 							</div>
 							</div>
 							<label id="datediffShow{{$index}}" class="col-md-12 col-md-offset-1" style="color:red;display:none;">Select ToDate greater then FromDate </label>

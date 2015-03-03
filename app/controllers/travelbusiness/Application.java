@@ -1183,14 +1183,15 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		
 		findMinRateInHotel(hotellist);  /* find min Rate in par Hotel function*/
 		
-		if( searchHotelValueVM.getNoSort().equals("1")){
+		if(searchHotelValueVM.getNoSort().equals("1")){
 		if(searchHotelValueVM.getSortData().equals("1")){
 			Collections.sort(hotellist,new HotelComparatorByRateAsc());
 		}else{
 			Collections.sort(hotellist,new HotelComparatorByRateDes());
 		}
 		}
-		if( searchHotelValueVM.getNoSort().equals("0")){
+		
+		if(searchHotelValueVM.getNoSort().equals("0")){
 		if(searchHotelValueVM.getSortByRating().equals("1")){
 			Collections.sort(hotellist,new HotelComparatorByRatingAsc());
 		}else{

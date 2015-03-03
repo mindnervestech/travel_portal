@@ -218,18 +218,22 @@ public class AgentInfoController extends Controller {
 		public static Result getbookingcancel(long id){
 		  int count= 0;
 			HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingById(id);
-			/*hBookingDetails.setRoom_status("cancel");
-			hBookingDetails.merge();*/
+			hBookingDetails.setRoom_status("cancel");
+			hBookingDetails.merge();
 			
 			List<HotelBookingDates> hotelBookingDates = HotelBookingDates.getDateBybookingId(id);
 			//RoomAllotedRateWise rateWise = RoomAllotedRateWise.findByRateId(hBookingDetails.getRate().getId());
 			for(HotelBookingDates hDates:hotelBookingDates){
+				
+				if(hBookingDetails.getRate() != null){
+				
 				RoomAllotedRateWise rateWise = RoomAllotedRateWise.findByRateIdandDate(hBookingDetails.getRate().getId(), hDates.getBookingDate());
 				if(rateWise != null){
 					count = rateWise.getRoomCount() - hBookingDetails.getNoOfroom();
 					rateWise.setRoomCount(count);
 					rateWise.merge();
 					
+				}
 				}
 				
 			}

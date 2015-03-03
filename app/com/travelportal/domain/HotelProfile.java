@@ -936,8 +936,9 @@ public class HotelProfile {
 		 HotelProfile am = new HotelProfile();
 		
 		 am.setAddress(o[0].toString());
+		 if(o[1].toString() != null){
 		 am.setHotelProfileDesc(o[1].toString());
-	
+		 }
 		 am.setSupplier_code(Long.parseLong(o[2].toString()));
 		 HotelProfile hAmenities1 = HotelProfile.findAllData(Long.parseLong(o[2].toString()));
 		 List<HotelServices> sList = new ArrayList<>();

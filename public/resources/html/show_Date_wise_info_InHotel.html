@@ -14,7 +14,7 @@
                                            <span>NO OF PERSON</span>
                                            <div class="selector">
                             				 <select class="full-width" name="adult" data-ng-model="searchroom.adult" ng-change="showRateAdultwise(searchroom.adult,serchroom.noOfroom)">
-                          				     <option ng-repeat="adult in ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal" value="{{adult.adult}}"> {{adult.adult  | limitTo: 1}}</option>  <!-- {{adult.adult}}   {{$index+1}}-->
+                          				     <option ng-repeat="adult in ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal | orderBy: 'adult'" value="{{adult.adult}}"> {{adult.adult  | limitTo: 1}}</option>  <!-- {{adult.adult}}   {{$index+1}}-->
                              				 </select><span class="custom-select full-width">1</span>   <!-- {{ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal[0].adult}} -->
                                            </div>
                                            </div>

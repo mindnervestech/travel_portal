@@ -1,6 +1,6 @@
 
 
-travelBusiness.controller('AgentBookingController', function ($scope,$http,$filter,ngDialog,$cookieStore) {
+travelBusiness.controller('AgentBookingController', function ($scope,$http,$filter,ngDialog,$cookieStore,notificationService) {
 	
 	
 	$scope.pageNumber;
@@ -161,7 +161,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		console.log(agentId);
 		$http.get("/getbookingcancel/"+agentId).success(function(response){
 			
-			//notificationService.success("Confirmed Booking");
+			notificationService.success("Cancel Booking");
 			ngDialog.close();
 			$http.get("/getagentInfo/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.status).success(function(response){
 				
@@ -1285,7 +1285,7 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 			 notificationService.success("Room Book Successfully");
 			console.log("Success");
     		
-    		 $window.location.replace("http://localhost:9000/");
+    		 $window.location.replace("http://li664-78.members.linode.com:9989/");
     		
     	}).error(function(data, status, headers, config) {
 			console.log('ERROR');
