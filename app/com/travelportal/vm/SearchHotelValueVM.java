@@ -14,6 +14,7 @@ public class SearchHotelValueVM {
 	public String id;
 	public String nationalityCode;
 	public String sortData;
+	public String noSort;
 	public String sortByRating;
 	public List<Integer> servicesCheck;
 	public List<Integer> locationCheck;
@@ -142,6 +143,12 @@ public class SearchHotelValueVM {
 	}
 	public void setSortByRating(String sortByRating) {
 		this.sortByRating = sortByRating;
+	}
+	public String getNoSort() {
+		return noSort;
+	}
+	public void setNoSort(String noSort) {
+		this.noSort = noSort;
 	}
 		
 	
