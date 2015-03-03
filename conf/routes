@@ -5,6 +5,7 @@
 #travelbusiness
 
 GET     /                           controllers.travelbusiness.Application.index()
+GET   /getAgentpassword/:email		   controllers.travelbusiness.Application.getAgentpassword(email:String)
 #GET     /hotelBooking	     	controllers.travelbusiness.HotelDetailsController.hotelBooking()
 #GET 	/searchHotel.html           controllers.travelbusiness.Application.searchHotel()
 #GET     /searchHotelInfo/:city/:checkIn/:checkOut/:starId/:nationalityId 	controllers.travelbusiness.Application.searchHotelInfo(city:String,checkIn:String,checkOut:String,starId:String,nationalityId:String)

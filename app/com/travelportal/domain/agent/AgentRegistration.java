@@ -15,6 +15,7 @@ import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
 import com.travelportal.domain.HearAboutUs;
+import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.NatureOfBusiness;
 import com.travelportal.domain.Salutation;
@@ -349,6 +350,18 @@ public static List<AgentRegistration> getAgentData(int code) {/*List<Integer> ra
 	catch(Exception ex){
 		return null;
 	}
+	}
+	
+	public static AgentRegistration findByemail(String email) {
+		try
+		{
+    	Query query = JPA.em().createQuery("Select a from AgentRegistration a where a.EmailAddr = ?1");
+		query.setParameter(1, email);
+    	return (AgentRegistration) query.getSingleResult();
+		}
+		catch(Exception ex){
+			return null;
+		}
 	}
 	
 	public static AgentRegistration findagentinfo(String loginID,String password,String agentId) {

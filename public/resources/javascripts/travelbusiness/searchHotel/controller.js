@@ -197,6 +197,31 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 		});
 	}
 	
+	$scope.forgotpass = function(){
+		ngDialog.close();
+		
+		ngDialog.open({
+			template: '/assets/resources/html/forgotPassword.html',
+			scope : $scope,
+			//controller:'hoteProfileController',
+			className: 'ngdialog-theme-default'
+		});
+		
+	}
+	
+	$scope.getpassword = function(email){
+		console.log(email);
+		$http.get('/getAgentpassword/'+email).success(function(response) {
+			if(response == 0){
+				$scope.flag = 0;
+				ngDialog.close();
+			}else{
+				$scope.flag = 1;
+				
+			}
+		});
+	}
+	
 	/*$scope.AgentBookingInfo = function(){
 		console.log("HIii");
 		window.location("AgentBookingInfo/");

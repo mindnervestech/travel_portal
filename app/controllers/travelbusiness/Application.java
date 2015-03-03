@@ -14,9 +14,23 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+
+import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -89,6 +103,7 @@ public class Application extends Controller {
 		return ok(Json.toJson("0"));
     	
     }
+  
         
     @Transactional(readOnly=true)
 	public static Result searchCountries() {
@@ -137,6 +152,22 @@ public class Application extends Controller {
 		return ok(Json.toJson(hotelstarratings));
 	}
 
+    
+    @Transactional(readOnly=true)
+	public static Result getAgentpassword(String email){
+    	
+    	AgentRegistration aRegistration= AgentRegistration.findByemail(email);
+    	//HotelProfile hProfile = HotelProfile.findByEmail(email);
+		int flag = 0;
+		if(aRegistration != null){
+
+ 		flag= 0;
+ 		
+		}else{
+			flag=1;
+		}
+		return ok(Json.toJson(flag));
+    }
     
     
     @Transactional(readOnly = true)
@@ -736,7 +767,11 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	hProfileVM.setServices(sList);
 	hProfileVM.setNationality(Integer.parseInt(nationality));
 	InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
+	if(infowiseimagesPath != null){
+	if(infowiseimagesPath.getGeneralDescription() != null){
 	hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
+	}
+	}
 	
 	//hProfileVM.setFlag("0");
 }
