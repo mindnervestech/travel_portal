@@ -393,7 +393,11 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	hProfileVM.setServices(sList);
 	hProfileVM.setNationality(Integer.parseInt(nationality));
 	InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
+	if(infowiseimagesPath != null){
+		if(infowiseimagesPath.getGeneralDescription() != null){
 	hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
+		}
+	}
 	
 	//hProfileVM.setFlag("0");
 }

@@ -914,6 +914,7 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 			roomNo = 1;
 		}
 		console.log(roomNo);
+		console.log(adultValue);
 		
 		$scope.rateDatedetail = [];
 		var total = 0;
