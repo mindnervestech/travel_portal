@@ -1182,20 +1182,21 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		}
 		
 		findMinRateInHotel(hotellist);  /* find min Rate in par Hotel function*/
-		System.out.println("\\\\\\\\\\\\///////////");
-		System.out.println(searchHotelValueVM.getSortData());
+		
+		if( searchHotelValueVM.getNoSort().equals("1")){
 		if(searchHotelValueVM.getSortData().equals("1")){
 			Collections.sort(hotellist,new HotelComparatorByRateAsc());
 		}else{
 			Collections.sort(hotellist,new HotelComparatorByRateDes());
 		}
-		
+		}
+		if( searchHotelValueVM.getNoSort().equals("0")){
 		if(searchHotelValueVM.getSortByRating().equals("1")){
 			Collections.sort(hotellist,new HotelComparatorByRatingAsc());
 		}else{
 			Collections.sort(hotellist,new HotelComparatorByRatingDes());
 		}
-		
+		}
 	
 		mapObject.put("hotellist", hotellist);
 		mapObject.put("totalHotel",totalHotel);

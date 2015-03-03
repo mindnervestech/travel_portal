@@ -394,6 +394,7 @@ $http.get("/searchCountries").success(function(response) {
 	$scope.sortRating = function(){
 		console.log("HIiiii");
 		
+		
 		 if($scope.sortByStar == 0){
 			   $scope.sortByStar = 1;
 		   }else{
@@ -411,7 +412,7 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.findHotelData.locationCheck = $scope.location_check;
 			$scope.findHotelData.sortByRating = $scope.sortByStar;
 			$scope.findHotelData.sortData = $scope.sort;
-			
+			$scope.findHotelData.noSort = 0;
 				console.log($scope.findHotelData);
 			
 			$http.post('/findHotelByData', $scope.findHotelData).success(function(data){
@@ -451,6 +452,7 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.findHotelData.locationCheck = $scope.location_check;
 			$scope.findHotelData.sortByRating = $scope.sortByStar;
 			$scope.findHotelData.sortData = $scope.sort;
+			$scope.findHotelData.noSort = 1;
 			
 				console.log($scope.findHotelData);
 			
