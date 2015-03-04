@@ -38,7 +38,14 @@ controller("LoginController",['$scope', '$http','notificationService','$rootScop
 
 angular.module('travel_portal').
 controller("ApplicationController",function($scope,$http) {
+	console.log(supplierCode);
+	 if (angular.isUndefined(supplierCode) || supplierCode == null){
+		 $scope.isSupplier = false;
+	 }else{
+		 $scope.isSupplier = true;
+	 }
 	
+	console.log($scope.isSupplier);
 	
 	$scope.permission;
 	$scope.init = function(data) {

@@ -3,8 +3,9 @@
 var app = angular.module('travel_portal',['ngRoute','ngDialog','jlareau.pnotify','angularFileUpload','ngCookies','multi-select']).config(function ($routeProvider) {
 	$routeProvider
 	.when('/', {
-		templateUrl: '/assets/html/hotel_profile/general_info.html',
-		controller: 'hoteProfileController'
+		templateUrl: '/assets/html/admin/selectPage.html',
+		//templateUrl: '/assets/html/hotel_profile/general_info.html',
+		controller: 'ApplicationController'
 	})
 	.when('/profile0', {
 		templateUrl: '/assets/html/hotel_profile/general_info.html',
@@ -86,10 +87,10 @@ var app = angular.module('travel_portal',['ngRoute','ngDialog','jlareau.pnotify'
 		templateUrl: '/assets/html/allotment_page/allotment.html',
 		controller: 'allotmentController'
 	})
-	.when('/manageSuppliers', {
+	/*.when('/', {
 		templateUrl: '/assets/html/admin/manageSuppliers.html',
 		controller: 'manageSuppliersController'
-	})
+	})*/
 	
 	.when('/findSupplier', {
 		templateUrl: '/assets/html/admin/find_supplier.html',
