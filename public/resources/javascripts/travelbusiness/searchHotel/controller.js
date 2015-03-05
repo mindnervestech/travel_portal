@@ -68,11 +68,12 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 	
 	$scope.showoAgentDataDateWise = function(selectDate){
 		console.log(selectDate);
-		if(selectDate.status == undefined || selectDate.status == ""){
+		if(selectDate.status == undefined || selectDate.status == "" || selectDate.status == "All"){
 			$scope.status = "1";
 		}else{
 			$scope.status = selectDate.status;
 		}
+		
 		if(selectDate.fromDate == undefined || selectDate.fromDate == "" && selectDate.toDate == undefined || selectDate.toDate == ""){
 			$scope.fromData ="1";
 			$scope.toDate = "1";
@@ -808,7 +809,10 @@ $http.get("/searchCountries").success(function(response) {
 
 
 
-travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filter,ngDialog) {
+travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filter,ngDialog,$cookieStore) {
+	
+	$scope.AgentId = $cookieStore.get('AgentId');
+	$scope.AgentCompany = $cookieStore.get('AgentCompany');
 	
 	$scope.init = function(hotel){
 		
@@ -1240,7 +1244,10 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 });
 
 
-travelBusiness.controller('hotelBookingController', function ($scope,$http,$filter,ngDialog,notificationService,$window) {
+travelBusiness.controller('hotelBookingController', function ($scope,$http,$filter,ngDialog,notificationService,$window,$cookieStore) {
+	
+	$scope.AgentId = $cookieStore.get('AgentId');
+	$scope.AgentCompany = $cookieStore.get('AgentCompany');
 	
 	$scope.init = function(hotel){
 		$scope.hotel = hotel;

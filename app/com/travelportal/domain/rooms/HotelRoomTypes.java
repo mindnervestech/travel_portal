@@ -309,9 +309,14 @@ public class HotelRoomTypes {
 	
 
 	 public static HotelRoomTypes findById(long id) {
-	    	Query query = JPA.em().createQuery("Select a from HotelRoomTypes a where a.roomId = ?1");
+	    try{	
+		 Query query = JPA.em().createQuery("Select a from HotelRoomTypes a where a.roomId = ?1");
 			query.setParameter(1, id);
 	    	return (HotelRoomTypes) query.getSingleResult();
+	    }
+		catch(Exception ex){
+			return null;
+		}
 	    }
 	 
 	 public static HotelRoomTypes findByIdAndName(String name,Long code) {

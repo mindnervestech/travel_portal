@@ -51,7 +51,7 @@
 <!--  <link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/style.css")'> -->
  
 </head>
-<body class=" " ng-controller="ApplicationController" ng-init='init(@permissions)'>
+<body class=" " ng-controller="ApplicationController" ng-init='init(@permissions)'>   <!-- ng-init='init(@permissions);selectedTab=1;' -->
 
 <div>
     
@@ -97,11 +97,11 @@
                     <li class="user-panel">
                         
                     </li>
-                      <li ng-sec = "Supplier Agreement"  permission="permission"><a href="#/supplierAgreement"><i class="">
+                      <li ng-sec = "Supplier Agreement"  permission="permission" ng-click="selectedTab=0;" ng-class="selectedTab==0 ? 'active':''" ><a href="#/supplierAgreement"><i class="">
                         <div class="glyphicon glyphicon-picture"></div>
                     </i><span class="menu-title">Supplier Agreement</span></a></li>
                     
-                    <li ng-sec = "Hotel Profile"  permission="permission"><a href="#"><i class="fa fa-tachometer fa-fw">
+                    <li ng-sec = "Hotel Profile" ng-click="selectedTab=1;" ng-class="selectedTab==1 ? 'active':''"  permission="permission"><a href="#"><i class="fa fa-tachometer fa-fw">
                         <div class="icon-bg bg-orange"></div>
                     </i><span class="menu-title">Hotel Profile</span></a></li>
                     
@@ -114,19 +114,19 @@
                         </ul> 
                     </li>-->
                     
-                    <li ng-sec = "Room Types"  permission="permission"><a href="#/addHotelRoomType"><i class="fa fa-desktop fa-fw">
+                    <li ng-sec = "Room Types"  permission="permission" ng-class="selectedTab==2 ? 'active':''" ng-click="selectedTab=2;"><a href="#/addHotelRoomType"><i class="fa fa-desktop fa-fw">
                         <div class="icon-bg bg-pink"></div>
                     </i><span class="menu-title">Room Types</span></a></li>
                     
-                     <li ng-sec = "Manage Hotel Images"  permission="permission"><a href="#/manageHotelImages"><i class="">
+                     <li ng-sec = "Manage Hotel Images"  ng-class="selectedTab==3 ? 'active':''" ng-click="selectedTab=3;" permission="permission"><a href="#/manageHotelImages"><i class="">
                         <div class="glyphicon glyphicon-camera"></div>
                     </i><span class="menu-title">Manage Hotel Images</span></a></li>
                     
-                      <li ng-sec = "View Your Web Page"  permission="permission"><a href="#/viewWebPage"><i class="">
+                      <li ng-sec = "View Your Web Page"  ng-class="selectedTab==4 ? 'active':''" ng-click="selectedTab=4;" permission="permission"><a href="#/viewWebPage"><i class="">
                         <div class="glyphicon glyphicon-film"></div>
                     </i><span class="menu-title">View Your Web Page</span></a></li>
                      
-                     <li ng-sec = "Contract Management"  permission="permission"><a href="#/manageContracts"><i class="">
+                     <li ng-sec = "Contract Management"  ng-class="selectedTab==5 ? 'active':''" ng-click="selectedTab=5;" permission="permission"><a href="#/manageContracts"><i class="">
                         <div class="glyphicon glyphicon-calendar"></div>
                     </i><span class="menu-title">Contract Management</span></a></li>
                      
@@ -135,22 +135,22 @@
                     </i><span class="menu-title">Allotment</span></a></li> -->
                     				
                     
-                    <li ng-sec = "Manage Specials"  permission="permission"><a href="#/manageSpecials"><i class="">
+                    <li ng-sec = "Manage Specials"  ng-class="selectedTab==6 ? 'active':''" ng-click="selectedTab=6;" permission="permission"><a href="#/manageSpecials"><i class="">
                         <div class="glyphicon glyphicon-tags"></div>
                     </i><span class="menu-title">Manage Promotion</span></a></li>
                     
-                     <li ng-sec = "Confirm Booking"  permission="permission"><a href="#/confirmBooking"><i class="">
+                     <li ng-sec = "Confirm Booking"  ng-class="selectedTab==7 ? 'active':''" ng-click="selectedTab=7;"  permission="permission"><a href="#/confirmBooking"><i class="">
                         <div class="glyphicon glyphicon-saved"></div>
                     </i><span class="menu-title">Confirmed Booking</span></a></li>
                     
-                     <li ng-sec = "On Request"  permission="permission"><a href="#/onRequest"><i class="">
+                     <li ng-sec = "On Request"  ng-class="selectedTab==8 ? 'active':''" ng-click="selectedTab=8;"  permission="permission"><a href="#/onRequest"><i class="">
                         <div class="glyphicon glyphicon-import"></div>
                     </i><span class="menu-title">On Request Booking</span></a></li>
                     
-                     <li ng-sec = "Rejected Booking"  permission="permission"><a href="#/rejected"><i class="">
+                     <li ng-sec = "Rejected Booking"  ng-class="selectedTab==9 ? 'active':''" ng-click="selectedTab=9;" permission="permission"><a href="#/rejected"><i class="">
                         <div class="glyphicon glyphicon-export"></div>
                     </i><span class="menu-title">Rejected Booking</span></a></li>
-                     <li ng-sec = "Cancel Booking"  permission="permission"><a href="#/cancel"><i class="">
+                     <li ng-sec = "Cancel Booking"  ng-class="selectedTab==10 ? 'active':''" ng-click="selectedTab=10;" permission="permission"><a href="#/cancel"><i class="">
                         <div class="glyphicon glyphicon-floppy-remove"></div>
                     </i><span class="menu-title">Cancel Booking</span></a></li>
 					

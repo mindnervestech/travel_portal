@@ -38,7 +38,7 @@ controller("LoginController",['$scope', '$http','notificationService','$rootScop
 
 angular.module('travel_portal').
 controller("ApplicationController",function($scope,$http) {
-	console.log(supplierCode);
+	
 	 if (angular.isUndefined(supplierCode) || supplierCode == null){
 		 $scope.isSupplier = false;
 	 }else{
@@ -1821,6 +1821,7 @@ angular.module('travel_portal').
 		console.log($scope.mealpolicy);
 		$http.post('/savemealpolicy',$scope.mealpolicy).success(function(data){
 			console.log('success');
+			
 			$http.get("/MealTypeplan/"+$rootScope.supplierCode).success(function(response){
 				$scope.MealType=response;
 				console.log("+++++++");
@@ -1831,7 +1832,9 @@ angular.module('travel_portal').
 					return;
 				});
 			});	
+			
 			notificationService.success("Save Successfully");
+			ngDialog.close();
 			//$scope.mealPlanSuccessMsg = true;
 			//$scope.mealpolicy = [];
 		}).error(function(data, status, headers, config) {

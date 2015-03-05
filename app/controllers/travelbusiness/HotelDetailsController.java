@@ -205,7 +205,16 @@ public class HotelDetailsController extends Controller {
 	public static Result getHotelRoomImagePath(long roomId) {
 		
 		HotelRoomTypes hRoomTypes = HotelRoomTypes.findById(roomId);
-		File f = new File(hRoomTypes.getRoomPic());
+		File f = null;
+		if(hRoomTypes != null){
+			if(hRoomTypes.getRoomPic() != null){
+				f = new File(hRoomTypes.getRoomPic());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}else{
+			f = new File("C:\\mypath\\default\\logo.jpg");
+		}
 	    return ok(f);		
 		
 	}

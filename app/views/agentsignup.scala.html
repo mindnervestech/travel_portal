@@ -33,11 +33,6 @@ List[String],natureOfBusiness: List[String],Currency: List[String])
 	href='@routes.Assets.at("app/css/style-responsive.css")'>
 <link type="text/css" rel="stylesheet"
 	href='@routes.Assets.at("app/css/app.css")'>
-<script src='@routes.Assets.at("app/js/jquery-1.10.2.min.js")'></script>
-<script src='@routes.Assets.at("app/js/jquery-migrate-1.2.1.min.js")'></script>
-<script src='@routes.Assets.at("app/js/jquery-ui.js")'></script>
-<script src='@routes.Assets.at("app/js/prettify.js")'></script>
-<script src='@routes.Assets.at("app/js/jquery.slimscroll.min.js")'></script>
 
 <style>
 .progress .progress-bar{
@@ -62,6 +57,11 @@ border: 3px solid #fdb714;
 </style>
 
 <!--loading bootstrap js-->
+<script src='@routes.Assets.at("app/js/jquery-1.10.2.min.js")'></script>
+<script src='@routes.Assets.at("app/js/jquery-migrate-1.2.1.min.js")'></script>
+<script src='@routes.Assets.at("app/js/jquery-ui.js")'></script>
+<script src='@routes.Assets.at("app/js/prettify.js")'></script>
+<script src='@routes.Assets.at("app/js/jquery.slimscroll.min.js")'></script>
 <script
 	src='@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")'></script>
 <script
@@ -350,7 +350,7 @@ border: 3px solid #fdb714;
 											customer's finance department email address:</label>
 
 										<div class="col-md-6">
-											<input type="email" name="financeEmailAddr"
+											<input type="email" id="emailid" name="financeEmailAddr"
 												class="form-control">
 										</div>
 									</div>
@@ -773,8 +773,10 @@ function getpaymentMode(){
 	if($("#paymentMethod").val() == "Credit"){
 		$("#financeEmailSelect").css("display", "block");
 		$('#wantToReceiveNet').css("display","none");
+		$("#emailid").val("");
 	}
 	if($("#paymentMethod").val() == "Credit Card"){
+		$("#emailid").val("defaultdefault.com");
 		$("#financeEmailSelect").css("display", "none");
 		$('#wantToReceiveNet').css("display","block");
 	}
@@ -807,7 +809,7 @@ function getpaymentMode(){
 		}
 
 	}
-
+	
 	function isreceiveNet(value) {
 		if (value == true) {
 			/*$("#netSelect").css("display", "block");*/

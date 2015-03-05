@@ -94,15 +94,15 @@
                         
                     </li>
                    
-					<li><a href="#"><i class="fa fa-align-left">
+					<li ng-click="selectedTab=0;" ng-class="selectedTab==0 ? 'active':''" ><a href="#"><i class="fa fa-align-left">
                         <div class="icon-bg bg-orange"></div>
                     </i><span class="menu-title">Manage Supplier</span></a></li>
                     
-                    <li><a href="#/manageAgent"><i class="fa fa-align-left">
+                    <li ng-click="selectedTab=1;" ng-class="selectedTab==1 ? 'active':''" ><a href="#/manageAgent"><i class="fa fa-align-left">
                         <div class="icon-bg bg-orange"></div>
                     </i><span class="menu-title">Manage Agent</span></a></li>
                     
-                    <li><a href="#/markupPage"><i class="fa fa-align-left">
+                    <li ng-click="selectedTab=2;" ng-class="selectedTab==2 ? 'active':''" ><a href="#/markupPage"><i class="fa fa-align-left">
                         <div class="icon-bg bg-orange"></div>
                     </i><span class="menu-title">Markup Page</span></a></li>
 					
