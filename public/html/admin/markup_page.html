@@ -479,10 +479,10 @@
 
 																		<tr ng-repeat="supplerWise in SupplerWiseRate">
 																		
-																			<td>{{supplerWise.agent.firstName}}</td>
-																			<td>{{supplerWise.agent.agentCode}}</td>
-																			<td>{{supplerWise.agent.country.countryName}}</td>
-																			<td>{{supplerWise.agent.currency.currencyName}}</td>
+																			<td>{{supplerWise.agentfirstName}}</td>
+																			<td>{{supplerWise.agentCode}}</td>
+																			<td>{{supplerWise.countryName}}</td>
+																			<td>{{supplerWise.currencyName}}</td>
 																			<td ng-if="supplerWise.selected == '0'"><div><input type="text" ng-model="supplerWise.flat" class="form-control required number" style="width: 124px;"></div></td>
 																			<td ng-if="supplerWise.selected == '1'"><div><input type="text" ng-model="supplerWise.percent" class="form-control required number" style="width: 124px;"></div></td>
 																			<td><select class="form-control" ng-model="supplerWise.selected" required>
@@ -532,13 +532,13 @@
 
 																		<tr ng-repeat="supplerWiseSpecific in SupplerWiseSpecificRate">
 																		
-																			<td>{{supplerWiseSpecific.agentSpecific.firstName}} ({{supplerWiseSpecific.agentSpecific.country.countryName}})</td>
-																			<td>{{supplerWiseSpecific.rateSelected.rateName}}</td>
-																			<td>{{supplerWiseSpecific.rateSelected.currency}}</td>
-																			<td>{{supplerWiseSpecific.rateSelected.fromDate}} - {{supplerWiseSpecific.rateSelected.toDate}}</td>
-																			<td ng-if="supplerWiseSpecific.specificSelected == '0'"><input type="text" ng-model="supplerWiseSpecific.specificFlat" class="form-control required number" style="width: 124px;"></td>
-																			<td ng-if="supplerWiseSpecific.specificSelected == '1'"><input type="text" ng-model="supplerWiseSpecific.specificPercent" class="form-control required number" style="width: 124px;"></td>
-																			<td><select class="form-control" ng-model="supplerWiseSpecific.specificSelected" required>
+																			<td>{{supplerWiseSpecific.agentfirstName}} ({{supplerWiseSpecific.countryName}})</td>
+																			<td>{{supplerWiseSpecific.rateName}}</td>
+																			<td>{{supplerWiseSpecific.currencyName}}</td>
+																			<td>{{supplerWiseSpecific.fromDate}} - {{supplerWiseSpecific.toDate}}</td>
+																			<td ng-if="supplerWiseSpecific.selected == '0'"><input type="text" ng-model="supplerWiseSpecific.flat" class="form-control required number" style="width: 124px;"></td>
+																			<td ng-if="supplerWiseSpecific.selected == '1'"><input type="text" ng-model="supplerWiseSpecific.percent" class="form-control required number" style="width: 124px;"></td>
+																			<td><select class="form-control" ng-model="supplerWiseSpecific.selected" required>
 																					<option value="0">Flat</option>
 																					<option value="1">Percent</option>
 

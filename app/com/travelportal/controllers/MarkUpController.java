@@ -28,6 +28,7 @@ import com.travelportal.domain.admin.BatchMarkup;
 import com.travelportal.domain.admin.SpecificMarkup;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.allotment.AllotmentMarket;
+import com.travelportal.domain.rooms.ApplicableDateOnRate;
 import com.travelportal.domain.rooms.CancellationPolicy;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
@@ -37,6 +38,7 @@ import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.AgentRegistrationVM;
 import com.travelportal.vm.AllotmentMarketVM;
+import com.travelportal.vm.BatchMarkupInfoVM;
 import com.travelportal.vm.BatchMarkupVM;
 import com.travelportal.vm.BatchViewSupportVM;
 import com.travelportal.vm.CancellationPolicyVM;
@@ -48,6 +50,7 @@ import com.travelportal.vm.RateVM;
 import com.travelportal.vm.SpecialRateVM;
 import com.travelportal.vm.SpecialsMarketVM;
 import com.travelportal.vm.SpecialsVM;
+import com.travelportal.vm.SpecificMarkupInfoVM;
 import com.travelportal.vm.SpecificMarkupVM;
 import com.travelportal.vm.SpecificViewSupportVM;
 
@@ -121,17 +124,63 @@ public class MarkUpController extends Controller {
 	
 	@Transactional(readOnly = true)
 	public static Result getSupplerWiseRate(long supplierCode) {
-		List<AgentRegistration> rList = BatchMarkup.getAllAgent(supplierCode);
-		/*for(AgentRegistration rARegistration : rList){
+		List<BatchMarkupInfoVM> bList = new ArrayList<>();
+	 	List<BatchMarkup> BatchList = BatchMarkup.getAllAgent(supplierCode);
+		for(BatchMarkup bMarkupn: BatchList){
 			
-		}*/
-		return ok(Json.toJson(rList));
+			BatchMarkupInfoVM bInfoVM=new BatchMarkupInfoVM();
+			bInfoVM.setBatchMarkupId(bMarkupn.getBatchMarkupId());
+			bInfoVM.setFlat(bMarkupn.getFlat());
+			bInfoVM.setSelected(bMarkupn.getSelected());
+			bInfoVM.setPercent(bMarkupn.getPercent());
+			bInfoVM.setSupplier(bMarkupn.getSupplier());
+			AgentRegistration aRegistration= AgentRegistration.getAgentCode(bMarkupn.getAgent().getAgentCode());
+			bInfoVM.setAgentCode(aRegistration.getAgentCode());
+			bInfoVM.setAgentfirstName(aRegistration.getFirstName());
+			bInfoVM.setCurrencyCode(aRegistration.getCurrency().getId());
+			bInfoVM.setCurrencyName(aRegistration.getCurrency().getCurrencyName());
+			bInfoVM.setCountryCode(aRegistration.getCountry().getCountryCode());
+			bInfoVM.setCountryName(aRegistration.getCountry().getCountryName());
+			
+			bList.add(bInfoVM);
+			
+		}
+		return ok(Json.toJson(bList));
+		//return ok();
+		
 	}
 	
 	@Transactional(readOnly = true)
 	public static Result getSupplerWiseSpecificRate(long supplierCode) {
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		List<SpecificMarkupInfoVM> sList = new ArrayList<>();
 		List<SpecificMarkup> sRList = SpecificMarkup.getAllSpecific(supplierCode);
-		return ok(Json.toJson(sRList));
+		for(SpecificMarkup sMarkup: sRList){
+			SpecificMarkupInfoVM sVm=new SpecificMarkupInfoVM();
+			sVm.setSpecificMarkupId(sMarkup.getSpecificMarkupId());
+			sVm.setFlat(sMarkup.getSpecificFlat());
+			sVm.setSelected(sMarkup.getSpecificSelected());
+			sVm.setPercent(sMarkup.getSpecificPercent());
+			sVm.setSupplier(sMarkup.getSupplierCode());
+			AgentRegistration aRegistration= AgentRegistration.getAgentCode(sMarkup.getAgentSpecific().getAgentCode());
+			sVm.setAgentCode(aRegistration.getAgentCode());
+			sVm.setAgentfirstName(aRegistration.getFirstName());
+			sVm.setCurrencyCode(aRegistration.getCurrency().getId());
+			sVm.setCurrencyName(aRegistration.getCurrency().getCurrencyName());
+			sVm.setCountryCode(aRegistration.getCountry().getCountryCode());
+			sVm.setCountryName(aRegistration.getCountry().getCountryName());
+			RateMeta rMeta = RateMeta.findById(sMarkup.getRateSelected().getId());
+			sVm.setRateId(rMeta.getId());
+			sVm.setRateName(rMeta.getRateName());
+			List<String> aMinDateOnRate = ApplicableDateOnRate.getMinDate(rMeta.getId());
+			sVm.setFromDate(format.format(aMinDateOnRate.get(0)));
+			List<String> aMaxDateOnRate = ApplicableDateOnRate.getMaxDate(rMeta.getId());
+			sVm.setToDate(format.format(aMaxDateOnRate.get(0)));
+			sList.add(sVm);
+		}
+		
+		
+		return ok(Json.toJson(sList));
 	}
 
 	@Transactional(readOnly = true)
@@ -219,10 +268,10 @@ public class MarkUpController extends Controller {
 		for (RateMeta rate : rateMeta) {
 			RateDetails rateDetails = RateDetails
 					.findByRateMetaId(rate.getId());
-			List<PersonRate> personRate = PersonRate.findByRateMetaId(rate
-					.getId());
-			List<CancellationPolicy> cancellation = CancellationPolicy
-					.findByRateMetaId(rate.getId());
+			/*List<PersonRate> personRate = PersonRate.findByRateMetaId(rate
+					.getId());*/
+			/*List<CancellationPolicy> cancellation = CancellationPolicy
+					.findByRateMetaId(rate.getId());*/
 
 			RateVM rateVM = new RateVM();
 			rateVM.setCurrency(rate.getCurrency());
@@ -233,7 +282,7 @@ public class MarkUpController extends Controller {
 			rateVM.setIsSpecialRate(rateDetails.getIsSpecialRate());
 			rateVM.setRateName(rate.getRateName());
 			rateVM.setId(rate.getId());
-			rateVM.applyToMarket = rateDetails.isApplyToMarket();
+			/*rateVM.applyToMarket = rateDetails.isApplyToMarket();
 
 			NormalRateVM normalRateVM = new NormalRateVM();
 			SpecialRateVM specialRateVM = new SpecialRateVM();
@@ -302,7 +351,7 @@ public class MarkUpController extends Controller {
 			}
 
 			rateVM.setNormalRate(normalRateVM);
-			rateVM.setSpecial(specialRateVM);
+			rateVM.setSpecial(specialRateVM);*/
 
 			list.add(rateVM);
 		}

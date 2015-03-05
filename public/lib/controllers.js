@@ -3947,14 +3947,15 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     	});
     	
     	$http.get("/getSupplerWiseSpecificRate/"+$scope.code).success(function(response){
+    		console.log(response);
     		$scope.SupplerWiseSpecificRate = response;
-    		 angular.forEach($scope.SupplerWiseSpecificRate, function(obj, index){
+    		/* angular.forEach($scope.SupplerWiseSpecificRate, function(obj, index){
     		 
     			 $scope.SupplerWiseSpecificRate[index].rateSelected.fromDate = $filter('date')(response[index].rateSelected.fromDate, "dd/MM/yyyy");
     			 $scope.SupplerWiseSpecificRate[index].rateSelected.toDate = $filter('date')(response[index].rateSelected.toDate, "dd/MM/yyyy");
     			 return;
     		 });
-    		
+    		*/
     		console.log(response);
     	});
     }
@@ -3962,16 +3963,16 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     $scope.selectedSpecificData = {};
     $scope.updateSpecificId = function(supplerWiseSpecific){
     	console.log(supplerWiseSpecific);
-    	if(supplerWiseSpecific.specificSelected == "1"){
-    		supplerWiseSpecific.specificFlat = null;
+    	if(supplerWiseSpecific.selected == "1"){
+    		supplerWiseSpecific.flat = null;
     	}else{
-    		supplerWiseSpecific.specificPercent =null;
+    		supplerWiseSpecific.percent =null;
     	}
     	console.log(supplerWiseSpecific);
     	$scope.selectedSpecificData.specificMarkupId = supplerWiseSpecific.specificMarkupId;
-    	$scope.selectedSpecificData.specificFlat = supplerWiseSpecific.specificFlat;
-    	$scope.selectedSpecificData.specificPercent = supplerWiseSpecific.specificPercent;
-    	$scope.selectedSpecificData.specificSelected = supplerWiseSpecific.specificSelected;
+    	$scope.selectedSpecificData.specificFlat = supplerWiseSpecific.flat;
+    	$scope.selectedSpecificData.specificPercent = supplerWiseSpecific.percent;
+    	$scope.selectedSpecificData.specificSelected = supplerWiseSpecific.selected;
     	console.log($scope.selectedSpecificData);
     	$http.post('/UpdateSpecificMarkup',$scope.selectedSpecificData).success(function(data){
     		console.log("Success");
@@ -3985,6 +3986,7 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     $scope.selectedData = {};
     
     $scope.updateAgentId = function(supplerWise){
+    	console.log(supplerWise);
     	if(supplerWise.selected == "1"){
     		supplerWise.flat = null;
     	}else{
