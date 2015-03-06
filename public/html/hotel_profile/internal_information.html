@@ -21,8 +21,8 @@
 									COMMUNICATION</a></li>
 							<li><a href="#profile5" data-toggle="tab">BILLING
 									INFORMATION</a></li>
-							<li><a href="#profile6" data-toggle="tab">TAXES, FEES,
-									SUPPLEMENTS</a></li>
+							<!-- <li><a href="#profile6" data-toggle="tab">TAXES, FEES,
+									SUPPLEMENTS</a></li> -->
 							<li><a href="#profile7" data-toggle="tab">MEAL PLAN AND
 									PRICES</a></li>
 							<li><a href="#profile8" data-toggle="tab">HOTEL
@@ -114,12 +114,12 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Guest Fax:</label>
 				<div class="col-md-2 setwidth">
-					<input type="text" name="guestFaxCode" data-ng-model="internalInfo.guestFaxCode" class="form-control required number" required>
+					<input type="text" name="guestFaxCode" data-ng-model="internalInfo.guestFaxCode" class="form-control number">
 					 <!-- <span class="error" ng-show="myForm.guestFaxCode.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<p style="float: left;">-</p>
 				<div class="col-md-3">
-					<input type="text" name="guestFax" data-ng-model="internalInfo.guestFax" class="form-control required number" required>
+					<input type="text" name="guestFax" data-ng-model="internalInfo.guestFax" class="form-control number">
 					<!-- <span class="error" ng-show="myForm.guestFax.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<div class="col-md-4">
@@ -161,12 +161,12 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Direct Fax:</label>
 				<div class="col-md-2 setwidth">
-					<input type="text" name="directFaxNo" data-ng-model="internalInfo.directFaxNo" class="form-control required number">
+					<input type="text" name="directFaxNo" data-ng-model="internalInfo.directFaxNo" class="form-control number">
 					<!-- <span class="error" ng-show="myForm.directFaxNo.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<p style="float: left;">-</p>
 				<div class="col-md-3">
-					<input type="text" name="directFaxCode" data-ng-model="internalInfo.directFaxCode" class="form-control required number">
+					<input type="text" name="directFaxCode" data-ng-model="internalInfo.directFaxCode" class="form-control number">
 					<!-- <span class="error" ng-show="myForm.directFaxCode.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<div class="col-md-4">

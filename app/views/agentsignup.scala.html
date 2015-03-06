@@ -159,7 +159,7 @@ border: 3px solid #fdb714;
 				<div id="bar" class="progress active">
 					<div class="bar progress-bar progress-bar-primary"></div>
 				</div>
-				<form method="post" name="contact" action="/agentregister"
+				<form  name="myForm" method="post" name="contact" action="/agentregister"
 					role="form" class="form-horizontal form-validate">
 					<div class="tab-content">
 
@@ -422,7 +422,7 @@ border: 3px solid #fdb714;
 										<label class="col-md-3 control-label">*E-mail Address:</label>
 
 										<div class="col-md-6">
-											<input type="email" name="EmailAddr" class="form-control"
+											<input type="email" id="EmailAddr" name="EmailAddr" class="form-control required"
 												required>
 										</div>
 									</div>
@@ -433,7 +433,7 @@ border: 3px solid #fdb714;
 											Address:</label>
 
 										<div class="col-md-6">
-											<input type="email" name="EmailAddr" class="form-control"
+											<input type="email" id="cEmailAddr" name="cEmailAddr" class="form-control required"
 												required>
 										</div>
 									</div>
@@ -725,12 +725,12 @@ Company Seal :      			"
 									<div class="form-group">
 
 										<div class="col-md-6">
-											<input type="checkbox" name="agree" value="1" required>I
+											<input type="checkbox"  name="agree" value="1" required>I
 											agree terms and conditions.<br>
 										</div>
 									</div>
 									<div class="col-md-6">
-										<input type="submit" class="btn btn-info">
+										<input type="submit" onclick="getcheck()" class="btn btn-info">
 									</div>
 
 								</div>
@@ -749,7 +749,7 @@ Company Seal :      			"
 								class="btn btn-info button-previous">
 								<i class="fa fa-arrow-circle-o-left mrx"></i>Previous
 							</button>
-							<button type="button" name="next" value="Next"
+							<button type="button" onclick="validateForm()" name="next" value="Next"
 								class="btn btn-info button-next mlm">
 								Next<i class="fa fa-arrow-circle-o-right mlx"></i>
 							</button>
@@ -780,6 +780,26 @@ function getpaymentMode(){
 		$("#financeEmailSelect").css("display", "none");
 		$('#wantToReceiveNet').css("display","block");
 	}
+}
+
+function getcheck(){
+	
+	if($("#paymentMethod").val() == "Credit Card"){
+		$("#emailid").val("");
+
+	}
+}
+
+function validateForm() {
+	//id="EmailAddr"
+		console.log($("#EmailAddr").val());
+		
+		 
+	     if($("#EmailAddr").val() != $("#cEmailAddr").val()){
+	    	alert("E-mail Address not match");
+	    	 $("#EmailAddr").val().focus;
+	        return false;
+	    } 
 }
 
 	function getCountry() {

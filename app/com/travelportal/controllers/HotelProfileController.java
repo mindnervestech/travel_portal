@@ -1197,12 +1197,20 @@ public class HotelProfileController extends Controller {
 
 			internalcontact.setGuestTelCityCode(Integer.parseInt(form.get("guestTelCode")));
 			internalcontact.setGuestTelValue(Integer.parseInt(form.get("guestTel")));
+			if(form.get("guestFaxCode") != null){
 			internalcontact.setGuestFaxCityCode(Integer.parseInt(form.get("guestFaxCode")));
+			}
+			if(form.get("guestFax") != null){
 			internalcontact.setGuestFaxValue(Integer.parseInt(form.get("guestFax")));
+			}
 			internalcontact.setDirectTelCityCode(Integer.parseInt(form.get("directTelCode")));
 			internalcontact.setDirectTelValue(Integer.parseInt(form.get("directTelNo")));
+			if(form.get("directFaxCode") != null){
 			internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("directFaxCode")));
+			}
+			if(form.get("directFaxNo") != null){
 			internalcontact.setDirectFaxValue(Integer.parseInt(form.get("directFaxNo")));
+			}
 			internalcontact.setSupplierCode(Long.parseLong(form.get("supplierCode")));
 
 			internalcontact.save();
@@ -1212,12 +1220,20 @@ public class HotelProfileController extends Controller {
 
 			internalcontact.setGuestTelCityCode(Integer.parseInt(form.get("guestTelCode")));
 			internalcontact.setGuestTelValue(Integer.parseInt(form.get("guestTel")));
-			internalcontact.setGuestFaxCityCode(Integer.parseInt(form.get("guestFaxCode")));
-			internalcontact.setGuestFaxValue(Integer.parseInt(form.get("guestFax")));
+			if(form.get("guestFaxCode") != null){
+				internalcontact.setGuestFaxCityCode(Integer.parseInt(form.get("guestFaxCode")));
+				}
+				if(form.get("guestFax") != null){
+				internalcontact.setGuestFaxValue(Integer.parseInt(form.get("guestFax")));
+				}
 			internalcontact.setDirectTelCityCode(Integer.parseInt(form.get("directTelCode")));
 			internalcontact.setDirectTelValue(Integer.parseInt(form.get("directTelNo")));
-			internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("directFaxCode")));
-			internalcontact.setDirectFaxValue(Integer.parseInt(form.get("directFaxNo")));
+			if(form.get("directFaxCode") != null){
+				internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("directFaxCode")));
+				}
+				if(form.get("directFaxNo") != null){
+				internalcontact.setDirectFaxValue(Integer.parseInt(form.get("directFaxNo")));
+				}
 
 			internalcontact.merge();
 		}

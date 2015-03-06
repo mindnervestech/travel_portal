@@ -262,7 +262,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelcontactinformation.setdTelCode(hotelprivatecontacts.getMainContactTelCode());
 		hotelcontactinformation.setdFaxNo(hotelprivatecontacts.getMainContactFaxNo());
 		hotelcontactinformation.setdFaxCode(hotelprivatecontacts.getMainContactFaxCode());
-		hotelcontactinformation.setDeptExtNo(hotelprivatecontacts.getMainContactExt());
+		hotelcontactinformation.setdExtNo(hotelprivatecontacts.getMainContactExt());
 		hotelcontactinformation.setdEmailAddr(hotelprivatecontacts.getMainContactEmailAddr());
 		hotelcontactinformation.setdTollFreeTelNo(hotelprivatecontacts.getTollFreeNo());
 		if(hotelprivatecontacts.getSalutation_salutation_id() != null)
@@ -277,9 +277,11 @@ public class TravelPortalUtilsController extends Controller {
 		hotelcontactinformation.setrDeptTelCode(hotelprivatecontacts.getReservationContactTelNo());
 		hotelcontactinformation.setrDeptFaxNo(hotelprivatecontacts.getDeptFaxNo());
 		hotelcontactinformation.setrDeptFaxCode(hotelprivatecontacts.getDeptFaxCode());
-		hotelcontactinformation.setrDirectTelCode(hotelprivatecontacts.getReservationContactTelNo());
+		hotelcontactinformation.setrDirectTelNo(hotelprivatecontacts.getReservationContactTelNo());
 		hotelcontactinformation.setrDirectTelCode(hotelprivatecontacts.getReservationContactTelCode());
-		
+		hotelcontactinformation.setrExtNo(hotelprivatecontacts.getReservationConstactExt());
+		hotelcontactinformation.setDeptExtNo(hotelprivatecontacts.getDeptExtNo());
+		//hotelcontactinformation.setrDeptTelNo(rDeptTelNo)(dTelCode);
 		return ok(Json.toJson(hotelcontactinformation));
 	}
 	

@@ -129,9 +129,21 @@ public static void createRootDir() {
 	public static Result getImagePath(long supplierCode) {
 		
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-		File f = new File(infowiseimagesPath.getGeneralPicture());
+		File f;
+		if(infowiseimagesPath != null){
+		 
+			if(infowiseimagesPath.getGeneralPicture() != null){
+				 f = new File(infowiseimagesPath.getGeneralPicture());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}
+		else{
+			f = new File("C:\\mypath\\default\\logo.jpg");
+		}
+				
         return ok(f);		
-		
+    		
 	}
 	
 	
@@ -219,7 +231,19 @@ public static void createRootDir() {
 	public static Result getLobbyImagePath(long supplierCode) {
 		
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-		File f = new File( infowiseimagesPath.getHotel_Lobby());
+		
+		File f;
+		if(infowiseimagesPath != null){
+		 
+			if(infowiseimagesPath.getHotel_Lobby() != null){
+				f = new File(infowiseimagesPath.getHotel_Lobby());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}
+		else{
+			f = new File("C:\\mypath\\default\\logo.jpg");
+		}
         return ok(f);		
 		
 	}
@@ -300,7 +324,20 @@ public static void createRootDir() {
 	public static Result getRoomImagePath(long supplierCode) {
 		
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-		File f = new File( infowiseimagesPath.getHotelRoom());
+		File f;
+		if(infowiseimagesPath != null){
+		 
+			if(infowiseimagesPath.getHotelRoom() != null){
+				f = new File(infowiseimagesPath.getHotelRoom());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}
+		else{
+			f = new File("C:\\mypath\\default\\logo.jpg");
+		}
+		
+		
         return ok(f);		
 		
 	}
@@ -380,7 +417,22 @@ public static void createRootDir() {
 	public static Result getAmenitiesServicesImagePath(long supplierCode) {
 		
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-		File f = new File( infowiseimagesPath.getAmenitiesServices());
+		File f;
+		if(infowiseimagesPath != null){
+		 
+			if(infowiseimagesPath.getAmenitiesServices() != null){
+				
+				f = new File(infowiseimagesPath.getAmenitiesServices());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}
+		else{
+			f = new File("C:\\mypath\\default\\logo.jpg");
+		}
+		
+		
+		
         return ok(f);		
 		
 	}
@@ -463,7 +515,23 @@ public static void createRootDir() {
 	public static Result getLeisureorSportsImagePath(long supplierCode) {
 		
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-		File f = new File( infowiseimagesPath.getLeisureSports());
+		
+		File f;
+		if(infowiseimagesPath != null){
+		 
+			if(infowiseimagesPath.getLeisureSports() != null){
+				
+				 f = new File(infowiseimagesPath.getLeisureSports());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}
+		else{
+			f = new File("C:\\mypath\\default\\logo.jpg");
+		}
+		
+		
+		
         return ok(f);		
 		
 	}
@@ -546,7 +614,19 @@ public static void createRootDir() {
 	public static Result getMapImagePath(long supplierCode) {
 		
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-		File f = new File( infowiseimagesPath.getMap_image());
+		File f;
+		if(infowiseimagesPath != null){
+		 
+			if(infowiseimagesPath.getMap_image() != null){
+				
+			f = new File(infowiseimagesPath.getMap_image());
+			}else{
+				f = new File("C:\\mypath\\default\\logo.jpg");
+			}
+		}
+		else{
+			f = new File("C:\\mypath\\default\\logo.jpg");
+		}
         return ok(f);		
 		
 	}
