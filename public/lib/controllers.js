@@ -884,6 +884,9 @@ angular.module('travel_portal').
 					var arr = $rootScope.currencyname.split(" - ");
 					$rootScope.currencyShotcut = arr[0];
 					 $cookieStore.put('currencyShotcut',$rootScope.currencyShotcut);
+					 
+					 $rootScope.currencyname = $cookieStore.get('currency');
+					 $rootScope.currencyShotcut = $cookieStore.get('currencyShotcut');
 				
 				console.log(response.hotelgeneralinfo.isAdmin)
 				$http.get('/cities/'+response.hotelgeneralinfo.countryCode)
@@ -912,10 +915,7 @@ angular.module('travel_portal').
 	$rootScope.hotelName= $cookieStore.get('hotelName');
 	$rootScope.hotelAddress= $cookieStore.get('hotelAddress');
 	
-	$rootScope.currencyname = $cookieStore.get('currency');
 	
-	
-	 $rootScope.currencyShotcut = $cookieStore.get('currencyShotcut');
 	
 	$scope.getgeneralinfo = function(){
 	
