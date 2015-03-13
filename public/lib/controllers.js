@@ -876,13 +876,13 @@ angular.module('travel_portal').
 
 					if ((response.hotelgeneralinfo.currencyCode == $scope.currency[index].currencyCode)) {
 						$rootScope.currencyname = $scope.currency[index].currencyName ;	
-						
-					};
-				});
-				 $cookieStore.put('currency',$rootScope.currencyname);
+						 $cookieStore.put('currency',$rootScope.currencyname);
 					$rootScope.currencyname = $cookieStore.get('currency');
 					var arr = $rootScope.currencyname.split(" - ");
 					$rootScope.currencyShotcut = arr[0];
+					};
+				});
+				
 					 $cookieStore.put('currencyShotcut',$rootScope.currencyShotcut);
 					 
 					 $rootScope.currencyname = $cookieStore.get('currency');
