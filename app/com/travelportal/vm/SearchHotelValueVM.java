@@ -158,6 +158,12 @@ public class SearchHotelValueVM {
 	public void setHotelname(String hotelname) {
 		this.hotelname = hotelname;
 	}
+	public String getTotalParPerson() {
+		return totalParPerson;
+	}
+	public void setTotalParPerson(String totalParPerson) {
+		this.totalParPerson = totalParPerson;
+	}
 		
 	
 	

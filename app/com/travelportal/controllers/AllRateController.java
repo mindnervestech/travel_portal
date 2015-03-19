@@ -67,7 +67,7 @@ public class AllRateController extends Controller {
 		Map<Long, Long> map = new HashMap<Long, Long>();
 	
 		Set<String> mapDate = new HashSet<String>();
-		String[] fromDate ={"10-04-2015"};
+		String[] fromDate ={"11-04-2015"};
 		String[] toDate = {"14-04-2015"};
 		String[] cId = {"5"};
 		//String[] sId =  {"1"};

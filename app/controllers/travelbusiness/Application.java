@@ -586,6 +586,7 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 
 						}
 						sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
+						sRateDetail.setCancellation(rateObj.getCancellation());
 					}
 					mapRM.put(roomTP.getRoomId(), sRateDetail);
 					promoMap.put(roomTP.getRoomId(),roomTP.getPcount());
@@ -1759,6 +1760,7 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 
 						}
 						sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
+						sRateDetail.setCancellation(rateObj.getCancellation());
 					}
 					mapRM.put(roomTP.getRoomId(), sRateDetail);
 					promoMap.put(roomTP.getRoomId(),roomTP.getPcount());

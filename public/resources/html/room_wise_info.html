@@ -49,6 +49,7 @@
                                      <div class="intro table-wrapper full-width hidden-table-sms">
                                         <div class="col-sm-5 col-lg-5 features table-cell">
                                             <ul>
+                                          
                                                 <li><label>HOTEL NAME:</label>{{hotelif.hotelNm}}</li>
                                                 <li><label>ROOM TYPE:</label>{{roomIF.roomName}}</li>
                                                 <li><label>MAX GUESTS:</label>{{roomIF.hotelRoomRateDetail[0].adult_occupancy}}</li>
@@ -88,12 +89,40 @@
                                     </ul>
                                 </div>
                                 <div class="tab-pane fade" id="room-child" style="height: 307px;overflow: auto;">
-                                                                        
-                                    <h2>Room Child Policy</h2>
-                                    <div ng-repeat="child in roomIF.roomchildPolicies">
-                                    	<label>{{child.netRate}}</label>
+                                                   
+                                                   <div class="intro table-wrapper full-width hidden-table-sms">
+                                        
+                                        <div class="col-sm-7 col-lg-8 table-cell cruise-itinerary">
+                                            <div class="travelo-box">
+                                                <h4 class="box-title">Room Child Policy</h4>
+                                                {{hotelif.currencyShort}}
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sr.No</th>
+                                                            <th>Child Age From</th>
+                                                            <th>Child Age To</th>
+                                                            <th>Price</th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="child in roomIF.roomchildPolicies">
+                                                        <tr>
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{child.allowedChildAgeFrom}}</td>
+                                                            <td>{{child.allowedChildAgeTo}}</td>
+                                                            
+                                                            <td ng-if="child.netRate == '% of'">{{child.years}}% Extra on room rate </td>
+                                                            <td ng-if="child.netRate == 'add to Room Rate'"><sup style="font-size: 11px;color: chocolate;top: 0px;" class="ng-binding">{{hotelif.currencyShort}}</sup> {{child.years}} Extra on room rate </td>
+                                                           <!--  <td>{{child.netRate}}</td> -->
+                                                        </tr> 
+                                                       
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
-                                   		<label></label>
+                                   
                                 </div>
                              	
                         	</div>
