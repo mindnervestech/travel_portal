@@ -28,6 +28,7 @@ public class HotelSearch {
 	public List<ServicesVM> services;
 	public HotelBookingDetailsVM hotelBookingDetails;
 	public long datediff;
+	public String perferhotel;
 	
 	public List<SerachHotelRoomType> hotelbyRoom = new ArrayList<>();
 	public List<SerachedHotelbyDate> hotelbyDate; 
@@ -168,6 +169,13 @@ public class HotelSearch {
 	public void setStars(int stars) {
 		this.stars = stars;
 	}
+	public String getPerferhotel() {
+		return perferhotel;
+	}
+	public void setPerferhotel(String perferhotel) {
+		this.perferhotel = perferhotel;
+	}
+	
 	
 	
 }

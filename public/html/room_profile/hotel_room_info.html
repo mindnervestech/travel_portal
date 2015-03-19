@@ -91,7 +91,14 @@
 					<label id="-error" ng-show="myForm.maxAdultOccSharingWithChildren.$error.number" class="error" for="">This field is required.</label> <br>
 				</div>
 			</div>
-
+			
+			<div class="form-group">
+				<label class="col-md-4">Room Size</label>
+				<div class="col-md-3">
+					<input type="text" name="roomname" class="form-control"
+						data-ng-model="roomTypeIns.roomSize" style="width: 239px;margin-left: -1px;">
+				</div>
+			</div>
 
 
 		</div>
@@ -254,8 +261,8 @@
 		</fieldset>
 		<br>
 			<div class="form-group">
-						<label class="col-md-7">*Can you fit an EXTRA BED to this room type?</label>
-						<div class="col-md-3">
+						<label class="col-md-6">*Can you fit an EXTRA BED to this room type?</label>
+						<div class="col-md-2">
 
 							<div class="chargechild">
 								<input type="radio" name="extraBed"
@@ -269,11 +276,18 @@
 							</div>
 							<br>
 						</div>
+						<div ng-if="roomTypeIns.extraBedAllowed == 'true'">
+					<label class="col-md-1">Rate :</label>
+					<div class="col-md-2">
+						<input type="text"
+							data-ng-model="roomTypeIns.extraBedRate">
+					</div>
+						</div>
 
 					</div>
 					<div class="form-group">
-						<label class="col-md-7">*Is this room a suite?</label>
-						<div class="col-md-3">
+						<label class="col-md-6">*Is this room a suite?</label>
+						<div class="col-md-2">
 
 							<div class="chargechild">
 								<input type="radio" name="roomSuite"

@@ -19,6 +19,7 @@ public class AdminUser {
 	private long id;
 	private String userName;
 	private String password;
+	private String email;
 	public long getId() {
 		return id;
 	}
@@ -37,6 +38,13 @@ public class AdminUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	
 	public static AdminUser doLogin(String name,String pass) {
 		Query q = JPA.em().createQuery("SELECT a FROM AdminUser a where a.userName = ?1 AND a.password = ?2");

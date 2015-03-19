@@ -193,6 +193,11 @@ public class HotelRegistration {
 		return (List<HotelRegistration>) query.getResultList();
 	}
 	
+	public static List<HotelRegistration> getAllBlockUsers() {
+		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.status = 'BLOCK'");
+		return (List<HotelRegistration>) query.getResultList();
+	}
+	
 	public static HotelRegistration findById(long id) {
 		Query query = JPA.em().createQuery("select h from HotelRegistration h where h.id = ?1").setParameter(1, id);
 		return (HotelRegistration) query.getSingleResult();
@@ -214,6 +219,11 @@ public class HotelRegistration {
 	
 	public static HotelRegistration getallSupplierCode(long code) {
 		return (HotelRegistration) JPA.em().createQuery("select c from HotelRegistration c where c.supplierCode = "+code).getSingleResult();
+	}
+	
+	public static long pendingData() {
+		Query query = JPA.em().createQuery("select count(h.status) from HotelRegistration h where h.status = 'PENDING'");
+		return (long) query.getSingleResult();
 	}
 	
 	public static HotelRegistration findSupplier(String code,String name) {

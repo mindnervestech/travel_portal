@@ -315,6 +315,12 @@ public class AgentRegistration {
 		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.status = 'PENDING'");
 		return (List<AgentRegistration>) query.getResultList();
 	}
+	
+	public static long pendingData() {
+		Query query = JPA.em().createQuery("select count(h.status) from AgentRegistration h where h.status = 'PENDING'");
+		return (long) query.getSingleResult();
+	}
+	
 	//Query q = JPA.em().createQuery("select c.fromDate,c.toDate from RateMeta c where c.roomType.roomId = :roomid and c.currency = :currencyName GROUP BY c.fromDate , c.toDate");
 	public static List getAllApprovedAgent() {
 		Query query = JPA.em().createQuery("select DISTINCT h.country from AgentRegistration h where h.status = 'APPROVED'");
@@ -341,6 +347,12 @@ public static List<AgentRegistration> getAgentData(int code) {/*List<Integer> ra
 		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.status = 'REJECTED'");
 		return (List<AgentRegistration>) query.getResultList();
 	}
+	
+	public static List<AgentRegistration> getAllBlockAgent() {
+		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.status = 'BLOCK'");
+		return (List<AgentRegistration>) query.getResultList();
+	}
+	
 	public static AgentRegistration findById(long id) {
 		try{
 			System.out.println(id);
@@ -367,7 +379,7 @@ public static List<AgentRegistration> getAgentData(int code) {/*List<Integer> ra
 	public static AgentRegistration findagentinfo(String loginID,String password,String agentId) {
 		 
 		try{
-			Query query = JPA.em().createQuery("select a from AgentRegistration a where a.loginId = ?1 and a.password = ?2 and a.agentCode = ?3 and a.status = 'APPROVED'").setParameter(1, loginID).setParameter(2, password).setParameter(3, agentId);
+			Query query = JPA.em().createQuery("select a from AgentRegistration a where a.loginId = ?1 and a.password = ?2 and a.agentCode = ?3 and a.status IN ('APPROVED','BLOCK')").setParameter(1, loginID).setParameter(2, password).setParameter(3, agentId);
 			return (AgentRegistration) query.getSingleResult();
 		}catch(Exception ex){
 				return null;

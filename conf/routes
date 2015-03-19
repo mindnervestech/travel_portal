@@ -79,9 +79,12 @@ GET    /supplierfind/:supplierCode/:supplierName  com.travelportal.controllers.S
 GET		/getPendingUsers			com.travelportal.controllers.AdminController.getPendingUsers
 GET		/getApprovedUsers			com.travelportal.controllers.AdminController.getApprovedUsers
 GET		/getRejectedUsers			com.travelportal.controllers.AdminController.getRejectedUsers
+GET     /getBlockUsers			com.travelportal.controllers.AdminController.getBlockUsers
+GET     /perferUser/:id				com.travelportal.controllers.AdminController.perferUser(id: Long)
 GET		/approveUser/:id/:email/:supplierCode			com.travelportal.controllers.AdminController.approveUser(id: Long,email: String,supplierCode: Long)
 GET		/rejectUser/:id				com.travelportal.controllers.AdminController.rejectUser(id: Long)
 GET		/pendingUser/:id			com.travelportal.controllers.AdminController.pendingUser(id: Long)
+GET     /blockUser/:id				com.travelportal.controllers.AdminController.blockUser(id: Long)
 
 GET 	/countries					com.travelportal.controllers.TravelPortalUtilsController.getCountries()
 GET 	/cities/:countryCode		com.travelportal.controllers.TravelPortalUtilsController.getCities(countryCode: Integer)
@@ -190,10 +193,11 @@ POST    /setCitySelection                        com.travelportal.controllers.Ho
 GET		/getPendingAgent			com.travelportal.controllers.AdminController.getPendingAgent
 GET		/getApprovedAgent			com.travelportal.controllers.AdminController.getApprovedAgent
 GET		/getRejectedAgent			com.travelportal.controllers.AdminController.getRejectedAgent
+GET		/getBlockAgent			com.travelportal.controllers.AdminController.getBlockAgent
 GET		/approveAgent/:id/:email/:agentCode			com.travelportal.controllers.AdminController.approveAgent(id: Long,email:String,agentCode: Long)
 GET		/rejectAgent/:id			com.travelportal.controllers.AdminController.rejectAgent(id: Long)
 GET		/pendingAgent/:id		com.travelportal.controllers.AdminController.pendingAgent(id: Long)
-
+GET    /blockresultAgent/:id	com.travelportal.controllers.AdminController.blockresultAgent(id: Long)
 
 
 #following routes are used for fetch room details, Add Room Type and Edit Room Type

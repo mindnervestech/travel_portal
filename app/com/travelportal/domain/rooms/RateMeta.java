@@ -198,6 +198,15 @@ public class RateMeta {
 		return list;
 		
 	 }
+	 public static List<BigInteger> getsupplierByName(String name) {
+			
+		 List<BigInteger> list;
+	
+		 list = JPA.em().createNativeQuery("select DISTINCT hpp.supplier_code from hotel_profile hpp where hpp.supplier_nm = '"+name+"'").getResultList();  //and am.roomType_room_id = '"+roomId+"'
+	
+		return list;
+		
+	 }
 	 public static List<RateMeta> getdatecheck(Long roomId, int countryId, Date date, long supplier) {  
 		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		

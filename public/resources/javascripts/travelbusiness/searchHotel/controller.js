@@ -395,7 +395,6 @@ $http.get("/searchCountries").success(function(response) {
 	$scope.sortRating = function(){
 		console.log("HIiiii");
 		
-		
 		 if($scope.sortByStar == 0){
 			   $scope.sortByStar = 1;
 		   }else{
@@ -413,6 +412,7 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.findHotelData.locationCheck = $scope.location_check;
 			$scope.findHotelData.sortByRating = $scope.sortByStar;
 			$scope.findHotelData.sortData = $scope.sort;
+			$scope.findHotelData.hotelname = $scope.hotelName;
 			$scope.findHotelData.noSort = 0;
 				console.log($scope.findHotelData);
 			
@@ -453,6 +453,7 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.findHotelData.locationCheck = $scope.location_check;
 			$scope.findHotelData.sortByRating = $scope.sortByStar;
 			$scope.findHotelData.sortData = $scope.sort;
+			$scope.findHotelData.hotelname = $scope.hotelName;
 			$scope.findHotelData.noSort = 1;
 			
 				console.log($scope.findHotelData);
@@ -476,6 +477,39 @@ $http.get("/searchCountries").success(function(response) {
 		   
 		}
 	
+	   $scope.hotelwisesearch = function(hotelName){
+		   console.log(hotelName);
+		   $scope.findHotelData.checkIn = $scope.hotelAllData.hotellist[0].checkIn;
+			$scope.findHotelData.checkOut = $scope.hotelAllData.hotellist[0].checkOut;
+			$scope.findHotelData.city = $scope.hotelAllData.hotellist[0].cityCode;
+			$scope.findHotelData.nationalityCode = $scope.hotelAllData.hotellist[0].nationality;
+			//$scope.findHotelData.id = $scope.hotelAllData.hotellist[0].startRating;
+			$scope.findHotelData.amenitiesCheck = $scope.amenities_check;
+			$scope.findHotelData.servicesCheck = $scope.services_check;
+			$scope.findHotelData.locationCheck = $scope.location_check;
+			$scope.findHotelData.sortByRating = $scope.sortByStar;
+			$scope.findHotelData.sortData = $scope.sort;
+			$scope.findHotelData.hotelname = hotelName;
+			$scope.findHotelData.noSort = 1;
+			
+			console.log($scope.findHotelData);	
+			
+			$http.post('/findHotelByData', $scope.findHotelData).success(function(data){
+				console.log('success');
+				console.log(data);
+				$scope.hotellistInfo = data.hotellist;
+				angular.forEach(data.hotellist, function(obj, index){ 
+					$scope.img = "/searchHotelInfo/getHotelImagePath/"+data.hotellist[index].supplierCode+"?d="+new Date().getTime();
+					$scope.hotellistInfo[index].imgPaths = $scope.img;
+				});
+				$scope.hotelAllData.totalHotel = data.totalHotel;
+				console.log($scope.hotellistInfo);
+				
+			}).error(function(data, status, headers, config) {
+				console.log('ERROR');
+			});
+		   
+	   }
 	$scope.ShowFullImg = function(index){
 		console.log(index);
 		$scope.hotelIF = $scope.hotellistInfo[index];
@@ -1142,6 +1176,10 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 			//controller:'hoteProfileController',
 			className: 'ngdialog-theme-default'
 		});
+		
+		$scope.selectextraBed = function(){
+			console.log("------Select---------");
+		}
 	}
 	
 	$scope.availableFlag = [];
@@ -1287,12 +1325,19 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 		
 		
 		
-		
+		$scope.flagA = 0;
 		$http.post('/saveHotelBookingInfo',$scope.hotel).success(function(data){
-			 notificationService.success("Room Book Successfully");
+			
 			console.log("Success");
-    		
+			console.log(data);
+			console.log("-----------");
+    		if(data == 0){
+    			$scope.flagA = 0;
+    			 notificationService.success("Room Book Successfully");
     		 $window.location.replace("http://li664-78.members.linode.com:9989/");
+    		}else{
+    			$scope.flagA = 1;
+    		}
     		
     	}).error(function(data, status, headers, config) {
 			console.log('ERROR');

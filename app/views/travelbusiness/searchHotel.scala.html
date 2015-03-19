@@ -125,6 +125,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                 <div class="panel style1 arrow-right">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#hotel-filter" class="collapsed">Hotel Name</a>
+                                    </h4>
+                                    <div id="hotel-filter" class="panel-collapse collapse">
+                                        <div class="panel-content">
+                                       <input type="text" data-ng-model="hotelname" class="input-text full-width" value="">
+                                            <!-- <ul class="check-square filters-option" ng-repeat="hotelLocation in hotelAllData.hotellocation">
+                                               <li><a id="location{{$index}}" ng-click="locationWiseHotel($index,hotelLocation.locationid)">{{hotelLocation.locationNm}}<small>({{hotelLocation.countHotelByLocation}})</small></a></li>
+                                            </ul> -->
+                                            <a class="button btn-small" ng-click="hotelwisesearch(hotelname)" style="background: #98ce44;margin-top: 12px;">Find</a>
+                                        </div>
+                                    </div>
+                                </div>
                                <!--  <div class="panel style1 arrow-right">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" href="#language-filter" class="collapsed">Host Language</a>
@@ -208,7 +222,7 @@
                                   </ul>
                             </div>
                             <div class="hotel-list listing-style3 hotel">
-                                <article class="box" ng-repeat="hotelInfo in hotellistInfo" >   <!-- style="border: 4px solid #C8C6C6;" -->
+                                <article class="box" ng-repeat="hotelInfo in hotellistInfo  | orderBy:'perferhotel'" >   <!-- style="border: 4px solid #C8C6C6;" -->
                                 
                                  
                                     <div class="col-md-12" style="border-bottom: 4px solid #C8C6C6;">
@@ -246,7 +260,9 @@
                                         <div>
                                             <p>{{hotelInfo.imgDescription}}</p>
                                              <div style="width: 150px;">
-                                                  <span class="price"><small>MIN/START</small>{{hotelInfo.minRate}}<sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup></span>  
+                                                  <span class="price"><small>MIN/START</small>{{hotelInfo.minRate}}<sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup></span>
+                                                 
+                                                  
                                                 <!--  <form action="/hoteldetailpage" method="post">
                               					        <input type="text" name="supplierCode"  value="{{hotelInfo.supplierCode}}" style="display: none;">
                                 					    <input type="text" name="checkIn" value="{{hotelInfo.checkIn}}" style="display: none;">
@@ -254,6 +270,14 @@
                             						     <input type="text" name="nationalityCode" value="{{hotelInfo.nationality}}" style="display: none;">  
                                                  <button type="submit" class="btn-small full-width text-center">VIEW DETAILS</button>
                                                </form>  -->
+                                            </div> 
+                                        </div>
+                                        <div ng-if="hotelInfo.perferhotel == 'perfer'">
+                                        <p></p>
+                                             <div style="width: 150px;">
+                                                 
+                                                  <span><img src="/assets/resources/images/preferredImg.png" style="margin-top: 15px;"></span>  
+                                                 
                                             </div> 
                                         </div>
                                     </div>

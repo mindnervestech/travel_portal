@@ -4,22 +4,25 @@
 	</div>
 
 	<ul class="nav nav-tabs" role="tablist" id="myTab">
-		<li class="active"><a data-target="#approved" role="tab"
-			data-toggle="tab" style="cursor: pointer;">Approved</a></li>
+	<li class="active"><a data-target="#pending" role="tab" data-toggle="tab"
+			style="cursor: pointer;">Pending</a></li>
+			<li><a data-target="#block" role="tab" data-toggle="tab" style="cursor: pointer;">Block</a></li>
 		<li><a data-target="#rejected" role="tab" data-toggle="tab"
 			style="cursor: pointer;">Rejected</a></li>
-		<li><a data-target="#pending" role="tab" data-toggle="tab"
-			style="cursor: pointer;">Pending</a></li>
+			<li><a data-target="#approved" role="tab"
+			data-toggle="tab" style="cursor: pointer;">Approved</a></li>
+		
 	</ul>
 
 	<!-- Tab panes -->
 	<div class="tab-content" ng-init="getData()">
-		<div class="tab-pane active" id="approved">
+		<div class="tab-pane" id="approved">
 			<h4>Approved Users</h4>
 
 			<table ng-table="tableParams" class="table">
 				<tbody>
 					<tr>
+						<th>Company Name</th>
 						<th>First Name</th>
 						<th>Last Name</th>
 						<th>Email</th>
@@ -28,6 +31,7 @@
 						<th></th>
 					</tr>
 					<tr ng-repeat="user in approvedUsers">
+					    <td>{{user.companyName}}</td>
 						<td>{{user.firstName}}</td>
 						<td>{{user.lastName}}</td>
 						<td>{{user.EmailAddr}}</td>
@@ -48,6 +52,7 @@
 			<table ng-table="tableParams" class="table">
 				<tbody>
 					<tr>
+						<th>Company Name</th>
 						<th>First Name</th>
 						<th>Last Name</th>
 						<th>Email</th>
@@ -56,6 +61,7 @@
 						<th></th>
 					</tr>
 					<tr ng-repeat=" user in rejectedUsers">
+						<td>{{user.companyName}}</td>
 						<td>{{user.firstName}}</td>
 						<td>{{user.lastName}}</td>
 						<td>{{user.EmailAddr}}</td>
@@ -70,11 +76,12 @@
 			</table>
 		</div>
 
-		<div class="tab-pane" id="pending">
+		<div class="tab-pane active" id="pending">
 			<h4>Pending Users</h4>
 			<table ng-table="tableParams" class="table">
 				<tbody>
 					<tr>
+						<th>Company Name</th>
 						<th>First Name</th>
 						<th>Last Name</th>
 						<th>Email</th>
@@ -83,6 +90,7 @@
 						<th></th>
 					</tr>
 					<tr ng-repeat=" user in pendingUsers">
+						<td>{{user.companyName}}</td>
 						<td>{{user.firstName}}</td>
 						<td>{{user.lastName}}</td>
 						<td>{{user.EmailAddr}}</td>
@@ -96,6 +104,36 @@
 				</tbody>
 			</table>
 		</div>
+		
+		<div class="tab-pane" id="block">
+			<h4>Block Users</h4>
+			<table ng-table="tableParams" class="table">
+				<tbody>
+					<tr>
+						<th>Company Name</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Email</th>
+						<th>Country</th>
+						<th>Agent Id</th>
+						<th></th>
+					</tr>
+					<tr ng-repeat=" user in blockUsers">
+						<td>{{user.companyName}}</td>
+						<td>{{user.firstName}}</td>
+						<td>{{user.lastName}}</td>
+						<td>{{user.EmailAddr}}</td>
+						<td>{{user.country}}</td>
+						<td>{{user.agentCode}}</td>
+						<td><input name="" type="button" class="btn btn-primary"
+							value="View" ng-click="pendingU(user)" class="btnblue"
+							data-toggle="modal" /></td>
+						<!-- <td><input type="button"  class="btn" value="Approve" ng-click="approvePending(user.id,user)"></td> -->
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
 
 	</div>
 
@@ -277,7 +315,8 @@
 			
 		<hr class="mtxxl mbxxl" style="border-color: black">	
 		</div>
-		<div class="col-md-4 col-md-offset-7">
+		<div class="col-md-6 col-md-offset-6">
+			   <button type="button" ng-click="blockresult(generalInfo)" class="btn btn-primary">Block</button>
 				<button type="submit" class="btn btn-primary" ng-click="closeThisDialog()">Rejected</button>
 				<button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
 		</div>
@@ -461,7 +500,8 @@
 			
 		<hr class="mtxxl mbxxl" style="border-color: black">	
 		</div>
-		<div class="col-md-4 col-md-offset-7">
+		<div class="col-md-6 col-md-offset-6">
+				<button type="button" ng-click="approvresult(generalInfo)" class="btn btn-primary">Approved</button>
 				<button type="submit" class="btn btn-primary" ng-click="closeThisDialog()">Pending</button>
 				<button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
 		</div>
@@ -645,7 +685,8 @@
 			
 		<hr class="mtxxl mbxxl" style="border-color: black">	
 		</div>
-		<div class="col-md-4 col-md-offset-7">
+		<div class="col-md-6 col-md-offset-6">
+				 <button type="button" ng-click="rejectresult(generalInfo)" class="btn btn-primary">Rejected</button>
 				<button type="submit" class="btn btn-primary" ng-click="closeThisDialog()">Approved</button>
 				<button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
 		</div>
@@ -655,4 +696,184 @@
 						</div>
 </script>
 
+<script type="text/ng-template" id="block">
+		<div id="myTabContent2" class="tab-content hotel-profile-tab-content">
+		
+							<form method="post" role="form" data-ng-submit="ApprovReject()" class="form-horizontal">
+	<div class="row">
+		<div class="col-md-12">
+					<div class="form-group">
+										<label class="col-md-3 control-label">*Agent Code:</label>
+										<div class="col-md-8">
+											<input type="text" name="firstName" class="form-control" data-ng-model="generalInfo.agentCode" disabled="disabled">
+										</div>
+									</div>
+			<div class="form-group">
+										<label class="col-md-3 control-label">*Title:</label>
+										<div class="col-md-8">
+											<input type="text" name="title" class="form-control" data-ng-model="generalInfo.title" disabled="disabled">
+										</div>
+									</div>
 
+									<div class="form-group">
+										<label class="col-md-3 control-label">*First Name:</label>
+										<div class="col-md-8">
+											<input type="text" name="firstName" class="form-control" data-ng-model="generalInfo.firstName" disabled="disabled">
+										</div>
+									</div>
+
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Last Name:</label>
+										<div class="col-md-8">
+											<input type="text" name="lastName" class="form-control" data-ng-model="generalInfo.lastName" disabled="disabled">
+										</div>
+									</div>
+
+							<div class="form-group">
+										<label class="col-md-3 control-label">*Country:</label>
+										<div class="col-md-8">
+											<input type="text" name="country" class="form-control" data-ng-model="generalInfo.country" disabled="disabled">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Nature of Business:</label>
+										<div class="col-md-8">
+											<input type="text" name="business" class="form-control" data-ng-model="generalInfo.business" disabled="disabled">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">How did you hear
+											about us? </label>
+										<div class="col-md-8">
+											<input type="text" name="hear" class="form-control" data-ng-model="generalInfo.hear" disabled="disabled">
+										</div>
+									</div>
+			
+							<div class="form-group">
+										<label class="col-md-3 control-label">Position/Designation:</label>
+										<div class="col-md-8">
+											<input type="text" name="Position" class="form-control" data-ng-model="generalInfo.Position" disabled="disabled">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Company Name:</label>
+										<div class="col-md-8">
+											<input type="text" name="companyName" class="form-control" data-ng-model="generalInfo.companyName" disabled="disabled">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Company Street
+											Address: </label>
+
+										<div class="col-md-8">
+											<textarea id="companyAddress" name="companyAddress" rows="2" data-ng-model="generalInfo.companyAddress" disabled="disabled" class="form-control"></textarea>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">*Company City:</label>
+										<div class="col-md-8">
+											<input type="text" name="city" class="form-control" data-ng-model="generalInfo.city" disabled="disabled">
+										</div>
+									</div>
+
+
+
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">Company
+											Zip/Postal Code:</label>
+										<div class="col-md-8">
+											<input type="text" name="postalCode" class="form-control" data-ng-model="generalInfo.postalCode" disabled="disabled">
+										</div>
+									</div>
+
+							<div class="form-group">
+										<label class="col-md-3 control-label">*Preferred
+											Payment Method: </label>
+										<div class="col-md-8">
+												<input type="text" name="paymentMethod" class="form-control" data-ng-model="generalInfo.paymentMethod" disabled="disabled">
+										</div>
+									</div>
+								<div class="form-group">
+				<label class="col-md-3 control-label">Choose Currency</label>
+				<div class="col-md-8">
+					<input type="text" id="currency" name="currency" data-ng-model="generalInfo.currency" placeholder="currency" class="form-control" disabled="disabled">
+				</div>
+			</div>
+			
+			<div class="form-group">
+										<label class="col-md-3 control-label">*E-mail Address:</label>
+
+										<div class="col-md-8">
+											<input type="email" name="EmailAddr" class="form-control" data-ng-model="generalInfo.EmailAddr" placeholder="currency" class="form-control" disabled="disabled">
+										</div>
+									</div>
+
+					<div class="form-group">
+									<label class="col-md-3 control-label">*Choose your
+										login ID: </label>
+									<div class="col-md-6">
+										<input type="text" name="loginId" class="form-control" data-ng-model="generalInfo.loginId" disabled="disabled">
+									</div>
+								</div>
+								
+								<div class="form-group">
+						<label class="col-md-3 control-label">*Password:</label>
+							<div class="col-md-6">
+								<input type="text" name="password" class="form-control" data-ng-model="generalInfo.password" disabled="disabled">
+								<label>(minimum 6 characters)</label>
+							</div>
+					</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">*Direct
+										Telephone:</label>
+									<div class="col-md-2">
+										<input type="text" name="directCode" class="form-control" data-ng-model="generalInfo.directCode" disabled="disabled">
+
+									</div>
+
+									<div class="col-md-3">
+										<input type="text" name="directTelNo" class="form-control" data-ng-model="generalInfo.directTelNo" disabled="disabled">
+
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-md-3 control-label">*Direct Fax:</label>
+									<div class="col-md-2 setwidth">
+										<input type="text" name="faxCode" class="form-control" data-ng-model="generalInfo.faxCode" disabled="disabled">
+
+									</div>
+
+									<div class="col-md-3">
+										<input type="text" name="faxTelNo" class="form-control" data-ng-model="generalInfo.faxTelNo" disabled="disabled">
+
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-md-3 control-label">Web Site: </label>
+									<div class="col-md-6">
+										<input type="text" name="webSite" class="form-control" data-ng-model="generalInfo.webSite" disabled="disabled">
+									</div>
+								</div>
+
+			
+		<hr class="mtxxl mbxxl" style="border-color: black">	
+		</div>
+		<div class="col-md-6 col-md-offset-6">
+			   <button type="button" ng-click="approvresult(generalInfo)" class="btn btn-primary">Approved</button>
+				<button type="submit" class="btn btn-primary" ng-click="closeThisDialog()">Rejected</button>
+				<button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
+		</div>
+	</div>
+</form>
+
+						</div>
+</script>

@@ -59,28 +59,28 @@
                                     <h2>Booking Information</h2>
                                     <div class="form-group row">
                                         <div class="col-sm-6 col-md-5">
-                                            <label>traveller first name</label>
+                                            <label>*traveller first name</label>
                                             <input type="text" data-ng-model="traveller.firstname" class="input-text full-width" value="" placeholder="" required>
                                         </div>
                                         <div class="col-sm-6 col-md-5">
-                                            <label>traveller last name</label>
+                                            <label>*traveller last name</label>
                                             <input type="text" data-ng-model="traveller.lastname" class="input-text full-width" value="" placeholder="" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6 col-md-5">
                                             <label>traveller email address</label>
-                                            <input type="email" data-ng-model="traveller.email" class="input-text full-width" value="" placeholder="" required>
+                                            <input type="email" data-ng-model="traveller.email" class="input-text full-width" value="" placeholder="">
                                         </div>
                                          <div class="col-sm-6 col-md-5">
                                             <label>traveller Phone number</label>
-                                            <input type="text" data-ng-model="traveller.phnaumber" class="input-text full-width" value="" placeholder="" required>
+                                            <input type="text" data-ng-model="traveller.phnaumber" class="input-text full-width" value="" placeholder="">
                                         </div>
                                     
                                     </div>
                                      <div class="form-group row">
                                         <div class="col-sm-6 col-md-5">
-                                            <label>Country code</label>
+                                            <label>*Country code</label>
                                             <div class="selector">
                                                 <select class="full-width" name="countryCode" data-ng-model="traveller.country" ng-change="onCountryChange()" placeholder="Country" > 
                                                         <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
@@ -88,7 +88,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-5">
-                                            <label>Addresss</label>
+                                            <label>*Addresss</label>
                                             <textarea data-ng-model="traveller.address" class="input-text full-width" value="" placeholder="" required></textarea>
                                         </div>
                                     </div> 
@@ -106,6 +106,9 @@
                                     <div class="col-sm-6 col-md-5">
                                         <button type="submit" class="full-width btn-large">CONFIRM BOOKING</button>
                                     </div>
+                                </div>
+                                <div class="form-group row" ng-show="flagA == 1">
+									<label style="color:red;">ljlsdjfkjksdjfkdsj </label>
                                 </div>
                             </form>
                         </div>
@@ -150,7 +153,9 @@
                             <dl class="other-details">
                                 <dt class="feature">room Type:</dt><dd class="value">{{hotel.hotelbyRoom[0].roomName}}</dd>
                                 <dt class="feature">No Of Room:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}}</dd>
-                                <dt class="feature">Total Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.total}}<sup style="color: chocolate;top: -2px;" class="ng-binding">{{hotel.currencyShort}}</sup></dd>
+                                 <dt class="feature">Per Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.totalParPerson}}<sup style="color: chocolate;top: -2px;" class="ng-binding">{{hotel.currencyShort}}</sup></dd>
+                                 <dt class="feature">Total Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * {{hotel.hotelBookingDetails.totalParPerson}}<sup style="color: chocolate;top: -2px;" class="ng-binding">{{hotel.currencyShort}}</sup></dd>
+                               <!--  <dt class="feature"></dt><dd class="value">{{hotel.hotelBookingDetails.total}}<sup style="color: chocolate;top: -2px;" class="ng-binding">{{hotel.currencyShort}}</sup></dd> -->
                                 <!-- <dt class="feature">taxes and fees:</dt><dd class="value">$10</dd> -->
                                 <dt class="total-price">Total Price</dt><dd class="total-price-value">{{hotel.hotelBookingDetails.total}}<sup style="color: chocolate;top: -2px;" class="ng-binding">{{hotel.currencyShort}}</sup></dd>
                             </dl>

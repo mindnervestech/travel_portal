@@ -1,3 +1,5 @@
+@(supplierPending: String , agentPending : String)
+
 
 <script>
 	var supplierCode = null;
@@ -66,7 +68,12 @@
                     <div class="input-group"><input type="text" placeholder="Search..." class="form-control"/><span class="input-group-btn"><a href="javascript:;" class="btn submit"><i class="fa fa-search"></i></a></span></div>
                 </form> -->
                 <ul class="nav navbar navbar-top-links navbar-right mbn">
-                    
+                     <li id="topbar-chat" class="hidden-xs">
+                	<a data-hover="dropdown" href="#" class="dropdown-toggle"><i><span style="font-size: smaller;">Supplier pending</span></i><span class="badge badge-orange">@supplierPending</span></a>
+               </li>
+                <li id="topbar-chat" class="hidden-xs">
+                	<a data-hover="dropdown" href="#/manageAgent" class="dropdown-toggle"><i><span style="font-size: smaller;">Agent pending</span></i><span class="badge badge-orange">@agentPending</span></a>
+               </li>
                    <!--  <li id="topbar-chat" class="hidden-xs">
 						<a href="javascript:void(0)" class="btn-chat">Home</a>
 					</li> -->

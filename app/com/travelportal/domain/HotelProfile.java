@@ -173,7 +173,9 @@ public class HotelProfile {
 	private String location1;
 	private String location2;
 	private String location3;
+	private String perfer;
 	
+	private String status;
 	
 	
 	
@@ -769,7 +771,22 @@ public class HotelProfile {
 		this.id = id;
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
+	public String getPerfer() {
+		return perfer;
+	}
+
+	public void setPerfer(String perfer) {
+		this.perfer = perfer;
+	}
+
 	public static HotelProfile findById(Long id) {
 		try
 		{

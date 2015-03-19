@@ -23,9 +23,11 @@ public class SearchHotelValueVM {
 	public String total;
 	public String adult;
 	public String noOfroom;
+	public String totalParPerson;
 	public String loginID;
 	public String password;
 	public String agentId;
+	public String hotelname;
 	
 	
 	
@@ -149,6 +151,12 @@ public class SearchHotelValueVM {
 	}
 	public void setNoSort(String noSort) {
 		this.noSort = noSort;
+	}
+	public String getHotelname() {
+		return hotelname;
+	}
+	public void setHotelname(String hotelname) {
+		this.hotelname = hotelname;
 	}
 		
 	

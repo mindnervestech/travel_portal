@@ -1195,7 +1195,10 @@ public static void createRootDir() {
 			hotelroomTypes.setDescription(roomtypeVM.getDescription());
 			hotelroomTypes.setMaxAdultOccSharingWithChildren(roomtypeVM.getMaxAdultOccSharingWithChildren());
 			hotelroomTypes.setSupplierCode(roomtypeVM.getSupplierCode());
-			
+			hotelroomTypes.setRoomSize(roomtypeVM.getRoomSize());
+			if(roomtypeVM.getExtraBedRate() != null){
+			hotelroomTypes.setExtraBedRate(Double.parseDouble(roomtypeVM.getExtraBedRate()));
+			}
 			hotelroomTypes.setAmenities(RoomAmenities.getroomamenities(roomtypeVM.getRoomamenities()));
 					
 			for(RoomChildpoliciVM childVM : roomtypeVM.getRoomchildPolicies())
@@ -1214,8 +1217,6 @@ public static void createRootDir() {
 		}
 		else
 		{
-			
-			
 			HotelRoomTypes hotelroomTypes =HotelRoomTypes.findById(Long.parseLong(roomtypeVM.getRoomId()));
 			hotelroomTypes.setRoomType(roomtypeVM.getRoomname());
 			hotelroomTypes.setExtraBedAllowed(roomtypeVM.getExtraBedAllowed());
@@ -1228,7 +1229,9 @@ public static void createRootDir() {
 			hotelroomTypes.setMaxAdultOccSharingWithChildren(roomtypeVM.getMaxAdultOccSharingWithChildren());
 			//hotelroomTypes.setSupplierCode(roomtypeVM.getSupplierCode());
 			hotelroomTypes.setAmenities(RoomAmenities.getroomamenities(roomtypeVM.getRoomamenities()));
-					
+			if(roomtypeVM.getExtraBedRate() != null){
+			hotelroomTypes.setExtraBedRate(Double.parseDouble(roomtypeVM.getExtraBedRate()));
+			}
 			for(RoomChildpoliciVM childVM : roomtypeVM.getRoomchildPolicies())
 			{
 							

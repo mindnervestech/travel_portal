@@ -137,6 +137,7 @@ public class MarkUpController extends Controller {
 			AgentRegistration aRegistration= AgentRegistration.getAgentCode(bMarkupn.getAgent().getAgentCode());
 			bInfoVM.setAgentCode(aRegistration.getAgentCode());
 			bInfoVM.setAgentfirstName(aRegistration.getFirstName());
+			bInfoVM.setCompanyName(aRegistration.getCompanyName());
 			bInfoVM.setCurrencyCode(aRegistration.getCurrency().getId());
 			bInfoVM.setCurrencyName(aRegistration.getCurrency().getCurrencyName());
 			bInfoVM.setCountryCode(aRegistration.getCountry().getCountryCode());
@@ -165,6 +166,7 @@ public class MarkUpController extends Controller {
 			AgentRegistration aRegistration= AgentRegistration.getAgentCode(sMarkup.getAgentSpecific().getAgentCode());
 			sVm.setAgentCode(aRegistration.getAgentCode());
 			sVm.setAgentfirstName(aRegistration.getFirstName());
+			sVm.setCompanyName(aRegistration.getCompanyName());
 			sVm.setCurrencyCode(aRegistration.getCurrency().getId());
 			sVm.setCurrencyName(aRegistration.getCurrency().getCurrencyName());
 			sVm.setCountryCode(aRegistration.getCountry().getCountryCode());

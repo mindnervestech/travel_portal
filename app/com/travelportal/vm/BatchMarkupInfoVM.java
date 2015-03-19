@@ -11,6 +11,7 @@ public class BatchMarkupInfoVM {
 	public Long supplier;
 	public String agentCode;
 	public String agentfirstName;
+	public String companyName;
 	public int countryCode;
 	public String CountryName;
 	public int currencyCode;
@@ -85,6 +86,12 @@ public class BatchMarkupInfoVM {
 	}
 	public void setAgentfirstName(String agentfirstName) {
 		this.agentfirstName = agentfirstName;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 	
 	

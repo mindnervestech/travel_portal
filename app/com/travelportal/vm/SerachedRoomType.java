@@ -10,8 +10,11 @@ public class SerachedRoomType {
 	public int childAllowedFreeWithAdults;
 	public String extraBedAllowed;
 	public String roomSuiteType;
+	public String roomSize;
+	public String extraBedRate;
 	public List<SerachedRoomRateDetail> hotelRoomRateDetail;
 	public List<RoomAmenitiesVm> amenities;
+	public List<RoomChildpoliciVM> roomchildPolicies;
 	public List<SpecialsVM> specials;
 	public int pcount;
 	
@@ -75,6 +78,24 @@ public class SerachedRoomType {
 	}
 	public void setPcount(int pcount) {
 		this.pcount = pcount;
+	}
+	public String getRoomSize() {
+		return roomSize;
+	}
+	public void setRoomSize(String roomSize) {
+		this.roomSize = roomSize;
+	}
+	public List<RoomChildpoliciVM> getRoomchildPolicies() {
+		return roomchildPolicies;
+	}
+	public void setRoomchildPolicies(List<RoomChildpoliciVM> roomchildPolicies) {
+		this.roomchildPolicies = roomchildPolicies;
+	}
+	public String getExtraBedRate() {
+		return extraBedRate;
+	}
+	public void setExtraBedRate(String extraBedRate) {
+		this.extraBedRate = extraBedRate;
 	}
 	
 	 

@@ -25,6 +25,7 @@ import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.InfoWiseImagesPath;
 import com.travelportal.domain.allotment.AllotmentMarket;
+import com.travelportal.domain.rooms.CancellationPolicy;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
@@ -35,6 +36,7 @@ import com.travelportal.domain.rooms.RoomAmenities;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.AllotmentMarketVM;
+import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.RoomAmenitiesVm;
 import com.travelportal.vm.RoomType;
@@ -142,9 +144,10 @@ public class AllRateController extends Controller {
     				}*/
     				hProfileVM.setServices(sList);
     				hProfileVM.setNationality(Integer.parseInt(cId[0]));
-    				InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
+    				/*InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
+    				if(infowiseimagesPath.getGeneralDescription() != null){
     				hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
-    				
+    				}*/
     				for (int i = 0; i < dayDiff; i++) {
     					
     					List<HotelRoomTypes> roomType = HotelRoomTypes
@@ -153,6 +156,7 @@ public class AllRateController extends Controller {
     					SerachedHotelbyDate hotelBydateVM = new SerachedHotelbyDate();
     					hotelBydateVM.setDate(format.format(c.getTime()));
     					Map<Long, Long> mapRm = new HashMap<Long, Long>();
+    					Map<Long, Long> mapcancel = new HashMap<Long, Long>();
     					Map<Long, Long> mapRate = new HashMap<Long, Long>();
     					List<SerachedRoomType> roomlist = new ArrayList<>();
     					for (HotelRoomTypes room : roomType) {
@@ -209,7 +213,7 @@ public class AllRateController extends Controller {
     							for (RateMeta rate : rateMeta1) {
     								roomtyp.setRoomId(room.getRoomId());
     								roomtyp.setRoomName(room.getRoomType());
-    								
+    								roomtyp.setRoomSize(room.getRoomSize());
     								/*List<RoomAmenitiesVm> rList = new ArrayList<>();
     								
     								for (RoomAmenities roomAmenitiesVm : room.getAmenities()){
@@ -333,8 +337,9 @@ public class AllRateController extends Controller {
     									}
     								}		
     								int findrate = 0;
+    								Long objectcancel;
     								for (PersonRate person : personRate) {
-    									
+    									List<CancellationPolicy> cancellation = CancellationPolicy.findByRateMetaId(person.getRate().getId());
     									if (person.getIsNormal() > 2) {
     										
     										for(RateSpecialDays rDays:reDays){
@@ -348,7 +353,7 @@ public class AllRateController extends Controller {
         											} catch (ParseException e) { // TODO Auto-generated catch block
         												e.printStackTrace();
         											}
-        											
+        											Double value = rDays.getIsSpecialdaysRate();
         											long sdayDiff;
         											if(stoDates.getTime() == sformDate.getTime()){
         												sdayDiff = 1;
@@ -378,7 +383,26 @@ public class AllRateController extends Controller {
         		    											rateVM.rateDetails.add(vm);
         		    											}
         													findrate = 1;
+        													
+        													for(CancellationPolicy cancel:cancellation) {
+        														objectcancel = (Long) mapcancel.get(cancel.getId());
+            						    						
+            						    						if (objectcancel == null) {
+            						    							
+            													System.out.println(cancel.getIsNormal());
+            													if(cancel.getIsNormal() > 2){
+            														if(person.getIsNormal() == cancel.getIsNormal()){
+            														CancellationPolicyVM vm = new CancellationPolicyVM(cancel);
+            														rateVM.cancellation.add(vm);
+            														}
+            													}
+            													mapcancel.put(cancel.getId(), Long.parseLong("1"));
+            						    						}
+            													
+            												}
         												}
+        												
+        												
         						    					specialfromDate.add(Calendar.DATE, 1);
         											}
     												
@@ -400,6 +424,18 @@ public class AllRateController extends Controller {
     											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
+    											
+    											for(CancellationPolicy cancel:cancellation) {
+													objectcancel = (Long) mapcancel.get(cancel.getId());
+						    						
+						    						if (objectcancel == null) {
+        											if(cancel.getIsNormal() == 1) {
+        												CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+        												rateVM.cancellation.add(vm1);
+        											}
+        											mapcancel.put(cancel.getId(), Long.parseLong("1"));
+						    						}
+    											 }
     											}
     										}else if(days == 1 && specialRateVM.rateDay1) {
     											if (person.getIsNormal() == 1) {
@@ -411,6 +447,17 @@ public class AllRateController extends Controller {
     											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
+    											for(CancellationPolicy cancel:cancellation) {
+													objectcancel = (Long) mapcancel.get(cancel.getId());
+						    						
+						    						if (objectcancel == null) {
+        											if(cancel.getIsNormal() == 1) {
+        												CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+        												rateVM.cancellation.add(vm1);
+        											}
+        											mapcancel.put(cancel.getId(), Long.parseLong("1"));
+						    						}
+    											 }
     											}
     										}else if(days == 2 && specialRateVM.rateDay2) {
     											if (person.getIsNormal() == 1) {
@@ -422,6 +469,17 @@ public class AllRateController extends Controller {
     											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
+    											for(CancellationPolicy cancel:cancellation) {
+													objectcancel = (Long) mapcancel.get(cancel.getId());
+						    						
+						    						if (objectcancel == null) {
+        											if(cancel.getIsNormal() == 1) {
+        												CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+        												rateVM.cancellation.add(vm1);
+        											}
+        											mapcancel.put(cancel.getId(), Long.parseLong("1"));
+						    						}
+    											 }
     											}
     										}else if(days == 3 && specialRateVM.rateDay3) {
     											if (person.getIsNormal() == 1) {
@@ -433,6 +491,17 @@ public class AllRateController extends Controller {
     											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
+    											for(CancellationPolicy cancel:cancellation) {
+													objectcancel = (Long) mapcancel.get(cancel.getId());
+						    						
+						    						if (objectcancel == null) {
+        											if(cancel.getIsNormal() == 1) {
+        												CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+        												rateVM.cancellation.add(vm1);
+        											}
+        											mapcancel.put(cancel.getId(), Long.parseLong("1"));
+						    						}
+    											 }
     											}
     										}else if(days == 4 && specialRateVM.rateDay4) {
     											if (person.getIsNormal() == 1) {
@@ -444,6 +513,17 @@ public class AllRateController extends Controller {
     											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
+    											for(CancellationPolicy cancel:cancellation) {
+													objectcancel = (Long) mapcancel.get(cancel.getId());
+						    						
+						    						if (objectcancel == null) {
+        											if(cancel.getIsNormal() == 1) {
+        												CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+        												rateVM.cancellation.add(vm1);
+        											}
+        											mapcancel.put(cancel.getId(), Long.parseLong("1"));
+						    						}
+    											 }
     											}
     										}else if(days == 5 && specialRateVM.rateDay5) {
     											if (person.getIsNormal() == 1) {
@@ -455,6 +535,17 @@ public class AllRateController extends Controller {
     											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
+    											for(CancellationPolicy cancel:cancellation) {
+													objectcancel = (Long) mapcancel.get(cancel.getId());
+						    						
+						    						if (objectcancel == null) {
+        											if(cancel.getIsNormal() == 1) {
+        												CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+        												rateVM.cancellation.add(vm1);
+        											}
+        											mapcancel.put(cancel.getId(), Long.parseLong("1"));
+						    						}
+    											 }
     											}
     										}else if(days == 6 && specialRateVM.rateDay6) {
     											if (person.getIsNormal() == 1) {
@@ -466,6 +557,17 @@ public class AllRateController extends Controller {
     											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
+    											for(CancellationPolicy cancel:cancellation) {
+													objectcancel = (Long) mapcancel.get(cancel.getId());
+						    						
+						    						if (objectcancel == null) {
+        											if(cancel.getIsNormal() == 1) {
+        												CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+        												rateVM.cancellation.add(vm1);
+        											}
+        											mapcancel.put(cancel.getId(), Long.parseLong("1"));
+						    						}
+    											 }
     											}
     										}else{
     											if (person.getIsNormal() == 0) {
@@ -477,6 +579,17 @@ public class AllRateController extends Controller {
     											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
+    											for(CancellationPolicy cancel:cancellation) {
+													objectcancel = (Long) mapcancel.get(cancel.getId());
+						    						
+						    						if (objectcancel == null) {
+        											if(cancel.getIsNormal() == 0) {
+        												CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+        												rateVM.cancellation.add(vm1);
+        											}
+        											mapcancel.put(cancel.getId(), Long.parseLong("1"));
+						    						}
+    											 }
     											}
     										}
     										
@@ -491,7 +604,19 @@ public class AllRateController extends Controller {
     											}
     											vm.adult = person.getNumberOfPersons();
     											rateVM.rateDetails.add(vm);
+    											for(CancellationPolicy cancel:cancellation) {
+													objectcancel = (Long) mapcancel.get(cancel.getId());
+						    						
+						    						if (objectcancel == null) {
+        											if(cancel.getIsNormal() == 0) {
+        												CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+        												rateVM.cancellation.add(vm1);
+        											}
+        											mapcancel.put(cancel.getId(), Long.parseLong("1"));
+						    						}
+    											 }
     											}
+    										
     									}
     									
     									
@@ -615,6 +740,10 @@ public class AllRateController extends Controller {
 
     							}
     							sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
+    							//if(){
+    							sRateDetail.setCancellation(rateObj.getCancellation());
+    							//}
+    							
     						}
     						mapRM.put(roomTP.getRoomId(), sRateDetail);
     						promoMap.put(roomTP.getRoomId(),roomTP.getPcount());
@@ -662,6 +791,7 @@ public class AllRateController extends Controller {
     										.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
     								x++;
     							}
+    							sRateDetail.setCancellation(rateObj.getCancellation());
     						}
     						mapRM.put(roomTP.getRoomId(), sRateDetail);
     						promoMap.put(roomTP.getRoomId(),arrayCount.get(aCount));

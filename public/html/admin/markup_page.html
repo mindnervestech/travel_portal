@@ -132,8 +132,9 @@
 																					type="checkbox" name="agent"
 																					ng-click="agentClicked($event,agentInfo)"
 																					ng-model="agentInfo.isSelected">
-																					{{agentInfo.firstName}} {{agentInfo.lastName}}
-																					(Agent Code :{{agentInfo.agentCode}})
+																					Com. Name : {{agentInfo.companyName}} (Name :{{agentInfo.firstName}} {{agentInfo.lastName}} /
+																					Code :{{agentInfo.agentCode}})
+																					
 																				</label>
 																			</div>
 																		</div>
@@ -286,8 +287,8 @@
 																					type="checkbox" name="agent"
 																					ng-click="specificAgentClicked($event,specificAgentInfo)"
 																					ng-model="specificAgentInfo.isSelected">
-																					{{specificAgentInfo.firstName}}
-																					{{specificAgentInfo.lastName}} (Agent Code :
+																					Com. Name : {{specificAgentInfo.companyName}} ({{specificAgentInfo.firstName}}
+																					{{specificAgentInfo.lastName}}/ Code :
 																					{{specificAgentInfo.agentCode}})
 																				</label>
 																			</div>
@@ -463,7 +464,7 @@
 																	style="width: 100%; font-size: small;">
 																	<thead style="background-color: #488c6c;">
 																		<tr>
-																			
+																			<th><a style="color: white;">Agent Company</a></th>
 																			<th><a style="color: white;">Agent Name</a></th>
 																			<th><a style="color: white;">Agent No</a></th>
 																			<th><a style="color: white;">Country</a></th>
@@ -478,7 +479,7 @@
 																	<tbody>
 
 																		<tr ng-repeat="supplerWise in SupplerWiseRate">
-																		
+																			<td>{{supplerWise.companyName}}</td>
 																			<td>{{supplerWise.agentfirstName}}</td>
 																			<td>{{supplerWise.agentCode}}</td>
 																			<td>{{supplerWise.countryName}}</td>
@@ -516,7 +517,7 @@
 																	style="width: 100%; font-size: small;">
 																	<thead style="background-color: #488c6c;">
 																		<tr>
-																			
+																			<th><a style="color: white;">Agent Company</a></th>
 																			<th><a style="color: white;">Agent Name/Country</a></th>
 																			<th><a style="color: white;">Rate Name</a></th>
 																			<th><a style="color: white;">Currency</a></th>
@@ -531,7 +532,7 @@
 																	<tbody>
 
 																		<tr ng-repeat="supplerWiseSpecific in SupplerWiseSpecificRate">
-																		
+																			<td>{{supplerWiseSpecific.companyName}}</td>
 																			<td>{{supplerWiseSpecific.agentfirstName}} ({{supplerWiseSpecific.countryName}})</td>
 																			<td>{{supplerWiseSpecific.rateName}}</td>
 																			<td>{{supplerWiseSpecific.currencyName}}</td>

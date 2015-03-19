@@ -11,6 +11,7 @@ public class SpecificMarkupInfoVM {
 	public Long supplier;
 	public String agentCode;
 	public String agentfirstName;
+	public String companyName;
 	public int countryCode;
 	public String CountryName;
 	public int currencyCode;
@@ -114,9 +115,12 @@ public class SpecificMarkupInfoVM {
 	public void setToDate(String toDate) {
 		this.toDate = toDate;
 	}
-	
-	
-	
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 	
 	
 	

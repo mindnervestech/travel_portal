@@ -877,9 +877,9 @@ angular.module('travel_portal').
 					if ((response.hotelgeneralinfo.currencyCode == $scope.currency[index].currencyCode)) {
 						$rootScope.currencyname = $scope.currency[index].currencyName ;	
 						 $cookieStore.put('currency',$rootScope.currencyname);
-					$rootScope.currencyname = $cookieStore.get('currency');
-					var arr = $rootScope.currencyname.split(" - ");
-					$rootScope.currencyShotcut = arr[0];
+							$rootScope.currencyname = $cookieStore.get('currency');
+							var arr = $rootScope.currencyname.split(" - ");
+							$rootScope.currencyShotcut = arr[0];
 					};
 				});
 				
@@ -2887,7 +2887,50 @@ controller("manageSuppliersController",function($scope,notificationService,$root
             error.insertAfter(element);
         }
     });
+	
+	$scope.preferHotel = function(perferInfo){
+		console.log(perferInfo);
+		$scope.userId = perferInfo.code;
+		$http.get('/perferUser/'+$scope.userId).success(function(response){
+			console.log("Success")
+			 notificationService.success("Hotel Perferred");
 		
+		});
+	}
+	
+	$scope.blockresult = function(blockinfo){
+		$scope.userId = blockinfo.id;
+		//console.log($scope.userId);
+		$http.get('/blockUser/'+$scope.userId).success(function(response){
+			console.log("Success")
+		$scope.blockUsers.splice($scope.blockUsers.indexOf(blockinfo),1);
+		$scope.getData();
+	});
+		ngDialog.close();
+	}
+	
+	$scope.rejectresult = function(rejectinfo){
+		$scope.userId = rejectinfo.id;
+		//console.log($scope.userId);
+		$http.get('/rejectUser/'+$scope.userId).success(function(response){
+			console.log("Success")
+		$scope.approvedUsers.splice($scope.approvedUsers.indexOf(rejectinfo),1);
+		$scope.getData();
+	});
+		ngDialog.close();
+	}	
+	$scope.approvresult = function(approvinfo){
+		
+		$scope.userId = approvinfo.id;
+		$scope.email = approvinfo.email;
+		$scope.supplierCode = approvinfo.code;
+		$http.get('/approveUser/'+$scope.userId+'/'+$scope.email+'/'+$scope.supplierCode).success(function(response){
+			$scope.pendingUsers.splice($scope.pendingUsers.indexOf(approvinfo),1);
+			$scope.getData();
+		});
+		ngDialog.close();
+	}
+	
 	
 			$scope.getData = function() {
 				
@@ -2904,6 +2947,11 @@ controller("manageSuppliersController",function($scope,notificationService,$root
 				$http.get('/getRejectedUsers').success(function(response){
 					console.log(response);
 					$scope.rejectedUsers = response;
+				});
+				
+				$http.get('/getBlockUsers').success(function(response){
+					console.log(response);
+					$scope.blockUsers = response;
 				});
 				
 			}
@@ -3464,6 +3512,46 @@ controller("manageAgentController",['$scope','notificationService','$filter','$r
         }
     });
 	
+	
+	$scope.blockresult = function(blockinfo){
+		console.log(blockinfo);
+		$scope.userId = blockinfo.id;
+		$http.get('/blockresultAgent/'+$scope.userId).success(function(response){
+			console.log("Success")
+			 notificationService.success("Reject Successfully");
+		$scope.approvedUsers.splice($scope.approvedUsers.indexOf(blockinfo),1);
+		$scope.getData();
+		ngDialog.close();
+	});
+	}
+	
+	$scope.rejectresult = function(rejectinfo){
+		console.log(rejectinfo);
+		$scope.userId = rejectinfo.id;
+		$http.get('/rejectAgent/'+$scope.userId).success(function(response){
+			console.log("Success")
+			 notificationService.success("Reject Successfully");
+		$scope.approvedUsers.splice($scope.approvedUsers.indexOf(rejectinfo),1);
+		$scope.getData();
+		
+		});
+		ngDialog.close();
+	}	
+	$scope.approvresult = function(approvinfo){
+		console.log(approvinfo);
+		$scope.userId = approvinfo.id;
+		$scope.email = approvinfo.EmailAddr;
+		$scope.agentCode = approvinfo.agentCode;
+		$scope.loginId = approvinfo.loginId;
+		$http.get('/approveAgent/'+$scope.userId+'/'+$scope.email+'/'+$scope.agentCode).success(function(response){
+			 notificationService.success("Approved Successfully");
+			$scope.pendingUsers.splice($scope.pendingUsers.indexOf(approvinfo),1);
+			$scope.getData();
+		});
+		ngDialog.close();
+	}
+	
+	
 	$scope.getData = function() {
 	
 	   $http.get('/getApprovedAgent').success(function(response){
@@ -3477,11 +3565,14 @@ controller("manageAgentController",['$scope','notificationService','$filter','$r
 			$scope.pendingUsers = response;
 		});
 		
-	
-		
 		$http.get('/getRejectedAgent').success(function(response){
 			console.log(response);
 			$scope.rejectedUsers = response;
+		});
+		
+		$http.get('/getBlockAgent').success(function(response){
+			console.log(response);
+			$scope.blockUsers = response;
 		});
 		
 	}

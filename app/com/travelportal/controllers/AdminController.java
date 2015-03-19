@@ -75,6 +75,18 @@ public class AdminController extends Controller {
 	}
 	
 	@Transactional
+	public static Result getBlockUsers() {
+		List<HotelRegistration> list = HotelRegistration.getAllBlockUsers();
+		List<HotelRegistrationVM> vm = new ArrayList<>();
+		for(HotelRegistration hotel : list) {
+			HotelRegistrationVM hotelRegistrationVM = new HotelRegistrationVM(hotel);
+			vm.add(hotelRegistrationVM);
+		}
+		
+		return ok(Json.toJson(vm));
+	}
+	
+	@Transactional
 	public static Result approveUser(Long id,String email,Long supplierCode) {
 		HotelRegistration register = HotelRegistration.findById(id);
 		register.setStatus("APPROVED");
@@ -107,6 +119,8 @@ public class AdminController extends Controller {
 		hotelProfile.setStartRatings(HotelStarRatings.getHotelRatingsByName(register.getStarRating()));
 		hotelProfile.setLaws(register.isLaws());
 		hotelProfile.setZipCode(register.getZipcode());
+		hotelProfile.setPerfer("test_first");
+		hotelProfile.setStatus("APPROVED");
 		hotelProfile.save();
 		
 		
@@ -158,11 +172,40 @@ public class AdminController extends Controller {
 		return ok();
 	}
 	
+	
+	@Transactional
+	public static Result perferUser(Long id) {
+		
+		HotelProfile hotelp = HotelProfile.findById(id);
+		
+		hotelp.setPerfer("perfer");
+		hotelp.merge();
+		
+		return ok();
+	}
+	
+	
 	@Transactional
 	public static Result pendingUser(Long id) {
 		HotelRegistration register = HotelRegistration.findById(id);
 		register.setStatus("PENDING");
 		register.merge();
+		return ok();
+	}
+	
+	@Transactional
+	public static Result blockUser(Long id) {
+		HotelRegistration register = HotelRegistration.findById(id);
+		register.setStatus("BLOCK");
+		register.merge();
+		
+		HotelProfile hotelp = HotelProfile.findById(Integer.parseInt(register.getSupplierCode()));
+		
+		if(hotelp == null){			
+			hotelp.setStatus("BLOCK");
+			hotelp.merge();
+		}
+		
 		return ok();
 	}
 	
@@ -197,6 +240,18 @@ public class AdminController extends Controller {
 	@Transactional
 	public static Result getRejectedAgent() {
 		List<AgentRegistration> list = AgentRegistration.getAllRejectedAgent();
+		List<AgentRegistrationVM> vm = new ArrayList<>();
+		for(AgentRegistration hotel : list) {
+			AgentRegistrationVM agentRegisVM = new AgentRegistrationVM(hotel);
+			vm.add(agentRegisVM);
+		}
+		
+		return ok(Json.toJson(vm));
+	}
+	
+	@Transactional
+	public static Result getBlockAgent() {
+		List<AgentRegistration> list = AgentRegistration.getAllBlockAgent();
 		List<AgentRegistrationVM> vm = new ArrayList<>();
 		for(AgentRegistration hotel : list) {
 			AgentRegistrationVM agentRegisVM = new AgentRegistrationVM(hotel);
@@ -297,6 +352,15 @@ public class AdminController extends Controller {
 	public static Result pendingAgent(Long id) {
 		AgentRegistration register = AgentRegistration.findById(id);
 		register.setStatus("PENDING");
+		register.merge();
+		return ok();
+	}
+	
+	
+	@Transactional
+	public static Result blockresultAgent(Long id) {
+		AgentRegistration register = AgentRegistration.findById(id);
+		register.setStatus("BLOCK");
 		register.merge();
 		return ok();
 	}

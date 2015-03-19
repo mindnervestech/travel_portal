@@ -17,8 +17,11 @@ public class SerachHotelRoomType {
 	public List<SerachedRoomRateDetail> hotelRoomRateDetail;
 	public List<RoomAmenitiesVm> amenities;
 	public List<SpecialsVM> specials;
+	public List<RoomChildpoliciVM> roomchildPolicies;
 	public int pcount;
 	public int applyPromotion;
+	public String roomSize;
+	public String extraBedRate;
 	
 	public Long getRoomId() {
 		return roomId;
@@ -86,6 +89,24 @@ public class SerachHotelRoomType {
 	}
 	public void setApplyPromotion(int applyPromotion) {
 		this.applyPromotion = applyPromotion;
+	}
+	public String getRoomSize() {
+		return roomSize;
+	}
+	public void setRoomSize(String roomSize) {
+		this.roomSize = roomSize;
+	}
+	public List<RoomChildpoliciVM> getRoomchildPolicies() {
+		return roomchildPolicies;
+	}
+	public void setRoomchildPolicies(List<RoomChildpoliciVM> roomchildPolicies) {
+		this.roomchildPolicies = roomchildPolicies;
+	}
+	public String getExtraBedRate() {
+		return extraBedRate;
+	}
+	public void setExtraBedRate(String extraBedRate) {
+		this.extraBedRate = extraBedRate;
 	}  
 	
 	

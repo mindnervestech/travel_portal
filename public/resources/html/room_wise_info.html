@@ -20,7 +20,7 @@
                                            
                                         </div> 
                                         <div class="col-md-4 pull-right">
-                                        <a class="button btn-small full-width text-center" style="background: #7db921;" title="">Book Now</a>
+                                        <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomIF.roomId)" style="background: #7db921;" title="">Book Now</a>
                                         </div>
                                     </div>
 		 							</div>
@@ -42,6 +42,7 @@
                             <ul class="tabs">
                                 <li class="active"><a href="#hotel-description" data-toggle="tab">Description</a></li>
                                 <li><a href="#room-amenities" data-toggle="tab">Room Amenities</a></li>
+                                 <li><a href="#room-child" data-toggle="tab">Room Child Policy</a></li>
                             </ul>
                             <div class="tab-content">
                             	<div class="tab-pane fade in active" id="hotel-description">
@@ -51,6 +52,7 @@
                                                 <li><label>HOTEL NAME:</label>{{hotelif.hotelNm}}</li>
                                                 <li><label>ROOM TYPE:</label>{{roomIF.roomName}}</li>
                                                 <li><label>MAX GUESTS:</label>{{roomIF.hotelRoomRateDetail[0].adult_occupancy}}</li>
+                                                 <li><label>ROOM SIZE:</label>{{roomIF.roomSize}}</li>
                                                 <li ng-if="roomIF.childAllowedFreeWithAdults != null"><label>FREE CHILD ALLOW:</label>{{roomIF.childAllowedFreeWithAdults}}</li>
                                                 <li ng-if="roomIF.extraBedAllowed == 'true'"><label>EXTRA BED:</label>YES</li>
                                                 <li ng-if="roomIF.extraBedAllowed == 'false'"><label>EXTRA BED:</label>NO</li>
@@ -84,6 +86,14 @@
                                         </li>
                                         </div>
                                     </ul>
+                                </div>
+                                <div class="tab-pane fade" id="room-child" style="height: 307px;overflow: auto;">
+                                                                        
+                                    <h2>Room Child Policy</h2>
+                                    <div ng-repeat="child in roomIF.roomchildPolicies">
+                                    	<label>{{child.netRate}}</label>
+                                    </div>
+                                   		<label></label>
                                 </div>
                              	
                         	</div>

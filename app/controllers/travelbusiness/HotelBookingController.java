@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 
 import play.data.Form;
 import play.db.jpa.Transactional;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.travelbusiness.afterBookingpage;
@@ -39,15 +40,21 @@ public class HotelBookingController extends Controller {
 		Json.fromJson(json, HotelSearch.class);
 		HotelSearch hSearch = Json.fromJson(json, HotelSearch.class);*/
 		
+		int flagAppro = 0;
+		
 		Form<HotelSearch> HotelForm = Form.form(HotelSearch.class).bindFromRequest();
 		HotelSearch searchVM = HotelForm.get();
 		
 		HotelBookingDetails hBookingDetails=new HotelBookingDetails();
+		AgentRegistration agRegistration = AgentRegistration.getAgentCode((session().get("agent")));
+		
+		if(agRegistration.getStatus().equals("APPROVED")){
+			
+		
+		hBookingDetails.setAgentId(Long.parseLong(session().get("agent")));
 		hBookingDetails.setHotelNm(searchVM.getHotelNm());
 		hBookingDetails.setHotelAddr(searchVM.getHotelAddr());
 		hBookingDetails.setSupplierCode(searchVM.getSupplierCode());
-		hBookingDetails.setAgentId(Long.parseLong(session().get("agent")));
-		AgentRegistration agRegistration = AgentRegistration.getAgentCode((session().get("agent")));
 		hBookingDetails.setAgentNm(agRegistration.getFirstName());
 		hBookingDetails.setAgentCompanyNm(agRegistration.getCompanyName());
 		hBookingDetails.setSupplierNm(searchVM.getSupplierNm());
@@ -227,8 +234,12 @@ public class HotelBookingController extends Controller {
 				}
 			}
 		}
-		
-		return ok(afterBookingpage.render());
+		flagAppro = 0;
+		}else{
+			flagAppro = 1;
+		}
+
+		return ok(Json.toJson(flagAppro));
 		
 	}
 	 

@@ -42,6 +42,7 @@ import views.html.travelbusiness.hotelDetails;
 import views.html.travelbusiness.searchHotel;
 
 import com.fasterxml.jackson.databind.JsonNode;
+//import com.gargoylesoftware.htmlunit.javascript.host.Console;
 import com.mnt.travelbusiness.helper.PageScope;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
@@ -52,6 +53,7 @@ import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.InfoWiseImagesPath;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.allotment.AllotmentMarket;
+import com.travelportal.domain.rooms.CancellationPolicy;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
@@ -59,11 +61,14 @@ import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RateSpecialDays;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.domain.rooms.RoomAmenities;
+import com.travelportal.domain.rooms.RoomChildPolicies;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.AgentRegistrationVM;
+import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.RoomAmenitiesVm;
+import com.travelportal.vm.RoomChildpoliciVM;
 import com.travelportal.vm.SearchAllotmentMarketVM;
 import com.travelportal.vm.SearchHotelValueVM;
 import com.travelportal.vm.SearchRateDetailsVM;
@@ -110,10 +115,12 @@ public class Application extends Controller {
 		final List<Country> countries = Country.getCountries(); 
 		List<Map> country = new ArrayList<>();
  		for(Country c : countries){
+ 			if(c.getCountryCode() == 4 ||c.getCountryCode() == 1){
  			Map m = new HashMap<>();
  			m.put("countryCode", c.getCountryCode());
  			m.put("countryName", c.getCountryName());
  			country.add(m);
+ 			}
 		}
 		return ok(Json.toJson(country));
 	}
@@ -553,7 +560,10 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 					
 					sHotelRoomType.setRoomId(roomTP.getRoomId());
 					sHotelRoomType.setRoomName(roomTP.getRoomName());
+					sHotelRoomType.setRoomSize(roomTP.getRoomSize());
+					sHotelRoomType.setExtraBedRate(roomTP.getExtraBedRate());
 					sHotelRoomType.setDescription(roomTP.getDescription());
+					sHotelRoomType.setRoomchildPolicies(roomTP.getRoomchildPolicies());
 					sHotelRoomType.setChildAllowedFreeWithAdults(roomTP.getChildAllowedFreeWithAdults());
 					sHotelRoomType.setExtraBedAllowed(roomTP.getExtraBedAllowed());
 					sHotelRoomType.setRoomSuiteType(roomTP.getRoomSuiteType());
@@ -723,13 +733,29 @@ public static void allotmentmarketInfo(AllotmentMarket alloMarket,SerachedRoomRa
 }
 
 public static void fillRoomInfo(HotelRoomTypes room,SerachedRoomType roomtyp){
+	
 	roomtyp.setRoomId(room.getRoomId());
 	roomtyp.setRoomName(room.getRoomType());
 	roomtyp.setDescription(room.getDescription());
 	roomtyp.setChildAllowedFreeWithAdults(room.getChildAllowedFreeWithAdults());
 	roomtyp.setExtraBedAllowed(room.getExtraBedAllowed());
 	roomtyp.setRoomSuiteType(room.getRoomSuiteType());
+	roomtyp.setRoomSize(room.getRoomSize());
+	roomtyp.setExtraBedRate(String.valueOf(room.getExtraBedRate()));
 	
+	List<RoomChildpoliciVM> roomChildList = new ArrayList<>();
+	
+	for(RoomChildPolicies rooVm:room.getRoomchildPolicies()){
+		RoomChildpoliciVM rooChildpoliciVM = new RoomChildpoliciVM();
+		rooChildpoliciVM.setAllowedChildAgeFrom(rooVm.getAllowedChildAgeFrom());
+		rooChildpoliciVM.setAllowedChildAgeTo(rooVm.getAllowedChildAgeTo());
+		rooChildpoliciVM.setNetRate(rooVm.getNetRate());
+		rooChildpoliciVM.setRoomchildPolicyId(rooVm.getRoomchildPolicyId());
+		rooChildpoliciVM.setYears(rooVm.getYears());
+		roomChildList.add(rooChildpoliciVM);
+	}
+	
+	roomtyp.setRoomchildPolicies(roomChildList);
 	List<RoomAmenitiesVm> rList = new ArrayList<>();
 	
 	for (RoomAmenities roomAmenitiesVm : room.getAmenities()){
@@ -748,6 +774,7 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	
 	hProfileVM.setSupplierCode(hAmenities.getSupplier_code());
 	hProfileVM.setHotelNm(hAmenities.getHotelName());
+	hProfileVM.setPerferhotel(hAmenities.getPerfer());
 	hProfileVM.setSupplierNm(hAmenities.getSupplierName());
 
 	if (hAmenities.getStartRatings() != null) {
@@ -832,8 +859,11 @@ public static void SpecialRateReturn(SearchSpecialRateVM specialRateVM,RateDetai
 
 public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRateVM specialRateVM,RateDetails rateDetails,int days,SerachedRoomRateDetail rateVM, List<RateSpecialDays> reDays, DateFormat format,Calendar checkInDate){
 	int findrate = 0;
+	Long objectcancel;
+	Map<Long, Long> mapcancel = new HashMap<Long, Long>();
 	for (PersonRate person : personRate) {
 		
+		 List<CancellationPolicy> cancellation = CancellationPolicy.findByRateMetaId(person.getRate().getId());
 		if (person.getIsNormal() > 2) {
 			
 			for(RateSpecialDays rDays:reDays){
@@ -847,6 +877,8 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 					} catch (ParseException e) { // TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
+					Double value = rDays.getIsSpecialdaysRate();
 					
 					long sdayDiff;
 					if(stoDates.getTime() == sformDate.getTime()){
@@ -874,10 +906,32 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 								vm.mealTypeName = person.getMealType().getMealTypeNm();
 								}
 								vm.adult = person.getNumberOfPersons();
+								
+															
 								rateVM.rateDetails.add(vm);
 								}
+							
+							
+							
 							findrate = 1;
+							for(CancellationPolicy cancel:cancellation) {
+								objectcancel = (Long) mapcancel.get(cancel.getId());
+	    						
+	    						if (objectcancel == null) {
+	    							
+								System.out.println(cancel.getIsNormal());
+								if(cancel.getIsNormal() > 2){
+									if(person.getIsNormal() == cancel.getIsNormal()){
+									CancellationPolicyVM vm = new CancellationPolicyVM(cancel);
+									rateVM.cancellation.add(vm);
+									}
+								}
+								mapcancel.put(cancel.getId(), Long.parseLong("1"));
+	    						}
+								
+							}
 						}
+						
     					specialfromDate.add(Calendar.DATE, 1);
 					}
 					
@@ -897,6 +951,18 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				}
 			vm.adult = person.getNumberOfPersons();
 			rateVM.rateDetails.add(vm);
+			
+			for(CancellationPolicy cancel:cancellation) {
+				objectcancel = (Long) mapcancel.get(cancel.getId());
+				
+				if (objectcancel == null) {
+				if(cancel.getIsNormal() == 1) {
+					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+					rateVM.cancellation.add(vm1);
+				}
+				mapcancel.put(cancel.getId(), Long.parseLong("1"));
+				}
+			 }
 			}
 		}else if(days == 1 && specialRateVM.rateDay1) {
 			if (person.getIsNormal() == 1) {
@@ -908,6 +974,18 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				}
 			vm.adult = person.getNumberOfPersons();
 			rateVM.rateDetails.add(vm);
+			
+			for(CancellationPolicy cancel:cancellation) {
+				objectcancel = (Long) mapcancel.get(cancel.getId());
+				
+				if (objectcancel == null) {
+				if(cancel.getIsNormal() == 1) {
+					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+					rateVM.cancellation.add(vm1);
+				}
+				mapcancel.put(cancel.getId(), Long.parseLong("1"));
+				}
+			 }
 			}
 		}else if(days == 2 && specialRateVM.rateDay2) {
 			if (person.getIsNormal() == 1) {
@@ -919,6 +997,18 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				}
 			vm.adult = person.getNumberOfPersons();
 			rateVM.rateDetails.add(vm);
+			
+			for(CancellationPolicy cancel:cancellation) {
+				objectcancel = (Long) mapcancel.get(cancel.getId());
+				
+				if (objectcancel == null) {
+				if(cancel.getIsNormal() == 1) {
+					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+					rateVM.cancellation.add(vm1);
+				}
+				mapcancel.put(cancel.getId(), Long.parseLong("1"));
+				}
+			 }
 			}
 		}else if(days == 3 && specialRateVM.rateDay3) {
 			if (person.getIsNormal() == 1) {
@@ -930,6 +1020,18 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				}
 			vm.adult = person.getNumberOfPersons();
 			rateVM.rateDetails.add(vm);
+			
+			for(CancellationPolicy cancel:cancellation) {
+				objectcancel = (Long) mapcancel.get(cancel.getId());
+				
+				if (objectcancel == null) {
+				if(cancel.getIsNormal() == 1) {
+					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+					rateVM.cancellation.add(vm1);
+				}
+				mapcancel.put(cancel.getId(), Long.parseLong("1"));
+				}
+			 }
 			}
 		}else if(days == 4 && specialRateVM.rateDay4) {
 			if (person.getIsNormal() == 1) {
@@ -941,6 +1043,18 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				}
 			vm.adult = person.getNumberOfPersons();
 			rateVM.rateDetails.add(vm);
+			
+			for(CancellationPolicy cancel:cancellation) {
+				objectcancel = (Long) mapcancel.get(cancel.getId());
+				
+				if (objectcancel == null) {
+				if(cancel.getIsNormal() == 1) {
+					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+					rateVM.cancellation.add(vm1);
+				}
+				mapcancel.put(cancel.getId(), Long.parseLong("1"));
+				}
+			 }
 			}
 		}else if(days == 5 && specialRateVM.rateDay5) {
 			if (person.getIsNormal() == 1) {
@@ -952,6 +1066,18 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				}
 			vm.adult = person.getNumberOfPersons();
 			rateVM.rateDetails.add(vm);
+			
+			for(CancellationPolicy cancel:cancellation) {
+				objectcancel = (Long) mapcancel.get(cancel.getId());
+				
+				if (objectcancel == null) {
+				if(cancel.getIsNormal() == 1) {
+					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+					rateVM.cancellation.add(vm1);
+				}
+				mapcancel.put(cancel.getId(), Long.parseLong("1"));
+				}
+			 }
 			}
 		}else if(days == 6 && specialRateVM.rateDay6) {
 			if (person.getIsNormal() == 1) {
@@ -963,6 +1089,18 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				}
 			vm.adult = person.getNumberOfPersons();
 			rateVM.rateDetails.add(vm);
+			
+			for(CancellationPolicy cancel:cancellation) {
+				objectcancel = (Long) mapcancel.get(cancel.getId());
+				
+				if (objectcancel == null) {
+				if(cancel.getIsNormal() == 1) {
+					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+					rateVM.cancellation.add(vm1);
+				}
+				mapcancel.put(cancel.getId(), Long.parseLong("1"));
+				}
+			 }
 			}
 		}else{
 			if (person.getIsNormal() == 0) {
@@ -974,8 +1112,21 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				}
 			vm.adult = person.getNumberOfPersons();
 			rateVM.rateDetails.add(vm);
+			
+			for(CancellationPolicy cancel:cancellation) {
+				objectcancel = (Long) mapcancel.get(cancel.getId());
+				
+				if (objectcancel == null) {
+				if(cancel.getIsNormal() == 0) {
+					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+					rateVM.cancellation.add(vm1);
+				}
+				mapcancel.put(cancel.getId(), Long.parseLong("1"));
+				}
+			 }
 			}
 		}
+		
 		
 	}else{
 		if (person.getIsNormal() == 0 && findrate == 0) {
@@ -987,9 +1138,25 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				}
 			vm.adult = person.getNumberOfPersons();
 			rateVM.rateDetails.add(vm);
+			
+			for(CancellationPolicy cancel:cancellation) {
+				objectcancel = (Long) mapcancel.get(cancel.getId());
+				
+				if (objectcancel == null) {
+				if(cancel.getIsNormal() == 0) {
+					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
+					rateVM.cancellation.add(vm1);
+				}
+				mapcancel.put(cancel.getId(), Long.parseLong("1"));
+				}
+			 }
 			}
+		
 	}
+	
+	 
 	}
+	
 }
 public static void findMinRateInHotel(List<HotelSearch> hotellist){
 	for (HotelSearch hotel : hotellist) {
@@ -1032,8 +1199,6 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	Json.fromJson(json, SearchHotelValueVM.class);
 	SearchHotelValueVM searchHotelValueVM = Json.fromJson(json, SearchHotelValueVM.class);
 
-	
-		
 		Map<String, Object> mapObject = new HashMap<String, Object>();
 		List<HotelSearch> hotellist = new ArrayList<>();
 		Map<Long, Long> map = new HashMap<Long, Long>();
@@ -1058,10 +1223,14 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		
 		dayDiff = findDateDiff(toDates,formDate,dayDiff);
 		diffInpromo = dayDiff;
-			
-		List<BigInteger> supplierId = RateMeta.getsupplierId(
+		List<BigInteger> supplierId;
+		if(searchHotelValueVM.getHotelname() == null || searchHotelValueVM.getHotelname() == ""){
+			supplierId = RateMeta.getsupplierId(
 				Integer.parseInt(cityId),
 				Integer.parseInt(nationalityId));
+		}else{
+			supplierId = RateMeta.getsupplierByName(searchHotelValueVM.getHotelname());
+		}
 
 		for (BigInteger supplierid : supplierId) {
 
@@ -1565,7 +1734,10 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 					
 					sHotelRoomType.setRoomId(roomTP.getRoomId());
 					sHotelRoomType.setRoomName(roomTP.getRoomName());
+					sHotelRoomType.setRoomSize(roomTP.getRoomSize());
+					sHotelRoomType.setExtraBedRate(roomTP.getExtraBedRate());
 					sHotelRoomType.setDescription(roomTP.getDescription());
+					sHotelRoomType.setRoomchildPolicies(roomTP.getRoomchildPolicies());
 					sHotelRoomType.setChildAllowedFreeWithAdults(roomTP.getChildAllowedFreeWithAdults());
 					sHotelRoomType.setExtraBedAllowed(roomTP.getExtraBedAllowed());
 					sHotelRoomType.setRoomSuiteType(roomTP.getRoomSuiteType());

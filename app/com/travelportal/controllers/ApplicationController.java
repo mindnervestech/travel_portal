@@ -79,11 +79,15 @@ public class ApplicationController extends Controller{
 	@Transactional
 	public static Result adminLogin() {
 		final String value = session().get("NAME");
+		long supplierpending = HotelRegistration.pendingData();
+		long agentpending = AgentRegistration.pendingData();
+		System.out.println(supplierpending);
         if (value == null) {
+        	
         	return ok(views.html.adminLogin.render());
         }
 		
-        return ok(views.html.adminHome.render());
+        return ok(views.html.adminHome.render(String.valueOf(supplierpending),String.valueOf(agentpending)));
 		
 	}
 	
@@ -93,12 +97,15 @@ public class ApplicationController extends Controller{
 	public static Result doAdminLogin() {
 		DynamicForm form = DynamicForm.form().bindFromRequest();
 		System.out.println(form.get("name"));
+		long supplierpending = HotelRegistration.pendingData();
+		long agentpending = AgentRegistration.pendingData();
+		System.out.println(supplierpending);
 		try {
 			AdminUser adminUser = AdminUser.doLogin(form.get("name"),form.get("pass"));
 			
 			if(adminUser != null) {
 				session().put("NAME", adminUser.getUserName());
-				return ok(views.html.adminHome.render());
+				return ok(views.html.adminHome.render(String.valueOf(supplierpending),String.valueOf(agentpending)));
 			}
 		
 		} catch(NoResultException e) { }
@@ -158,14 +165,16 @@ public class ApplicationController extends Controller{
 		System.out.println("-----------------");
 		System.out.println(form.get("supplierCode"));
 		HotelRegistration user = HotelRegistration.findSupplier(form.get("supplierCode"),form.get("hotelNm"));
-		System.out.println(user.getSupplierCode());
+		long supplierpending = HotelRegistration.pendingData();
+		long agentpending = AgentRegistration.pendingData();
+		System.out.println(supplierpending);
 		if(user != null) {
 			//session().put("SUPPLIER", user.getSupplierCode());
 			long code = Long.parseLong(user.getSupplierCode());
-			return ok(views.html.adminHome.render());
+			return ok(views.html.adminHome.render(String.valueOf(supplierpending), String.valueOf(agentpending)));
 			//return ok(home.render("Home Page", code));
 		}
-		return ok(views.html.adminHome.render());
+		return ok(views.html.adminHome.render(String.valueOf(supplierpending), String.valueOf(agentpending)));
 		
 	}
 	
@@ -173,6 +182,8 @@ public class ApplicationController extends Controller{
 	public static Result adminLogout() {
 		System.out.println("SESSION VALUE   "+session().get("NAME"));
 		session().clear();
+		long supplierpending = HotelRegistration.pendingData();
+		System.out.println(supplierpending);
 		return ok(views.html.adminLogin.render());
 	}	
 	
@@ -213,7 +224,9 @@ public class ApplicationController extends Controller{
 		List<Currency> currencies = Currency.getCurrency();
 		List<String> currencyList = new ArrayList<>();
 		for(Currency currency : currencies) {
+			if(currency.getCurrencyName().equals("USD - US Dollars") || currency.getCurrencyName().equals("THB - Thai Baht") ||currency.getCurrencyName().equals("INR - Indian Rupees") || currency.getCurrencyName().equals("EUR - Euro") || currency.getCurrencyName().equals("GBP - UK Pounds Sterling")){
 			currencyList.add(currency.getCurrencyName());
+			}
 		}
 		
 		
@@ -222,6 +235,8 @@ public class ApplicationController extends Controller{
 	
 	@Transactional
 	public static Result getAdminForm() {
+		long supplierpending = HotelRegistration.pendingData();
+		System.out.println(supplierpending);
 		return ok(views.html.adminLogin.render());
 		
 	}
@@ -269,6 +284,7 @@ public class ApplicationController extends Controller{
 		String countryName = bindedForm.get("country");
 		List<String> cities = new ArrayList<>();
 		
+				
 		Country country = Country.getCountryByName(countryName);
 		
 		List<City> cities1 = City.getCities(country.getCountryCode());

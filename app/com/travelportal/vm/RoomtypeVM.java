@@ -21,6 +21,8 @@ public class RoomtypeVM {
 	public String roomSuiteType;
 	public String description;
 	public String roomPicture;
+	public String roomSize;
+	public String extraBedRate;
 	
 	public List<Integer> roomamenities;
 	public List<RoomChildpoliciVM> roomchildPolicies;
@@ -59,9 +61,12 @@ public class RoomtypeVM {
 		this.maxOccupancy = maxOccupancy;
 	}
 	
-	
-	
-	
+	public String getExtraBedRate() {
+		return extraBedRate;
+	}
+	public void setExtraBedRate(String extraBedRate) {
+		this.extraBedRate = extraBedRate;
+	}
 	public int getMaxAdultOccupancy() {
 		return maxAdultOccupancy;
 	}
@@ -125,6 +130,12 @@ public class RoomtypeVM {
 	}
 	public void setRoomPicture(String roomPicture) {
 		this.roomPicture = roomPicture;
+	}
+	public String getRoomSize() {
+		return roomSize;
+	}
+	public void setRoomSize(String roomSize) {
+		this.roomSize = roomSize;
 	}
 	
 	

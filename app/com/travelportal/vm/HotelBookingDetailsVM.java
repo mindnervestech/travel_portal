@@ -7,6 +7,7 @@ public class HotelBookingDetailsVM {
 	public String adult;
 	public String noOfroom;
 	public String total;
+	public String totalParPerson;
 	public String travellerfirstname;
 	public String travellerlastname;
 	public String travelleraddress;
@@ -67,6 +68,12 @@ public class HotelBookingDetailsVM {
 	}
 	public void setTravelleremail(String travelleremail) {
 		this.travelleremail = travelleremail;
+	}
+	public String getTotalParPerson() {
+		return totalParPerson;
+	}
+	public void setTotalParPerson(String totalParPerson) {
+		this.totalParPerson = totalParPerson;
 	}
 		
 	

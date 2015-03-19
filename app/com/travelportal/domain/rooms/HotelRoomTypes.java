@@ -60,6 +60,11 @@ public class HotelRoomTypes {
 	private String description;
 	@Column(name="room_pic")
 	private String roomPic;
+
+	@Column(name="room_size")
+	private String roomSize;
+	@Column(name="extraBedRate")
+	private Double extraBedRate;
 	
 	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<RoomAmenities> amenities;
@@ -262,9 +267,18 @@ public class HotelRoomTypes {
 		this.description = description;
 	}
 	
-	
-	
-	
+	public Double getExtraBedRate() {
+		return extraBedRate;
+	}
+	public void setExtraBedRate(Double extraBedRate) {
+		this.extraBedRate = extraBedRate;
+	}
+	public String getRoomSize() {
+		return roomSize;
+	}
+	public void setRoomSize(String roomSize) {
+		this.roomSize = roomSize;
+	}
 	public String getRoomPic() {
 		return roomPic;
 	}

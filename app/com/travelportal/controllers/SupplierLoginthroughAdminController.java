@@ -7,6 +7,7 @@ import java.util.List;
 import com.ning.http.client.Response;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.Permissions;
+import com.travelportal.domain.agent.AgentRegistration;
 
 import play.data.DynamicForm;
 import play.db.jpa.Transactional;
@@ -43,7 +44,9 @@ public class SupplierLoginthroughAdminController extends Controller {
 	
 	HotelRegistration user = HotelRegistration.findSupplier(form.get("supplierCode"),form.get("hotelNm"));
 	//System.out.println(user.getSupplierCode());
-	
+	long supplierpending = HotelRegistration.pendingData();
+	long agentpending = AgentRegistration.pendingData();
+	System.out.println(supplierpending);
 	System.out.println("SESSION VALUE   "+session().get("NAME"));
 	if(user != null) {
 		//session().put("SUPPLIER", user.getSupplierCode());
@@ -61,7 +64,7 @@ public class SupplierLoginthroughAdminController extends Controller {
 	
 	
 	//return ok();
-	return ok(views.html.adminHome.render());
+	return ok(views.html.adminHome.render(String.valueOf(supplierpending), String .valueOf(agentpending)));
 }
 	
 	

@@ -10,7 +10,7 @@ public class SerachedRoomRateDetail {
 	public List<SearchRateDetailsVM> rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
 	//public boolean isSpecialRate;
 	
-	//public SearchSpecialRateVM special;
+	public List<CancellationPolicyVM> cancellation = new ArrayList<CancellationPolicyVM>();
 	public List<SearchRateDetailsVM> rateDetails = new ArrayList<SearchRateDetailsVM>();
 	public SearchAllotmentMarketVM allotmentmarket;
 	//public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
@@ -60,6 +60,12 @@ public class SerachedRoomRateDetail {
 	
 	public int getAdult_occupancy() {
 		return adult_occupancy;
+	}
+	public List<CancellationPolicyVM> getCancellation() {
+		return cancellation;
+	}
+	public void setCancellation(List<CancellationPolicyVM> cancellation) {
+		this.cancellation = cancellation;
 	}
 	public List<SearchRateDetailsVM> getRateDetailsNormal() {
 		return rateDetailsNormal;

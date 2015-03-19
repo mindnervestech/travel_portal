@@ -81,7 +81,7 @@ public class Country {
 	}
 
 	public static List<Country> getCountries() {
-		return JPA.em().createQuery("select c from Country c").getResultList();
+		return JPA.em().createQuery("select c from Country c ORDER BY c.countryName").getResultList();
 	}
 	
 	public static List<Country> getCountry(final int marketCode) {
