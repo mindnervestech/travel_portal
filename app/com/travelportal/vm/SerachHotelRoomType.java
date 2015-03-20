@@ -12,6 +12,7 @@ public class SerachHotelRoomType {
 	public String roomName;
 	public String description;
 	public int childAllowedFreeWithAdults;
+	public int maxAdultsWithchild;
 	public String extraBedAllowed;
 	public String roomSuiteType;
 	public List<SerachedRoomRateDetail> hotelRoomRateDetail;
@@ -107,6 +108,12 @@ public class SerachHotelRoomType {
 	}
 	public void setExtraBedRate(String extraBedRate) {
 		this.extraBedRate = extraBedRate;
+	}
+	public int getMaxAdultsWithchild() {
+		return maxAdultsWithchild;
+	}
+	public void setMaxAdultsWithchild(int maxAdultsWithchild) {
+		this.maxAdultsWithchild = maxAdultsWithchild;
 	}  
 	
 	

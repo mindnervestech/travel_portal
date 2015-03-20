@@ -181,6 +181,7 @@
                                             <div style="border-right: none;" class="col-md-12">
                                                 <h4 class="box-title"><span class="col-md-11">{{roomInfo.roomName}}</span><small class="col-md-5" style="color: #01b7f2;padding-right: 1px;width: 83px;">MAX GUESTS:</small><small class="col-md-4" style="padding-left: 1px;">{{roomInfo.hotelRoomRateDetail[0].adult_occupancy}} PERSONS</small></h4>
                                             </div>
+                                             
                                             <div style="padding-left: 0;padding-bottom: 0;">
                                                <div class="amenities col-md-12" style="width: 141px;">
                                                 <div  ng-repeat="ameni in roomInfo.amenities"> 
@@ -215,10 +216,7 @@
                                          <div class="col-md-6" style="width:50% !important;border-bottom: none !important;border-right: none;">  <!-- style="width: 106px;" -->
                                          <!-- <i class="soap-icon-check-1" style="color: #7db921;"></i> -->
                                          <h4 class="box-title col-md-6" style="margin-top: 15px;"><span>{{adultRate.adult  | limitTo: 1}} GUESTS</span></h4>
-                                        <!--  <h4 class="box-title col-md-6" ng-if="adultRate.adult == '2 Adults'" style="margin-top: 15px;"><span>2 GUESTS</span></h4>
-                                         <h4 class="box-title col-md-6" ng-if="adultRate.adult == '3 Adults'" style="margin-top: 15px;"><span>3 GUESTS</span></h4>
-                                         <h4 class="box-title col-md-6" ng-if="adultRate.adult == '4 Adults'" style="margin-top: 15px;"><span>4 GUESTS</span></h4>
-                                         <h4 class="box-title col-md-6" ng-if="adultRate.adult == '5 Adults'" style="margin-top: 15px;"><span>5 GUESTS</span></h4> -->  <!--  {{adultRate.adult}} -->
+                                      
                                            <div class="amenities col-md-6">   
                                              <div  ng-repeat="ameniti in roominfo.amenities"> 
                                              <div class="col-md-3" ng-if="ameniti.amenityId == 1">
@@ -250,8 +248,16 @@
                                          </div>
                                      </div>
                                    </div>
-                                     <div class="col-md-9 col-md-offset-2">
-                                   <div class="form-group col-sm-3 col-md-3 col-md-offset-9">
+                                     <div class="col-md-9 col-md-offset-1">
+                                     <div>
+                                   
+                                     <label style="color: #01B7F2;">Cancellation Policy</label>     
+                                     <div ng-repeat="cancal in roomInfo.hotelRoomRateDetail[0].cancellation">
+                                      <label ng-if="cancal.penaltyCharge == true">* prior {{cancal.days}} the penalty cancellation will be {{cancal.nights}} room tariff</label>
+                                      <label ng-if="cancal.penaltyCharge == false">* prior {{cancal.days}} the penalty cancellation will be {{cancal.percentage}} booking</label>
+                                     </div>                                
+                                     </div>
+                                   <div class="form-group col-sm-3 col-md-3 col-md-offset-10">
                                      <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomInfo.roomId)" style="background: #98ce44;margin-top: 2%;margin-left: 49%;" title="">BOOK NOW</a>
                                      </div>
                                    </div>  

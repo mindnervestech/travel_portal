@@ -563,6 +563,7 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 					sHotelRoomType.setRoomSize(roomTP.getRoomSize());
 					sHotelRoomType.setExtraBedRate(roomTP.getExtraBedRate());
 					sHotelRoomType.setDescription(roomTP.getDescription());
+					sHotelRoomType.setMaxAdultsWithchild(roomTP.getMaxAdultsWithchild());
 					sHotelRoomType.setRoomchildPolicies(roomTP.getRoomchildPolicies());
 					sHotelRoomType.setChildAllowedFreeWithAdults(roomTP.getChildAllowedFreeWithAdults());
 					sHotelRoomType.setExtraBedAllowed(roomTP.getExtraBedAllowed());
@@ -669,9 +670,6 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 		  }
 		}
 		
-		
-		
-		
 		for(SerachHotelRoomType room:hotel.hotelbyRoom){
 			for (Entry<Long, List<SpecialsVM>> entry : mapSpecials.entrySet()) {
 			if(room.getRoomId() == entry.getKey()){
@@ -739,6 +737,7 @@ public static void fillRoomInfo(HotelRoomTypes room,SerachedRoomType roomtyp){
 	roomtyp.setRoomName(room.getRoomType());
 	roomtyp.setDescription(room.getDescription());
 	roomtyp.setChildAllowedFreeWithAdults(room.getChildAllowedFreeWithAdults());
+	roomtyp.setMaxAdultsWithchild(room.getMaxAdultOccSharingWithChildren());
 	roomtyp.setExtraBedAllowed(room.getExtraBedAllowed());
 	roomtyp.setRoomSuiteType(room.getRoomSuiteType());
 	roomtyp.setRoomSize(room.getRoomSize());
@@ -1738,6 +1737,7 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 					sHotelRoomType.setRoomSize(roomTP.getRoomSize());
 					sHotelRoomType.setExtraBedRate(roomTP.getExtraBedRate());
 					sHotelRoomType.setDescription(roomTP.getDescription());
+					sHotelRoomType.setMaxAdultsWithchild(roomTP.getMaxAdultsWithchild());
 					sHotelRoomType.setRoomchildPolicies(roomTP.getRoomchildPolicies());
 					sHotelRoomType.setChildAllowedFreeWithAdults(roomTP.getChildAllowedFreeWithAdults());
 					sHotelRoomType.setExtraBedAllowed(roomTP.getExtraBedAllowed());
