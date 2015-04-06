@@ -29,10 +29,13 @@ public class RoomChildPolicies {
 	private int allowedChildAgeFrom;
 	@Column(name="child_age_allowed_to")
 	private int allowedChildAgeTo;
-	@Column(name="years")
+	@Column(name="extra_Child_Rate")
+	private Double extraChildRate;
+	
+	/*@Column(name="years")
 	private int years; 
-	@Column(name="net_rate")
-	private String netRate;
+	@Column(name="net_rate")*/
+	//private String netRate;
 	/*@Column(name="supplierCode")
 	private long supplierCode;*/
 	
@@ -71,21 +74,32 @@ public class RoomChildPolicies {
 		this.allowedChildAgeTo = allowedChildAgeTo;
 	}
 
-	public int getYears() {
+	
+	
+	
+	/*public int getYears() {
 		return years;
 	}
 
 	public void setYears(int years) {
 		this.years = years;
+	}*/
+
+	public Double getExtraChildRate() {
+		return extraChildRate;
 	}
 
-	public String getNetRate() {
+	public void setExtraChildRate(Double extraChildRate) {
+		this.extraChildRate = extraChildRate;
+	}
+
+	/*public String getNetRate() {
 		return netRate;
 	}
 
 	public void setNetRate(String netRate) {
 		this.netRate = netRate;
-	}
+	}*/
 	public static RoomChildPolicies findById(int id) {
 		try
 		{

@@ -22,7 +22,10 @@ public class SerachHotelRoomType {
 	public int pcount;
 	public int applyPromotion;
 	public String roomSize;
-	public String extraBedRate;
+	//public String extraBedRate;
+	public String breakfastInclude;
+	public int breakfastRate;
+	public int childAge;
 	
 	public Long getRoomId() {
 		return roomId;
@@ -103,17 +106,36 @@ public class SerachHotelRoomType {
 	public void setRoomchildPolicies(List<RoomChildpoliciVM> roomchildPolicies) {
 		this.roomchildPolicies = roomchildPolicies;
 	}
-	public String getExtraBedRate() {
+	/*public String getExtraBedRate() {
 		return extraBedRate;
 	}
 	public void setExtraBedRate(String extraBedRate) {
 		this.extraBedRate = extraBedRate;
-	}
+	}*/
 	public int getMaxAdultsWithchild() {
 		return maxAdultsWithchild;
 	}
 	public void setMaxAdultsWithchild(int maxAdultsWithchild) {
 		this.maxAdultsWithchild = maxAdultsWithchild;
+	}
+	public String getBreakfastInclude() {
+		return breakfastInclude;
+	}
+	public void setBreakfastInclude(String breakfastInclude) {
+		this.breakfastInclude = breakfastInclude;
+	}
+	
+	public int getBreakfastRate() {
+		return breakfastRate;
+	}
+	public void setBreakfastRate(int breakfastRate) {
+		this.breakfastRate = breakfastRate;
+	}
+	public int getChildAge() {
+		return childAge;
+	}
+	public void setChildAge(int childAge) {
+		this.childAge = childAge;
 	}  
 	
 	

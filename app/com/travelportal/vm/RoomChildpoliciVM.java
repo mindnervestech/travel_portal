@@ -7,8 +7,9 @@ public class RoomChildpoliciVM {
 	public int roomchildPolicyId;
 	public int allowedChildAgeFrom;
 	public int allowedChildAgeTo;
-	public int years;
-	public String netRate;
+	public String extraChildRate;
+	//public int years;
+	//public String netRate;
 	
 	
 	
@@ -30,7 +31,16 @@ public class RoomChildpoliciVM {
 	public void setAllowedChildAgeTo(int allowedChildAgeTo) {
 		this.allowedChildAgeTo = allowedChildAgeTo;
 	}
-	public int getYears() {
+	public String getExtraChildRate() {
+		return extraChildRate;
+	}
+	public void setExtraChildRate(String extraChildRate) {
+		this.extraChildRate = extraChildRate;
+	}
+	
+	
+	
+	/*public int getYears() {
 		return years;
 	}
 	public void setYears(int years) {
@@ -41,7 +51,7 @@ public class RoomChildpoliciVM {
 	}
 	public void setNetRate(String netRate) {
 		this.netRate = netRate;
-	}
+	}*/
 	
 	
 	

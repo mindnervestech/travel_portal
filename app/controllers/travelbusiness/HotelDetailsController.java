@@ -422,7 +422,14 @@ public static void fillRoomInfo(HotelRoomTypes room,SerachedRoomType roomtyp){
 	roomtyp.setExtraBedAllowed(room.getExtraBedAllowed());
 	roomtyp.setRoomSuiteType(room.getRoomSuiteType());
 	roomtyp.setRoomSize(room.getRoomSize());
-	roomtyp.setExtraBedRate(String.valueOf(room.getExtraBedRate()));
+	roomtyp.setBreakfastInclude(room.getBreakfastInclude());
+	if(room.getBreakfastRate() != null){
+		roomtyp.setBreakfastRate(room.getBreakfastRate().intValue());
+		}else{
+			roomtyp.setBreakfastRate(0);
+		}
+	roomtyp.setChildAge(room.getChildAge());
+	//roomtyp.setExtraBedRate(String.valueOf(room.getExtraBedRate()));
 	
 	List<RoomChildpoliciVM> roomChildList = new ArrayList<>();
 	
@@ -430,9 +437,10 @@ public static void fillRoomInfo(HotelRoomTypes room,SerachedRoomType roomtyp){
 		RoomChildpoliciVM rooChildpoliciVM = new RoomChildpoliciVM();
 		rooChildpoliciVM.setAllowedChildAgeFrom(rooVm.getAllowedChildAgeFrom());
 		rooChildpoliciVM.setAllowedChildAgeTo(rooVm.getAllowedChildAgeTo());
-		rooChildpoliciVM.setNetRate(rooVm.getNetRate());
+		rooChildpoliciVM.setExtraChildRate(String.valueOf(rooVm.getExtraChildRate()));
+		//rooChildpoliciVM.setNetRate(rooVm.getNetRate());
 		rooChildpoliciVM.setRoomchildPolicyId(rooVm.getRoomchildPolicyId());
-		rooChildpoliciVM.setYears(rooVm.getYears());
+		//rooChildpoliciVM.setYears(rooVm.getYears());
 		roomChildList.add(rooChildpoliciVM);
 	}
 	
@@ -905,12 +913,15 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 					sHotelRoomType.setRoomName(roomTP.getRoomName());
 					sHotelRoomType.setDescription(roomTP.getDescription());
 					sHotelRoomType.setRoomSize(roomTP.getRoomSize());
-					sHotelRoomType.setExtraBedRate(roomTP.getExtraBedRate());
+					//sHotelRoomType.setExtraBedRate(roomTP.getExtraBedRate());
 					sHotelRoomType.setRoomchildPolicies(roomTP.getRoomchildPolicies());
 					sHotelRoomType.setMaxAdultsWithchild(roomTP.getMaxAdultsWithchild());
 					sHotelRoomType.setChildAllowedFreeWithAdults(roomTP.getChildAllowedFreeWithAdults());
 					sHotelRoomType.setExtraBedAllowed(roomTP.getExtraBedAllowed());
 					sHotelRoomType.setRoomSuiteType(roomTP.getRoomSuiteType());
+					sHotelRoomType.setBreakfastInclude(roomTP.getBreakfastInclude());
+					sHotelRoomType.setBreakfastRate(roomTP.getBreakfastRate());
+					sHotelRoomType.setChildAge(roomTP.getChildAge());
 					arrayCount.add(aCount, roomTP.getPcount());
 					
 					sHotelRoomType.setAmenities(roomTP.getAmenities());

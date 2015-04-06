@@ -12,7 +12,10 @@ public class SerachedRoomType {
 	public String extraBedAllowed;
 	public String roomSuiteType;
 	public String roomSize;
-	public String extraBedRate;
+	public String breakfastInclude;
+	public int breakfastRate;
+	public int childAge;
+	
 	public List<SerachedRoomRateDetail> hotelRoomRateDetail;
 	public List<RoomAmenitiesVm> amenities;
 	public List<RoomChildpoliciVM> roomchildPolicies;
@@ -92,11 +95,24 @@ public class SerachedRoomType {
 	public void setRoomchildPolicies(List<RoomChildpoliciVM> roomchildPolicies) {
 		this.roomchildPolicies = roomchildPolicies;
 	}
-	public String getExtraBedRate() {
-		return extraBedRate;
+	public String getBreakfastInclude() {
+		return breakfastInclude;
 	}
-	public void setExtraBedRate(String extraBedRate) {
-		this.extraBedRate = extraBedRate;
+	public void setBreakfastInclude(String breakfastInclude) {
+		this.breakfastInclude = breakfastInclude;
+	}
+	
+	public int getBreakfastRate() {
+		return breakfastRate;
+	}
+	public void setBreakfastRate(int breakfastRate) {
+		this.breakfastRate = breakfastRate;
+	}
+	public int getChildAge() {
+		return childAge;
+	}
+	public void setChildAge(int childAge) {
+		this.childAge = childAge;
 	}
 	public int getMaxAdultsWithchild() {
 		return maxAdultsWithchild;

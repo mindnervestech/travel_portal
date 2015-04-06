@@ -22,7 +22,11 @@ public class RoomtypeVM {
 	public String description;
 	public String roomPicture;
 	public String roomSize;
-	public String extraBedRate;
+	//public String extraBedRate;
+	
+	public int childAge;
+	public String breakfastInclude;
+	public Double breakfastRate;
 	
 	public List<Integer> roomamenities;
 	public List<RoomChildpoliciVM> roomchildPolicies;
@@ -61,12 +65,12 @@ public class RoomtypeVM {
 		this.maxOccupancy = maxOccupancy;
 	}
 	
-	public String getExtraBedRate() {
+	/*public String getExtraBedRate() {
 		return extraBedRate;
 	}
 	public void setExtraBedRate(String extraBedRate) {
 		this.extraBedRate = extraBedRate;
-	}
+	}*/
 	public int getMaxAdultOccupancy() {
 		return maxAdultOccupancy;
 	}
@@ -137,10 +141,24 @@ public class RoomtypeVM {
 	public void setRoomSize(String roomSize) {
 		this.roomSize = roomSize;
 	}
-	
-	
-	
-	
-	
+	public int getChildAge() {
+		return childAge;
+	}
+	public void setChildAge(int childAge) {
+		this.childAge = childAge;
+	}
+	public String getBreakfastInclude() {
+		return breakfastInclude;
+	}
+	public void setBreakfastInclude(String breakfastInclude) {
+		this.breakfastInclude = breakfastInclude;
+	}
+	public Double getBreakfastRate() {
+		return breakfastRate;
+	}
+	public void setBreakfastRate(Double breakfastRate) {
+		this.breakfastRate = breakfastRate;
+	}
+
 	
 }

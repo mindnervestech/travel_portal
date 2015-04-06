@@ -63,8 +63,15 @@ public class HotelRoomTypes {
 
 	@Column(name="room_size")
 	private String roomSize;
-	@Column(name="extraBedRate")
-	private Double extraBedRate;
+	//@Column(name="extraBedRate")
+	//private Double extraBedRate;
+	
+	@Column(name="childAge")
+	private int childAge;
+	@Column(name="breakfastInclude")
+	private String breakfastInclude;
+	@Column(name="breakfastRate")
+	private Double breakfastRate;
 	
 	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<RoomAmenities> amenities;
@@ -267,12 +274,12 @@ public class HotelRoomTypes {
 		this.description = description;
 	}
 	
-	public Double getExtraBedRate() {
+	/*public Double getExtraBedRate() {
 		return extraBedRate;
 	}
 	public void setExtraBedRate(Double extraBedRate) {
 		this.extraBedRate = extraBedRate;
-	}
+	}*/
 	public String getRoomSize() {
 		return roomSize;
 	}
@@ -286,7 +293,24 @@ public class HotelRoomTypes {
 		this.roomPic = roomPic;
 	}
 	
-	
+	public int getChildAge() {
+		return childAge;
+	}
+	public void setChildAge(int childAge) {
+		this.childAge = childAge;
+	}
+	public String getBreakfastInclude() {
+		return breakfastInclude;
+	}
+	public void setBreakfastInclude(String breakfastInclude) {
+		this.breakfastInclude = breakfastInclude;
+	}
+	public Double getBreakfastRate() {
+		return breakfastRate;
+	}
+	public void setBreakfastRate(Double breakfastRate) {
+		this.breakfastRate = breakfastRate;
+	}
 	
 	public static List<RoomType> getAllRoomTypes(final Long supplierCode) {
 		Query q = JPA.em().createQuery("select r.roomId, r.roomType from HotelRoomTypes r where r.supplierCode = :supplierCode ");

@@ -1196,9 +1196,12 @@ public static void createRootDir() {
 			hotelroomTypes.setMaxAdultOccSharingWithChildren(roomtypeVM.getMaxAdultOccSharingWithChildren());
 			hotelroomTypes.setSupplierCode(roomtypeVM.getSupplierCode());
 			hotelroomTypes.setRoomSize(roomtypeVM.getRoomSize());
-			if(roomtypeVM.getExtraBedRate() != null){
+			hotelroomTypes.setBreakfastInclude(roomtypeVM.getBreakfastInclude());
+			hotelroomTypes.setBreakfastRate(roomtypeVM.getBreakfastRate());
+			hotelroomTypes.setChildAge(roomtypeVM.getChildAge());
+			/*if(roomtypeVM.getExtraBedRate() != null){
 			hotelroomTypes.setExtraBedRate(Double.parseDouble(roomtypeVM.getExtraBedRate()));
-			}
+			}*/
 			hotelroomTypes.setAmenities(RoomAmenities.getroomamenities(roomtypeVM.getRoomamenities()));
 					
 			for(RoomChildpoliciVM childVM : roomtypeVM.getRoomchildPolicies())
@@ -1206,8 +1209,9 @@ public static void createRootDir() {
 				RoomChildPolicies roomchildPolicies = new RoomChildPolicies();
 				roomchildPolicies.setAllowedChildAgeFrom(childVM.getAllowedChildAgeFrom());
 				roomchildPolicies.setAllowedChildAgeTo(childVM.getAllowedChildAgeTo());
-				roomchildPolicies.setYears(childVM.getYears());
-				roomchildPolicies.setNetRate(childVM.getNetRate());
+				roomchildPolicies.setExtraChildRate(Double.parseDouble(childVM.getExtraChildRate()));
+				//roomchildPolicies.setYears(childVM.getYears());
+				//roomchildPolicies.setNetRate(childVM.getNetRate());
 				roomchildPolicies.save();
 				hotelroomTypes.addchildPolicies(roomchildPolicies);
 				
@@ -1229,17 +1233,22 @@ public static void createRootDir() {
 			hotelroomTypes.setMaxAdultOccSharingWithChildren(roomtypeVM.getMaxAdultOccSharingWithChildren());
 			//hotelroomTypes.setSupplierCode(roomtypeVM.getSupplierCode());
 			hotelroomTypes.setAmenities(RoomAmenities.getroomamenities(roomtypeVM.getRoomamenities()));
-			if(roomtypeVM.getExtraBedRate() != null){
+			hotelroomTypes.setBreakfastInclude(roomtypeVM.getBreakfastInclude());
+			hotelroomTypes.setBreakfastRate(roomtypeVM.getBreakfastRate());
+			hotelroomTypes.setChildAge(roomtypeVM.getChildAge());
+			
+			/*if(roomtypeVM.getExtraBedRate() != null){
 			hotelroomTypes.setExtraBedRate(Double.parseDouble(roomtypeVM.getExtraBedRate()));
-			}
+			}*/
 			for(RoomChildpoliciVM childVM : roomtypeVM.getRoomchildPolicies())
 			{
 							
 				RoomChildPolicies roomchildPolicies = RoomChildPolicies.findById(childVM.getRoomchildPolicyId());
 				roomchildPolicies.setAllowedChildAgeFrom(childVM.getAllowedChildAgeFrom());
 				roomchildPolicies.setAllowedChildAgeTo(childVM.getAllowedChildAgeTo());
-				roomchildPolicies.setYears(childVM.getYears());
-				roomchildPolicies.setNetRate(childVM.getNetRate());
+				roomchildPolicies.setExtraChildRate(Double.parseDouble(childVM.getExtraChildRate()));
+				//roomchildPolicies.setYears(childVM.getYears());
+				//roomchildPolicies.setNetRate(childVM.getNetRate());
 				roomchildPolicies.merge();
 				hotelroomTypes.addchildPolicies(roomchildPolicies);
 				

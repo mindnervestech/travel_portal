@@ -505,6 +505,16 @@ angular.module('travel_portal').
 	    });
 	    
 			$scope.counterArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+			
+			$scope.setOccupancy = function(occupancy){
+				$scope.adultcount = []
+				console.log(occupancy);	
+				for(var i = 1; i <= occupancy; i++){
+					$scope.adultcount[i] = i;
+				}
+				console.log("-----");
+				console.log($scope.adultcount);
+			}
 		
 			console.log("hoteRoomController successfully initialized."+supplierCode);
 
@@ -531,6 +541,15 @@ angular.module('travel_portal').
 					$scope.roomTypeIns.maxAdultOccupancy = response.maxAdultOccupancy; 
 					$scope.roomTypeIns.roomType = response.roomType;
 					$scope.roomTypeIns.maxOccupancy = response.maxOccupancy; 
+					$scope.roomTypeIns.breakfastInclude = response.breakfastInclude; 
+					$scope.roomTypeIns.breakfastRate = response.breakfastRate;
+					$scope.roomTypeIns.childAge = response.childAge;
+					$scope.roomTypeIns.roomSize = response.roomSize;
+					
+					$scope.adultcount = [];
+					for(var i = 1; i <= response.maxOccupancy; i++){
+						$scope.adultcount[i] = i;
+					}
 					$scope.roomTypeIns.description = response.description;
 					$scope.roomTypeIns.roomSuiteType = response.roomSuiteType;
 					$scope.roomTypeIns.chargesForChildren = response.chargesForChildren;
@@ -603,16 +622,22 @@ angular.module('travel_portal').
 			    	
 			    	console.log($scope.roomTypeIns);
 			    	var flag = 0;
-			    	angular.forEach($scope.roomTypeIns.roomchildPolicies, function(obj, index){
+			    /*	angular.forEach($scope.roomTypeIns.roomchildPolicies, function(obj, index){
 			    		if(obj.years == undefined && obj.years == null){
+			    			flag = 1;
+			    		}
+			    	});*/
+			    	
+			    	angular.forEach($scope.roomTypeIns.roomchildPolicies, function(obj, index){
+			    		if(obj.extraChildRate == undefined && obj.extraChildRate == null){
 			    			flag = 1;
 			    		}
 			    	});
 			    	
+			    	
 			    	if(flag == 0){
 			    	$http.post('/hotel/saveUpdateRoomType',$scope.roomTypeIns).success(function(data){
 						console.log(data);
-					
 						
 						$http.get("/roomtypes/"+supplierCode).success(function(response){
 							console.log(response);
