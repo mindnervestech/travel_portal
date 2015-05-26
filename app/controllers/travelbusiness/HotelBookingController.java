@@ -89,6 +89,9 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setAgentCompanyNm(agRegistration.getCompanyName());
 		hBookingDetails.setSupplierNm(searchVM.getSupplierNm());
 		hBookingDetails.setTotalNightStay(searchVM.getDatediff());
+		System.out.println("(*((*(*(*(*(*(*(");
+		System.out.println(searchVM.getCheckIn());
+		System.out.println("(*((*(*(*(*(*(*(");
 		try {
 			hBookingDetails.setCheckIn(format.parse(searchVM.getCheckIn()));
 		} catch (ParseException e) {
@@ -113,7 +116,16 @@ public class HotelBookingController extends Controller {
 		
 		hBookingDetails.setAdult(searchVM.hotelBookingDetails.getAdult());
 		hBookingDetails.setNoOfroom(Integer.parseInt(searchVM.hotelBookingDetails.getNoOfroom()));
-		hBookingDetails.setNoOfchild(Integer.parseInt(searchVM.hotelBookingDetails.getNoOfchild()));
+		if(searchVM.hotelBookingDetails.getNoOfchild().equals("NoChild")){
+			hBookingDetails.setNoOfchild(0);
+		}else if(searchVM.hotelBookingDetails.getNoOfchild() == null){
+			hBookingDetails.setNoOfchild(0);
+		}else if(searchVM.hotelBookingDetails.getNoOfchild() == ""){
+			hBookingDetails.setNoOfchild(1);
+		}else{
+			hBookingDetails.setNoOfchild(Integer.parseInt(searchVM.hotelBookingDetails.getNoOfchild()));
+		}
+		
 		hBookingDetails.setTotal(Double.parseDouble(searchVM.hotelBookingDetails.getTotal()));
 		hBookingDetails.setTravellerfirstname(searchVM.hotelBookingDetails.getTravellerfirstname());
 		hBookingDetails.setTravelleremail(searchVM.hotelBookingDetails.getTravelleremail());
