@@ -298,6 +298,16 @@ public static Result hotelBookingpage() {
 			}else{
 				hotelBookings.setNoOfroom(searchVM.noOfroom);
 		    }
+			System.out.println(searchVM.noOfchild);
+			if(searchVM.noOfchild == ""){
+				hotelBookings.setNoOfchild("1");
+			}else if(searchVM.noOfchild == null){
+				hotelBookings.setNoOfchild("0");
+			}else if(searchVM.noOfchild == "NoChild"){
+				hotelBookings.setNoOfchild("0");
+			}else{
+				hotelBookings.setNoOfchild(searchVM.noOfchild);
+		    }
 			hotelBookings.setTotal(searchVM.total);
 			hotelBookings.setTotalParPerson(searchVM.totalParPerson);
 			

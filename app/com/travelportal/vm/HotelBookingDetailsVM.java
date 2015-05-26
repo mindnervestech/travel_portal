@@ -6,6 +6,7 @@ public class HotelBookingDetailsVM {
 	
 	public String adult;
 	public String noOfroom;
+	public String noOfchild;
 	public String total;
 	public String totalParPerson;
 	public String travellerfirstname;
@@ -74,6 +75,12 @@ public class HotelBookingDetailsVM {
 	}
 	public void setTotalParPerson(String totalParPerson) {
 		this.totalParPerson = totalParPerson;
+	}
+	public String getNoOfchild() {
+		return noOfchild;
+	}
+	public void setNoOfchild(String noOfchild) {
+		this.noOfchild = noOfchild;
 	}
 		
 	

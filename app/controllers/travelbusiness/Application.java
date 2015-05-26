@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.mail.BodyPart;
@@ -42,7 +42,6 @@ import views.html.travelbusiness.hotelDetails;
 import views.html.travelbusiness.searchHotel;
 
 import com.fasterxml.jackson.databind.JsonNode;
-//import com.gargoylesoftware.htmlunit.javascript.host.Console;
 import com.mnt.travelbusiness.helper.PageScope;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
@@ -80,6 +79,7 @@ import com.travelportal.vm.SerachedRoomType;
 import com.travelportal.vm.ServicesVM;
 import com.travelportal.vm.SpecialsMarketVM;
 import com.travelportal.vm.SpecialsVM;
+//import com.gargoylesoftware.htmlunit.javascript.host.Console;
 public class Application extends Controller {
 
     public static Result index() {

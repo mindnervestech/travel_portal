@@ -23,6 +23,7 @@ public class SearchHotelValueVM {
 	public String total;
 	public String adult;
 	public String noOfroom;
+	public String noOfchild;
 	public String totalParPerson;
 	public String loginID;
 	public String password;
@@ -163,6 +164,12 @@ public class SearchHotelValueVM {
 	}
 	public void setTotalParPerson(String totalParPerson) {
 		this.totalParPerson = totalParPerson;
+	}
+	public String getNoOfchild() {
+		return noOfchild;
+	}
+	public void setNoOfchild(String noOfchild) {
+		this.noOfchild = noOfchild;
 	}
 		
 	

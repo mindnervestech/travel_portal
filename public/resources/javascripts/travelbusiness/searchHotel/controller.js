@@ -198,6 +198,14 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 		});
 	}
 	
+	$scope.showPDF = function(){
+		console.log("Show PDF");
+	
+		$http.get("/generatePDF").success(function(response){
+			console.log("Yessss");
+		});
+	}
+	
 	$scope.forgotpass = function(){
 		ngDialog.close();
 		

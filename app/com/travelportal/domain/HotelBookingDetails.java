@@ -50,6 +50,7 @@ public class HotelBookingDetails {
 	private Currency currencyId;
 	private String adult;
 	private int noOfroom;
+	private int noOfchild;
 	private Double total;
 	private String travellerfirstname;
 	private String travellerlastname;
@@ -268,8 +269,12 @@ public class HotelBookingDetails {
 		this.agentNm = agentNm;
 	}
 	
-	
-	
+	public int getNoOfchild() {
+		return noOfchild;
+	}
+	public void setNoOfchild(int noOfchild) {
+		this.noOfchild = noOfchild;
+	}
 	public RateMeta getRate() {
 		return rate;
 	}

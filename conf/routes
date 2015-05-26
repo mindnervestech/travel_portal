@@ -272,3 +272,5 @@ GET  /getRejectBooking/:id       com.travelportal.controllers.ConfirmBookingCont
 GET  /getconfBooking/:id       com.travelportal.controllers.ConfirmBookingController.getconfBooking(id:Long)
 GET  /getrejectInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	com.travelportal.controllers.ConfirmBookingController.getrejectInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)
 GET  /getcancelInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	com.travelportal.controllers.ConfirmBookingController.getcancelInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)
+
+GET  /generatePDF        controllers.travelbusiness.HotelBookingController.generatePDF()
