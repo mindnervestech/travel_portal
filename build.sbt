@@ -10,6 +10,8 @@ libraryDependencies ++= Seq(
 	javaJpa,
 	"org.hibernate" % "hibernate-entitymanager" % "3.6.9.Final", 
 	"org.json"%"org.json"%"chargebee-1.0",
+	"com.itextpdf" % "itextpdf" % "5.5.4",
+    "com.itextpdf.tool" % "xmlworker" % "1.0.0",
 	"commons-io" % "commons-io" % "2.1"
 )     
 
