@@ -399,7 +399,7 @@ public class TravelPortalUtilsController extends Controller {
 		}
 		
 		if(hAndSafety.getHaccpCertifyexpiryDate() != null){
-		healthAndSafetyVM.haccpCertify=format.format(hAndSafety.getHaccpCertifyexpiryDate());
+		healthAndSafetyVM.haccpCertifyexpiryDate =format.format(hAndSafety.getHaccpCertifyexpiryDate());
 		}
 		
 		if(hAndSafety.getInternalFireexpiryDate() != null){

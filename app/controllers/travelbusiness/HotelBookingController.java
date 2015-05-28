@@ -1991,8 +1991,8 @@ public class HotelBookingController extends Controller {
 			System.out.println("Pdf created successfully..");
 			File file = new File(fileName);
 			
-			/*
 			
+		/*	
 			final String username=Play.application().configuration().getString("username");
 	        final String password=Play.application().configuration().getString("password");
 	        
@@ -2044,3 +2044,4 @@ public class HotelBookingController extends Controller {
 	}
 	 
 }
+

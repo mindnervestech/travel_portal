@@ -39,7 +39,7 @@
 									SAFETY</a></li>
 						</ul>
 						<div id="myTabContent2" class="tab-content">
-							<form method="post" name="billinfo" ng-submit="Savebillinginfo()" role="form" class="form-horizontal form-validate">
+							<form method="post" name="billinfo" ng-submit="Savebillinginfo()" role="form" class="form-horizontal">
 <fieldset class="billBorder">
   <legend style="width: 70%;border-bottom: none;">Company/Management/ Supplier Information</legend>
 	<div class="row">
@@ -120,12 +120,12 @@
 					<div class="form-group">
 				<label class="col-md-5 control-label">*Direct Telephone:</label>
 				<div class="col-md-2 setwidth">
-					<input type="text" name="dTelCode" data-ng-model="bill.dTelCode" class="form-control required number" required>
+					<input type="text" name="dTelCode" data-ng-model="bill.dTelCode" pattern="\d*" title="Please enter numbers" class="form-control" required>
 					<!-- <span class="error" ng-show="billinfo.dTelCode.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<p style="float: left;">-</p>
 					<div class="col-md-4">
-					<input type="text" name="dTelNo" data-ng-model="bill.dTelNo" class="form-control required number" required>
+					<input type="text" name="dTelNo" data-ng-model="bill.dTelNo" pattern="\d*" title="Please enter numbers" class="form-control" required>
 					<!-- <span class="error" ng-show="billinfo.dTelNo.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 			</div>
@@ -133,13 +133,13 @@
 				<div class="form-group">
 				<label class="col-md-5 control-label">*Direct Fax:</label>
 				<div class="col-md-2 setwidth">
-					<input type="text" name="dFaxCode" data-ng-model="bill.dFaxCode" class="form-control required number" required>
+					<input type="text" name="dFaxCode" data-ng-model="bill.dFaxCode" pattern="\d*" title="Please enter numbers" class="form-control" required>
 					<!-- <span class="error" ng-show="billinfo.dFaxCode.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 							<p style="float: left;">-</p>
 				
 					<div class="col-md-4">
-					<input type="text" name="dFaxNo" data-ng-model="bill.dFaxNo" class="form-control required number" required>
+					<input type="text" name="dFaxNo" data-ng-model="bill.dFaxNo" pattern="\d*" title="Please enter numbers" class="form-control" required>
 					<!-- <span class="error" ng-show="billinfo.dFaxNo.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 			</div>
@@ -147,7 +147,7 @@
 				<div class="form-group">
 						<label class="col-md-5 control-label">Extension:</label>
 						<div class="col-md-7">
-						<input type="text" name="dExtNo" data-ng-model="bill.dExtNo" class="form-control required number" >
+						<input type="text" name="dExtNo" data-ng-model="bill.dExtNo" pattern="\d*" title="Please enter numbers" class="form-control" >
 						<!-- <span class="error" ng-show="billinfo.dExtNo.$error.number" style="color: red;">Not valid number!</span> -->
 					</div>
 					</div>	
@@ -171,11 +171,11 @@
 								<div class="col-md-4">
 				
 									<div class="chargechild">
-									<input type="radio" name="bank" data-ng-model="bill.bankToBankTransfer" value="true">
+									<input type="radio" name="bank" data-ng-model="bill.bankToBankTransfer" value="true" required>
 									&nbsp; Yes
 									</div>
 									<div>
-									<input type="radio" name="bank" data-ng-model="bill.bankToBankTransfer" value="false">
+									<input type="radio" name="bank" data-ng-model="bill.bankToBankTransfer" value="false" required>
 									&nbsp; No
 									</div> 
 				
@@ -193,7 +193,7 @@
 					<div class="form-group">
 						<label class="col-md-5 control-label">Account No.:</label>
 						<div class="col-md-7">
-						<input type="text" name="accountNo" data-ng-model="bill.accountNo" class="form-control required number" required>
+						<input type="text" name="accountNo" data-ng-model="bill.accountNo" pattern="\d*" title="Please enter numbers" class="form-control" required>
 					</div>
 					</div>
 					
