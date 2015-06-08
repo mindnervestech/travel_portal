@@ -1,6 +1,7 @@
 package com.travelportal.domain;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -346,6 +347,52 @@ public class HotelBookingDetails {
 		
 	}
 	
+	
+	
+	//00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+	
+	public static List<HotelBookingDetails> getfindByagentDateWise1(long agentId,Date fromDate,Date toDate,int currentPage, int rowsPerPage,long totalPages,String status,String guest) {
+		int  start=0;
+    	
+    	String sql="";
+    	if(!guest.equals("undefined")){
+    		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentId = ?1 and a.room_status = ?4 and travellerfirstname LIKE CONCAT('%', :someSymbol, '%') ORDER BY a.checkIn DESC";
+    	}else{
+    		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentId = ?1 and a.room_status = ?4 and travellerfirstname LIKE CONCAT('%', :someSymbol, '%') ORDER BY a.checkIn DESC";
+    	}
+    	if(currentPage >= 1 && currentPage <= totalPages) {
+			start = (currentPage*rowsPerPage)-rowsPerPage;
+		}
+		if(currentPage>totalPages && totalPages!=0) {
+			currentPage--;
+			start = (int) ((totalPages*rowsPerPage)-rowsPerPage); 
+		}
+    	Query q = JPA.em().createQuery(sql).setFirstResult(start).setMaxResults(rowsPerPage);
+		
+    	q.setParameter(1, agentId);
+   		q.setParameter(2, fromDate);
+   		q.setParameter(3, toDate);
+   		q.setParameter("someSymbol", guest);
+   		if(!status.equals("1")){
+   		q.setParameter(4, status);
+   		}
+		return (List<HotelBookingDetails>)q.getResultList();
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static List<HotelBookingDetails> getfindByDateWiseAgentWise(long agentId,int currentPage, int rowsPerPage,long totalPages, String status) {
 		int  start=0;
     	
@@ -371,6 +418,70 @@ public class HotelBookingDetails {
 		return (List<HotelBookingDetails>)q.getResultList();
 		
 	}
+	
+	
+	//000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+	
+	public static List<HotelBookingDetails> getfindByDateWiseAgentWise11(long agentId,int currentPage, int rowsPerPage,long totalPages,String status,Date fromDate,Date toDate) {
+		int  start=0;
+    	
+		System.out.println("---------");
+		System.out.println(status);
+		System.out.println("---------");
+    	String sql="";
+    
+    		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and a.checkIn BETWEEN ?3 and ?4 and a.checkOut BETWEEN ?3 and ?4 ORDER BY a.checkIn DESC";
+    	
+    	if(currentPage >= 1 && currentPage <= totalPages) {
+			start = (currentPage*rowsPerPage)-rowsPerPage;
+		}
+		if(currentPage>totalPages && totalPages!=0) {
+			currentPage--;
+			start = (int) ((totalPages*rowsPerPage)-rowsPerPage); 
+		}
+    	Query q = JPA.em().createQuery(sql).setFirstResult(start).setMaxResults(rowsPerPage);
+		
+    	q.setParameter(1, agentId);
+   		q.setParameter(2, status);
+   		q.setParameter(3, fromDate);
+   		q.setParameter(4, toDate);
+   		
+		return (List<HotelBookingDetails>)q.getResultList();
+		
+	}
+	
+	
+	
+	//00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+	
+	public static List<HotelBookingDetails> getfindByDateWiseAgentWise1(long agentId,int currentPage, int rowsPerPage,long totalPages, String status,String guest) {
+		int  start=0;
+    	
+		System.out.println("---------");
+		System.out.println(status);
+		System.out.println("---------");
+    	String sql="";
+    
+    		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and travellerfirstname LIKE CONCAT('%', :someSymbol, '%') ORDER BY a.checkIn DESC";
+    	
+    	if(currentPage >= 1 && currentPage <= totalPages) {
+			start = (currentPage*rowsPerPage)-rowsPerPage;
+		}
+		if(currentPage>totalPages && totalPages!=0) {
+			currentPage--;
+			start = (int) ((totalPages*rowsPerPage)-rowsPerPage); 
+		}
+    	Query q = JPA.em().createQuery(sql).setFirstResult(start).setMaxResults(rowsPerPage);
+		
+    	q.setParameter(1, agentId);
+   		q.setParameter(2, status);
+   		q.setParameter("someSymbol", guest);
+		return (List<HotelBookingDetails>)q.getResultList();
+		
+	}
+	
+	
+	
 	
 	
 	public static List<HotelBookingDetails> getfindBysupplierDateWiseAgentWise(long supplierCode,int currentPage, int rowsPerPage,long totalPages,String agentNm, String status) {
@@ -418,6 +529,21 @@ public class HotelBookingDetails {
 		
 	}
 	
+	//------------------------------------------------------------------------------------------------------------
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static List<HotelBookingDetails> getfindBysupplier(long supplierCode,int currentPage, int rowsPerPage,long totalPages, String status) {
 		int  start=0;
     	
@@ -459,6 +585,84 @@ public class HotelBookingDetails {
     	return totalPages;
     }
 	
+	//oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+	
+    public static long getAllagentTotalDateWise1(int rowsPerPage,long agentId,Date fromDate,Date toDate , String status,String guest) {
+		long totalPages = 0, size;
+	
+		if(!guest.equals("undefined")){
+			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentId = ?1 and a.room_status = ?4 and a.travellerfirstname LIKE CONCAT('%', :someSymbol, '%')").setParameter(1, agentId).setParameter(2, fromDate).setParameter(3, toDate).setParameter(4, status).setParameter("someSymbol", guest).getSingleResult();  
+		}else{
+			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentId = ?1 and a.room_status = ?4 and a.travellerfirstname LIKE CONCAT('%', :someSymbol, '%')").setParameter(1, agentId).setParameter(2, fromDate).setParameter(3, toDate).setParameter(4, status).setParameter("someSymbol", guest).getSingleResult();
+		}
+    	
+    	totalPages = size/rowsPerPage;
+		
+    	if(size % rowsPerPage > 0) {
+			totalPages++;
+		}
+    	System.out.println("total pages ::"+totalPages);
+    	return totalPages;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//--------------------------------------------------------------------------------------------------
+	public static List<HotelBookingDetails> getinfobyname(String guest,String status,long agentid1,String checkIn,String checkOut)
+	{
+		Query q = null;
+		System.out.println("guest"+guest+"checkIn"+checkIn+"checkOut"+checkOut);
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		if(!guest.equals("undefined") && !checkIn.equals("undefined") && !checkOut.equals("undefined") )
+		{
+			 q = JPA.em().createQuery("select c from HotelBookingDetails c where travellerfirstname LIKE CONCAT('%', :someSymbol, '%') AND room_status=:s1 AND agentId=:id1 and checkIn BETWEEN :todate and :fromdate and checkOut BETWEEN :todate and :fromdate");
+			 System.out.println("room status="+status+"agent id="+agentid1);
+			 q.setParameter("someSymbol", guest);
+			q.setParameter("s1",status);
+			q.setParameter("id1",agentid1);
+			try {
+				q.setParameter("todate",format.parse(checkIn));
+				q.setParameter("fromdate",format.parse(checkOut));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(guest.equals("undefined")&&!checkIn.equals("undefined")&&!checkOut.equals("undefined"))
+		{
+			 q = JPA.em().createQuery("select c from HotelBookingDetails c where  room_status=:s1 AND agentId=:id1 and checkIn BETWEEN :todate and :fromdate and checkOut BETWEEN :todate and :fromdate");
+			System.out.println("room status="+status+"agent id="+agentid1);
+			q.setParameter("s1",status);
+			q.setParameter("id1",agentid1);
+			try {
+				q.setParameter("todate",format.parse(checkIn));
+				q.setParameter("fromdate",format.parse(checkOut));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		else if(!guest.equals("undefined")&&checkIn.equals("undefined")&&checkOut.equals("undefined"))
+		{
+			 q = JPA.em().createQuery("select c from HotelBookingDetails c where travellerfirstname LIKE CONCAT('%', :someSymbol, '%')AND room_status=:s1 AND agentId=:id1");
+			 System.out.println("room status="+status+"agent id="+agentid1);
+			 q.setParameter("someSymbol", guest);	
+			q.setParameter("s1",status);
+			q.setParameter("id1",agentid1);
+		}
+		return  q.getResultList();
+	
+	
+	}
+	
 	@Transactional
     public static long getAllBookingTotalDateWise(int rowsPerPage,long supplierCode,Date fromDate,Date toDate ,String agentNm, String status) {
 		long totalPages = 0, size;
@@ -494,6 +698,45 @@ public class HotelBookingDetails {
     	System.out.println("total pages ::"+totalPages);
     	return totalPages;
     }
+	
+	
+	//000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+	
+	   public static long getTotalDateWiseAgentWise1(int rowsPerPage,long agentId, String status,String guest) {
+			long totalPages = 0, size;
+		
+			
+				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and travellerfirstname LIKE CONCAT('%', :someSymbol, '%')").setParameter(1, agentId).setParameter(2, status).setParameter("someSymbol", guest).getSingleResult();  
+			
+	    	
+	    	totalPages = size/rowsPerPage;
+			
+	    	if(size % rowsPerPage > 0) {
+				totalPages++;
+			}
+	    	System.out.println("total pages ::"+totalPages);
+	    	return totalPages;
+	    }
+	   
+	   //00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+	   
+	   public static long getTotalDateWiseAgentWise11(int rowsPerPage,long agentId, String status,Date fromDate,Date toDate ) {
+			long totalPages = 0, size;
+		
+			
+				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and a.checkIn BETWEEN ?3 and ?4 and a.checkOut BETWEEN ?3 and ?4").setParameter(1, agentId).setParameter(2, status).setParameter(3, fromDate).setParameter(4, toDate).getSingleResult();  
+			
+	    	
+	    	totalPages = size/rowsPerPage;
+			
+	    	if(size % rowsPerPage > 0) {
+				totalPages++;
+			}
+	    	System.out.println("total pages ::"+totalPages);
+	    	return totalPages;
+	    }
+	   
+	   
 	
 	
 	@Transactional

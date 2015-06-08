@@ -64,7 +64,29 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		});
 	};
 	
-	
+	$scope.showtable = function(checkIn,checkOut,guest,status){
+		console.log(guest);
+		console.log(status);
+		console.log(checkIn);
+		console.log(checkOut);
+		if(guest=="")
+	{
+			guest="undefined";
+	}
+		
+		$http.get("/getagentInfobynm/"+currentPage+"/"+checkIn+"/"+checkOut+"/"+guest+"/"+status).success(function(response1){
+		console.log(response1);
+		totalPages = response1.totalPages;
+		currentPage = response1.currentPage;
+		$scope.pageNumber = response1.currentPage;
+		$scope.pageSize = response1.totalPages;
+		$scope.agentBook = response1.results;
+		if(totalPages == 0) {
+			$scope.pageNumber = 0;
+		}
+		
+	});
+	}
 	
 	$scope.showoAgentDataDateWise = function(selectDate){
 		console.log(selectDate);

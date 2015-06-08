@@ -46,6 +46,7 @@ public class HotelBookDetailsVM {
 	public int stayDays_inpromotion;
 	public int payDays_inpromotion;
 	public String typeOfStay_inpromotion;
+	public String curr; 
 	public String room_status;
 	public Long totalNightStay;
 	public List<AgentRegisVM> agent;
@@ -249,6 +250,8 @@ public class HotelBookDetailsVM {
 	}
 	public void setCurrencyNm(String currencyNm) {
 		this.currencyNm = currencyNm;
+	 String currency[]=currencyNm.split("-");
+	 curr=currency[0];
 	}
 	public String getTravellercountryNm() {
 		return travellercountryNm;
