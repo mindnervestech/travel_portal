@@ -3,6 +3,9 @@ package com.travelportal.vm;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.travelportal.domain.HotelMealPlan;
+import com.travelportal.domain.admin.BatchMarkup;
+
 public class HotelSearch {
 	
 	public Long supplierCode;
@@ -29,9 +32,11 @@ public class HotelSearch {
 	public HotelBookingDetailsVM hotelBookingDetails;
 	public long datediff;
 	public String perferhotel;
-	
+	public BatchMarkupInfoVM batchMarkup;
 	public List<SerachHotelRoomType> hotelbyRoom = new ArrayList<>();
 	public List<SerachedHotelbyDate> hotelbyDate; 
+	public List<HotelMealPlan> mealPlan;
+	public SpecificMarkupInfoVM markup;
 	//public String flag;
 	
 	public Long getSupplierCode() {
@@ -175,6 +180,25 @@ public class HotelSearch {
 	public void setPerferhotel(String perferhotel) {
 		this.perferhotel = perferhotel;
 	}
+	public SpecificMarkupInfoVM getMarkup() {
+		return markup;
+	}
+	public void setMarkup(SpecificMarkupInfoVM markup) {
+		this.markup = markup;
+	}
+	public BatchMarkupInfoVM getBatchMarkup() {
+		return batchMarkup;
+	}
+	public void setBatchMarkup(BatchMarkupInfoVM batchMarkup) {
+		this.batchMarkup = batchMarkup;
+	}
+	public List<HotelMealPlan> getMealPlan() {
+		return mealPlan;
+	}
+	public void setMealPlan(List<HotelMealPlan> mealPlan) {
+		this.mealPlan = mealPlan;
+	}
+	
 	
 	
 	

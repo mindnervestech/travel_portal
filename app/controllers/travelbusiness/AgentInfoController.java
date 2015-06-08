@@ -120,6 +120,7 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setTravellerphnaumber(hBookingDetails.getTravellerphnaumber());
 			hDetailsVM.setTravellercountry(hBookingDetails.getTravellercountry().getCountryCode());
 			hDetailsVM.setTypeOfStay_inpromotion(hBookingDetails.getTypeOfStay_inpromotion());
+			hDetailsVM.setNonRefund(hBookingDetails.getNonRefund());
 			aDetailsVMs.add(hDetailsVM);
 		}
 		//return ok(Json.toJson(aDetailsVMs));
@@ -230,6 +231,7 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setTravellerphnaumber(hBookingDetails.getTravellerphnaumber());
 			hDetailsVM.setTravellercountry(hBookingDetails.getTravellercountry().getCountryCode());
 			hDetailsVM.setTypeOfStay_inpromotion(hBookingDetails.getTypeOfStay_inpromotion());
+			hDetailsVM.setNonRefund(hBookingDetails.getNonRefund());
 			aDetailsVMs.add(hDetailsVM);
 		}
 		//return ok(Json.toJson(aDetailsVMs));
@@ -362,6 +364,7 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setTravellerphnaumber(hBookingDetails.getTravellerphnaumber());
 			hDetailsVM.setTravellercountry(hBookingDetails.getTravellercountry().getCountryCode());
 			hDetailsVM.setTypeOfStay_inpromotion(hBookingDetails.getTypeOfStay_inpromotion());
+			hDetailsVM.setNonRefund(hBookingDetails.getNonRefund());
 			aDetailsVMs.add(hDetailsVM);
 		}
 		//return ok(Json.toJson(aDetailsVMs));

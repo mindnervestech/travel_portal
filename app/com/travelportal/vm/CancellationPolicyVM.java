@@ -26,6 +26,5 @@ public class CancellationPolicyVM {
 		if(policy.getPercentage() != null) {
 			this.percentage = policy.getPercentage();
 		}
-		
 	}
 }

@@ -89,9 +89,6 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setAgentCompanyNm(agRegistration.getCompanyName());
 		hBookingDetails.setSupplierNm(searchVM.getSupplierNm());
 		hBookingDetails.setTotalNightStay(searchVM.getDatediff());
-		System.out.println("(*((*(*(*(*(*(*(");
-		System.out.println(searchVM.getCheckIn());
-		System.out.println("(*((*(*(*(*(*(*(");
 		try {
 			hBookingDetails.setCheckIn(format.parse(searchVM.getCheckIn()));
 		} catch (ParseException e) {
@@ -136,15 +133,13 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setTravellercountry(Country.getCountryByCode(Integer.parseInt(searchVM.hotelBookingDetails.getTravellercountry())));
 		hBookingDetails.setTravellerphnaumber(searchVM.hotelBookingDetails.getTravellerphnaumber());
 		
-		/*AgentRegistration agent = AgentRegistration.findagentinfo(loginID, password, agentId);
-    	session().put("agent", agent.getAgentCode());
-		if(agent != null) {
-			System.out.println("SESSION VALUE   "+session().get("agent"));
-			AgentRegistrationVM aVm=new AgentRegistrationVM(agent);
-		}*/
-		//(searchVM.hotelBookingDetails.getTravellerphnaumber()));
 		
 		for(SerachHotelRoomType byRoom:searchVM.hotelbyRoom){
+			if(byRoom.nonRefund == true){
+			hBookingDetails.setNonRefund("true");
+			}else{
+				hBookingDetails.setNonRefund("false");
+			}
 			hBookingDetails.setRoomId(byRoom.roomId);
 			hBookingDetails.setRoomName(byRoom.roomName);
 			if(byRoom.specials != null){

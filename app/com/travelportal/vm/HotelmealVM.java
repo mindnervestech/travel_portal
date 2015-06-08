@@ -8,6 +8,7 @@ public class HotelmealVM {
 	public int id;
 	public int mealType;
 	public String mealPlanNm;
+	public String restaurants;
 	public String fromPeriod;
 	public String toPeriod;
 	public String guestType;
@@ -138,6 +139,12 @@ public class HotelmealVM {
 	 */
 	public void setMealType(int mealType) {
 		this.mealType = mealType;
+	}
+	public String getRestaurants() {
+		return restaurants;
+	}
+	public void setRestaurants(String restaurants) {
+		this.restaurants = restaurants;
 	}
 	
 	

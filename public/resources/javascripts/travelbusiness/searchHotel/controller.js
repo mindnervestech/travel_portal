@@ -180,8 +180,13 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		});
 	}
 	
-	$scope.cancelbooking = function(agentId){
+	$scope.cancelbooking = function(agentId,nonrefund){
 		console.log(agentId);
+		console.log(nonrefund);
+		if(nonrefund == "true"){
+			ngDialog.close();
+			notificationService.error("This booking can not be cancel");
+		}else{
 		$http.get("/getbookingcancel/"+agentId).success(function(response){
 			
 			notificationService.success("Cancel Booking");
@@ -200,7 +205,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 				
 			});
 		});
-		
+		}
 	}
 	
 	
@@ -345,8 +350,11 @@ travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDia
 	$scope.init = function(hotelAllData){
 		
 		angular.forEach(hotelAllData.hotellist, function(obj, index){ ///hotel_profile
-			$scope.img = "/searchHotelInfo/getHotelImagePath/"+hotelAllData.hotellist[index].supplierCode+"?d="+new Date().getTime();
-			hotelAllData.hotellist[index].imgPaths = $scope.img;
+					if(index == 0){
+						$scope.img = "/searchHotelInfo/getHotelImagePath/"+hotelAllData.hotellist[index].supplierCode+"/"+index;
+						console.log($scope.img);
+					}
+				hotelAllData.hotellist[index].imgPaths = $scope.img;
 						
 		});
 		
@@ -566,212 +574,7 @@ $http.get("/searchCountries").success(function(response) {
 		});
 	}
 	
-/*	$scope.dateWiseInfo = function(index){
-		console.log(index);
-		$scope.hotelIF = $scope.hotellistInfo[index];
-		console.log($scope.hotelIF);
-		//$scope.roominfo = $scope.hotellistInfo[pIndex].hotelbyRoom[index];
-		//console.log($scope.roominfo);
-		$scope.rateDatedetail = [];
-		$http.get('/getDatewiseHotelRoom/'+$scope.hotelIF.checkIn+"/"+$scope.hotelIF.checkOut+"/"+$scope.hotelIF.nationality+"/"+$scope.hotelIF.supplierCode+"/"+$scope.hotelIF.hotelbyRoom[0].roomId)
-		.success(function(response){
-			console.log(response);
-			$scope.ratedetail = response;
-			console.log($scope.ratedetail);
-			var total = 0;
-			var flag=0;
-			angular.forEach($scope.ratedetail.hotelbyDate,function(value,key){
-				
-				var arr = value.date.split("-");
-				var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
-				$scope.datevalue1 = $filter('date')(new Date(datevalue), "EEE,MMM,dd,yyyy");
-				var arr = $scope.datevalue1.split(",");
-				$scope.day = arr[0];
-				$scope.month = arr[1];
-				$scope.date = arr[2];
-				if(value.flag == 1){
-					flag = value.flag;
-					console.log(value.flag);
-					}
-				angular.forEach(value.roomType,function(value1,key1){					
-					angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
-						angular.forEach(value2.rateDetails,function(value3,key3){
-							console.log(value.currencyShort);
-							if(value3.adult == "1 Adult"){
-								total = total+value3.rateValue;
-								$scope.rateDatedetail.push({
-									rate:value3.rateValue,
-									meal:value3.mealTypeName,
-									flag:value.flag,
-									fulldate:value.date,
-									day:$scope.day,
-								    month:$scope.month,
-								    currency:value.currencyShort,
-								    date:$scope.date
-									
-								});
-							}							
-						});
-					  });
-					
-				    });
-				if(value.roomType.length == "0"){
-					$scope.rateDatedetail.push({
-						flag:value.flag,
-						currency:value.currencyShort,
-						fulldate:value.date,
-						day:$scope.day,
-						month:$scope.month,
-						date:$scope.date
-						
-					});
-				}
-			     });
-			$scope.flag = flag;
-			$scope.total = total;
-			console.log($scope.rateDatedetail);
-			console.log(total);
-			
-		}).error(function(data, status, headers, config) {
-			console.log('ERROR');
-		});
-	
-		
-		
-		ngDialog.open({
-			template: '/assets/resources/html/show_Date_wise_info.html',
-			scope : $scope,
-			//controller:'hoteProfileController',
-			className: 'ngdialog-theme-default'
-		});
-	}*/
-	
-	/*$scope.showAdult=function(roomid){
-		$scope.rateDatedetail = [];
-		
-		$http.get('/getDatewiseHotelRoom/'+$scope.hotelIF.checkIn+"/"+$scope.hotelIF.checkOut+"/"+$scope.hotelIF.nationality+"/"+$scope.hotelIF.supplierCode+"/"+roomid)
-		.success(function(response){
-			console.log(response);
-			$scope.ratedetail = response;
-			console.log($scope.ratedetail);
-			var total = 0;
-			var flag=0;
-			angular.forEach($scope.ratedetail.hotelbyDate,function(value,key){
-				
-				var arr = value.date.split("-");
-				var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
-				$scope.datevalue1 = $filter('date')(new Date(datevalue), "EEE,MMM,dd,yyyy");
-				var arr = $scope.datevalue1.split(",");
-				$scope.day = arr[0];
-				$scope.month = arr[1];
-				$scope.date = arr[2];
-				if(value.flag == 1){
-					flag = value.flag;
-					console.log(value.flag);
-					}
-				angular.forEach(value.roomType,function(value1,key1){					
-					angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
-						angular.forEach(value2.rateDetails,function(value3,key3){
-							console.log(value.currencyShort);
-							if(value3.adult == "1 Adult"){
-								total = total+value3.rateValue;
-								$scope.rateDatedetail.push({
-									rate:value3.rateValue,
-									meal:value3.mealTypeName,
-									flag:value.flag,
-									fulldate:value.date,
-									day:$scope.day,
-								    month:$scope.month,
-								    currency:value.currencyShort,
-								    date:$scope.date
-									
-								});
-							}							
-						});
-					  });
-					
-				    });
-				if(value.roomType.length == "0"){
-					$scope.rateDatedetail.push({
-						flag:value.flag,
-						currency:value.currencyShort,
-						fulldate:value.date,
-						day:$scope.day,
-						month:$scope.month,
-						date:$scope.date
-						
-					});
-				}
-			     });
-			$scope.flag = flag;
-			$scope.total = total;
-			console.log($scope.rateDatedetail);
-			console.log(total);
-			
-		}).error(function(data, status, headers, config) {
-			console.log('ERROR');
-		});
-	
-		
-		
-	}*/
-	
-	
-	/*$scope.showRate=function(adultValue){
-				
-		$scope.rateDatedetail = [];
-		var total = 0;
-		var flag=0;
-		angular.forEach($scope.ratedetail.hotelbyDate,function(value,key){
-			var arr = value.date.split("-");
-			var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
-			$scope.datevalue1 = $filter('date')(new Date(datevalue), "EEE,MMM,dd,yyyy");
-			var arr = $scope.datevalue1.split(",");
-			$scope.day = arr[0];
-			$scope.month = arr[1];
-			$scope.date = arr[2];
-			if(value.flag == 1){
-				flag = value.flag;
-				console.log(value.flag);
-				}
-			angular.forEach(value.roomType,function(value1,key1){
-				angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
-					angular.forEach(value2.rateDetails,function(value3,key3){
-						console.log(value.currencyShort);
-						if(value3.adult == adultValue){
-							total = total+value3.rateValue;
-							$scope.rateDatedetail.push({
-								rate:value3.rateValue,
-								meal:value3.mealTypeName,
-								flag:value.flag,
-								fulldate:value.date,
-								day:$scope.day,
-							    month:$scope.month,
-							    currency:value.currencyShort,
-							    date:$scope.date
-							});
-						} 
-					});
-				  });
-			    });
-			if(value.roomType.length == "0"){
-				$scope.rateDatedetail.push({
-					flag:value.flag,
-					currency:value.currencyShort,
-					fulldate:value.date,
-					day:$scope.day,
-				    month:$scope.month,
-				    date:$scope.date
-				});
-			}
-		     });
-		$scope.flag = flag;
-		$scope.total = total;
-		console.log($scope.rateDatedetail);
-		console.log($scope.total);
-		
-	}*/
-	
+
 	$scope.services_check = [];
 	$scope.servicesWiseHotel = function(index,servicesid){
 		console.log("---");
@@ -877,18 +680,21 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 	
 	$scope.AgentId = $cookieStore.get('AgentId');
 	$scope.AgentCompany = $cookieStore.get('AgentCompany');
+	$scope.imgArray = [];
 	
 	$scope.init = function(hotel){
 		
 		$scope.hotel = hotel;
-		
-		$scope.GenImg = "/searchHotelGenImg/getHotelGenImg/"+$scope.hotel.supplierCode+"?d="+new Date().getTime();
-		$scope.ServImg = "/searchHotelServImg/getHotelServImg/"+$scope.hotel.supplierCode+"?d="+new Date().getTime();
-		$scope.RoomImg = "/searchHotelRoomImg/getHotelRoomImg/"+$scope.hotel.supplierCode+"?d="+new Date().getTime();
-		$scope.LobbyImg = "/searchHotelLobbyImg/getHotelLobbyImg/"+$scope.hotel.supplierCode+"?d="+new Date().getTime();
-		$scope.LSImg = "/searchHotelLSImg/getHotelLSImg/"+$scope.hotel.supplierCode+"?d="+new Date().getTime();
-		$scope.MapImg = "/searchHotelMapImg/getHotelMapImg/"+$scope.hotel.supplierCode+"?d="+new Date().getTime();
 	
+		$http.get('/getAllImgs/'+$scope.hotel.supplierCode).success(function(response){
+			console.log(response);
+			angular.forEach(response, function(obj, index){
+				$scope.imgArray[index] = "/searchHotelGenImg/getHotelGenImg/"+$scope.hotel.supplierCode+"/"+obj.indexValue;
+			});
+			console.log($scope.imgArray);
+		});
+		
+		
 		angular.forEach(hotel.hotelbyRoom, function(obj, index){ 
 			$scope.roomImg = "/hoteldetailpage/getHotelRoomImagePath/"+hotel.hotelbyRoom[index].roomId+"?d="+new Date().getTime();
 			$scope.hotel.hotelbyRoom[index].roomimgPaths = $scope.roomImg;
@@ -1002,6 +808,21 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 		$scope.rateDatedetail = [];
 		var total = 0;
 		var flag = 0;
+		
+		var divDays = 0;
+		var remDay = 0;
+		var totalStayDay = 0;
+		var typeOFFreeStey = 0;
+		var daysLess = 0;
+		
+		if($scope.ratedetail.hotelbyRoom[0].applyPromotion == 1){
+			divDays = parseInt($scope.ratedetail.datediff / $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].stayDays);
+			remDay = $scope.ratedetail.datediff % $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].stayDays;
+			totalStayDay = (divDays * $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays) + remDay;
+			daysLess = $scope.ratedetail.datediff - totalStayDay;
+			typeOFFreeStey = $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].typeOfStay;
+		}
+		
 		angular.forEach($scope.ratedetail.hotelbyDate,function(value,key){
 			var arr = value.date.split("-");
 			var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
@@ -1022,7 +843,9 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 					angular.forEach(value2.rateDetails,function(value3,key3){
 						console.log(value.currencyShort);
 						if(value3.adult == adultValue){
-							total = total+value3.rateValue;
+			
+ 						total = total+value3.rateValue;
+							
 							$scope.rateDatedetail.push({
 								rate:value3.rateValue,
 								meal:value3.mealTypeName,
@@ -1085,6 +908,9 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 			$scope.total = $scope.totalParPerson * roomNo;
 		}
 	
+		$scope.batchMarkupFunction();
+		$scope.commanPromotionFunction();
+		
 		$scope.flag = flag;
 		console.log($scope.rateDatedetail);
 		console.log($scope.total);
@@ -1138,8 +964,11 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 			console.log(response);
 			$scope.ratedetail = response;
 			console.log($scope.ratedetail);
+			
 			var total = 0;
 			var flag =0;
+			
+			var stayCountar = 0;
 			angular.forEach($scope.ratedetail.hotelbyDate,function(value,key){
 				
 				var arr = value.date.split("-");
@@ -1161,7 +990,9 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 						angular.forEach(value2.rateDetails,function(value3,key3){
 							console.log(value.currencyShort);
 							if(value3.adult == "1 Adult"){
-								total = total+value3.rateValue;
+								
+									total = total+value3.rateValue;
+								
 								$scope.rateDatedetail.push({
 									rate:value3.rateValue,
 									meal:value3.mealTypeName,
@@ -1218,6 +1049,10 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 			
 			$scope.total = total;
 			$scope.totalParPerson = total;
+			
+			$scope.batchMarkupFunction();
+	
+			$scope.commanPromotionFunction();
 			$scope.flag = flag;
 			console.log($scope.rateDatedetail);
 			console.log(total);
@@ -1245,6 +1080,109 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 		
 		$scope.selectextraBed = function(){
 			console.log("------Select---------");
+		}
+	}
+	
+	$scope.batchMarkupFunction = function(){
+		if($scope.ratedetail.batchMarkup.selected == 0){
+			var markupCount = $scope.ratedetail.datediff * $scope.ratedetail.batchMarkup.flat;
+			console.log(markupCount);
+			$scope.total = $scope.total + markupCount;
+		}else if($scope.ratedetail.batchMarkup.selected == 1){
+		   var markupPer =	$scope.total / 100 * $scope.ratedetail.batchMarkup.percent;
+		   console.log(markupPer);
+		   $scope.total = markupPer;
+		}
+	}
+	$scope.commanPromotionFunction = function(){
+		
+		var divDays = 0;
+		var remDay = 0;
+		var totalStayDay = 0;
+		var typeOFFreeStey = 0;
+		var daysLess = 0;
+		
+		
+		if($scope.ratedetail.hotelbyRoom[0].applyPromotion == 1){	
+		
+			divDays = parseInt($scope.ratedetail.datediff / $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].stayDays);
+			remDay = $scope.ratedetail.datediff % $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].stayDays;
+			totalStayDay = (divDays * $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays) + remDay;
+			daysLess = $scope.ratedetail.datediff - totalStayDay;
+			typeOFFreeStey = $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].typeOfStay;
+			
+			
+			var a = [];
+			var cheapestTotal = 0;
+			var ExpensivesTotal = 0;
+			var firstNoTotal = 0;
+			var standardTotal = 0;
+			var i=0;
+			
+			for(i=0;i<$scope.rateDatedetail.length;i++){
+				a[i] = $scope.rateDatedetail[i].rate;
+				console.log($scope.rateDatedetail[i].rate);
+			}
+			
+			 if(typeOFFreeStey ==  "First Night"){
+				
+				 for(i=0; i<daysLess; i++){
+					 firstNoTotal = firstNoTotal + a[i];
+					}
+				 
+				 $scope.total = $scope.total - firstNoTotal;
+			  }
+			  if(typeOFFreeStey ==  "Standard Policy"){
+				  
+				  var stayCountar = 0;
+				  for(i=0; i<a.length; i++){
+					  if(stayCountar < $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays){
+							stayCountar = stayCountar + 1;
+							console.log(stayCountar);
+						 }else if(stayCountar >= $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays){
+							 standardTotal = standardTotal + a[i];	
+							 console.log(a[i]);
+							 console.log(standardTotal);
+							 stayCountar = stayCountar + 1;
+							 if(stayCountar == $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].stayDays){
+								 stayCountar = 0; 
+							 }
+						 }
+					  console.log(stayCountar);
+					}
+				  console.log(standardTotal);
+				  $scope.total = $scope.total - standardTotal;
+				
+			   }
+			
+			if(typeOFFreeStey ==  "Cheapest night"){
+				
+			
+				
+				a.sort(function(a, b){return a-b});
+				console.log(a);
+				console.log(daysLess);
+				for(i=0; i<daysLess; i++){
+					cheapestTotal = cheapestTotal + a[i];
+				}
+				
+				$scope.total = $scope.total - cheapestTotal;
+				
+			}
+			if(typeOFFreeStey ==  "Most expensive night/s"){
+				
+							
+				a.sort(function(a, b){return b-a});
+				console.log(a);
+				
+				for(i=0;i<daysLess;i++){
+					ExpensivesTotal = ExpensivesTotal + a[i];
+				}
+				console.log($scope.total);
+				console.log(ExpensivesTotal);
+				
+				$scope.total = $scope.total - ExpensivesTotal;
+			}
 		}
 	}
 	
@@ -1280,38 +1218,11 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 			}
 		});
 		
-		
-/*	$scope.childselected[0].age = 1;
-		
-		angular.forEach($scope.ratedetail.hotelbyRoom, function(value, count){
-			
-			if(value.breakfastInclude == "false"){
-				$scope.childselected[0].breakfast = value.breakfastRate;
-			}else{
-				$scope.childselected[0].breakfast = "";
-			}
-			
-			if(value.childAge > $scope.childselected[0].age){
-				$scope.childselected[0].freeChild = "Free";
-			}else{
-				$scope.childselected[0].breakfast = "";
-				angular.forEach(value.roomchildPolicies, function(value1, count1){
-					if(value1.allowedChildAgeFrom <= $scope.childselected[0].age &&  value1.allowedChildAgeTo >= $scope.childselected[0].age){
-						$scope.childselected[0].freeChild = value1.extraChildRate;
-					}
-				});
-			}
-			
-		});*/
-		
+				
 	}
 	
 	$scope.parChildAge = function(age,index,roomCount){
 		//freechild
-		console.log(age);
-		console.log(index);
-		console.log(")()()()())(");
-		console.log($scope.totalParPerson);
 		
 		if(roomCount == undefined){
 			roomCount = 1;
@@ -1355,6 +1266,18 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 		console.log(totalchileValue);
 		
 		$scope.total = parseInt(totalcount) + parseInt(totalchileValue);
+		
+		/*if($scope.ratedetail.batchMarkup.selected == 0){
+			var markupCount = $scope.ratedetail.datediff * $scope.ratedetail.batchMarkup.flat;
+			console.log(markupCount);
+			$scope.total = $scope.total + markupCount;
+		  }else if($scope.ratedetail.batchMarkup.selected == 1){
+		    var markupPer =	$scope.total / 100 * $scope.ratedetail.batchMarkup.percent;
+		    console.log(markupPer);
+		    $scope.total = markupPer;
+		}*/
+		$scope.batchMarkupFunction();
+		$scope.commanPromotionFunction();
 	}
 	
 	
@@ -1377,6 +1300,18 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 			roomCount = 1;
 		}
 		$scope.total = $scope.totalParPerson * roomCount;
+		
+		/*if($scope.ratedetail.batchMarkup.selected == 0){
+			var markupCount = $scope.ratedetail.datediff * $scope.ratedetail.batchMarkup.flat;
+			console.log(markupCount);
+			$scope.total = $scope.total + markupCount;
+		  }else if($scope.ratedetail.batchMarkup.selected == 1){
+		    var markupPer =	$scope.total / 100 * $scope.ratedetail.batchMarkup.percent;
+		    console.log(markupPer);
+		    $scope.total = markupPer;
+		}*/
+		$scope.batchMarkupFunction();
+		$scope.commanPromotionFunction();
 	}
 	
 	$scope.availableFlag = [];
@@ -1441,11 +1376,11 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 		console.log($scope.rateDatedetail);
 		
 		
-		/*angular.forEach(value2.rateDetails,function(value3,key3){
-			console.log(value.currencyShort);
-			
-		});*/
 		
+		$scope.batchMarkupFunction();
+		$scope.commanPromotionFunction();
+		
+			
 		
 	}
 	
@@ -1502,8 +1437,9 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 	$scope.init = function(hotel){
 		$scope.hotel = hotel;
 		
+		
 		angular.forEach(hotel.hotelbyRoom, function(obj, index){ 
-			$scope.Img = "/hotelBookingpage/getHotelImagePath/"+hotel.supplierCode+"?d="+new Date().getTime();
+			$scope.Img = "/hotelBookingpage/getHotelImagePath/"+hotel.supplierCode+"/"+index;
 			$scope.hotel.imgPaths = $scope.Img;
 						
 		});

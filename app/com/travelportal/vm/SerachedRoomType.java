@@ -121,6 +121,7 @@ public class SerachedRoomType {
 		this.maxAdultsWithchild = maxAdultsWithchild;
 	}
 	
+	
 	 
 	
 	

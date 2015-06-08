@@ -5,8 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -14,22 +13,19 @@ import javax.imageio.ImageIO;
 import net.coobird.thumbnailator.Thumbnails;
 
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.core.io.FileSystemResource;
 
 import play.Play;
 import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
-import play.mvc.Result;
 import play.mvc.Http.MultipartFormData.FilePart;
-import views.html.index;
+import play.mvc.Result;
+import scala.Array;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.travelportal.domain.HotelHealthAndSafety;
-import com.travelportal.domain.HotelProfile;
-import com.travelportal.domain.ImgPath;
+import com.travelportal.domain.HotelImagesPath;
 import com.travelportal.domain.InfoWiseImagesPath;
+import com.travelportal.vm.AllImagesVM;
 
 
 
@@ -49,7 +45,17 @@ public static void createRootDir() {
         
 }
 	
-	
+/*List<FilePart> picture = request().body().asMultipartFormData().getFiles();
+
+System.out.println(form.get("supplierCode"));
+System.out.println(form.get("description"));
+
+createDir(rootDir,Long.parseLong(form.get("supplierCode")));
+for(int i=0; i< picture.size()-1 ;i++){
+	String fileName = picture.get(i).getFilename();
+	System.out.println("-------------------");
+	System.out.println(fileName);
+}*/
 
 	//savegeneralImg
 	@Transactional(readOnly=false)
@@ -62,12 +68,13 @@ public static void createRootDir() {
 		
 		System.out.println(form.get("supplierCode"));
 		System.out.println(form.get("description"));
-		
-		createDir(rootDir,Long.parseLong(form.get("supplierCode")));
+	
+	
+		createDir(rootDir,Long.parseLong(form.get("supplierCode")),form.get("index"));
 		 String fileName = picture.getFilename();
 		
-		 String ThumbnailImage = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator+"GeneralPic"+ File.separator+"Logo_thumbnail."+FilenameUtils.getExtension(fileName);
-         String originalFileName = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator +"GeneralPic"+File.separator+"Original_image."+FilenameUtils.getExtension(fileName);
+		 String ThumbnailImage = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator+form.get("index")+ File.separator+"Logo_thumbnail."+FilenameUtils.getExtension(fileName);
+         String originalFileName = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator +form.get("index")+File.separator+"Original_image."+FilenameUtils.getExtension(fileName);
 		 
 		 
          File src = picture.getFile();
@@ -99,7 +106,29 @@ public static void createRootDir() {
          }
            
  		 System.out.println(fileName);
- 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(Long.parseLong(form.get("supplierCode")));
+ 		 
+		HotelImagesPath hotelImagesPath = HotelImagesPath.findByIdAndIndex(
+				Long.parseLong(form.get("supplierCode")),
+				Long.parseLong(form.get("index")));
+		if (hotelImagesPath == null) {
+			hotelImagesPath = new HotelImagesPath();
+			hotelImagesPath.setIndexValue(Long.parseLong(form.get("index")));
+			hotelImagesPath.setSupplierCode(Long.parseLong(form
+					.get("supplierCode")));
+			hotelImagesPath.setPictureName(form.get("pictureName"));
+			hotelImagesPath.setPicturePath(ThumbnailImage);
+			hotelImagesPath.setPictureDescription(form.get("description"));
+			hotelImagesPath.save();
+		} else {
+			hotelImagesPath.setSupplierCode(Long.parseLong(form
+					.get("supplierCode")));
+			hotelImagesPath.setPictureName(form.get("pictureName"));
+			hotelImagesPath.setPicturePath(ThumbnailImage);
+			hotelImagesPath.setPictureDescription(form.get("description"));
+			hotelImagesPath.merge();
+		}
+ 		
+ 		/*InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(Long.parseLong(form.get("supplierCode")));
  		 if(infowiseimagesPath == null)
  		 {
  		infowiseimagesPath = new InfoWiseImagesPath();
@@ -113,27 +142,26 @@ public static void createRootDir() {
  			infowiseimagesPath.setGeneralPicture(ThumbnailImage);
  			infowiseimagesPath.setGeneralDescription(form.get("description"));
  	 		infowiseimagesPath.merge();
- 		 }
+ 		 }*/
  		
-		return ok(Json.toJson(infowiseimagesPath));
- 		//return ok();
+		return ok(Json.toJson(hotelImagesPath));
 		
 	}
-	public static void createDir(String rootDir, long supplierCode) {
-        File file3 = new File(rootDir + File.separator+supplierCode +File.separator+ "ManageHotelImages"+File.separator+"GeneralPic");
+	public static void createDir(String rootDir, long supplierCode,String index) {
+        File file3 = new File(rootDir + File.separator+supplierCode +File.separator+ "ManageHotelImages"+File.separator+index);
         if (!file3.exists()) {
                 file3.mkdirs();
         }
 	}
 	@Transactional(readOnly=false)
-	public static Result getImagePath(long supplierCode) {
+	public static Result getImagePath(long supplierCode,long indexValue) {
 		
-		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
+		HotelImagesPath hImagesPath = HotelImagesPath.findByIdAndIndex(supplierCode,indexValue);
 		File f;
-		if(infowiseimagesPath != null){
+		if(hImagesPath != null){
 		 
-			if(infowiseimagesPath.getGeneralPicture() != null){
-				 f = new File(infowiseimagesPath.getGeneralPicture());
+			if(hImagesPath.getPicturePath() != null){
+				 f = new File(hImagesPath.getPicturePath());
 			}else{
 				f = new File("C:\\mypath\\default\\logo.jpg");
 			}
@@ -149,486 +177,29 @@ public static void createRootDir() {
 	
 	@Transactional(readOnly=false)
 	public static Result finddescrip(long supplierCode) {
-	InfoWiseImagesPath infoImagesPath= InfoWiseImagesPath.findById(supplierCode);
+		InfoWiseImagesPath infoImagesPath= InfoWiseImagesPath.findById(supplierCode);
 		return ok(Json.toJson(infoImagesPath));
 	
-	
-	}
-	
-	
-	@Transactional(readOnly=false)
-	public static Result saveLobbyImg() {
-		
-
-		DynamicForm form = DynamicForm.form().bindFromRequest();
-		
-		FilePart picture = request().body().asMultipartFormData().getFile("LobbyImage");
-		
-		System.out.println(form.get("supplierCode"));
-		
-		createDirLobby(rootDir,Long.parseLong(form.get("supplierCode")));
-		 String fileName = picture.getFilename();
-		
-		 String ThumbnailImage = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator+"LobbyImage"+ File.separator+"Logo_thumbnail."+FilenameUtils.getExtension(fileName);
-         String originalFileName = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator +"LobbyImage"+File.separator+"Original_image."+FilenameUtils.getExtension(fileName);
-		 
-		 
-         File src = picture.getFile();
-         OutputStream out = null;
-         BufferedImage image = null;
-         File f = new File(ThumbnailImage);
-         System.out.println(originalFileName);
-         try {
-        	   
-                  BufferedImage originalImage = ImageIO.read(src);
-                        Thumbnails.of(originalImage)
-                            .size(780, 780)
-                            .toFile(f);
-                            File _f = new File(originalFileName);
-                            Thumbnails.of(originalImage).scale(1.0).
-                            toFile(_f);
-           
-        	 
-         } catch (FileNotFoundException e) {
-                 e.printStackTrace();
-         } catch (IOException e) {
-                 e.printStackTrace();
-         } finally {
-                 try {
-                         if(out != null) out.close();
-                 } catch (IOException e) {
-                         e.printStackTrace();
-                 }
-         }
-           
- 		 System.out.println(fileName);
- 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(Long.parseLong(form.get("supplierCode")));
- 		 if(infowiseimagesPath == null)
- 		 {
- 		infowiseimagesPath = new InfoWiseImagesPath();
- 		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
- 		infowiseimagesPath.setHotel_Lobby(ThumbnailImage);
- 		infowiseimagesPath.setLobbyDescription(form.get("description"));
- 		infowiseimagesPath.save();
- 		 }
- 		 else
- 		 {
- 			infowiseimagesPath.setHotel_Lobby(ThumbnailImage);
- 			infowiseimagesPath.setLobbyDescription(form.get("description"));
- 	 		infowiseimagesPath.merge();
- 		 }
- 		
-		return ok(Json.toJson(infowiseimagesPath));
- 			
-	}
-	public static void createDirLobby(String rootDir, long supplierCode) {
-        File file3 = new File(rootDir + File.separator+supplierCode +File.separator+ "ManageHotelImages"+File.separator+"LobbyImage");
-        if (!file3.exists()) {
-                file3.mkdirs();
-        }
-	}
-	@Transactional(readOnly=false)
-	public static Result getLobbyImagePath(long supplierCode) {
-		
-		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-		
-		File f;
-		if(infowiseimagesPath != null){
-		 
-			if(infowiseimagesPath.getHotel_Lobby() != null){
-				f = new File(infowiseimagesPath.getHotel_Lobby());
-			}else{
-				f = new File("C:\\mypath\\default\\logo.jpg");
-			}
-		}
-		else{
-			f = new File("C:\\mypath\\default\\logo.jpg");
-		}
-        return ok(f);		
-		
-	}
-	
-	
-	@Transactional(readOnly=false)
-	public static Result saveRoomImg() {
-		
-
-		DynamicForm form = DynamicForm.form().bindFromRequest();
-		
-		FilePart picture = request().body().asMultipartFormData().getFile("RoomImage");
-		
-		System.out.println(form.get("supplierCode"));
-		
-		createDirRoom(rootDir,Long.parseLong(form.get("supplierCode")));
-		 String fileName = picture.getFilename();
-		
-		 String ThumbnailImage = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator+"RoomImage"+ File.separator+"Logo_thumbnail."+FilenameUtils.getExtension(fileName);
-         String originalFileName = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator +"RoomImage"+File.separator+"Original_image."+FilenameUtils.getExtension(fileName);
-		 
-		 
-         File src = picture.getFile();
-         OutputStream out = null;
-         BufferedImage image = null;
-         File f = new File(ThumbnailImage);
-         System.out.println(originalFileName);
-         try {
-        	   
-                  BufferedImage originalImage = ImageIO.read(src);
-                        Thumbnails.of(originalImage)
-                           .size(780, 780)
-                            .toFile(f);
-                            File _f = new File(originalFileName);
-                            Thumbnails.of(originalImage).scale(1.0).
-                            toFile(_f);
-           
-        	 
-         } catch (FileNotFoundException e) {
-                 e.printStackTrace();
-         } catch (IOException e) {
-                 e.printStackTrace();
-         } finally {
-                 try {
-                         if(out != null) out.close();
-                 } catch (IOException e) {
-                         e.printStackTrace();
-                 }
-         }
-           
- 		 System.out.println(fileName);
- 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(Long.parseLong(form.get("supplierCode")));
- 		 if(infowiseimagesPath == null)
- 		 {
- 		infowiseimagesPath = new InfoWiseImagesPath();
- 		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
- 		infowiseimagesPath.setHotelRoom(ThumbnailImage);
- 		infowiseimagesPath.setRoomDescription(form.get("description"));
- 		infowiseimagesPath.save();
- 		 }
- 		 else
- 		 {
- 			infowiseimagesPath.setHotelRoom(ThumbnailImage);
- 			infowiseimagesPath.setRoomDescription(form.get("description"));
- 	 		infowiseimagesPath.merge();
- 		 }
- 		
-		return ok(Json.toJson(infowiseimagesPath));
- 			
-	}
-	public static void createDirRoom(String rootDir, long supplierCode) {
-        File file3 = new File(rootDir + File.separator+supplierCode +File.separator+ "ManageHotelImages"+File.separator+"RoomImage");
-        if (!file3.exists()) {
-                file3.mkdirs();
-        }
-	}
-	@Transactional(readOnly=false)
-	public static Result getRoomImagePath(long supplierCode) {
-		
-		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-		File f;
-		if(infowiseimagesPath != null){
-		 
-			if(infowiseimagesPath.getHotelRoom() != null){
-				f = new File(infowiseimagesPath.getHotelRoom());
-			}else{
-				f = new File("C:\\mypath\\default\\logo.jpg");
-			}
-		}
-		else{
-			f = new File("C:\\mypath\\default\\logo.jpg");
-		}
-		
-		
-        return ok(f);		
-		
 	}
 	
 	@Transactional(readOnly=false)
-	public static Result saveAmenitiesServicesImg() {
-		
-
-		DynamicForm form = DynamicForm.form().bindFromRequest();
-		
-		FilePart picture = request().body().asMultipartFormData().getFile("AmenitiesServicesImage");
-		
-		System.out.println(form.get("supplierCode"));
-		
-		createDirAmenitiesServices(rootDir,Long.parseLong(form.get("supplierCode")));
-		 String fileName = picture.getFilename();
-		
-		 String ThumbnailImage = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator+"AmenitiesServicesImage"+ File.separator+"Logo_thumbnail."+FilenameUtils.getExtension(fileName);
-         String originalFileName = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator +"AmenitiesServicesImage"+File.separator+"Original_image."+FilenameUtils.getExtension(fileName);
-		 
-		 
-         File src = picture.getFile();
-         OutputStream out = null;
-         BufferedImage image = null;
-         File f = new File(ThumbnailImage);
-         System.out.println(originalFileName);
-         try {
-        	   
-                  BufferedImage originalImage = ImageIO.read(src);
-                        Thumbnails.of(originalImage)
-                            .size(780, 780)
-                            .toFile(f);
-                            File _f = new File(originalFileName);
-                            Thumbnails.of(originalImage).scale(1.0).
-                            toFile(_f);
-           
-        	 
-         } catch (FileNotFoundException e) {
-                 e.printStackTrace();
-         } catch (IOException e) {
-                 e.printStackTrace();
-         } finally {
-                 try {
-                         if(out != null) out.close();
-                 } catch (IOException e) {
-                         e.printStackTrace();
-                 }
-         }
-           
- 		 System.out.println(fileName);
- 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(Long.parseLong(form.get("supplierCode")));
- 		 if(infowiseimagesPath == null)
- 		 {
- 		infowiseimagesPath = new InfoWiseImagesPath();
- 		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
- 		infowiseimagesPath.setAmenitiesServices(ThumbnailImage);
- 		infowiseimagesPath.setAmenitiesDescription(form.get("description"));
- 		infowiseimagesPath.save();
- 		 }
- 		 else
- 		 {
- 			infowiseimagesPath.setAmenitiesServices(ThumbnailImage);
- 			infowiseimagesPath.setAmenitiesDescription(form.get("description"));
- 	 		infowiseimagesPath.merge();
- 		 }
- 		
-		return ok(Json.toJson(infowiseimagesPath));
- 			
-	}
-	public static void createDirAmenitiesServices(String rootDir, long supplierCode) {
-        File file3 = new File(rootDir + File.separator+supplierCode +File.separator+ "ManageHotelImages"+File.separator+"AmenitiesServicesImage");
-        if (!file3.exists()) {
-                file3.mkdirs();
-        }
-	}
-	@Transactional(readOnly=false)
-	public static Result getAmenitiesServicesImagePath(long supplierCode) {
-		
-		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-		File f;
-		if(infowiseimagesPath != null){
-		 
-			if(infowiseimagesPath.getAmenitiesServices() != null){
-				
-				f = new File(infowiseimagesPath.getAmenitiesServices());
-			}else{
-				f = new File("C:\\mypath\\default\\logo.jpg");
-			}
-		}
-		else{
-			f = new File("C:\\mypath\\default\\logo.jpg");
-		}
-		
-		
-		
-        return ok(f);		
-		
+	public static Result getAllImgs(long supplierCode){
+		List<AllImagesVM> aImagesVMs = new ArrayList<>();
+		List<HotelImagesPath> hImagesPath = HotelImagesPath.findBySupplier(supplierCode);
+		/*for(HotelImagesPath hPath:hImagesPath){
+			AllImagesVM aVm = new AllImagesVM();
+			aVm.indexValue = hPath.getIndexValue();
+			aVm.file =  new File(hPath.getPicturePath());
+			aVm.pictureName = hPath.getPictureName();
+			
+			aImagesVMs.add(aVm);
+			
+		}*/
+		return ok(Json.toJson(hImagesPath));
 	}
 	
-	//
-	//
 	
-	@Transactional(readOnly=false)
-	public static Result saveLeisureorSportsImg() {
-		
-
-		DynamicForm form = DynamicForm.form().bindFromRequest();
-		
-		FilePart picture = request().body().asMultipartFormData().getFile("LeisureorSportsImage");
-		
-		System.out.println(form.get("supplierCode"));
-		
-		createDirLeisureorSports(rootDir,Long.parseLong(form.get("supplierCode")));
-		 String fileName = picture.getFilename();
-		
-		 String ThumbnailImage = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator+"LeisureorSportsImage"+ File.separator+"Logo_thumbnail."+FilenameUtils.getExtension(fileName);
-         String originalFileName = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator +"LeisureorSportsImage"+File.separator+"Original_image."+FilenameUtils.getExtension(fileName);
-		 
-		 
-         File src = picture.getFile();
-         OutputStream out = null;
-         BufferedImage image = null;
-         File f = new File(ThumbnailImage);
-         System.out.println(originalFileName);
-         try {
-        	   
-                  BufferedImage originalImage = ImageIO.read(src);
-                        Thumbnails.of(originalImage)
-                           .size(780, 780)
-                            .toFile(f);
-                            File _f = new File(originalFileName);
-                            Thumbnails.of(originalImage).scale(1.0).
-                            toFile(_f);
-           
-        	 
-         } catch (FileNotFoundException e) {
-                 e.printStackTrace();
-         } catch (IOException e) {
-                 e.printStackTrace();
-         } finally {
-                 try {
-                         if(out != null) out.close();
-                 } catch (IOException e) {
-                         e.printStackTrace();
-                 }
-         }
-           
- 		 System.out.println(fileName);
- 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(Long.parseLong(form.get("supplierCode")));
- 		 if(infowiseimagesPath == null)
- 		 {
- 		infowiseimagesPath = new InfoWiseImagesPath();
- 		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
- 		infowiseimagesPath.setLeisureSports(ThumbnailImage);
- 		infowiseimagesPath.setLeisureDescription(form.get("description"));
- 		infowiseimagesPath.save();
- 		 }
- 		 else
- 		 {
- 			infowiseimagesPath.setLeisureSports(ThumbnailImage);
- 			infowiseimagesPath.setLeisureDescription(form.get("description"));
- 	 		infowiseimagesPath.merge();
- 		 }
- 		
-		return ok(Json.toJson(infowiseimagesPath));
- 			
-	}
-	public static void createDirLeisureorSports(String rootDir, long supplierCode) {
-        File file3 = new File(rootDir + File.separator+supplierCode +File.separator+ "ManageHotelImages"+File.separator+"LeisureorSportsImage");
-        if (!file3.exists()) {
-                file3.mkdirs();
-        }
-	}
-	@Transactional(readOnly=false)
-	public static Result getLeisureorSportsImagePath(long supplierCode) {
-		
-		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-		
-		File f;
-		if(infowiseimagesPath != null){
-		 
-			if(infowiseimagesPath.getLeisureSports() != null){
-				
-				 f = new File(infowiseimagesPath.getLeisureSports());
-			}else{
-				f = new File("C:\\mypath\\default\\logo.jpg");
-			}
-		}
-		else{
-			f = new File("C:\\mypath\\default\\logo.jpg");
-		}
-		
-		
-		
-        return ok(f);		
-		
-	}
 	
-	//
-	//
-	@Transactional(readOnly=false)
-	public static Result saveMapImg() {
-		
-
-		DynamicForm form = DynamicForm.form().bindFromRequest();
-		
-		FilePart picture = request().body().asMultipartFormData().getFile("MapImage");
-		
-		System.out.println(form.get("supplierCode"));
-		
-		createDirMap(rootDir,Long.parseLong(form.get("supplierCode")));
-		 String fileName = picture.getFilename();
-		
-		 String ThumbnailImage = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator+"MapImage"+ File.separator+"Logo_thumbnail."+FilenameUtils.getExtension(fileName);
-         String originalFileName = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator +"MapImage"+File.separator+"Original_image."+FilenameUtils.getExtension(fileName);
-		 
-		 
-         File src = picture.getFile();
-         OutputStream out = null;
-         BufferedImage image = null;
-         File f = new File(ThumbnailImage);
-         System.out.println(originalFileName);
-         System.out.println(ThumbnailImage);
-         try {
-        	   
-                  BufferedImage originalImage = ImageIO.read(src);
-                        Thumbnails.of(originalImage)
-                            .size(780, 780)
-                            .toFile(f);
-                            File _f = new File(originalFileName);
-                            Thumbnails.of(originalImage).scale(1.0).
-                            toFile(_f);
-           
-        	 
-         } catch (FileNotFoundException e) {
-                 e.printStackTrace();
-         } catch (IOException e) {
-                 e.printStackTrace();
-         } finally {
-                 try {
-                         if(out != null) out.close();
-                 } catch (IOException e) {
-                         e.printStackTrace();
-                 }
-         }
-           
- 		 System.out.println(fileName);
- 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(Long.parseLong(form.get("supplierCode")));
- 		 if(infowiseimagesPath == null)
- 		 {
- 		infowiseimagesPath = new InfoWiseImagesPath();
- 		infowiseimagesPath.setSupplierCode(Long.parseLong(form.get("supplierCode")));
- 		infowiseimagesPath.setMap_image(ThumbnailImage);
- 		infowiseimagesPath.setMapDescription(form.get("description"));
- 		infowiseimagesPath.save();
- 		 }
- 		 else
- 		 {
- 			infowiseimagesPath.setMap_image(ThumbnailImage);
- 			infowiseimagesPath.setMapDescription(form.get("description"));
- 	 		infowiseimagesPath.merge();
- 		 }
- 		
-		return ok(Json.toJson(infowiseimagesPath));
- 			
-	}
-	public static void createDirMap(String rootDir, long supplierCode) {
-        File file3 = new File(rootDir + File.separator+supplierCode +File.separator+ "ManageHotelImages"+File.separator+"MapImage");
-        if (!file3.exists()) {
-                file3.mkdirs();
-        }
-	}
-	@Transactional(readOnly=false)
-	public static Result getMapImagePath(long supplierCode) {
-		
-		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-		File f;
-		if(infowiseimagesPath != null){
-		 
-			if(infowiseimagesPath.getMap_image() != null){
-				
-			f = new File(infowiseimagesPath.getMap_image());
-			}else{
-				f = new File("C:\\mypath\\default\\logo.jpg");
-			}
-		}
-		else{
-			f = new File("C:\\mypath\\default\\logo.jpg");
-		}
-        return ok(f);		
-		
-	}
+	
 	
 }

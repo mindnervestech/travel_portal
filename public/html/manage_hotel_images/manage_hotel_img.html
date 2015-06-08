@@ -13,42 +13,52 @@
 	<div class="row">
 		<div class="col-md-12">
 					
-		
-		<form method="post" ng-submit="savegeneralPic()" role="form" class="form-horizontal">
+		<div ng-repeat="imgInfo in AddImgAndInfo.addImg">
+		<form method="post" role="form" class="form-horizontal">   <!-- ng-submit="savegeneralPic()" -->
 		<fieldset class="billBorder">
 		 
-  			<legend class="gen-img">General Image</legend>
+	 
+		 
+  			<legend class="gen-img">Add Images</legend>
 				<div class="row">
 					<div class="col-md-10">
 					<div class="col-md-12">
-						<label>Hotel General Picture, please choose an exterior picture.</label>		    	
 		               </div>
 		               
 		                <div class="form-group">
 		                <div class="col-md-4">
-		                     <img data-ng-src="{{img}}" alt="" style="width: 254px;"> 
+		                     <img data-ng-src="{{imgInfo.img}}" alt="" style="width: 254px;"> 
 		                </div>
-		                <div  ng-show="opengeneralPic1" class="manageButton">
+		               <!--  <div  ng-show="opengeneralPic1" class="manageButton">
 		                <input type="button" class="btn btn-primary" value="Replace Picture" ng-click="opengeneralImg()">
 		               
-		               </div>
-		               <div ng-show="opengeneralPic" class="manageGenButton">
-					   <label class="col-md-1 control-label"> File:</label>
-						<div class="col-md-3">
-					       <input ng-file-select="selectGeneralPicImage($files)" name="" type="file" />
+		               </div> -->
+		               <div>   <!-- class="manageGenButton" -->
+					   <div class="col-md-8">
+					    <label class="col-md-1 control-label"> File:</label>
+						<div class="col-md-3" style="margin-left: 39px;">
+					       <input ng-file-select="selectGeneralPicImage($files,$index)" name="" type="file" />
 			             
 			             </div>	
+			             </div>
 			              <br>
-			             <div class="col-md-8">
+			               <div class="col-md-8" style="margin-top: 13px;">
+										<label class="col-md-2 control-label" style="padding: 0px;">Picture Name</label>
+
+										<div class="col-md-7">
+											 <input type="text" data-ng-model="imgInfo.pictureName">
+										</div>
+							</div>  
+			             <div class="col-md-8" style="margin-top: 13px;">
 										<label class="col-md-2 control-label">Description</label>
 
 										<div class="col-md-7">
-											<textarea id="description" name="description" data-ng-model="savegeneral.description" rows="3"
+											<textarea id="description" name="description" data-ng-model="imgInfo.description" rows="3"
 												class="form-control" maxlength="240"></textarea>
 										</div>
 									</div>  
 			              <div class="col-md-4" style="margin-left: 22px;margin-top: 14px;">
-			             <button type="submit" class="btn btn-primary">Show</button>
+			             <button type="submit" class="btn btn-primary" ng-click="savegeneralPic(imgInfo,$index)">Show</button>
 			                <input type="button" class="btn btn-primary" value="Reset" ng-click="opengeneralpic1()">
 			             </div>	
 			             </div>
@@ -59,9 +69,15 @@
 			    </div>
 			    
 			</fieldset>	
+			<div style="margin-top: 8px;">
+				   <button class="btn btn-default" ng-click="newImage($event)">+</button>
+           			<span ng-show="AddImgAndInfo.addImg.length > 1">
+                        <button class="btn btn-default" ng-click="AddImgAndInfo.addImg.splice($index, 1)">-</button>
+                        </span>
+				</div>
 			</form>
-			
-			<form method="post" ng-submit="saveHotelLobbyImage()" role="form" class="form-horizontal">
+			</div>
+			<!-- <form method="post" ng-submit="saveHotelLobbyImage()" role="form" class="form-horizontal">
 			<fieldset class="billBorder">
   			<legend class="lobby-room-img">Hotel Lobby</legend>
 				<div class="row">
@@ -300,7 +316,7 @@
 		    	    
 			    </div>
 			</fieldset>								
-			</form>
+			</form> -->
 			
 		</div>
 				

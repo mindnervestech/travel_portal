@@ -51,6 +51,8 @@ public class BatchMarkup {
 	private String selected;
 	private Double flat;
 	private Double percent;
+	@OneToOne
+	private RateMeta rateSelected;
 	
 		
 	public int getBatchMarkupId() {
@@ -102,10 +104,30 @@ public class BatchMarkup {
 		this.percent = percent;
 	}
 	
+	public RateMeta getRateSelected() {
+		return rateSelected;
+	}
+
+	public void setRateSelected(RateMeta rateSelected) {
+		this.rateSelected = rateSelected;
+	}
+
 	public static List getAllAgent(long supplierCode) {
 		Query query = JPA.em().createQuery("select h from BatchMarkup h where h.supplier ="+supplierCode);
 		return query.getResultList();
 	}
+	
+public static List<BatchMarkup> findAgentSupplierList(AgentRegistration agentid, long supplier) {
+    	
+    	try
+		{
+		return (List<BatchMarkup>) JPA.em().createQuery("select c from BatchMarkup c where c.supplier = ?1 and c.agent.agentCode = ?2").setParameter(1, supplier).setParameter(2, agentid.getAgentCode()).getResultList();
+		
+		}
+		catch(Exception ex){
+			return null;
+		}
+    }
 	
 public static BatchMarkup findAgentSupplier(AgentRegistration agentid, long supplier) {
     	
@@ -118,6 +140,31 @@ public static BatchMarkup findAgentSupplier(AgentRegistration agentid, long supp
 			return null;
 		}
     }
+
+
+public static List<BatchMarkup> findMarkupAgentSupplier(AgentRegistration agentid, long supplier) {
+	
+	try
+	{
+	return (List<BatchMarkup>) JPA.em().createQuery("select c from BatchMarkup c where c.supplier = ?1 and c.agent = ?2").setParameter(1, supplier).setParameter(2, agentid).setMaxResults(1).getResultList();
+	//return	(BatchMarkup) JPA.em().createNativeQuery("select TOP 1 * from batchmarkup where supplier = '"+supplier+"' and agent_id= '"+agentid+"'").getSingleResult();
+	}
+	catch(Exception ex){
+		return null;
+	}
+}
+
+public static BatchMarkup findAgentSupplierRate(int batchId, long rateId) {
+	
+	try
+	{
+	return (BatchMarkup) JPA.em().createQuery("select c from BatchMarkup c where c.batchMarkupId = ?1 and c.rateSelected.id = ?2").setParameter(1, batchId).setParameter(2, rateId).getSingleResult();
+	
+	}
+	catch(Exception ex){
+		return null;
+	}
+}
 
 public static BatchMarkup findByBatchId(int batchId) {
 	

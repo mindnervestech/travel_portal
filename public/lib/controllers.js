@@ -137,288 +137,82 @@ angular.module('travel_portal').
 	controller("ManageHotelImageController",['$scope', '$http','notificationService','$rootScope','$filter','$upload','ngDialog',
 	                                         function($scope, $http,notificationService, $rootScope,  $filter, $upload, ngDialog) {
 		
-		 var generalPic =null;
+		
+		$scope.AddImgAndInfo= {
+				addImg:[],
+				supplierCode:''
+			};
+		
+		
+		$http.get('/getAllImgs/'+supplierCode).success(function(response){
+			console.log(response);
+			if(response.length == 0){
+				$scope.AddImgAndInfo.addImg.push({});
+			}else{
+			angular.forEach(response, function(obj, index){
+				$scope.AddImgAndInfo.addImg.push({
+					pictureName:obj.pictureName,
+					img:"/hotel_profile/getImagePath/"+obj.supplierCode+"/"+obj.indexValue,
+					description:obj.pictureDescription
+				})
+				
+			});
+		}
+			console.log($scope.AddImgAndInfo);
+		});
+		
+			
+			$scope.newImage = function($event){
+				console.log("newLocation");
+				$scope.AddImgAndInfo.addImg.push( {  } );
+				$event.preventDefault();
+			};
+		
+		
+		var generalPic = [];
 		 $scope.opengeneralPic = false;
 		 $scope.opengeneralPic1 = true;
 		 
 		 console.log(supplierCode);
 		 
-	     $scope.selectGeneralPicImage = function($generalPic)
+	     $scope.selectGeneralPicImage = function($generalPic,index)
 	     {
 	    	
-	    	 generalPic = $generalPic[0]; 
+	    	 generalPic[index] = $generalPic[0]; 
 	    	    	 
 	     }
-	     $scope.img = "/hotel_profile/getImagePath/"+supplierCode+"?d="+new Date().getTime();
-	     $scope.savegeneral = {};
-	     $scope.savegeneralPic = function(){	     
-	    	$scope.savegeneral.supplierCode = supplierCode;
-	  	   $scope.upload = $upload.upload({
+	    // $scope.img = "/hotel_profile/getImagePath/"+supplierCode+"?d="+new Date().getTime();
+	     $scope.savegeneralPic = function(imgInfo,index){
+	    	 console.log(generalPic);
+	    	 imgInfo.newImg = generalPic[index];
+	    	 imgInfo.supplierCode = supplierCode;
+	    	 imgInfo.index = index;
+	    	 imgInfo.imgPath = null;
+	    	// imgInfo.pictureName = "lobby";
+	    	 console.log(imgInfo);
+
+	    	 $scope.upload = $upload.upload({
 	             url: '/savegeneralImg', 
 	             method:'post',
-	             data:$scope.savegeneral,
+	             data:imgInfo,
 	             fileFormDataName: 'generalImg',
-	             file:generalPic,
+	             file:generalPic[index],
 	            
 	     }).progress(function(evt) {
 	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
 	     }).success(function(data, status, headers, config) {
 	    	 console.log(data);   
 	    	 console.log(data.generalPicture);
-	            $scope.img = "/hotel_profile/getImagePath/"+data.supplierCode+"?d="+new Date().getTime();
+	    	 $scope.AddImgAndInfo.addImg[index].img = "/hotel_profile/getImagePath/"+data.supplierCode+"/"+index+"?d="+new Date().getTime();
 	            notificationService.success("Replace Successfully");
 	            $scope.opengeneralPic = false;	
 		    	 $scope.opengeneralPic1 = true;
+		    	 console.log( $scope.AddImgAndInfo);
 	     }); 
 	  	 
 	     }
-	     	    //
-	     $scope.opengeneralpic1 = function()
-	     {
-	    	 $scope.opengeneralPic = false;	
-	    	 $scope.opengeneralPic1 = true;
-	     }
-	     $scope.opengeneralImg = function()
-	     {
-	    	 $scope.opengeneralPic = true;	
-	    	 $scope.opengeneralPic1 = false;
-	     }
-	     
-	     /*------------------------------------------------------------*/
-	     
-	     var Lobbypic =null;
-	     $scope.openLobbyPic = false;
-		 $scope.openLobbyPic1 = true;
-			 
-	     $scope.selectHotelLobbyImage = function($Lobbypic)
-	     {
-	    	
-	    	 Lobbypic = $Lobbypic[0]; 
-	    	    	 
-	     }
-	     $scope.imgLobby = "/hotel_profile/getLobbyImagePath/"+supplierCode+"?d="+new Date().getTime();
-	     $scope.saveLobbyImage = {};
-	     $scope.saveHotelLobbyImage = function(){	     
-	    	
-	    	$scope.saveLobbyImage.supplierCode = supplierCode;
-	  	   $scope.upload = $upload.upload({
-	             url: '/saveLobbyImg', 
-	             method:'post',
-	             data:$scope.saveLobbyImage,
-	             fileFormDataName: 'LobbyImage',
-	             file:Lobbypic,
-	            
-	     }).progress(function(evt) {
-	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-	     }).success(function(data, status, headers, config) {
-	    	 console.log(data);   
-	    	 console.log(data.hotel_Lobby);
-	          $scope.imgLobby = "/hotel_profile/getLobbyImagePath/"+data.supplierCode+"?d="+new Date().getTime();
-	          notificationService.success("Replace Successfully"); 
-	          $scope.openLobbyPic = false;	
-		    	 $scope.openLobbyPic1 = true;
-	          
-	     }); 
-	     }
-	     //
-	     $scope.openLobbyspic1 = function()
-	     {
-	    	 $scope.openLobbyPic = false;	
-	    	 $scope.openLobbyPic1 = true;
-	     }
-	     $scope.openLobbyImg = function()
-	     {
-	    	 $scope.openLobbyPic = true;	
-	    	 $scope.openLobbyPic1 = false;
-	     }
-	     /*------------------------------------------------*/
-	     var Roompic =null;
-	     $scope.openRoomPic = false;
-		 $scope.openRoomPic1 = true;
-		 
-		 $scope.selectHotelRoomImage = function($Roompic)
-	     {
-	    	
-			 Roompic = $Roompic[0]; 
-	    	    	 
-	     }
-		
-		 $scope.imgRoom = "/hotel_profile/getRoomImagePath/"+supplierCode+"?d="+new Date().getTime();
-	     $scope.saveRoomImage = {};
-	     $scope.saveHotelRoomImage = function(){	     
-	    	
-	    	$scope.saveRoomImage.supplierCode = supplierCode;
-	  	   $scope.upload = $upload.upload({
-	             url: '/saveRoomImg', 
-	             method:'post',
-	             data:$scope.saveRoomImage,
-	             fileFormDataName: 'RoomImage',
-	             file:Roompic,
-	            
-	     }).progress(function(evt) {
-	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-	     }).success(function(data, status, headers, config) {
-	    	 console.log(data);   
-	          $scope.imgRoom = "/hotel_profile/getRoomImagePath/"+data.supplierCode+"?d="+new Date().getTime();
-	          notificationService.success("Replace Successfully");  
-	          $scope.openRoomPic = false;	
-		    	 $scope.openRoomPic1 = true;
-	          
-	     }); 
-	     }
-		
-		 //
-	     $scope.openRoompic1 = function()
-	     {
-	    	 $scope.openRoomPic = false;	
-	    	 $scope.openRoomPic1 = true;
-	     }
-		  $scope.openRoomImg = function()
-	     {
-	    	 $scope.openRoomPic = true;	
-	    	 $scope.openRoomPic1 = false;
-	     }
-		 /*------------------------------------------------*/
-	     var AmenitiesServicespic =null;
-	     $scope.openAmenitiesServices = false;
-		 $scope.openAmenitiesServices1 = true;
-		 
-		 $scope.selectAmenitiesServicesImage = function($AmenitiesServicespic)
-	     {
-	    	
-			 AmenitiesServicespic = $AmenitiesServicespic[0]; 
-	    	    	 
-	     }
-		
-		 $scope.imgAmenitiesServices = "/hotel_profile/getAmenitiesServicesImagePath/"+supplierCode+"?d="+new Date().getTime();
-	     $scope.saveAmenitiesServicesImage = {};
-	     $scope.saveHotelAmenitiesServices = function(){	     
-	    	
-	    	$scope.saveAmenitiesServicesImage.supplierCode = supplierCode;
-	  	   $scope.upload = $upload.upload({
-	             url: '/saveAmenitiesServicesImg', 
-	             method:'post',
-	             data:$scope.saveAmenitiesServicesImage,
-	             fileFormDataName: 'AmenitiesServicesImage',
-	             file:AmenitiesServicespic,
-	            
-	     }).progress(function(evt) {
-	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-	     }).success(function(data, status, headers, config) {
-	    	 console.log(data);   
-	          $scope.imgAmenitiesServices = "/hotel_profile/getAmenitiesServicesImagePath/"+data.supplierCode+"?d="+new Date().getTime();
-	          notificationService.success("Replace Successfully"); 
-	          $scope.openAmenitiesServices = false;	
-		    	 $scope.openAmenitiesServices1 = true;
-	          
-	     }); 
-	     }
-		 
-	     $scope.openAmenitiespic1 = function()
-	     {
-	    	 $scope.openAmenitiesServices = false;	
-	    	 $scope.openAmenitiesServices1 = true;
-	     }
-		 $scope.openAmenitiesServicesImg = function()
-	     {
-	    	 $scope.openAmenitiesServices = true;	
-	    	 $scope.openAmenitiesServices1 = false;
-	     }
-		 /*------------------------------------------------*/
-	     var LeisureorSportspic =null;
-	     $scope.openLeisureorSports = false;
-		 $scope.openLeisureorSports1 = true;
-		 
-		 $scope.selectLeisureorSportsImage = function($LeisureorSportspic)
-	     {
-	    	
-			 LeisureorSportspic = $LeisureorSportspic[0]; 
-	    	    	 
-	     }
-		
-		 $scope.imgLeisureorSports = "/hotel_profile/getLeisureorSportsImagePath/"+supplierCode+"?d="+new Date().getTime();
-	     $scope.saveLeisureorSportsImage = {};
-	     $scope.saveHotelLeisureorSports = function(){	     
-	    	
-	    	$scope.saveLeisureorSportsImage.supplierCode = supplierCode;
-	  	   $scope.upload = $upload.upload({
-	             url: '/saveLeisureorSportsImg', 
-	             method:'post',
-	             data:$scope.saveLeisureorSportsImage,
-	             fileFormDataName: 'LeisureorSportsImage',
-	             file:LeisureorSportspic,
-	            
-	     }).progress(function(evt) {
-	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-	     }).success(function(data, status, headers, config) {
-	    	 console.log(data);   
-	          $scope.imgLeisureorSports = "/hotel_profile/getLeisureorSportsImagePath/"+data.supplierCode+"?d="+new Date().getTime();
-	          notificationService.success("Replace Successfully");  
-	          $scope.openLeisureorSports = false;	
-		    	 $scope.openLeisureorSports1 = true;
-	          
-	     }); 
-	     }
-	     //
-	     $scope.openLeisurepic1 = function()
-	     {
-	    	 
-	    	 $scope.openLeisureorSports = false;	
-	    	 $scope.openLeisureorSports1 = true;
-	     }
-	     
-		 $scope.openLeisureorSportsImg = function()
-	     {
-	    	 $scope.openLeisureorSports = true;	
-	    	 $scope.openLeisureorSports1 = false;
-	     }
-		 /*------------------------------------------------*/
-	     var Mappic =null;
-	     $scope.openMapPic = false;
-		 $scope.openMapPic1 = true;
-		
-		 $scope.selectHotelMapImage = function($selectHotelMapImage)
-	     {
-	    	
-			 selectHotelMapImage = $selectHotelMapImage[0]; 
-	    	    	 
-	     }
-		
-		 $scope.imgMap = "/hotel_profile/getMapImagePath/"+supplierCode+"?d="+new Date().getTime();
-	     $scope.saveMapImage = {};
-	     $scope.saveHotelMapImage = function(){	     
-	    	
-	    	$scope.saveMapImage.supplierCode = supplierCode;
-	  	   $scope.upload = $upload.upload({
-	             url: '/saveMapImg', 
-	             method:'post',
-	             data:$scope.saveMapImage,
-	             fileFormDataName: 'MapImage',
-	             file:selectHotelMapImage,
-	            
-	     }).progress(function(evt) {
-	             console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-	     }).success(function(data, status, headers, config) {
-	    	 console.log(data);   
-	          $scope.imgMap = "/hotel_profile/getMapImagePath/"+data.supplierCode+"?d="+new Date().getTime();
-	          notificationService.success("Replace Successfully"); 
-	          $scope.openMapPic = false;	
-		    	 $scope.openMapPic1 = true;
-	          
-	     }); 
-	     }
-	     
-	     $scope.opeMappic1 = function()
-	     {
-	    	 $scope.openMapPic = false;	
-	    	 $scope.openMapPic1 = true;
-	     }
-		 
-		 $scope.opeMapImg = function()
-	     {
-	    	 $scope.openMapPic = true;	
-	    	 $scope.openMapPic1 = false;
-	     }
+		     
+	   
 		 
 		 
 		 /*------------------------View Web Page------------------------------*/
@@ -762,7 +556,7 @@ angular.module('travel_portal').
 
 		
 		
-		$(".form-validate").validate({
+		/*$(".form-validate").validate({
 	        errorPlacement: function(error, element){
 	            error.insertAfter(element);
 	        }
@@ -772,7 +566,7 @@ angular.module('travel_portal').
 	        errorPlacement: function(error, element){
 	            error.insertAfter(element);
 	        }
-	    });
+	    });*/
 		
 		console.log("$$$$$$&$$$$$");
 		console.log(permissions);
@@ -1887,9 +1681,16 @@ angular.module('travel_portal').
 			 }
 				 
 		 });
-		 
+		 console.log($scope.mealdata);
+		 console.log($scope.mealdata.mealType.mealTypeId);
+		 var mealId = $scope.mealdata.mealType.mealTypeId;
 		
+		 $scope.mealdata.mealType = null;
+		 console.log(mealId);
+		 $scope.mealdata.mealType = mealId;
 		console.log($scope.mealdata);
+		
+		
 		$http.post('/updatemealpolicy',$scope.mealdata).success(function(data){
 			console.log('success');
 			//$scope.mealPlanUpdateSuccessMsg = true;
@@ -1898,7 +1699,6 @@ angular.module('travel_portal').
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
 		});
-
 
 	};
 
@@ -2663,31 +2463,11 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			$scope.rateObject[i].toDate = $scope.formData.toDate;
 			$scope.rateObject[i].currency = $scope.currencyname;
 			$scope.rateObject[i].supplierCode = supplierCode;
-			//if($scope.rateObject[i].allocatedCities.length == 0)
-			//	{
-			//	 $scope.showMarketTable($scope.rateObject[i]);
-			
-			//	}
+		
 		
 		}
 		
 		 $scope.showDate = false;
-		/*var flag1 = 0;
-		 angular.forEach($scope.rateObject, function(value, key){
-			 angular.forEach(value.specialDaysRate, function(value1, key1){
-				 var arr = value1.tospecial.split("-");
-					var tDate = (arr[1]+"/"+arr[0]+"/"+arr[2])
-					var arr1 = value1.fromspecial.split("-");
-					var fDate = (arr1[1]+"/"+arr1[0]+"/"+arr1[2])
-					 var toDate = Date.parse(tDate);
-			         var fromDate = Date.parse(fDate);
-					
-					if(fromDate > toDate){
-					     flag1 = 1;
-					     $scope.showDate = true;
-					}
-			 });
-		 });*/
 		
 		var flag = 0;
 		console.log($scope.rateObject);

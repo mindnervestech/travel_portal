@@ -46,10 +46,13 @@ import com.mnt.travelbusiness.helper.PageScope;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.HotelAmenities;
+import com.travelportal.domain.HotelImagesPath;
+import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.InfoWiseImagesPath;
+import com.travelportal.domain.admin.BatchMarkup;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.CancellationPolicy;
@@ -64,6 +67,7 @@ import com.travelportal.domain.rooms.RoomChildPolicies;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.AgentRegistrationVM;
+import com.travelportal.vm.BatchMarkupInfoVM;
 import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.RoomAmenitiesVm;
@@ -234,7 +238,8 @@ public class Application extends Controller {
     		
     	 		List<Long> hotelNo = new ArrayList<>();
     		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
-    		fillRoomsInHotelInfo(hotellist,hotelRMlist,hotelNo,diffInpromo); /* fill data in room in hotel object.... function*/
+    		boolean refundValue = false;
+    		fillRoomsInHotelInfo(hotellist,hotelRMlist,hotelNo,diffInpromo,refundValue); /* fill data in room in hotel object.... function*/
     		
     		List<Long> hotelCount = new ArrayList<>();
     		int totalHotel = 0;
@@ -310,8 +315,8 @@ public class Application extends Controller {
 
     		List<Long> hotelNo = new ArrayList<>();
     		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
-    		
-    		fillRoomsInHotelInfo(hotellist,hotelRMlist,hotelNo,diffInpromo); /* fill data in room in hotel object.... function*/
+    		boolean refundValue = false;
+    		fillRoomsInHotelInfo(hotellist,hotelRMlist,hotelNo,diffInpromo,refundValue); /* fill data in room in hotel object.... function*/
     		
     		List<Long> hotelCount = new ArrayList<>();
     		int totalHotel = 0;
@@ -348,21 +353,23 @@ public class Application extends Controller {
     
 
 @Transactional(readOnly=false)
-public static Result getHotelImagePath(long supplierCode) {
+public static Result getHotelImagePath(long supplierCode,long indexValue) {
 	
-	InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(supplierCode);
-	File f = null;
-	if(infowiseimagesPath != null){
-		if(infowiseimagesPath.getGeneralPicture() != null){
-			f = new File(infowiseimagesPath.getGeneralPicture());
-			
+	HotelImagesPath hImagesPath = HotelImagesPath.findByIdAndIndex(supplierCode,indexValue);
+	File f;
+	if(hImagesPath != null){
+	 
+		if(hImagesPath.getPicturePath() != null){
+			 f = new File(hImagesPath.getPicturePath());
 		}else{
 			f = new File("C:\\mypath\\default\\logo.jpg");
 		}
-	}else{
+	}
+	else{
 		f = new File("C:\\mypath\\default\\logo.jpg");
 	}
-	return ok(f);
+			
+    return ok(f);		
     		
 	
 }
@@ -452,9 +459,12 @@ public static void DateWiseSortFunction(List<HotelSearch> hotellist,String toDat
 							
 							personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM, reDays, format, checkInDate); /* person Rate return function*/
 							
+							
 							list.add(rateVM);
-						
+							
 						}
+						
+						//
 						mapRm.put(room.getRoomId(), Long.parseLong("1"));
 						roomtyp.setHotelRoomRateDetail(list);
 						if(!roomtyp.hotelRoomRateDetail.isEmpty()){
@@ -525,11 +535,13 @@ public static void specialsPromotion(SerachedRoomType roomtyp, DateFormat format
 	}
 }
 
-public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachHotelRoomType> hotelRMlist,List<Long> hotelNo,Long diffInpromo){
+public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachHotelRoomType> hotelRMlist,List<Long> hotelNo,Long diffInpromo, Boolean refundValue){
 	
 	Map<Long, List<SpecialsVM>> mapSpecials = new HashMap<Long, List<SpecialsVM>>();
 	Map<Long, Integer> promoMap = new HashMap<Long, Integer>();
 	Map<Long, SerachedRoomRateDetail> mapRM = new HashMap<Long, SerachedRoomRateDetail>();
+	Map<Long, Boolean> nonrefundRoom = new HashMap<Long, Boolean>();
+	
 	int count=0;
 	
 	for (HotelSearch hotel : hotellist) {
@@ -544,14 +556,12 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 			for (SerachedRoomType roomTP : date.getRoomType()) {
 				
 				Double total = 0.0;
-				//Double avg = 0.0;
 				SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
 				sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
 				
 				SerachedRoomRateDetail sRateDetail = new SerachedRoomRateDetail();
 				sRateDetail.rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
 
-				//List<SerachedRoomRateDetail> serachedRoomRateDetails = new ArrayList<>();
 				List<SearchRateDetailsVM> searchRateDetailsVMs = new ArrayList<>();
 				SerachedRoomRateDetail objectRM = mapRM.get(roomTP.getRoomId());
 				if (objectRM == null) {
@@ -561,7 +571,6 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 					sHotelRoomType.setRoomId(roomTP.getRoomId());
 					sHotelRoomType.setRoomName(roomTP.getRoomName());
 					sHotelRoomType.setRoomSize(roomTP.getRoomSize());
-					//sHotelRoomType.setExtraBedRate(roomTP.getExtraBedRate());
 					sHotelRoomType.setDescription(roomTP.getDescription());
 					sHotelRoomType.setMaxAdultsWithchild(roomTP.getMaxAdultsWithchild());
 					sHotelRoomType.setRoomchildPolicies(roomTP.getRoomchildPolicies());
@@ -572,7 +581,6 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 					sHotelRoomType.setBreakfastRate(roomTP.getBreakfastRate());
 					sHotelRoomType.setChildAge(roomTP.getChildAge());
 					arrayCount.add(aCount, roomTP.getPcount());
-					//sHotelRoomType.setSpecials(roomTP.getSpecials());
 					
 					sHotelRoomType.setAmenities(roomTP.getAmenities());
 					for (SerachedRoomRateDetail rateObj : roomTP
@@ -591,6 +599,10 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 						}
 						sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
 						sRateDetail.setCancellation(rateObj.getCancellation());
+						if(rateObj.non_refund == true){
+							refundValue = true;
+						}
+						nonrefundRoom.put(roomTP.getRoomId(), rateObj.non_refund);
 					}
 					mapRM.put(roomTP.getRoomId(), sRateDetail);
 					promoMap.put(roomTP.getRoomId(),roomTP.getPcount());
@@ -634,7 +646,13 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 							sRateDetail.rateDetailsNormal
 									.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
 							x++;
+							
 						}
+						if(rateObj.non_refund == true){
+							refundValue = true;
+							nonrefundRoom.put(roomTP.getRoomId(), rateObj.non_refund);
+						}
+					
 					}
 					mapRM.put(roomTP.getRoomId(), sRateDetail);
 					promoMap.put(roomTP.getRoomId(),arrayCount.get(aCount));
@@ -643,6 +661,7 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 						}
 					newHotel++;
 				}
+				
 				sHotelRoomType.hotelRoomRateDetail.add(sRateDetail);
 				
 
@@ -656,19 +675,26 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 			
 							 
 		}
+		
+		System.out.println(nonrefundRoom);
 		int diffProm;
 		for(SerachHotelRoomType room:hotel.hotelbyRoom){
+			for (Entry<Long, Boolean> entry : nonrefundRoom.entrySet()) {
+				if(room.getRoomId() == entry.getKey()){
+					room.nonRefund = entry.getValue();
+				}
+			}
 			for (Entry<Long, Integer> entry : promoMap.entrySet()) {
 			if(room.getRoomId() == entry.getKey()){
 				room.setPcount(entry.getValue());
-				diffProm = (int) (diffInpromo/2);
+				diffProm = diffInpromo.intValue();
 				if(entry.getValue() == 0 && diffProm == 0){
 					room.setApplyPromotion(0);
 				}else if(entry.getValue() >= diffProm){
 					room.setApplyPromotion(1);
-				}else{
-					room.setApplyPromotion(0);
-				}
+					}else{
+						room.setApplyPromotion(0);
+					}
 			}
 		  }
 		}
@@ -821,6 +847,8 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
 	}
 	}
+	List<HotelMealPlan> mealtype = HotelMealPlan.getmealtype(hAmenities.getSupplier_code());
+	hProfileVM.setMealPlan(mealtype);
 	
 	//hProfileVM.setFlag("0");
 }
@@ -922,8 +950,6 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 								rateVM.rateDetails.add(vm);
 								}
 							
-							
-							
 							findrate = 1;
 							for(CancellationPolicy cancel:cancellation) {
 								objectcancel = (Long) mapcancel.get(cancel.getId());
@@ -935,6 +961,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 									if(person.getIsNormal() == cancel.getIsNormal()){
 									CancellationPolicyVM vm = new CancellationPolicyVM(cancel);
 									rateVM.cancellation.add(vm);
+									rateVM.non_refund = cancel.isNon_refund();
 									}
 								}
 								mapcancel.put(cancel.getId(), Long.parseLong("1"));
@@ -970,6 +997,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -993,6 +1021,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -1016,6 +1045,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -1039,6 +1069,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -1062,6 +1093,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -1085,6 +1117,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -1108,6 +1141,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -1131,6 +1165,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 0) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -1157,6 +1192,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 0) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -1171,9 +1207,6 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 }
 public static void findMinRateInHotel(List<HotelSearch> hotellist){
 	for (HotelSearch hotel : hotellist) {
-		
-		
-
 	double min=0.0;
 	int minStart = 0;
 	for(SerachHotelRoomType sHotelRoomType2:hotel.hotelbyRoom){
@@ -1350,7 +1383,8 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
 		List<Long> hotelNo = new ArrayList<>();
 		List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
-		fillRoomsInHotelInfo(hotellist,hotelRMlist,hotelNo,diffInpromo); /* fill data in room in hotel object.... function*/
+		boolean refundValue = false;
+		fillRoomsInHotelInfo(hotellist,hotelRMlist,hotelNo,diffInpromo, refundValue); /* fill data in room in hotel object.... function*/
 		
 		List<Long> hotelCount = new ArrayList<>();
 		int totalHotel = 0;
@@ -1554,8 +1588,9 @@ public static Result hoteldetailpage() {
 	List<SerachHotelRoomType> hotelRMlist = new ArrayList<>();
 	Map<Long, SerachedRoomRateDetail> mapRM = new HashMap<Long, SerachedRoomRateDetail>();
 	int count=0;
+	boolean refundValue = false;
 	for (HotelSearch hotel : hotellist) {
-		fillRoomsInHotelInfo1(hotel, hotelRMlist, count, mapRM ,diffInpromo); /* fill data in room in hotel object.... function*/
+		fillRoomsInHotelInfo1(hotel, hotelRMlist, count, mapRM ,diffInpromo,refundValue); /* fill data in room in hotel object.... function*/
 				
 		findMinRateInHotel(hotellist);
 				
@@ -1569,6 +1604,8 @@ public static Result hoteldetailpage() {
 
 @Transactional(readOnly = true)
 	public static Result getDatewiseHotelRoom(String checkIn,String checkOut,String nationality,String supplierCode1,String roomCode) {
+	
+		//
 	
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		
@@ -1613,6 +1650,23 @@ public static Result hoteldetailpage() {
 			
 			if (object == null) {
 				HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());	
+				
+				List<BatchMarkup> batchMarkup = BatchMarkup.findMarkupAgentSupplier(AgentRegistration.findById(Long.parseLong(session().get("agent"))), Long.parseLong(supplierCode));
+				
+				for(BatchMarkup bm:batchMarkup){
+					BatchMarkupInfoVM baInfoVM = new BatchMarkupInfoVM();
+					
+					if(bm.getFlat() != null){
+						baInfoVM.flat = bm.getFlat();
+					}
+					if(bm.getPercent() != null){
+						baInfoVM.percent = bm.getPercent();
+					}
+					baInfoVM.selected = bm.getSelected();
+					baInfoVM.supplier = bm.getSupplier();
+					
+					hProfileVM.batchMarkup = baInfoVM;
+				}
 				
 				fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId,dayDiff);
 				
@@ -1704,9 +1758,10 @@ public static Result hoteldetailpage() {
 		
 		Map<Long, SerachedRoomRateDetail> mapRM = new HashMap<Long, SerachedRoomRateDetail>();
 		int count=0;
+		boolean refundValue = false;
 		for (HotelSearch hotel : hotellist) {
 			
-			fillRoomsInHotelInfo1(hotel, hotelRMlist, count, mapRM , diffInpromo); /* fill data in room in hotel object.... function*/
+			fillRoomsInHotelInfo1(hotel, hotelRMlist, count, mapRM , diffInpromo, refundValue); /* fill data in room in hotel object.... function*/
 		
 			return ok(Json.toJson(hotel));
 		}
@@ -1714,12 +1769,14 @@ public static Result hoteldetailpage() {
 	}
 
 
-public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoomType> hotelRMlist,int count, Map<Long, SerachedRoomRateDetail> mapRM,Long diffInpromo){
+public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoomType> hotelRMlist,int count, Map<Long, SerachedRoomRateDetail> mapRM,Long diffInpromo,boolean refundValue){
 	
 	Map<Long, List<SpecialsVM>> mapSpecials = new HashMap<Long, List<SpecialsVM>>();
 	Map<Long, Integer> promoMap = new HashMap<Long, Integer>();
+	Map<Long, Boolean> nonrefundRoom = new HashMap<Long, Boolean>();
 		int dataVar = 0;
 		int countRoom = count;
+		
 		List<Integer> arrayCount = new ArrayList<Integer>();
 		for (SerachedHotelbyDate date : hotel.hotelbyDate) {
 			int newHotel=countRoom; 
@@ -1776,9 +1833,14 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 						}
 						sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
 						sRateDetail.setCancellation(rateObj.getCancellation());
+						if(rateObj.non_refund == true){
+							refundValue = true;
+						}
+						nonrefundRoom.put(roomTP.getRoomId(), rateObj.non_refund);
 					}
 					mapRM.put(roomTP.getRoomId(), sRateDetail);
 					promoMap.put(roomTP.getRoomId(),roomTP.getPcount());
+					
 					if(roomTP.getSpecials() != null){
 						mapSpecials.put(roomTP.getRoomId(), (List<SpecialsVM>) roomTP.getSpecials());
 						}
@@ -1819,6 +1881,10 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 							sRateDetail.rateDetailsNormal
 									.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
 							x++;
+							if(rateObj.non_refund == true){
+								refundValue =true;
+								nonrefundRoom.put(roomTP.getRoomId(), rateObj.non_refund);
+							}
 						}
 					}
 					mapRM.put(roomTP.getRoomId(), sRateDetail);
@@ -1841,12 +1907,20 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 			
 							 
 		}
+		
+		System.out.println(nonrefundRoom.toString());
+		
 		int diffProm;
 		for(SerachHotelRoomType room:hotel.hotelbyRoom){
+			for (Entry<Long, Boolean> entry : nonrefundRoom.entrySet()) {
+				if(room.getRoomId() == entry.getKey()){
+					room.nonRefund = entry.getValue();
+				}
+			}
 			for (Entry<Long, Integer> entry : promoMap.entrySet()) {
 			if(room.getRoomId() == entry.getKey()){
 				room.setPcount(entry.getValue());
-				diffProm = (int) (diffInpromo/2);
+				diffProm =diffInpromo.intValue();
 				if(entry.getValue() == 0 && diffProm == 0){
 					room.setApplyPromotion(0);
 				}else if(entry.getValue() >= diffProm){

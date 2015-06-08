@@ -17,19 +17,14 @@ GET 	/searchNationality					controllers.travelbusiness.Application.searchNationa
 GET     /checkAgentinfo/:loginID/:password/:agentId			controllers.travelbusiness.Application.checkAgentinfo(loginID:String,password:String,agentId:String)
 GET 	/searchCities/:countryId			controllers.travelbusiness.Application.searchCities(countryId: Integer)
 GET 	/searchStarrating                	controllers.travelbusiness.Application.getStarRatings()
-GET	  /searchHotelInfo/getHotelImagePath/:supplierCode			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long)
-GET	   /hotelBookingpage/getHotelImagePath/:supplierCode			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long)
+GET	  /searchHotelInfo/getHotelImagePath/:supplierCode/:index			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long,index:Long)
+GET	   /hotelBookingpage/getHotelImagePath/:supplierCode/:index			controllers.travelbusiness.Application.getHotelImagePath(supplierCode:Long,index:Long)
 #POST  /findByServices 		    controllers.travelbusiness.Application.findByServices()
 #POST  /findBylocation				    controllers.travelbusiness.Application.findBylocation()
 POST  /findHotelByData	        controllers.travelbusiness.Application.findHotelByData()
 #Hotel Details
 POST    /hotelBookingpage		controllers.travelbusiness.HotelDetailsController.hotelBookingpage()
-GET   /searchHotelGenImg/getHotelGenImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelGenImg(supplierCode:Long)
-GET   /searchHotelServImg/getHotelServImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelServImg(supplierCode:Long)
-GET   /searchHotelRoomImg/getHotelRoomImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelRoomImg(supplierCode:Long)
-GET   /searchHotelLobbyImg/getHotelLobbyImg/:supplierCode		controllers.travelbusiness.HotelDetailsController.getHotelLobbyImg(supplierCode:Long)
-GET   /searchHotelLSImg/getHotelLSImg/:supplierCode				controllers.travelbusiness.HotelDetailsController.getHotelLSImg(supplierCode:Long)
-GET   /searchHotelMapImg/getHotelMapImg/:supplierCode			controllers.travelbusiness.HotelDetailsController.getHotelMapImg(supplierCode:Long)
+GET   /searchHotelGenImg/getHotelGenImg/:supplierCode/:index			controllers.travelbusiness.HotelDetailsController.getHotelGenImg(supplierCode:Long,index:Long)
 GET   /hotelamenities                	controllers.travelbusiness.HotelDetailsController.getAmenities()
 GET   /business              	    	controllers.travelbusiness.HotelDetailsController.getBusiness()
 GET   /leisureSport             		controllers.travelbusiness.HotelDetailsController.getLeisureSport()
@@ -169,20 +164,10 @@ POST   /findSupplier  		com.travelportal.controllers.SupplierLoginthroughAdminCo
 
 
 POST   /savegeneralImg   com.travelportal.controllers.ManageHotelImagesController.savegeneralImg()
-POST   /saveLobbyImg      com.travelportal.controllers.ManageHotelImagesController.saveLobbyImg()
-POST   /saveRoomImg      com.travelportal.controllers.ManageHotelImagesController.saveRoomImg()
-POST   /saveAmenitiesServicesImg      com.travelportal.controllers.ManageHotelImagesController.saveAmenitiesServicesImg()
-POST   /saveLeisureorSportsImg      com.travelportal.controllers.ManageHotelImagesController.saveLeisureorSportsImg()
-POST   /saveMapImg      com.travelportal.controllers.ManageHotelImagesController.saveMapImg()
 
 GET   /finddescrip/:supplierCode  com.travelportal.controllers.ManageHotelImagesController.finddescrip(supplierCode:Long)
-GET	  /hotel_profile/getImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getImagePath(supplierCode:Long)
-GET	  /hotel_profile/getLobbyImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getLobbyImagePath(supplierCode:Long)
-GET	  /hotel_profile/getRoomImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getRoomImagePath(supplierCode:Long)
-GET	  /hotel_profile/getAmenitiesServicesImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getAmenitiesServicesImagePath(supplierCode:Long)
-GET	  /hotel_profile/getLeisureorSportsImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getLeisureorSportsImagePath(supplierCode:Long)
-GET	  /hotel_profile/getMapImagePath/:supplierCode			com.travelportal.controllers.ManageHotelImagesController.getMapImagePath(supplierCode:Long)
- 
+GET	  /hotel_profile/getImagePath/:supplierCode/:index			com.travelportal.controllers.ManageHotelImagesController.getImagePath(supplierCode:Long,index:Long)
+GET   /getAllImgs/:supplierCode             com.travelportal.controllers.ManageHotelImagesController.getAllImgs(supplierCode:Long)
  
 
 GET	  /hotel_profile/getRoomImagePathInroom/:roomId			com.travelportal.controllers.HotelRoomController.getRoomImagePathInroom(roomId:Long) 

@@ -956,7 +956,7 @@ public class HotelProfileController extends Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		hotelmealplan.setRestaurants(hotelmealvm.getRestaurants());
 		hotelmealplan.setMealPlanNm(hotelmealvm.getMealPlanNm());
 		hotelmealplan.setRate(hotelmealvm.getRate());
 		hotelmealplan.setSupplierCode(hotelmealvm.getSupplierCode());
@@ -1004,6 +1004,7 @@ public class HotelProfileController extends Controller {
 			e.printStackTrace();
 		}
 	
+		hotelmealplan.setRestaurants(hotelmealvm.getRestaurants());
 		hotelmealplan.setMealPlanNm(hotelmealvm.getMealPlanNm());
 		hotelmealplan.setRate(hotelmealvm.getRate());
 		hotelmealplan.setSupplierCode(hotelmealvm.getSupplierCode());
@@ -1180,8 +1181,12 @@ public class HotelProfileController extends Controller {
 
 		hotelprofile.setHotelGeneralManager(form.get("genMgrName"));
 		hotelprofile.setGeneralMgrEmail(form.get("genMgrEmail"));
-		hotelprofile.setHotelBuiltYear(Integer.parseInt(form.get("builtYear")));
-		hotelprofile.setHotelRenovationYear(Integer.parseInt(form.get("renovationYear")));
+		if(form.get("builtYear") != null && form.get("builtYear") != ""){
+			hotelprofile.setHotelBuiltYear(Integer.parseInt(form.get("builtYear")));
+		}
+		if(form.get("renovationYear") != null && form.get("renovationYear") != ""){
+			hotelprofile.setHotelRenovationYear(Integer.parseInt(form.get("renovationYear")));
+		}
 		hotelprofile.setHotelWebSite(form.get("webSiteUrl"));
 		hotelprofile.setNoOfFloors(Integer.parseInt(form.get("noOffloor")));
 		hotelprofile.setNoOfRooms(Integer.parseInt(form.get("noOfRoom")));
@@ -1197,18 +1202,18 @@ public class HotelProfileController extends Controller {
 
 			internalcontact.setGuestTelCityCode(Integer.parseInt(form.get("guestTelCode")));
 			internalcontact.setGuestTelValue(Integer.parseInt(form.get("guestTel")));
-			if(form.get("guestFaxCode") != null){
+			if(form.get("guestFaxCode") != null && form.get("guestFaxCode") != ""){
 			internalcontact.setGuestFaxCityCode(Integer.parseInt(form.get("guestFaxCode")));
 			}
-			if(form.get("guestFax") != null){
+			if(form.get("guestFax") != null && form.get("guestFax") != ""){
 			internalcontact.setGuestFaxValue(Integer.parseInt(form.get("guestFax")));
 			}
 			internalcontact.setDirectTelCityCode(Integer.parseInt(form.get("directTelCode")));
 			internalcontact.setDirectTelValue(Integer.parseInt(form.get("directTelNo")));
-			if(form.get("directFaxCode") != null){
+			if(form.get("directFaxCode") != null && form.get("directFaxCode") != ""){
 			internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("directFaxCode")));
 			}
-			if(form.get("directFaxNo") != null){
+			if(form.get("directFaxNo") != null && form.get("directFaxNo") != ""){
 			internalcontact.setDirectFaxValue(Integer.parseInt(form.get("directFaxNo")));
 			}
 			internalcontact.setSupplierCode(Long.parseLong(form.get("supplierCode")));
@@ -1220,18 +1225,18 @@ public class HotelProfileController extends Controller {
 
 			internalcontact.setGuestTelCityCode(Integer.parseInt(form.get("guestTelCode")));
 			internalcontact.setGuestTelValue(Integer.parseInt(form.get("guestTel")));
-			if(form.get("guestFaxCode") != null){
+			if(form.get("guestFaxCode") != null && form.get("guestFaxCode") != ""){
 				internalcontact.setGuestFaxCityCode(Integer.parseInt(form.get("guestFaxCode")));
 				}
-				if(form.get("guestFax") != null){
+				if(form.get("guestFax") != null && form.get("guestFax") != ""){
 				internalcontact.setGuestFaxValue(Integer.parseInt(form.get("guestFax")));
 				}
 			internalcontact.setDirectTelCityCode(Integer.parseInt(form.get("directTelCode")));
 			internalcontact.setDirectTelValue(Integer.parseInt(form.get("directTelNo")));
-			if(form.get("directFaxCode") != null){
+			if(form.get("directFaxCode") != null && form.get("directFaxCode") != ""){
 				internalcontact.setDirectFaxCityCode(Integer.parseInt(form.get("directFaxCode")));
 				}
-				if(form.get("directFaxNo") != null){
+				if(form.get("directFaxNo") != null && form.get("directFaxNo") != ""){
 				internalcontact.setDirectFaxValue(Integer.parseInt(form.get("directFaxNo")));
 				}
 

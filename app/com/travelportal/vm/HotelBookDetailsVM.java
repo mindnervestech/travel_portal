@@ -50,6 +50,7 @@ public class HotelBookDetailsVM {
 	public String room_status;
 	public Long totalNightStay;
 	public List<AgentRegisVM> agent;
+	public String nonRefund;
 	
 	
 	public String getHotelNm() {
@@ -278,6 +279,12 @@ public class HotelBookDetailsVM {
 	}
 	public void setAgent(List<AgentRegisVM> agent) {
 		this.agent = agent;
+	}
+	public String getNonRefund() {
+		return nonRefund;
+	}
+	public void setNonRefund(String nonRefund) {
+		this.nonRefund = nonRefund;
 	}
 
 	

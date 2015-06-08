@@ -40,23 +40,22 @@
                             <div class="tab-content">
                                 <div id="photos-tab" class="tab-pane fade in active">
                                     <div class="photo-gallery style1" data-animation="slide" data-sync="#photos-tab .image-carousel">
+                                      
+                                
                                         <ul class="slides">
-                                            <li><img src="{{GenImg}}" alt="" /></li>
-                                            <li><img src="{{ServImg}}" alt="" /></li>
-                                            <li><img src="{{RoomImg}}" alt="" /></li>
-                                            <li><img src="{{LobbyImg}}" alt="" /></li>
-                                            <li><img src="{{MapImg}}" alt="" /></li>
-                                            <li><img src="{{LSImg}}" alt="" /></li>
+                                      
+                               	<li ng-repeat="img in imgArray"><img src="{{img}}" alt="" /></li>
+                                          
                                         </ul>
                                     </div>
                                     <div class="image-carousel style1" data-animation="slide" data-item-width="70" data-item-margin="10" data-sync="#photos-tab .photo-gallery">
                                         <ul class="slides">
-                                            <li><img src="{{GenImg}}" alt="" /></li>
-                                            <li><img src="{{ServImg}}" alt="" /></li>
+                                            <li ng-repeat="img in imgArray"><img src="{{img}}" alt="" /></li>
+                                           <!--  <li><img src="/searchHotelGenImg/getHotelGenImg/41160/0" alt="" /></li>
                                             <li><img src="{{RoomImg}}" alt="" /></li>
                                             <li><img src="{{LobbyImg}}" alt="" /></li>
                                             <li><img src="{{MapImg}}" alt="" /></li>
-                                            <li><img src="{{LSImp}}" alt="" /></li>
+                                            <li><img src="{{LSImp}}" alt="" /></li> -->
                                         </ul>
                                     </div>
                                 </div>
@@ -87,87 +86,9 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade in active" id="hotel-availability">
-                                    <!-- <div class="update-search clearfix">
-                                        <div class="col-md-6">
-                                            <h4 class="title">Search</h4>
-                                            <div class="row">
-                                                <div class="col-xs-6">
-                                                    <label>ROOMS</label>
-                                                    <div class="selector">
-                                                         <select class="full-width" name="room" data-ng-model="searchroom.roomtp" ng-change="showAdultRoomView(searchroom.roomtp)">
-                          				     <option ng-repeat="roomtp in hotel.hotelbyRoom" value="{{roomtp.roomId}}">{{roomtp.roomName}}</option>
-                             				 </select><span class="custom-select full-width">{{hotel.hotelbyRoom[0].roomName}}</span> 
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-6">
-                                                    <label>ADULTS</label>
-                                                    <div class="selector">
-                                                       <select class="full-width" name="adult" data-ng-model="searchroom.adult" ng-change="showRateAdultwise(searchroom.adult)">
-                          				    			 <option ng-repeat="adult in ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal" value="{{adult.adult}}">{{adult.adult}}</option>
-                             							 </select><span class="custom-select full-width">{{ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal[0].adult}}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h4 class="visible-md visible-lg">&nbsp;</h4>
-                                            <label class="visible-md visible-lg">&nbsp;</label>
-                                            <div class="row">
-                                            <div class="col-xs-6">
-                                                   <div class="col-xs-6">
-                                                    <label>TOTAL : </label>
-                                                   </div>
-                                                   <div class="col-xs-6">
-                                                      <span class="price">{{total}} <span style="font-size: small;color: chocolate;">{{ratedetail.currencyShort}}</span></span>
-                                                   </div> 
-                                                </div>
-                                                <div class="col-xs-6" ng-if="flag == 0">
-                                                    <button data-animation-duration="1" data-animation-type="bounce" class="full-width icon-check animated bounce" type="submit" style="-webkit-animation: 1s; visibility: visible;">BOOK NOW</button>
-                                                </div>
-                                                 <div class="col-xs-6" ng-if="flag == 1">
-                                                    <button data-animation-duration="1" data-animation-type="bounce" class="full-width dark-orange btn-small animated bounce" type="button" style="-webkit-animation: 1s; visibility: visible;">ON REQUEST</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
+                                 
                                     <h2>Available Rooms</h2>
-                                     <!-- <div id="booking" class="tab-pane fade active in">
-                                     <div class="col-md-12">   height: 325px !important;overflow: auto;
-                                <div class="booking-history col-md-4" ng-repeat="Dateinfo in rateDatedetail">
-                                
-                                 <div class="booking-info clearfix" ng-if="Dateinfo.flag == 0">
-                                        <div class="date">
-                                            <label class="month">{{Dateinfo.month}}</label>
-                                            <label class="date">{{Dateinfo.date}}</label>
-                                            <label class="day">{{Dateinfo.day}}</label>
-                                        </div>
-                                        <dl class="info">
-                                            <dt>Rate</dt>
-                                            <dd>{{Dateinfo.rate}}  {{ratedetail.currencyShort}}</dd>
-                                            <dt>Included</dt>
-                                            <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
-                                            <dd ng-if="Dateinfo.meal == null">--"--</dd>
-                                        </dl>
-                                        <button class="btn-mini status">Book Now</button>
-                                    </div>
-                                    <div class="booking-info clearfix cancelled" ng-if="Dateinfo.flag == 1">
-                                        <div class="date">
-                                            <label class="month">{{Dateinfo.month}}</label>
-                                            <label class="date">{{Dateinfo.date}}</label>
-                                            <label class="day">{{Dateinfo.day}}</label>
-                                        </div>
-                                        <dl class="info">   style="width: 110px !important;"
-                                            <dt>Rate</dt>
-                                            <dd>{{Dateinfo.rate}}  {{ratedetail.currencyShort}}</dd>
-                                            <dt>Included</dt>
-                                            <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
-                                            <dd ng-if="Dateinfo.meal == null">--"--</dd>
-                                        </dl>
-                                        <button class="btn-mini status">CANCELLED</button>
-                                    </div>
-                                </div>
-								</div>
-								</div> -->
+                                 
                                     <div class="hotel-list listing-style3 hotel">
                                     <article class="box" style="border: 2px solid #C8C6C6;" ng-repeat="roomInfo in hotel.hotelbyRoom">   <!-- ng-repeat="hotelInfo in hotellistInfo" -->
                                     <div class="col-md-12" style="border-bottom: 2px solid #C8C6C6;">
@@ -249,7 +170,7 @@
                                      </div>
                                    </div>
                                      <div class="col-md-9 col-md-offset-1">
-                                     <div>
+                                     <div ng-if="roomInfo.nonRefund == false">
                                    
                                      <label style="color: #01B7F2;">Cancellation Policy</label>     
                                      <div ng-repeat="cancal in roomInfo.hotelRoomRateDetail[0].cancellation">
@@ -465,7 +386,7 @@
                     <div class="sidebar col-md-3">
                     <article class="detailed-logo">
                      <figure>
-                                <img width="114" height="85" src="{{GenImg}}" alt="">
+                                <img width="114" height="85" src="{{imgArray[0]}}" alt="">
                             </figure>
                           <div class="details">
                                 <h2 class="box-title">{{hotel.hotelNm}}<small><i class="soap-icon-departure yellow-color"></i><span class="fourty-space">{{hotel.hotelAddr}}</span></small></h2>

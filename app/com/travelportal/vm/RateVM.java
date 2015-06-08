@@ -29,6 +29,7 @@ public class RateVM {
 	public String date;
 	public int adult_occupancy;
 	public boolean applyToMarket;
+	public boolean non_refund;
 	
 	
 	public Long getSupplierCode() {
@@ -125,6 +126,14 @@ public class RateVM {
 	public void setAdult_occupancy(int adult_occupancy) {
 		this.adult_occupancy = adult_occupancy;
 	}
+	
+	/*public boolean getNon_refund() {
+		return non_refund;
+	}
+	public void setNon_refund(boolean non_refund) {
+		this.non_refund = non_refund;
+	}
+	*/
 	public List<String> getAllocatedCountry() {
 		return allocatedCountry;
 	}
@@ -150,6 +159,9 @@ public class RateVM {
 	public void setIsSpecialDaysRate(double isSpecialDaysRate) {
 		this.isSpecialDaysRate = isSpecialDaysRate;
 	}
+	
+	
+	
 	
 	
 	

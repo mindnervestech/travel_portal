@@ -2,7 +2,6 @@ package com.travelportal.vm;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 public class SerachedRoomRateDetail {
 
 	public long id;
@@ -16,6 +15,7 @@ public class SerachedRoomRateDetail {
 	//public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
 	public int flag;
 	public int availableRoom;
+	public boolean non_refund;
 	
 	
 	public int adult_occupancy;
@@ -26,38 +26,7 @@ public class SerachedRoomRateDetail {
 		this.id = id;
 	}
 	
-	/*public String getRateName() {
-		return rateName;
-	}
-	public void setRateName(String rateName) {
-		this.rateName = rateName;
-	}*/
-
-	
-	/*public boolean isSpecialRate() {
-		return isSpecialRate;
-	}
-	public void setSpecialRate(boolean isSpecialRate) {
-		this.isSpecialRate = isSpecialRate;
-	}*/
-	
-	/*public SearchSpecialRateVM getSpecial() {
-		return special;
-	}
-	public void setSpecial(SearchSpecialRateVM special) {
-		this.special = special;
-	}*/
-	
-	
-	/*public SeaachNormalRateVM getNormalRate() {
-		return normalRate;
-	}
-	public void setNormalRate(SeaachNormalRateVM normalRate) {
-		this.normalRate = normalRate;
-	}*/
-	
-	
-	
+		
 	public int getAdult_occupancy() {
 		return adult_occupancy;
 	}

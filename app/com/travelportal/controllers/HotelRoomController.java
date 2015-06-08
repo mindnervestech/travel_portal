@@ -173,6 +173,7 @@ public static void createRootDir() {
 			rateDetail.meals ="Lunch";
 			rateDetail.onlineMeals = "Lunch";
 			normal.rateDetails.add(rateDetail);
+			special.non_refund = true;
 			special.rateDetails.add(rateDetail);
 			
 			specialDaysRateVM.rateDetails.add(rateDetail);
@@ -182,6 +183,7 @@ public static void createRootDir() {
 		CancellationPolicyVM cancel = new CancellationPolicyVM();
 		
 		cancel.penaltyCharge = true;
+		specialDaysRateVM.non_refund = true;
 		specialDaysRateVM.cancellation.add(cancel);
 		
 		special.cancellation.add(cancel);
@@ -194,6 +196,7 @@ public static void createRootDir() {
 		rateVM.special = special;
 		rateVM.cancellation.add(cancel);
 		rateVM.applyToMarket = true;
+		rateVM.non_refund = true;
 		return ok(Json.toJson(rateVM));
 	}
 	
@@ -207,15 +210,11 @@ public static void createRootDir() {
 		
 		
 		for(RateVM rate : list) {
-			//rate.isSpecialRate = true;
-			//System.out.println("RATE ........"+rate.currency+rate.fromDate+rate.toDate+rate.rateName+rate.getIsSpecialRate());
 
 				RateMeta rateMeta = new RateMeta();
 				rateMeta.setSupplierCode(rate.supplierCode);
 				rateMeta.setCurrency(rate.currency);
 				rateMeta.setRateName(rate.rateName);
-				//rateMeta.setFromDate(format.parse(rate.fromDate));
-				//rateMeta.setToDate(format.parse(rate.toDate));
 				rateMeta.setRoomType(HotelRoomTypes.findById(rate.roomId));
 				
 				rateMeta.save();
@@ -278,8 +277,10 @@ public static void createRootDir() {
 				}
 				rateObject.setCountry(listCity);
 				
-			
+				if(rate.allotmentmarket != null){
+				
 				AllotmentMarket allotmentmarket = new AllotmentMarket();
+				
 				allotmentmarket.setPeriod(rate.allotmentmarket.period);
 				allotmentmarket.setSpecifyAllot(rate.allotmentmarket.specifyAllot);
 				allotmentmarket.setAllocation(rate.allotmentmarket.allocation);
@@ -296,7 +297,7 @@ public static void createRootDir() {
 				allotmentmarket.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
 				
 				allotmentmarket.save();
-				
+				}
 				
 				RateDetails rateDetails = new RateDetails();
 				if(rate.isSpecialRate == 1) {
@@ -320,6 +321,13 @@ public static void createRootDir() {
 					rateSpecialDays.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
 					rateSpecialDays.save();
 					
+					if(sDaysRateVM.non_refund == true){
+						CancellationPolicy cancellation = new CancellationPolicy();
+						cancellation.setIsNormal(value);	
+						cancellation.setNon_refund(sDaysRateVM.non_refund);
+						cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
+						cancellation.save();
+					}else{
 					for(CancellationPolicyVM vm : sDaysRateVM.cancellation) {
 						CancellationPolicy cancellation = new CancellationPolicy();
 						if(vm.days != null) {
@@ -333,11 +341,12 @@ public static void createRootDir() {
 								}
 								
 							cancellation.setIsNormal(value);	
+							cancellation.setNon_refund(sDaysRateVM.non_refund);
 							cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
 							cancellation.save();
 						}
 					}
-					
+				}
 					for(RateDetailsVM rateDetailsVM : sDaysRateVM.rateDetails) {
 						PersonRate personRate = new PersonRate();
 						personRate.setNumberOfPersons(rateDetailsVM.name);
@@ -408,6 +417,14 @@ public static void createRootDir() {
 					}
 				}
 				
+				if(rate.non_refund == true){
+					CancellationPolicy cancellation = new CancellationPolicy();
+					cancellation.setIsNormal(0);	
+					cancellation.setNon_refund(rate.non_refund);
+					cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
+					cancellation.save();
+				}else{
+
 				for(CancellationPolicyVM vm : rate.cancellation) {
 					CancellationPolicy cancellation = new CancellationPolicy();
 					if(vm.days != null) {
@@ -420,12 +437,22 @@ public static void createRootDir() {
 								cancellation.setPercentage(vm.percentage);
 							}
 						cancellation.setIsNormal(0);	
+						cancellation.setNon_refund(rate.non_refund);
 						cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
 						cancellation.save();
 					}
 				}
-				
+		}
 				if(rate.isSpecialRate == 1) {
+					
+					if(rate.special.non_refund == true){
+						CancellationPolicy cancellation = new CancellationPolicy();
+						cancellation.setIsNormal(1);	
+						cancellation.setNon_refund(rate.special.non_refund);
+						cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
+						cancellation.save();
+					}else{
+
 					for(CancellationPolicyVM vm : rate.special.cancellation) {
 						CancellationPolicy cancellation = new CancellationPolicy();
 						if(vm.days != null) {
@@ -438,10 +465,12 @@ public static void createRootDir() {
 									cancellation.setPercentage(vm.percentage);
 								}
 							cancellation.setIsNormal(1);	
+							cancellation.setNon_refund(rate.special.non_refund);
 							cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
 							cancellation.save();
 						}
 					}
+				}
 				}
 				
 		}
@@ -585,6 +614,18 @@ public static void createRootDir() {
 						rateSpecialDays.setTospecialDate(sDaysRateVM.getTospecial());
 						rateSpecialDays.merge();
 						
+						if(sDaysRateVM.non_refund == true){
+							
+							for(CancellationPolicyVM vm : sDaysRateVM.cancellation) {
+								CancellationPolicy cancellation = CancellationPolicy.findByRateMetaIdAndNormalrate(rate.getId(), sDaysRateVM.isspecialdaysrate);
+								cancellation.delete();
+							}
+							CancellationPolicy cancellation = new CancellationPolicy();
+							cancellation.setIsNormal(value);	
+							cancellation.setNon_refund(sDaysRateVM.non_refund);
+							cancellation.setRate(RateMeta.findById(rate.id));
+							cancellation.save();
+						}else{
 						for(CancellationPolicyVM vm : sDaysRateVM.cancellation) {
 							CancellationPolicy cancellation = CancellationPolicy.findByRateMetaIdAndNormalrate(rate.getId(), sDaysRateVM.isspecialdaysrate);
 							if(vm.days != null) {
@@ -600,7 +641,7 @@ public static void createRootDir() {
 								cancellation.merge();
 							}
 						}
-						
+						}
 						for(RateDetailsVM rateDetailsVM : sDaysRateVM.rateDetails) {
 							PersonRate personRate = PersonRate.findByRateMetaIdAndNormal(rate.getId(),sDaysRateVM.isspecialdaysrate, rateDetailsVM.name);
 							personRate.setNumberOfPersons(rateDetailsVM.name);
@@ -627,6 +668,15 @@ public static void createRootDir() {
 						rateSpecialDays1.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
 						rateSpecialDays1.save();
 						
+						
+						if(sDaysRateVM.non_refund == true){
+							
+							CancellationPolicy cancellation = new CancellationPolicy();
+							cancellation.setIsNormal(value);	
+							cancellation.setNon_refund(sDaysRateVM.non_refund);
+							cancellation.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
+							cancellation.save();
+						}else{
 						for(CancellationPolicyVM vm : sDaysRateVM.cancellation) {
 							CancellationPolicy cancellation1 = new CancellationPolicy();
 							if(vm.days != null) {
@@ -638,13 +688,13 @@ public static void createRootDir() {
 										cancellation1.setPenalty(vm.penaltyCharge);
 										cancellation1.setPercentage(vm.percentage);
 									}
-									
+								cancellation1.setNon_refund(sDaysRateVM.non_refund);
 								cancellation1.setIsNormal(value);	
 								cancellation1.setRate(RateMeta.findRateMeta(rate.rateName,rate.currency,HotelRoomTypes.findById(rate.roomId)));
 								cancellation1.save();
 							}
 						}
-						
+					 }
 						for(RateDetailsVM rateDetailsVM : sDaysRateVM.rateDetails) {
 							PersonRate personRate1 = new PersonRate();
 							personRate1.setNumberOfPersons(rateDetailsVM.name);
@@ -703,6 +753,18 @@ public static void createRootDir() {
 					}
 				}
 				
+				if(rate.non_refund == true){
+					
+					for(CancellationPolicyVM vm : rate.cancellation) {
+						CancellationPolicy cancellation = CancellationPolicy.findById(vm.id);
+						cancellation.delete();
+					}
+					CancellationPolicy cancellation = new CancellationPolicy();
+					cancellation.setIsNormal(0);	
+					cancellation.setNon_refund(rate.non_refund);
+					cancellation.setRate(RateMeta.findById(rate.id));
+					cancellation.save();
+				}else{
 				for(CancellationPolicyVM vm : rate.cancellation) {
 						if(vm.id == 0) {
 							CancellationPolicy cancellation = new CancellationPolicy();
@@ -736,8 +798,20 @@ public static void createRootDir() {
 							}
 						}	
 				}
-				
+		}
 				if(rate.isSpecialRate == 1) {
+					if(rate.special.non_refund == true){
+						
+						for(CancellationPolicyVM vm : rate.special.cancellation) {
+							CancellationPolicy cancellation = CancellationPolicy.findById(vm.id);
+							cancellation.delete();
+						}
+						CancellationPolicy cancellation = new CancellationPolicy();
+						cancellation.setIsNormal(1);	
+						cancellation.setNon_refund(rate.special.non_refund);
+						cancellation.setRate(RateMeta.findById(rate.id));
+						cancellation.save();
+					}else{
 					for(CancellationPolicyVM vm : rate.special.cancellation) {
 						if(vm.id == 0) {
 							CancellationPolicy cancellation = new CancellationPolicy();
@@ -770,6 +844,7 @@ public static void createRootDir() {
 							}
 						}
 					}
+				}
 				}
 				
 		}
@@ -853,6 +928,7 @@ public static void createRootDir() {
 					SpecialDaysRateVM sDaysRateVM = new SpecialDaysRateVM();
 					List<SpecialDaysRateVM> spList = new ArrayList<>(); 
 					
+					if(aMarket != null){
 					aMarketVM.setAllocation(aMarket.getAllocation());
 					aMarketVM.setChoose(aMarket.getChoose());
 					aMarketVM.setPeriod(aMarket.getPeriod());
@@ -868,7 +944,7 @@ public static void createRootDir() {
 					}
 					
 					rateVM.setAllotmentmarket(aMarketVM);
-			
+					}
 												
 							for(CancellationPolicy cancel:cancellation) {
 								if(cancel.getIsNormal() == 0){
@@ -977,6 +1053,7 @@ public static void createRootDir() {
 					SpecialDaysRateVM sDaysRateVM = new SpecialDaysRateVM();
 					List<SpecialDaysRateVM> spList = new ArrayList<>(); 
 					
+					if(aMarket != null){
 					aMarketVM.setAllocation(aMarket.getAllocation());
 					aMarketVM.setChoose(aMarket.getChoose());
 					aMarketVM.setPeriod(aMarket.getPeriod());
@@ -992,7 +1069,7 @@ public static void createRootDir() {
 					}
 					
 					rateVM.setAllotmentmarket(aMarketVM);
-			
+					}
 			
 					for(PersonRate person:personRate) {
 						
@@ -1002,24 +1079,7 @@ public static void createRootDir() {
 						}else if(person.getIsNormal() == 1) {
 							RateDetailsVM vm = new RateDetailsVM(person);
 							specialRateVM.rateDetails.add(vm);
-						}/*else{
-							int maxAdults = HotelRoomTypes.getHotelRoomMaxAdultOccupancy(rate.getRoomType().getRoomId());
-							System.out.println(maxAdults);
-							for(int j=1;i<=maxAdults;j++) {
-								RateDetailsVM rateDetail = new RateDetailsVM();
-								if(j != 1) {
-									rateDetail.name = j+" Adults";
-								} else {
-									rateDetail.name = "1 Adult";
-								}
-								
-								rateDetail.includeMeals = false;
-								rateDetail.meals ="Lunch";
-								rateDetail.onlineMeals = "Lunch";
-								specialRateVM.rateDetails.add(rateDetail);
-							}
-						}*/
-						
+						}						
 											
 						if(person.getIsNormal() > 2) {
 							rateVM.setIsSpecialDaysRate(2);
@@ -1030,7 +1090,7 @@ public static void createRootDir() {
 								sRateVM.fromspecial = rDays.getFromspecialDate();
 								sRateVM.tospecial = rDays.getTospecialDate();
 								sRateVM.isspecialdaysrate = rDays.getIsSpecialdaysRate();
-							 
+							    
 								RateDetailsVM vm = new RateDetailsVM(person);
 								sRateVM.rateDetails.add(vm);
 								for(CancellationPolicy cancel:cancellation) {
@@ -1038,36 +1098,16 @@ public static void createRootDir() {
 											if(sRateVM.isspecialdaysrate == cancel.getIsNormal()){
 										CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 										sRateVM.cancellation.add(vm1);
+										sRateVM.non_refund = cancel.isNon_refund();
 										}
+												
 									}
 								}	
 								spDaysRateVMs.add(sRateVM);
 								}
 							}
 							
-							}/*else{
-								int maxAdults = HotelRoomTypes.getHotelRoomMaxAdultOccupancy(rate.getRoomType().getRoomId());
-								SpecialDaysRateVM specialDaysRateVM = new SpecialDaysRateVM();
-								for(int j=1;j<=maxAdults;j++) {
-									RateDetailsVM rateDetail = new RateDetailsVM();
-									if(j != 1) {
-										rateDetail.name = j+" Adults";
-									} else {
-										rateDetail.name = "1 Adult";
-									}
-									
-									rateDetail.includeMeals = false;
-									rateDetail.meals ="Lunch";
-									rateDetail.onlineMeals = "Lunch";
-									specialDaysRateVM.rateDetails.add(rateDetail);
-								}
-								
-								
-								CancellationPolicyVM cancel = new CancellationPolicyVM();
-								
-								cancel.penaltyCharge = true;
-								specialDaysRateVM.cancellation.add(cancel);
-							}*/
+							}
 					}
 						if(rateDetails.getSpecialDays() != null) {
 							String week[] = rateDetails.getSpecialDays().split(",");
@@ -1111,10 +1151,12 @@ public static void createRootDir() {
 								if(cancel.getIsNormal() == 0){
 									CancellationPolicyVM vm = new CancellationPolicyVM(cancel);
 									rateVM.cancellation.add(vm);
+									rateVM.non_refund = cancel.isNon_refund();
 								}
 								if(cancel.getIsNormal() == 1) {
 									CancellationPolicyVM vm = new CancellationPolicyVM(cancel);
 									specialRateVM.cancellation.add(vm);
+									specialRateVM.non_refund = cancel.isNon_refund();
 								}
 							}
 							
@@ -1195,7 +1237,8 @@ public static void createRootDir() {
 			hotelroomTypes.setDescription(roomtypeVM.getDescription());
 			hotelroomTypes.setMaxAdultOccSharingWithChildren(roomtypeVM.getMaxAdultOccSharingWithChildren());
 			hotelroomTypes.setSupplierCode(roomtypeVM.getSupplierCode());
-			hotelroomTypes.setRoomSize(roomtypeVM.getRoomSize());
+			//String roomSize = roomtypeVM.getRoomSize() + roomtypeVM.getRoomSizeType();
+			hotelroomTypes.setRoomSize(roomtypeVM.getRoomSize() + roomtypeVM.getRoomSizeType());
 			hotelroomTypes.setBreakfastInclude(roomtypeVM.getBreakfastInclude());
 			hotelroomTypes.setBreakfastRate(roomtypeVM.getBreakfastRate());
 			hotelroomTypes.setChildAge(roomtypeVM.getChildAge());

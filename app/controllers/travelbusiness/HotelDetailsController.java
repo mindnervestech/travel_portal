@@ -24,6 +24,7 @@ import views.html.travelbusiness.hotelBookingInfo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.travelportal.domain.AmenitiesType;
 import com.travelportal.domain.HotelAmenities;
+import com.travelportal.domain.HotelImagesPath;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.InfoWiseImagesPath;
@@ -59,26 +60,27 @@ import com.travelportal.vm.SpecialsVM;
 public class HotelDetailsController extends Controller {
 
 	@Transactional(readOnly = false)
-	public static Result getHotelGenImg(long supplierCode) {
+	public static Result getHotelGenImg(long supplierCode,long indexValue) {
 
-		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath
-				.findById(supplierCode);
-		File f = null;
-		if(infowiseimagesPath != null){
-			if(infowiseimagesPath.getGeneralPicture() != null){
-			
-		 f = new File(infowiseimagesPath.getGeneralPicture());
+		HotelImagesPath hImagesPath = HotelImagesPath.findByIdAndIndex(supplierCode,indexValue);
+		File f;
+		if(hImagesPath != null){
+		 
+			if(hImagesPath.getPicturePath() != null){
+				 f = new File(hImagesPath.getPicturePath());
 			}else{
 				f = new File("C:\\mypath\\default\\logo.jpg");
 			}
-		}else{
-			    f = new File("C:\\mypath\\default\\logo.jpg");
 		}
-		return ok(f);
+		else{
+			f = new File("C:\\mypath\\default\\logo.jpg");
+		}
+				
+        return ok(f);	
 
 	}
 
-	@Transactional(readOnly = false)
+	/*@Transactional(readOnly = false)
 	public static Result getHotelServImg(long supplierCode) {
 
 		InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath
@@ -178,7 +180,7 @@ public class HotelDetailsController extends Controller {
 		}
 		return ok(f);
 
-	}
+	}*/
 	
 	@Transactional(readOnly=true)
 	public static Result getAmenities() {
@@ -207,7 +209,8 @@ public class HotelDetailsController extends Controller {
 	
 	@Transactional(readOnly=false)
 	public static Result getHotelRoomImagePath(long roomId) {
-		
+		System.out.println("()()()()()()(");
+		System.out.println(roomId);
 		HotelRoomTypes hRoomTypes = HotelRoomTypes.findById(roomId);
 		File f = null;
 		if(hRoomTypes != null){
@@ -611,8 +614,6 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 								rateVM.rateDetails.add(vm);
 								}
 							
-							
-							
 							findrate = 1;
 							for(CancellationPolicy cancel:cancellation) {
 								objectcancel = (Long) mapcancel.get(cancel.getId());
@@ -624,6 +625,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 									if(person.getIsNormal() == cancel.getIsNormal()){
 									CancellationPolicyVM vm = new CancellationPolicyVM(cancel);
 									rateVM.cancellation.add(vm);
+									rateVM.non_refund = cancel.isNon_refund();
 									}
 								}
 								mapcancel.put(cancel.getId(), Long.parseLong("1"));
@@ -659,6 +661,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -682,6 +685,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -705,6 +709,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -728,6 +733,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -751,6 +757,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -774,6 +781,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -797,6 +805,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -820,6 +829,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 0) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -846,6 +856,7 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				if(cancel.getIsNormal() == 0) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
+					rateVM.non_refund = cancel.isNon_refund();
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
@@ -853,48 +864,21 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 			}
 		
 	}
+	
+	 
 	}
 	
 }
-
-/*
-public static void findMinRateInHotel(List<HotelSearch> hotellist){
-	for (HotelSearch hotel : hotellist) {
-		
-		
-
-	double min=0.0;
-	int minStart = 0;
-	for(SerachHotelRoomType sHotelRoomType2:hotel.hotelbyRoom){
-		
-		for (SerachedRoomRateDetail roomRateDetail:sHotelRoomType2.hotelRoomRateDetail) {
-			
-			for(SearchRateDetailsVM sRD:roomRateDetail.rateDetailsNormal){
-				
-				System.out.println(sRD.adult);
-				if(sRD.adult.equals("1 Adult")){
-					if(minStart == 0){
-						min = sRD.rateAvg;
-						minStart++;
-					}
-					if(min > sRD.rateAvg){
-						min = sRD.rateAvg;
-					}
-				}
-			}
-		}
-	 }
- hotel.minRate = min;
-	}
-}*/
- 
 
 public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoomType> hotelRMlist,int count, Map<Long, SerachedRoomRateDetail> mapRM,Long diffInpromo){
 	
 	Map<Long, List<SpecialsVM>> mapSpecials = new HashMap<Long, List<SpecialsVM>>();
 	Map<Long, Integer> promoMap = new HashMap<Long, Integer>();
+	Map<Long, Boolean> nonrefundRoom = new HashMap<Long, Boolean>();
+	
 		int dataVar = 0;
 		int countRoom = count;
+		boolean refundValue = false;
 		List<Integer> arrayCount = new ArrayList<Integer>();
 		for (SerachedHotelbyDate date : hotel.hotelbyDate) {
 			int newHotel=countRoom; 
@@ -906,7 +890,6 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 				//Double avg = 0.0;
 				SerachHotelRoomType sHotelRoomType = new SerachHotelRoomType();
 				sHotelRoomType.hotelRoomRateDetail = new ArrayList<SerachedRoomRateDetail>();
-
 				
 				SerachedRoomRateDetail sRateDetail = new SerachedRoomRateDetail();
 				sRateDetail.rateDetailsNormal = new ArrayList<SearchRateDetailsVM>();
@@ -951,6 +934,10 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 						}
 						sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
 						sRateDetail.setCancellation(rateObj.getCancellation());
+						if(rateObj.non_refund == true){
+							refundValue = true;
+						}
+						nonrefundRoom.put(roomTP.getRoomId(), rateObj.non_refund);
 					}
 					mapRM.put(roomTP.getRoomId(), sRateDetail);
 					promoMap.put(roomTP.getRoomId(),roomTP.getPcount());
@@ -987,6 +974,10 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 							sRateDetail.rateDetailsNormal
 									.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
 							x++;
+							if(rateObj.non_refund == true){
+								refundValue = true;
+								nonrefundRoom.put(roomTP.getRoomId(), rateObj.non_refund);
+							}
 						}
 					}
 					mapRM.put(roomTP.getRoomId(), sRateDetail);
@@ -1009,8 +1000,15 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 			
 							 
 		}
+		
 		int diffProm;
 		for(SerachHotelRoomType room:hotel.hotelbyRoom){
+
+			for (Entry<Long, Boolean> entry : nonrefundRoom.entrySet()) {
+				if(room.getRoomId() == entry.getKey()){
+					room.nonRefund = entry.getValue();
+				}
+			}
 			for (Entry<Long, Integer> entry : promoMap.entrySet()) {
 			if(room.getRoomId() == entry.getKey()){
 				room.setPcount(entry.getValue());

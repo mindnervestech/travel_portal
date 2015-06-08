@@ -26,6 +26,7 @@ public class SerachHotelRoomType {
 	public String breakfastInclude;
 	public int breakfastRate;
 	public int childAge;
+	public boolean nonRefund;
 	
 	public Long getRoomId() {
 		return roomId;
@@ -136,7 +137,8 @@ public class SerachHotelRoomType {
 	}
 	public void setChildAge(int childAge) {
 		this.childAge = childAge;
-	}  
+	}
+	
 	
 	
 	

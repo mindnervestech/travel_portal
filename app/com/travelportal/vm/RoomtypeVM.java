@@ -22,6 +22,7 @@ public class RoomtypeVM {
 	public String description;
 	public String roomPicture;
 	public String roomSize;
+	public String roomSizeType;
 	//public String extraBedRate;
 	
 	public int childAge;
@@ -159,6 +160,14 @@ public class RoomtypeVM {
 	public void setBreakfastRate(Double breakfastRate) {
 		this.breakfastRate = breakfastRate;
 	}
+	public String getRoomSizeType() {
+		return roomSizeType;
+	}
+	public void setRoomSizeType(String roomSizeType) {
+		this.roomSizeType = roomSizeType;
+	}
 
+	
+	
 	
 }

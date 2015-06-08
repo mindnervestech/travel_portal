@@ -1,7 +1,6 @@
 package com.travelportal.domain;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -73,6 +72,7 @@ public class HotelBookingDetails {
 	private long totalNightStay;
 	@OneToOne
 	private RateMeta rate;
+	public String nonRefund;
 	
 	public Long getSupplierCode() {
 		return supplierCode;
@@ -281,6 +281,13 @@ public class HotelBookingDetails {
 	}
 	public void setRate(RateMeta rate) {
 		this.rate = rate;
+	}
+	
+	public String getNonRefund() {
+		return nonRefund;
+	}
+	public void setNonRefund(String nonRefund) {
+		this.nonRefund = nonRefund;
 	}
 	public static HotelBookingDetails findBookingId() {
 	    	return (HotelBookingDetails) JPA.em().createQuery("select c from HotelBookingDetails c where c.id = (select max(a.id) from HotelBookingDetails a)").getSingleResult();
@@ -528,21 +535,6 @@ public class HotelBookingDetails {
 		return (List<HotelBookingDetails>)q.getResultList();
 		
 	}
-	
-	//------------------------------------------------------------------------------------------------------------
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	public static List<HotelBookingDetails> getfindBysupplier(long supplierCode,int currentPage, int rowsPerPage,long totalPages, String status) {
 		int  start=0;

@@ -35,6 +35,8 @@ public class HotelMealPlan { //supplier specific records...
 	private List<ChildPolicies> child;
 	@Column(name="meal_plan_nm")
 	private String mealPlanNm;
+	@Column(name="restaurants")
+	private String restaurants;
 	@Column(name="from_period")
 	private Date fromPeriod;
 	@Column(name="to_period")
@@ -185,6 +187,12 @@ public class HotelMealPlan { //supplier specific records...
 	}
 
 	
+	public String getRestaurants() {
+		return restaurants;
+	}
+	public void setRestaurants(String restaurants) {
+		this.restaurants = restaurants;
+	}
 	public List<ChildPolicies> getChild() {
 		return child;
 	}

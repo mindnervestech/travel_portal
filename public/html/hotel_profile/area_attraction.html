@@ -40,7 +40,7 @@
 						</ul>
 						<div id="myTabContent2" class="tab-content">
 							<form method="post" ng-submit="saveAreainfo()" role="form"
-								class="form-horizontal form-validate">
+								class="form-horizontal">
 								<div class="row">
 									<div class="col-md-12">
 
@@ -96,7 +96,7 @@
 
 											<div class="col-md-2 setwidth">
 												<input type="text" name="minutes"
-													data-ng-model="formArr[0].minutes" class="form-control required number"
+													data-ng-model="formArr[0].minutes" pattern="\d*" title="Please enter numbers" class="form-control"
 													required>
 											</div>
 
@@ -125,7 +125,7 @@
 
 											<div class="col-md-2 setwidth">
 												<input type="text" name="minutes"
-													data-ng-model="formArr[1].minutes" class="form-control number">
+													data-ng-model="formArr[1].minutes" pattern="\d*" title="Please enter numbers" class="form-control">
 											</div>
 										</div>
 
@@ -152,7 +152,7 @@
 
 											<div class="col-md-2 setwidth">
 												<input type="text" name="minutes"
-													data-ng-model="formArr[2].minutes" class="form-control number">
+													data-ng-model="formArr[2].minutes" pattern="\d*" title="Please enter numbers" class="form-control">
 											</div>
 										</div>
 
@@ -179,7 +179,7 @@
 
 											<div class="col-md-2 setwidth">
 												<input type="text" name="minutes"
-													data-ng-model="formArr[3].minutes" class="form-control number">
+													data-ng-model="formArr[3].minutes" pattern="\d*" title="Please enter numbers" class="form-control">
 											</div>
 										</div>
 
@@ -208,7 +208,7 @@
 
 												<div class="col-md-2 setwidth">
 													<input type="text" name="minutes"
-														data-ng-model="formArr[4].minutes" class="form-control number">
+														data-ng-model="formArr[4].minutes" pattern="\d*" title="Please enter numbers" class="form-control">
 												</div>
 											</div>
 
@@ -236,7 +236,7 @@
 
 												<div class="col-md-2 setwidth">
 													<input type="text" name="minutes"
-														data-ng-model="formArr[5].minutes" class="form-control number">
+														data-ng-model="formArr[5].minutes" pattern="\d*" title="Please enter numbers" class="form-control">
 												</div>
 											</div>
 
@@ -264,7 +264,7 @@
 
 												<div class="col-md-2 setwidth">
 													<input type="text" name="minutes"
-														data-ng-model="formArr[6].minutes" class="form-control number">
+														data-ng-model="formArr[6].minutes" pattern="\d*" title="Please enter numbers" class="form-control">
 												</div>
 											</div>
 
@@ -292,7 +292,7 @@
 
 												<div class="col-md-2 setwidth">
 													<input type="text" name="minutes"
-														data-ng-model="formArr[7].minutes" class="form-control number">
+														data-ng-model="formArr[7].minutes" pattern="\d*" title="Please enter numbers" class="form-control">
 												</div>
 											</div>
 
@@ -320,7 +320,7 @@
 
 												<div class="col-md-2 setwidth">
 													<input type="text" name="minutes"
-														data-ng-model="formArr[8].minutes" class="form-control number">
+														data-ng-model="formArr[8].minutes" pattern="\d*" title="Please enter numbers" class="form-control">
 												</div>
 											</div>
 
@@ -348,7 +348,7 @@
 
 												<div class="col-md-2 setwidth">
 													<input type="text" name="minutes"
-														data-ng-model="formArr[9].minutes" class="form-control number">
+														data-ng-model="formArr[9].minutes" pattern="\d*" title="Please enter numbers" class="form-control">
 												</div>
 											</div>
 

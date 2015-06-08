@@ -8,6 +8,7 @@ public class SpecialDaysRateVM {
 	//public List<String> weekDays = new ArrayList<String>();
 	public List<RateDetailsVM> rateDetails = new ArrayList<RateDetailsVM>();
 	public List<CancellationPolicyVM> cancellation = new ArrayList<CancellationPolicyVM>();
+	public boolean non_refund;
 	public String fromspecial;
 	public String tospecial;
 	public double isspecialdaysrate;
@@ -49,6 +50,14 @@ public class SpecialDaysRateVM {
 	public void setIsspecialdaysrate(double isspecialdaysrate) {
 		this.isspecialdaysrate = isspecialdaysrate;
 	}
+	/*public boolean isNon_refund() {
+		return non_refund;
+	}
+	public void setNon_refund(boolean non_refund) {
+		this.non_refund = non_refund;
+	}*/
+	
+	
 	
 	
 	

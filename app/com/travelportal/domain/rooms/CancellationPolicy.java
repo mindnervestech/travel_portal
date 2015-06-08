@@ -29,6 +29,8 @@ public class CancellationPolicy {
 	private String nights;
 	@Column(name="percentage")
 	private String percentage;
+	@Column(name="non_refund")
+	private boolean non_refund;
 	@OneToOne
 	private RateMeta rate;
 	private double isNormal;
@@ -78,6 +80,13 @@ public class CancellationPolicy {
 		this.rate = rate;
 	}
 	
+	
+	public boolean isNon_refund() {
+		return non_refund;
+	}
+	public void setNon_refund(boolean non_refund) {
+		this.non_refund = non_refund;
+	}
 	public static List<CancellationPolicy> findByRateMetaId(Long id) {
     	Query query = JPA.em().createQuery("Select c from CancellationPolicy c where c.rate.id = ?1");
 		query.setParameter(1, id);

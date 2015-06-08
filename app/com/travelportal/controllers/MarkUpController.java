@@ -1,53 +1,36 @@
 package com.travelportal.controllers;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import play.data.DynamicForm;
-import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import scala.Enumeration.Val;
 
-import com.fasterxml.jackson.annotation.JsonFormat.Value;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.HotelRegistration;
-import com.travelportal.domain.HotelServices;
-import com.travelportal.domain.InternalContacts;
 import com.travelportal.domain.admin.BatchMarkup;
 import com.travelportal.domain.admin.SpecificMarkup;
 import com.travelportal.domain.agent.AgentRegistration;
-import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.ApplicableDateOnRate;
-import com.travelportal.domain.rooms.CancellationPolicy;
 import com.travelportal.domain.rooms.HotelRoomTypes;
-import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.AgentRegistrationVM;
-import com.travelportal.vm.AllotmentMarketVM;
 import com.travelportal.vm.BatchMarkupInfoVM;
 import com.travelportal.vm.BatchMarkupVM;
 import com.travelportal.vm.BatchViewSupportVM;
-import com.travelportal.vm.CancellationPolicyVM;
-import com.travelportal.vm.ChildpoliciVM;
 import com.travelportal.vm.HotelRegistrationVM;
-import com.travelportal.vm.NormalRateVM;
-import com.travelportal.vm.RateDetailsVM;
 import com.travelportal.vm.RateVM;
-import com.travelportal.vm.SpecialRateVM;
 import com.travelportal.vm.SpecialsMarketVM;
 import com.travelportal.vm.SpecialsVM;
 import com.travelportal.vm.SpecificMarkupInfoVM;
@@ -393,63 +376,100 @@ public class MarkUpController extends Controller {
 		
 	}
 	
+	
+	
 	@Transactional(readOnly = false)
 	public static Result savespecificMarkup() {
-		
+
 		JsonNode json = request().body().asJson();
 		DynamicForm form = DynamicForm.form().bindFromRequest();
 		Json.fromJson(json, SpecificMarkupVM.class);
-		SpecificMarkupVM specificMarkupVM = Json.fromJson(json, SpecificMarkupVM.class);
+		SpecificMarkupVM specificMarkupVM = Json.fromJson(json,
+				SpecificMarkupVM.class);
 
-		System.out.println("&^&&^&&^&^&^&^&&&^");
-		System.out.println(specificMarkupVM.getRateSelected());
-		System.out.println("&^&&^&&^&^&^&^&&&^");
 		
-for(long agentvm : specificMarkupVM.getAgentSpecific()){
-	
-	SpecificMarkup specificMarkup = SpecificMarkup.findRateSupplier(AgentRegistration.getAgentCode(String.valueOf(agentvm)),specificMarkupVM.getCode());
-	
-		if(specificMarkupVM.getRateSelected().size() != 0){
-			
-				for(long vm : specificMarkupVM.getRateSelected()){
+		for (long agentvm : specificMarkupVM.getAgentSpecific()) {
+
+			List<BatchMarkup> batchmarkup = BatchMarkup.findAgentSupplierList(
+					AgentRegistration.getAgentCode(String.valueOf(agentvm)),
+					specificMarkupVM.getCode());
+			for(BatchMarkup bm:batchmarkup){
+				bm.delete();
+			}
+		//	if(batchmarkup.size() == 0){
 				
-				System.out.println(vm);
-		
-				if(specificMarkup == null)
-				{
-	 specificMarkup = new SpecificMarkup();
-	specificMarkup.setSpecificFlat(specificMarkupVM.getSpecificFlat());
-	specificMarkup.setSpecificPercent(specificMarkupVM.getSpecificPercent());
-	specificMarkup.setSpecificSelected(specificMarkupVM.getSpecificSelected());
-	specificMarkup.setSupplierCode(specificMarkupVM.getCode());
-	specificMarkup.setAgentSpecific(AgentRegistration.getAgentCode(String.valueOf(agentvm)));
-	specificMarkup.setRateSelected(RateMeta.getallRateCode(vm));
-		
-	specificMarkup.save();
+			if (specificMarkupVM.getRateSelected().size() != 0) {
+				
+					for (long vm : specificMarkupVM.getRateSelected()) {
+
+						System.out.println(vm);
+
+						BatchMarkup batchmarkup1 = new BatchMarkup();
+						SaveDataInBatchMarkUp(batchmarkup1, specificMarkupVM,
+								agentvm);
+
+						batchmarkup1
+								.setRateSelected(RateMeta.getallRateCode(vm));
+
+						batchmarkup1.save();
+
+					}
+				
+			}else{
+				BatchMarkup batchmarkup1 = new BatchMarkup();
+				SaveDataInBatchMarkUp(batchmarkup1, specificMarkupVM,
+						agentvm);
+
+				batchmarkup1.save();
+			}
+			/*}else{
+				for(BatchMarkup bm:batchmarkup){
+				if (specificMarkupVM.getRateSelected().size() != 0) {
+					for (long vm : specificMarkupVM.getRateSelected()) {
+										
+						BatchMarkup batchMarkup2 = BatchMarkup.findAgentSupplierRate(bm.getBatchMarkupId(), vm);
+						if(batchMarkup2 != null){
+							System.out.println(specificMarkupVM.getSpecificFlat());
+							SaveDataInBatchMarkUp(batchMarkup2, specificMarkupVM,
+									agentvm);
+							batchMarkup2.merge();
+						}else{
+							
+							BatchMarkup batchMarkup3 = new BatchMarkup();
+							SaveDataInBatchMarkUp(batchMarkup3, specificMarkupVM,
+									agentvm);
+							batchMarkup3.setRateSelected(RateMeta.getallRateCode(vm));
+
+							batchMarkup3.save();
+
+						}
+					
+					}
+				}else{
+					SaveDataInBatchMarkUp(bm, specificMarkupVM,
+							agentvm);
+					bm.merge();
 				}
-		
-			}
-		}else{
-			if(specificMarkup == null)
-			{
- specificMarkup = new SpecificMarkup();
-specificMarkup.setSpecificFlat(specificMarkupVM.getSpecificFlat());
-specificMarkup.setSpecificPercent(specificMarkupVM.getSpecificPercent());
-specificMarkup.setSpecificSelected(specificMarkupVM.getSpecificSelected());
-specificMarkup.setSupplierCode(specificMarkupVM.getCode());
-specificMarkup.setAgentSpecific(AgentRegistration.getAgentCode(String.valueOf(agentvm)));
-//specificMarkup.setRateSelected(RateMeta.getallRateCode(null));
-	
-specificMarkup.save();
-			}
-		}
+				}
+			}*/
 			
-	
-	}
-		
+			
+		}
+
 		return ok();
-		
-		
+
+	}
+	
+	public static void SaveDataInBatchMarkUp(BatchMarkup batchmarkup, SpecificMarkupVM specificMarkupVM, Long agentvm){
+		batchmarkup.setFlat(specificMarkupVM.getSpecificFlat());
+		batchmarkup.setPercent(specificMarkupVM
+				.getSpecificPercent());
+		batchmarkup.setSelected(specificMarkupVM
+				.getSpecificSelected());
+		batchmarkup.setSupplier(specificMarkupVM
+				.getCode());
+		batchmarkup.setAgent(AgentRegistration
+				.getAgentCode(String.valueOf(agentvm)));
 	}
 
 	@Transactional(readOnly = false)
@@ -464,20 +484,24 @@ specificMarkup.save();
 			
 			for(long agentvm : batMarkupVM.getAgent()){
 				System.out.println(vm);
-				BatchMarkup batchmarkup = BatchMarkup.findAgentSupplier(AgentRegistration.getAgentCode(String.valueOf(agentvm)), vm);
+				List<BatchMarkup> batchmarkup1 = BatchMarkup.findAgentSupplierList(AgentRegistration.getAgentCode(String.valueOf(agentvm)), vm);
 
-				if(batchmarkup == null)
+				if(batchmarkup1 != null)
 				{
-				 batchmarkup = new BatchMarkup();
-		batchmarkup.setFlat(batMarkupVM.getFlat());
-		batchmarkup.setPercent(batMarkupVM.getPercent());
-		batchmarkup.setSelected(batMarkupVM.getSelected());
-		//batchmarkup.setSupplier(HotelRegistration.getallSupplierCode(vm));
-		batchmarkup.setSupplier(vm);
-		batchmarkup.setAgent(AgentRegistration.getAgentCode(String.valueOf(agentvm)));
-		
-		batchmarkup.save();
+					for(BatchMarkup bm:batchmarkup1){
+						bm.delete();
+					}
 				}
+				 BatchMarkup batchmarkup = new BatchMarkup();
+				 batchmarkup.setFlat(batMarkupVM.getFlat());
+				 batchmarkup.setPercent(batMarkupVM.getPercent());
+				 batchmarkup.setSelected(batMarkupVM.getSelected());
+				 //batchmarkup.setSupplier(HotelRegistration.getallSupplierCode(vm));
+				 batchmarkup.setSupplier(vm);
+				 batchmarkup.setAgent(AgentRegistration.getAgentCode(String.valueOf(agentvm)));
+		
+				 batchmarkup.save();
+				
 		
 			}
 	
@@ -487,3 +511,166 @@ specificMarkup.save();
 
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+@Transactional(readOnly = false)
+public static Result savespecificMarkup() {
+
+	JsonNode json = request().body().asJson();
+	DynamicForm form = DynamicForm.form().bindFromRequest();
+	Json.fromJson(json, SpecificMarkupVM.class);
+	SpecificMarkupVM specificMarkupVM = Json.fromJson(json,
+			SpecificMarkupVM.class);
+
+	System.out.println("&^&&^&&^&^&^&^&&&^");
+	System.out.println(specificMarkupVM.getRateSelected());
+	System.out.println("&^&&^&&^&^&^&^&&&^");
+
+	for (long agentvm : specificMarkupVM.getAgentSpecific()) {
+
+		SpecificMarkup specificMarkup = SpecificMarkup.findRateSupplier(
+				AgentRegistration.getAgentCode(String.valueOf(agentvm)),
+				specificMarkupVM.getCode());
+
+		if (specificMarkupVM.getRateSelected().size() != 0) {
+
+			for (long vm : specificMarkupVM.getRateSelected()) {
+
+				System.out.println(vm);
+
+				if (specificMarkup == null) {
+					specificMarkup = new SpecificMarkup();
+					specificMarkup.setSpecificFlat(specificMarkupVM
+							.getSpecificFlat());
+					specificMarkup.setSpecificPercent(specificMarkupVM
+							.getSpecificPercent());
+					specificMarkup.setSpecificSelected(specificMarkupVM
+							.getSpecificSelected());
+					specificMarkup.setSupplierCode(specificMarkupVM
+							.getCode());
+					specificMarkup.setAgentSpecific(AgentRegistration
+							.getAgentCode(String.valueOf(agentvm)));
+					specificMarkup.setRateSelected(RateMeta
+							.getallRateCode(vm));
+
+					specificMarkup.save();
+				}
+
+			}
+		} else {
+			if (specificMarkup == null) {
+				specificMarkup = new SpecificMarkup();
+				specificMarkup.setSpecificFlat(specificMarkupVM
+						.getSpecificFlat());
+				specificMarkup.setSpecificPercent(specificMarkupVM
+						.getSpecificPercent());
+				specificMarkup.setSpecificSelected(specificMarkupVM
+						.getSpecificSelected());
+				specificMarkup.setSupplierCode(specificMarkupVM.getCode());
+				specificMarkup.setAgentSpecific(AgentRegistration
+						.getAgentCode(String.valueOf(agentvm)));
+				// specificMarkup.setRateSelected(RateMeta.getallRateCode(null));
+
+				specificMarkup.save();
+			}
+		}
+
+	}
+
+	return ok();
+
+}
+
+
+
+
+
+
+
+@Transactional(readOnly = false)
+	public static Result savespecificMarkup() {
+
+		JsonNode json = request().body().asJson();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		Json.fromJson(json, SpecificMarkupVM.class);
+		SpecificMarkupVM specificMarkupVM = Json.fromJson(json,
+				SpecificMarkupVM.class);
+
+		System.out.println("&^&&^&&^&^&^&^&&&^");
+		System.out.println(specificMarkupVM.getRateSelected());
+		System.out.println("&^&&^&&^&^&^&^&&&^");
+
+		for (long agentvm : specificMarkupVM.getAgentSpecific()) {
+
+			BatchMarkup batchmarkup = BatchMarkup.findAgentSupplier(
+					AgentRegistration.getAgentCode(String.valueOf(agentvm)),
+					specificMarkupVM.getCode());
+			
+			if (batchmarkup == null) {
+				if (specificMarkupVM.getRateSelected().size() != 0) {
+
+					for (long vm : specificMarkupVM.getRateSelected()) {
+
+						System.out.println(vm);
+
+						batchmarkup = new BatchMarkup();
+						SaveDataInBatchMarkUp(batchmarkup, specificMarkupVM,
+								agentvm);
+
+						batchmarkup
+								.setRateSelected(RateMeta.getallRateCode(vm));
+
+						batchmarkup.save();
+
+					}
+				} else {
+
+					batchmarkup = new BatchMarkup();
+					SaveDataInBatchMarkUp(batchmarkup, specificMarkupVM,
+							agentvm);
+
+					batchmarkup.save();
+
+				}
+			} else {
+
+				if (specificMarkupVM.getRateSelected().size() != 0) {
+
+					for (long vm : specificMarkupVM.getRateSelected()) {
+						SaveDataInBatchMarkUp(batchmarkup, specificMarkupVM,
+								agentvm);
+						batchmarkup
+								.setRateSelected(RateMeta.getallRateCode(vm));
+
+						batchmarkup.merge();
+					}
+				} else {
+					SaveDataInBatchMarkUp(batchmarkup, specificMarkupVM,
+							agentvm);
+					batchmarkup.merge();
+				}
+			}
+		}
+
+		return ok();
+
+	}
+	
+*/
+
+
+
+
+

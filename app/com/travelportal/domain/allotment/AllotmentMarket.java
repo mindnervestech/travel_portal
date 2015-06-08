@@ -249,9 +249,15 @@ public class AllotmentMarket {
 	
 	
 	public static AllotmentMarket findByRateId(Long id) {
-		Query query = JPA.em().createQuery("Select c from AllotmentMarket c where c.rate.id = ?1");
-		query.setParameter(1, id);
-    	return (AllotmentMarket) query.getSingleResult();
+		try {
+			Query query = JPA.em().createQuery(
+					"Select c from AllotmentMarket c where c.rate.id = ?1");
+			query.setParameter(1, id);
+			return (AllotmentMarket) query.getSingleResult();
+		} catch (Exception ex) {
+			return null;
+		}
+
 	}
 	
 	public static AllotmentMarket getnationalitywiseMark(int allotId,int nationalityId) {
