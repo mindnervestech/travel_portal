@@ -4,25 +4,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-
-import play.Play;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -33,17 +18,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.agent.AgentRegistration;
-import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.vm.AgentRegisVM;
-import com.travelportal.vm.BookingDatesVM;
 import com.travelportal.vm.HotelBookDetailsVM;
-
-import play.db.jpa.Transactional;
-import play.libs.Json;
-import play.mvc.Controller;
-import play.mvc.Result;
-import views.html.travelbusiness.agentBookingInfo;
 
 public class AgentInfoController extends Controller {
 
@@ -380,36 +357,6 @@ public class AgentInfoController extends Controller {
 
 
 
-
-
-
-
-
-
-
-	/*----------------------------------------------------------------------------------------------------------------------------------------*/  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Transactional
 	public static Result getbookingcancel(long id){
 		int count= 0;
@@ -441,51 +388,8 @@ public class AgentInfoController extends Controller {
 
 	}
 
-	public static void cancelMail(String email,HotelBookingDetails hBookingDetails){
-/*		SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-		final String username=Play.application().configuration().getString("username");
-		final String password=Play.application().configuration().getString("password");
-
-		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
-
-		Session session = Session.getInstance(props,
-				new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-
-				return new PasswordAuthentication(username, password);
-			}
-		});
-
-		try{
-
-			Date todayD = new Date();
-
-			Message feedback = new MimeMessage(session);
-			feedback.setFrom(new InternetAddress(username));
-			feedback.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(email));
-			feedback.setSubject("On Cancel Booking");	  			
-			BodyPart messageBodyPart = new MimeBodyPart();	
-			HotelRoomTypes hRoomTypes =HotelRoomTypes.findById(hBookingDetails.getRoomId());
-			String[] noAdults;
-			noAdults = hBookingDetails.getAdult().split(" ");
-
-			messageBodyPart.setText("Dear "+hBookingDetails.getTravellerfirstname()+" "+hBookingDetails.getTravellerlastname()+",\n\n Please be informed that your booking has been cancelled \n\n -------------------------------------- \n Original Booking Details\n -------------------------------------- \n Booking ID      : "+hBookingDetails.getId()+" \n Cancelled on    : "+df.format(todayD)+" \n Customer First Name : "+hBookingDetails.getTravellerfirstname()+" \n Customer Last Name :"+hBookingDetails.getTravellerlastname()+" \n Hotel        : "+hBookingDetails.getHotelNm()+"  \n Arrival        : "+df.format(hBookingDetails.getCheckIn())+" \n Departure        :"+df.format(hBookingDetails.getCheckOut())+" \n Room Type      : "+hRoomTypes.getRoomType()+" \n Number of Adults   : "+noAdults[0]+"   \n\n -------------------------------------- \n Cancellation Details \n --------------------------------------\n Any cancellation received within 2 days prior to arrival date will incur the first night charge. Failure to arrive at your hotel will be treated as a No-Show and will incur the first night charge (Hotel policy). \n Promotion : Limited Time Offer. Rate includes 12% discount!" +
-					"\n\n Refund to credit card : \n\n Any applicable refund should be converted to your local currency by your credit card company. Banks generally take up to 10 business days to process the refund payment and transfer the funds into customers account. Please note, some banks can take up to 15-30 days, or until the next billing cycle. Your statement will ALWAYS show  theexpedition somewhere in the subject line. \n If you want to make a new booking, please visit our website: www.theexpeditionthailand.com \n\n We’re looking forward to seeing you again." +
-					"\n\n  theexpedition Customer Support \n ************************************ \n Go Smarter, Go  theexpedition \n  theexpedition Company Pte Ltd \n Tel: +44 (0)20 3027 7900 \n ************************************ \n\n  Internet : http://www.theexpeditionthailand.com\n  theexpedition Customer Support 24/7 : http:// theexpeditionthailand.com/info/contact_theexpedition.html \n ************************************ \n  theexpedition handles bookings for thousands of travel brands and websites  through our global partners network.");
-			//messageBodyPart.setText("You Your Agent Code : "+aRegistration.getAgentCode() +"Password :"+aRegistration.getPassword());	  	    
-			Multipart multipart = new MimeMultipart();	  	    
-			multipart.addBodyPart(messageBodyPart);	            
-			feedback.setContent(multipart);
-			Transport.send(feedback);
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
-*/
+	public static void cancelMail(String email1,HotelBookingDetails hBookingDetails){
+		System.out.println("Delete");
 	}
 
 }
