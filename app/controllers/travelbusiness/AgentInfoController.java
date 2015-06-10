@@ -442,7 +442,7 @@ public class AgentInfoController extends Controller {
 	}
 
 	public static void cancelMail(String email,HotelBookingDetails hBookingDetails){
-		SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+/*		SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
 		final String username=Play.application().configuration().getString("username");
 		final String password=Play.application().configuration().getString("password");
 
@@ -485,7 +485,7 @@ public class AgentInfoController extends Controller {
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
-
+*/
 	}
 
 }
