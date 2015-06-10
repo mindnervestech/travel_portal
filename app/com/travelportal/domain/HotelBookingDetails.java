@@ -5,25 +5,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Query;
 import javax.persistence.Table;
 
-import com.travelportal.domain.allotment.AllotmentMarket;
-import com.travelportal.domain.rooms.HotelRoomTypes;
-import com.travelportal.domain.rooms.RateMeta;
-
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
+
+import com.travelportal.domain.rooms.RateMeta;
 
 @Entity
 @Table(name = "hotel_booking_details")
@@ -619,13 +614,16 @@ public class HotelBookingDetails {
 			 q.setParameter("someSymbol", guest);
 			q.setParameter("s1",status);
 			q.setParameter("id1",agentid1);
-			try {
-				q.setParameter("todate",format.parse(checkIn));
-				q.setParameter("fromdate",format.parse(checkOut));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
+				try {
+					q.setParameter("todate",format.parse(checkIn));
+					q.setParameter("fromdate",format.parse(checkOut));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			
 		}
 		else if(guest.equals("undefined")&&!checkIn.equals("undefined")&&!checkOut.equals("undefined"))
 		{
@@ -633,13 +631,16 @@ public class HotelBookingDetails {
 			System.out.println("room status="+status+"agent id="+agentid1);
 			q.setParameter("s1",status);
 			q.setParameter("id1",agentid1);
-			try {
-				q.setParameter("todate",format.parse(checkIn));
-				q.setParameter("fromdate",format.parse(checkOut));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
+				try {
+					q.setParameter("todate",format.parse(checkIn));
+					q.setParameter("fromdate",format.parse(checkOut));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			
 			
 		}
 		else if(!guest.equals("undefined")&&checkIn.equals("undefined")&&checkOut.equals("undefined"))
