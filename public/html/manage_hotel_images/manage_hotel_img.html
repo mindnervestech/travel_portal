@@ -19,12 +19,13 @@
 		 
 	 
 		 
-  			<legend class="gen-img">Add Images</legend>
+  			<legend class="gen-img" style="margin-bottom: 7px;">Add Images</legend>
 				<div class="row">
 					<div class="col-md-10">
 					<div class="col-md-12">
 		               </div>
-		               
+		               <label ng-if="$index == 0">Please put the hotel exterior image as the first one</label><br>
+		                 <label style="margin-bottom: 15px;">Please add your images minimum resolution of 1000 x 1000 pixels and a maximum of 2,000 x 2,000</label>
 		                <div class="form-group">
 		                <div class="col-md-4">
 		                     <img data-ng-src="{{imgInfo.img}}" alt="" style="width: 254px;"> 

@@ -211,6 +211,8 @@ public static void createRootDir() {
 		
 		for(RateVM rate : list) {
 
+			RateMeta rMeta = RateMeta.getRateName(rate.rateName, rate.supplierCode);
+			if(rMeta == null){
 				RateMeta rateMeta = new RateMeta();
 				rateMeta.setSupplierCode(rate.supplierCode);
 				rateMeta.setCurrency(rate.currency);
@@ -473,8 +475,11 @@ public static void createRootDir() {
 				}
 				}
 				
+		}else{
+			return ok("rateNameSame");
 		}
-		
+			}
+			
 		return ok();
 	}
 	

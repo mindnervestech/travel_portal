@@ -19,6 +19,7 @@ public class SearchHotelValueVM {
 	public List<Integer> servicesCheck;
 	public List<Integer> locationCheck;
 	public List<Integer> amenitiesCheck;
+	public List<Integer> starCheck;
 	public String roomId;
 	public String total;
 	public String adult;
@@ -92,6 +93,13 @@ public class SearchHotelValueVM {
 	}
 	public void setAmenitiesCheck(List<Integer> amenitiesCheck) {
 		this.amenitiesCheck = amenitiesCheck;
+	}
+	
+	public List<Integer> getStarCheck() {
+		return starCheck;
+	}
+	public void setStarCheck(List<Integer> starCheck) {
+		this.starCheck = starCheck;
 	}
 	public String getSortData() {
 		return sortData;

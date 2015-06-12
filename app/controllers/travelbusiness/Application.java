@@ -826,7 +826,12 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	 currencySplit = currency.split(" - ");
 	hProfileVM.currencyShort = currencySplit[0];
 	hProfileVM.setHotelAddr(hAmenities.getAddress());
+	if(hAmenities.getCountry() != null){
+	hProfileVM.setCountryCode(hAmenities.getCountry().getCountryCode());
+	hProfileVM.setCountryName(hAmenities.getCountry().getCountryName());
+	}
 	hProfileVM.setCityCode(hAmenities.getCity().getCityCode());
+	hProfileVM.setCityName(hAmenities.getCity().getCityName());
 	hProfileVM.setHoteldescription(hAmenities.getHotelProfileDesc());
 	hProfileVM.setCheckIn(fDate);
 	hProfileVM.setCheckOut(tDate);
@@ -841,6 +846,9 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	}
 	hProfileVM.setServices(sList);
 	hProfileVM.setNationality(Integer.parseInt(nationality));
+	Country country = Country.getCountryByCode(Integer.parseInt(nationality));
+	hProfileVM.setNationalityName(country.getNationality());
+	
 	InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
 	if(infowiseimagesPath != null){
 	if(infowiseimagesPath.getGeneralDescription() != null){
@@ -1293,7 +1301,7 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 			if (object == null) {
 				
 				List<HotelProfile> hAmenities1 = HotelProfile.findAllDataforamenities(hProfile.getId()
-						,searchHotelValueVM.getAmenitiesCheck(),searchHotelValueVM.getServicesCheck(),searchHotelValueVM.getLocationCheck());  
+						,searchHotelValueVM.getAmenitiesCheck(),searchHotelValueVM.getServicesCheck(),searchHotelValueVM.getLocationCheck(),searchHotelValueVM.getStarCheck());  
 				
 
 				for(HotelProfile hAmenities:hAmenities1){

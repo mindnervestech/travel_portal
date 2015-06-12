@@ -18,8 +18,11 @@ public class HotelSearch {
 	public String checkIn;
 	public String checkOut;
 	public int nationality;
+	public String nationalityName;
 	public int countryCode;
+	public String countryName;
 	public int cityCode;
+	public String cityName;
 	public int startRating;
 	public int stars;
 	public int currencyId;
@@ -197,6 +200,24 @@ public class HotelSearch {
 	}
 	public void setMealPlan(List<HotelMealPlan> mealPlan) {
 		this.mealPlan = mealPlan;
+	}
+	public String getNationalityName() {
+		return nationalityName;
+	}
+	public void setNationalityName(String nationalityName) {
+		this.nationalityName = nationalityName;
+	}
+	public String getCountryName() {
+		return countryName;
+	}
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+	public String getCityName() {
+		return cityName;
+	}
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
 	
 	

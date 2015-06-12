@@ -364,6 +364,16 @@ public class RateMeta {
 				return (RateMeta) JPA.em().createQuery("select c from RateMeta c where id = ?1").setParameter(1, code).getSingleResult();
 			}
 		 
+		 public static RateMeta getRateName(String rateName,Long supplierCode) {
+			try{
+			 return (RateMeta) JPA.em().createQuery("select c from RateMeta c where c.rateName = ?1 and c.supplierCode = ?2").setParameter(1, rateName).setParameter(2, supplierCode).getSingleResult();
+		 }
+			catch(Exception ex){
+				return null;
+			}
+		 
+		 }
+		 
 				 
 		 
 	 

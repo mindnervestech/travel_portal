@@ -837,48 +837,86 @@ public class HotelProfile {
 	
 	
 	
-	public static List<HotelProfile> findAllDataforamenities(Long supplierCode,List<Integer> amenities,List<Integer> services,List<Integer> location) {
+	public static List<HotelProfile> findAllDataforamenities(Long supplierCode,List<Integer> amenities,List<Integer> services,List<Integer> location,List<Integer> stars) {
 		 
 		 List<Object[]> list = null;
-		 if(services.isEmpty() && amenities.isEmpty() && location.isEmpty()){
+		
+		 if(services.isEmpty() && amenities.isEmpty() && location.isEmpty() && stars.isEmpty()){
 		    list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp where hp.id = ?1").setParameter(1,supplierCode).getResultList();
 		 }
-		 if(!services.isEmpty() && !amenities.isEmpty() && !location.isEmpty()){
+		 if(!services.isEmpty() && !amenities.isEmpty() && !location.isEmpty() && stars.isEmpty()){
 			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp,hotel_profile_hotel_amenities ha,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ha.hotel_profile_id and hp.id = ?1 and  ha.amenities_amenities_code IN ?2 and hs.services_id IN ?3 and hp.location_location_id IN ?4 group by hp.id").setParameter(1,supplierCode).setParameter(2,amenities).setParameter(3,services).setParameter(4,location).getResultList();
 		 }
 		 
-		 if(!services.isEmpty() && !amenities.isEmpty() && location.isEmpty()){
+		 if(!services.isEmpty() && !amenities.isEmpty() && location.isEmpty() && stars.isEmpty()){
 			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp,hotel_profile_hotel_amenities ha,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ha.hotel_profile_id and hp.id = ?1 and  ha.amenities_amenities_code IN ?2 and hs.services_id IN ?3 group by hp.id").setParameter(1,supplierCode).setParameter(2,amenities).setParameter(3,services).getResultList();
 		 }
 		 
-		 if(!services.isEmpty() && amenities.isEmpty() && !location.isEmpty()){
+		 if(!services.isEmpty() && amenities.isEmpty() && !location.isEmpty() && stars.isEmpty()){
 			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ?1 and hs.services_id IN ?2 and hp.location_location_id IN ?3 group by hp.id").setParameter(1,supplierCode).setParameter(2,services).setParameter(3,location).getResultList();
 		 }
 		 
-		 if(services.isEmpty() && !amenities.isEmpty() && !location.isEmpty()){
+		 if(services.isEmpty() && !amenities.isEmpty() && !location.isEmpty() && stars.isEmpty()){
 			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp,hotel_profile_hotel_amenities ha where hp.id = ha.hotel_profile_id and hp.id = ?1 and  ha.amenities_amenities_code IN ?2 and hp.location_location_id IN ?3 group by hp.id").setParameter(1,supplierCode).setParameter(2,amenities).setParameter(3,location).getResultList();
 		 }
 		
-		 if(services.isEmpty() && !amenities.isEmpty() && location.isEmpty()){
+		 if(services.isEmpty() && !amenities.isEmpty() && location.isEmpty() && stars.isEmpty()){
 	      list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp,hotel_profile_hotel_amenities ha where hp.id = ha.hotel_profile_id and hp.id = ?1 and  ha.amenities_amenities_code IN ?2 group by hp.id").setParameter(1,supplierCode).setParameter(2,amenities).getResultList();   
 		 }
 		
-		 if(!services.isEmpty() && amenities.isEmpty() && location.isEmpty()){
+		 if(!services.isEmpty() && amenities.isEmpty() && location.isEmpty() && stars.isEmpty()){
 			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ?1 and hs.services_id IN ?2 group by hp.id").setParameter(1,supplierCode).setParameter(2,services).getResultList();
 		 }
 		 
-		 if(!location.isEmpty() && amenities.isEmpty() && services.isEmpty()){
+		 if(!location.isEmpty() && amenities.isEmpty() && services.isEmpty() && stars.isEmpty()){
 			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp where hp.id = ?1 and hp.location_location_id IN ?2 group by hp.id").setParameter(1,supplierCode).setParameter(2,location).getResultList();
 		 }
+		 
+		 if(!stars.isEmpty() && services.isEmpty() && amenities.isEmpty() && location.isEmpty()){
+			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp where hp.id = ?1 and  hp.startRatings_id IN?2 group by hp.id").setParameter(1,supplierCode).setParameter(2,stars).getResultList();
+		 }
+		 
+		 if(!services.isEmpty() && !amenities.isEmpty() && !location.isEmpty() && !stars.isEmpty()){
+			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp,hotel_profile_hotel_amenities ha,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ha.hotel_profile_id and hp.id = ?1 and  ha.amenities_amenities_code IN ?2 and hs.services_id IN ?3 and hp.location_location_id IN ?4 and hp.startRatings_id IN?5 group by hp.id").setParameter(1,supplierCode).setParameter(2,amenities).setParameter(3,services).setParameter(4,location).setParameter(5, stars).getResultList();
+		 }
+		 
+		 if(services.isEmpty() && !amenities.isEmpty() && !location.isEmpty() && !stars.isEmpty()){
+			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp,hotel_profile_hotel_amenities ha where hp.id = ha.hotel_profile_id and hp.id = ?1 and  ha.amenities_amenities_code IN ?2 and hp.location_location_id IN ?3 and hp.startRatings_id IN?4 group by hp.id").setParameter(1,supplierCode).setParameter(2,amenities).setParameter(3,location).setParameter(4, stars).getResultList();
+		 }
+		 
+		 if(!services.isEmpty() && amenities.isEmpty() && !location.isEmpty() && !stars.isEmpty()){
+			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ?1 and hs.services_id IN ?2 and hp.location_location_id IN ?3 and hp.startRatings_id IN?4 group by hp.id").setParameter(1,supplierCode).setParameter(2,services).setParameter(3,location).setParameter(4, stars).getResultList();
+		 }
+		 
+		 if(!services.isEmpty() && !amenities.isEmpty() && location.isEmpty() && !stars.isEmpty()){
+			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp,hotel_profile_hotel_amenities ha,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ha.hotel_profile_id and hp.id = ?1 and  ha.amenities_amenities_code IN ?2 and hs.services_id IN ?3 and hp.startRatings_id IN?4 group by hp.id").setParameter(1,supplierCode).setParameter(2,amenities).setParameter(3,services).setParameter(4, stars).getResultList();
+		 }
+		 
+		 if(services.isEmpty() && amenities.isEmpty() && !location.isEmpty() && !stars.isEmpty()){
+			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp where hp.id = ?1 and hp.location_location_id IN ?2 and hp.startRatings_id IN?3 group by hp.id").setParameter(1,supplierCode).setParameter(2,location).setParameter(3, stars).getResultList();
+		 }
+		 
+		 if(!services.isEmpty() && amenities.isEmpty() && location.isEmpty() && !stars.isEmpty()){
+			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp,hotel_profile_services hs where hp.id = hs.hotel_profile_id and hp.id = ?1 and hs.services_id IN ?2 and hp.startRatings_id IN?3 group by hp.id").setParameter(1,supplierCode).setParameter(2,services).setParameter(3, stars).getResultList();
+		 }
+		 
+		 if(services.isEmpty() && !amenities.isEmpty() && !location.isEmpty() && !stars.isEmpty()){
+			 list = JPA.em().createNativeQuery("select hp.address,hp.hotel_profile_desc,hp.supplier_code,hp.hotel_nm,hp.currency_id,hp.startRatings_id,hp.city_city_code from hotel_profile hp,hotel_profile_hotel_amenities ha where hp.id = ha.hotel_profile_id and hp.id = ?1 and  ha.amenities_amenities_code IN ?2 and hp.startRatings_id IN?3 group by hp.id").setParameter(1,supplierCode).setParameter(2,amenities).setParameter(3, stars).getResultList();
+		 }
+		 
+		 
 	 List<HotelProfile> list1 = new ArrayList<>();
 	 
 	 for(Object[] o :list) {
 		 HotelProfile am = new HotelProfile();
 		
 		 am.setAddress(o[0].toString());
-		 if(o[1].toString() != null){
-		 am.setHotelProfileDesc(o[1].toString());
+		 if(o[1] != null){
+			 if(o[1].toString() != null){
+				 am.setHotelProfileDesc(o[1].toString());
+				 }
 		 }
+		
 		 am.setSupplier_code(Long.parseLong(o[2].toString()));
 		 HotelProfile hAmenities1 = HotelProfile.findAllData(Long.parseLong(o[2].toString()));
 		 List<HotelServices> sList = new ArrayList<>();
@@ -895,6 +933,7 @@ public class HotelProfile {
 		 am.setCurrency(Currency.getCurrencyByCode(Integer.parseInt(o[4].toString())));
 		 am.setStartRatings(HotelStarRatings.getHotelRatingsById(Integer.parseInt(o[5].toString())));
 		 am.setCity(City.getCityByCode(Integer.parseInt(o[6].toString())));
+		 //am.setCountry(country)
 				 
 		 
 		 

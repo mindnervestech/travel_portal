@@ -11,14 +11,6 @@
                                         <div class="pull-right col-md-12" style="margin: 1%;">
                                             <div class="col-md-6">
                                            <div class="col-md-4">
-                                           <span>NO OF ADULT</span>
-                                           <div class="selector">
-                            				 <select class="full-width" name="adult" data-ng-model="searchroom.adult" ng-change="showRateAdultwise(searchroom.adult,serchroom.noOfroom,serchroom.childAllow)">
-                          				     <option ng-repeat="adult in ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal | orderBy: 'adult'" value="{{adult.adult}}"> {{adult.adult  | limitTo: 1}}</option>  <!-- {{adult.adult}}   {{$index+1}}-->
-                             				 </select><span class="custom-select full-width">1</span>   <!-- {{ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal[0].adult}} -->
-                                           </div>
-                                           </div>
-                                           <div class="col-md-4">
                                            <span>NO OF ROOM</span>
                                            	 <div class="selector">
                                                     <select class="full-width" name="noOfroom" data-ng-model="serchroom.noOfroom" ng-change="countTotal(serchroom.noOfroom)">
@@ -33,6 +25,14 @@
                                                     </select><span class="custom-select full-width">01</span>
                                                 	</div>
                                                 </div>
+                                                <div class="col-md-4">
+                                           <span>NO OF ADULT</span>
+                                           <div class="selector">
+                            				 <select class="full-width" name="adult" data-ng-model="searchroom.adult" ng-change="showRateAdultwise(searchroom.adult,serchroom.noOfroom,serchroom.childAllow)">
+                          				     <option ng-repeat="adult in ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal | orderBy: 'adult'" value="{{adult.adult}}"> {{adult.adult  | limitTo: 1}}</option>  <!-- {{adult.adult}}   {{$index+1}}-->
+                             				 </select><span class="custom-select full-width">1</span>   <!-- {{ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal[0].adult}} -->
+                                           </div>
+                                           </div>
                                          <div class="col-md-4" ng-show="cAllow == 'true'">
                                            <span>Child</span>
                                            	 <div class="selector">
@@ -121,6 +121,11 @@
                                                         <option value="10">10</option>
                                                         <option value="11">11</option>
                                                         <option value="12">12</option>
+                                                         <option value="13">13</option>
+                                                        <option value="14">14</option>
+                                                        <option value="15">15</option>
+                                                         <option value="16">16</option>
+                                                        <option value="17">17</option>
                                                        
                                                     </select><span class="custom-select full-width">0</span>
                                               	</div>

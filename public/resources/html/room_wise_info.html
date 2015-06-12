@@ -111,9 +111,10 @@
                                                             <td>{{$index+1}}</td>
                                                             <td>{{child.allowedChildAgeFrom}}</td>
                                                             <td>{{child.allowedChildAgeTo}}</td>
+                                                            <td>{{child.extraChildRate}}</td>
                                                             
-                                                            <td ng-if="child.netRate == '% of'">{{child.years}}% Extra on room rate </td>
-                                                            <td ng-if="child.netRate == 'add to Room Rate'"><sup style="font-size: 11px;color: chocolate;top: 0px;" class="ng-binding">{{hotelif.currencyShort}}</sup> {{child.years}} Extra on room rate </td>
+                                                           <!--  <td ng-if="child.netRate == '% of'">{{child.years}}% Extra on room rate </td>
+                                                            <td ng-if="child.netRate == 'add to Room Rate'"><sup style="font-size: 11px;color: chocolate;top: 0px;" class="ng-binding">{{hotelif.currencyShort}}</sup> {{child.years}} Extra on room rate </td> -->
                                                            <!--  <td>{{child.netRate}}</td> -->
                                                         </tr> 
                                                        

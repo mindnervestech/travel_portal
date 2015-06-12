@@ -2452,6 +2452,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		allot.stopChoose = null;
 	}
 	$scope.saveRate = function() {
+		
 		console.log($scope.rateObject);
 		console.log($scope.rateMeta1);
 		
@@ -2463,11 +2464,9 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			$scope.rateObject[i].toDate = $scope.formData.toDate;
 			$scope.rateObject[i].currency = $scope.currencyname;
 			$scope.rateObject[i].supplierCode = supplierCode;
-		
-		
 		}
 		
-		 $scope.showDate = false;
+		$scope.showDate = false;
 		
 		var flag = 0;
 		console.log($scope.rateObject);
@@ -2492,7 +2491,13 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		if(flag == 0){
 		$http.post('/saveRate', {"rateObject":$scope.rateObject}).success(function(data){
 			console.log('success');
-			 notificationService.success("Save Successfully");
+			if(data == "rateNameSame"){
+				notificationService.error("Rate name already exists");
+				 $("#focus").focus();
+				
+			}else{
+				notificationService.success("Save Successfully");
+			}
 			
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');

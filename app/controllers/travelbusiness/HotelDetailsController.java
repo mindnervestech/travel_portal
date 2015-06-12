@@ -23,6 +23,7 @@ import views.html.travelbusiness.hotelBookingInfo;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.travelportal.domain.AmenitiesType;
+import com.travelportal.domain.Country;
 import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelImagesPath;
 import com.travelportal.domain.HotelProfile;
@@ -492,7 +493,10 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	 currencySplit = currency.split(" - ");
 	hProfileVM.currencyShort = currencySplit[0];
 	hProfileVM.setHotelAddr(hAmenities.getAddress());
+	hProfileVM.setCountryCode(hAmenities.getCountry().getCountryCode());
+	hProfileVM.setCountryName(hAmenities.getCountry().getCountryName());
 	hProfileVM.setCityCode(hAmenities.getCity().getCityCode());
+	hProfileVM.setCityName(hAmenities.getCity().getCityName());
 	hProfileVM.setHoteldescription(hAmenities.getHotelProfileDesc());
 	hProfileVM.setCheckIn(fDate);
 	hProfileVM.setCheckOut(tDate);
@@ -507,6 +511,8 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	}
 	hProfileVM.setServices(sList);
 	hProfileVM.setNationality(Integer.parseInt(nationality));
+	Country country = Country.getCountryByCode(Integer.parseInt(nationality));
+	hProfileVM.setNationalityName(country.getNationality());
 	InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
 	if(infowiseimagesPath != null){
 		if(infowiseimagesPath.getGeneralDescription() != null){

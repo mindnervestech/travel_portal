@@ -125,8 +125,9 @@
                                         <div>
                                             <p>{{roomInfo.description}}</p>
                                              <div style="width: 150px;">
-                                                 <a class="button btn-small full-width text-center" ng-click="roomWiseInfo(roomInfo)" style="background: #98ce44;">ROOM DETAILS</a>
-												 <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"> Special Promotion<!-- <i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i> --></a></span>
+                                                 <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomInfo.roomId)" style="background: #98ce44;">Book Now</a>
+                                                 <span class="ng-scope"><a ng-click="roomWiseInfo(roomInfo)" style="cursor: pointer;">Room Info</a></span>
+												 <!-- <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"> Special Promotion<i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span> -->
                                             </div> 
                                         </div>
                                     </div>
@@ -156,15 +157,13 @@
                                                 </div>
                                          </div>
                                          <div class="col-md-6" style="width:50% !important;border-bottom: none !important;">
-                                        <div class="col-md-4"> <!-- ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null" -->
-                                          <span class="price"><small>MIN/NIGHT</small>{{adultRate.rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotel.currencyShort}}</sup><small>1 PERSON</small></span>
+                                        <div class="col-md-5"> <!-- ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null" -->
+                                          <span class="price"><small>Per Room Per Night</small>{{adultRate.rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotel.currencyShort}}</sup></span>
                                          </div>
                                          <div class="col-md-4"  ng-if="adultRate.mealTypeName != null">
                                         <span class="price"><small>Included</small><sup style="font-size: small;color: chocolate;top: 9px;">{{adultRate.mealTypeName}}</sup></span>
                                          </div> 
-                                        <!--  <div class="col-md-4" ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg != null">
-                                         <span class="price"><small>MIN/NIGHT</small>{{roominfo.hotelRoomRateDetail[0].rateDetailsNormal[2].rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotelInfo.currencyShort}}</sup><small>3 PERSONS</small></span>
-                                         </div> -->
+                                       
                                          </div>
                                          </div>
                                      </div>
@@ -172,15 +171,15 @@
                                      <div class="col-md-9 col-md-offset-1">
                                      <div ng-if="roomInfo.nonRefund == false">
                                    
-                                     <label style="color: #01B7F2;">Cancellation Policy</label>     
+                                     <label style="color: #01B7F2;" tooltip="a tooltip comment ">Cancellation Policy</label>     
                                      <div ng-repeat="cancal in roomInfo.hotelRoomRateDetail[0].cancellation">
-                                      <label ng-if="cancal.penaltyCharge == true">* prior {{cancal.days}} the penalty cancellation will be {{cancal.nights}} room tariff</label>
-                                      <label ng-if="cancal.penaltyCharge == false">* prior {{cancal.days}} the penalty cancellation will be {{cancal.percentage}} booking</label>
+                                      <label ng-if="cancal.penaltyCharge == true">* prior {{cancal.days}} the penalty charges will be {{cancal.nights}} charges</label>
+                                      <label ng-if="cancal.penaltyCharge == false">* prior {{cancal.days}} the penalty charges will be {{cancal.percentage}} % of total stay</label>
                                      </div>                                
                                      </div>
-                                   <div class="form-group col-sm-3 col-md-3 col-md-offset-10">
+                                   <!-- <div class="form-group col-sm-3 col-md-3 col-md-offset-10">
                                      <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomInfo.roomId)" style="background: #98ce44;margin-top: 2%;margin-left: 49%;" title="">BOOK NOW</a>
-                                     </div>
+                                     </div> -->
                                    </div>  
                                 </article>
                                    </div> 
@@ -415,7 +414,57 @@
                             <h4>Similar Listings</h4>
                         </div>
                         <div class="travelo-box book-with-us-box">
-                            <h4>Why Book with us?</h4>
+                                <div class="panel style1 arrow-right">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#modify-search-panel" class="collapsed">Modify Search</a>
+                                    </h4>
+                                    <div id="modify-search-panel" class="panel-collapse collapse">
+                                        <div class="panel-content">
+                                            <form action="/searchAgainHotelInfo" method="post">  <!-- action="/searchAgainHotelInfo"   ng-submit="searchAgainHotel()"  -->
+                                                <div class="form-group">
+                                                    <label>Country</label>
+                                                   <div class="selector">
+                                                    <select class="full-width" name="countryCode" data-ng-model="searchby.countryCode" ng-change="onCountryChange()" placeholder="Country"> 
+                                                        <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
+                                                    </select><span class="custom-select full-width">{{searchby.countryCode}}</span>
+                                                    
+                                      
+                                                   </div>
+                                                </div>
+                                                 <div class="form-group">
+                                                 	<label>City</label>
+                                                    <div class="selector">
+                                                    <select class="full-width" name="city" data-ng-model="searchby.city" ng-change="onCityChange()">
+                                                           <option ng-repeat="city in searchCities" value="{{city.cityCode}}">{{city.cityName}}</option>
+                                                    </select><span class="custom-select full-width">{{searchby.city}}</span>
+                                                    </div>
+                                                 </div>
+                                                <div class="form-group">
+                                                    <label>Check In</label>
+                                                    <div class="datepicker-wrap">
+                                                    <input type="text" name="checkIn" data-ng-model="searchby.checkIn" class="input-text full-width" placeholder="dd/mm/yyyy" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                   <label>Check Out</label>
+                                                   <div class="datepicker-wrap">
+                                                    <input type="text" name="checkOut" data-ng-model="searchby.checkOut" class="input-text full-width" placeholder="dd/mm/yyyy" />
+                                                   </div>
+                                                </div>
+                                                 <div class="form-group">
+                                                   <label>Nationality</label>
+                                                   <div class="selector">
+                                                    <select class="full-width"  name="nationalityCode" data-ng-model="searchby.nationalityCode" placeholder="dd/mm/yyyy">
+                                                        <option ng-repeat="nationality in searchNationality" value="{{nationality.nationalityCode}}">{{nationality.nationality}}</option>
+                                                    </select><span class="custom-select full-width">{{searchby.nationalityCode}}</span>
+                                                    </div>
+                                                 </div>
+                                                <br />
+                                                <button type="submit" class="btn-medium icon-check uppercase full-width">search again</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                     </div>
             </div>
@@ -433,6 +482,7 @@
         #loading-id{
          display: none;
         }
+        
   </style>
 </body>
 </html>
