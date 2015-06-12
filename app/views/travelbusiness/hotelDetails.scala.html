@@ -137,8 +137,7 @@
                                     <div style="border-bottom: 1px solid #f5f5f5 !important;float: left;width: 98%;margin-top: 5px;">
                                          <div class="col-md-6" style="width:50% !important;border-bottom: none !important;border-right: none;">  <!-- style="width: 106px;" -->
                                          <!-- <i class="soap-icon-check-1" style="color: #7db921;"></i> -->
-                                         <h4 class="box-title col-md-6" style="margin-top: 15px;"><span>{{adultRate.adult  | limitTo: 1}} GUESTS</span></h4>
-                                      
+                                         <h4 class="box-title col-md-6" style="margin-top: 15px;"><span>{{adultRate.adult  | limitTo: 1}} GUESTS</span><span style="margin-left: 8px;"><i ng-repeat="adultRate in roomInfo.hotelRoomRateDetail[0].rateDetailsNormal | limitTo:$index+1" class="soap-icon-user"></i></span></h4>
                                            <div class="amenities col-md-6">   
                                              <div  ng-repeat="ameniti in roominfo.amenities"> 
                                              <div class="col-md-3" ng-if="ameniti.amenityId == 1">
@@ -169,6 +168,9 @@
                                      </div>
                                    </div>
                                      <div class="col-md-9 col-md-offset-1">
+                                     <div ng-if="roomInfo.nonRefund == true">
+                                     <label style="color: #01B7F2;" tooltip="a tooltip comment ">Non Refund</label>  
+                                     </div>
                                      <div ng-if="roomInfo.nonRefund == false">
                                    
                                      <label style="color: #01B7F2;" tooltip="a tooltip comment ">Cancellation Policy</label>     
