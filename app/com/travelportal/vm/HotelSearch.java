@@ -24,7 +24,12 @@ public class HotelSearch {
 	public int cityCode;
 	public String cityName;
 	public int startRating;
-	public int stars;
+	public Double stars;
+	public String hotelBuiltYear;
+	public String checkInTime;
+	public String checkOutTime;
+	public String roomVoltage;
+	
 	public int currencyId;
 	public String currencyName;
 	public String currencyShort;
@@ -34,6 +39,7 @@ public class HotelSearch {
 	public List<ServicesVM> services;
 	public HotelBookingDetailsVM hotelBookingDetails;
 	public long datediff;
+	public String breakfackRate;
 	public String perferhotel;
 	public BatchMarkupInfoVM batchMarkup;
 	public List<SerachHotelRoomType> hotelbyRoom = new ArrayList<>();
@@ -171,10 +177,11 @@ public class HotelSearch {
 	public void setDatediff(long datediff) {
 		this.datediff = datediff;
 	}
-	public int getStars() {
+	
+	public Double getStars() {
 		return stars;
 	}
-	public void setStars(int stars) {
+	public void setStars(Double stars) {
 		this.stars = stars;
 	}
 	public String getPerferhotel() {
@@ -218,6 +225,36 @@ public class HotelSearch {
 	}
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
+	}
+	public String getBreakfackRate() {
+		return breakfackRate;
+	}
+	public void setBreakfackRate(String breakfackRate) {
+		this.breakfackRate = breakfackRate;
+	}
+	public String getHotelBuiltYear() {
+		return hotelBuiltYear;
+	}
+	public void setHotelBuiltYear(String hotelBuiltYear) {
+		this.hotelBuiltYear = hotelBuiltYear;
+	}
+	public String getCheckInTime() {
+		return checkInTime;
+	}
+	public void setCheckInTime(String checkInTime) {
+		this.checkInTime = checkInTime;
+	}
+	public String getCheckOutTime() {
+		return checkOutTime;
+	}
+	public void setCheckOutTime(String checkOutTime) {
+		this.checkOutTime = checkOutTime;
+	}
+	public String getRoomVoltage() {
+		return roomVoltage;
+	}
+	public void setRoomVoltage(String roomVoltage) {
+		this.roomVoltage = roomVoltage;
 	}
 	
 	

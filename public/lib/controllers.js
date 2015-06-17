@@ -3909,6 +3909,15 @@ controller("markupController",['$scope','notificationService','$filter','$rootSc
     	
     }
     
+    $scope.saveBreakfast = function(breakfast){
+    	console.log(breakfast);
+    	$http.get("/saveBreakfastRate/"+breakfast).success(function(response){
+    		notificationService.success("Save Successfully");
+    		console.log(response);
+    		
+    	});
+    }
+    
 }]);
 
 angular.module('travel_portal').

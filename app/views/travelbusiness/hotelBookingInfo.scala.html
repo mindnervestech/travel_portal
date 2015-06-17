@@ -58,15 +58,45 @@
                                 <div class="person-information">
                                     <h2>Booking Information</h2>
                                     <div class="form-group row">
-                                        <div class="col-sm-6 col-md-5">
-                                            <label>*passenger/Guest first name</label>
+                                        <div class="col-sm-2 col-md-1">
+                                            <label>*Salutation</label>
+                                             <div class="selector">
+                                                <select class="full-width" name="salutation" data-ng-model="traveller.salutation" placeholder="Country" > 
+                                                        <option ng-repeat="salut in salutation" value="{{salut.salutationId}}">{{salut.salutationValue}}</option>                                                       
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-md-3">
+                                            <label>*passenger first name</label>
                                             <input type="text" data-ng-model="traveller.firstname" class="input-text full-width" value="" placeholder="" required>
                                         </div>
-                                        <div class="col-sm-6 col-md-5">
-                                            <label>*passenger/Guest last name</label>
+                                       <div class="col-sm-4 col-md-3">
+                                            <label>passenger Middle name</label>
+                                            <input type="text" data-ng-model="traveller.middlename" class="input-text full-width" value="" placeholder="">
+                                        </div>
+                                        <div class="col-sm-4 col-md-3">
+                                            <label>*passenger last name</label>
                                             <input type="text" data-ng-model="traveller.lastname" class="input-text full-width" value="" placeholder="" required>
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 col-md-5">
+                                            <label>*Country of passport</label>
+                                            <div class="selector">
+                                                <select class="full-width" name="countryCode" data-ng-model="traveller.country" ng-change="onCountryChange()" placeholder="Country" > 
+                                                        <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
+                                                </select>
+                                            </div>
+                                        </div>
+                                         <div class="col-sm-6 col-md-5">
+                                            <label>*Passport No</label>
+                                            <input type="text" data-ng-model="traveller.passportNo" class="input-text full-width" value="" placeholder="" required>
+                                        </div>
+                                       <!--  <div class="col-sm-6 col-md-5">
+                                            <label>*Addresss</label>
+                                            <textarea data-ng-model="traveller.address" class="input-text full-width" value="" placeholder="" required></textarea>
+                                        </div> -->
+                                    </div> 
                                     <div class="form-group row">
                                         <div class="col-sm-6 col-md-5">
                                             <label>passenger/Guest email address</label>
@@ -78,20 +108,7 @@
                                         </div>
                                     
                                     </div>
-                                     <div class="form-group row">
-                                        <div class="col-sm-6 col-md-5">
-                                            <label>*Country code</label>
-                                            <div class="selector">
-                                                <select class="full-width" name="countryCode" data-ng-model="traveller.country" ng-change="onCountryChange()" placeholder="Country" > 
-                                                        <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-5">
-                                            <label>*Addresss</label>
-                                            <textarea data-ng-model="traveller.address" class="input-text full-width" value="" placeholder="" required></textarea>
-                                        </div>
-                                    </div> 
+                                     
                                     <!-- <div class="form-group">
                                         <div class="checkbox">
                                             <label>

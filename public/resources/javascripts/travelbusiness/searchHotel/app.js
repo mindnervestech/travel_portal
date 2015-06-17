@@ -30,7 +30,7 @@ travelBusiness.config(function ($httpProvider) {
    $httpProvider.interceptors.push('MyHttpInterceptor');  
 })
 
-travelBusiness.directive("starRating", function() {
+/*travelBusiness.directive("starRating", function() {
   return {
     restrict : "A",
     template : "<ul class='rating'>" +
@@ -63,7 +63,7 @@ travelBusiness.directive("starRating", function() {
       });
     }
   };
-});
+});*/
 
 travelBusiness.directive('ngSec',function(){
 	return {
@@ -89,4 +89,16 @@ travelBusiness.directive('ngSec',function(){
 
 	}
 	}
+	});
+
+
+travelBusiness.directive('starRate', function($compile) {
+	
+	return {
+		  link: function(scope, element, attrs) {
+			  jQuery(element).rating({stars:attrs.value});
+	        }
+	};
+		 
+	
 	});

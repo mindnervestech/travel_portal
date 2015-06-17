@@ -19,7 +19,7 @@ public class HotelStarRatings {
 	@Column(name="start_rating_txt")
 	private String starRatingTxt;
 	@Column(name="start_rating")
-	private int starRating;
+	private Double starRating;
 	
 	public int getId() {
 		return id;
@@ -38,13 +38,10 @@ public class HotelStarRatings {
 	public String getstarRatingTxt() {
 		return starRatingTxt;
 	}
-	
-   
-	
-	public int getStarRating() {
+	public Double getStarRating() {
 		return starRating;
 	}
-	public void setStarRating(int starRating) {
+	public void setStarRating(Double starRating) {
 		this.starRating = starRating;
 	}
 	public static List<HotelStarRatings> gethotelStarratings() {

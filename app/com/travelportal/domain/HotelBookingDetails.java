@@ -47,10 +47,14 @@ public class HotelBookingDetails {
 	private int noOfroom;
 	private int noOfchild;
 	private Double total;
+	@OneToOne
+	private Salutation travellersalutation;
 	private String travellerfirstname;
+	private String travellermiddlename;
 	private String travellerlastname;
 	private String travelleraddress;
 	private String travelleremail;
+	private String travellerpassportNo;
 	@ManyToOne
 	private Country travellercountry;
 	private String travellerphnaumber;
@@ -283,6 +287,29 @@ public class HotelBookingDetails {
 	}
 	public void setNonRefund(String nonRefund) {
 		this.nonRefund = nonRefund;
+	}
+	
+	public String getTravellermiddlename() {
+		return travellermiddlename;
+	}
+	public void setTravellermiddlename(String travellermiddlename) {
+		this.travellermiddlename = travellermiddlename;
+	}
+	public String getTravellerpassportNo() {
+		return travellerpassportNo;
+	}
+	public void setTravellerpassportNo(String travellerpassportNo) {
+		this.travellerpassportNo = travellerpassportNo;
+	}
+	
+	
+	
+	
+	public Salutation getTravellersalutation() {
+		return travellersalutation;
+	}
+	public void setTravellersalutation(Salutation travellersalutation) {
+		this.travellersalutation = travellersalutation;
 	}
 	public static HotelBookingDetails findBookingId() {
 	    	return (HotelBookingDetails) JPA.em().createQuery("select c from HotelBookingDetails c where c.id = (select max(a.id) from HotelBookingDetails a)").getSingleResult();

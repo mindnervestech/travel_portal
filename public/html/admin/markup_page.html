@@ -31,6 +31,8 @@
 												data-toggle="tab" style="padding: 7px 5px;"
 												ng-click="init()">Specific Markups</a></li>
 											<li class="menu-li custom_menu"><a href="#step3"
+												data-toggle="tab" style="padding: 7px 5px;">Breakfast Markups</a></li>
+											<li class="menu-li custom_menu"><a href="#step4"
 												data-toggle="tab" style="padding: 7px 5px;">View Markup</a></li>
 
 										</ul>
@@ -388,7 +390,25 @@
 
 
 											</div>
+											<!-- ------------------- -->
+											
+											
 											<div class="tab-pane" id="step3">
+
+												<div class="row">
+														<div class="form-group">
+																	<label>Breakfast Markup : </label>
+																		 <input type="text"
+																			name="breakfast" ng-model="breakfast" style="height: 30px;"/> %
+																		<button class="btn btn-primary" ng-click="saveBreakfast(breakfast)" style="margin-left: 34px;">Save</button>
+															</div>
+												</div>
+																			
+											</div>
+											
+											
+											<!-- ----------------- -->
+											<div class="tab-pane" id="step4">
 
 													<div class="row">
 														<div class="form-group">

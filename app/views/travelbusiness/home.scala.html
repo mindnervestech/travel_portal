@@ -108,7 +108,7 @@
                                             <div class="col-xs-6">
                                                 <label>City</label>
                                                 <div class="selector">
-                                                    <select class="full-width" name="city" data-ng-model="searchby.city" ng-change="onCityChange()" required>
+                                                    <select class="full-width" name="cityCode" data-ng-model="searchby.cityCode" ng-change="onCityChange()" required>
                                                            <option ng-repeat="city in searchCities" value="{{city.cityCode}}">{{city.cityName}}</option>
                                                     </select>
                                                 </div>
@@ -166,11 +166,13 @@
                                      <div class="form-group col-sm-6 col-md-2 fixheight" ng-show="loginSuccess == 1">
                                         <label class="hidden-xs">&nbsp;</label>
                                         <button type="submit" class="full-width icon-check animated" data-animation-type="bounce" data-animation-duration="1">SEARCH NOW</button>
+                                     
                                     </div>
                                      <div class="form-group col-sm-6 col-md-2 fixheight" ng-show="loginSuccess == 0">
                                         <label class="hidden-xs">&nbsp;</label>
                                         <button type="button" class="full-width icon-check animated" ng-click="loginAgent()" data-animation-type="bounce" data-animation-duration="1">SEARCH NOW</button>
-                                    </div>  
+
+                                    </div>   
                                 </div>
                             </form>
                         </div>

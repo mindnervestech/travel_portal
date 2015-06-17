@@ -37,6 +37,9 @@ public class SpecialsMarket {
 	private String typeOfStay;
 	private boolean multiple;
 	private boolean combined;
+	public boolean breakfast;
+	public String adultRate;
+	public String childRate;
 	private String applyToMarket;
 	@OneToOne
 	private Specials special;
@@ -103,7 +106,28 @@ public class SpecialsMarket {
 	public void setApplyToMarket(String applyToMarket) {
 		this.applyToMarket = applyToMarket;
 	}
+	
+	
+	
 		
+	public boolean isBreakfast() {
+		return breakfast;
+	}
+	public void setBreakfast(boolean breakfast) {
+		this.breakfast = breakfast;
+	}
+	public String getAdultRate() {
+		return adultRate;
+	}
+	public void setAdultRate(String adultRate) {
+		this.adultRate = adultRate;
+	}
+	public String getChildRate() {
+		return childRate;
+	}
+	public void setChildRate(String childRate) {
+		this.childRate = childRate;
+	}
 	public static SpecialsMarket findByIdCity(long Code) {
 		try
 		{
@@ -165,7 +189,9 @@ public class SpecialsMarket {
 			spm.setStayDays(o[4].toString());
 			spm.setTypeOfStay(o[5].toString());
 			spm.setApplyToMarket(o[7].toString());
-			
+			spm.setAdultRate(o[8].toString());
+			spm.setBreakfast(Boolean.parseBoolean(o[9].toString()));
+			spm.setChildRate(o[10].toString());
 			list1.add(spm);
 		}
 		

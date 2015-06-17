@@ -82,6 +82,13 @@ public class SupplierController extends Controller {
 				specialsMarket.setTypeOfStay(market.typeOfStay);
 				specialsMarket.setCombined(market.combined);
 				specialsMarket.setMultiple(market.multiple);
+				specialsMarket.setBreakfast(market.breakfast);
+				if(market.breakfast == false){
+					market.childRate = null;
+					market.adultRate = null;
+				}
+				specialsMarket.setChildRate(market.childRate);
+				specialsMarket.setAdultRate(market.adultRate);
 				specialsMarket.setApplyToMarket(market.applyToMarket);
 				specialsMarket.setSpecial(Specials.findSpecial(spec.promotionName, format.parse(spec.fromDate), format.parse(spec.toDate)));
 				specialsMarket.save();
@@ -165,15 +172,19 @@ public class SupplierController extends Controller {
 			
 			for(SpecialsMarketVM market: spec.markets) {
 				if(market.id == 0) {
-					System.out.println("-------------");
-					System.out.println(market.applyToMarket);
-					System.out.println(market.payDays);
-					System.out.println("-------------");
+				
 					SpecialsMarket specialsMarket = new SpecialsMarket();
 					specialsMarket.setStayDays(market.stayDays);
 					specialsMarket.setPayDays(market.payDays);
 					specialsMarket.setTypeOfStay(market.typeOfStay);
 					specialsMarket.setCombined(market.combined);
+					specialsMarket.setBreakfast(market.breakfast);
+					if(market.breakfast == false){
+						market.childRate = null;
+						market.adultRate = null;
+					}
+					specialsMarket.setChildRate(market.childRate);
+					specialsMarket.setAdultRate(market.adultRate);
 					specialsMarket.setMultiple(market.multiple);
 					specialsMarket.setApplyToMarket(market.applyToMarket);
 					specialsMarket.setSpecial(Specials.findSpecial(spec.promotionName, format.parse(spec.fromDate), format.parse(spec.toDate)));
@@ -206,6 +217,13 @@ public class SupplierController extends Controller {
 					specialsMarket.setPayDays(market.payDays);
 					specialsMarket.setTypeOfStay(market.typeOfStay);
 					specialsMarket.setCombined(market.combined);
+					specialsMarket.setBreakfast(market.breakfast);
+					if(market.breakfast == false){
+						market.childRate = null;
+						market.adultRate = null;
+					}
+					specialsMarket.setChildRate(market.childRate);
+					specialsMarket.setAdultRate(market.adultRate);
 					specialsMarket.setMultiple(market.multiple);
 					specialsMarket.setApplyToMarket(market.applyToMarket);
 					specialsMarket.merge();
@@ -264,6 +282,9 @@ public class SupplierController extends Controller {
 				vm.payDays = market.getPayDays();
 				vm.stayDays = market.getStayDays();
 				vm.typeOfStay = market.getTypeOfStay();
+				vm.breakfast = market.isBreakfast();
+				vm.adultRate = market.getAdultRate();
+				vm.childRate = market.getChildRate();
 				vm.applyToMarket = market.getApplyToMarket();
 				vm.id = market.getId();
 				specialsVM.markets.add(vm);

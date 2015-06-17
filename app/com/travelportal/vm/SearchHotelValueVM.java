@@ -8,7 +8,7 @@ public class SearchHotelValueVM {
 	
 	public String supplierCode;
 	public String countryCode;
-	public String city;
+	public String cityCode;
 	public String checkIn;
 	public String checkOut;
 	public String id;
@@ -46,11 +46,12 @@ public class SearchHotelValueVM {
 		this.countryCode = countryCode;
 	}
 	
-	public String getCity() {
-		return city;
+	
+	public String getCityCode() {
+		return cityCode;
 	}
-	public void setCity(String city) {
-		this.city = city;
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
 	}
 	public String getCheckIn() {
 		return checkIn;

@@ -1217,6 +1217,10 @@ public class HotelProfileController extends Controller {
 			internalcontact.setDirectFaxValue(Integer.parseInt(form.get("directFaxNo")));
 			}
 			internalcontact.setSupplierCode(Long.parseLong(form.get("supplierCode")));
+			internalcontact.setCheckInTime(form.get("checkInTime"));
+			internalcontact.setCheckOutTime(form.get("checkOutTime"));
+			internalcontact.setRoomVoltage(form.get("roomVoltage"));
+			
 
 			internalcontact.save();
 		}
@@ -1239,6 +1243,10 @@ public class HotelProfileController extends Controller {
 				if(form.get("directFaxNo") != null && form.get("directFaxNo") != ""){
 				internalcontact.setDirectFaxValue(Integer.parseInt(form.get("directFaxNo")));
 				}
+				
+				internalcontact.setCheckInTime(form.get("checkInTime"));
+				internalcontact.setCheckOutTime(form.get("checkOutTime"));
+				internalcontact.setRoomVoltage(form.get("roomVoltage"));
 
 			internalcontact.merge();
 		}

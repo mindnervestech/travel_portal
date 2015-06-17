@@ -30,6 +30,9 @@ public class InternalContacts {
 	private int directFaxCityCode;
 	private int directFaxValue;
 	private long supplier_code;
+	private String checkInTime;
+	private String checkOutTime;
+	private String roomVoltage;
 	
 	public long getSupplierCode() {
 		return supplier_code;
@@ -148,6 +151,30 @@ public class InternalContacts {
 		this.directFaxValue = directFaxValue;
 	}
 	
+	public String getCheckInTime() {
+		return checkInTime;
+	}
+
+	public void setCheckInTime(String checkInTime) {
+		this.checkInTime = checkInTime;
+	}
+
+	public String getCheckOutTime() {
+		return checkOutTime;
+	}
+
+	public void setCheckOutTime(String checkOutTime) {
+		this.checkOutTime = checkOutTime;
+	}
+
+	public String getRoomVoltage() {
+		return roomVoltage;
+	}
+
+	public void setRoomVoltage(String roomVoltage) {
+		this.roomVoltage = roomVoltage;
+	}
+
 	public static InternalContacts findById(long id) {
     	
     	try

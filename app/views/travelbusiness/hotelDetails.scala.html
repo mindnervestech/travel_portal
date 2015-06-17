@@ -69,11 +69,11 @@
                             <ul class="tabs">
                                 <li class="active"><a href="#hotel-availability" data-toggle="tab" ng-click="availability()">Availability</a></li>
                                 <li><a href="#hotel-descr" data-toggle="tab">Description</a></li>
-                                <li><a href="#hotel-amenities" data-toggle="tab"  ng-click="hotel_amenities()">Hotel Amenities</a></li>
+                                <li><a href="#hotel-amenities" data-toggle="tab"  ng-click="hotel_amenities();business_amenities();sport_amenities()">Hotel Amenities</a></li>
                                <!--  <li><a href="#hotel-reviews" data-toggle="tab">Reviews</a></li>
                                 <li><a href="#hotel-faqs" data-toggle="tab">FAQs</a></li> -->
-                                <li><a href="#hotel-business-amenities" data-toggle="tab" ng-click="business_amenities()">Business Amenities</a></li>
-                                <li><a href="#hotel-sport-amenities" data-toggle="tab" ng-click="sport_amenities()">Leisure & Sport Amenities</a></li>
+                              <li><a href="#hotel-useful-info" data-toggle="tab">Useful Info</a></li>
+                                 <!--  <li><a href="#hotel-sport-amenities" data-toggle="tab" ng-click="sport_amenities()">Leisure & Sport Amenities</a></li> -->
                             </ul>
                             <div class="tab-content">
                             	<div class="tab-pane fade" id="hotel-descr">
@@ -90,7 +90,7 @@
                                     <h2>Available Rooms</h2>
                                  
                                     <div class="hotel-list listing-style3 hotel">
-                                    <article class="box" style="border: 2px solid #C8C6C6;" ng-repeat="roomInfo in hotel.hotelbyRoom">   <!-- ng-repeat="hotelInfo in hotellistInfo" -->
+                                    <article class="box" style="border: 2px solid #C8C6C6;" ng-repeat="roomInfo in hotel.hotelbyRoom | limitTo: noOfRoomShow">   <!-- ng-repeat="hotelInfo in hotellistInfo" -->
                                     <div class="col-md-12" style="border-bottom: 2px solid #C8C6C6;">
                                     <figure class="col-sm-5 col-md-4" style="padding-left:0;">
                                      <!-- <img data-ng-src="{{img}}" alt="">  -->
@@ -184,6 +184,7 @@
                                      </div> -->
                                    </div>  
                                 </article>
+                                <a class="button btn-small full-width text-center" ng-if="hotel.hotelbyRoom.length > noOfRoomShow" ng-click="showAllRooms()" style="background: #333;">Show More Available Room</a>
                                    </div> 
                                 </div>
                                 <div class="tab-pane fade" id="hotel-amenities">                                                      
@@ -192,6 +193,24 @@
                                     	<div  ng-repeat="hotelamenities in amenities_check">
                                         <li class="col-md-4 col-sm-6">  <!-- ng-if="hotelamenities.amenitiesCode == 30" -->
                                             <div class="icon-box style2"><i class="{{hotelamenities.amenitiesIcon}} circle"></i>{{hotelamenities.amenitiesName}}</div>
+                                        </li>
+                                        </div>
+                                    </ul>
+                                    
+                                     <h2>Hotel Business Amenities</h2>
+                                    <ul class="amenities clearfix style2">
+                                    	<div  ng-repeat="Bamenities in business_check">
+                                        <li class="col-md-4 col-sm-6" >   <!--  ng-if="Bamenities.amenitiesCode == 4" -->
+                                            <div class="icon-box style2"><i class="{{Bamenities.amenitiesIcon}} circle"></i>{{Bamenities.amenitiesName}}</div>
+                                        </li>
+                                        </div>
+                                    </ul>
+                                    
+                                    <h2>Hotel Sport Amenities</h2>
+                                    <ul class="amenities clearfix style2">
+                                    	<div  ng-repeat="lsportamenities in leisure_sport_check">
+                                        <li class="col-md-4 col-sm-6">  
+                                            <div class="icon-box style2" style="margin-top: 4%;"><i class="{{lsportamenities.amenitiesIcon}} circle"></i>{{lsportamenities.amenitiesName}}</div>
                                         </li>
                                         </div>
                                     </ul>
@@ -361,17 +380,23 @@
                                         </div>
                                     </div>
                                 </div>
-                             	<div class="tab-pane fade" id="hotel-business-amenities">
-                                    <h2>Hotel Business Amenities</h2>
-                                    <ul class="amenities clearfix style2">
-                                    	<div  ng-repeat="Bamenities in business_check">
-                                        <li class="col-md-4 col-sm-6" >   <!--  ng-if="Bamenities.amenitiesCode == 4" -->
-                                            <div class="icon-box style2"><i class="{{Bamenities.amenitiesIcon}} circle"></i>{{Bamenities.amenitiesName}}</div>
-                                        </li>
+                             	<div class="tab-pane fade" id="hotel-useful-info">
+                                      <div>
+                                        <div class="col-sm-12 col-lg-12 features table-cell">
+                                            <ul>
+                                          
+                                                <li class="col-sm-12"><label class="col-sm-4" style="color: #01b7f2;">Check-In From:</label>{{hotel.checkInTime}}</li>
+                                                <li class="col-sm-12"><label class="col-sm-4" style="color: #01b7f2;">Check-Out Until:</label>{{hotel.checkOutTime}}</li>
+                                                <li class="col-sm-12"><label class="col-sm-4" style="color: #01b7f2;">Year Hotel Built:</label>{{hotel.hotelBuiltYear}}</li>
+                                                 <li class="col-sm-12"><label class="col-sm-4" style="color: #01b7f2;">Room Voltage:</label>{{hotel.roomVoltage}}</li>
+                                             
+                                               
+                                            </ul>
                                         </div>
-                                    </ul>
+                                      
+                                    </div> 
                              	</div>
-                             	<div class="tab-pane fade" id="hotel-sport-amenities">
+                             <!-- 	<div class="tab-pane fade" id="hotel-sport-amenities">
                                     <h2>Hotel Sport Amenities</h2>
                                     <ul class="amenities clearfix style2">
                                     	<div  ng-repeat="lsportamenities in leisure_sport_check">
@@ -380,7 +405,7 @@
                                         </li>
                                         </div>
                                     </ul>
-                             	</div>
+                             	</div> -->
                         	</div>
                         </div>	
                     </div>
@@ -420,25 +445,26 @@
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" href="#modify-search-panel" class="collapsed">Modify Search</a>
                                     </h4>
-                                    <div id="modify-search-panel" class="panel-collapse collapse">
+                                    <div id="modify-search-panel" class="panel-collapse">
                                         <div class="panel-content">
-                                            <form action="/searchAgainHotelInfo" method="post">  <!-- action="/searchAgainHotelInfo"   ng-submit="searchAgainHotel()"  -->
+                                          <form action="/searchAgainHotelInfo" method="post">  <!-- action="/searchAgainHotelInfo"   ng-submit="searchAgainHotel()"  -->
                                                 <div class="form-group">
                                                     <label>Country</label>
                                                    <div class="selector">
-                                                    <select class="full-width" name="countryCode" data-ng-model="searchby.countryCode" ng-change="onCountryChange()" placeholder="Country"> 
+                                                    <select class="full-width" name="countryCode1" data-ng-model="searchby.countryCode" ng-change="onCountryChange()" placeholder="Country"> 
                                                         <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
-                                                    </select><span class="custom-select full-width">{{searchby.countryCode}}</span>
-                                                    
+                                                    </select><span class="custom-select full-width">{{searchby.countryName}}</span>
+                                                    <input type="text" name="countryCode" data-ng-model="searchby.countryCode" value="searchby.countryCode" style="display: none"/>
                                       
                                                    </div>
                                                 </div>
                                                  <div class="form-group">
                                                  	<label>City</label>
                                                     <div class="selector">
-                                                    <select class="full-width" name="city" data-ng-model="searchby.city" ng-change="onCityChange()">
+                                                    <select class="full-width" name="cityCode1" data-ng-model="searchby.cityCode" ng-change="onCityChange()">
                                                            <option ng-repeat="city in searchCities" value="{{city.cityCode}}">{{city.cityName}}</option>
-                                                    </select><span class="custom-select full-width">{{searchby.city}}</span>
+                                                    </select><span class="custom-select full-width">{{searchby.cityName}}</span>
+                                                     <input type="text" name="cityCode" data-ng-model="searchby.cityCode" value="searchby.cityCode" style="display: none"/>
                                                     </div>
                                                  </div>
                                                 <div class="form-group">
@@ -451,14 +477,16 @@
                                                    <label>Check Out</label>
                                                    <div class="datepicker-wrap">
                                                     <input type="text" name="checkOut" data-ng-model="searchby.checkOut" class="input-text full-width" placeholder="dd/mm/yyyy" />
+                                                  
                                                    </div>
                                                 </div>
                                                  <div class="form-group">
                                                    <label>Nationality</label>
                                                    <div class="selector">
-                                                    <select class="full-width"  name="nationalityCode" data-ng-model="searchby.nationalityCode" placeholder="dd/mm/yyyy">
+                                                    <select class="full-width"  name="nationalityCode1" data-ng-model="searchby.nationalityCode" placeholder="dd/mm/yyyy">
                                                         <option ng-repeat="nationality in searchNationality" value="{{nationality.nationalityCode}}">{{nationality.nationality}}</option>
-                                                    </select><span class="custom-select full-width">{{searchby.nationalityCode}}</span>
+                                                    </select><span class="custom-select full-width">{{searchby.nationalityName}}</span>
+                                                      <input type="text" name="nationalityCode" data-ng-model="searchby.nationalityCode" value="searchby.nationalityCode" style="display: none"/>
                                                     </div>
                                                  </div>
                                                 <br />

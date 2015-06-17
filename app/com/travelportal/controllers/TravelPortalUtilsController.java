@@ -239,6 +239,9 @@ public class TravelPortalUtilsController extends Controller {
 		hotelinternalinformation.setDirectFaxNo(internalcontacts.getDirectFaxValue());
 		hotelinternalinformation.setDirectFaxCode(internalcontacts.getDirectFaxCityCode());
 		hotelinternalinformation.setSupplierCode(internalcontacts.getSupplierCode());
+		hotelinternalinformation.setCheckInTime(internalcontacts.getCheckInTime());
+		hotelinternalinformation.setCheckOutTime(internalcontacts.getCheckOutTime());
+		hotelinternalinformation.setRoomVoltage(internalcontacts.getRoomVoltage());
 				
 		return ok(Json.toJson(hotelinternalinformation));
 	}

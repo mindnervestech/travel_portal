@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.BodyPart;
@@ -46,6 +47,7 @@ import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.HotelStarRatings;
+import com.travelportal.domain.Salutation;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
@@ -60,7 +62,11 @@ import com.travelportal.vm.SpecialsVM;
 
 public class HotelBookingController extends Controller {
 
-	
+	@Transactional(readOnly=true)
+	public static Result getSalutation() {
+		final List<Salutation> salutation = Salutation.getsalutation();
+		return ok(Json.toJson(salutation));
+	}
 	
 	@Transactional(readOnly=false)
 	public static Result saveHotelBookingInfo() {
@@ -124,7 +130,10 @@ public class HotelBookingController extends Controller {
 		}
 		
 		hBookingDetails.setTotal(Double.parseDouble(searchVM.hotelBookingDetails.getTotal()));
+		hBookingDetails.setTravellersalutation(Salutation.getsalutationIdIdByCode(Integer.parseInt(searchVM.hotelBookingDetails.getTravellersalutation())));
 		hBookingDetails.setTravellerfirstname(searchVM.hotelBookingDetails.getTravellerfirstname());
+		hBookingDetails.setTravellermiddlename(searchVM.hotelBookingDetails.getTravellermiddlename());
+		hBookingDetails.setTravellerpassportNo(searchVM.hotelBookingDetails.getTravellerpassportNo());
 		hBookingDetails.setTravelleremail(searchVM.hotelBookingDetails.getTravelleremail());
 		
 		hBookingDetails.setTravellerlastname(searchVM.hotelBookingDetails.getTravellerlastname());

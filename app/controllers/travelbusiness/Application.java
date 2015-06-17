@@ -52,7 +52,9 @@ import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.InfoWiseImagesPath;
+import com.travelportal.domain.InternalContacts;
 import com.travelportal.domain.admin.BatchMarkup;
+import com.travelportal.domain.admin.BreakfastMarkup;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.CancellationPolicy;
@@ -216,7 +218,7 @@ public class Application extends Controller {
     		String fromDate = searchVM.checkIn;
     		String toDate = searchVM.checkOut;
     		//String[] sId = {searchVM.id};
-    		String cityId = searchVM.city;
+    		String cityId = searchVM.cityCode;
     		String nationalityId = searchVM.nationalityCode;
     	
     		Date formDate = null;
@@ -291,9 +293,10 @@ public class Application extends Controller {
     		List<HotelSearch> hotellist = new ArrayList<>();
     		Map<Long, Long> map = new HashMap<Long, Long>();
     		
+    	  		
     		String fromDate = searchVM.checkIn;
     		String toDate = searchVM.checkOut;
-    		String cityId = searchVM.city;
+    		String cityId = searchVM.cityCode;
     		String nationalityId = searchVM.nationalityCode;
     		
     		Date formDate = null;
@@ -404,6 +407,10 @@ public static void DateWiseSortFunction(List<HotelSearch> hotellist,String toDat
 		if (object == null) {
 
 			HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
+			BreakfastMarkup bMarkup = BreakfastMarkup.findById(1L);
+			if(bMarkup != null){
+				hProfileVM.breakfackRate = bMarkup.getBreakfastRate();
+			}
 			fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId,dayDiff);   /* Fill Hotel info function*/
 			
 			for (int i = 0; i < dayDiff; i++) {
@@ -517,6 +524,10 @@ public static void specialsPromotion(SerachedRoomType roomtyp, DateFormat format
 			vm.stayDays = market.getStayDays();
 			vm.typeOfStay = market.getTypeOfStay();
 			vm.applyToMarket = market.getApplyToMarket();
+			vm.breakfast = market.isBreakfast();
+			vm.adultRate = market.getAdultRate();
+			vm.childRate = market.getChildRate();
+			
 			vm.id = market.getId();
 				specialsVM.markets.add(vm);
 		}
@@ -848,6 +859,14 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	hProfileVM.setNationality(Integer.parseInt(nationality));
 	Country country = Country.getCountryByCode(Integer.parseInt(nationality));
 	hProfileVM.setNationalityName(country.getNationality());
+	
+	InternalContacts internalCont = InternalContacts.findById(hAmenities.getSupplier_code());
+	if(internalCont != null){
+		hProfileVM.setCheckInTime(internalCont.getCheckInTime());
+		hProfileVM.setCheckOutTime(internalCont.getCheckOutTime());
+		hProfileVM.setRoomVoltage(internalCont.getRoomVoltage());
+		hProfileVM.setHotelBuiltYear(String.valueOf(hAmenities.getHotelBuiltYear()));
+	}
 	
 	InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
 	if(infowiseimagesPath != null){
@@ -1258,7 +1277,7 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		
 		String fromDate = searchHotelValueVM.getCheckIn();
 		String toDate = searchHotelValueVM.getCheckOut();
-		String cityId = searchHotelValueVM.getCity();
+		String cityId = searchHotelValueVM.getCityCode();
 		String nationalityId = searchHotelValueVM.getNationalityCode();
 		
 		Date formDate = null;
@@ -1303,7 +1322,10 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 				List<HotelProfile> hAmenities1 = HotelProfile.findAllDataforamenities(hProfile.getId()
 						,searchHotelValueVM.getAmenitiesCheck(),searchHotelValueVM.getServicesCheck(),searchHotelValueVM.getLocationCheck(),searchHotelValueVM.getStarCheck());  
 				
-
+				BreakfastMarkup bMarkup = BreakfastMarkup.findById(1L);
+				if(bMarkup != null){
+					hProfileVM.breakfackRate = bMarkup.getBreakfastRate();
+				}
 				for(HotelProfile hAmenities:hAmenities1){
 					fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId,dayDiff);   /* Fill Hotel info function*/				for (int i = 0; i < dayDiff; i++) {
 
@@ -1507,7 +1529,10 @@ public static Result hoteldetailpage() {
 		
 		if (object == null) {
 			HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
-			
+			BreakfastMarkup bMarkup = BreakfastMarkup.findById(1L);
+			if(bMarkup != null){
+				hProfileVM.breakfackRate = bMarkup.getBreakfastRate();
+			}
 			fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId,dayDiff);
 			
 			for (int i = 0; i < dayDiff; i++) {
@@ -1674,6 +1699,11 @@ public static Result hoteldetailpage() {
 					baInfoVM.supplier = bm.getSupplier();
 					
 					hProfileVM.batchMarkup = baInfoVM;
+				}
+				
+				BreakfastMarkup bMarkup = BreakfastMarkup.findById(1L);
+				if(bMarkup != null){
+					hProfileVM.breakfackRate = bMarkup.getBreakfastRate();
 				}
 				
 				fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId,dayDiff);

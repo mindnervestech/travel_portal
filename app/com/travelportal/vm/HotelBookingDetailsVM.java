@@ -2,6 +2,8 @@ package com.travelportal.vm;
 
 import javax.persistence.Column;
 
+import com.travelportal.domain.Salutation;
+
 public class HotelBookingDetailsVM {
 	
 	public String adult;
@@ -9,9 +11,12 @@ public class HotelBookingDetailsVM {
 	public String noOfchild;
 	public String total;
 	public String totalParPerson;
+	public String travellersalutation;
 	public String travellerfirstname;
 	public String travellerlastname;
+	public String travellermiddlename;
 	public String travelleraddress;
+	public String travellerpassportNo;
 	public String travellercountry;
 	public String travellerphnaumber;
 	public String travelleremail;	
@@ -81,6 +86,24 @@ public class HotelBookingDetailsVM {
 	}
 	public void setNoOfchild(String noOfchild) {
 		this.noOfchild = noOfchild;
+	}
+	public String getTravellermiddlename() {
+		return travellermiddlename;
+	}
+	public void setTravellermiddlename(String travellermiddlename) {
+		this.travellermiddlename = travellermiddlename;
+	}
+	public String getTravellerpassportNo() {
+		return travellerpassportNo;
+	}
+	public void setTravellerpassportNo(String travellerpassportNo) {
+		this.travellerpassportNo = travellerpassportNo;
+	}
+	public String getTravellersalutation() {
+		return travellersalutation;
+	}
+	public void setTravellersalutation(String travellersalutation) {
+		this.travellersalutation = travellersalutation;
 	}
 		
 	

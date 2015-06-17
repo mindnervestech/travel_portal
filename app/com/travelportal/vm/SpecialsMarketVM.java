@@ -11,6 +11,9 @@ public class SpecialsMarketVM {
 	public String typeOfStay;
 	public boolean multiple;
 	public boolean combined;
+	public boolean breakfast;
+	public String adultRate;
+	public String childRate;
 	public String applyToMarket;
 	public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
 	

@@ -19,6 +19,9 @@ public class HotelInternalInformation {
 	public int directFaxCode;
 	public String genMgrName;
 	public String genMgrEmail;
+	public String checkInTime;
+	public String checkOutTime;
+	public String roomVoltage;
 	/**
 	 * @return the supplierCode
 	 */
@@ -186,6 +189,24 @@ public class HotelInternalInformation {
 	 */
 	public void setGenMgrEmail(String genMgrEmail) {
 		this.genMgrEmail = genMgrEmail;
+	}
+	public String getCheckInTime() {
+		return checkInTime;
+	}
+	public void setCheckInTime(String checkInTime) {
+		this.checkInTime = checkInTime;
+	}
+	public String getCheckOutTime() {
+		return checkOutTime;
+	}
+	public void setCheckOutTime(String checkOutTime) {
+		this.checkOutTime = checkOutTime;
+	}
+	public String getRoomVoltage() {
+		return roomVoltage;
+	}
+	public void setRoomVoltage(String roomVoltage) {
+		this.roomVoltage = roomVoltage;
 	}
 	
 	

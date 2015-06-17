@@ -36,6 +36,7 @@ GET   /getDatewiseHotelRoom/:checkIn/:checkOut/:nationality/:supplierCode/:roomC
 
 #Hotel Booking Page
 POST  /saveHotelBookingInfo  controllers.travelbusiness.HotelBookingController.saveHotelBookingInfo
+GET   /getSalutation    controllers.travelbusiness.HotelBookingController.getSalutation()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -233,6 +234,7 @@ GET   /getSpecialRate/:code 			com.travelportal.controllers.MarkUpController.get
 POST /savebatchMarkup		com.travelportal.controllers.MarkUpController.savebatchMarkup
 POST /savespecificMarkup		com.travelportal.controllers.MarkUpController.savespecificMarkup
 POST /UpdateBatchMarkup			com.travelportal.controllers.MarkUpController.UpdateBatchMarkup
+GET  /saveBreakfastRate/:breakfast   com.travelportal.controllers.MarkUpController.saveBreakfastRate(breakfast:String)
 POST /UpdateSpecificMarkup			com.travelportal.controllers.MarkUpController.UpdateSpecificMarkup
 
 #GET  /AllDate/:fromDate/:toDate     com.travelportal.controllers.AllRateController.AllDate(fromDate:String,toDate:String)

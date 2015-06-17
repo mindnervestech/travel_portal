@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.admin.BatchMarkup;
+import com.travelportal.domain.admin.BreakfastMarkup;
 import com.travelportal.domain.admin.SpecificMarkup;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.ApplicableDateOnRate;
@@ -377,6 +378,21 @@ public class MarkUpController extends Controller {
 	}
 	
 	
+	@Transactional(readOnly = false)
+	public static Result saveBreakfastRate(String breakfast) {
+		
+		BreakfastMarkup bMarkup = BreakfastMarkup.findById(1L);
+		if (bMarkup == null) {
+			bMarkup = new BreakfastMarkup();
+			bMarkup.setBreakfastRate(breakfast);
+			bMarkup.save();
+		} else {
+			bMarkup.setBreakfastRate(breakfast);
+			bMarkup.merge();
+		}
+		return ok();
+
+	}
 	
 	@Transactional(readOnly = false)
 	public static Result savespecificMarkup() {

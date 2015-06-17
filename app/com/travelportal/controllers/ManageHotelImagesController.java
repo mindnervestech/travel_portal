@@ -76,7 +76,6 @@ for(int i=0; i< picture.size()-1 ;i++){
 		 String ThumbnailImage = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator+form.get("index")+ File.separator+"Logo_thumbnail."+FilenameUtils.getExtension(fileName);
          String originalFileName = rootDir + File.separator + +Long.parseLong(form.get("supplierCode"))+File.separator+ "ManageHotelImages"+ File.separator +form.get("index")+File.separator+"Original_image."+FilenameUtils.getExtension(fileName);
 		 
-		 
          File src = picture.getFile();
          OutputStream out = null;
          BufferedImage image = null;

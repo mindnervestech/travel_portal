@@ -163,7 +163,24 @@
 											<input type="radio" name="combined{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="market.combined">Yes
 											<input type="radio" name="combined{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="market.combined">No
 								</div>
-							</div>					
+							</div>
+							<div class="row" style="margin-top: 3%;margin-left: 2%;">
+								<div class="form-group">
+									<label>Promotion include breakfast on free stay? </label>
+											<input type="radio" name="breakfast{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="market.breakfast" style="margin-left: 22px;">Yes
+											<input type="radio" name="breakfast{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="market.breakfast">No
+								</div>
+							</div>	
+							
+							<div class="row" style="margin-top: 3%;margin-left: 2%;" ng-if="market.breakfast == true">
+								<div class="form-group">
+									<label>Breakfast Rate :</label>
+											Adult:<input type="text" name="adultRate{{$parent.$index}}{{$index}}"  data-ng-model="market.adultRate" style="margin-left: 22px;">
+											Child:<input type="text" name="childRate{{$parent.$index}}{{$index}}"  data-ng-model="market.childRate">
+								</div>
+							</div>	
+							
+											
 						</div>
 						<input type="button" value="DELETE" ng-click="deleteSavedMarket($parent.$index,$index)" style="float:right;margin-top: 1%;margin-right: 1%;"><br> <!-- ng-show="showSavedRemoveMarket == true" -->
 					</fieldset>
@@ -323,6 +340,20 @@
 									<label>Do you allow this special to be combined with other specials under the same booking? </label>
 											<input type="radio" name="combined{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="market.combined">Yes
 											<input type="radio" name="combined{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="market.combined">No
+								</div>
+							</div>	
+							<div class="row" style="margin-top: 3%;margin-left: 2%;">
+								<div class="form-group">
+									<label>Promotion include breakfast on free stay? </label>
+											<input type="radio" name="breakfast{{$parent.$index}}{{$index}}" data-ng-value="true" data-ng-model="market.breakfast" style="margin-left: 22px;">Yes
+											<input type="radio" name="breakfast{{$parent.$index}}{{$index}}" data-ng-value="false" data-ng-model="market.breakfast">No
+								</div>
+							</div>	
+							<div class="row" style="margin-top: 3%;margin-left: 2%;" ng-if="market.breakfast == true">
+								<div class="form-group">
+									<label>Breakfast Rate : </label>
+											Adult:<input type="text" name="adultRate{{$parent.$index}}{{$index}}"  data-ng-model="market.adultRate" style="margin-left: 22px;">
+											Child:<input type="text" name="childRate{{$parent.$index}}{{$index}}"  data-ng-model="market.childRate">
 								</div>
 							</div>					
 						</div>
