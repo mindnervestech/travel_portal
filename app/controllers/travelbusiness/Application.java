@@ -43,6 +43,7 @@ import views.html.travelbusiness.searchHotel;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.mnt.travelbusiness.helper.PageScope;
+import com.travelportal.domain.CancellationDateDiff;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.HotelAmenities;
@@ -830,6 +831,10 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 				.getId());
 		hProfileVM.setStars(hAmenities.getStartRatings().getStarRating());
 	}
+	
+	CancellationDateDiff can = CancellationDateDiff.getById(1);
+	
+	hProfileVM.cancellation_date_diff = can.getDateDiff();
 	hProfileVM.currencyId = hAmenities.getCurrency().getCurrencyCode();
 	hProfileVM.currencyName = hAmenities.getCurrency().getCurrencyName();
 	String currency = hAmenities.getCurrency().getCurrencyName();

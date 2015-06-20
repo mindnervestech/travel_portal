@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -41,17 +42,20 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.travelportal.domain.CancellationDateDiff;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.HotelStarRatings;
+import com.travelportal.domain.RoomRegiterBy;
 import com.travelportal.domain.Salutation;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.vm.HotelSearch;
+import com.travelportal.vm.PassengerBookingInfoVM;
 import com.travelportal.vm.SearchRateDetailsVM;
 import com.travelportal.vm.SerachHotelRoomType;
 import com.travelportal.vm.SerachedHotelbyDate;
@@ -67,6 +71,7 @@ public class HotelBookingController extends Controller {
 		final List<Salutation> salutation = Salutation.getsalutation();
 		return ok(Json.toJson(salutation));
 	}
+	
 	
 	@Transactional(readOnly=false)
 	public static Result saveHotelBookingInfo() {
@@ -95,6 +100,27 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setAgentCompanyNm(agRegistration.getCompanyName());
 		hBookingDetails.setSupplierNm(searchVM.getSupplierNm());
 		hBookingDetails.setTotalNightStay(searchVM.getDatediff());
+		
+		
+		CancellationDateDiff canDateDiff = CancellationDateDiff.getById(1);
+		
+		
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(format.parse(searchVM.getCheckIn()));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		c.add(Calendar.DATE, - canDateDiff.getDateDiff());  // number of days to add
+		String cancellDate = format.format(c.getTime());
+		try {
+			hBookingDetails.setLatestCancellationDate(format.parse(cancellDate));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		try {
 			hBookingDetails.setCheckIn(format.parse(searchVM.getCheckIn()));
 		} catch (ParseException e) {
@@ -135,12 +161,20 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setTravellermiddlename(searchVM.hotelBookingDetails.getTravellermiddlename());
 		hBookingDetails.setTravellerpassportNo(searchVM.hotelBookingDetails.getTravellerpassportNo());
 		hBookingDetails.setTravelleremail(searchVM.hotelBookingDetails.getTravelleremail());
-		
 		hBookingDetails.setTravellerlastname(searchVM.hotelBookingDetails.getTravellerlastname());
 		hBookingDetails.setTravelleraddress(searchVM.hotelBookingDetails.getTravelleraddress());
-
 		hBookingDetails.setTravellercountry(Country.getCountryByCode(Integer.parseInt(searchVM.hotelBookingDetails.getTravellercountry())));
 		hBookingDetails.setTravellerphnaumber(searchVM.hotelBookingDetails.getTravellerphnaumber());
+		hBookingDetails.setNonSmokingRoom(searchVM.hotelBookingDetails.getNonSmokingRoom());
+		hBookingDetails.setTwinBeds(searchVM.hotelBookingDetails.getTwinBeds());
+		hBookingDetails.setLateCheckin(searchVM.hotelBookingDetails.getLateCheckin());
+		hBookingDetails.setLargeBed(searchVM.hotelBookingDetails.getLargeBed());
+		hBookingDetails.setHighFloor(searchVM.hotelBookingDetails.getHighFloor());
+		hBookingDetails.setEarlyCheckin(searchVM.hotelBookingDetails.getEarlyCheckin());
+		hBookingDetails.setAirportTransfer(searchVM.hotelBookingDetails.getAirportTransfer());
+		hBookingDetails.setAirportTransferInfo(searchVM.hotelBookingDetails.getAirportTransferInfo());
+		hBookingDetails.setEnterComments(searchVM.hotelBookingDetails.getEnterComments());
+		hBookingDetails.setPayment("no");
 		
 		
 		for(SerachHotelRoomType byRoom:searchVM.hotelbyRoom){
@@ -208,6 +242,20 @@ public class HotelBookingController extends Controller {
 		}
 		if(hBookingDetails.getRoom_status().equals("available")){
 			generatePDF1(hBookingDetails.getTravelleremail(),hBookingDetails.getId());
+		}
+		
+		int i=1;
+		for(PassengerBookingInfoVM passBookingInfoVM:searchVM.hotelBookingDetails.passengerInfo){
+			RoomRegiterBy regiterBy = new RoomRegiterBy();
+			regiterBy.setAdult(passBookingInfoVM.adult);
+			regiterBy.setRegiterBy(passBookingInfoVM.regiterBy);
+			if(passBookingInfoVM.noOfchild != null){
+				regiterBy.setNoOfchild(Integer.parseInt(passBookingInfoVM.noOfchild));
+			}
+			regiterBy.setHotelBookingDetails(HotelBookingDetails.findBookingById(hBookingDetails.getId()));
+			regiterBy.setRoomIndex(i);
+			i++;
+			regiterBy.save();
 		}
 		
 		int applyforroom = 0;

@@ -166,11 +166,18 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			console.log($scope.rateDatewise);
 		});
 	}
-	
+	$scope.bookingPayment = function(bookingId, payment){
+		console.log(bookingId);
+		console.log(payment);
+		$http.get("/getBookingPaymentInfo/"+bookingId+"/"+payment).success(function(response){
+			console.log("OK,,OK");
+		});
+		
+	}
 	
 	
 	$scope.showDetails = function(agentinfo){
-		//console.log(agent);
+		console.log(agentinfo);
 		$scope.agentinfo = agentinfo;
 		ngDialog.open({
 			template: '/assets/resources/html/agent_booking_details.html',
@@ -779,9 +786,9 @@ $http.get("/searchCountries").success(function(response) {
 		angular.forEach(hotel.hotelbyRoom, function(obj, index){ 
 			angular.forEach(obj.hotelRoomRateDetail[0].cancellation, function(obj1, index1){ 
 				if(obj1.days == "012" || obj1.days == "016" || obj1.days == "018"){
-					obj1.days = 1;
+					obj1.days = hotel.cancellation_date_diff;
 				}else{
-					obj1.days = parseInt(obj1.days) + 1;
+					obj1.days = parseInt(obj1.days) + hotel.cancellation_date_diff;
 				}
 			});
 		});
@@ -899,10 +906,13 @@ $http.get("/searchCountries").success(function(response) {
 	$scope.adultString = "1 Adult";
 	$scope.countNoOfRoom = 1;
 	
-	$scope.showRateAdultwise=function(adultValue,roomNo,childallow){
+	$scope.showRateAdultwise=function(adultValue,childallow,index){
+		var roomNo = (index+1);
 		if(roomNo == undefined){
 			roomNo = 1;
 		}
+		
+		//$scope.addRooms[index].total = $scope.totalParPerson;
 		console.log(roomNo);
 		console.log(adultValue);
 		console.log(childallow);
@@ -1018,9 +1028,10 @@ $http.get("/searchCountries").success(function(response) {
 		
 		$scope.total = total;
 		$scope.totalParPerson = total;
-		if(roomNo != undefined){
-			$scope.total = $scope.totalParPerson * roomNo;
-		}
+	
+		//if(roomNo != undefined){
+			$scope.total = $scope.totalParPerson * 1;// roomNo;
+		//}
 	
 		
 		var arr1 = adultValue.split(" ");
@@ -1031,9 +1042,11 @@ $http.get("/searchCountries").success(function(response) {
 		
 		$scope.commanPromotionFunction();
 		$scope.batchMarkupFunction();
-		$scope.breakfastFunction($scope.adultTotal,$scope.childTotal); 
 		
-		
+		$scope.addRooms[index].total = $scope.total;
+		$scope.addRooms[index].rateDatedetail = $scope.rateDatedetail;
+		$scope.addRooms[index].childselected = $scope.childselected;
+		$scope.breakfastFunction(); 
 		$scope.flag = flag;
 		console.log($scope.rateDatedetail);
 		console.log($scope.total);
@@ -1073,10 +1086,11 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.total = $scope.totalParPerson * roomCount;
 	}
 	
-	
+	$scope.rateDatedetailRoomWise = []; 
 	$scope.childcount = [];
 	$scope.dateWiseInfo = function(roomid){
-				
+		$scope.addRooms.push({});
+		$scope.addRooms[0].adult = "1 Adult";
 		console.log($scope.hotel);
 		
 			$scope.rateDatedetail = [];
@@ -1178,12 +1192,22 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.childTotal = 0;
 			
 			
+			/*angular.forEach($scope.rateDatedetail,function(value,key){
+				
+			}*/
+			
 			$scope.commanPromotionFunction();
 			$scope.batchMarkupFunction();
-			$scope.breakfastFunction($scope.adultTotal,$scope.childTotal); 
+			
+			$scope.addRooms[0].total = $scope.total;
+			$scope.addRooms[0].rateDatedetail = $scope.rateDatedetail; 
+			$scope.rateDatedetailRoomWise = $scope.rateDatedetail;
+			
+			$scope.breakfastFunction(); 
 			
 			$scope.flag = flag;
 			console.log($scope.rateDatedetail);
+			
 			console.log(total);
 			console.log(flag);
 			$scope.childcount = [];
@@ -1213,6 +1237,7 @@ $http.get("/searchCountries").success(function(response) {
 	}
 	
 	$scope.batchMarkupFunction = function(){
+		
 		console.log($scope.totalStayDays);
 		if($scope.ratedetail.batchMarkup.selected == 0){
 			if($scope.totalStayDays == null || $scope.totalStayDays == "" || $scope.totalStayDays == 0){
@@ -1265,7 +1290,7 @@ $http.get("/searchCountries").success(function(response) {
 			
 			}
 			if($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].multiple == false){
-				totalStayDay = parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].stayDays) + parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays);
+				//totalStayDay = $scope.ratedetail.datediff; //parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].stayDays) + parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays);
 				divDays = parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].stayDays) - parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays);
 				
 				//daysLess = daysLess + totalStayDay;
@@ -1400,7 +1425,38 @@ $http.get("/searchCountries").success(function(response) {
 		}
 	}
 	
-	$scope.breakfastFunction = function(adultNo,childNo){
+	$scope.finalTotal = 0;
+	$scope.finalTotalDetails = [];
+	
+	$scope.breakfastFunction = function(){
+		$scope.finalTotal = 0;
+		var adultNo = 0;
+		var childNo = 0;
+		
+		console.log("%%%%%%%%%%%%%%");
+		console.log($scope.addRooms);
+		console.log("%%%%%%%%%%%%%%");
+	
+		
+		angular.forEach($scope.addRooms,function(value,key){
+			var arr =value.adult.split(" ");
+			adultNo = adultNo + parseInt(arr[0]);
+			if(value.noOfchild != undefined){
+				angular.forEach(value.childselected,function(value1,key1){
+					if(value1.age != ""){
+						console.log("-----------------");
+						childNo = childNo + 1;
+						console.log(value.noOfchild);
+						console.log(childNo);
+					}
+				});
+			}
+			console.log(value.total);
+			$scope.finalTotal = $scope.finalTotal + parseInt(value.total);
+			
+		});
+		
+		console.log($scope.finalTotal);
 		
 		var divDays = 0;
 		
@@ -1434,9 +1490,21 @@ $http.get("/searchCountries").success(function(response) {
 			
 			$scope.breakfastAddfree = divDays *  finalBreakfastCharg;
 		   console.log($scope.breakfastAddfree);
-		   $scope.total = $scope.total + $scope.breakfastAddfree;
+		   $scope.finalTotal = $scope.finalTotal+ $scope.breakfastAddfree;
 	    }
 		}
+		console.log($scope.finalTotal);
+		$scope.finalTotalDetails = [];
+		angular.forEach($scope.addRooms,function(value,key){
+//			$scope.finalTotalDetails.push = ({adult:"",noOfchild:"",total:""});
+			$scope.finalTotalDetails.push({});
+			$scope.finalTotalDetails[key].adult = value.adult;
+			$scope.finalTotalDetails[key].noOfchild = value.noOfchild;
+			$scope.finalTotalDetails[key].total = value.total;
+		});
+		
+		
+		console.log($scope.finalTotalDetails);
 		
 	}
 	
@@ -1475,14 +1543,19 @@ $http.get("/searchCountries").success(function(response) {
 				
 	}
 	
-	$scope.parChildAge = function(age,index,roomCount){
+	$scope.parChildAge = function(age,index,pIndex){
 		//freechild
 		
-		if(roomCount == undefined){
+		/*if(roomCount == undefined){
 			roomCount = 1;
 		}
-		console.log(roomCount);
-		var totalcount = $scope.totalParPerson * roomCount;
+		console.log(roomCount);*/
+	//	console.log($scope.addRooms[pIndex].total);
+		
+		var arr = $scope.addRooms[pIndex].adult.split(" ");
+		$scope.total = $scope.totalParPerson;
+		$scope.batchMarkupFunction();
+		var totalcount = $scope.total;// * arr[0]; //* 1;//roomCount;
 		console.log(totalcount);
 		
 		$scope.rateDatedetail = [];
@@ -1512,6 +1585,8 @@ $http.get("/searchCountries").success(function(response) {
 			
 		});
 		console.log($scope.childselected);
+		$scope.addRooms[pIndex].childselected = $scope.childselected;
+		
 		var totalchileValue = 0;
 		angular.forEach($scope.childselected, function(value, count){
 			if(value.breakfast != ""){
@@ -1525,6 +1600,7 @@ $http.get("/searchCountries").success(function(response) {
 		
 		$scope.total = parseInt(totalcount) + parseInt(totalchileValue);
 		
+		
 		/*if($scope.ratedetail.batchMarkup.selected == 0){
 			var markupCount = $scope.ratedetail.datediff * $scope.ratedetail.batchMarkup.flat;
 			console.log(markupCount);
@@ -1536,15 +1612,31 @@ $http.get("/searchCountries").success(function(response) {
 		}*/
 		
 		
-		
 		$scope.commanPromotionFunction();
-		$scope.batchMarkupFunction();
-		$scope.breakfastFunction($scope.adultTotal,$scope.childTotal); 
+		//$scope.batchMarkupFunction();
+	
+		$scope.addRooms[pIndex].total = $scope.total;
+		$scope.breakfastFunction(); 
 		
 	}
 	
+	$scope.addRooms = [];
+	
+	$scope.newRoom = function($event,index){
+		console.log(index);
+		$scope.addRooms.push( {  } );
+		$scope.addRooms[index].adult = "1 Adult";
+		
+		$event.preventDefault();
+		$scope.countTotal(index);
+		
+		
+		//newRoom
+	};
+	
 	
 	$scope.noOfchildSelect = function(selectedChild,roomCount){
+		//var roomCountAddOne = roomCount+1;
 		$scope.childselected = [];
 		console.log(selectedChild);
 		for(var i=0;i<selectedChild;i++){
@@ -1559,11 +1651,13 @@ $http.get("/searchCountries").success(function(response) {
 		}
 		console.log($scope.childselected);
 		console.log($scope.totalParPerson);
+		$scope.addRooms[roomCount].childselected = $scope.childselected;
+		console.log($scope.addRooms);
 		
-		if(roomCount == undefined){
-			roomCount = 1;
-		}
-		$scope.total = $scope.totalParPerson * roomCount;
+	//	if(roomCount == undefined){
+		//	roomCount = 1;
+		//}
+		$scope.total = $scope.totalParPerson * (roomCount+1);
 		$scope.rateDatedetail = [];
 
 		$scope.fillrateDatedetai($scope.adultString);
@@ -1575,12 +1669,15 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.childTotal = selectedChild;
 		$scope.commanPromotionFunction();
 		$scope.batchMarkupFunction();
-		$scope.breakfastFunction($scope.adultTotal,$scope.childTotal); 
+	
+		$scope.breakfastFunction(); 
 	
 	}
 	
+	
 	$scope.fillrateDatedetai = function(adultValues){
 		
+		var total =0;
 		var flag =0;
 		
 		angular.forEach($scope.ratedetail.hotelbyDate,function(value,key){
@@ -1604,7 +1701,7 @@ $http.get("/searchCountries").success(function(response) {
 						console.log(value.currencyShort);
 						if(value3.adult == adultValues){
 			
-							
+							total = total+value3.rateValue;
 							$scope.rateDatedetail.push({
 								rate:value3.rateValue,
 								meal:value3.mealTypeName,
@@ -1631,7 +1728,7 @@ $http.get("/searchCountries").success(function(response) {
 			}
 		     });
 		
-		
+		$scope.totalParPerson = total;
 	}
 	
 	
@@ -1641,8 +1738,12 @@ $http.get("/searchCountries").success(function(response) {
 		console.log(roomNo);
 		$scope.countNoOfRoom = roomNo;
 		console.log($scope.ratedetail);
-		console.log($scope.totalParPerson);
+		
 		console.log($scope.childselected);
+		$scope.adultString = "1 Adult";
+		$scope.fillrateDatedetai($scope.adultString);
+		/*$scope.dateWiseInfo($scope.ratedetail.hotelbyRoom[0].roomId)*/
+		console.log($scope.totalParPerson);
 		
 		$scope.availableFlag = [];
 		var totalchileValue = 0;
@@ -1655,9 +1756,11 @@ $http.get("/searchCountries").success(function(response) {
 		}
 	});
 	console.log(totalchileValue);
-		
+		console.log($scope.addRooms);
+	
+	
 	   console.log($scope.totalParPerson);
-		$scope.total = $scope.totalParPerson * roomNo;
+		$scope.total = $scope.totalParPerson * 1;//(roomNo+1);
 		console.log(totalchileValue);
 		$scope.total = $scope.total + totalchileValue;
 		
@@ -1676,7 +1779,7 @@ $http.get("/searchCountries").success(function(response) {
 					}
 					if(value2.allotmentmarket.allocation == 3){
 						console.log(value2.availableRoom);
-						if(value2.availableRoom < roomNo){
+						if(value2.availableRoom < (roomNo+1)){
 							flag = 1;
 							angular.forEach($scope.rateDatedetail,function(value3,key3){
 								if(value3.fulldate == value.date){
@@ -1701,16 +1804,23 @@ $http.get("/searchCountries").success(function(response) {
 		
 		console.log(flag);
 		console.log($scope.rateDatedetail);
-		
+		$scope.addRooms[roomNo].rateDatedetail = $scope.rateDatedetail;
 		
 		$scope.commanPromotionFunction();
 		
 		$scope.batchMarkupFunction();
-		$scope.breakfastFunction($scope.adultTotal,$scope.childTotal); 
+		 
+		$scope.addRooms[roomNo].total = $scope.total;
 		
+		$scope.breakfastFunction();
 		
-			
-		
+	}
+	
+	$scope.showDateWiseDetails = function(index){
+		console.log("Hiii..Bye");
+		console.log(index);
+		$scope.rateDatedetailRoomWise = [];
+		$scope.rateDatedetailRoomWise = $scope.addRooms[index].rateDatedetail;
 	}
 	
 	$scope.ShowFull = function(index){
@@ -1805,6 +1915,15 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 		$scope.hotel.hotelBookingDetails.travellercountry = $scope.traveller.country;
 		$scope.hotel.hotelBookingDetails.travellerphnaumber = $scope.traveller.phnaumber;
 		$scope.hotel.hotelBookingDetails.travelleremail = $scope.traveller.email;
+		$scope.hotel.hotelBookingDetails.nonSmokingRoom = $scope.traveller.nonSmokingRoom;
+		$scope.hotel.hotelBookingDetails.twinBeds = $scope.traveller.twinBeds;
+		$scope.hotel.hotelBookingDetails.lateCheckin = $scope.traveller.lateCheckin;
+		$scope.hotel.hotelBookingDetails.largeBed = $scope.traveller.largeBed;
+		$scope.hotel.hotelBookingDetails.highFloor = $scope.traveller.highFloor;
+		$scope.hotel.hotelBookingDetails.earlyCheckin = $scope.traveller.earlyCheckin;
+		$scope.hotel.hotelBookingDetails.airportTransfer = $scope.traveller.airportTransfer;
+		$scope.hotel.hotelBookingDetails.airportTransferInfo = $scope.traveller.airportTransferInfo;
+		$scope.hotel.hotelBookingDetails.enterComments = $scope.traveller.enterComments;
 		//$scope.hotel.hotelbyDate = null;
 		console.log($scope.hotel);
 		

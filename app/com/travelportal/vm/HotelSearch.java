@@ -29,6 +29,7 @@ public class HotelSearch {
 	public String checkInTime;
 	public String checkOutTime;
 	public String roomVoltage;
+	public int cancellation_date_diff;
 	
 	public int currencyId;
 	public String currencyName;
@@ -255,6 +256,12 @@ public class HotelSearch {
 	}
 	public void setRoomVoltage(String roomVoltage) {
 		this.roomVoltage = roomVoltage;
+	}
+	public int getCancellation_date_diff() {
+		return cancellation_date_diff;
+	}
+	public void setCancellation_date_diff(int cancellation_date_diff) {
+		this.cancellation_date_diff = cancellation_date_diff;
 	}
 	
 	

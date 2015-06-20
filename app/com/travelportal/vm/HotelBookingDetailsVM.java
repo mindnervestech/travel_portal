@@ -1,5 +1,7 @@
 package com.travelportal.vm;
 
+import java.util.List;
+
 import javax.persistence.Column;
 
 import com.travelportal.domain.Salutation;
@@ -20,6 +22,18 @@ public class HotelBookingDetailsVM {
 	public String travellercountry;
 	public String travellerphnaumber;
 	public String travelleremail;	
+	public String nonSmokingRoom;
+	public String twinBeds;
+	public String lateCheckin;
+	public String largeBed;
+	public String highFloor;
+	public String earlyCheckin;
+	public String airportTransfer;
+	public String airportTransferInfo;
+	public String enterComments;
+	public List<PassengerBookingInfoVM> passengerInfo;
+	
+	
 	
 	public String getAdult() {
 		return adult;
@@ -104,6 +118,66 @@ public class HotelBookingDetailsVM {
 	}
 	public void setTravellersalutation(String travellersalutation) {
 		this.travellersalutation = travellersalutation;
+	}
+	public String getNonSmokingRoom() {
+		return nonSmokingRoom;
+	}
+	public void setNonSmokingRoom(String nonSmokingRoom) {
+		this.nonSmokingRoom = nonSmokingRoom;
+	}
+	public String getTwinBeds() {
+		return twinBeds;
+	}
+	public void setTwinBeds(String twinBeds) {
+		this.twinBeds = twinBeds;
+	}
+	public String getLateCheckin() {
+		return lateCheckin;
+	}
+	public void setLateCheckin(String lateCheckin) {
+		this.lateCheckin = lateCheckin;
+	}
+	public String getLargeBed() {
+		return largeBed;
+	}
+	public void setLargeBed(String largeBed) {
+		this.largeBed = largeBed;
+	}
+	public String getHighFloor() {
+		return highFloor;
+	}
+	public void setHighFloor(String highFloor) {
+		this.highFloor = highFloor;
+	}
+	public String getEarlyCheckin() {
+		return earlyCheckin;
+	}
+	public void setEarlyCheckin(String earlyCheckin) {
+		this.earlyCheckin = earlyCheckin;
+	}
+	public String getAirportTransfer() {
+		return airportTransfer;
+	}
+	public void setAirportTransfer(String airportTransfer) {
+		this.airportTransfer = airportTransfer;
+	}
+	public String getAirportTransferInfo() {
+		return airportTransferInfo;
+	}
+	public void setAirportTransferInfo(String airportTransferInfo) {
+		this.airportTransferInfo = airportTransferInfo;
+	}
+	public String getEnterComments() {
+		return enterComments;
+	}
+	public void setEnterComments(String enterComments) {
+		this.enterComments = enterComments;
+	}
+	public List<PassengerBookingInfoVM> getPassengerInfo() {
+		return passengerInfo;
+	}
+	public void setPassengerInfo(List<PassengerBookingInfoVM> passengerInfo) {
+		this.passengerInfo = passengerInfo;
 	}
 		
 	

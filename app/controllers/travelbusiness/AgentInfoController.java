@@ -98,6 +98,17 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setTravellercountry(hBookingDetails.getTravellercountry().getCountryCode());
 			hDetailsVM.setTypeOfStay_inpromotion(hBookingDetails.getTypeOfStay_inpromotion());
 			hDetailsVM.setNonRefund(hBookingDetails.getNonRefund());
+
+			hDetailsVM.setNonSmokingRoom(hBookingDetails.getNonSmokingRoom());
+			hDetailsVM.setTwinBeds(hBookingDetails.getTwinBeds());
+			hDetailsVM.setLateCheckin(hBookingDetails.getLateCheckin());
+			hDetailsVM.setLargeBed(hBookingDetails.getLargeBed());
+			hDetailsVM.setHighFloor(hBookingDetails.getHighFloor());
+			hDetailsVM.setEarlyCheckin(hBookingDetails.getEarlyCheckin());
+			hDetailsVM.setAirportTransfer(hBookingDetails.getAirportTransfer());
+			hDetailsVM.setAirportTransferInfo(hBookingDetails.getAirportTransferInfo());
+			hDetailsVM.setEnterComments(hBookingDetails.getEnterComments());
+			
 			aDetailsVMs.add(hDetailsVM);
 		}
 		//return ok(Json.toJson(aDetailsVMs));
@@ -209,6 +220,16 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setTravellercountry(hBookingDetails.getTravellercountry().getCountryCode());
 			hDetailsVM.setTypeOfStay_inpromotion(hBookingDetails.getTypeOfStay_inpromotion());
 			hDetailsVM.setNonRefund(hBookingDetails.getNonRefund());
+			hDetailsVM.setNonSmokingRoom(hBookingDetails.getNonSmokingRoom());
+			hDetailsVM.setTwinBeds(hBookingDetails.getTwinBeds());
+			hDetailsVM.setLateCheckin(hBookingDetails.getLateCheckin());
+			hDetailsVM.setLargeBed(hBookingDetails.getLargeBed());
+			hDetailsVM.setHighFloor(hBookingDetails.getHighFloor());
+			hDetailsVM.setEarlyCheckin(hBookingDetails.getEarlyCheckin());
+			hDetailsVM.setAirportTransfer(hBookingDetails.getAirportTransfer());
+			hDetailsVM.setAirportTransferInfo(hBookingDetails.getAirportTransferInfo());
+			hDetailsVM.setEnterComments(hBookingDetails.getEnterComments());
+			
 			aDetailsVMs.add(hDetailsVM);
 		}
 		//return ok(Json.toJson(aDetailsVMs));
@@ -342,6 +363,16 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setTravellercountry(hBookingDetails.getTravellercountry().getCountryCode());
 			hDetailsVM.setTypeOfStay_inpromotion(hBookingDetails.getTypeOfStay_inpromotion());
 			hDetailsVM.setNonRefund(hBookingDetails.getNonRefund());
+			hDetailsVM.setNonSmokingRoom(hBookingDetails.getNonSmokingRoom());
+			hDetailsVM.setTwinBeds(hBookingDetails.getTwinBeds());
+			hDetailsVM.setLateCheckin(hBookingDetails.getLateCheckin());
+			hDetailsVM.setLargeBed(hBookingDetails.getLargeBed());
+			hDetailsVM.setHighFloor(hBookingDetails.getHighFloor());
+			hDetailsVM.setEarlyCheckin(hBookingDetails.getEarlyCheckin());
+			hDetailsVM.setAirportTransfer(hBookingDetails.getAirportTransfer());
+			hDetailsVM.setAirportTransferInfo(hBookingDetails.getAirportTransferInfo());
+			hDetailsVM.setEnterComments(hBookingDetails.getEnterComments());
+			
 			aDetailsVMs.add(hDetailsVM);
 		}
 		//return ok(Json.toJson(aDetailsVMs));

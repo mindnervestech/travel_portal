@@ -257,6 +257,7 @@ GET  /getbookingInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	
 GET  /getonrequestInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm          com.travelportal.controllers.ConfirmBookingController.getonrequestInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)
 #GET  /getonrequestInfoDateWise/:fromDate/:toDate/:supplierCode    com.travelportal.controllers.ConfirmBookingController.getonrequestInfoDateWise(fromDate:String,toDate:String,supplierCode:Long)
 GET  /getbookDateWise/:id			com.travelportal.controllers.ConfirmBookingController.getbookDateWise(id:Long)
+GET  /getBookingPaymentInfo/:bookingId/:payment	   com.travelportal.controllers.ConfirmBookingController.getBookingPaymentInfo(bookingId:Long,payment:String)
 GET  /getRejectBooking/:id       com.travelportal.controllers.ConfirmBookingController.getRejectBooking(id:Long)
 GET  /getconfBooking/:id       com.travelportal.controllers.ConfirmBookingController.getconfBooking(id:Long)
 GET  /getrejectInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	com.travelportal.controllers.ConfirmBookingController.getrejectInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)

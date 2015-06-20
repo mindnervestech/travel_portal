@@ -58,6 +58,18 @@ public class HotelBookingDetails {
 	@ManyToOne
 	private Country travellercountry;
 	private String travellerphnaumber;
+	
+	private String nonSmokingRoom;
+	private String twinBeds;
+	private String lateCheckin;
+	private String largeBed;
+	private String highFloor;
+	private String earlyCheckin;
+	private String airportTransfer;
+	private String airportTransferInfo;
+	private String enterComments;
+	
+	public String payment;
 	private Long roomId;
 	private String roomName;
 	private String promotionname;
@@ -72,6 +84,7 @@ public class HotelBookingDetails {
 	@OneToOne
 	private RateMeta rate;
 	public String nonRefund;
+	private Date latestCancellationDate;
 	
 	public Long getSupplierCode() {
 		return supplierCode;
@@ -302,14 +315,83 @@ public class HotelBookingDetails {
 		this.travellerpassportNo = travellerpassportNo;
 	}
 	
-	
-	
-	
 	public Salutation getTravellersalutation() {
 		return travellersalutation;
 	}
 	public void setTravellersalutation(Salutation travellersalutation) {
 		this.travellersalutation = travellersalutation;
+	}
+	
+	
+	
+	
+	public String getNonSmokingRoom() {
+		return nonSmokingRoom;
+	}
+	public void setNonSmokingRoom(String nonSmokingRoom) {
+		this.nonSmokingRoom = nonSmokingRoom;
+	}
+	public String getTwinBeds() {
+		return twinBeds;
+	}
+	public void setTwinBeds(String twinBeds) {
+		this.twinBeds = twinBeds;
+	}
+	public String getLateCheckin() {
+		return lateCheckin;
+	}
+	public void setLateCheckin(String lateCheckin) {
+		this.lateCheckin = lateCheckin;
+	}
+	public String getLargeBed() {
+		return largeBed;
+	}
+	public void setLargeBed(String largeBed) {
+		this.largeBed = largeBed;
+	}
+	public String getHighFloor() {
+		return highFloor;
+	}
+	public void setHighFloor(String highFloor) {
+		this.highFloor = highFloor;
+	}
+	public String getEarlyCheckin() {
+		return earlyCheckin;
+	}
+	public void setEarlyCheckin(String earlyCheckin) {
+		this.earlyCheckin = earlyCheckin;
+	}
+	public String getAirportTransfer() {
+		return airportTransfer;
+	}
+	public void setAirportTransfer(String airportTransfer) {
+		this.airportTransfer = airportTransfer;
+	}
+	public String getAirportTransferInfo() {
+		return airportTransferInfo;
+	}
+	public void setAirportTransferInfo(String airportTransferInfo) {
+		this.airportTransferInfo = airportTransferInfo;
+	}
+	public String getEnterComments() {
+		return enterComments;
+	}
+	public void setEnterComments(String enterComments) {
+		this.enterComments = enterComments;
+	}
+	
+	public Date getLatestCancellationDate() {
+		return latestCancellationDate;
+	}
+	public void setLatestCancellationDate(Date latestCancellationDate) {
+		this.latestCancellationDate = latestCancellationDate;
+	}
+	
+	public String getPayment() {
+		return payment;
+	}
+	public void setPayment(String payment) {
+		this.payment = payment;
 	}
 	public static HotelBookingDetails findBookingId() {
 	    	return (HotelBookingDetails) JPA.em().createQuery("select c from HotelBookingDetails c where c.id = (select max(a.id) from HotelBookingDetails a)").getSingleResult();

@@ -1,8 +1,7 @@
 package com.travelportal.vm;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Column;
 
 public class SearchHotelValueVM {
 	
@@ -20,6 +19,7 @@ public class SearchHotelValueVM {
 	public List<Integer> locationCheck;
 	public List<Integer> amenitiesCheck;
 	public List<Integer> starCheck;
+	public String finalTotalDetails;
 	public String roomId;
 	public String total;
 	public String adult;
@@ -180,6 +180,13 @@ public class SearchHotelValueVM {
 	public void setNoOfchild(String noOfchild) {
 		this.noOfchild = noOfchild;
 	}
+	public String getFinalTotalDetails() {
+		return finalTotalDetails;
+	}
+	public void setFinalTotalDetails(String finalTotalDetails) {
+		this.finalTotalDetails = finalTotalDetails;
+	}
+	
 		
 	
 	

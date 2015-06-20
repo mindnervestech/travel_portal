@@ -13,7 +13,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 @Entity
-@Table(name="Hotel_images")
+@Table(name="hotel_images")
 public class HotelImagesPath { 
 	@Column(name="id")
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)

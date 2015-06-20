@@ -38,7 +38,7 @@ import com.travelportal.vm.AllotmentMarketVM;
 import com.travelportal.vm.RoomType;
 
 @Entity
-@Table(name="batchMarkup")
+@Table(name="batchmarkup")
 public class BatchMarkup {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)

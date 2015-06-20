@@ -25,7 +25,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 public class ConfirmBookingController extends Controller {
-
+	
+	
 	@Transactional(readOnly=true)
 	public static Result getbookingInfo(long supplierCode,int currentPage,String fromDate,String toDate,String agentcompanyNm) {
 		
@@ -464,6 +465,21 @@ public class ConfirmBookingController extends Controller {
 		HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingById(id);
 		hBookingDetails.setRoom_status("available");
 		hBookingDetails.merge();
+		return ok();
+		
+	}
+	
+	@Transactional
+	public static Result getBookingPaymentInfo(long bookingId,String payment) {
+		HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingById(bookingId);
+		if(payment.equals("true")){
+			hBookingDetails.setPayment("yes");
+		}else{
+			hBookingDetails.setPayment("no");
+		}
+		
+		hBookingDetails.merge();
+		
 		return ok();
 		
 	}

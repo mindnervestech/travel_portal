@@ -14,15 +14,26 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+/*import play.activiti.engine.impl.util.json.JSONArray;
+import play.activiti.engine.impl.util.json.JSONException;
+import org.activiti.engine.impl.util.json.JSONObject;
+*/
+import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.libs.Json;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.util.parsing.json.JSONObject;
 import views.html.travelbusiness.hotelBookingInfo;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.travelportal.domain.AmenitiesType;
+import com.travelportal.domain.CancellationDateDiff;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelImagesPath;
@@ -45,7 +56,9 @@ import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.HotelBookingDetailsVM;
+import com.travelportal.vm.HotelHealthAndSafetyVM;
 import com.travelportal.vm.HotelSearch;
+import com.travelportal.vm.PassengerBookingInfoVM;
 import com.travelportal.vm.RoomAmenitiesVm;
 import com.travelportal.vm.RoomChildpoliciVM;
 import com.travelportal.vm.SearchAllotmentMarketVM;
@@ -239,9 +252,20 @@ public class HotelDetailsController extends Controller {
 @Transactional(readOnly=true)
 public static Result hotelBookingpage() {
 	
+	/*JsonNode json = request().body().asJson();
+	DynamicForm form = DynamicForm.form().bindFromRequest();
+	Json.fromJson(json, SearchHotelValueVM.class);
+	SearchHotelValueVM searchVM = Json.fromJson(json, SearchHotelValueVM.class);*/
+	
 	Form<SearchHotelValueVM> HotelForm = Form.form(SearchHotelValueVM.class).bindFromRequest();
 	SearchHotelValueVM searchVM = HotelForm.get();
-	    	
+	
+	System.out.println("==================");
+	System.out.println(searchVM.getFinalTotalDetails().toString());
+	System.out.println("==================");
+	//Json.parse(arg0)
+	
+	
 	DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
 	List<HotelSearch> hotellist = new ArrayList<>();
@@ -319,6 +343,36 @@ public static Result hotelBookingpage() {
 		    }
 			hotelBookings.setTotal(searchVM.total);
 			hotelBookings.setTotalParPerson(searchVM.totalParPerson);
+			
+			List<PassengerBookingInfoVM> pList = new ArrayList<>();
+			 JSONArray array = null;
+				try {
+					array = new JSONArray(searchVM.getFinalTotalDetails());
+				} catch (JSONException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				 for(int i=0; i<array.length(); i++){
+					 try {
+						 PassengerBookingInfoVM pInfoVM = new PassengerBookingInfoVM();
+						 org.json.JSONObject jsonObj  = array.getJSONObject(i);
+					
+						 pInfoVM.adult = jsonObj.getString("adult");
+						 try{
+						 pInfoVM.noOfchild = jsonObj.getString("noOfchild");
+						 } catch(Exception e){
+							 System.out.println("Child Not Found");
+						 }
+						// pInfoVM.total = jsonObj.getString("total").toString();
+						 pList.add(pInfoVM);
+						 
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				      
+				 }   
+				 hotelBookings.setPassengerInfo(pList);
 			
 			hProfileVM.setHotelBookingDetails(hotelBookings);
 			
@@ -491,6 +545,11 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 				.getId());
 		hProfileVM.setStars(hAmenities.getStartRatings().getStarRating());
 	}
+	
+	CancellationDateDiff can = CancellationDateDiff.getById(1);
+	
+	hProfileVM.cancellation_date_diff = can.getDateDiff();
+	
 	hProfileVM.currencyId = hAmenities.getCurrency().getCurrencyCode();
 	hProfileVM.currencyName = hAmenities.getCurrency().getCurrencyName();
 	String currency = hAmenities.getCurrency().getCurrencyName();
