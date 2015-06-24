@@ -53,14 +53,14 @@
 				</div>
 				<div class="col-md-4">
 					<input type="text" name="checkIn" data-ng-model="agentinfo.checkIn"
-							class="form-control meal-font-text-size" disabled="disabled" required style="width: 179px;margin-left: 10px;">
+							class="form-control meal-font-text-size" required style="width: 179px;margin-left: 10px;">
 				</div>
 				<div class="col-md-2">
 				<label>Check Out Date</label>
 				</div>
 				<div class="col-md-4">
 				<input type="text" name="checkOut" data-ng-model="agentinfo.checkOut"
-							class="form-control meal-font-text-size" disabled="disabled" required style="width: 175px;padding-left: 10px;">
+							class="form-control meal-font-text-size" required style="width: 175px;padding-left: 10px;">
 							</div>
 				</div>
 				</div>
@@ -364,7 +364,19 @@
 											<div class="col-md-2">
 													 <button type="button" ng-click="cancelbooking(agentinfo.id,agentinfo.nonRefund)" class="btn btn-primary">Cancel booking</button>
 											</div>
+											<!-- <div class="col-md-2">
+											<button type="button" ng-click="" class="btn btn-primary">Amend booking</button>
+											</div> -->
 											<div class="col-md-2">
+												 <form action="/hoteldetailpage" method="post">
+                              					         <input type="text" name="supplierCode"  value="{{agentinfo.supplierCode}}" style="display: none;">
+                                					    <input type="text" name="checkIn" value="{{agentinfo.checkIn}}" style="display: none;">
+                              						     <input type="text" name="checkOut" value="{{agentinfo.checkOut}}" style="display: none;">
+                              						     <input type="text" name="checkOut" value="{{agentinfo.checkOut}}" style="display: none;">
+                            						     <input type="text" name="nationalityCode" value="{{agentinfo.nationality}}" style="display: none;">
+                            						      <input type="text" name="bookingId" value="{{agentinfo.id}}" style="display: none;">   
+                                                 <button type="submit"class="btn btn-primary">Amend booking</button>
+                                               </form> 
 											</div>
 				
 		    							</div>

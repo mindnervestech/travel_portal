@@ -30,7 +30,7 @@ public class HotelSearch {
 	public String checkOutTime;
 	public String roomVoltage;
 	public int cancellation_date_diff;
-	
+	public String bookingId;
 	public int currencyId;
 	public String currencyName;
 	public String currencyShort;

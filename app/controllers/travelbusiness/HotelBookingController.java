@@ -2,26 +2,22 @@ package controllers.travelbusiness;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import org.javers.core.Javers;
+import org.javers.core.JaversBuilder;
+import org.javers.core.diff.Diff;
+import org.javers.core.diff.changetype.ValueChange;
+import org.javers.core.diff.changetype.container.ContainerChange;
+import org.javers.core.diff.changetype.container.ContainerElementChange;
+import org.javers.core.diff.changetype.container.ListChange;
 
 import play.Play;
 import play.data.Form;
@@ -30,6 +26,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import com.google.gson.Gson;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -49,13 +46,17 @@ import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.HotelStarRatings;
+import com.travelportal.domain.RoomAndDateWiseRate;
 import com.travelportal.domain.RoomRegiterBy;
+import com.travelportal.domain.RoomRegiterByChild;
 import com.travelportal.domain.Salutation;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
+import com.travelportal.vm.ChildselectedVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.PassengerBookingInfoVM;
+import com.travelportal.vm.RateDatedetailVM;
 import com.travelportal.vm.SearchRateDetailsVM;
 import com.travelportal.vm.SerachHotelRoomType;
 import com.travelportal.vm.SerachedHotelbyDate;
@@ -245,10 +246,36 @@ public class HotelBookingController extends Controller {
 		}
 		
 		int i=1;
+		
+		if(searchVM.bookingId != ""){
+			List<RoomRegiterBy> regiterByOldObj = RoomRegiterBy.getRoomInfoByBookingId(Long.parseLong(searchVM.bookingId));
+			List<RoomRegiterBy> regiterByOldObjDelete = RoomRegiterBy.getRoomInfoByBookingId(Long.parseLong(searchVM.bookingId));
+			for(RoomRegiterBy roomRegiterBy:regiterByOldObjDelete){
+				roomRegiterBy.delete();
+			}
+			
+			for(PassengerBookingInfoVM passBookingInfoVM:searchVM.hotelBookingDetails.passengerInfo){
+				RoomRegiterBy regiterBy = new RoomRegiterBy();
+				regiterBy.setAdult(passBookingInfoVM.adult);
+				regiterBy.setRegiterBy(passBookingInfoVM.regiterBy);
+				regiterBy.setTotal(passBookingInfoVM.total);
+				if(passBookingInfoVM.noOfchild != null){
+					regiterBy.setNoOfchild(Integer.parseInt(passBookingInfoVM.noOfchild));
+				}
+				regiterBy.setHotelBookingDetails(HotelBookingDetails.findBookingById(Long.parseLong(searchVM.bookingId)));
+				regiterBy.setRoomIndex(i);
+				i++;
+				regiterBy.save();
+			}	
+			
+			List<RoomRegiterBy> regiterByNewObjDelete = RoomRegiterBy.getRoomInfoByBookingId(Long.parseLong(searchVM.bookingId));
+			//compare(regiterByOldObj, regiterByNewObjDelete);
+		}
 		for(PassengerBookingInfoVM passBookingInfoVM:searchVM.hotelBookingDetails.passengerInfo){
 			RoomRegiterBy regiterBy = new RoomRegiterBy();
 			regiterBy.setAdult(passBookingInfoVM.adult);
 			regiterBy.setRegiterBy(passBookingInfoVM.regiterBy);
+			regiterBy.setTotal(passBookingInfoVM.total);
 			if(passBookingInfoVM.noOfchild != null){
 				regiterBy.setNoOfchild(Integer.parseInt(passBookingInfoVM.noOfchild));
 			}
@@ -256,6 +283,36 @@ public class HotelBookingController extends Controller {
 			regiterBy.setRoomIndex(i);
 			i++;
 			regiterBy.save();
+			for(ChildselectedVM chVm:passBookingInfoVM.childselected){
+				RoomRegiterByChild regiterByChild = new RoomRegiterByChild();
+				if(chVm.age != null){
+				 regiterByChild.setAge(Integer.parseInt(chVm.age));
+				}
+				regiterByChild.setBreakfast(chVm.breakfast);
+				if(!chVm.childRate.equals("")){
+				regiterByChild.setChild_rate(Double.parseDouble(chVm.childRate));
+				}
+				regiterByChild.setFree_child(chVm.freeChild);
+				regiterByChild.setRoomRegiterBy(RoomRegiterBy.getRoomInfoById(regiterBy.getId()));
+				regiterByChild.save();
+				
+			}
+			
+			for(RateDatedetailVM rDatedetailVM:passBookingInfoVM.rateDatedetail){
+				RoomAndDateWiseRate rWiseRate = new RoomAndDateWiseRate();
+				rWiseRate.setCurrency(rDatedetailVM.currency);
+				rWiseRate.setDate(rDatedetailVM.date);
+				rWiseRate.setDay(rDatedetailVM.day);
+				rWiseRate.setFulldate(rDatedetailVM.fulldate);
+				rWiseRate.setMeal(rDatedetailVM.meal);
+				rWiseRate.setMonth(rDatedetailVM.month);
+				if(rDatedetailVM.rate != null){
+				  rWiseRate.setRate(Double.parseDouble(rDatedetailVM.rate));
+				}
+				rWiseRate.setRoomRegiterBy(RoomRegiterBy.getRoomInfoById(regiterBy.getId()));
+				rWiseRate.save();
+			}
+			
 		}
 		
 		int applyforroom = 0;
@@ -342,6 +399,67 @@ public class HotelBookingController extends Controller {
 		}
 
 		return ok(Json.toJson(flagAppro));
+		
+	}
+	
+	
+	/*private static void compare(Object o, Object n) {
+		Javers javers = JaversBuilder.javers().build();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date dt = new Date();
+		Diff diff = javers.compare(o, n);
+
+		System.out.println("===" + diff.getChanges().size());
+		System.out.println("diff= " + diff);
+	   List<changeValueVM1> list = new ArrayList<changeValueVM1>();
+		
+		Map map = new java.util.HashMap<>();
+		//ValueChange change =  diff.getChangesByType(ValueChange.class).get(0);
+		//List<ListChange> changes = diff.getChangesByType(ListChange.class);
+		List<ListChange> changes = diff.getChangesByType(ListChange.class);
+		 for(ListChange c:changes){
+			 
+			 c.getProperty(
+			 
+			 changeValueVM1 chVm = new changeValueVM1();
+			 chVm.property = c.getProperty().getName();
+			 chVm.changes =  c.getChanges();
+			 //chVm.oldVal = c.getChanges().get(0);
+			 //chVm.newVal = c.getRight().toString();
+			 // c.getChanges().get(0);
+			
+			 
+			 list.add(chVm);
+    	 }
+		 Gson gson = new Gson(); 
+		 String json = gson.toJson(list);
+		 
+		for(ContainerElementChange c1:list.get(0).changes){
+			//c1.getIndex()
+		}
+		 User user = User.findByEmail(username);
+		 
+		 AduitLog al = new AduitLog();
+         al.setEntityId(EntityId);
+         al.setEntity(entity);
+         al.setJsonData(json);
+         al.setUser(User.findById(user.getId()));
+         al.setChangeDate(dt);
+         al.save();
+
+	}
+	*/
+	public static class changeValueVM {
+		public String property;
+		public String oldVal;
+		public String newVal;
+		
+	}
+	
+	public static class changeValueVM1 {
+		public String property;
+		public List<ContainerElementChange> changes;
 		
 	}
 	

@@ -55,10 +55,12 @@ import com.travelportal.domain.rooms.RoomChildPolicies;
 import com.travelportal.domain.rooms.Specials;
 import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.CancellationPolicyVM;
+import com.travelportal.vm.ChildselectedVM;
 import com.travelportal.vm.HotelBookingDetailsVM;
 import com.travelportal.vm.HotelHealthAndSafetyVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.PassengerBookingInfoVM;
+import com.travelportal.vm.RateDatedetailVM;
 import com.travelportal.vm.RoomAmenitiesVm;
 import com.travelportal.vm.RoomChildpoliciVM;
 import com.travelportal.vm.SearchAllotmentMarketVM;
@@ -260,12 +262,6 @@ public static Result hotelBookingpage() {
 	Form<SearchHotelValueVM> HotelForm = Form.form(SearchHotelValueVM.class).bindFromRequest();
 	SearchHotelValueVM searchVM = HotelForm.get();
 	
-	System.out.println("==================");
-	System.out.println(searchVM.getFinalTotalDetails().toString());
-	System.out.println("==================");
-	//Json.parse(arg0)
-	
-	
 	DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
 	List<HotelSearch> hotellist = new ArrayList<>();
@@ -305,6 +301,7 @@ public static Result hotelBookingpage() {
 		
 		List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 		HotelSearch hProfileVM = new HotelSearch();
+		hProfileVM.bookingId = searchVM.bookingId;
 		Long object = (Long) map.get(supplierid.longValue());
 		
 		if (object == null) {
@@ -345,7 +342,11 @@ public static Result hotelBookingpage() {
 			hotelBookings.setTotalParPerson(searchVM.totalParPerson);
 			
 			List<PassengerBookingInfoVM> pList = new ArrayList<>();
+			System.out.println("_+_+_+_+Yogesh_+_+_+_+_+-");
+			System.out.println(searchVM.getFinalTotalDetails().toString());
 			 JSONArray array = null;
+			 JSONArray childArray = null;
+			 JSONArray rateArray = null;
 				try {
 					array = new JSONArray(searchVM.getFinalTotalDetails());
 				} catch (JSONException e1) {
@@ -358,11 +359,48 @@ public static Result hotelBookingpage() {
 						 org.json.JSONObject jsonObj  = array.getJSONObject(i);
 					
 						 pInfoVM.adult = jsonObj.getString("adult");
+						 pInfoVM.total = String.valueOf(jsonObj.getLong("total"));
 						 try{
 						 pInfoVM.noOfchild = jsonObj.getString("noOfchild");
+						 
 						 } catch(Exception e){
 							 System.out.println("Child Not Found");
 						 }
+						 childArray = jsonObj.getJSONArray("childselected");
+						 List<ChildselectedVM> chList= new ArrayList<>();
+						 for(int j=0; j<childArray.length(); j++){
+							 org.json.JSONObject jsonObjChild  = childArray.getJSONObject(j);
+
+							 ChildselectedVM chVm = new ChildselectedVM();
+							 chVm.age = jsonObjChild.getString("age");
+							 chVm.breakfast = jsonObjChild.getString("breakfast");
+							 chVm.childRate = jsonObjChild.getString("childRate");
+							 chVm.freeChild = jsonObjChild.getString("freeChild");
+							 chList.add(chVm);
+						 }
+						 
+						 pInfoVM.childselected = chList;
+						 
+						 rateArray = jsonObj.getJSONArray("rateDatedetail");
+						 List<RateDatedetailVM> rdList= new ArrayList<>();
+						 for(int j=0; j<rateArray.length(); j++){
+							 org.json.JSONObject jsonObjRate  = rateArray.getJSONObject(j);
+
+							 RateDatedetailVM rdVm = new RateDatedetailVM();
+							 System.out.println(jsonObjRate.getString("fulldate"));
+							// rdVm.currency = jsonObjRate.getString("currency");
+							 rdVm.date = jsonObjRate.getString("date");
+							 rdVm.day = jsonObjRate.getString("day");
+							 rdVm.fulldate = jsonObjRate.getString("fulldate");
+							 rdVm.meal = jsonObjRate.getString("meal");
+							 rdVm.month = jsonObjRate.getString("month");
+							 rdVm.rate = String.valueOf(jsonObjRate.getDouble("rate"));
+							 rdList.add(rdVm);
+						 }
+						 
+						 pInfoVM.rateDatedetail = rdList;
+						 
+						 
 						// pInfoVM.total = jsonObj.getString("total").toString();
 						 pList.add(pInfoVM);
 						 

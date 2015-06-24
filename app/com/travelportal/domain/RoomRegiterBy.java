@@ -1,5 +1,7 @@
 package com.travelportal.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +27,8 @@ public class RoomRegiterBy {
 	private int noOfchild;
 	@Column(name="regiter_by")
 	private String regiterBy;
+	@Column(name="total")
+	private String total;
 	@OneToOne
 	private HotelBookingDetails hotelBookingDetails;
 	
@@ -111,6 +115,14 @@ public class RoomRegiterBy {
 		return hotelBookingDetails;
 	}
 
+	public String getTotal() {
+		return total;
+	}
+
+	public void setTotal(String total) {
+		this.total = total;
+	}
+
 
 
 
@@ -120,7 +132,14 @@ public class RoomRegiterBy {
 	}
 
 
-
+	public static List<RoomRegiterBy> getRoomInfoByBookingId(long code) {
+		try{
+		return (List<RoomRegiterBy>) JPA.em().createQuery("select c from RoomRegiterBy c where c.hotelBookingDetails.id = ?1").setParameter(1, code).getResultList();
+		}
+		catch(Exception ex){
+			return null;
+		}
+	}
 
 
 	public static RoomRegiterBy getRoomInfoById(int code) {

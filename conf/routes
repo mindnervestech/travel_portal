@@ -31,7 +31,7 @@ GET   /leisureSport             		controllers.travelbusiness.HotelDetailsControl
 GET	  /hoteldetailpage/getHotelRoomImagePath/:roomId			controllers.travelbusiness.HotelDetailsController.getHotelRoomImagePath(roomId:Long)
 
 GET   /findAmenitiesData/:supplierCode     controllers.travelbusiness.HotelDetailsController.findAmenitiesData(supplierCode:Long)
-GET   /getDatewiseHotelRoom/:checkIn/:checkOut/:nationality/:supplierCode/:roomCode   controllers.travelbusiness.Application.getDatewiseHotelRoom(checkIn:String,checkOut:String,nationality:String,supplierCode:String,roomCode:String)
+GET   /getDatewiseHotelRoom/:checkIn/:checkOut/:nationality/:supplierCode/:roomCode/:bookingId   controllers.travelbusiness.Application.getDatewiseHotelRoom(checkIn:String,checkOut:String,nationality:String,supplierCode:String,roomCode:String,bookingId:String)
 #GET   /getSortHotel/:checkIn/:checkOut/:nationality/:cityid/:starid/:sortData   controllers.travelbusiness.Application.getSortHotel(checkIn:String,checkOut:String,nationality:String,cityid:String,starid:String,sortData:String)
 
 #Hotel Booking Page

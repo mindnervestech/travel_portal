@@ -54,6 +54,9 @@ import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.InfoWiseImagesPath;
 import com.travelportal.domain.InternalContacts;
+import com.travelportal.domain.RoomAndDateWiseRate;
+import com.travelportal.domain.RoomRegiterBy;
+import com.travelportal.domain.RoomRegiterByChild;
 import com.travelportal.domain.admin.BatchMarkup;
 import com.travelportal.domain.admin.BreakfastMarkup;
 import com.travelportal.domain.agent.AgentRegistration;
@@ -72,7 +75,11 @@ import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.AgentRegistrationVM;
 import com.travelportal.vm.BatchMarkupInfoVM;
 import com.travelportal.vm.CancellationPolicyVM;
+import com.travelportal.vm.ChildselectedVM;
+import com.travelportal.vm.HotelBookingDetailsVM;
 import com.travelportal.vm.HotelSearch;
+import com.travelportal.vm.PassengerBookingInfoVM;
+import com.travelportal.vm.RateDatedetailVM;
 import com.travelportal.vm.RoomAmenitiesVm;
 import com.travelportal.vm.RoomChildpoliciVM;
 import com.travelportal.vm.SearchAllotmentMarketVM;
@@ -751,7 +758,6 @@ public static void allotmentmarketInfo(AllotmentMarket alloMarket,SerachedRoomRa
 		}
 		if(alloMarket.getAllocation() == 3){
 			RoomAllotedRateWise rAllotedRateWise= RoomAllotedRateWise.findByRateIdandDate(rateid, CurrDate);
-			System.out.println("++++++++++++++++++++++");
 			if(rAllotedRateWise != null){
 				
 				aRoom = alloMarket.getChoose() - rAllotedRateWise.getRoomCount();
@@ -1530,6 +1536,62 @@ public static Result hoteldetailpage() {
 
 		List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 		HotelSearch hProfileVM = new HotelSearch();
+		if(searchVM.bookingId != null)
+		{
+			hProfileVM.bookingId = searchVM.bookingId;
+			HotelBookingDetailsVM hbooking = new HotelBookingDetailsVM(); 
+			List<PassengerBookingInfoVM> pBookingInfoVM = new ArrayList<>();
+			List<RoomRegiterBy> roBy = RoomRegiterBy.getRoomInfoByBookingId(Long.parseLong(searchVM.bookingId));
+			if(roBy != null){
+				//hProfileVM.hotelBookingDetails.passengerInfo =
+				for(RoomRegiterBy rBy:roBy){
+					PassengerBookingInfoVM paInfoVM = new PassengerBookingInfoVM();
+					paInfoVM.adult = rBy.getAdult();
+					paInfoVM.noOfchild =String.valueOf(rBy.getNoOfchild());
+					paInfoVM.total = rBy.getTotal();
+					List<ChildselectedVM> chList = new ArrayList<>();
+					List<RoomRegiterByChild> rByChild = RoomRegiterByChild.getRoomChildInfoByRoomId(rBy.getId());
+					if(rByChild != null){
+					
+					for(RoomRegiterByChild rChild:rByChild){
+						ChildselectedVM cVm = new ChildselectedVM();
+						cVm.age = String.valueOf(rChild.getAge());
+						cVm.breakfast = rChild.getBreakfast();
+						cVm.childRate = String.valueOf(rChild.getChild_rate());
+						cVm.freeChild = rChild.getFree_child();
+						chList.add(cVm);
+					}
+					paInfoVM.childselected = chList;
+					}
+					
+					List<RateDatedetailVM> rList = new ArrayList<>();
+					List<RoomAndDateWiseRate> rByrate = RoomAndDateWiseRate.getRoomRateInfoByRoomId(rBy.getId());
+					if(rByrate != null){
+					
+					for(RoomAndDateWiseRate rRate:rByrate){
+						RateDatedetailVM rVm = new RateDatedetailVM();
+						rVm.currency = rRate.getCurrency();
+						rVm.date = rRate.getDate();
+						rVm.day = rRate.getDay();
+						rVm.fulldate = rRate.getFulldate();
+						rVm.meal = rRate.getMeal();
+						rVm.month = rRate.getMonth();
+						rVm.rate = String.valueOf(rRate.getRate());
+						rList.add(rVm);
+					}
+					paInfoVM.rateDatedetail = rList;
+					}
+					
+					pBookingInfoVM.add(paInfoVM);
+					
+				}
+				hbooking.passengerInfo = pBookingInfoVM;
+				hProfileVM.hotelBookingDetails = hbooking;
+			}
+			
+		}
+		
+		
 		Long object = (Long) map.get(supplierid.longValue());
 		
 		if (object == null) {
@@ -1641,7 +1703,7 @@ public static Result hoteldetailpage() {
 
 
 @Transactional(readOnly = true)
-	public static Result getDatewiseHotelRoom(String checkIn,String checkOut,String nationality,String supplierCode1,String roomCode) {
+	public static Result getDatewiseHotelRoom(String checkIn,String checkOut,String nationality,String supplierCode1,String roomCode,String bookingId) {
 	
 		//
 	
@@ -1684,6 +1746,65 @@ public static Result hoteldetailpage() {
 			
 			List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 			HotelSearch hProfileVM = new HotelSearch();
+			
+			
+			if(!bookingId.equals("null"))
+			{
+				hProfileVM.bookingId = bookingId;
+				HotelBookingDetailsVM hbooking = new HotelBookingDetailsVM(); 
+				List<PassengerBookingInfoVM> pBookingInfoVM = new ArrayList<>();
+				List<RoomRegiterBy> roBy = RoomRegiterBy.getRoomInfoByBookingId(Long.parseLong(bookingId));
+				if(roBy != null){
+					//hProfileVM.hotelBookingDetails.passengerInfo =
+					for(RoomRegiterBy rBy:roBy){
+						PassengerBookingInfoVM paInfoVM = new PassengerBookingInfoVM();
+						paInfoVM.adult = rBy.getAdult();
+						paInfoVM.noOfchild =String.valueOf(rBy.getNoOfchild());
+						paInfoVM.total = rBy.getTotal();
+						List<ChildselectedVM> chList = new ArrayList<>();
+						List<RoomRegiterByChild> rByChild = RoomRegiterByChild.getRoomChildInfoByRoomId(rBy.getId());
+						if(rByChild != null){
+						
+						for(RoomRegiterByChild rChild:rByChild){
+							ChildselectedVM cVm = new ChildselectedVM();
+							cVm.age = String.valueOf(rChild.getAge());
+							cVm.breakfast = rChild.getBreakfast();
+							cVm.childRate = String.valueOf(rChild.getChild_rate());
+							cVm.freeChild = rChild.getFree_child();
+							chList.add(cVm);
+						}
+						paInfoVM.childselected = chList;
+						}
+						
+						List<RateDatedetailVM> rList = new ArrayList<>();
+						List<RoomAndDateWiseRate> rByrate = RoomAndDateWiseRate.getRoomRateInfoByRoomId(rBy.getId());
+						if(rByrate != null){
+						
+						for(RoomAndDateWiseRate rRate:rByrate){
+							RateDatedetailVM rVm = new RateDatedetailVM();
+							rVm.currency = rRate.getCurrency();
+							rVm.date = rRate.getDate();
+							rVm.day = rRate.getDay();
+							rVm.fulldate = rRate.getFulldate();
+							rVm.meal = rRate.getMeal();
+							rVm.month = rRate.getMonth();
+							rVm.rate = String.valueOf(rRate.getRate());
+							rList.add(rVm);
+						}
+						paInfoVM.rateDatedetail = rList;
+						}
+						
+						pBookingInfoVM.add(paInfoVM);
+						
+					}
+					hbooking.passengerInfo = pBookingInfoVM;
+					hProfileVM.hotelBookingDetails = hbooking;
+				}
+				
+			}
+			
+			
+			
 			Long object = (Long) map.get(supplierid.longValue());
 			
 			if (object == null) {

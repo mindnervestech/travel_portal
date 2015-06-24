@@ -10,6 +10,7 @@ public class SearchHotelValueVM {
 	public String cityCode;
 	public String checkIn;
 	public String checkOut;
+	public String bookingId;
 	public String id;
 	public String nationalityCode;
 	public String sortData;
@@ -185,6 +186,12 @@ public class SearchHotelValueVM {
 	}
 	public void setFinalTotalDetails(String finalTotalDetails) {
 		this.finalTotalDetails = finalTotalDetails;
+	}
+	public String getBookingId() {
+		return bookingId;
+	}
+	public void setBookingId(String bookingId) {
+		this.bookingId = bookingId;
 	}
 	
 		
