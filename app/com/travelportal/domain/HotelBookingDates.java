@@ -26,6 +26,7 @@ public class HotelBookingDates {
 	private Date bookingDate;
 	private Double bookDateRate;
 	private String mealtypeName;
+	private int allotmentmarket;
 	
 	@OneToOne
 	private HotelBookingDetails bookingId;
@@ -73,6 +74,14 @@ public class HotelBookingDates {
 	}
 	
 	
+	public int getAllotmentmarket() {
+		return allotmentmarket;
+	}
+
+	public void setAllotmentmarket(int allotmentmarket) {
+		this.allotmentmarket = allotmentmarket;
+	}
+
 	public static List<HotelBookingDates> getDateBybookingId(long id) {
 		return JPA.em().createQuery("select c from HotelBookingDates c where c.bookingId.id = ?1").setParameter(1, id).getResultList();
 	}

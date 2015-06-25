@@ -366,6 +366,8 @@ public static Result hotelBookingpage() {
 						 } catch(Exception e){
 							 System.out.println("Child Not Found");
 						 }
+						 
+						 try{
 						 childArray = jsonObj.getJSONArray("childselected");
 						 List<ChildselectedVM> chList= new ArrayList<>();
 						 for(int j=0; j<childArray.length(); j++){
@@ -380,7 +382,9 @@ public static Result hotelBookingpage() {
 						 }
 						 
 						 pInfoVM.childselected = chList;
-						 
+						 } catch(JSONException e){
+							 System.out.println("No Child");
+						 }
 						 rateArray = jsonObj.getJSONArray("rateDatedetail");
 						 List<RateDatedetailVM> rdList= new ArrayList<>();
 						 for(int j=0; j<rateArray.length(); j++){
@@ -392,7 +396,7 @@ public static Result hotelBookingpage() {
 							 rdVm.date = jsonObjRate.getString("date");
 							 rdVm.day = jsonObjRate.getString("day");
 							 rdVm.fulldate = jsonObjRate.getString("fulldate");
-							 rdVm.meal = jsonObjRate.getString("meal");
+							// rdVm.meal = jsonObjRate.getString("meal");
 							 rdVm.month = jsonObjRate.getString("month");
 							 rdVm.rate = String.valueOf(jsonObjRate.getDouble("rate"));
 							 rdList.add(rdVm);

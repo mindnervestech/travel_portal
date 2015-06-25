@@ -7,7 +7,6 @@
                                <span class="col-md-1">TOTAL : </span>
                               <span class="price col-md-3" style="float: left;text-align: left;">{{finalTotal}} <sup style="font-size: small;color: chocolate;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
                            
-                             
                                <div class="col-md-2" >
                                                  <!-- <span class="price"><small>AVG/NIGHT</small>$620</span>  -->
                                                  <form action="/hotelBookingpage" method="post">
@@ -34,7 +33,7 @@
                                  </div>
                                  
                                
-                                <div class="filter-section gray-area clearfix">
+                                <div class="filter-section gray-area clearfix" style="max-height: 170px;overflow: auto;">
                                      
                                        <div class="pull-right col-md-12" ng-repeat="serchroom in addRooms" style="margin: 1%;">
                                        <div class="col-md-8">
@@ -56,7 +55,7 @@
                                            	 			<div class="selector">
                                                     		<select class="full-width" name="noOfchild" data-ng-model="serchroom.noOfchild" ng-change="noOfchildSelect(serchroom.noOfchild,$index)">
                                                        		<option ng-repeat="child in childcount" value="{{child}}">{{child}}</option>
-		                                                    </select><span ng-if="serchroom.noOfchild == null" class="custom-select full-width">1</span>
+		                                                    </select><span ng-if="serchroom.noOfchild == null" class="custom-select full-width">0</span>
 		                                                    <span ng-if="serchroom.noOfchild != null" class="custom-select full-width">{{serchroom.noOfchild}}</span>
         	                                        	</div>
                                              </div>
@@ -94,14 +93,14 @@
                                          		<span class="price" style="font-size: 15px;">{{serchroom.total}} <sup style="font-size: 10px;color: chocolate;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
                                        		  </div>
                                        		  <div class="col-md-2" style="margin-top: 20px;">
-                                         		<span><a ng-click="showDateWiseDetails($index)">Details</a></span>
+                                         		<span><a ng-click="showDateWiseDetails($index)">DayWise</a></span>
                                        		  </div>
                                          <div class="col-md-3" style="margin-top: 20px;">
                                          	<button class="full-width text-center" ng-click="newRoom($event,$index+1)">+</button>
                                          </div>
                                           <div class="col-md-3" style="margin-top: 20px;">
            									<span ng-show="addRooms.length > 1">
-                        					<button class="full-width text-center" ng-click="lessTotal($event,$index);addRooms.splice($index, 1)">-</button>
+                        					<button class="full-width text-center" ng-click="lessTotal($event,$index);">-</button>
                         					</span>
                                          </div>
                                          </div>
@@ -241,9 +240,14 @@
 					   			</div>
                                         
                                 </div>
-                                  <div class="col-md-12">
+                                  <div class="col-md-12" ng-if="breakfastAddfree != '' && breakfastAddfree != null">
                                   <label>Breakfast charges : {{breakfastAddfree}}</label>
                                   </div>
+                                  
+                                   <div class="col-md-12">
+                                  <label><u>Room {{currentRoom}}</u></label>
+                                  </div>
+                                  
                                 <div id="booking" class="col-md-12" style="background-color: white;height: 325px !important;overflow: auto;">
                                 <div class="booking-history col-md-4" ng-repeat="Dateinfo in rateDatedetailRoomWise">
                               
@@ -297,6 +301,14 @@ input.input-text,select,textarea,span.custom-select {
 	padding: .35em .625em .75em;
 	margin: 0 2px;
 	border: 1px solid;
+}
+.ngdialog-content{
+	width: 995px !important;
+	height: 570px;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+  min-height: 627px;
 }
 </style>     
                            

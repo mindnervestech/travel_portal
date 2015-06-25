@@ -143,6 +143,7 @@
 				</div>
 				
 			</div>
+			<hr>
 			<div class="form-group" ng-show="agentinfo.promotionname != null">
 		
 				<div class="col-md-12">
@@ -153,10 +154,25 @@
 					<input type="text" name="promotionname" data-ng-model="agentinfo.promotionname"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
+				<div class="col-md-1">
+				<label>Stay Days</label>
+				</div>
+				<div class="col-md-2">
+					<input type="text" name="stayDays_inpromotion" data-ng-model="agentinfo.stayDays_inpromotion"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				
+				<div class="col-md-1">
+				<label>Pay Days</label>
+				</div>
+				<div class="col-md-2">
+					<input type="text" name="payDays_inpromotion" data-ng-model="agentinfo.payDays_inpromotion"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
 				</div>
 				
 			</div>
-			<div class="form-group" ng-show="agentinfo.promotionname != null">
+			<!-- <div class="form-group" ng-show="agentinfo.promotionname != null">
 		
 				<div class="col-md-12">
 				<div class="col-md-2">
@@ -175,7 +191,7 @@
 				</div>
 				</div>
 				
-			</div>
+			</div> -->
 			 <div class="form-group">
 		
 				<div class="col-md-12">
@@ -276,7 +292,7 @@
 						</div>
 
 										<div class="tab-pane" id="Step3">
-												<div id="booking">
+												<div style="height: 390px;">
 											<div class="form-group">
 		
 											<div class="col-md-12">
@@ -358,16 +374,14 @@
 										</div>
 
 											<div class="form-group">
-		    								<div class="col-md-2">
-													 <button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
-											</div>
-											<div class="col-md-2">
-													 <button type="button" ng-click="cancelbooking(agentinfo.id,agentinfo.nonRefund)" class="btn btn-primary">Cancel booking</button>
+		    								
+											<div class="col-md-2" ng-if="agentinfo.room_status == 'available'">
+													 <button type="button" ng-click="cancelbooking(agentinfo.id,agentinfo.nonRefund)" class="btn btn-primary">Cancel Booking</button>
 											</div>
 											<!-- <div class="col-md-2">
 											<button type="button" ng-click="" class="btn btn-primary">Amend booking</button>
 											</div> -->
-											<div class="col-md-2">
+											<div class="col-md-2" ng-if="agentinfo.room_status == 'available'">
 												 <form action="/hoteldetailpage" method="post">
                               					         <input type="text" name="supplierCode"  value="{{agentinfo.supplierCode}}" style="display: none;">
                                 					    <input type="text" name="checkIn" value="{{agentinfo.checkIn}}" style="display: none;">
@@ -375,9 +389,17 @@
                               						     <input type="text" name="checkOut" value="{{agentinfo.checkOut}}" style="display: none;">
                             						     <input type="text" name="nationalityCode" value="{{agentinfo.nationality}}" style="display: none;">
                             						      <input type="text" name="bookingId" value="{{agentinfo.id}}" style="display: none;">   
-                                                 <button type="submit"class="btn btn-primary">Amend booking</button>
+                                                 <button type="submit"class="btn btn-primary">Amend Booking</button>
                                                </form> 
 											</div>
+											<div class="col-md-2">
+													 <button type="button" ng-click="voucher(agentinfo.id,agentinfo.room_status)" class="btn btn-primary">Voucher</button>
+											</div>
+											
+											<div class="col-md-2 pull-right">
+													 <button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
+											</div>
+										
 				
 		    							</div>
 										</div>
@@ -396,12 +418,20 @@
 
 <style>
 .ngdialog-content {
-width: 959px !important;
+width: 970px !important;
 }
 
 .meal-font-text-size{
 font-size: 12px;
 }
 
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+  min-height: 599px;
+  }
+
+
+ .menu-li{
+	  background-color: gainsboro !important;
+} 
 
 </style>

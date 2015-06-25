@@ -3,6 +3,7 @@ package com.travelportal.domain.rooms;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Query;
 import javax.persistence.Table;
 
+import com.travelportal.domain.Country;
 import com.travelportal.domain.allotment.AllotmentMarket;
 
 import play.db.jpa.JPA;
@@ -67,6 +69,15 @@ public class RoomAllotedRateWise {
 	}
 	
 
+	/*public static List<RoomAllotedRateWise> findAllDate() {
+		Query query = JPA.em().createQuery("Select c from RoomAllotedRateWise");
+    	return (List<RoomAllotedRateWise>) query.getResultList();
+	}*/
+	
+	public static List<RoomAllotedRateWise> findAllDate() {
+		return JPA.em().createQuery("select c from RoomAllotedRateWise c").getResultList();
+	}
+	
 	public static RoomAllotedRateWise findByRateId(Long id) {
 		Query query = JPA.em().createQuery("Select c from RoomAllotedRateWise c where c.rate.id = ?1");
 		query.setParameter(1, id);

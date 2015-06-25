@@ -47,6 +47,9 @@ GET   /getagentInfo/:currentPage/:fromDate/:toDate/:status          controllers.
 GET   /getagentInfobynm/:currentPage/:checkIn/:checkOut/:guest/:status         controllers.travelbusiness.AgentInfoController.getagentInfobynm(currentPage :Integer,checkIn:String,checkOut:String,guest:String,status:String)
 
 GET  /getbookingcancel/:id			 controllers.travelbusiness.AgentInfoController.getbookingcancel(id:Long)
+GET  /getVoucherConfirm/:bookingId    controllers.travelbusiness.AgentInfoController.getVoucherConfirm(bookingId:Long)
+GET  /getVoucherCancel/:bookingId    controllers.travelbusiness.AgentInfoController.getVoucherCancel(bookingId:Long)
+GET  /getVoucherOnRequest/:bookingId    controllers.travelbusiness.AgentInfoController.getVoucherOnRequest(bookingId:Long)
 
 #travelportal
 
