@@ -61,13 +61,18 @@ public class HotelBookingDetails {
 	
 	private String nonSmokingRoom;
 	private String twinBeds;
-	private String lateCheckin;
+	private String lateCheckout;
 	private String largeBed;
 	private String highFloor;
 	private String earlyCheckin;
 	private String airportTransfer;
 	private String airportTransferInfo;
 	private String enterComments;
+	private String smokingRoom;
+	private String wheelchair;
+	private String handicappedRoom;
+	
+	
 	
 	public String payment;
 	private Long roomId;
@@ -337,12 +342,7 @@ public class HotelBookingDetails {
 	public void setTwinBeds(String twinBeds) {
 		this.twinBeds = twinBeds;
 	}
-	public String getLateCheckin() {
-		return lateCheckin;
-	}
-	public void setLateCheckin(String lateCheckin) {
-		this.lateCheckin = lateCheckin;
-	}
+	
 	public String getLargeBed() {
 		return largeBed;
 	}
@@ -355,11 +355,36 @@ public class HotelBookingDetails {
 	public void setHighFloor(String highFloor) {
 		this.highFloor = highFloor;
 	}
+
+	public String getLateCheckout() {
+		return lateCheckout;
+	}
+	public void setLateCheckout(String lateCheckout) {
+		this.lateCheckout = lateCheckout;
+	}
 	public String getEarlyCheckin() {
 		return earlyCheckin;
 	}
 	public void setEarlyCheckin(String earlyCheckin) {
 		this.earlyCheckin = earlyCheckin;
+	}
+	public String getSmokingRoom() {
+		return smokingRoom;
+	}
+	public void setSmokingRoom(String smokingRoom) {
+		this.smokingRoom = smokingRoom;
+	}
+	public String getWheelchair() {
+		return wheelchair;
+	}
+	public void setWheelchair(String wheelchair) {
+		this.wheelchair = wheelchair;
+	}
+	public String getHandicappedRoom() {
+		return handicappedRoom;
+	}
+	public void setHandicappedRoom(String handicappedRoom) {
+		this.handicappedRoom = handicappedRoom;
 	}
 	public String getAirportTransfer() {
 		return airportTransfer;
@@ -567,10 +592,7 @@ public class HotelBookingDetails {
 	
 	public static List<HotelBookingDetails> getfindByDateWiseAgentWise1(long agentId,int currentPage, int rowsPerPage,long totalPages, String status,String guest) {
 		int  start=0;
-    	
-		System.out.println("---------");
-		System.out.println(status);
-		System.out.println("---------");
+    
     	String sql="";
     
     		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and travellerfirstname LIKE CONCAT('%', :someSymbol, '%') ORDER BY a.checkIn DESC";
@@ -591,7 +613,38 @@ public class HotelBookingDetails {
 		
 	}
 	
-	
+	public static List<HotelBookingDetails> getfindByBookingId(long agentId,int currentPage, int rowsPerPage,long totalPages, String status,Long bookingId) {
+		int  start=0;
+    	
+		System.out.println("---------");
+		System.out.println(status);
+		System.out.println("---------");
+    	String sql="";
+    	
+    	
+    	if(status.equals("undefined")){
+    		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and a.id = ?3";
+    	}else{
+    		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and a.id = ?3";
+    	}
+    	
+    	if(currentPage >= 1 && currentPage <= totalPages) {
+			start = (currentPage*rowsPerPage)-rowsPerPage;
+		}
+		if(currentPage>totalPages && totalPages!=0) {
+			currentPage--;
+			start = (int) ((totalPages*rowsPerPage)-rowsPerPage); 
+		}
+    	Query q = JPA.em().createQuery(sql).setFirstResult(start).setMaxResults(rowsPerPage);
+		
+    	q.setParameter(1, agentId);
+    	if(!status.equals("undefined")){
+    		q.setParameter(2, status);
+    	}
+   		q.setParameter(3, bookingId);
+		return (List<HotelBookingDetails>)q.getResultList();
+		
+	}
 	
 	
 	
@@ -821,6 +874,26 @@ public class HotelBookingDetails {
 	    }
 	   
 	   //00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+	   
+	   public static long getTotalBookingIdWise(int rowsPerPage,long agentId, String status,Long bookingId) {
+			long totalPages = 0, size;
+		
+			
+			if(status.equals("undefined")){
+				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and a.id = ?3").setParameter(1, agentId).setParameter(3, bookingId).getSingleResult();
+			}else{
+				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and a.id = ?3").setParameter(1, agentId).setParameter(2, status).setParameter(3, bookingId).getSingleResult();
+			}
+	    	
+	    	totalPages = size/rowsPerPage;
+			
+	    	if(size % rowsPerPage > 0) {
+				totalPages++;
+			}
+	    	System.out.println("total pages ::"+totalPages);
+	    	return totalPages;
+	    }
+	   
 	   
 	   public static long getTotalDateWiseAgentWise11(int rowsPerPage,long agentId, String status,Date fromDate,Date toDate ) {
 			long totalPages = 0, size;

@@ -65,8 +65,8 @@ public class AgentInfoController extends Controller {
 
 		List<HotelBookingDetails> hoteDetails = null;
 
-		totalPages = HotelBookingDetails.getAgentBookingTotal(5,Long.parseLong(session().get("agent")));
-		hoteDetails = HotelBookingDetails.getfindByAgent(Long.parseLong(session().get("agent")), currentPage, 5, totalPages);
+		totalPages = HotelBookingDetails.getAgentBookingTotal(10,Long.parseLong(session().get("agent")));
+		hoteDetails = HotelBookingDetails.getfindByAgent(Long.parseLong(session().get("agent")), currentPage, 10, totalPages);
 
 
 		for(HotelBookingDetails hBookingDetails:hoteDetails){
@@ -131,13 +131,16 @@ public class AgentInfoController extends Controller {
 
 			hDetailsVM.setNonSmokingRoom(hBookingDetails.getNonSmokingRoom());
 			hDetailsVM.setTwinBeds(hBookingDetails.getTwinBeds());
-			hDetailsVM.setLateCheckin(hBookingDetails.getLateCheckin());
+			hDetailsVM.setLateCheckout(hBookingDetails.getLateCheckout());
 			hDetailsVM.setLargeBed(hBookingDetails.getLargeBed());
 			hDetailsVM.setHighFloor(hBookingDetails.getHighFloor());
 			hDetailsVM.setEarlyCheckin(hBookingDetails.getEarlyCheckin());
 			hDetailsVM.setAirportTransfer(hBookingDetails.getAirportTransfer());
 			hDetailsVM.setAirportTransferInfo(hBookingDetails.getAirportTransferInfo());
 			hDetailsVM.setEnterComments(hBookingDetails.getEnterComments());
+			hDetailsVM.setSmokingRoom(hBookingDetails.getSmokingRoom());
+			hDetailsVM.setHandicappedRoom(hBookingDetails.getHandicappedRoom());
+			hDetailsVM.setWheelchair(hBookingDetails.getWheelchair());
 			
 			aDetailsVMs.add(hDetailsVM);
 		}
@@ -166,27 +169,27 @@ public class AgentInfoController extends Controller {
 
 		if(fromDate.equals("1") && toDate.equals("1") && status.equals("1")){
 
-			totalPages = HotelBookingDetails.getAllagentBookingTotal(5, Long.parseLong(session().get("agent")));
-			hoteDetails = HotelBookingDetails.getfindByagent(Long.parseLong(session().get("agent")), currentPage, 5, totalPages);
+			totalPages = HotelBookingDetails.getAllagentBookingTotal(10, Long.parseLong(session().get("agent")));
+			hoteDetails = HotelBookingDetails.getfindByagent(Long.parseLong(session().get("agent")), currentPage, 10, totalPages);
 		}else if(!fromDate.equals("1") && !toDate.equals("1")){
 			try {
-				totalPages = HotelBookingDetails.getAllagentTotalDateWise(5 , Long.parseLong(session().get("agent")) , format.parse(fromDate) , format.parse(toDate) , status);
+				totalPages = HotelBookingDetails.getAllagentTotalDateWise(10 , Long.parseLong(session().get("agent")) , format.parse(fromDate) , format.parse(toDate) , status);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			try {
-				hoteDetails = HotelBookingDetails.getfindByagentDateWise(Long.parseLong(session().get("agent")), format.parse(fromDate) , format.parse(toDate), currentPage, 5, totalPages , status);
+				hoteDetails = HotelBookingDetails.getfindByagentDateWise(Long.parseLong(session().get("agent")), format.parse(fromDate) , format.parse(toDate), currentPage, 10, totalPages , status);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else if(fromDate.equals("1") && toDate.equals("1") && !status.equals("1")){
 
-			totalPages = HotelBookingDetails.getTotalDateWiseAgentWise(5 , Long.parseLong(session().get("agent")), status);
+			totalPages = HotelBookingDetails.getTotalDateWiseAgentWise(10 , Long.parseLong(session().get("agent")), status);
 
-			hoteDetails = HotelBookingDetails.getfindByDateWiseAgentWise(Long.parseLong(session().get("agent")), currentPage, 5, totalPages , status);
+			hoteDetails = HotelBookingDetails.getfindByDateWiseAgentWise(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status);
 
 		}
 
@@ -252,13 +255,16 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setNonRefund(hBookingDetails.getNonRefund());
 			hDetailsVM.setNonSmokingRoom(hBookingDetails.getNonSmokingRoom());
 			hDetailsVM.setTwinBeds(hBookingDetails.getTwinBeds());
-			hDetailsVM.setLateCheckin(hBookingDetails.getLateCheckin());
+			hDetailsVM.setLateCheckout(hBookingDetails.getLateCheckout());
 			hDetailsVM.setLargeBed(hBookingDetails.getLargeBed());
 			hDetailsVM.setHighFloor(hBookingDetails.getHighFloor());
 			hDetailsVM.setEarlyCheckin(hBookingDetails.getEarlyCheckin());
 			hDetailsVM.setAirportTransfer(hBookingDetails.getAirportTransfer());
 			hDetailsVM.setAirportTransferInfo(hBookingDetails.getAirportTransferInfo());
 			hDetailsVM.setEnterComments(hBookingDetails.getEnterComments());
+			hDetailsVM.setSmokingRoom(hBookingDetails.getSmokingRoom());
+			hDetailsVM.setHandicappedRoom(hBookingDetails.getHandicappedRoom());
+			hDetailsVM.setWheelchair(hBookingDetails.getWheelchair());
 			
 			aDetailsVMs.add(hDetailsVM);
 		}
@@ -274,7 +280,7 @@ public class AgentInfoController extends Controller {
 	/*----------------------------------------------------------------------------------------------------------------------------------------*/
 
 	@Transactional(readOnly=true)
-	public static Result getagentInfobynm(int currentPage,String checkIn,String checkOut,String guest,String status) {
+	public static Result getagentInfobynm(int currentPage,String checkIn,String checkOut,String guest,String status,Long bookingId) {
 
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		//HotelBookDetailsVM hDetailsVM= new HotelBookDetailsVM();       
@@ -286,32 +292,32 @@ public class AgentInfoController extends Controller {
 		//String status = "available";
 		List<HotelBookingDetails> hoteDetails = null;
 
-		if(!checkIn.equals("undefined") && !checkOut.equals("undefined")&&!guest.equals("undefined")){
+		if(!checkIn.equals("undefined") && !checkOut.equals("undefined")&&!guest.equals("undefined") && bookingId.equals("undefined")){
 			try {
-				totalPages = HotelBookingDetails.getAllagentTotalDateWise1(5 , Long.parseLong(session().get("agent")) , format.parse(checkIn) , format.parse(checkOut) , status,guest);
+				totalPages = HotelBookingDetails.getAllagentTotalDateWise1(10 , Long.parseLong(session().get("agent")) , format.parse(checkIn) , format.parse(checkOut) , status,guest);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			try {
-				hoteDetails = HotelBookingDetails.getfindByagentDateWise1(Long.parseLong(session().get("agent")), format.parse(checkIn) , format.parse(checkOut), currentPage, 5, totalPages , status,guest);
+				hoteDetails = HotelBookingDetails.getfindByagentDateWise1(Long.parseLong(session().get("agent")), format.parse(checkIn) , format.parse(checkOut), currentPage, 10, totalPages , status,guest);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else if(checkIn.equals("undefined") && checkOut.equals("undefined") && !guest.equals("undefined")){
+		}else if(checkIn.equals("undefined") && checkOut.equals("undefined") && !guest.equals("undefined") && bookingId.equals("undefined")){
 
-			totalPages = HotelBookingDetails.getTotalDateWiseAgentWise1(5 , Long.parseLong(session().get("agent")), status,guest);
+			totalPages = HotelBookingDetails.getTotalDateWiseAgentWise1(10 , Long.parseLong(session().get("agent")), status,guest);
 
-			hoteDetails = HotelBookingDetails.getfindByDateWiseAgentWise1(Long.parseLong(session().get("agent")), currentPage, 5, totalPages , status,guest);
+			hoteDetails = HotelBookingDetails.getfindByDateWiseAgentWise1(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status,guest);
 
 		}
-		else if(guest.equals("undefined")&&!checkIn.equals("undefined") && !checkOut.equals("undefined"))
+		else if(guest.equals("undefined")&&!checkIn.equals("undefined") && !checkOut.equals("undefined") && bookingId.equals("undefined"))
 		{
 
 			try {
-				totalPages = HotelBookingDetails.getTotalDateWiseAgentWise11(5 , Long.parseLong(session().get("agent")), status,format.parse(checkIn),format.parse(checkOut));
+				totalPages = HotelBookingDetails.getTotalDateWiseAgentWise11(10 , Long.parseLong(session().get("agent")), status,format.parse(checkIn),format.parse(checkOut));
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -321,7 +327,7 @@ public class AgentInfoController extends Controller {
 			}
 
 			try {
-				hoteDetails = HotelBookingDetails.getfindByDateWiseAgentWise11(Long.parseLong(session().get("agent")), currentPage, 5, totalPages , status,format.parse(checkIn) , format.parse(checkOut));
+				hoteDetails = HotelBookingDetails.getfindByDateWiseAgentWise11(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status,format.parse(checkIn) , format.parse(checkOut));
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -330,6 +336,9 @@ public class AgentInfoController extends Controller {
 				e.printStackTrace();
 			}
 
+		}else if(!bookingId.equals("undefined")){
+			totalPages = HotelBookingDetails.getTotalBookingIdWise(10 , Long.parseLong(session().get("agent")), status, bookingId);
+			hoteDetails = HotelBookingDetails.getfindByBookingId(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status,bookingId);
 		}
 
 
@@ -395,13 +404,16 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setNonRefund(hBookingDetails.getNonRefund());
 			hDetailsVM.setNonSmokingRoom(hBookingDetails.getNonSmokingRoom());
 			hDetailsVM.setTwinBeds(hBookingDetails.getTwinBeds());
-			hDetailsVM.setLateCheckin(hBookingDetails.getLateCheckin());
+			hDetailsVM.setLateCheckout(hBookingDetails.getLateCheckout());
 			hDetailsVM.setLargeBed(hBookingDetails.getLargeBed());
 			hDetailsVM.setHighFloor(hBookingDetails.getHighFloor());
 			hDetailsVM.setEarlyCheckin(hBookingDetails.getEarlyCheckin());
 			hDetailsVM.setAirportTransfer(hBookingDetails.getAirportTransfer());
 			hDetailsVM.setAirportTransferInfo(hBookingDetails.getAirportTransferInfo());
 			hDetailsVM.setEnterComments(hBookingDetails.getEnterComments());
+			hDetailsVM.setSmokingRoom(hBookingDetails.getSmokingRoom());
+			hDetailsVM.setHandicappedRoom(hBookingDetails.getHandicappedRoom());
+			hDetailsVM.setWheelchair(hBookingDetails.getWheelchair());
 			
 			aDetailsVMs.add(hDetailsVM);
 		}
@@ -1154,7 +1166,7 @@ public class AgentInfoController extends Controller {
 			float[] notesFieldWidth = {2f};
 			notesFieldTable.setWidths(notesFieldWidth);
 			
-			PdfPCell note = new PdfPCell(new Phrase("Nots",font2));
+			PdfPCell note = new PdfPCell(new Phrase("Note",font2));
 			note.setBorderColor(BaseColor.WHITE);
 			note.setBackgroundColor(new BaseColor(255, 255, 255));
 			notesFieldTable.addCell(note);

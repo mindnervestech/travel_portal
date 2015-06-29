@@ -64,17 +64,18 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		});
 	};
 	
-	$scope.showtable = function(checkIn,checkOut,guest,status){
+	$scope.showtable = function(checkIn,checkOut,guest,status, bookingId){
 		console.log(guest);
 		console.log(status);
 		console.log(checkIn);
 		console.log(checkOut);
+		console.log(bookingId);
 		if(guest=="")
 	{
 			guest="undefined";
 	}
 		
-		$http.get("/getagentInfobynm/"+currentPage+"/"+checkIn+"/"+checkOut+"/"+guest+"/"+status).success(function(response1){
+		$http.get("/getagentInfobynm/"+currentPage+"/"+checkIn+"/"+checkOut+"/"+guest+"/"+status+"/"+bookingId).success(function(response1){
 		console.log(response1);
 		totalPages = response1.totalPages;
 		currentPage = response1.currentPage;
@@ -384,6 +385,10 @@ travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDia
 				hotelAllData.hotellist[index].imgPaths = $scope.img;
 						
 		});
+		
+		/*angular.forEach(response, function(obj, index){
+			$scope.imgArray[index] = "/searchHotelGenImg/getHotelGenImg/"+$scope.hotel.supplierCode+"/"+obj.indexValue;
+		});*/
 		
 		console.log(hotelAllData.hotellist);
 		$scope.hotelAllData = hotelAllData;
@@ -812,6 +817,19 @@ $http.get("/searchCountries").success(function(response) {
 			});
 		});
 		
+		angular.forEach(hotel.hotelbyRoom, function(obj, index){ 
+			angular.forEach(obj.hotelRoomRateDetail[0].rateDetailsNormal, function(obj1, index1){ 
+				console.log("HHHHoiiiiiiii");
+				if($scope.hotel.batchMarkup.selected == 0){
+						obj1.rateAvg = obj1.rateAvg + $scope.hotel.batchMarkup.flat;
+				}else if($scope.hotel.batchMarkup.selected == 1){
+					   var markupPer =	obj1.rateAvg / 100 * $scope.hotel.batchMarkup.percent;
+					   obj1.rateAvg = obj1.rateAvg + markupPer;
+				}
+			});
+		});
+		
+				
 		console.log($scope.hotel);
 		
 		
@@ -1683,24 +1701,26 @@ $http.get("/searchCountries").success(function(response) {
 	}
 	
 	$scope.addRooms = [];
-	
+	$scope.indexCount = 0;
 	$scope.newRoom = function($event,index){
-		console.log(index);
+		//console.log(index);
 		$scope.addRooms.push( {  } );
-		$scope.addRooms[index].adult = "1 Adult";
-		$scope.addRooms[index].id = index;
-		$event.preventDefault();
-		$scope.countTotal(index);
+		
+		$scope.indexCount = $scope.indexCount + 1;
+		console.log($scope.indexCount);
+		$scope.addRooms[$scope.indexCount].adult = "1 Adult";
+		$scope.addRooms[$scope.indexCount].id = index;
+		//$event.preventDefault();
+		$scope.countTotal($scope.indexCount);
 		
 		
-		//newRoom
 	};
 	
-	$scope.lessTotal = function($event,index){
+	$scope.lessTotal = function(){
 		console.log(index);
 		
 		 $scope.addRooms.splice(index,1);
-				 
+		 $scope.indexCount = $scope.indexCount - 1;	 
 		console.log($scope.addRooms);
 		$scope.breakfastFunction(); 
 		
@@ -1964,7 +1984,7 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 		});
 		console.log($scope.hotel);
 		console.log(hotel);
-		
+		$scope.termsAndConditions = false;
 		var arr = hotel.checkIn.split("-");
 		var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
 		$scope.checkIn = $filter('date')(new Date(datevalue), "MMM dd,yyyy");
@@ -1992,13 +2012,17 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 		$scope.hotel.hotelBookingDetails.travelleremail = $scope.traveller.email;
 		$scope.hotel.hotelBookingDetails.nonSmokingRoom = $scope.traveller.nonSmokingRoom;
 		$scope.hotel.hotelBookingDetails.twinBeds = $scope.traveller.twinBeds;
-		$scope.hotel.hotelBookingDetails.lateCheckin = $scope.traveller.lateCheckin;
+		$scope.hotel.hotelBookingDetails.lateCheckout = $scope.traveller.lateCheckout;
 		$scope.hotel.hotelBookingDetails.largeBed = $scope.traveller.largeBed;
 		$scope.hotel.hotelBookingDetails.highFloor = $scope.traveller.highFloor;
 		$scope.hotel.hotelBookingDetails.earlyCheckin = $scope.traveller.earlyCheckin;
 		$scope.hotel.hotelBookingDetails.airportTransfer = $scope.traveller.airportTransfer;
 		$scope.hotel.hotelBookingDetails.airportTransferInfo = $scope.traveller.airportTransferInfo;
 		$scope.hotel.hotelBookingDetails.enterComments = $scope.traveller.enterComments;
+		$scope.hotel.hotelBookingDetails.smokingRoom = $scope.traveller.smokingRoom;
+		$scope.hotel.hotelBookingDetails.wheelchair = $scope.traveller.wheelchair;
+		$scope.hotel.hotelBookingDetails.handicappedRoom = $scope.traveller.handicappedRoom;
+		
 		//$scope.hotel.hotelbyDate = null;
 		console.log($scope.hotel);
 		

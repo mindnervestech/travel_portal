@@ -80,13 +80,6 @@
                          
                         </div>
                         
-                        
-
-                        
-                        
-                        
-                        
-                        
                         <!--------------------------------------------------------------------------------->
                         
                         
@@ -103,9 +96,14 @@
 				
 				
 				 <div class="row">
-				 <div class="col-md-1">
-					<label>Booking</label>
-				</div>
+				
+								 <div class="col-xs-1">
+                                            <label type="text">BookingId</label>
+                                            <div>
+                                            <input type="text" name="bookingId" ng-model="searchby.bookingId" style="height: 31px;width: 56px;">
+                                            </div>
+                                            </div>
+				
                                             <div class="col-xs-3">
                                                 <label>Start Date</label>
                                                 <div class="datepicker-wrap">
@@ -126,8 +124,7 @@
                                             </div>
                                             </div>
                                      <div class="col-xs-1" style="margin-top: 23px;">
-                 					 <button type="button" ng-click="showtable(searchby.checkIn,searchby.checkOut,guest,selectData.status)" class="btn btn-primary">Show</button>
-			
+                 					 <button type="button" ng-click="showtable(searchby.checkIn,searchby.checkOut,guest,selectData.status,searchby.bookingId)" class="btn btn-primary">Show</button>
 				</div>
                                             
                                         </div>

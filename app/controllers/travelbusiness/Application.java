@@ -415,6 +415,24 @@ public static void DateWiseSortFunction(List<HotelSearch> hotellist,String toDat
 		if (object == null) {
 
 			HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
+			
+			List<BatchMarkup> batchMarkup = BatchMarkup.findMarkupAgentSupplier(AgentRegistration.findById(Long.parseLong(session().get("agent"))), supplierid.longValue());
+			
+			for(BatchMarkup bm:batchMarkup){
+				BatchMarkupInfoVM baInfoVM = new BatchMarkupInfoVM();
+				
+				if(bm.getFlat() != null){
+					baInfoVM.flat = bm.getFlat();
+				}
+				if(bm.getPercent() != null){
+					baInfoVM.percent = bm.getPercent();
+				}
+				baInfoVM.selected = bm.getSelected();
+				baInfoVM.supplier = bm.getSupplier();
+				
+				hProfileVM.batchMarkup = baInfoVM;
+			}
+			
 			BreakfastMarkup bMarkup = BreakfastMarkup.findById(1L);
 			if(bMarkup != null){
 				hProfileVM.breakfackRate = bMarkup.getBreakfastRate();
@@ -1596,6 +1614,24 @@ public static Result hoteldetailpage() {
 		
 		if (object == null) {
 			HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
+			
+			List<BatchMarkup> batchMarkup = BatchMarkup.findMarkupAgentSupplier(AgentRegistration.findById(Long.parseLong(session().get("agent"))), supplierid.longValue());
+			
+			for(BatchMarkup bm:batchMarkup){
+				BatchMarkupInfoVM baInfoVM = new BatchMarkupInfoVM();
+				
+				if(bm.getFlat() != null){
+					baInfoVM.flat = bm.getFlat();
+				}
+				if(bm.getPercent() != null){
+					baInfoVM.percent = bm.getPercent();
+				}
+				baInfoVM.selected = bm.getSelected();
+				baInfoVM.supplier = bm.getSupplier();
+				
+				hProfileVM.batchMarkup = baInfoVM;
+			}
+			
 			BreakfastMarkup bMarkup = BreakfastMarkup.findById(1L);
 			if(bMarkup != null){
 				hProfileVM.breakfackRate = bMarkup.getBreakfastRate();

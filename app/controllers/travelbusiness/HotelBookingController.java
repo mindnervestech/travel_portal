@@ -192,13 +192,16 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setTravellerphnaumber(searchVM.hotelBookingDetails.getTravellerphnaumber());
 		hBookingDetails.setNonSmokingRoom(searchVM.hotelBookingDetails.getNonSmokingRoom());
 		hBookingDetails.setTwinBeds(searchVM.hotelBookingDetails.getTwinBeds());
-		hBookingDetails.setLateCheckin(searchVM.hotelBookingDetails.getLateCheckin());
+		hBookingDetails.setLateCheckout(searchVM.hotelBookingDetails.getLateCheckout());
 		hBookingDetails.setLargeBed(searchVM.hotelBookingDetails.getLargeBed());
 		hBookingDetails.setHighFloor(searchVM.hotelBookingDetails.getHighFloor());
 		hBookingDetails.setEarlyCheckin(searchVM.hotelBookingDetails.getEarlyCheckin());
 		hBookingDetails.setAirportTransfer(searchVM.hotelBookingDetails.getAirportTransfer());
 		hBookingDetails.setAirportTransferInfo(searchVM.hotelBookingDetails.getAirportTransferInfo());
 		hBookingDetails.setEnterComments(searchVM.hotelBookingDetails.getEnterComments());
+		hBookingDetails.setSmokingRoom(searchVM.hotelBookingDetails.getSmokingRoom());
+		hBookingDetails.setHandicappedRoom(searchVM.hotelBookingDetails.getHandicappedRoom());
+		hBookingDetails.setWheelchair(searchVM.hotelBookingDetails.getWheelchair());
 		hBookingDetails.setPayment("no");
 		
 		
@@ -527,21 +530,23 @@ public class HotelBookingController extends Controller {
 			regiterBy.setRoomIndex(i);
 			i++;
 			regiterBy.save();
-			for(ChildselectedVM chVm:passBookingInfoVM.childselected){
-				RoomRegiterByChild regiterByChild = new RoomRegiterByChild();
-				if(chVm.age != null && chVm.age != ""){
-				 regiterByChild.setAge(Integer.parseInt(chVm.age));
-				}
-				regiterByChild.setBreakfast(chVm.breakfast);
-				if(!chVm.childRate.equals("")){
-				regiterByChild.setChild_rate(Double.parseDouble(chVm.childRate));
-				}
-				regiterByChild.setFree_child(chVm.freeChild);
-				regiterByChild.setRoomRegiterBy(RoomRegiterBy.getRoomInfoById(regiterBy.getId()));
-				regiterByChild.save();
-				
-			}
+			if(passBookingInfoVM.childselected != null){
 			
+				for(ChildselectedVM chVm:passBookingInfoVM.childselected){
+					RoomRegiterByChild regiterByChild = new RoomRegiterByChild();
+					if(chVm.age != null && chVm.age != ""){
+						regiterByChild.setAge(Integer.parseInt(chVm.age));
+					}
+					regiterByChild.setBreakfast(chVm.breakfast);
+					if(!chVm.childRate.equals("")){
+						regiterByChild.setChild_rate(Double.parseDouble(chVm.childRate));
+					}
+					regiterByChild.setFree_child(chVm.freeChild);
+					regiterByChild.setRoomRegiterBy(RoomRegiterBy.getRoomInfoById(regiterBy.getId()));
+					regiterByChild.save();
+				
+				}
+			}
 			for(RateDatedetailVM rDatedetailVM:passBookingInfoVM.rateDatedetail){
 				RoomAndDateWiseRate rWiseRate = new RoomAndDateWiseRate();
 				rWiseRate.setCurrency(rDatedetailVM.currency);
@@ -1406,7 +1411,7 @@ public class HotelBookingController extends Controller {
 			float[] notesFieldWidth = {2f};
 			notesFieldTable.setWidths(notesFieldWidth);
 			
-			PdfPCell note = new PdfPCell(new Phrase("Nots",font2));
+			PdfPCell note = new PdfPCell(new Phrase("Note",font2));
 			note.setBorderColor(BaseColor.WHITE);
 			note.setBackgroundColor(new BaseColor(255, 255, 255));
 			notesFieldTable.addCell(note);

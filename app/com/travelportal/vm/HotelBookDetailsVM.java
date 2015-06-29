@@ -54,13 +54,16 @@ public class HotelBookDetailsVM {
 	
 	public String nonSmokingRoom;
 	public String twinBeds;
-	public String lateCheckin;
+	public String lateCheckout;
 	public String largeBed;
 	public String highFloor;
 	public String earlyCheckin;
 	public String airportTransfer;
 	public String airportTransferInfo;
 	public String enterComments;
+	public String smokingRoom;
+	public String wheelchair;
+	public String handicappedRoom;
 	
 	
 	public String getHotelNm() {
@@ -314,11 +317,30 @@ public class HotelBookDetailsVM {
 	public void setTwinBeds(String twinBeds) {
 		this.twinBeds = twinBeds;
 	}
-	public String getLateCheckin() {
-		return lateCheckin;
+	
+	public String getLateCheckout() {
+		return lateCheckout;
 	}
-	public void setLateCheckin(String lateCheckin) {
-		this.lateCheckin = lateCheckin;
+	public void setLateCheckout(String lateCheckout) {
+		this.lateCheckout = lateCheckout;
+	}
+	public String getSmokingRoom() {
+		return smokingRoom;
+	}
+	public void setSmokingRoom(String smokingRoom) {
+		this.smokingRoom = smokingRoom;
+	}
+	public String getWheelchair() {
+		return wheelchair;
+	}
+	public void setWheelchair(String wheelchair) {
+		this.wheelchair = wheelchair;
+	}
+	public String getHandicappedRoom() {
+		return handicappedRoom;
+	}
+	public void setHandicappedRoom(String handicappedRoom) {
+		this.handicappedRoom = handicappedRoom;
 	}
 	public String getLargeBed() {
 		return largeBed;

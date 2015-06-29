@@ -9,15 +9,13 @@
 				<div class="col-lg-12">
 					<div class="tabbable tabs-left">
 
-						<div id="myTabContent2">
 
-
-							<div class="row">
+							 <div class="row">
 								<div class="col-md-12">
 									<script type="text/javascript">
-										$('#myTab a').click(function(e) {
+									jQuery('#myTab a').click(function(e) {
 											e.preventDefault();
-											$(this).tab('show');
+											jQuery(this).tab('show');
 										})
 									</script>
 									<div class="tabbable">
@@ -59,6 +57,7 @@
 				<label>Check Out Date</label>
 				</div>
 				<div class="col-md-4">
+				
 				<input type="text" name="checkOut" data-ng-model="agentinfo.checkOut"
 							class="form-control meal-font-text-size" required style="width: 175px;padding-left: 10px;">
 							</div>
@@ -92,14 +91,14 @@
 		
 				<div class="col-md-12">
 				<div class="col-md-2">
-				<label>Traveller First Name</label>
+				<label>Passenger First Name</label>
 				</div>
 				<div class="col-md-4">
 					<input type="text" name="travellerfirstname" data-ng-model="agentinfo.travellerfirstname"
 							class="form-control meal-font-text-size" disabled="disabled" required>
 				</div>
 				<div class="col-md-2">
-				<label>Traveller Last Name</label>
+				<label>Passenger Last Name</label>
 				</div>
 				<div class="col-md-4">
 					<input type="text" name="travellerlastname" data-ng-model="agentinfo.travellerlastname"
@@ -113,18 +112,18 @@
 		
 				<div class="col-md-12">
 				<div class="col-md-2">
-				<label>Traveller Address</label>
+				<label>Passenger Address</label>
 				</div>
 				<div class="col-md-4">
 					<input type="text" name="travelleraddress" data-ng-model="agentinfo.travelleraddress"
-							class="form-control meal-font-text-size" disabled="disabled" required>
+							class="form-control meal-font-text-size" disabled="disabled">
 				</div>
 				<div class="col-md-2">
-				<label>Traveller Ph Number</label>
+				<label>Passenger Ph Number</label>
 				</div>
 				<div class="col-md-4">
 					<input type="text" name="travellerphnaumber" data-ng-model="agentinfo.travellerphnaumber"
-							class="form-control meal-font-text-size" disabled="disabled" required>
+							class="form-control meal-font-text-size" disabled="disabled">
 				</div>
 				</div>
 				
@@ -134,11 +133,11 @@
 		
 				<div class="col-md-12">
 				<div class="col-md-2">
-				<label>Traveller Email</label>
+				<label>Passenger Email</label>
 				</div>
 				<div class="col-md-4">
 					<input type="text" name="travelleremail" data-ng-model="agentinfo.travelleremail"
-							class="form-control meal-font-text-size" disabled="disabled" required>
+							class="form-control meal-font-text-size" disabled="disabled">
 				</div>
 				</div>
 				
@@ -172,7 +171,7 @@
 				</div>
 				
 			</div>
-			<!-- <div class="form-group" ng-show="agentinfo.promotionname != null">
+			<div class="form-group" ng-show="agentinfo.promotionname != null">
 		
 				<div class="col-md-12">
 				<div class="col-md-2">
@@ -191,7 +190,7 @@
 				</div>
 				</div>
 				
-			</div> -->
+			</div>
 			 <div class="form-group">
 		
 				<div class="col-md-12">
@@ -270,7 +269,7 @@
 											 <div class="col-md-12" style="background-color: white;height: 325px !important;overflow: auto;">
                                 <div class="booking-history col-md-4" ng-repeat="Dateinfo in rateDatewise">
                                 
-                                 <div class="booking-info clearfix"> <!--  Dateinfo.flag == 0   -->
+                                 <div class="booking-info clearfix">  
                                         <div class="date">
                                            <label class="month">{{Dateinfo.month}}</label>
                                             <label class="date">{{Dateinfo.date}}</label>
@@ -283,7 +282,7 @@
                                             <dt ng-if="Dateinfo.meal != null">Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
                                         </dl>
-                                       <!--  <button class="btn-mini status">Book Now</button> -->
+                                      <!--   <button class="btn-mini status">Book Now</button> -->
                                     </div>
                                    
                                 </div>
@@ -378,9 +377,9 @@
 											<div class="col-md-2" ng-if="agentinfo.room_status == 'available'">
 													 <button type="button" ng-click="cancelbooking(agentinfo.id,agentinfo.nonRefund)" class="btn btn-primary">Cancel Booking</button>
 											</div>
-											<!-- <div class="col-md-2">
+											<div class="col-md-2">
 											<button type="button" ng-click="" class="btn btn-primary">Amend booking</button>
-											</div> -->
+											</div>
 											<div class="col-md-2" ng-if="agentinfo.room_status == 'available'">
 												 <form action="/hoteldetailpage" method="post">
                               					         <input type="text" name="supplierCode"  value="{{agentinfo.supplierCode}}" style="display: none;">
@@ -408,7 +407,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> 
 				</div>
 			</div>
 
