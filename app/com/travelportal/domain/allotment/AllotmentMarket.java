@@ -1,6 +1,5 @@
 package com.travelportal.domain.allotment;
 
-import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,28 +9,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NoResultException;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Query;
 import javax.persistence.Table;
 
-import com.travelportal.domain.City;
-import com.travelportal.domain.Country;
-import com.travelportal.domain.rooms.CancellationPolicy;
-import com.travelportal.domain.rooms.RateMeta;
-
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
+
+import com.travelportal.domain.rooms.RateMeta;
 
 @Entity
 @Table(name="allotmentmarket")

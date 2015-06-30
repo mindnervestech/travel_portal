@@ -13,7 +13,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 @Entity
-@Table(name="breakfastMarkup")
+@Table(name="breakfastmarkup")
 public class BreakfastMarkup {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)

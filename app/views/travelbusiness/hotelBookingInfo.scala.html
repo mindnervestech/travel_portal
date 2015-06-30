@@ -109,7 +109,7 @@
                                     
                                     </div>  -->
                                      
-                                    <div class="form-group row">
+                                    <!-- <div class="form-group row">
                                      
                                          <div class="col-sm-6 col-md-5">
                                              <div class="checkbox">
@@ -126,14 +126,195 @@
                                         </div>
                                         </div>
                                         
-                                    </div> 
+                                    </div>  -->
                                     
                                    
                                 </div>
                                 <hr>
                                
-                               <div class="person-information" ng-if="showSpecialReq == true">
+                              <!--  <div class="person-information" ng-if="showSpecialReq == true">
                                     <h2>Special Requests</h2>
+                                     <div class="row">
+                                      <div class="form-group col-sm-12 col-md-11">
+                                    	<label>Special Requests are subject to each property&lsquo;s availability and cannot be guaranteed.</label>
+                                      </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-6 col-md-5">
+                                            <div class="checkbox" ng-class="traveller.nonSmokingRoom?'checked':''">
+                                            <label>
+                                                <input type="checkbox" data-ng-model="traveller.nonSmokingRoom"> Non-Smoking Room
+                                            </label>
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-sm-6 col-md-5">
+                                        	<div class="checkbox" ng-class="traveller.smokingRoom?'checked':''">
+                                            <label>
+                                                <input type="checkbox" data-ng-model="traveller.smokingRoom" value="smokingRoom"> Smoking Room
+                                            </label>
+                                          </div>
+                                            <div class="checkbox"  ng-class="traveller.twinBeds?'checked':''">
+                                            <label>
+                                                <input type="checkbox" data-ng-model="traveller.twinBeds"> Twin Beds
+                                            </label>
+                                        </div>
+                                        </div>
+                                    </div>
+                                   <div class="row">
+                                        <div class="form-group col-sm-6 col-md-5">
+                                            <div class="checkbox" ng-class="traveller.lateCheckin?'checked':''">
+                                            <label>
+                                                <input type="checkbox" data-ng-model="traveller.lateCheckout" value="lateCheckout"> Late Check-Out
+                                            </label>
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-sm-6 col-md-5">
+                                            <div class="checkbox" ng-class="traveller.largeBed?'checked':''">
+                                            <label>
+                                                <input type="checkbox" data-ng-model="traveller.largeBed" value="largeBed"> Large Bed
+                                            </label>
+                                        </div>
+                                        </div>
+                                    </div>  
+                                    
+                                     <div class="row">
+                                        <div class="form-group col-sm-6 col-md-5">
+                                            <div class="checkbox" ng-class="traveller.highFloor?'checked':''">
+                                            <label>
+                                                <input type="checkbox" data-ng-model="traveller.highFloor" value="highFloor"> High Floor
+                                            </label>
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-sm-6 col-md-5">
+                                            <div class="checkbox"  ng-class="traveller.twinBeds?'checked':''">
+                                            <label>
+                                                <input type="checkbox" data-ng-model="traveller.twinBeds"> Twin Beds
+                                            </label>
+                                        </div>
+                                        </div>
+                                    </div> 
+                                  <hr style="border: 1px dotted;">
+                                   <div class="row">
+                                        <div class="form-group col-sm-6 col-md-5">
+                                            <div class="checkbox" ng-class="traveller.earlyCheckin?'checked':''">
+                                            <label>
+                                                <input type="checkbox" data-ng-model="traveller.earlyCheckin" value="earlyCheckin"> Early check-in 
+                                            </label>
+                                          </div>
+                                        </div>
+                                        
+                                        <div class="form-group col-sm-6 col-md-5">
+                                    		<div class="checkbox" ng-class="traveller.handicappedRoom?'checked':''">
+                                            <label>
+                                                <input type="checkbox" data-ng-model="traveller.handicappedRoom" value="handicappedRoom"> Handicapped Room
+                                            </label>
+                                          </div>
+                                        </div>
+                                       
+                                    </div> 
+                                    
+                                     <div class="row">
+                                        <div class="form-group col-sm-6 col-md-5">
+                                            <div class="checkbox" ng-class="traveller.wheelchair?'checked':''">
+                                            <label>
+                                                <input type="checkbox" data-ng-model="traveller.wheelchair" value="wheelchair"> Wheel-Chair
+                                            </label>
+                                          </div>
+                                        </div>
+                                        
+                                        <div class="form-group col-sm-6 col-md-5">
+                                    		
+                                        </div>
+                                       
+                                    </div> 
+                                   
+                                    
+                                     <div class="row">
+                                        <div class="form-group col-sm-12 col-md-11">
+                                            <div class="checkbox" ng-class="traveller.airportTransfer?'checked':''">
+                                            <label>
+                                                <input type="checkbox" data-ng-model="traveller.airportTransfer" value="airportTransfer"> Airport transfer
+                                            </label>
+                                          </div>
+                                        </div>
+                                       
+                                    </div> 
+                                    <div class="row" ng-if="traveller.earlyCheckin == true || traveller.airportTransfer == true">
+                                      <div class="form-group col-sm-12 col-md-11">
+                                    	<label><b>Note:</b> Early Check-in or Airport Transfer may require an additional payment. Please contact the property to confirm.</label>
+                                      </div> 
+                                    </div>
+                                    
+                                    <div class="row" ng-if="traveller.airportTransfer == true">
+                                     <div class="form-group col-sm-12 col-md-11">
+                                     <textarea name="airportTransferInfo" data-ng-model="traveller.airportTransferInfo" rows="2"
+										class="form-control"  placeholder="Enter flight number and arrival time. Transfers are not guaranteed so please confirm your request with the property">					
+									</textarea>
+                                    </div>
+                                    </div>
+                                    <hr style="border: 1px dotted;">
+                                    
+                                    <div class="row">
+                                      <div class="form-group col-sm-12 col-md-11">
+                                    	<label>Please enter comments in <b>English</b>.</label>
+                                      </div> 
+                                    </div>
+                                    
+                                    <div class="row">
+                                     <div class="form-group col-sm-12 col-md-11">
+                                     <textarea name="enterComments" data-ng-model="traveller.enterComments" rows="4"
+										class="form-control">					
+									</textarea>
+                                    </div>
+                                    </div>
+                                    <hr>
+                                </div> -->
+                                
+                               <!--  <div class="person-information" ng-if="roomRegist == true">
+                                	 
+                                	 
+                                	  <h2>{{hotel.hotelbyRoom[0].roomName}}</h2>
+                                	   <div class="row" ng-repeat="rooms in hotel.hotelBookingDetails.passengerInfo">
+                                        <div class="form-group col-sm-3 col-md-2">
+                                            <label>Room {{$index+1}}</label>
+                                        </div>
+                                        <div class="form-group col-sm-6 col-md-5">
+                                               <input type="text" data-ng-model="rooms.regiterBy" class="input-text full-width" value="" placeholder="">
+                                        </div>
+                                         <div class="form-group col-sm-6 col-md-5">
+                                         <label class="col-sm-4 col-md-3" style="padding: 0px;width: 60px;">({{rooms.adult}}</label><label style="padding: 0px;" ng-if="rooms.noOfchild == null" class="col-sm-2 col-md-1">)</label>  <label class="col-sm-4 col-md-3" style="padding: 0px;" ng-if="rooms.noOfchild != null">, {{rooms.noOfchild}} child)</label>
+                                         </div>
+                                        
+                                    </div>  
+                                </div> -->
+                                 <div class="toggle-container filters-container">
+                                <div class="panel style1 arrow-right">
+                                    <h4 class="panel-title" style="background-color: #01b7f2;">
+                                        <a data-toggle="collapse" href="#room-regi" class="collapsed" style="color: white;">Room Registration</a>
+                                    </h4>
+                                    
+                                    <div id="room-regi" class="panel-collapse collapse">
+                                        <h2>{{hotel.hotelbyRoom[0].roomName}}</h2>
+                                	   <div class="row" ng-repeat="rooms in hotel.hotelBookingDetails.passengerInfo">
+                                        <div class="form-group col-sm-3 col-md-2">
+                                            <label>Room {{$index+1}}</label>
+                                        </div>
+                                        <div class="form-group col-sm-6 col-md-5">
+                                               <input type="text" data-ng-model="rooms.regiterBy" class="input-text full-width" value="" placeholder="">
+                                        </div>
+                                         <div class="form-group col-sm-6 col-md-5">
+                                         <label class="col-sm-4 col-md-3" style="padding: 0px;width: 60px;">({{rooms.adult}}</label><label style="padding: 0px;" ng-if="rooms.noOfchild == null" class="col-sm-2 col-md-1">)</label>  <label class="col-sm-4 col-md-3" style="padding: 0px;" ng-if="rooms.noOfchild != null">, {{rooms.noOfchild}} child)</label>
+                                         </div>
+                                        
+                                    </div>  
+                                    </div>
+                                </div>
+                                <div class="panel style1 arrow-right">
+                                    <h4 class="panel-title" style="background-color: #01b7f2;">
+                                        <a data-toggle="collapse" href="#special_req" class="collapsed" style="color: white;">Special Requests(Optional)</a>
+                                    </h4>
+                                    
+                                    <div id="special_req" class="panel-collapse collapse">
                                      <div class="row">
                                       <div class="form-group col-sm-12 col-md-11">
                                     	<label>Special Requests are subject to each property&lsquo;s availability and cannot be guaranteed.</label>
@@ -267,26 +448,25 @@
 									</textarea>
                                     </div>
                                     </div>
-                                    <hr>
+                                    </div>
                                 </div>
-                                
-                                <div class="person-information" ng-if="roomRegist == true">
-                                	 
-                                	 <!--  -->
-                                	  <h2>{{hotel.hotelbyRoom[0].roomName}}</h2>
-                                	   <div class="row" ng-repeat="rooms in hotel.hotelBookingDetails.passengerInfo">
-                                        <div class="form-group col-sm-3 col-md-2">
-                                            <label>Room {{$index+1}}</label>
-                                        </div>
-                                        <div class="form-group col-sm-6 col-md-5">
-                                               <input type="text" data-ng-model="rooms.regiterBy" class="input-text full-width" value="" placeholder="">
-                                        </div>
-                                         <div class="form-group col-sm-6 col-md-5">
-                                         <label class="col-sm-4 col-md-3" style="padding: 0px;width: 60px;">({{rooms.adult}}</label><label style="padding: 0px;" ng-if="rooms.noOfchild == null" class="col-sm-2 col-md-1">)</label>  <label class="col-sm-4 col-md-3" style="padding: 0px;" ng-if="rooms.noOfchild != null">, {{rooms.noOfchild}} child)</label>
-                                         </div>
-                                        
-                                    </div>  
                                 </div>
+                                <hr>
+                                  <div class="form-group row">
+                                     <div class="col-sm-10 col-md-9" ng-if="hotel.hotelbyRoom[0].nonRefund == true">
+                                     <label style="color: chocolate;" tooltip="a tooltip comment ">Non Refund</label>  
+                                     </div>
+                                     <div  ng-if="hotel.hotelbyRoom[0].nonRefund == false"> 
+                                   
+                                     <label class="col-sm-10 col-md-9" style="color: chocolate;" tooltip="a tooltip comment ">Cancellation Policy</label>     
+                                     <div class="col-sm-10 col-md-9" ng-repeat="cancal in hotel.hotelbyRoom[0].hotelRoomRateDetail[0].cancellation">
+                                      <label ng-if="cancal.penaltyCharge == true" style="color: chocolate;">* prior {{cancal.days}} the penalty charges will be {{cancal.nights}} charges</label>
+                                      <label ng-if="cancal.penaltyCharge == false" style="color: chocolate;">* prior {{cancal.days}} the penalty charges will be {{cancal.percentage}} % of total stay</label>
+                                     </div>                                
+                                     </div>
+                                    
+                                   </div>  
+                                 <hr>
                                 <div class="form-group row">
                                      
                                          <div class="col-sm-10 col-md-9">
@@ -424,6 +604,10 @@
      #booking .booking-info .info{
                width: 110px !important;
         }
+        
+        .toggle-container .panel.style1 .panel-title > a {
+  				line-height: 5px;
+  		}
   </style>
 </body>
 </html>

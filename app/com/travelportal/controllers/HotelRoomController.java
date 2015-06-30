@@ -642,6 +642,7 @@ public static void createRootDir() {
 										cancellation.setPenalty(vm.penaltyCharge);
 										cancellation.setPercentage(vm.percentage);
 									}
+									cancellation.setNon_refund(sDaysRateVM.non_refund);
 									
 								cancellation.merge();
 							}
@@ -782,6 +783,7 @@ public static void createRootDir() {
 										cancellation.setPenalty(vm.penaltyCharge);
 										cancellation.setPercentage(vm.percentage);
 									}
+									cancellation.setNon_refund(rate.non_refund);
 								cancellation.setIsNormal(0);	
 								cancellation.setRate(RateMeta.findById(rate.id));
 								cancellation.save();
@@ -798,6 +800,7 @@ public static void createRootDir() {
 										cancellation.setPenalty(vm.penaltyCharge);
 										cancellation.setPercentage(vm.percentage);
 									}
+									cancellation.setNon_refund(rate.non_refund);
 								cancellation.setIsNormal(0);	
 								cancellation.merge();
 							}

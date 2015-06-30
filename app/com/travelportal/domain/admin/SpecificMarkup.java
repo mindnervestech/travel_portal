@@ -39,7 +39,7 @@ import com.travelportal.vm.AllotmentMarketVM;
 import com.travelportal.vm.RoomType;
 
 @Entity
-@Table(name="specificMarkup")
+@Table(name="specificmarkup")
 public class SpecificMarkup {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)

@@ -14,7 +14,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 @Entity
-@Table(name="Booking_history")
+@Table(name="booking_history")
 public class BookingHistory {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)

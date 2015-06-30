@@ -35,7 +35,7 @@ import com.travelportal.vm.AllotmentMarketVM;
 import com.travelportal.vm.RoomType;
 
 @Entity
-@Table(name="Allotment")
+@Table(name="allotment")
 public class Allotment {
 	@Column(name="allotment_id")
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)

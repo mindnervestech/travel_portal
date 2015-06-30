@@ -14,7 +14,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 @Entity
-@Table(name="Room_and_date_wise_rate")
+@Table(name="room_and_date_wise_rate")
 public class RoomAndDateWiseRate {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)

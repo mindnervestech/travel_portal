@@ -14,7 +14,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 @Entity
-@Table(name="InfoWise_ImagesPath")
+@Table(name="infowise_imagespath")
 public class InfoWiseImagesPath { //Seed table.
 	@Column(name="img_id")
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)

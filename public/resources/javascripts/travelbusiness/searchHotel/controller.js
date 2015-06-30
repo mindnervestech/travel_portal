@@ -390,6 +390,26 @@ travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDia
 			$scope.imgArray[index] = "/searchHotelGenImg/getHotelGenImg/"+$scope.hotel.supplierCode+"/"+obj.indexValue;
 		});*/
 		
+		angular.forEach(hotelAllData.hotellist, function(value, key){
+		angular.forEach(value.hotelbyRoom, function(obj, index){ 
+			angular.forEach(obj.hotelRoomRateDetail[0].rateDetailsNormal, function(obj1, index1){ 
+				if(value.batchMarkup.selected == 0){
+						obj1.rateAvg = obj1.rateAvg + value.batchMarkup.flat;
+				}else if(value.batchMarkup.selected == 1){
+					   var markupPer =	obj1.rateAvg / 100 * value.batchMarkup.percent;
+					   obj1.rateAvg = obj1.rateAvg + markupPer;
+				}
+			});
+		});
+			if(value.batchMarkup.selected == 0){
+				value.minRate = value.minRate + value.batchMarkup.flat;
+			}else if(value.batchMarkup.selected == 1){
+				var markupPer =	value.minRate / 100 * value.batchMarkup.percent;
+				value.minRate = value.minRate + markupPer;
+			}
+		
+		});
+		
 		console.log(hotelAllData.hotellist);
 		$scope.hotelAllData = hotelAllData;
 		console.log($scope.hotelAllData);
@@ -819,7 +839,6 @@ $http.get("/searchCountries").success(function(response) {
 		
 		angular.forEach(hotel.hotelbyRoom, function(obj, index){ 
 			angular.forEach(obj.hotelRoomRateDetail[0].rateDetailsNormal, function(obj1, index1){ 
-				console.log("HHHHoiiiiiiii");
 				if($scope.hotel.batchMarkup.selected == 0){
 						obj1.rateAvg = obj1.rateAvg + $scope.hotel.batchMarkup.flat;
 				}else if($scope.hotel.batchMarkup.selected == 1){
@@ -828,6 +847,13 @@ $http.get("/searchCountries").success(function(response) {
 				}
 			});
 		});
+		
+		if($scope.hotel.batchMarkup.selected == 0){
+			$scope.hotel.minRate = hotel.minRate + $scope.hotel.batchMarkup.flat;
+		}else if($scope.hotel.batchMarkup.selected == 1){
+			var markupPer =	$scope.hotel.minRate / 100 * $scope.hotel.batchMarkup.percent;
+			$scope.hotel.minRate = $scope.hotel.minRate + markupPer;
+		}
 		
 				
 		console.log($scope.hotel);
@@ -934,6 +960,15 @@ $http.get("/searchCountries").success(function(response) {
 			console.log($scope.leisure_sport_check);
 			});
 		});
+	}
+	
+	$scope.closePopup = function(){
+		$scope.addRooms = [];
+		/*$scope.addRooms.push({});
+		$scope.addRooms[0].adult = "1 Adult";
+		$scope.addRooms[0].cAllow = "true";
+		$scope.addRooms[0].id = 0;*/
+		console.log("HiiiOOooooo");
 	}
 	
 	$scope.cAllow = "false";
@@ -1091,27 +1126,31 @@ $http.get("/searchCountries").success(function(response) {
 		
 		
 		
-		if(childallow == "true"){
+		//if(childallow == "true"){
 			
 		
 		console.log($scope.ratedetail);
 		
 		
 		angular.forEach($scope.ratedetail.hotelbyRoom,function(value,key){
-			if(value.maxAdultsWithchild >= arr1[0]){
-				$scope.cAllow = "true";
-				$scope.childnotallowMsg = "false";
+			if(value.maxAdultsWithchild > arr1[0]){
+				$scope.addRooms[index].cAllow = "true";
+				//$scope.cAllow = "true";
+				//$scope.childnotallowMsg = "false";
 			}else{
-				
-				$scope.cAllow = "false";
-				$scope.childnotallowMsg = "true";
+				$scope.addRooms[index].cAllow = "false";
+				delete $scope.addRooms[index].childselected;
+				$scope.addRooms[index].noOfchild = "0";
+				//$scope.cAllow = "false";
+				//$scope.childnotallowMsg = "true";
 			}
 		});
 		
-      }else{
-    	  $scope.cAllow = "false";
-    	  $scope.childnotallowMsg = "false";
-      }
+     /* }else{
+    		$scope.addRooms[index].cAllow = "false";
+    	  //$scope.cAllow = "false";
+    	  //$scope.childnotallowMsg = "false";
+      }*/
 	}
 	
 
@@ -1128,6 +1167,7 @@ $http.get("/searchCountries").success(function(response) {
 	$scope.dateWiseInfo = function(roomid){
 		$scope.addRooms.push({});
 		$scope.addRooms[0].adult = "1 Adult";
+		$scope.addRooms[0].cAllow = "true";
 		$scope.addRooms[0].id = 0;
 		console.log($scope.hotel);
 		
@@ -1299,6 +1339,7 @@ $http.get("/searchCountries").success(function(response) {
 		ngDialog.open({
 			template: '/assets/resources/html/show_Date_wise_info_InHotel.html',
 			scope : $scope,
+			closeByDocument:false,
 			//controller:'hoteProfileController',
 			className: 'ngdialog-theme-default'
 		});
@@ -1709,6 +1750,7 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.indexCount = $scope.indexCount + 1;
 		console.log($scope.indexCount);
 		$scope.addRooms[$scope.indexCount].adult = "1 Adult";
+		$scope.addRooms[$scope.indexCount].cAllow = "true";
 		$scope.addRooms[$scope.indexCount].id = index;
 		//$event.preventDefault();
 		$scope.countTotal($scope.indexCount);
@@ -2048,5 +2090,5 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 		});
 	}
 	
-
+	
 });	

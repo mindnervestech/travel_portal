@@ -19,7 +19,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 @Entity
-@Table(name="Hotel_health_and_safety")
+@Table(name="hotel_health_and_safety")
 public class HotelHealthAndSafety {
 
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)

@@ -14,7 +14,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 @Entity
-@Table(name="Room_regiter_by_child")
+@Table(name="room_regiter_by_child")
 public class RoomRegiterByChild {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
