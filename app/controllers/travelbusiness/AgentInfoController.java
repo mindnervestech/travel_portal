@@ -48,6 +48,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.agent.AgentRegistration;
+import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.vm.AgentRegisVM;
 import com.travelportal.vm.HotelBookDetailsVM;
@@ -1306,6 +1307,13 @@ public class AgentInfoController extends Controller {
 		System.out.println("Delete");
 	}
 	
+	@Transactional(readOnly=true)
+	public static Result getRoomType(Long supplierCode){
+		
+		List<HotelRoomTypes> hRoomTypes = HotelRoomTypes.getHotelRoomDetails(supplierCode);
+		return ok(Json.toJson(hRoomTypes));
+		
+	}
 	
 
 }

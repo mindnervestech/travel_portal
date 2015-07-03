@@ -36,6 +36,7 @@ import com.travelportal.domain.AmenitiesType;
 import com.travelportal.domain.CancellationDateDiff;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.HotelAmenities;
+import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.HotelImagesPath;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
@@ -302,6 +303,8 @@ public static Result hotelBookingpage() {
 		List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 		HotelSearch hProfileVM = new HotelSearch();
 		hProfileVM.bookingId = searchVM.bookingId;
+		
+		
 		Long object = (Long) map.get(supplierid.longValue());
 		
 		if (object == null) {
@@ -316,6 +319,20 @@ public static Result hotelBookingpage() {
 			
 			HotelBookingDetailsVM hotelBookings = new HotelBookingDetailsVM();
 			
+			if(searchVM.bookingId != null && searchVM.bookingId != ""){
+				
+				HotelBookingDetails hDetails = HotelBookingDetails.findBookingById(Long.parseLong(searchVM.bookingId));
+				
+				hotelBookings.travelleraddress = hDetails.getTravelleraddress();
+				hotelBookings.travellercountry = String.valueOf(hDetails.getTravellercountry().getCountryCode());
+				hotelBookings.travelleremail = hDetails.getTravelleremail();
+				hotelBookings.travellerfirstname = hDetails.getTravellerfirstname();
+				hotelBookings.travellerlastname = hDetails.getTravellerlastname();
+				hotelBookings.travellermiddlename = hDetails.getTravellermiddlename();
+				hotelBookings.travellerpassportNo = hDetails.getTravellerpassportNo();
+				hotelBookings.travellerphnaumber = hDetails.getTravellerphnaumber();
+				hotelBookings.travellersalutation = String.valueOf(hDetails.getTravellersalutation().getSalutationId());
+			}
 			//hotelBookings.setAdult(adult)
 			
 			if(searchVM.adult == ""){
@@ -339,6 +356,7 @@ public static Result hotelBookingpage() {
 				hotelBookings.setNoOfchild(searchVM.noOfchild);
 		    }
 			hotelBookings.setTotal(searchVM.total);
+			
 			hotelBookings.setTotalParPerson(searchVM.totalParPerson);
 			
 			List<PassengerBookingInfoVM> pList = new ArrayList<>();
@@ -362,7 +380,7 @@ public static Result hotelBookingpage() {
 						 pInfoVM.total = String.valueOf(jsonObj.getLong("total"));
 						 try{
 						 pInfoVM.noOfchild = jsonObj.getString("noOfchild");
-						 
+						 pInfoVM.regiterBy = jsonObj.getString("regiterBy");
 						 } catch(Exception e){
 							 System.out.println("Child Not Found");
 						 }

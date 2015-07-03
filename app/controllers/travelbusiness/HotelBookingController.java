@@ -17,6 +17,7 @@ import org.javers.core.diff.changetype.ValueChange;
 import org.javers.core.diff.changetype.container.ElementValueChange;
 import org.javers.core.diff.changetype.container.ListChange;
 import org.javers.core.diff.changetype.container.ValueAdded;
+import org.javers.core.diff.changetype.container.ValueRemoved;
 
 import play.Play;
 import play.data.Form;
@@ -596,8 +597,16 @@ public class HotelBookingController extends Controller {
 					 rRbOld = (RoomRegiterBy)change.getLeftValue();
 					 rRbNew = (RoomRegiterBy)change.getRightValue();
 				 } catch(ClassCastException e) {
-					 ValueAdded change = (ValueAdded)c.getChanges().get(i);
-					 rRbNew = (RoomRegiterBy)change.getValue();
+									 
+					/* if(c.getChanges().get(i).getClass().getSimpleName().equals("ValueRemoved")){
+						 ValueRemoved change = (ValueRemoved)c.getChanges().get(i);
+						 rRbOld = (RoomRegiterBy)change.getValue();
+					 }*/
+					 
+					 if(c.getChanges().get(i).getClass().getSimpleName().equals("ValueAdded")){
+						 ValueAdded change = (ValueAdded)c.getChanges().get(i);
+						 rRbNew = (RoomRegiterBy)change.getValue();
+					 }
 				 }
 				 changeValueVM chVm = new changeValueVM();
 				 if(rRbOld !=null) {
@@ -608,13 +617,15 @@ public class HotelBookingController extends Controller {
 					 valueOld.add(chVm);
 				 }
 				 
-					 changeValueVM chVm1 = new changeValueVM();
+				 changeValueVM chVm1 = new changeValueVM();
+				 if(rRbNew !=null) {
+					
 					 chVm1.room = i+1;
 					 chVm1.adult = rRbNew.getAdult();
 					 chVm1.noOfchild = rRbNew.getNoOfchild();
 					 chVm1.total = rRbNew.getTotal();
 					 valueNew.add(chVm1);
-				 
+				 }
 				 
 			 }
 			 cInData.oldValue = valueOld;

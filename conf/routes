@@ -50,6 +50,8 @@ GET  /getbookingcancel/:id			 controllers.travelbusiness.AgentInfoController.get
 GET  /getVoucherConfirm/:bookingId    controllers.travelbusiness.AgentInfoController.getVoucherConfirm(bookingId:Long)
 GET  /getVoucherCancel/:bookingId    controllers.travelbusiness.AgentInfoController.getVoucherCancel(bookingId:Long)
 GET  /getVoucherOnRequest/:bookingId    controllers.travelbusiness.AgentInfoController.getVoucherOnRequest(bookingId:Long)
+GET  /getRoomType/:supplierCode 		controllers.travelbusiness.AgentInfoController.getRoomType(supplierCode:Long)
+
 
 #travelportal
 
