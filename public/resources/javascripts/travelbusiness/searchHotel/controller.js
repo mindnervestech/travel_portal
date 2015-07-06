@@ -328,9 +328,13 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 					var childTotalRate = 0;
 					$scope.childselected = value.childselected;
 					angular.forEach(value.childselected,function(value1,key1){
-						childTotalRate = parseInt(childTotalRate + value1.freeChild);
+						if(value1.freeChild != "Free"){
+							childTotalRate = parseInt(childTotalRate) + parseInt(value1.freeChild);
+						}
 					});
+					
 					 $scope.total = $scope.total + childTotalRate
+					 console.log( $scope.total);
 					value.total = $scope.total;
 					value.rateDatedetail = $scope.rateDatedetail;
 				});
@@ -477,6 +481,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		var totalcount = $scope.total;
 		console.log(totalcount);
 		
+		
 		$scope.rateDatedetail = [];
 		console.log($scope.addRooms[pIndex]);
 		$scope.fillrateDatedetai($scope.addRooms[pIndex].adult);
@@ -536,12 +541,16 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		});
 		console.log(totalchileValue);
 		
-		$scope.total = parseInt(totalcount) + parseInt(totalchileValue);
+		//$scope.total = parseInt(totalcount) + parseInt(totalchileValue);
 		
 	
 		console.log($scope.total);
 		$scope.commanPromotionFunction();
 		$scope.batchMarkupFunction();
+		
+		
+		$scope.total = $scope.total + parseInt(totalchileValue);
+		
 	
 		$scope.addRooms[pIndex].total = $scope.total;
 		$scope.breakfastFunction(); 
@@ -710,15 +719,15 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			
 			$scope.total = $scope.totalParPerson;
 	
-			$scope.total = $scope.totalParPerson * 1;// roomNo;
+		//	$scope.total = $scope.totalParPerson * 1;// roomNo;
 		
 		var arr1 = adultValue.split(" ");
 		console.log(arr1[0]);
 		
 		$scope.adultTotal = arr1[0];
-		
-		$scope.commanPromotionFunction();
 		$scope.batchMarkupFunction();
+		$scope.commanPromotionFunction();
+		
 		
 		$scope.addRooms[index].total = $scope.total;
 		$scope.addRooms[index].rateDatedetail = $scope.rateDatedetail;
@@ -812,6 +821,10 @@ $scope.commanPromotionFunction = function(){
 	var typeOFFreeStey = 0;
 	var daysLess = 0;
 	
+	$scope.total = 0;
+    for(var j=0;j<$scope.rateDatedetail.length;j++){
+    	$scope.total = $scope.total  + $scope.rateDatedetail[j].rate;
+    }
 	console.log($scope.total);
 	
 	if($scope.ratedetail.hotelbyRoom[0].applyPromotion == 1){	
@@ -853,16 +866,16 @@ $scope.commanPromotionFunction = function(){
 			 if($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].multiple == false){
 				 for(i=0; i<divDays; i++){
 					 firstNoTotal = firstNoTotal + a[i];
-					 if($scope.ratedetail.batchMarkup.selected == 0){
+					/* if($scope.ratedetail.batchMarkup.selected == 0){
 						 	firstNoTotal = firstNoTotal + $scope.ratedetail.batchMarkup.flat
-					 }
+					 }*/
 					}
 			 }else{
 			 for(i=0; i<daysLess; i++){
 				 firstNoTotal = firstNoTotal + a[i];
-				if($scope.ratedetail.batchMarkup.selected == 0){
+				/*if($scope.ratedetail.batchMarkup.selected == 0){
 					 	firstNoTotal = firstNoTotal + $scope.ratedetail.batchMarkup.flat
-				 }
+				 }*/
 				}
 		     }
 			// firstNoTotal = firstNoTotal * $scope.countNoOfRoom; 
@@ -874,9 +887,9 @@ $scope.commanPromotionFunction = function(){
 					 for(i=parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays); i<parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays) + parseInt(divDays); i++){
 						console.log(i);
 						 standardTotal = standardTotal + a[i];
-						 if($scope.ratedetail.batchMarkup.selected == 0){
+						/* if($scope.ratedetail.batchMarkup.selected == 0){
 							 standardTotal = standardTotal + $scope.ratedetail.batchMarkup.flat
-						 }
+						 }*/
 						 console.log(standardTotal);
 						}
 				 }else{
@@ -886,9 +899,9 @@ $scope.commanPromotionFunction = function(){
 							 console.log(stayCountar);
 						 }else if(stayCountar >= $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays){
 							 standardTotal = standardTotal + a[i];	
-							 if($scope.ratedetail.batchMarkup.selected == 0){
+							 /*if($scope.ratedetail.batchMarkup.selected == 0){
 								 standardTotal = standardTotal + $scope.ratedetail.batchMarkup.flat
-							 }
+							 }*/
 							 console.log(a[i]);
 							 console.log(standardTotal);
 							 stayCountar = stayCountar + 1;
@@ -913,16 +926,16 @@ $scope.commanPromotionFunction = function(){
 			 if($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].multiple == false){
 				 for(i=0; i<divDays; i++){
 						cheapestTotal = cheapestTotal + a[i];
-						if($scope.ratedetail.batchMarkup.selected == 0){
+						/*if($scope.ratedetail.batchMarkup.selected == 0){
 							cheapestTotal = cheapestTotal + $scope.ratedetail.batchMarkup.flat
-						 }
+						 }*/
 					}
 			 }else{
 				 for(i=0; i<daysLess; i++){
 						cheapestTotal = cheapestTotal + a[i];
-						if($scope.ratedetail.batchMarkup.selected == 0){
+						/*if($scope.ratedetail.batchMarkup.selected == 0){
 							cheapestTotal = cheapestTotal + $scope.ratedetail.batchMarkup.flat
-						 }
+						 }*/
 					}
 			 }
 			
@@ -1950,7 +1963,7 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.totalParPerson = total;
 	
 		//if(roomNo != undefined){
-			$scope.total = $scope.totalParPerson * 1;// roomNo;
+			//$scope.total = $scope.totalParPerson * 1;// roomNo;
 		//}
 	
 		
@@ -1960,8 +1973,9 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.adultTotal = arr1[0];
 		//$scope.childTotal = 0;
 		
-		$scope.commanPromotionFunction();
 		$scope.batchMarkupFunction();
+		$scope.commanPromotionFunction();
+		
 		
 		$scope.addRooms[index].total = $scope.total;
 		$scope.addRooms[index].rateDatedetail = $scope.rateDatedetail;
@@ -1972,11 +1986,7 @@ $http.get("/searchCountries").success(function(response) {
 		console.log($scope.total);
 		console.log(flag);
 		
-		
-		
-		//if(childallow == "true"){
-			
-		
+				
 		console.log($scope.ratedetail);
 		
 		
@@ -2153,9 +2163,9 @@ $http.get("/searchCountries").success(function(response) {
 			/*angular.forEach($scope.rateDatedetail,function(value,key){
 				
 			}*/
-			
-			$scope.commanPromotionFunction();
 			$scope.batchMarkupFunction();
+			$scope.commanPromotionFunction();
+			
 			
 			$scope.addRooms[0].total = $scope.total;
 			$scope.addRooms[0].rateDatedetail = $scope.rateDatedetail; 
@@ -2236,7 +2246,10 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.totalStayDays = 0;
 		var typeOFFreeStey = 0;
 		var daysLess = 0;
-		
+		$scope.total = 0;
+	    for(var j=0;j<$scope.rateDatedetail.length;j++){
+	    	$scope.total = $scope.total  + $scope.rateDatedetail[j].rate;
+	    }
 		console.log($scope.total);
 		
 		if($scope.ratedetail.hotelbyRoom[0].applyPromotion == 1){	
@@ -2278,30 +2291,31 @@ $http.get("/searchCountries").success(function(response) {
 				 if($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].multiple == false){
 					 for(i=0; i<divDays; i++){
 						 firstNoTotal = firstNoTotal + a[i];
-						 if($scope.ratedetail.batchMarkup.selected == 0){
+						/* if($scope.ratedetail.batchMarkup.selected == 0){
 							 	firstNoTotal = firstNoTotal + $scope.ratedetail.batchMarkup.flat
-						 }
+						 }*/
 						}
 				 }else{
 				 for(i=0; i<daysLess; i++){
 					 firstNoTotal = firstNoTotal + a[i];
-					if($scope.ratedetail.batchMarkup.selected == 0){
+					/*if($scope.ratedetail.batchMarkup.selected == 0){
 						 	firstNoTotal = firstNoTotal + $scope.ratedetail.batchMarkup.flat
-					 }
+					 }*/
 					}
 			     }
 				// firstNoTotal = firstNoTotal * $scope.countNoOfRoom; 
 				 $scope.total = $scope.total - firstNoTotal;
 			  }
 			  if(typeOFFreeStey ==  "Standard Policy"){
+				  console.log(")()()(&&&&***()()()()");
 				  var stayCountar = 0;
 				  if($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].multiple == false){
 						 for(i=parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays); i<parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays) + parseInt(divDays); i++){
 							console.log(i);
 							 standardTotal = standardTotal + a[i];
-							 if($scope.ratedetail.batchMarkup.selected == 0){
+							/* if($scope.ratedetail.batchMarkup.selected == 0){
 								 standardTotal = standardTotal + $scope.ratedetail.batchMarkup.flat
-							 }
+							 }*/
 							 console.log(standardTotal);
 							}
 					 }else{
@@ -2311,9 +2325,9 @@ $http.get("/searchCountries").success(function(response) {
 								 console.log(stayCountar);
 							 }else if(stayCountar >= $scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].payDays){
 								 standardTotal = standardTotal + a[i];	
-								 if($scope.ratedetail.batchMarkup.selected == 0){
-									 standardTotal = standardTotal + $scope.ratedetail.batchMarkup.flat
-								 }
+								 /*if($scope.ratedetail.batchMarkup.selected == 0){
+									 standardTotal = standardTotal + $scope.ratedetail.batchMarkup.flat;
+								 }*/
 								 console.log(a[i]);
 								 console.log(standardTotal);
 								 stayCountar = stayCountar + 1;
@@ -2326,7 +2340,7 @@ $http.get("/searchCountries").success(function(response) {
 					 }
 				  console.log(standardTotal);
 				 // standardTotal = standardTotal * $scope.countNoOfRoom;
-				  console.log(standardTotal);
+				  console.log($scope.total);
 				  $scope.total = $scope.total - standardTotal;
 				
 			   }
@@ -2338,16 +2352,16 @@ $http.get("/searchCountries").success(function(response) {
 				 if($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].multiple == false){
 					 for(i=0; i<divDays; i++){
 							cheapestTotal = cheapestTotal + a[i];
-							if($scope.ratedetail.batchMarkup.selected == 0){
+							/*if($scope.ratedetail.batchMarkup.selected == 0){
 								cheapestTotal = cheapestTotal + $scope.ratedetail.batchMarkup.flat
-							 }
+							 }*/
 						}
 				 }else{
 					 for(i=0; i<daysLess; i++){
 							cheapestTotal = cheapestTotal + a[i];
-							if($scope.ratedetail.batchMarkup.selected == 0){
+							/*if($scope.ratedetail.batchMarkup.selected == 0){
 								cheapestTotal = cheapestTotal + $scope.ratedetail.batchMarkup.flat
-							 }
+							 }*/
 						}
 				 }
 				
@@ -2573,13 +2587,17 @@ $http.get("/searchCountries").success(function(response) {
 		});
 		console.log(totalchileValue);
 		
-		$scope.total = parseInt(totalcount) + parseInt(totalchileValue);
+		//$scope.total = parseInt(totalcount) + parseInt(totalchileValue);
 		
 	
-		console.log($scope.total);
+		
 		$scope.commanPromotionFunction();
 		$scope.batchMarkupFunction();
-	
+		
+		
+		$scope.total = $scope.total + parseInt(totalchileValue);
+		console.log($scope.total);
+		console.log(pIndex);
 		$scope.addRooms[pIndex].total = $scope.total;
 		$scope.breakfastFunction(); 
 		
@@ -2590,19 +2608,19 @@ $http.get("/searchCountries").success(function(response) {
 	$scope.newRoom = function($event,index){
 		//console.log(index);
 		$scope.addRooms.push( {  } );
-		
+		console.log(index);
 		$scope.indexCount = $scope.indexCount + 1;
 		console.log($scope.indexCount);
 		$scope.addRooms[$scope.indexCount].adult = "1 Adult";
 		$scope.addRooms[$scope.indexCount].cAllow = "true";
-		$scope.addRooms[$scope.indexCount].id = index;
+		$scope.addRooms[$scope.indexCount].id = $scope.indexCount;
 		//$event.preventDefault();
 		$scope.countTotal($scope.indexCount);
 		
 		
 	};
 	
-	$scope.lessTotal = function(){
+	$scope.lessTotal = function(event,index){
 		console.log(index);
 		
 		 $scope.addRooms.splice(index,1);

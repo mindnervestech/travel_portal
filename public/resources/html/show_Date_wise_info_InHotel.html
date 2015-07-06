@@ -36,9 +36,7 @@
                                  </div>
                                 
                                  
-                               
                                 <div class="filter-section gray-area clearfix" style="max-height: 170px;overflow: auto;">
-                                     
                                        <div class="pull-right col-md-12" ng-repeat="serchroom in addRooms" style="margin: 1%;">
                                        <div class="col-md-8">
                                        	 <div class="col-md-1" style="margin-top: 20px;">
@@ -63,11 +61,10 @@
 		                                                    <span ng-if="serchroom.noOfchild != null" class="custom-select full-width">{{serchroom.noOfchild}}</span>
         	                                        	</div>
                                              </div>
-                                             
                                              <div class="col-md-2" ng-if="serchroom.cAllow == 'true'" ng-repeat="child in serchroom.childselected">
                                            			<span>Age</span>
                                            	 			<div class="selector">
-                                                    		 <select class="full-width" name="childAge{{$parent.$index}}{{$index}}" data-ng-model="child.age" ng-change="parChildAge(child.age,$index,$parent.$index)">
+                                                    		 <select class="full-width" name="childAge{{serchroom.id}}{{$index}}" data-ng-model="child.age" ng-change="parChildAge(child.age,$index,serchroom.id)">
                                                          <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
