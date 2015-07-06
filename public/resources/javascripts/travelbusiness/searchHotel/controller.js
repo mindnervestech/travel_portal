@@ -265,10 +265,10 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			$scope.agentinfo.Passenger = value3;
 		}
 		
-		if($scope.agentinfo.date != "true"){
-			$scope.agentinfo.checkInAmend = agentinfo.checkIn;
-			$scope.agentinfo.checkOutAmend = agentinfo.checkOut;
-		}else{
+		$scope.agentinfo.checkInAmend = agentinfo.checkIn;
+		$scope.agentinfo.checkOutAmend = agentinfo.checkOut;
+		
+		if($scope.agentinfo.date == "true"){
 			$scope.amendButton = 0;
 		}
 		

@@ -124,27 +124,23 @@
 									<label>Check In :</label>
 								</div>
 								<div class="col-md-4">
-									 <input type="text" name="checkIn" id="dateValue" value="{{agentinfo.checkIn}}" data-ng-model="agentinfo.checkInAmend"
-									class="form-control meal-font-text-size" required style="width: 179px;margin-left: 10px;">
 									
-								<!-- 	 <div class="datepicker-wrap">
-                                                    <input type="text" id="dateValue" name="checkIn" data-ng-model="agentinfo.checkInAmend" class="input-text full-width" placeholder="dd/mm/yyyy" required/>
-                                                </div> 
-                                                 <script>
-                                                 jQuery('#dateValue').ui-datepicker-trigger();
-										         </script> 
-                                                
-                                                	<input id="date" name="checkIn" id="dateValue"
-												data-ng-model="agentinfo.checkInAmend"
-												class="input-filter form-control meal-font-text-size"
-												data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" required> -->
+									<input id="date" name="checkIn"
+										data-ng-model="agentinfo.checkInAmend"
+										class="input-filter form-control meal-font-text-size"
+										data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" required>
+ 
 								</div>
 								<div class="col-md-2">
 									<label>Check Out :</label>
 								</div>
 								<div class="col-md-4">
-								   <input type="text" name="checkOut" data-ng-model="agentinfo.checkOutAmend" value="{{agentinfo.checkOut}}"
-									class="form-control meal-font-text-size" required style="width: 175px;padding-left: 10px;"> 
+								
+									<input id="date" name="checkOut"
+										data-ng-model="agentinfo.checkOutAmend"
+										class="input-filter form-control meal-font-text-size"
+										data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" required>
+								
 								</div>
 								
 							</div>
