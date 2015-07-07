@@ -119,6 +119,7 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setSupplierCode(hBookingDetails.getSupplierCode());
 			hDetailsVM.setSupplierNm(hBookingDetails.getSupplierNm());
 			hDetailsVM.setTotal(hBookingDetails.getTotal());
+			hDetailsVM.setPayment(hBookingDetails.getPayment());
 			hDetailsVM.setTravelleraddress(hBookingDetails.getTravelleraddress());
 			hDetailsVM.setTravelleremail(hBookingDetails.getTravelleremail());
 			hDetailsVM.setCurrencyId(hBookingDetails.getCurrencyId().getCurrencyCode());
@@ -243,6 +244,7 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setSupplierCode(hBookingDetails.getSupplierCode());
 			hDetailsVM.setSupplierNm(hBookingDetails.getSupplierNm());
 			hDetailsVM.setTotal(hBookingDetails.getTotal());
+			hDetailsVM.setPayment(hBookingDetails.getPayment());
 			hDetailsVM.setCurrencyId(hBookingDetails.getCurrencyId().getCurrencyCode());
 			hDetailsVM.setCurrencyNm(hBookingDetails.getCurrencyId().getCurrencyName());
 			hDetailsVM.setTravelleraddress(hBookingDetails.getTravelleraddress());
@@ -290,10 +292,9 @@ public class AgentInfoController extends Controller {
 
 
 		long totalPages = 0;
-		//String status = "available";
 		List<HotelBookingDetails> hoteDetails = null;
 
-		if(!checkIn.equals("undefined") && !checkOut.equals("undefined")&&!guest.equals("undefined") && bookingId.equals("undefined")){
+		if(!checkIn.equals("undefined") && !checkOut.equals("undefined")&&!guest.equals("undefined") && bookingId == 0){
 			try {
 				totalPages = HotelBookingDetails.getAllagentTotalDateWise1(10 , Long.parseLong(session().get("agent")) , format.parse(checkIn) , format.parse(checkOut) , status,guest);
 			} catch (ParseException e) {
@@ -307,14 +308,14 @@ public class AgentInfoController extends Controller {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else if(checkIn.equals("undefined") && checkOut.equals("undefined") && !guest.equals("undefined") && bookingId.equals("undefined")){
+		}else if(checkIn.equals("undefined") && checkOut.equals("undefined") && !guest.equals("undefined") && bookingId == 0){
 
 			totalPages = HotelBookingDetails.getTotalDateWiseAgentWise1(10 , Long.parseLong(session().get("agent")), status,guest);
 
 			hoteDetails = HotelBookingDetails.getfindByDateWiseAgentWise1(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status,guest);
 
 		}
-		else if(guest.equals("undefined")&&!checkIn.equals("undefined") && !checkOut.equals("undefined") && bookingId.equals("undefined"))
+		else if(guest.equals("undefined")&&!checkIn.equals("undefined") && !checkOut.equals("undefined") && bookingId == 0)
 		{
 
 			try {
@@ -337,7 +338,7 @@ public class AgentInfoController extends Controller {
 				e.printStackTrace();
 			}
 
-		}else if(!bookingId.equals("undefined")){
+		}else if(bookingId != 0){
 			totalPages = HotelBookingDetails.getTotalBookingIdWise(10 , Long.parseLong(session().get("agent")), status, bookingId);
 			hoteDetails = HotelBookingDetails.getfindByBookingId(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status,bookingId);
 		}
@@ -392,6 +393,7 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setSupplierCode(hBookingDetails.getSupplierCode());
 			hDetailsVM.setSupplierNm(hBookingDetails.getSupplierNm());
 			hDetailsVM.setTotal(hBookingDetails.getTotal());
+			hDetailsVM.setPayment(hBookingDetails.getPayment());
 			hDetailsVM.setCurrencyId(hBookingDetails.getCurrencyId().getCurrencyCode());
 			hDetailsVM.setCurrencyNm(hBookingDetails.getCurrencyId().getCurrencyName());
 			hDetailsVM.setTravelleraddress(hBookingDetails.getTravelleraddress());

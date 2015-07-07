@@ -110,6 +110,7 @@ public class ConfirmBookingController extends Controller {
 			hDetailsVM.setSupplierCode(hBookingDetails.getSupplierCode());
 			hDetailsVM.setSupplierNm(hBookingDetails.getSupplierNm());
 			hDetailsVM.setTotal(hBookingDetails.getTotal());
+			hDetailsVM.setPayment(hBookingDetails.getPayment());
 			hDetailsVM.setTravelleraddress(hBookingDetails.getTravelleraddress());
 			hDetailsVM.setTravelleremail(hBookingDetails.getTravelleremail());
 			hDetailsVM.setTravellerfirstname(hBookingDetails.getTravellerfirstname());
@@ -210,6 +211,7 @@ public class ConfirmBookingController extends Controller {
 			hDetailsVM.setSupplierCode(hBookingDetails.getSupplierCode());
 			hDetailsVM.setSupplierNm(hBookingDetails.getSupplierNm());
 			hDetailsVM.setTotal(hBookingDetails.getTotal());
+			hDetailsVM.setPayment(hBookingDetails.getPayment());
 			hDetailsVM.setTravelleraddress(hBookingDetails.getTravelleraddress());
 			hDetailsVM.setTravelleremail(hBookingDetails.getTravelleremail());
 			hDetailsVM.setTravellerfirstname(hBookingDetails.getTravellerfirstname());
@@ -309,6 +311,7 @@ public class ConfirmBookingController extends Controller {
 			hDetailsVM.setSupplierCode(hBookingDetails.getSupplierCode());
 			hDetailsVM.setSupplierNm(hBookingDetails.getSupplierNm());
 			hDetailsVM.setTotal(hBookingDetails.getTotal());
+			hDetailsVM.setPayment(hBookingDetails.getPayment());
 			hDetailsVM.setTravelleraddress(hBookingDetails.getTravelleraddress());
 			hDetailsVM.setTravelleremail(hBookingDetails.getTravelleremail());
 			hDetailsVM.setTravellerfirstname(hBookingDetails.getTravellerfirstname());
@@ -409,6 +412,7 @@ public class ConfirmBookingController extends Controller {
 			hDetailsVM.setSupplierCode(hBookingDetails.getSupplierCode());
 			hDetailsVM.setSupplierNm(hBookingDetails.getSupplierNm());
 			hDetailsVM.setTotal(hBookingDetails.getTotal());
+			hDetailsVM.setPayment(hBookingDetails.getPayment());
 			hDetailsVM.setTravelleraddress(hBookingDetails.getTravelleraddress());
 			hDetailsVM.setTravelleremail(hBookingDetails.getTravelleremail());
 			hDetailsVM.setTravellerfirstname(hBookingDetails.getTravellerfirstname());
@@ -469,7 +473,7 @@ public class ConfirmBookingController extends Controller {
 		
 	}
 	
-	@Transactional
+	/*@Transactional
 	public static Result getBookingPaymentInfo(long bookingId,String payment) {
 		HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingById(bookingId);
 		if(payment.equals("true")){
@@ -482,7 +486,7 @@ public class ConfirmBookingController extends Controller {
 		
 		return ok();
 		
-	}
+	}*/
 	
 	
 }

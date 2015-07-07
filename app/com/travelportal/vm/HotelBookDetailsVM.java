@@ -51,6 +51,7 @@ public class HotelBookDetailsVM {
 	public Long totalNightStay;
 	public List<AgentRegisVM> agent;
 	public String nonRefund;
+	public String payment;
 	
 	public String nonSmokingRoom;
 	public String twinBeds;
@@ -377,6 +378,12 @@ public class HotelBookDetailsVM {
 	}
 	public void setEnterComments(String enterComments) {
 		this.enterComments = enterComments;
+	}
+	public String getPayment() {
+		return payment;
+	}
+	public void setPayment(String payment) {
+		this.payment = payment;
 	}
 
 	

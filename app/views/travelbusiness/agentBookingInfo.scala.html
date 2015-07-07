@@ -169,7 +169,7 @@
                 	<tbody>
                 	
                     	<tr ng-repeat="agent in agentBook">
-          					<td>{{$index+1}}</td>
+          					<td>{{agent.id}}</td>
           					 <td>{{agent.travellerfirstname}} {{agent.travellerlastname}}</td>
           					  <td>{{agent.supplierNm}}</td>
           					 <td>{{agent.checkIn}}</td>
@@ -182,11 +182,10 @@
  							 <td ng-if='agent.room_status != "available"'>{{agent.room_status}}</td>
                              <td ng-if='agent.room_status == "available"'>Confirm</td>
                                <td>{{agent.total}}<sup style="font-size: small;color: chocolate;top: 0px;" class="ng-binding"> {{agent.curr}}</sup></td>
-                            <td> <input type="checkbox"
-																			name="selectBooking" ng-model="payment"
-																			ng-click="bookingPayment(agent.id,payment)" />
-                                       
-                                     </td>
+                            <td ng-if="agent.payment == 'no'">Outstanding</td>
+                            <td ng-if="agent.payment == 'yes'">Received</td> 
+                            <td ng-if="agent.payment == null">-</td>                          
+                                     
                             <!--  <td>{{agent.nationalityNm}}</td> -->
                             <td><a ng-click="showDetails(agent)" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 0px;"></span></a></td> 
                           

@@ -52,6 +52,12 @@ GET  /getVoucherCancel/:bookingId    controllers.travelbusiness.AgentInfoControl
 GET  /getVoucherOnRequest/:bookingId    controllers.travelbusiness.AgentInfoController.getVoucherOnRequest(bookingId:Long)
 GET  /getRoomType/:supplierCode 		controllers.travelbusiness.AgentInfoController.getRoomType(supplierCode:Long)
 
+#manage Booking controller
+
+GET  /getAllAgentInfo/:agentCode      com.travelportal.controllers.ManageBookingController.getAllAgentInfo(agentCode:Long)
+GET  /getagentInfobyAll/:currentPage/:checkIn/:checkOut/:guest/:status/:bookingId/:agentCode        com.travelportal.controllers.ManageBookingController.getagentInfobyAll(currentPage:Integer,checkIn:String,checkOut:String,guest:String,status:String,bookingId:Long,agentCode:Long)
+GET  /getBookingPaymentInfo/:bookingId/:payment	   com.travelportal.controllers.ManageBookingController.getBookingPaymentInfo(bookingId:Long,payment:String)
+
 
 #travelportal
 
@@ -262,7 +268,7 @@ GET  /getbookingInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	
 GET  /getonrequestInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm          com.travelportal.controllers.ConfirmBookingController.getonrequestInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)
 #GET  /getonrequestInfoDateWise/:fromDate/:toDate/:supplierCode    com.travelportal.controllers.ConfirmBookingController.getonrequestInfoDateWise(fromDate:String,toDate:String,supplierCode:Long)
 GET  /getbookDateWise/:id			com.travelportal.controllers.ConfirmBookingController.getbookDateWise(id:Long)
-GET  /getBookingPaymentInfo/:bookingId/:payment	   com.travelportal.controllers.ConfirmBookingController.getBookingPaymentInfo(bookingId:Long,payment:String)
+#GET  /getBookingPaymentInfo/:bookingId/:payment	   com.travelportal.controllers.ConfirmBookingController.getBookingPaymentInfo(bookingId:Long,payment:String)
 GET  /getRejectBooking/:id       com.travelportal.controllers.ConfirmBookingController.getRejectBooking(id:Long)
 GET  /getconfBooking/:id       com.travelportal.controllers.ConfirmBookingController.getconfBooking(id:Long)
 GET  /getrejectInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	com.travelportal.controllers.ConfirmBookingController.getrejectInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)

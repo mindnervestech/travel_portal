@@ -116,6 +116,12 @@ var app = angular.module('travel_portal',['ngRoute','ngDialog','jlareau.pnotify'
 		templateUrl: '/assets/html/admin/markup_page.html',
 		controller: 'markupController'
 	})
+	
+	.when('/manageBooking', {
+		templateUrl: '/assets/html/admin/manageBooking.html',
+		controller: 'manageBookingController'
+	})
+	
 	.when('/confirmBooking', {
 		templateUrl: '/assets/html/booking_process/confirm_booking.html',
 		controller: 'confirmbookingController'

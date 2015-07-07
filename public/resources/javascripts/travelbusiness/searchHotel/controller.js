@@ -74,6 +74,9 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 	{
 			guest="undefined";
 	}
+		if(bookingId == "" || bookingId == undefined){
+			bookingId = 0;
+		}
 		
 		$http.get("/getagentInfobynm/"+currentPage+"/"+checkIn+"/"+checkOut+"/"+guest+"/"+status+"/"+bookingId).success(function(response1){
 		console.log(response1);
@@ -2581,23 +2584,24 @@ $http.get("/searchCountries").success(function(response) {
 		angular.forEach($scope.childselected, function(value, count){
 			if(value.breakfast != ""){
 				totalchileValue = parseInt(totalchileValue) + parseInt(value.breakfast);
+				console.log(value.breakfast);
 			}
 			if(value.freeChild != "Free" && value.freeChild != ""){
 				totalchileValue = parseInt(totalchileValue) + parseInt(value.freeChild);
 			}
 		});
-		console.log(totalchileValue);
+	
 		
 		//$scope.total = parseInt(totalcount) + parseInt(totalchileValue);
 		
 	
-		
-		$scope.commanPromotionFunction();
 		$scope.batchMarkupFunction();
+		$scope.commanPromotionFunction();
 		
-		
-		$scope.total = $scope.total + parseInt(totalchileValue);
+		console.log(totalchileValue);
 		console.log($scope.total);
+		$scope.total = $scope.total + parseInt(totalchileValue);
+	
 		console.log(pIndex);
 		$scope.addRooms[pIndex].total = $scope.total;
 		$scope.breakfastFunction(); 

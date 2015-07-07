@@ -4765,3 +4765,132 @@ controller("cancelController",['$scope','notificationService','$filter','$rootSc
 	
 }]);	
 
+angular.module('travel_portal').
+controller("manageBookingController",['$scope','notificationService','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$filter,$rootScope, $http,ngDialog){
+
+	$scope.pageNumber;
+	$scope.pageSize;
+	$scope.fromData = "1";
+	$scope.toDate="1";
+	$scope.status = "1";
+	var currentPage = 1;
+	var totalPages;
+	$scope.flag = 0;
+	$scope.showtable = 0; 
+	/*$scope.init = function(hotelAllData){
+				
+		console.log(hotelAllData);
+		
+		
+		
+	}*/
+	
+	
+	$scope.findAgentList = function(agentCode){
+		
+		$http.get("/getAllAgentInfo/"+agentCode).success(function(response){
+			console.log(response);
+			totalPages = response.totalPages;
+			currentPage = response.currentPage;
+			$scope.pageNumber = response.currentPage;
+			$scope.pageSize = response.totalPages;
+			$scope.agentBook = response.results;
+			if(response.results.length != 0){
+				$scope.showtable = 1;
+			}
+			console.log(response.results.length);
+			console.log($scope.showtable);
+			if(totalPages == 0) {
+				$scope.pageNumber = 0;
+			}
+		});
+		
+	}
+	
+	
+	$scope.onNext = function() {
+		if(currentPage < totalPages) {
+			currentPage++;
+			$scope.searchagent(currentPage);
+		}
+	};
+	$scope.onPrev = function() {
+		if(currentPage > 1) {
+			currentPage--;
+			$scope.searchagent(currentPage);
+		}
+	};
+	
+	$scope.showtableBooking = function(checkIn,checkOut,guest,status,bookingId,agentCode){
+		if(guest=="")
+		{
+			guest="undefined";
+		}
+		if(checkIn=="")
+		{
+			checkIn="undefined";
+		}
+		if(checkOut=="")
+		{
+			checkOut="undefined";
+		}
+		if(bookingId=="" || bookingId==undefined)
+		{
+			bookingId = 0;
+		}
+		
+		console.log(guest);
+		console.log(status);
+		console.log(checkIn);
+		console.log(checkOut);
+		console.log(bookingId);
+		console.log(agentCode);
+		
+		$http.get("/getagentInfobyAll/"+currentPage+"/"+checkIn+"/"+checkOut+"/"+guest+"/"+status+"/"+bookingId+"/"+agentCode).success(function(response1){
+			console.log(response1);
+			totalPages = response1.totalPages;
+			currentPage = response1.currentPage;
+			$scope.pageNumber = response1.currentPage;
+			$scope.pageSize = response1.totalPages;
+			$scope.agentBook = response1.results;
+			
+			
+			if(totalPages == 0) {
+				$scope.pageNumber = 0;
+			}
+			
+		});
+	}
+	
+	/*$scope.searchagent = function(page) {
+		currentPage = page;
+		
+		currentPage = page;
+		console.log(currentPage);
+		$http.get("/getagentInfobyAll/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.status).success(function(response){
+			
+			console.log(response);
+			totalPages = response.totalPages;
+			currentPage = response.currentPage;
+			$scope.pageNumber = response.currentPage;
+			$scope.pageSize = response.totalPages;
+			$scope.agentBook = response.results;
+			if(totalPages == 0) {
+				$scope.pageNumber = 0;
+			}
+			
+		});
+	};*/
+	
+	
+	$scope.bookingPayment = function(bookingId, payment){
+		console.log(bookingId);
+		console.log(payment);
+		$http.get("/getBookingPaymentInfo/"+bookingId+"/"+payment).success(function(response){
+			console.log("OK,,OK");
+		});
+		
+	}
+	
+	
+}]);
