@@ -809,6 +809,7 @@ $scope.fillrateDatedetai = function(adultValues){
 		     });
 		
 		$scope.totalParPerson = total;
+		
 	}
 	
 
@@ -2725,6 +2726,7 @@ $http.get("/searchCountries").success(function(response) {
 		     });
 		
 		$scope.totalParPerson = total;
+		console.log($scope.rateDatedetail);
 	}
 	
 	
@@ -2737,7 +2739,7 @@ $http.get("/searchCountries").success(function(response) {
 		
 		console.log($scope.childselected);
 		$scope.adultString = "1 Adult";
-		$scope.fillrateDatedetai($scope.adultString);
+		//$scope.fillrateDatedetai($scope.adultString);
 		console.log($scope.totalParPerson);
 		
 		$scope.availableFlag = [];
@@ -2797,14 +2799,15 @@ $http.get("/searchCountries").success(function(response) {
 		
 		$scope.flag = flag;
 		
-		console.log(flag);
+		console.log(roomNo);
 		console.log($scope.rateDatedetail);
 		$scope.addRooms[roomNo].rateDatedetail = $scope.rateDatedetail;
 		
+		$scope.batchMarkupFunction();
 		console.log($scope.total);
 		$scope.commanPromotionFunction();
 		console.log($scope.total);
-		$scope.batchMarkupFunction();
+		
 
 		$scope.addRooms[roomNo].total = $scope.total;
 		
