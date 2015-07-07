@@ -408,7 +408,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		
 		console.log($scope.childselected);
 		$scope.adultString = "1 Adult";
-		$scope.fillrateDatedetai($scope.adultString);
+	//	$scope.fillrateDatedetai($scope.adultString);
 		console.log($scope.totalParPerson);
 		
 		$scope.availableFlag = [];
@@ -464,10 +464,10 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		console.log($scope.rateDatedetail);
 		$scope.addRooms[roomNo].rateDatedetail = $scope.rateDatedetail;
 		
-		console.log($scope.total);
-		$scope.commanPromotionFunction();
-		console.log($scope.total);
+		
 		$scope.batchMarkupFunction();
+		$scope.commanPromotionFunction();
+		
 
 		$scope.addRooms[roomNo].total = $scope.total;
 		
@@ -1092,8 +1092,8 @@ $scope.showDateWiseDetails = function(index){
 	console.log("Hiii..Bye");
 	console.log(index);
 	$scope.rateDatedetailRoomWise = [];
-	console.log($scope.addRooms[index].rateDatedetail);
-	$scope.currentRoom = $scope.addRooms[index].id + 1;
+	console.log($scope.addRooms[index]);
+	$scope.currentRoom = index + 1;
 	$scope.rateDatedetailRoomWise = $scope.addRooms[index].rateDatedetail;
 	console.log($scope.rateDatedetailRoomWise);
 }
@@ -2820,7 +2820,7 @@ $http.get("/searchCountries").success(function(response) {
 		console.log(index);
 		$scope.rateDatedetailRoomWise = [];
 		console.log($scope.addRooms[index].rateDatedetail);
-		$scope.currentRoom = $scope.addRooms[index].id + 1;
+		$scope.currentRoom = index + 1;
 		$scope.rateDatedetailRoomWise = $scope.addRooms[index].rateDatedetail;
 		console.log($scope.rateDatedetailRoomWise);
 	}
