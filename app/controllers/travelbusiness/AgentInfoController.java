@@ -69,7 +69,24 @@ public class AgentInfoController extends Controller {
 		totalPages = HotelBookingDetails.getAgentBookingTotal(10,Long.parseLong(session().get("agent")));
 		hoteDetails = HotelBookingDetails.getfindByAgent(Long.parseLong(session().get("agent")), currentPage, 10, totalPages);
 
+		fullBookingInfo(hoteDetails, aDetailsVMs);
 
+		//return ok(Json.toJson(aDetailsVMs));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("totalPages", totalPages);
+		map.put("currentPage", currentPage);
+		map.put("results", aDetailsVMs);
+
+		JsonNode onehotelJson = Json.toJson(map);
+		return ok(agentBookingInfo.render(onehotelJson));
+		//return ok(agentBookingInfo.render());
+
+	}
+
+
+	public static void fullBookingInfo(List<HotelBookingDetails> hoteDetails, List<HotelBookDetailsVM> aDetailsVMs){
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		
 		for(HotelBookingDetails hBookingDetails:hoteDetails){
 
 			HotelBookDetailsVM hDetailsVM= new HotelBookDetailsVM();
@@ -146,19 +163,7 @@ public class AgentInfoController extends Controller {
 			
 			aDetailsVMs.add(hDetailsVM);
 		}
-		//return ok(Json.toJson(aDetailsVMs));
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("totalPages", totalPages);
-		map.put("currentPage", currentPage);
-		map.put("results", aDetailsVMs);
-
-		JsonNode onehotelJson = Json.toJson(map);
-		return ok(agentBookingInfo.render(onehotelJson));
-		//return ok(agentBookingInfo.render());
-
 	}
-
-
 
 	@Transactional(readOnly=true)
 	public static Result getagentInfo(int currentPage,String fromDate,String toDate,String status) {
@@ -195,7 +200,8 @@ public class AgentInfoController extends Controller {
 
 		}
 
-		for(HotelBookingDetails hBookingDetails:hoteDetails){
+		fullBookingInfo(hoteDetails, aDetailsVMs);
+		/*for(HotelBookingDetails hBookingDetails:hoteDetails){
 
 			HotelBookDetailsVM hDetailsVM= new HotelBookDetailsVM();
 			hDetailsVM.setId(hBookingDetails.getId());
@@ -270,7 +276,7 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setWheelchair(hBookingDetails.getWheelchair());
 			
 			aDetailsVMs.add(hDetailsVM);
-		}
+		}*/
 		//return ok(Json.toJson(aDetailsVMs));
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalPages", totalPages);
@@ -343,8 +349,8 @@ public class AgentInfoController extends Controller {
 			hoteDetails = HotelBookingDetails.getfindByBookingId(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status,bookingId);
 		}
 
-
-		for(HotelBookingDetails hBookingDetails:hoteDetails){
+		fullBookingInfo(hoteDetails, aDetailsVMs);
+	/*	for(HotelBookingDetails hBookingDetails:hoteDetails){
 
 			HotelBookDetailsVM hDetailsVM= new HotelBookDetailsVM();
 			hDetailsVM.setId(hBookingDetails.getId());
@@ -419,7 +425,7 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setWheelchair(hBookingDetails.getWheelchair());
 			
 			aDetailsVMs.add(hDetailsVM);
-		}
+		}*/
 		//return ok(Json.toJson(aDetailsVMs));
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalPages", totalPages);
