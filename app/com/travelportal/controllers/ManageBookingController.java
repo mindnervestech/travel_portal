@@ -357,9 +357,9 @@ public class ManageBookingController extends Controller {
 	public static Result getBookingPaymentInfo(long bookingId,String payment) {
 		HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingById(bookingId);
 		if(payment.equals("true")){
-			hBookingDetails.setPayment("yes");
+			hBookingDetails.setPayment("Received");
 		}else{
-			hBookingDetails.setPayment("no");
+			hBookingDetails.setPayment("Outstanding");
 		}
 		
 		hBookingDetails.merge();

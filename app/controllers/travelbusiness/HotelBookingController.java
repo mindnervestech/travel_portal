@@ -203,7 +203,7 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setSmokingRoom(searchVM.hotelBookingDetails.getSmokingRoom());
 		hBookingDetails.setHandicappedRoom(searchVM.hotelBookingDetails.getHandicappedRoom());
 		hBookingDetails.setWheelchair(searchVM.hotelBookingDetails.getWheelchair());
-		hBookingDetails.setPayment("no");
+		hBookingDetails.setPayment("Outstanding");
 		
 		
 		for(SerachHotelRoomType byRoom:searchVM.hotelbyRoom){

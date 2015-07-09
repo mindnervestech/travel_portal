@@ -15,7 +15,7 @@
 	</ul> -->
 
 	<!-- Tab panes -->
-			<h4>Booking Details</h4>
+			<h4 style="margin-left: 15px;">Booking Details</h4>
 				
 				<div class="form-group" style="  margin-bottom: 50px;">
 				<div class="col-md-12" style="margin-bottom: 28px;">
@@ -48,7 +48,7 @@
 				
 				 <div class="row">
 				
-								 <div class="col-xs-1">
+								 <div class="col-xs-1" style="width: 112px;">
                                             <label type="text">BookingId</label>
                                             <div>
                                             <input type="text" name="bookingId" class="form-control"  ng-model="searchby.bookingId">
@@ -56,7 +56,7 @@
                                             </div>
                                             </div>
 				
-                                            <div class="col-xs-3">
+                                            <div class="col-xs-2">
                                                 <label>Start Date</label>
                                                 <div>
                                                   <input id="date" name="checkIn" data-ng-model="searchby.checkIn"
@@ -65,7 +65,7 @@
                                                   
                                                 </div>
                                             </div>
-                                            <div class="col-xs-3">
+                                            <div class="col-xs-2">
                                                 <label>End Date</label>
                                                 <div>
                                                   <input id="date" name="checkOut" data-ng-model="searchby.checkOut"
@@ -76,20 +76,28 @@
                                                
                                             </div>
                                             
-                                            <div class="col-xs-3">
+                                            <div class="col-xs-2">
                                             <label type="text">Guest Name</label>
                                             <div>
                                              <input type="text" name="guestname" ng-model="guest"class="form-control" >
                                             </div>
                                             </div>
+                                            <div class="col-xs-2">
+                                            <label type="text">Payment</label>
+        										<select class="form-control" name="paymentStatus"
+													data-ng-model="paymentStatus" ng-change = "paymentWise(paymentStatus)" required>
+													<option value="Outstanding">Outstanding</option>
+													<option value="Received">Received</option>
+												</select>				 	
+        					 				</div>
                                      <div class="col-xs-1" style="margin-top: 23px;">
                  					 <button type="button" ng-click="showtableBooking(searchby.checkIn,searchby.checkOut,guest,'available',searchby.bookingId, agentCode)" class="btn btn-primary">Show</button>
 				</div>
                                             
                                         </div>
         
-				
-				
+        					 
+        
 			</div> 
 			
 			
@@ -140,10 +148,8 @@
  							 <td>{{agent.total}}<sup style="font-size: small;color: chocolate;top: 0px;" class="ng-binding"> {{agent.curr}}</sup></td>
                             <td> <input type="checkbox"
 																			name="selectBooking" ng-model="payment"
-																			ng-change="bookingPayment(agent.id,payment)" />
+																			ng-change="bookingPayment(agent.id,payment)" ng-checked="agent.payment == 'Received'"/>
                                      </td>
-                            <!--  <td>{{agent.nationalityNm}}</td> -->
-                           <!--  <td><a ng-click="showDetails(agent)" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 0px;"></span></a></td> --> 
                           
                             </tr>
                            

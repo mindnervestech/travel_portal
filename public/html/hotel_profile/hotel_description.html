@@ -40,7 +40,7 @@
 						</ul>
 						<div id="myTabContent2" class="tab-content hotel-profile-tab-content">
 							
-<form method="post" ng-submit="saveDescription()" role="form" class="form-horizontal form-validate"">
+<form method="post" ng-submit="saveDescription()" role="form" class="form-horizontal">
 	<div class="row">
 		<div class="col-md-12">
 				
@@ -92,7 +92,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 								
 								
 			<div class="form-group col-md-12">
-				<label class="col-md-4 col-sm-12 control-label"><b>Hotel Located in</b> </label>
+				<label class="col-md-4 col-sm-12 control-label"><b>*Hotel Located in</b> </label>
 				<div class="col-md-8 col-sm-12">
 					<select class="form-control required" name="hotelLocation" data-ng-model="descrip.hotelLocation" data-ng-options="location.locationId as location.locationNm for location in location" style="width: 65%;float: left;" required>
 						<option>-- Choose One --</option>
@@ -104,7 +104,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 			<div class="form-group col-md-12">
 			<label class="col-md-4 col-sm-12 control-label"><b>Shopping is</b> </label>
 				<div class="col-md-8 col-sm-12">
-					<select class="form-control" name="shoppingFacilityCode" data-ng-model="descrip.shoppingFacilityCode" data-ng-options="shopping.id as shopping.shoppingArea for shopping in shoppingfacility" style="width: 65%;float: left;" required>
+					<select class="form-control" name="shoppingFacilityCode" data-ng-model="descrip.shoppingFacilityCode" data-ng-options="shopping.id as shopping.shoppingArea for shopping in shoppingfacility" style="width: 65%;float: left;">
 						<option>-- Choose One --</option>
 					</select><label class="col-md-4 control-label"  style="text-align: left;"><b>and</b></label> 
 				</div>
@@ -113,7 +113,7 @@ The text will be displayed the way it is entered and therefore avoid typing the 
 			<div class="form-group col-md-12">
 			<label class="col-md-4 col-sm-12 control-label"><b>The nightlife/restaurants</b> </label>
 				<div class="col-md-8 col-sm-12">
-					<select class="form-control" name="nightLifeCode" data-ng-model="descrip.nightLifeCode" data-ng-options="night.nightLifeCode as night.nightLifeNm for night in nightlife" style="width: 65%;float: left;" required>
+					<select class="form-control" name="nightLifeCode" data-ng-model="descrip.nightLifeCode" data-ng-options="night.nightLifeCode as night.nightLifeNm for night in nightlife" style="width: 65%;float: left;">
 						<option>-- Choose One --</option>
 					</select><label class="col-md-4 control-label"  style="text-align: left;"><b>the hotel.</b></label>
 				</div>
