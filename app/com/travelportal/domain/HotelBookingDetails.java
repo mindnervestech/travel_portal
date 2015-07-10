@@ -959,6 +959,20 @@ public class HotelBookingDetails {
     	return totalPages;
     }
 	
+	@Transactional
+    public static long getAdminPaymentStatusBookingTotal(int rowsPerPage,long agentId, String paymentStatus, String status) {
+		long totalPages = 0, size;
+    		size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and a.payment = ?2 and a.room_status = ?3").setParameter(1, agentId).setParameter(2, paymentStatus).setParameter(3, status).getSingleResult();
+    	
+    	totalPages = size/rowsPerPage;
+		
+    	if(size % rowsPerPage > 0) {
+			totalPages++;
+		}
+    	System.out.println("total pages ::"+totalPages);
+    	return totalPages;
+    }
+	
 	public static List<HotelBookingDetails> getfindByAgent(long agentId,int currentPage, int rowsPerPage,long totalPages) {
 		int  start=0;
     	
@@ -1001,6 +1015,30 @@ public class HotelBookingDetails {
 		return (List<HotelBookingDetails>)q.getResultList();
 		
 	}
+	
+	public static List<HotelBookingDetails> getAdminfindpaymentStatusByAgent(long agentId,int currentPage, int rowsPerPage,long totalPages, String paymentStatus, String status) {
+		int  start=0;
+    	
+    	String sql="";
+    		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and a.payment = ?2 and a.room_status = ?3 ORDER BY a.checkIn DESC";
+
+    		if(currentPage >= 1 && currentPage <= totalPages) {
+			start = (currentPage*rowsPerPage)-rowsPerPage;
+		}
+		if(currentPage>totalPages && totalPages!=0) {
+			currentPage--;
+			start = (int) ((totalPages*rowsPerPage)-rowsPerPage); 
+		}
+    	Query q = JPA.em().createQuery(sql).setFirstResult(start).setMaxResults(rowsPerPage);
+		
+    	q.setParameter(1, agentId);
+    	q.setParameter(2, paymentStatus);
+    	q.setParameter(3, status);
+    		
+		return (List<HotelBookingDetails>)q.getResultList();
+		
+	}
+	
 	
 	@Transactional
     public static long getAllagentBookingTotal(int rowsPerPage,long agentId) {

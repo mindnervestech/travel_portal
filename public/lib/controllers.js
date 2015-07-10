@@ -2487,6 +2487,14 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 				 });
 			  });
 			});
+		 
+		 angular.forEach($scope.rateObject, function(value, key){
+			 angular.forEach(value.normalRate.rateDetails, function(value1, key1){
+				 if(value1.onlineRateValue == ""){
+					 value1.onlineRateValue = null;
+				 }
+			 });
+		 });
 		 console.log(flag);
 		if(flag == 0){
 		$http.post('/saveRate', {"rateObject":$scope.rateObject}).success(function(data){
@@ -2770,7 +2778,14 @@ controller("manageSuppliersController",function($scope,notificationService,$root
 			$scope.userId = $scope.generalInfo.id;
 			$scope.email = $scope.generalInfo.email;
 			$scope.supplierCode = $scope.generalInfo.code;
-			$http.get('/approveUser/'+$scope.userId+'/'+$scope.email+'/'+$scope.supplierCode).success(function(response){
+			console.log($scope.generalInfo.perfer);
+			if($scope.generalInfo.perfer == undefined){
+				$scope.perfer = false; 
+			}else{
+				$scope.perfer = $scope.generalInfo.perfer;
+			}
+			
+			$http.get('/approveUser/'+$scope.userId+'/'+$scope.email+'/'+$scope.supplierCode+'/'+$scope.perfer).success(function(response){
 				$scope.pendingUsers.splice($scope.pendingUsers.indexOf($scope.generalInfo),1);
 				$scope.getData();
 			});
@@ -3446,6 +3461,7 @@ controller("manageAgentController",['$scope','notificationService','$filter','$r
 		$scope.email = $scope.generalInfo.EmailAddr;
 		$scope.agentCode = $scope.generalInfo.agentCode;
 		$scope.loginId = $scope.generalInfo.loginId;
+		
 		$http.get('/approveAgent/'+$scope.userId+'/'+$scope.email+'/'+$scope.agentCode).success(function(response){
 			 notificationService.success("Approved Successfully");
 			$scope.pendingUsers.splice($scope.pendingUsers.indexOf($scope.generalInfo),1);
@@ -4820,6 +4836,25 @@ controller("manageBookingController",['$scope','notificationService','$filter','
 			$scope.searchagent(currentPage);
 		}
 	};
+	
+	$scope.paymentWise = function(paymentStatus, agentCode){
+		
+		$http.get("/getpaymentWise/"+paymentStatus+"/"+agentCode).success(function(response1){
+			console.log(response1);
+			totalPages = response1.totalPages;
+			currentPage = response1.currentPage;
+			$scope.pageNumber = response1.currentPage;
+			$scope.pageSize = response1.totalPages;
+			$scope.agentBook = response1.results;
+			
+			
+			if(totalPages == 0) {
+				$scope.pageNumber = 0;
+			}
+			
+		});
+	}
+	
 	
 	$scope.showtableBooking = function(checkIn,checkOut,guest,status,bookingId,agentCode){
 		if(guest=="")

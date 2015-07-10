@@ -47,11 +47,15 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
+import com.travelportal.domain.RoomRegiterBy;
+import com.travelportal.domain.RoomRegiterByChild;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.vm.AgentRegisVM;
+import com.travelportal.vm.ChildselectedVM;
 import com.travelportal.vm.HotelBookDetailsVM;
+import com.travelportal.vm.PassengerBookingInfoVM;
 
 public class AgentInfoController extends Controller {
 
@@ -160,6 +164,35 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setSmokingRoom(hBookingDetails.getSmokingRoom());
 			hDetailsVM.setHandicappedRoom(hBookingDetails.getHandicappedRoom());
 			hDetailsVM.setWheelchair(hBookingDetails.getWheelchair());
+			
+			List<PassengerBookingInfoVM> pList = new ArrayList<>();
+			List<RoomRegiterBy> roBy = RoomRegiterBy.getRoomInfoByBookingId(hBookingDetails.getId());
+			if(roBy != null){
+				for(RoomRegiterBy rBy:roBy){
+					PassengerBookingInfoVM paInfoVM = new PassengerBookingInfoVM();
+					paInfoVM.adult = rBy.getAdult();
+					paInfoVM.noOfchild =String.valueOf(rBy.getNoOfchild());
+					paInfoVM.regiterBy = rBy.getRegiterBy();
+					paInfoVM.total = rBy.getTotal();
+					List<ChildselectedVM> chList = new ArrayList<>();
+					List<RoomRegiterByChild> rByChild = RoomRegiterByChild.getRoomChildInfoByRoomId(rBy.getId());
+					if(rByChild != null){
+					
+					for(RoomRegiterByChild rChild:rByChild){
+						ChildselectedVM cVm = new ChildselectedVM();
+						cVm.age = String.valueOf(rChild.getAge());
+						cVm.breakfast = rChild.getBreakfast();
+						cVm.childRate = String.valueOf(rChild.getChild_rate());
+						cVm.freeChild = rChild.getFree_child();
+						chList.add(cVm);
+					}
+					paInfoVM.childselected = chList;
+					}
+					pList.add(paInfoVM);
+				}
+			
+			hDetailsVM.setPassengerInfo(pList);
+		}
 			
 			aDetailsVMs.add(hDetailsVM);
 		}

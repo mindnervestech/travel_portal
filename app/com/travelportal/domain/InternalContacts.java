@@ -32,7 +32,10 @@ public class InternalContacts {
 	private long supplier_code;
 	private String checkInTime;
 	private String checkOutTime;
+	private String checkInType;
+	private String checkOutType;
 	private String roomVoltage;
+	private String checkTimePolicy;
 	
 	public long getSupplierCode() {
 		return supplier_code;
@@ -173,6 +176,31 @@ public class InternalContacts {
 
 	public void setRoomVoltage(String roomVoltage) {
 		this.roomVoltage = roomVoltage;
+	}
+	
+
+	public String getCheckInType() {
+		return checkInType;
+	}
+
+	public void setCheckInType(String checkInType) {
+		this.checkInType = checkInType;
+	}
+
+	public String getCheckOutType() {
+		return checkOutType;
+	}
+
+	public void setCheckOutType(String checkOutType) {
+		this.checkOutType = checkOutType;
+	}
+
+	public String getCheckTimePolicy() {
+		return checkTimePolicy;
+	}
+
+	public void setCheckTimePolicy(String checkTimePolicy) {
+		this.checkTimePolicy = checkTimePolicy;
 	}
 
 	public static InternalContacts findById(long id) {

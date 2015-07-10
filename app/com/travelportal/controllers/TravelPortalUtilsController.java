@@ -242,6 +242,9 @@ public class TravelPortalUtilsController extends Controller {
 		hotelinternalinformation.setCheckInTime(internalcontacts.getCheckInTime());
 		hotelinternalinformation.setCheckOutTime(internalcontacts.getCheckOutTime());
 		hotelinternalinformation.setRoomVoltage(internalcontacts.getRoomVoltage());
+		hotelinternalinformation.setCheckInType(internalcontacts.getCheckInType());
+		hotelinternalinformation.setCheckOutType(internalcontacts.getCheckOutType());
+		hotelinternalinformation.setCheckTimePolicy(internalcontacts.getCheckTimePolicy());
 				
 		return ok(Json.toJson(hotelinternalinformation));
 	}

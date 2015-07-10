@@ -105,7 +105,7 @@
 					<!--  <span class="error" ng-show="myForm.guestTel.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<div class="col-md-4">
-				(-Not Use character or special characters)
+				(-not allow special character and character)
 				</div>
 			</div>
 			
@@ -123,7 +123,7 @@
 					<!-- <span class="error" ng-show="myForm.guestFax.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<div class="col-md-4">
-				(-Not Use character or special characters)
+				(-not allow special character and character)
 				</div>
 			</div>	
          
@@ -147,23 +147,23 @@
 					<!-- <span class="error" ng-show="myForm.directTelNo.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<div class="col-md-4">
-				(-Not Use character or special characters)
+				(-not allow special character and character)
 				</div>
 			</div>	
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Direct Fax:</label>
 				<div class="col-md-2 setwidth">
-					<input type="text" name="directFaxNo" data-ng-model="internalInfo.directFaxNo" pattern="\d*" title="Please enter numbers" class="form-control" required>
+					<input type="text" name="directFaxNo" data-ng-model="internalInfo.directFaxNo" pattern="\d*" title="Please enter numbers" class="form-control">
 					<!-- <span class="error" ng-show="myForm.directFaxNo.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<p style="float: left;">-</p>
 				<div class="col-md-3">
-					<input type="text" name="directFaxCode" data-ng-model="internalInfo.directFaxCode" pattern="\d*" title="Please enter numbers" class="form-control" required>
+					<input type="text" name="directFaxCode" data-ng-model="internalInfo.directFaxCode" pattern="\d*" title="Please enter numbers" class="form-control">
 					<!-- <span class="error" ng-show="myForm.directFaxCode.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				<div class="col-md-4">
-				(-Not Use character or special characters)
+				(-not allow special character and character)
 				</div>
 			</div>	
 						
@@ -184,23 +184,57 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="form-group">
-				<label class="col-md-3 control-label">Check-In Time:</label>
-				<div class="col-md-3">
+				<label class="col-md-5 col-md-offset-1">Does your hotel 24 hr checkin policy?</label>
+				<div class="col-md-5">
 				
-					 <input type="text" name="checkInTime" data-ng-model="internalInfo.checkInTime" class="form-control" > 
+				<div class="chargechild">
+						<input type="radio" name="checkTimePolicy" data-ng-model="internalInfo.checkTimePolicy" value="Yes">
+						&nbsp; Yes
+					</div>
+					<div>
+						<input type="radio" name="checkTimePolicy" data-ng-model="internalInfo.checkTimePolicy" value="No">
+						&nbsp; No
+					</div> 
+				
+					</div>
+			</div>	
+			
+			<div class="form-group" ng-if="internalInfo.checkTimePolicy == 'No'">
+				<label class="col-md-3 control-label">*Check-In Time:</label>
+				<div class="col-md-2">
+				
+					 <input type="text" name="checkInTime" data-ng-model="internalInfo.checkInTime" class="form-control"> 
 				</div>
 				
-				<label class="col-md-3 control-label">Check-Out Time:</label>
-				<div class="col-md-3">
+				<div class="col-md-1" style="padding: 0px;">
+					<select class="form-control" name="checkInType" data-ng-model="internalInfo.checkInType" style="padding-left: 0px;">
+						<option value="">Select</option>
+						<option value="AM">AM</option>
+						<option value="PM">PM</option>
+						<option value="HR">HR</option>
+					</select>
+				</div>
+				
+				<label class="col-md-2 control-label">*Check-Out Time:</label>
+				<div class="col-md-2">
 					<input type="text" name="checkOutTime" data-ng-model="internalInfo.checkOutTime" class="form-control">
 					
+				</div>
+				<div class="col-md-1" style="padding: 0px;">
+					<select class="form-control" name="checkOutType" data-ng-model="internalInfo.checkOutType" style="padding-left: 0px;">
+						<option value="">Select</option>
+						<option value="AM">AM</option>
+						<option value="PM">PM</option>
+						<option value="HR">HR</option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Room Voltage</label>
 				<div class="col-md-9">
-						<input type="text" name="roomVoltage" data-ng-model="internalInfo.roomVoltage" class="form-control" required>
+						<input type="text" name="roomVoltage" data-ng-model="internalInfo.roomVoltage" class="form-control">
 				</div>
 			</div>
 			

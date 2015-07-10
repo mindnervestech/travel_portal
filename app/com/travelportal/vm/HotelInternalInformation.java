@@ -21,7 +21,11 @@ public class HotelInternalInformation {
 	public String genMgrEmail;
 	public String checkInTime;
 	public String checkOutTime;
+	public String checkInType;
+	public String checkOutType;
 	public String roomVoltage;
+	public String checkTimePolicy;
+	
 	/**
 	 * @return the supplierCode
 	 */
@@ -207,6 +211,24 @@ public class HotelInternalInformation {
 	}
 	public void setRoomVoltage(String roomVoltage) {
 		this.roomVoltage = roomVoltage;
+	}
+	public String getCheckInType() {
+		return checkInType;
+	}
+	public void setCheckInType(String checkInType) {
+		this.checkInType = checkInType;
+	}
+	public String getCheckOutType() {
+		return checkOutType;
+	}
+	public void setCheckOutType(String checkOutType) {
+		this.checkOutType = checkOutType;
+	}
+	public String getCheckTimePolicy() {
+		return checkTimePolicy;
+	}
+	public void setCheckTimePolicy(String checkTimePolicy) {
+		this.checkTimePolicy = checkTimePolicy;
 	}
 	
 	

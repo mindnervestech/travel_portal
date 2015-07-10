@@ -52,6 +52,8 @@ public class HotelBookDetailsVM {
 	public List<AgentRegisVM> agent;
 	public String nonRefund;
 	public String payment;
+	public List<PassengerBookingInfoVM> passengerInfo;
+	
 	
 	public String nonSmokingRoom;
 	public String twinBeds;
@@ -384,6 +386,12 @@ public class HotelBookDetailsVM {
 	}
 	public void setPayment(String payment) {
 		this.payment = payment;
+	}
+	public List<PassengerBookingInfoVM> getPassengerInfo() {
+		return passengerInfo;
+	}
+	public void setPassengerInfo(List<PassengerBookingInfoVM> passengerInfo) {
+		this.passengerInfo = passengerInfo;
 	}
 
 	

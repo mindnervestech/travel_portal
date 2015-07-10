@@ -57,7 +57,7 @@ GET  /getRoomType/:supplierCode 		controllers.travelbusiness.AgentInfoController
 GET  /getAllAgentInfo/:agentCode      com.travelportal.controllers.ManageBookingController.getAllAgentInfo(agentCode:Long)
 GET  /getagentInfobyAll/:currentPage/:checkIn/:checkOut/:guest/:status/:bookingId/:agentCode        com.travelportal.controllers.ManageBookingController.getagentInfobyAll(currentPage:Integer,checkIn:String,checkOut:String,guest:String,status:String,bookingId:Long,agentCode:Long)
 GET  /getBookingPaymentInfo/:bookingId/:payment	   com.travelportal.controllers.ManageBookingController.getBookingPaymentInfo(bookingId:Long,payment:String)
-
+GET  /getpaymentWise/:paymentStatus/:agentCode   com.travelportal.controllers.ManageBookingController.getpaymentWise(paymentStatus:String,agentCode:Long)
 
 #travelportal
 
@@ -90,7 +90,7 @@ GET		/getApprovedUsers			com.travelportal.controllers.AdminController.getApprove
 GET		/getRejectedUsers			com.travelportal.controllers.AdminController.getRejectedUsers
 GET     /getBlockUsers			com.travelportal.controllers.AdminController.getBlockUsers
 GET     /perferUser/:id				com.travelportal.controllers.AdminController.perferUser(id: Long)
-GET		/approveUser/:id/:email/:supplierCode			com.travelportal.controllers.AdminController.approveUser(id: Long,email: String,supplierCode: Long)
+GET		/approveUser/:id/:email/:supplierCode/:perfer			com.travelportal.controllers.AdminController.approveUser(id: Long,email: String,supplierCode: Long,perfer: String)
 GET		/rejectUser/:id				com.travelportal.controllers.AdminController.rejectUser(id: Long)
 GET		/pendingUser/:id			com.travelportal.controllers.AdminController.pendingUser(id: Long)
 GET     /blockUser/:id				com.travelportal.controllers.AdminController.blockUser(id: Long)

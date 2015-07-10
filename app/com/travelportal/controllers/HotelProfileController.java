@@ -1159,13 +1159,13 @@ public class HotelProfileController extends Controller {
 
 		hotelprofile.setHotelProfileDesc(hoteldescription.getDescription());
 		hotelprofile.setLocation(Location.getlocationIdByCode(hoteldescription.getHotelLocation()));
-		System.out.println("_+_+_+_+_+_+");
-		System.out.println(hoteldescription.getShoppingFacilityCode());
-		/*if(hoteldescription.getShoppingFacilityCode() != ){
-			
-		}*/
-		hotelprofile.setShoppingFacility(ShoppingFacility.getShoppingFacilityByCode(hoteldescription.getShoppingFacilityCode()));
-		hotelprofile.setNightLife(NightLife.getNightLifeByCode(hoteldescription.getNightLifeCode()));
+		if(hoteldescription.getShoppingFacilityCode() != 0){
+			hotelprofile.setShoppingFacility(ShoppingFacility.getShoppingFacilityByCode(hoteldescription.getShoppingFacilityCode()));
+		}
+		if(hoteldescription.getNightLifeCode() != 0){
+			hotelprofile.setNightLife(NightLife.getNightLifeByCode(hoteldescription.getNightLifeCode()));
+		}
+		
 		hotelprofile.setServices(HotelServices.getallhotelservice(hoteldescription.getServices()));
 		hotelprofile.setlocation1(hoteldescription.getLocation1());
 		hotelprofile.setlocation2(hoteldescription.getLocation2());
@@ -1222,9 +1222,22 @@ public class HotelProfileController extends Controller {
 			internalcontact.setDirectFaxValue(Integer.parseInt(form.get("directFaxNo")));
 			}
 			internalcontact.setSupplierCode(Long.parseLong(form.get("supplierCode")));
-			internalcontact.setCheckInTime(form.get("checkInTime"));
-			internalcontact.setCheckOutTime(form.get("checkOutTime"));
+			internalcontact.setCheckTimePolicy(form.get("checkTimePolicy"));
+			if(form.get("checkTimePolicy").equals("yes")){
+				internalcontact.setCheckInTime(null);
+				internalcontact.setCheckInType(null);
+				internalcontact.setCheckOutTime(null);
+				internalcontact.setCheckOutType(null);
+			}else{
+				internalcontact.setCheckInTime(form.get("checkInTime"));
+				internalcontact.setCheckInType(form.get("checkInType"));
+				internalcontact.setCheckOutTime(form.get("checkOutTime"));
+				internalcontact.setCheckOutType(form.get("checkOutType"));
+			}
+			
 			internalcontact.setRoomVoltage(form.get("roomVoltage"));
+			
+			
 			
 
 			internalcontact.save();
@@ -1249,9 +1262,20 @@ public class HotelProfileController extends Controller {
 				internalcontact.setDirectFaxValue(Integer.parseInt(form.get("directFaxNo")));
 				}
 				
-				internalcontact.setCheckInTime(form.get("checkInTime"));
-				internalcontact.setCheckOutTime(form.get("checkOutTime"));
+				
 				internalcontact.setRoomVoltage(form.get("roomVoltage"));
+				internalcontact.setCheckTimePolicy(form.get("checkTimePolicy"));
+				if(form.get("checkTimePolicy").equals("Yes")){
+					internalcontact.setCheckInTime(null);
+					internalcontact.setCheckInType(null);
+					internalcontact.setCheckOutTime(null);
+					internalcontact.setCheckOutType(null);
+				}else{
+					internalcontact.setCheckInTime(form.get("checkInTime"));
+					internalcontact.setCheckInType(form.get("checkInType"));
+					internalcontact.setCheckOutTime(form.get("checkOutTime"));
+					internalcontact.setCheckOutType(form.get("checkOutType"));
+				}
 
 			internalcontact.merge();
 		}
@@ -1366,7 +1390,9 @@ public class HotelProfileController extends Controller {
 				billinginfo.setTelNoCode(Integer.parseInt(form.get("dTelCode")));
 				billinginfo.setFaxNo(Integer.parseInt(form.get("dFaxNo")));
 				billinginfo.setFaxNoCode(Integer.parseInt(form.get("dFaxCode")));
-				billinginfo.setExt(Integer.parseInt(form.get("dExtNo")));;
+				if(form.get("dExtNo") != null && form.get("dExtNo") != ""){
+					billinginfo.setExt(Integer.parseInt(form.get("dExtNo")));;
+				}
 				billinginfo.setSupplierCode(Long.parseLong(form.get("supplierCode")));
 				billinginfo.setBankservice(form.get("bankToBankTransfer"));
 				billinginfo.setBankName(form.get("bankName"));
@@ -1398,7 +1424,9 @@ public class HotelProfileController extends Controller {
 				billinginfo.setTelNoCode(Integer.parseInt(form.get("dTelCode")));
 				billinginfo.setFaxNo(Integer.parseInt(form.get("dFaxNo")));
 				billinginfo.setFaxNoCode(Integer.parseInt(form.get("dFaxCode")));
-				billinginfo.setExt(Integer.parseInt(form.get("dExtNo")));
+				if(form.get("dExtNo") != null && form.get("dExtNo") != ""){
+					billinginfo.setExt(Integer.parseInt(form.get("dExtNo")));;
+				}
 				billinginfo.setBankservice(form.get("bankToBankTransfer"));
 				billinginfo.setBankName(form.get("bankName"));
 				if(form.get("accountNo") != null)

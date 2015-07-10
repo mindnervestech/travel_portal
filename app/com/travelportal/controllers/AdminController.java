@@ -87,7 +87,7 @@ public class AdminController extends Controller {
 	}
 	
 	@Transactional
-	public static Result approveUser(Long id,String email,Long supplierCode) {
+	public static Result approveUser(Long id,String email,Long supplierCode, String perferHotel) {
 		HotelRegistration register = HotelRegistration.findById(id);
 		register.setStatus("APPROVED");
 		register.merge();
@@ -119,7 +119,12 @@ public class AdminController extends Controller {
 		hotelProfile.setStartRatings(HotelStarRatings.getHotelRatingsByName(register.getStarRating()));
 		hotelProfile.setLaws(register.isLaws());
 		hotelProfile.setZipCode(register.getZipcode());
-		hotelProfile.setPerfer("test_first");
+		if(perferHotel.equals("true")){
+			hotelProfile.setPerfer("perfer");
+		}else{
+			hotelProfile.setPerfer("test_first");
+		}
+		
 		hotelProfile.setStatus("APPROVED");
 		hotelProfile.save();
 		
