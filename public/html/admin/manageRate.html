@@ -1,0 +1,163 @@
+<div class="panel panel-green">
+	<div class="panel-heading clearfix">
+		<span class="mts pull-left">Manage Rate</span>
+	</div>
+
+	
+			<h4 style="margin-left: 15px;">Rate Details</h4>
+				
+				
+													
+			              
+	             <div>  
+					<hr style="float: left;width: 100%;">
+			<div class="form-group">
+			
+				<div class="col-md-12" style="margin-bottom: 28px;">
+				
+				
+				 <div class="row">
+				
+								 <div class="col-xs-1" style="width: 112px;">
+                                            <label type="text">Supplier Code :</label>
+                                            <div>
+                                            <input type="text" name="hcode" class="form-control"  ng-model="hcode">
+                                            </div>
+                                            </div>
+				
+                                         <!--    <div class="col-xs-2">
+                                                <label>Start Date</label>
+                                                <div>
+                                                  <input id="date" name="checkIn" data-ng-model="searchby.checkIn"
+													class="form-control" 
+													data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" required>
+                                                  
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <label>End Date</label>
+                                                <div>
+                                                  <input id="date" name="checkOut" data-ng-model="searchby.checkOut"
+													class="form-control" 
+													data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" required>
+                                                  
+                                                </div>
+                                               
+                                            </div>
+                                            
+                                            <div class="col-xs-2">
+                                            <label type="text">Guest Name</label>
+                                            <div>
+                                             <input type="text" name="guestname" ng-model="guest"class="form-control" >
+                                            </div>
+                                            </div> -->
+                                            <div class="col-xs-3">
+                                            <label type="text">Supplier Name</label>
+        										<select class="form-control" name="paymentStatus"
+													data-ng-model="hName" ng-change = "showSpplier(hName)" required>
+													<option ng-repeat="hName in hotelName" value="{{hName.code}}">{{hName.hotelName}}</option>
+												</select>				 	
+        					 				</div>
+                                     <div class="col-xs-1" style="margin-top: 23px;">
+                 					 <button type="button" ng-click="showSpplier(hcode)" class="btn btn-primary">Show</button>
+				</div>
+                                            
+                                        </div>
+        
+        					 
+        
+			</div> 
+			
+			
+    			</div>
+    		       	<div class="form-group"> 
+                     <!--   <table border="1" class="col-md-12" cellpadding="10" style="font-size: small;text-align: center;margin-top: 28px;">
+                	<thead style="background-color: #488c6c;">
+                    	<tr>
+                           <th style="text-align: center;"><a style="color: white;">Sr.No</a></th>
+                           <th style="text-align: center;width: 80px;"><a style="color: white;">Guest Name</a></th>
+                            <th style="text-align: center;"><a style="color: white;">Hotel Name</a></th>
+                            <th style="width: 91px;text-align: center;"><a style="color: white;">Check In</a></th>
+                            <th style="width: 91px;text-align: center;"><a style="color: white;">Check Out</a></th>
+                              
+                                <th style="width: 56px;text-align: center;"><a style="color: white;">Total Night</a></th>
+                                
+                                <th style="text-align: center;"><a style="color: white;">Room type</a></th>
+                                 <th style="text-align: center;"><a style="color: white;">No of Room</a></th>
+                                 <th style="width: 83px;text-align: center;"><a style="color: white;">Total</a></th>
+                                   <th style="width: 56px;text-align: center;"><a style="color: white;">Payment</a></th>
+                                  
+                                
+                                 <th style="text-align: center;width: 45px;"><a style="color: white;">Nationality</a></th>
+                            <th style="text-align: center;"><a style="color: white;">Edit</a></th> 
+                           
+                            
+                        </tr>
+                    </thead>
+                	<tbody>
+                	
+                    	<tr ng-repeat="agent in agentBook">
+          					<td style="padding: 9px;">{{agent.id}}</td>
+          					 <td>{{agent.travellerfirstname}} {{agent.travellerlastname}}</td>
+          					  <td>{{agent.supplierNm}}</td>
+          					 <td>{{agent.checkIn}}</td>
+                           <td>{{agent.checkOut}}</td>
+                            
+                           <td>{{agent.totalNightStay}}</td>
+                          
+                             <td>{{agent.roomNm}}</td>
+                             <td>{{agent.noOfroom}}</td>
+ 							 <td>{{agent.total}}<sup style="font-size: small;color: chocolate;top: 0px;" class="ng-binding"> {{agent.curr}}</sup></td>
+                            <td> <input type="checkbox"
+																			name="selectBooking" ng-model="payment"
+																			ng-change="bookingPayment(agent.id,payment)" ng-checked="agent.payment == 'Received'"/>
+                                     </td>
+                          
+                            </tr>
+                           
+                    	</tbody>
+                </table> -->
+                
+                	<table border="1" class="col-md-12" cellpadding="10" style="font-size: small;text-align: center;margin-top: 28px;">
+                	<thead style="background-color: #488c6c;">
+                    	<tr>
+                           <th><a style="color: white;text-align: center;">Sr.No</a></th>
+                            <th><a style="color: white;text-align: center;">Rate Name</a></th>
+                            <th><a style="color: white;text-align: center;">From Date</a></th>
+                            <th><a style="color: white;text-align: center;">To Date</a></th>
+                            <th style="width: 43%;text-align: center;"><a style="color: white;">Markets</a></th>
+                            <th style="width: 6%;text-align: center;"><a style="color: white;">Approved</a></th> 
+                            
+                        </tr>
+                    </thead>
+                	<tbody>
+                	
+                    	<tr ng-repeat="rate in rateMetaDate track by $index">
+          					<td style="padding: 5px;">{{$index+1}}</td>
+          					 <td>{{rate.rateName}}</td>
+                           <td>{{rate.fromDate}}</td>
+                           <td>{{rate.toDate}}</td>
+                           <td ng-if="rate.applyToMarket == true">All</td>
+                           <td ng-if="rate.applyToMarket == false" style="height: 49px;"><div style="width: 99%;height: 99%;margin: 0;padding: 0;overflow: auto;"><p ng-repeat="country in rate.allocatedCountry">{{country}}</p></div></td>
+                            <td><input name="" type="button" class="btn btn-primary" value="Approved" ng-click="approvedUser(rate.id)" class="btnblue"  data-toggle="modal"  /></td> 
+                           
+                            </tr>
+                           
+                    	</tbody>
+                </table>	
+                
+                </div>
+                        <section class="dpaging">
+          <h4> / </h4>
+            	
+            	 <span class="dpagingright">
+                	<!-- <a href="" class="dpagingprv" ng-click="onPrev()">Prev</a>
+                	<a href="" class="dpagingnxt" ng-click="onNext()">Next</a> -->
+                </span>  
+            </section>            
+                                  
+			</div>
+			
+
+
+</div>

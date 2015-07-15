@@ -1,5 +1,6 @@
 package com.travelportal.domain;
 
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -787,6 +788,18 @@ public class HotelProfile {
 		this.perfer = perfer;
 	}
 
+	
+	public static List<Integer> getCityId() {  
+	
+	 List<Integer> list;
+
+	 list = JPA.em().createNativeQuery("select DISTINCT am.city_city_code from hotel_profile am").getResultList();  
+	 
+
+	return list;
+	
+	}
+	
 	public static HotelProfile findById(Long id) {
 		try
 		{

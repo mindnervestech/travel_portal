@@ -4929,3 +4929,51 @@ controller("manageBookingController",['$scope','notificationService','$filter','
 	
 	
 }]);
+
+angular.module('travel_portal').
+controller("manageRateController",['$scope','notificationService','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$filter,$rootScope, $http,ngDialog){
+		$scope.rateMetaDate;
+		$scope.supplierCode;
+		
+		$http.get("/getSupplier").success(function(response){
+			console.log(response);
+			$scope.hotelName = response;
+		});
+		
+		$http.get("/getPendingRate").success(function(response){
+			console.log(response);
+			$scope.rateMetaDate = response;
+		});
+		
+		
+		$scope.showSpplier = function(supplierCode){
+			console.log(supplierCode);
+			$scope.supplierCode = supplierCode;
+			$http.get("/getSupplierWisePendingRate/"+supplierCode).success(function(response){
+				console.log(response);
+				$scope.rateMetaDate = response;
+			});
+		}
+		
+		$scope.approvedUser = function(rateId){
+			console.log(rateId);
+			console.log($scope.supplierCode);
+			
+			$http.get("/getAppPendingRate/"+rateId).success(function(response){
+				console.log("Rate App");
+				
+				if($scope.supplierCode != undefined){
+					$http.get("/getSupplierWisePendingRate/"+$scope.supplierCode).success(function(response){
+						console.log(response);
+						$scope.rateMetaDate = response;
+					});
+				}else{
+					$http.get("/getPendingRate").success(function(response){
+						console.log(response);
+						$scope.rateMetaDate = response;
+					});
+				}
+				
+			});
+		}
+}]);

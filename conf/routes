@@ -59,6 +59,12 @@ GET  /getagentInfobyAll/:currentPage/:checkIn/:checkOut/:guest/:status/:bookingI
 GET  /getBookingPaymentInfo/:bookingId/:payment	   com.travelportal.controllers.ManageBookingController.getBookingPaymentInfo(bookingId:Long,payment:String)
 GET  /getpaymentWise/:paymentStatus/:agentCode   com.travelportal.controllers.ManageBookingController.getpaymentWise(paymentStatus:String,agentCode:Long)
 
+#manage Rate controller    
+
+GET  /getPendingRate     	 com.travelportal.controllers.ManageRateController.getpaymentWise()
+GET  /getSupplier		     com.travelportal.controllers.ManageRateController.getSupplier()
+GET  /getSupplierWisePendingRate/:supplierCode     com.travelportal.controllers.ManageRateController.getSupplierWisePendingRate(supplierCode:Long)
+GET  /getAppPendingRate/:rateId			 com.travelportal.controllers.ManageRateController.getAppPendingRate(rateId:Long)
 #travelportal
 
 #Supplier Home Page

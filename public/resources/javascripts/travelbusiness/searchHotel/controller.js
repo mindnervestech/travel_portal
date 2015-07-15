@@ -1389,12 +1389,33 @@ $http.get("/searchCountries").success(function(response) {
 			$http.post('/findHotelByData', $scope.findHotelData).success(function(data){
 				console.log('success');
 				console.log(data);
-				$scope.hotellistInfo = data.hotellist;
+				
 				angular.forEach(data.hotellist, function(obj, index){ 
 					$scope.img = "/searchHotelInfo/getHotelImagePath/"+data.hotellist[index].supplierCode+"/"+index;
-					$scope.hotellistInfo[index].imgPaths = $scope.img;
+					obj.imgPaths = $scope.img;
 								
 				});
+				
+				angular.forEach(data.hotellist, function(value, key){
+					angular.forEach(value.hotelbyRoom, function(obj, index){ 
+						angular.forEach(obj.hotelRoomRateDetail[0].rateDetailsNormal, function(obj1, index1){ 
+							if(value.batchMarkup.selected == 0){
+									obj1.rateAvg = obj1.rateAvg + value.batchMarkup.flat;
+							}else if(value.batchMarkup.selected == 1){
+								   var markupPer =	obj1.rateAvg / 100 * value.batchMarkup.percent;
+								   obj1.rateAvg = obj1.rateAvg + markupPer;
+							}
+						});
+					});
+						if(value.batchMarkup.selected == 0){
+							value.minRate = value.minRate + value.batchMarkup.flat;
+						}else if(value.batchMarkup.selected == 1){
+							var markupPer =	value.minRate / 100 * value.batchMarkup.percent;
+							value.minRate = value.minRate + markupPer;
+						}
+					
+					});
+				$scope.hotellistInfo = data.hotellist;
 				$scope.hotelAllData.totalHotel = data.totalHotel;
 				console.log($scope.hotellistInfo);
 				
@@ -1433,12 +1454,33 @@ $http.get("/searchCountries").success(function(response) {
 			$http.post('/findHotelByData', $scope.findHotelData).success(function(data){
 				console.log('success');
 				console.log(data);
-				$scope.hotellistInfo = data.hotellist;
+			
 				angular.forEach(data.hotellist, function(obj, index){ 
 					$scope.img = "/searchHotelInfo/getHotelImagePath/"+data.hotellist[index].supplierCode+"/"+index;
-					$scope.hotellistInfo[index].imgPaths = $scope.img;
+					obj.imgPaths = $scope.img;
 								
 				});
+				
+				angular.forEach(data.hotellist, function(value, key){
+					angular.forEach(value.hotelbyRoom, function(obj, index){ 
+						angular.forEach(obj.hotelRoomRateDetail[0].rateDetailsNormal, function(obj1, index1){ 
+							if(value.batchMarkup.selected == 0){
+									obj1.rateAvg = obj1.rateAvg + value.batchMarkup.flat;
+							}else if(value.batchMarkup.selected == 1){
+								   var markupPer =	obj1.rateAvg / 100 * value.batchMarkup.percent;
+								   obj1.rateAvg = obj1.rateAvg + markupPer;
+							}
+						});
+					});
+						if(value.batchMarkup.selected == 0){
+							value.minRate = value.minRate + value.batchMarkup.flat;
+						}else if(value.batchMarkup.selected == 1){
+							var markupPer =	value.minRate / 100 * value.batchMarkup.percent;
+							value.minRate = value.minRate + markupPer;
+						}
+					
+					});
+				$scope.hotellistInfo = data.hotellist;
 				$scope.hotelAllData.totalHotel = data.totalHotel;
 				console.log($scope.hotellistInfo);
 				

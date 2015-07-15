@@ -234,7 +234,7 @@ border: 3px solid #fdb714;
 									<label class="col-md-3 control-label">How did you hear
 										about us? </label>
 									<div class="col-md-6">
-										<select class="form-control" id="hear" name="hear" required>
+										<select class="form-control" id="hear" name="hear">
 											<option value="">--Select--</option> @for(hear <-
 											hearAboutUs) {
 											<option value="@hear">@hear</option> }
@@ -350,7 +350,7 @@ border: 3px solid #fdb714;
 
 									<div class="form-group" id="financeEmailSelect"
 										style="display: none;">
-										<label class="col-md-3 control-label">*Please enter
+										<label class="col-md-3 control-label">Please enter
 											customer's finance department email address:</label>
 
 										<div class="col-md-6">
@@ -753,7 +753,7 @@ Company Seal :      			"
 								class="btn btn-info button-previous">
 								<i class="fa fa-arrow-circle-o-left mrx"></i>Previous
 							</button>
-							<button type="button" onclick="validateForm()" name="next" value="Next"
+							<button type="button" id="nextButton" onclick="validateForm()" name="next" value="Next"
 								class="btn btn-info button-next mlm">
 								Next<i class="fa fa-arrow-circle-o-right mlx"></i>
 							</button>
@@ -792,12 +792,31 @@ function getcheck(){
 		$("#emailid").val("");
 
 	}
+	
+	if($("#business").val() == ''){
+		 alert("Nature of Business required field");
+			
+	} 
+	 
+    if($("#EmailAddr").val() != $("#cEmailAddr").val()){
+   			alert("E-mail Address not match");
+   
+   } 
+	
 }
 
 function validateForm() {
 	//id="EmailAddr"
 		console.log($("#EmailAddr").val());
 		
+		 if($("#business").val() == ''){
+			 alert("Nature of Business required field");
+			 $("#business").val().focus;
+			 $('#nextButton').addClass('disabled');
+			 
+			 //disabled
+			 return false;
+		} 
 		 
 	     if($("#EmailAddr").val() != $("#cEmailAddr").val()){
 	    	alert("E-mail Address not match");

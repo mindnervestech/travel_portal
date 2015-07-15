@@ -217,6 +217,7 @@ public static void createRootDir() {
 				rateMeta.setSupplierCode(rate.supplierCode);
 				rateMeta.setCurrency(rate.currency);
 				rateMeta.setRateName(rate.rateName);
+				rateMeta.setStatus("pending");
 				rateMeta.setRoomType(HotelRoomTypes.findById(rate.roomId));
 				
 				rateMeta.save();

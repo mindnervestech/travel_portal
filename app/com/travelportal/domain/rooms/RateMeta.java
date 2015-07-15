@@ -51,6 +51,9 @@ public class RateMeta {
 	private String currency;
 	@Column(name="supplierCode")
 	private Long supplierCode;
+	@Column(name="status")
+	private String status;
+	
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<Country> country;
@@ -117,7 +120,13 @@ public class RateMeta {
 		this.currency = currency;
 	}
 	
-	 public static RateMeta findRateMeta(String rateName, String currency, HotelRoomTypes roomType) {
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public static RateMeta findRateMeta(String rateName, String currency, HotelRoomTypes roomType) {
 	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.rateName = ?1 and r.currency = ?2 and r.roomType = ?5");
 			query.setParameter(1, rateName);
 			query.setParameter(2, currency);
@@ -216,7 +225,7 @@ public class RateMeta {
 		 
 		 List<Object[]> list;
 	
-		list =JPA.em().createNativeQuery("select am.rate_id,am.currency,am.rate_name,am.roomType_room_id,am.supplierCode from rate_meta am,hotel_profile hpp,rate_meta_country rmcountry,applicable_dateonrate adr where am.rate_id = adr.rate_rate_id and am.rate_id = rmcountry.rate_meta_rate_id and am.supplierCode = hpp.supplier_code and am.supplierCode = '"+supplier+"' and rmcountry.country_country_code = '"+countryId+"' and am.roomType_room_id = '"+roomId+"' and adr.Date_selected = '"+SDate+"'").getResultList();  // 
+		list =JPA.em().createNativeQuery("select am.rate_id,am.currency,am.rate_name,am.roomType_room_id,am.supplierCode from rate_meta am,hotel_profile hpp,rate_meta_country rmcountry,applicable_dateonrate adr where am.rate_id = adr.rate_rate_id and am.rate_id = rmcountry.rate_meta_rate_id and am.supplierCode = hpp.supplier_code and am.status = 'approved' and am.supplierCode = '"+supplier+"' and rmcountry.country_country_code = '"+countryId+"' and am.roomType_room_id = '"+roomId+"' and adr.Date_selected = '"+SDate+"'").getResultList();  // 
 	
 	
 	 List<RateMeta> list1 = new ArrayList<>();
@@ -241,6 +250,20 @@ public class RateMeta {
 		
 	 }
 	 
+	 public static List<RateMeta> getpendingRate(String  status){
+		 Query query = JPA.em().createQuery("Select r from RateMeta r where r.status = ?1");
+			query.setParameter(1, status);
+			
+	    	return query.getResultList();
+	 }
+	 
+	 public static List<RateMeta> getsupplierWisependingRate(String  status,long supplierCode){
+		 Query query = JPA.em().createQuery("Select r from RateMeta r where r.status = ?1 and r.supplierCode = ?2");
+			query.setParameter(1, status);
+			query.setParameter(2, supplierCode);
+			
+	    	return query.getResultList();
+	 }
 	 
 	 public static List<RateMeta> getRatecheckdateWise(String currency,Long roomId, Date date) {  //,int sId
 		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");

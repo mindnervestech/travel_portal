@@ -33,6 +33,7 @@ import javax.mail.internet.MimeMultipart;
 import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -144,12 +145,21 @@ public class Application extends Controller {
     @Transactional(readOnly=true)
 	public static Result searchCities(int countryId) {
 		final List<City> cities = City.getCities(countryId);
+		
+		List<Integer> cityValue = HotelProfile.getCityId();
+		
 		List<Map> city = new ArrayList<>();
  		for(City c : cities){
- 			Map m = new HashMap<>();
- 			m.put("id", c.getCityCode());
- 			m.put("name", c.getCityName());
-			city.add(m);
+ 			for (Integer cityV : cityValue) {
+ 				if(c.getCityCode() == cityV.longValue()){
+ 					Map m = new HashMap<>();
+ 	 	 			m.put("id", c.getCityCode());
+ 	 	 			m.put("name", c.getCityName());
+ 	 				city.add(m);
+ 				}
+ 				
+ 			}
+ 			
 		}
  		
 		return ok(Json.toJson(city));
@@ -1415,6 +1425,23 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 				
 				List<HotelProfile> hAmenities1 = HotelProfile.findAllDataforamenities(hProfile.getId()
 						,searchHotelValueVM.getAmenitiesCheck(),searchHotelValueVM.getServicesCheck(),searchHotelValueVM.getLocationCheck(),searchHotelValueVM.getStarCheck());  
+				
+				List<BatchMarkup> batchMarkup = BatchMarkup.findMarkupAgentSupplier(AgentRegistration.findById(Long.parseLong(session().get("agent"))), supplierid.longValue());
+				
+				for(BatchMarkup bm:batchMarkup){
+					BatchMarkupInfoVM baInfoVM = new BatchMarkupInfoVM();
+					
+					if(bm.getFlat() != null){
+						baInfoVM.flat = bm.getFlat();
+					}
+					if(bm.getPercent() != null){
+						baInfoVM.percent = bm.getPercent();
+					}
+					baInfoVM.selected = bm.getSelected();
+					baInfoVM.supplier = bm.getSupplier();
+					
+					hProfileVM.batchMarkup = baInfoVM;
+				}
 				
 				BreakfastMarkup bMarkup = BreakfastMarkup.findById(1L);
 				if(bMarkup != null){
