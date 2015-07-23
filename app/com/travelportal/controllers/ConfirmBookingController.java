@@ -268,64 +268,7 @@ public class ConfirmBookingController extends Controller {
 		
 		
 		fullBookingInfo(hoteDetails, aDetailsVMs);
-	/*	for(HotelBookingDetails hBookingDetails:hoteDetails){
-			
-			HotelBookDetailsVM hDetailsVM= new HotelBookDetailsVM();
-			hDetailsVM.setId(hBookingDetails.getId());
-			hDetailsVM.setAdult(hBookingDetails.getAdult());
-			hDetailsVM.setCheckIn(format.format(hBookingDetails.getCheckIn()));
-			hDetailsVM.setCheckOut(format.format(hBookingDetails.getCheckOut()));
-			if(hBookingDetails.getCityCode() != null){
-			hDetailsVM.setCityCode(hBookingDetails.getCityCode().getCityCode());
-			hDetailsVM.setCityNm(hBookingDetails.getCityCode().getCityName());
-			}
-			hDetailsVM.setHotelNm(hBookingDetails.getHotelNm());
-			hDetailsVM.setHotelAddr(hBookingDetails.getHotelAddr());
-			hDetailsVM.setNoOfroom(hBookingDetails.getNoOfroom());
-			hDetailsVM.setTotalNightStay(hBookingDetails.getTotalNightStay());
-			
-			List<AgentRegisVM>aList = new ArrayList<>();
-			if(hBookingDetails.getAgentId() != null){
-			AgentRegistration agent = AgentRegistration.getAgentCode(hBookingDetails.getAgentId().toString());
-			AgentRegisVM agRegisVM=new AgentRegisVM();
-			agRegisVM.setAgentCode(agent.getAgentCode());
-			agRegisVM.setFirstName(agent.getFirstName());
-			agRegisVM.setLastName(agent.getLastName());
-			agRegisVM.setCompanyName(agent.getCompanyName());
-			aList.add(agRegisVM);
-			hDetailsVM.setAgent(aList);
-			}
-			
-				
-			if(hBookingDetails.getCountry()!=null){
-			hDetailsVM.setCountryId(hBookingDetails.getCountry().getCountryCode());
-			hDetailsVM.setCountryNm(hBookingDetails.getCountry().getCountryName());
-			}
-			hDetailsVM.setRoomId(hBookingDetails.getRoomId());
-			hDetailsVM.setRoomNm(hBookingDetails.getRoomName());
-			if(hBookingDetails.getNationality()!=null){
-			hDetailsVM.setNationality(hBookingDetails.getNationality().getCountryCode());
-			hDetailsVM.setNationalityNm(hBookingDetails.getNationality().getNationality());
-			}
-			hDetailsVM.setPayDays_inpromotion(hBookingDetails.getPayDays_inpromotion());
-			hDetailsVM.setPromotionname(hBookingDetails.getPromotionname());
-			if(hBookingDetails.getStartRating() != null){
-			hDetailsVM.setStartRating(hBookingDetails.getStartRating().getId());
-			hDetailsVM.setStartRatingNm(hBookingDetails.getStartRating().getstarRatingTxt());
-			}
-			hDetailsVM.setSupplierCode(hBookingDetails.getSupplierCode());
-			hDetailsVM.setSupplierNm(hBookingDetails.getSupplierNm());
-			hDetailsVM.setTotal(hBookingDetails.getTotal());
-			hDetailsVM.setPayment(hBookingDetails.getPayment());
-			hDetailsVM.setTravelleraddress(hBookingDetails.getTravelleraddress());
-			hDetailsVM.setTravelleremail(hBookingDetails.getTravelleremail());
-			hDetailsVM.setTravellerfirstname(hBookingDetails.getTravellerfirstname());
-			hDetailsVM.setTravellerlastname(hBookingDetails.getTravellerlastname());
-			hDetailsVM.setTravellerphnaumber(hBookingDetails.getTravellerphnaumber());
-			hDetailsVM.setTravellercountry(hBookingDetails.getTravellercountry().getCountryCode());
-			hDetailsVM.setTypeOfStay_inpromotion(hBookingDetails.getTypeOfStay_inpromotion());
-			aDetailsVMs.add(hDetailsVM);
-		}*/
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalPages", totalPages);
 		map.put("currentPage", currentPage);
@@ -370,65 +313,7 @@ public class ConfirmBookingController extends Controller {
 		}
 		
 		fullBookingInfo(hoteDetails, aDetailsVMs);
-		
-//		for(HotelBookingDetails hBookingDetails:hoteDetails){
-//			
-//			HotelBookDetailsVM hDetailsVM= new HotelBookDetailsVM();
-//			hDetailsVM.setId(hBookingDetails.getId());
-//			hDetailsVM.setAdult(hBookingDetails.getAdult());
-//			hDetailsVM.setCheckIn(format.format(hBookingDetails.getCheckIn()));
-//			hDetailsVM.setCheckOut(format.format(hBookingDetails.getCheckOut()));
-//			if(hBookingDetails.getCityCode() != null){
-//			hDetailsVM.setCityCode(hBookingDetails.getCityCode().getCityCode());
-//			hDetailsVM.setCityNm(hBookingDetails.getCityCode().getCityName());
-//			}
-//			hDetailsVM.setHotelNm(hBookingDetails.getHotelNm());
-//			hDetailsVM.setHotelAddr(hBookingDetails.getHotelAddr());
-//			hDetailsVM.setNoOfroom(hBookingDetails.getNoOfroom());
-//			hDetailsVM.setTotalNightStay(hBookingDetails.getTotalNightStay());
-//			
-//			List<AgentRegisVM>aList = new ArrayList<>();
-//			if(hBookingDetails.getAgentId() != null){
-//			AgentRegistration agent = AgentRegistration.getAgentCode(hBookingDetails.getAgentId().toString());
-//			AgentRegisVM agRegisVM=new AgentRegisVM();
-//			agRegisVM.setAgentCode(agent.getAgentCode());
-//			agRegisVM.setFirstName(agent.getFirstName());
-//			agRegisVM.setLastName(agent.getLastName());
-//			agRegisVM.setCompanyName(agent.getCompanyName());
-//			aList.add(agRegisVM);
-//			hDetailsVM.setAgent(aList);
-//			}
-//			
-//				
-//			if(hBookingDetails.getCountry()!=null){
-//			hDetailsVM.setCountryId(hBookingDetails.getCountry().getCountryCode());
-//			hDetailsVM.setCountryNm(hBookingDetails.getCountry().getCountryName());
-//			}
-//			hDetailsVM.setRoomId(hBookingDetails.getRoomId());
-//			hDetailsVM.setRoomNm(hBookingDetails.getRoomName());
-//			if(hBookingDetails.getNationality()!=null){
-//			hDetailsVM.setNationality(hBookingDetails.getNationality().getCountryCode());
-//			hDetailsVM.setNationalityNm(hBookingDetails.getNationality().getNationality());
-//			}
-//			hDetailsVM.setPayDays_inpromotion(hBookingDetails.getPayDays_inpromotion());
-//			hDetailsVM.setPromotionname(hBookingDetails.getPromotionname());
-//			if(hBookingDetails.getStartRating() != null){
-//			hDetailsVM.setStartRating(hBookingDetails.getStartRating().getId());
-//			hDetailsVM.setStartRatingNm(hBookingDetails.getStartRating().getstarRatingTxt());
-//			}
-//			hDetailsVM.setSupplierCode(hBookingDetails.getSupplierCode());
-//			hDetailsVM.setSupplierNm(hBookingDetails.getSupplierNm());
-//			hDetailsVM.setTotal(hBookingDetails.getTotal());
-//			hDetailsVM.setPayment(hBookingDetails.getPayment());
-//			hDetailsVM.setTravelleraddress(hBookingDetails.getTravelleraddress());
-//			hDetailsVM.setTravelleremail(hBookingDetails.getTravelleremail());
-//			hDetailsVM.setTravellerfirstname(hBookingDetails.getTravellerfirstname());
-//			hDetailsVM.setTravellerlastname(hBookingDetails.getTravellerlastname());
-//			hDetailsVM.setTravellerphnaumber(hBookingDetails.getTravellerphnaumber());
-//			hDetailsVM.setTravellercountry(hBookingDetails.getTravellercountry().getCountryCode());
-//			hDetailsVM.setTypeOfStay_inpromotion(hBookingDetails.getTypeOfStay_inpromotion());
-//			aDetailsVMs.add(hDetailsVM);
-//		}
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalPages", totalPages);
 		map.put("currentPage", currentPage);

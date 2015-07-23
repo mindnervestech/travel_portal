@@ -96,7 +96,8 @@ travelBusiness.directive('starRate', function($compile) {
 	
 	return {
 		  link: function(scope, element, attrs) {
-			  jQuery(element).rating({stars:attrs.value});
+					  jQuery(element).rating({stars:attrs.value});
+			  /*jQuery(element).rating({value:attrs.value});*/
 	        }
 	};
 		 

@@ -3457,17 +3457,51 @@ controller("manageAgentController",['$scope','notificationService','$filter','$r
 	}
 	
 	$scope.approvePending = function() {
+		console.log($scope.generalInfo.paymentMethod);
+		$scope.userId = $scope.generalInfo.id;
+		$scope.email = $scope.generalInfo.EmailAddr;
+		$scope.agentCode = $scope.generalInfo.agentCode;
+		$scope.loginId = $scope.generalInfo.loginId;
+		if($scope.generalInfo.creditLimit == undefined){
+			$scope.generalInfo.creditLimit = 0;
+		}
+			
+		$scope.creditLimit = $scope.generalInfo.creditLimit;
+		if($scope.generalInfo.creditLimit == 0){
+			if($scope.generalInfo.paymentMethod == "Credit" || $scope.generalInfo.paymentMethod == "Pre-Payment"){
+				ngDialog.open({
+					template: '/assets/html/admin/credit_limit.html',
+					scope : $scope,
+					className: 'ngdialog-theme-default'				
+				});
+			}else{
+				$http.get('/approveAgent/'+$scope.userId+'/'+$scope.email+'/'+$scope.agentCode+'/'+$scope.creditLimit).success(function(response){
+					 notificationService.success("Approved Successfully");
+					$scope.pendingUsers.splice($scope.pendingUsers.indexOf($scope.generalInfo),1);
+					$scope.getData();
+				});
+			}
+		}else{
+			$http.get('/approveAgent/'+$scope.userId+'/'+$scope.email+'/'+$scope.agentCode+'/'+$scope.creditLimit).success(function(response){
+				 notificationService.success("Approved Successfully");
+				$scope.pendingUsers.splice($scope.pendingUsers.indexOf($scope.generalInfo),1);
+				$scope.getData();
+			});
+		}
+		
+	}
+	
+	/*$scope.getCreditLimit = function(){
+		console.log($scope.generalInfo.creditLimit);
 		$scope.userId = $scope.generalInfo.id;
 		$scope.email = $scope.generalInfo.EmailAddr;
 		$scope.agentCode = $scope.generalInfo.agentCode;
 		$scope.loginId = $scope.generalInfo.loginId;
 		
-		$http.get('/approveAgent/'+$scope.userId+'/'+$scope.email+'/'+$scope.agentCode).success(function(response){
-			 notificationService.success("Approved Successfully");
-			$scope.pendingUsers.splice($scope.pendingUsers.indexOf($scope.generalInfo),1);
-			$scope.getData();
-		});
-	}
+		
+	}*/
+	
+	
 	
 	$scope.ApprovReject = function(){
 		console.log($scope.generalInfo);
@@ -4782,7 +4816,7 @@ controller("cancelController",['$scope','notificationService','$filter','$rootSc
 }]);	
 
 angular.module('travel_portal').
-controller("manageBookingController",['$scope','notificationService','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$filter,$rootScope, $http,ngDialog){
+controller("manageBookingController",['$scope','notificationService','$upload','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$upload,$filter,$rootScope, $http,ngDialog){
 
 	$scope.pageNumber;
 	$scope.pageSize;
@@ -4793,14 +4827,6 @@ controller("manageBookingController",['$scope','notificationService','$filter','
 	var totalPages;
 	$scope.flag = 0;
 	$scope.showtable = 0; 
-	/*$scope.init = function(hotelAllData){
-				
-		console.log(hotelAllData);
-		
-		
-		
-	}*/
-	
 	
 	$scope.findAgentList = function(agentCode){
 		
@@ -4918,15 +4944,42 @@ controller("manageBookingController",['$scope','notificationService','$filter','
 	};*/
 	
 	
-	$scope.bookingPayment = function(bookingId, payment){
+	$scope.bookingPayment = function(bookingId, payment, total){
 		console.log(bookingId);
 		console.log(payment);
-		$http.get("/getBookingPaymentInfo/"+bookingId+"/"+payment).success(function(response){
+		$http.get("/getBookingPaymentInfo/"+bookingId+"/"+payment+"/"+total).success(function(response){
 			console.log("OK,,OK");
 		});
 		
 	}
-	
+	$scope.savedoc = {};
+	$scope.selectBookingDoc = function($files,bookingId)
+	   {		
+			files = $files[0]; 		
+			console.log(bookingId);
+			$scope.savedoc.bookingId = bookingId;
+			 $scope.upload = $upload.upload({
+		           url: '/saveBookingfiles', 
+		           method:'post',
+		           data:$scope.savedoc,
+		           fileFormDataName: 'file1',
+		           file:files,
+		          
+		   }).progress(function(evt) {
+		           console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+		   }).success(function(data, status, headers, config) {
+			   
+			  console.log("Ok");
+		   }); 
+			
+			 $scope.buttonChange = "true";
+			
+	   }
+	   
+	$scope.buttonChange = "true";
+	$scope.showFileSelect = function(){
+		$scope.buttonChange = "false";
+	}	
 	
 }]);
 

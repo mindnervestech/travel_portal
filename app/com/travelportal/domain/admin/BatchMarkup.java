@@ -1,22 +1,11 @@
 package com.travelportal.domain.admin;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Query;
 import javax.persistence.Table;
@@ -24,18 +13,8 @@ import javax.persistence.Table;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
-import com.travelportal.domain.Country;
-import com.travelportal.domain.Currency;
-import com.travelportal.domain.HotelHealthAndSafety;
-import com.travelportal.domain.HotelMealPlan;
-import com.travelportal.domain.HotelProfile;
-import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.agent.AgentRegistration;
-import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.RateMeta;
-import com.travelportal.domain.rooms.RoomChildPolicies;
-import com.travelportal.vm.AllotmentMarketVM;
-import com.travelportal.vm.RoomType;
 
 @Entity
 @Table(name="batchmarkup")

@@ -1,5 +1,12 @@
 package com.travelportal.controllers;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,14 +15,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import play.Play;
+import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Http.MultipartFormData.FilePart;
 
 import com.travelportal.domain.HotelBookingDetails;
+import com.travelportal.domain.HotelHealthAndSafety;
+import com.travelportal.domain.ImgPath;
 import com.travelportal.domain.RoomRegiterBy;
 import com.travelportal.domain.RoomRegiterByChild;
+import com.travelportal.domain.admin.BookingDocument;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.vm.AgentRegisVM;
 import com.travelportal.vm.ChildselectedVM;
@@ -23,7 +36,21 @@ import com.travelportal.vm.HotelBookDetailsVM;
 import com.travelportal.vm.PassengerBookingInfoVM;
 
 public class ManageBookingController extends Controller {
+	final static String rootDir = Play.application().configuration().getString("mail.storage.path");
+	
+	  static {
+        createRootDir();
+  }
 
+	  public static void createRootDir() {
+        File file = new File(rootDir);
+        if (!file.exists()) {
+                file.mkdir();
+        }
+        
+	  }
+	
+	
 	@Transactional(readOnly=true)
 	public static Result getAllAgentInfo(long agentCode){ 
 
@@ -257,10 +284,17 @@ public class ManageBookingController extends Controller {
 	}
 	
 	@Transactional
-	public static Result getBookingPaymentInfo(long bookingId,String payment) {
+	public static Result getBookingPaymentInfo(long bookingId,String payment,Long total) {
 		HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingById(bookingId);
+		
 		if(payment.equals("true")){
 			hBookingDetails.setPayment("Received");
+			AgentRegistration aRegistration = AgentRegistration.findById(hBookingDetails.getAgentId());
+			if(aRegistration.getPaymentMethod().equals("Credit") || aRegistration.getPaymentMethod().equals("Pre-Payment")){
+				Double avaLimit = aRegistration.getAvailableLimit() + hBookingDetails.getTotal();
+				aRegistration.setAvailableLimit(avaLimit);
+				aRegistration.merge();
+			}
 		}else{
 			hBookingDetails.setPayment("Outstanding");
 		}
@@ -271,6 +305,57 @@ public class ManageBookingController extends Controller {
 		
 	}
 	
+	
+	@Transactional(readOnly=false)
+	public static Result saveBookingfiles() {
+		
+/*
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		
+		FilePart picture = request().body().asMultipartFormData().getFile("file1");
+		
+		createDir(rootDir,Long.parseLong(form.get("bookingId")));
+		 String fileName = picture.getFilename();
+		 String docPath = rootDir + File.separator +"BookingDocument"+File.separator+ Long.parseLong(form.get("bookingId"))+ File.separator+fileName;
+		
+         File src = picture.getFile();
+         OutputStream out = null;
+         BufferedImage image = null;
+         File f = new File(docPath);
+         System.out.println(docPath);
+         try {
+        	 Files.copy(src.toPath(),f.toPath(),java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        	
+         } catch (FileNotFoundException e) {
+                 e.printStackTrace();
+         } catch (IOException e) {
+                 e.printStackTrace();
+         } finally {
+                 try {
+                         if(out != null) out.close();
+                 } catch (IOException e) {
+                         e.printStackTrace();
+                 }
+         }
+		
+         BookingDocument path = new BookingDocument();
+         path.setDocpath(docPath);
+  	     path.setDocname(fileName);
+  		 path.setHotelbooingId(HotelBookingDetails.findBookingById(Long.parseLong(form.get("bookingId"))));
+  	     path.save();
+  		
+ 		return ok(Json.toJson(path.getDoc_id()));
+		*/
+		return ok();
+		
+	}
+	
+	public static void createDir(String rootDir, long bookingId) {
+        File file3 = new File(rootDir + File.separator+"BookingDocument"+File.separator+ bookingId);
+        if (!file3.exists()) {
+                file3.mkdirs();
+        }
+	}
 	
 
 }

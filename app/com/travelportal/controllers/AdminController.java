@@ -268,9 +268,11 @@ public class AdminController extends Controller {
 	
 	
 	@Transactional
-	public static Result approveAgent(Long id,String email,Long agentCode) {
+	public static Result approveAgent(Long id,String email,Long agentCode,Long creditLimit) {
 		AgentRegistration register = AgentRegistration.findById(id);
 		register.setStatus("APPROVED");
+		register.setCreditLimit(creditLimit.doubleValue());
+		register.setAvailableLimit(creditLimit.doubleValue());
 		register.merge();
 		
 		

@@ -78,20 +78,44 @@ public class HotelBookingController extends Controller {
 	
 	@Transactional(readOnly=false)
 	public static Result saveHotelBookingInfo() {
-		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-		/*JsonNode json = request().body().asJson();
-		DynamicForm form = DynamicForm.form().bindFromRequest();
-		Json.fromJson(json, HotelSearch.class);
-		HotelSearch hSearch = Json.fromJson(json, HotelSearch.class);*/
+	
 		
-		int flagAppro = 0;
-		String appComp = null;
+		String flagAppro = "";
 		
 		Form<HotelSearch> HotelForm = Form.form(HotelSearch.class).bindFromRequest();
 		HotelSearch searchVM = HotelForm.get();
+		
+		
+		AgentRegistration aRegistration = AgentRegistration.findById(Long.parseLong(session().get("agent")));
+		if(aRegistration.getPaymentMethod().equals("Credit") || aRegistration.getPaymentMethod().equals("Pre-Payment")){
+			if(aRegistration.getAvailableLimit() > Double.parseDouble(searchVM.hotelBookingDetails.getTotal())){
+				
+			Double availableLimit = aRegistration.getAvailableLimit() - Double.parseDouble(searchVM.hotelBookingDetails.getTotal());
+			aRegistration.setAvailableLimit(availableLimit);
+			aRegistration.merge();
+			saveBookingData(searchVM);
+		
+		
+			}else{
+				flagAppro = "NocreditLimit";
+			}
+		}else{
+			saveBookingData(searchVM);
+		}
+
+		return ok(Json.toJson(flagAppro));
+		
+	}
+	
+	public static void saveBookingData(HotelSearch searchVM){
+		
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		HotelBookingDetails hDetailsOld = null;
 		changeBookingValueVM cVmOld = null;
 		List<HotelBookingDates> hBookingDatesOld = null; 
+		
+		String appComp = null;
+		
 		if(searchVM.bookingId != ""){
 			hBookingDatesOld = HotelBookingDates.getDateBybookingId(Long.parseLong(searchVM.bookingId));
 			
@@ -115,8 +139,7 @@ public class HotelBookingController extends Controller {
 		
 		AgentRegistration agRegistration = AgentRegistration.getAgentCode((session().get("agent")));
 		
-		if(agRegistration.getStatus().equals("APPROVED")){
-			
+				
 		
 		hBookingDetails.setAgentId(Long.parseLong(session().get("agent")));
 		hBookingDetails.setHotelNm(searchVM.getHotelNm());
@@ -189,7 +212,7 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setTravelleremail(searchVM.hotelBookingDetails.getTravelleremail());
 		hBookingDetails.setTravellerlastname(searchVM.hotelBookingDetails.getTravellerlastname());
 		hBookingDetails.setTravelleraddress(searchVM.hotelBookingDetails.getTravelleraddress());
-		hBookingDetails.setTravellercountry(Country.getCountryByCode(Integer.parseInt(searchVM.hotelBookingDetails.getTravellercountry())));
+		hBookingDetails.setTravellercountry(Country.getCountryByCode(searchVM.countryCode));
 		hBookingDetails.setTravellerphnaumber(searchVM.hotelBookingDetails.getTravellerphnaumber());
 		hBookingDetails.setNonSmokingRoom(searchVM.hotelBookingDetails.getNonSmokingRoom());
 		hBookingDetails.setTwinBeds(searchVM.hotelBookingDetails.getTwinBeds());
@@ -506,13 +529,6 @@ public class HotelBookingController extends Controller {
 				}
 			}
 		}
-		flagAppro = 0;
-		}else{
-			flagAppro = 1;
-		}
-
-		return ok(Json.toJson(flagAppro));
-		
 	}
 	
 	private static void roomRegiFunction(HotelSearch searchVM,long bookingId) {

@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,7 @@ import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.travelportal.domain.CancellationDateDiff;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.RoomRegiterBy;
@@ -234,83 +236,7 @@ public class AgentInfoController extends Controller {
 		}
 
 		fullBookingInfo(hoteDetails, aDetailsVMs);
-		/*for(HotelBookingDetails hBookingDetails:hoteDetails){
-
-			HotelBookDetailsVM hDetailsVM= new HotelBookDetailsVM();
-			hDetailsVM.setId(hBookingDetails.getId());
-			hDetailsVM.setAdult(hBookingDetails.getAdult());
-			hDetailsVM.setCheckIn(format.format(hBookingDetails.getCheckIn()));
-			hDetailsVM.setCheckOut(format.format(hBookingDetails.getCheckOut()));
-			if(hBookingDetails.getCityCode() != null){
-				hDetailsVM.setCityCode(hBookingDetails.getCityCode().getCityCode());
-				hDetailsVM.setCityNm(hBookingDetails.getCityCode().getCityName());
-			}
-			hDetailsVM.setHotelNm(hBookingDetails.getHotelNm());
-			hDetailsVM.setHotelAddr(hBookingDetails.getHotelAddr());
-			hDetailsVM.setNoOfroom(hBookingDetails.getNoOfroom());
-			hDetailsVM.setTotalNightStay(hBookingDetails.getTotalNightStay());
-			hDetailsVM.setRoom_status(hBookingDetails.getRoom_status());
-
-			List<AgentRegisVM>aList = new ArrayList<>();
-			if(hBookingDetails.getAgentId() != null){
-				AgentRegistration agent = AgentRegistration.getAgentCode(hBookingDetails.getAgentId().toString());
-				AgentRegisVM agRegisVM=new AgentRegisVM();
-				agRegisVM.setAgentCode(agent.getAgentCode());
-				agRegisVM.setFirstName(agent.getFirstName());
-				agRegisVM.setLastName(agent.getLastName());
-				agRegisVM.setCompanyName(agent.getCompanyName());
-
-				aList.add(agRegisVM);
-				hDetailsVM.setAgent(aList);
-			}
-
-			if(hBookingDetails.getCountry()!=null){
-				hDetailsVM.setCountryId(hBookingDetails.getCountry().getCountryCode());
-				hDetailsVM.setCountryNm(hBookingDetails.getCountry().getCountryName());
-			}
-			hDetailsVM.setRoomId(hBookingDetails.getRoomId());
-			hDetailsVM.setRoomNm(hBookingDetails.getRoomName());
-			if(hBookingDetails.getNationality()!=null){
-				hDetailsVM.setNationality(hBookingDetails.getNationality().getCountryCode());
-				hDetailsVM.setNationalityNm(hBookingDetails.getNationality().getNationality());
-			}
-			hDetailsVM.setPayDays_inpromotion(hBookingDetails.getPayDays_inpromotion());
-			hDetailsVM.setPromotionname(hBookingDetails.getPromotionname());
-			if(hBookingDetails.getStartRating() != null){
-				hDetailsVM.setStartRating(hBookingDetails.getStartRating().getId());
-				hDetailsVM.setStartRatingNm(hBookingDetails.getStartRating().getstarRatingTxt());
-			}
-			hDetailsVM.setSupplierCode(hBookingDetails.getSupplierCode());
-			hDetailsVM.setSupplierNm(hBookingDetails.getSupplierNm());
-			hDetailsVM.setTotal(hBookingDetails.getTotal());
-			hDetailsVM.setPayment(hBookingDetails.getPayment());
-			hDetailsVM.setCurrencyId(hBookingDetails.getCurrencyId().getCurrencyCode());
-			hDetailsVM.setCurrencyNm(hBookingDetails.getCurrencyId().getCurrencyName());
-			hDetailsVM.setTravelleraddress(hBookingDetails.getTravelleraddress());
-			hDetailsVM.setTravelleremail(hBookingDetails.getTravelleremail());
-			System.out.println("currency="+hBookingDetails.getCurrencyId().getCurrencyCode());
-			hDetailsVM.setTravellerfirstname(hBookingDetails.getTravellerfirstname());
-			hDetailsVM.setTravellerlastname(hBookingDetails.getTravellerlastname());
-			hDetailsVM.setTravellerphnaumber(hBookingDetails.getTravellerphnaumber());
-			hDetailsVM.setTravellercountry(hBookingDetails.getTravellercountry().getCountryCode());
-			hDetailsVM.setTypeOfStay_inpromotion(hBookingDetails.getTypeOfStay_inpromotion());
-			hDetailsVM.setNonRefund(hBookingDetails.getNonRefund());
-			hDetailsVM.setNonSmokingRoom(hBookingDetails.getNonSmokingRoom());
-			hDetailsVM.setTwinBeds(hBookingDetails.getTwinBeds());
-			hDetailsVM.setLateCheckout(hBookingDetails.getLateCheckout());
-			hDetailsVM.setLargeBed(hBookingDetails.getLargeBed());
-			hDetailsVM.setHighFloor(hBookingDetails.getHighFloor());
-			hDetailsVM.setEarlyCheckin(hBookingDetails.getEarlyCheckin());
-			hDetailsVM.setAirportTransfer(hBookingDetails.getAirportTransfer());
-			hDetailsVM.setAirportTransferInfo(hBookingDetails.getAirportTransferInfo());
-			hDetailsVM.setEnterComments(hBookingDetails.getEnterComments());
-			hDetailsVM.setSmokingRoom(hBookingDetails.getSmokingRoom());
-			hDetailsVM.setHandicappedRoom(hBookingDetails.getHandicappedRoom());
-			hDetailsVM.setWheelchair(hBookingDetails.getWheelchair());
-			
-			aDetailsVMs.add(hDetailsVM);
-		}*/
-		//return ok(Json.toJson(aDetailsVMs));
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalPages", totalPages);
 		map.put("currentPage", currentPage);
@@ -383,83 +309,7 @@ public class AgentInfoController extends Controller {
 		}
 
 		fullBookingInfo(hoteDetails, aDetailsVMs);
-	/*	for(HotelBookingDetails hBookingDetails:hoteDetails){
-
-			HotelBookDetailsVM hDetailsVM= new HotelBookDetailsVM();
-			hDetailsVM.setId(hBookingDetails.getId());
-			hDetailsVM.setAdult(hBookingDetails.getAdult());
-			hDetailsVM.setCheckIn(format.format(hBookingDetails.getCheckIn()));
-			hDetailsVM.setCheckOut(format.format(hBookingDetails.getCheckOut()));
-			if(hBookingDetails.getCityCode() != null){
-				hDetailsVM.setCityCode(hBookingDetails.getCityCode().getCityCode());
-				hDetailsVM.setCityNm(hBookingDetails.getCityCode().getCityName());
-			}
-			hDetailsVM.setHotelNm(hBookingDetails.getHotelNm());
-			hDetailsVM.setHotelAddr(hBookingDetails.getHotelAddr());
-			hDetailsVM.setNoOfroom(hBookingDetails.getNoOfroom());
-			hDetailsVM.setTotalNightStay(hBookingDetails.getTotalNightStay());
-			hDetailsVM.setRoom_status(hBookingDetails.getRoom_status());
-
-			List<AgentRegisVM>aList = new ArrayList<>();
-			if(hBookingDetails.getAgentId() != null){
-				AgentRegistration agent = AgentRegistration.getAgentCode(hBookingDetails.getAgentId().toString());
-				AgentRegisVM agRegisVM=new AgentRegisVM();
-				agRegisVM.setAgentCode(agent.getAgentCode());
-				agRegisVM.setFirstName(agent.getFirstName());
-				agRegisVM.setLastName(agent.getLastName());
-				agRegisVM.setCompanyName(agent.getCompanyName());
-
-				aList.add(agRegisVM);
-				hDetailsVM.setAgent(aList);
-			}
-
-			if(hBookingDetails.getCountry()!=null){
-				hDetailsVM.setCountryId(hBookingDetails.getCountry().getCountryCode());
-				hDetailsVM.setCountryNm(hBookingDetails.getCountry().getCountryName());
-			}
-			hDetailsVM.setRoomId(hBookingDetails.getRoomId());
-			hDetailsVM.setRoomNm(hBookingDetails.getRoomName());
-			if(hBookingDetails.getNationality()!=null){
-				hDetailsVM.setNationality(hBookingDetails.getNationality().getCountryCode());
-				hDetailsVM.setNationalityNm(hBookingDetails.getNationality().getNationality());
-			}
-			hDetailsVM.setPayDays_inpromotion(hBookingDetails.getPayDays_inpromotion());
-			hDetailsVM.setPromotionname(hBookingDetails.getPromotionname());
-			if(hBookingDetails.getStartRating() != null){
-				hDetailsVM.setStartRating(hBookingDetails.getStartRating().getId());
-				hDetailsVM.setStartRatingNm(hBookingDetails.getStartRating().getstarRatingTxt());
-			}
-			hDetailsVM.setSupplierCode(hBookingDetails.getSupplierCode());
-			hDetailsVM.setSupplierNm(hBookingDetails.getSupplierNm());
-			hDetailsVM.setTotal(hBookingDetails.getTotal());
-			hDetailsVM.setPayment(hBookingDetails.getPayment());
-			hDetailsVM.setCurrencyId(hBookingDetails.getCurrencyId().getCurrencyCode());
-			hDetailsVM.setCurrencyNm(hBookingDetails.getCurrencyId().getCurrencyName());
-			hDetailsVM.setTravelleraddress(hBookingDetails.getTravelleraddress());
-			hDetailsVM.setTravelleremail(hBookingDetails.getTravelleremail());
-			System.out.println("currency="+hBookingDetails.getCurrencyId().getCurrencyCode());
-			hDetailsVM.setTravellerfirstname(hBookingDetails.getTravellerfirstname());
-			hDetailsVM.setTravellerlastname(hBookingDetails.getTravellerlastname());
-			hDetailsVM.setTravellerphnaumber(hBookingDetails.getTravellerphnaumber());
-			hDetailsVM.setTravellercountry(hBookingDetails.getTravellercountry().getCountryCode());
-			hDetailsVM.setTypeOfStay_inpromotion(hBookingDetails.getTypeOfStay_inpromotion());
-			hDetailsVM.setNonRefund(hBookingDetails.getNonRefund());
-			hDetailsVM.setNonSmokingRoom(hBookingDetails.getNonSmokingRoom());
-			hDetailsVM.setTwinBeds(hBookingDetails.getTwinBeds());
-			hDetailsVM.setLateCheckout(hBookingDetails.getLateCheckout());
-			hDetailsVM.setLargeBed(hBookingDetails.getLargeBed());
-			hDetailsVM.setHighFloor(hBookingDetails.getHighFloor());
-			hDetailsVM.setEarlyCheckin(hBookingDetails.getEarlyCheckin());
-			hDetailsVM.setAirportTransfer(hBookingDetails.getAirportTransfer());
-			hDetailsVM.setAirportTransferInfo(hBookingDetails.getAirportTransferInfo());
-			hDetailsVM.setEnterComments(hBookingDetails.getEnterComments());
-			hDetailsVM.setSmokingRoom(hBookingDetails.getSmokingRoom());
-			hDetailsVM.setHandicappedRoom(hBookingDetails.getHandicappedRoom());
-			hDetailsVM.setWheelchair(hBookingDetails.getWheelchair());
-			
-			aDetailsVMs.add(hDetailsVM);
-		}*/
-		//return ok(Json.toJson(aDetailsVMs));
+	
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalPages", totalPages);
 		map.put("currentPage", currentPage);
@@ -1356,5 +1206,10 @@ public class AgentInfoController extends Controller {
 		
 	}
 	
+@Transactional(readOnly=true)
+	public static Result cancellationBookingMail(){
+	
+		return ok();
+	}
 
 }

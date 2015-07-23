@@ -2989,12 +2989,13 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 			console.log("Success");
 			console.log(data);
 			console.log("-----------");
-    		if(data == 0){
+    		if(data != "NocreditLimit"){
     			$scope.flagA = 0;
     			 notificationService.success("Room Book Successfully");
     		 $window.location.replace("http://li664-78.members.linode.com:9989/AgentBookingInfo");
     		}else{
-    			$scope.flagA = 1;
+    			$scope.flagA = "NocreditLimit";
+    			notificationService.error("Credit Limit Is Less");
     		}
     		
     	}).error(function(data, status, headers, config) {

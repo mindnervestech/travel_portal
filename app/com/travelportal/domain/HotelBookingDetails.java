@@ -418,6 +418,11 @@ public class HotelBookingDetails {
 	public void setPayment(String payment) {
 		this.payment = payment;
 	}
+	
+	public static List<HotelBookingDetails> allBookingData() {
+    	return (List<HotelBookingDetails>) JPA.em().createQuery("select c from HotelBookingDetails c").getResultList();
+    }
+	
 	public static HotelBookingDetails findBookingId() {
 	    	return (HotelBookingDetails) JPA.em().createQuery("select c from HotelBookingDetails c where c.id = (select max(a.id) from HotelBookingDetails a)").getSingleResult();
 	    }

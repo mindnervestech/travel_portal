@@ -1,6 +1,4 @@
-package com.travelportal.domain;
-
-import java.util.Date;
+package com.travelportal.domain.admin;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,63 +6,73 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Query;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.travelportal.domain.HotelBookingDetails;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 @Entity
-@Table(name="img_path")
-public class ImgPath { //Seed table.
+@Table(name="booking_documents")
+public class BookingDocument { 
 	
-	@Column(name="img_path_id")
+		
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private int imgpathId;
-	@Column(name="img_path")
-	private String imgpath;
+	private int doc_id;
+	@Column(name="doc_path")
+	private String docpath;
 	@Column(name="doc_name")
 	private String docname;
-	@Column(name="date_Time")
-	private Date datetime;
+	@OneToOne
+	private HotelBookingDetails hotelbooingId;
 	
 	
-	
-	public int getImgpathId() {
-		return imgpathId;
+	public int getDoc_id() {
+		return doc_id;
 	}
 
-	public void setImgpathId(int imgpathId) {
-		this.imgpathId = imgpathId;
+
+	public void setDoc_id(int doc_id) {
+		this.doc_id = doc_id;
 	}
 
-	public String getImgpath() {
-		return imgpath;
+
+	public String getDocpath() {
+		return docpath;
 	}
 
-	public void setImgpath(String imgpath) {
-		this.imgpath = imgpath;
+
+	public void setDocpath(String docpath) {
+		this.docpath = docpath;
 	}
-	
+
+
 	public String getDocname() {
 		return docname;
 	}
+
 
 	public void setDocname(String docname) {
 		this.docname = docname;
 	}
 
-	public Date getDatetime() {
-		return datetime;
+
+	public HotelBookingDetails getHotelbooingId() {
+		return hotelbooingId;
 	}
 
-	public void setDatetime(Date datetime) {
-		this.datetime = datetime;
+
+	public void setHotelbooingId(HotelBookingDetails hotelbooingId) {
+		this.hotelbooingId = hotelbooingId;
 	}
-	
-	public static ImgPath getImagPathById(int id) {
-    	Query query = JPA.em(). createQuery("select p from ImgPath p where p.imgpathId = ?1");
+
+
+	public static BookingDocument getImagPathById(int id) {
+    	Query query = JPA.em(). createQuery("select p from BookingDocument p where p.doc_id = ?1");
 		query.setParameter(1, id);
-    	return (ImgPath) query.getSingleResult();
+    	return (BookingDocument) query.getSingleResult();
     }
 
 

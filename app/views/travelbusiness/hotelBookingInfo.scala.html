@@ -85,7 +85,7 @@
                                             <div class="selector">
                                                 <select class="full-width" name="travellercountry" data-ng-model="traveller.travellercountry" ng-change="onCountryChange()" placeholder="Country" > 
                                                         <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
-                                                </select><span ng-repeat="country in searchCountries" ng-if="country.countryCode == traveller.travellercountry" class="custom-select full-width">{{country.countryName}}</span>
+                                                </select><span ng-repeat="country in searchCountries" ng-if="country.countryCode == hotel.countryCode" class="custom-select full-width">{{country.countryName}}</span>      <!-- <span ng-repeat="country in searchCountries" ng-if="country.countryCode == traveller.travellercountry" class="custom-select full-width">{{country.countryName}}</span> -->
                                             </div>
                                         </div>
                                          <div class="col-sm-6 col-md-5">
@@ -337,8 +337,8 @@
                                         <button type="submit" class="full-width btn-large">CONFIRM BOOKING</button>
                                     </div>
                                 </div>
-                                <div class="form-group row" ng-show="flagA == 1">
-									<label style="color:red;">abcdefghijklm </label>
+                                <div class="form-group row" ng-show="flagA =='NocreditLimit'">
+									<label style="color:red;">Credit Limit Is Less</label>
                                 </div>
                             </form>
                         </div>

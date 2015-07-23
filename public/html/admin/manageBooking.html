@@ -124,6 +124,7 @@
                                  <th style="text-align: center;"><a style="color: white;">No of Room</a></th>
                                  <th style="width: 83px;text-align: center;"><a style="color: white;">Total</a></th>
                                    <th style="width: 56px;text-align: center;"><a style="color: white;">Payment</a></th>
+                                     <th style="width: 56px;text-align: center;"><a style="color: white;">attach</a></th>
                                   
                                 
                                  <!-- <th style="text-align: center;width: 45px;"><a style="color: white;">Nationality</a></th> -->
@@ -133,7 +134,7 @@
                         </tr>
                     </thead>
                 	<tbody>
-                	
+                	 <!-- <input ng-file-select="selectProfileImage($files)" name="" type="file" /> -->
                     	<tr ng-repeat="agent in agentBook">
           					<td style="padding: 9px;">{{agent.id}}</td>
           					 <td>{{agent.travellerfirstname}} {{agent.travellerlastname}}</td>
@@ -147,9 +148,10 @@
                              <td>{{agent.noOfroom}}</td>
  							 <td>{{agent.total}}<sup style="font-size: small;color: chocolate;top: 0px;" class="ng-binding"> {{agent.curr}}</sup></td>
                             <td> <input type="checkbox"
-																			name="selectBooking" ng-model="payment"
-																			ng-change="bookingPayment(agent.id,payment)" ng-checked="agent.payment == 'Received'"/>
+										name="selectBooking" ng-model="payment"	ng-change="bookingPayment(agent.id,payment,agent.total)" ng-checked="agent.payment == 'Received'"/>
                                      </td>
+                               <td ng-if="buttonChange == 'true'"><a ng-click="showFileSelect()" style="cursor: pointer;" data-toggle="modal"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 19px;padding: 4px;margin-left: 0px;"></span></a></td>
+                               <td ng-if="buttonChange == 'false'"><input ng-file-select="selectBookingDoc($files,agent.id)" name="" type="file" /></td>      
                           
                             </tr>
                            

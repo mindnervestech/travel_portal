@@ -65,6 +65,8 @@ public class AgentRegistration {
 	private String agree;
 	private String status;
 	private String password;
+	private Double creditLimit;
+	private Double availableLimit;
 		
 	
 	
@@ -299,6 +301,22 @@ public class AgentRegistration {
 		this.commission = commission;
 	}
 
+	public Double getCreditLimit() {
+		return creditLimit;
+	}
+
+	public void setCreditLimit(Double creditLimit) {
+		this.creditLimit = creditLimit;
+	}
+
+	public Double getAvailableLimit() {
+		return availableLimit;
+	}
+
+	public void setAvailableLimit(Double availableLimit) {
+		this.availableLimit = availableLimit;
+	}
+
 	public static AgentRegistration doLogin(String code, String loginid, String password) {
 		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.id = ?1 and h.password = ?2 and h.loginId = ?3 and h.status = 'APPROVED'").setParameter(1, code).setParameter(2, password).setParameter(3, loginid);
 		return (AgentRegistration) query.getSingleResult();
@@ -355,7 +373,6 @@ public static List<AgentRegistration> getAgentData(int code) {/*List<Integer> ra
 	
 	public static AgentRegistration findById(long id) {
 		try{
-			System.out.println(id);
 		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.id = ?1").setParameter(1, id);
 		return (AgentRegistration) query.getSingleResult();
 	}
