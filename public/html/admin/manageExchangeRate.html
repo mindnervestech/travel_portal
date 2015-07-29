@@ -1,0 +1,90 @@
+<div class="panel panel-green">
+	<div class="panel-heading clearfix">
+		<span class="mts pull-left">Manage Exchange Rate</span>
+	</div>
+
+
+	<h4 style="margin-left: 15px;">Exchange Rate</h4>
+
+	<div>
+	<form method="post" name="myForm" ng-submit="saveCurrencyRate()" role="form" class="form-horizontal" style="margin-left: 37px;">
+		<div class="form-group">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-xs-3">
+						<label type="text">Currency</label> <select
+							class="form-control" name="currencySelect" data-ng-model="currencyRate.currencySelect"
+							ng-change="showCurrency(currencyRate.currencySelect)" required>
+							<option value=""></option>
+							<option ng-repeat="curr in currency" value="{{curr.currencyCode}}">{{curr.currencyName}}</option>
+						</select>
+					</div>
+					<div class="col-xs-1" style="margin-top: 23px;">
+						<button type="submit" onclick="scroll(0,0)" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+				<div class="row">
+					<div class="col-xs-1" style="margin-left: 21px;">
+						<label type="text">THB :</label> 
+					</div>
+					<div class="col-xs-3">
+					<input type="text" class="form-control" name="curr_THB" data-ng-model="currencyRate.curr_THB" required>
+					</div>
+				</div> 
+		</div>
+		
+				
+		<div class="form-group">
+				<div class="row">
+					<div class="col-xs-1" style="margin-left: 21px;">
+						<label type="text">SGD :</label> 
+					</div>
+					<div class="col-xs-3">
+					<input type="text" class="form-control" name="curr_SGD" data-ng-model="currencyRate.curr_SGD" required>
+					</div>
+				</div> 
+		</div>
+		
+		<div class="form-group">
+				<div class="row">
+					<div class="col-xs-1" style="margin-left: 21px;">
+						<label type="text">MYR :</label> 
+					</div>
+					<div class="col-xs-3">
+					<input type="text" class="form-control" name="curr_MYR" data-ng-model="currencyRate.curr_MYR" required>
+					</div>
+				</div> 
+		</div>
+		
+		<div class="form-group">
+				<div class="row">
+					<div class="col-xs-1" style="margin-left: 21px;">
+						<label type="text">INR :</label> 
+					</div>
+					<div class="col-xs-3">
+					<input type="text" class="form-control" name="curr_INR" data-ng-model="currencyRate.curr_INR" required>
+					</div>
+				</div> 
+		</div>
+		
+		
+		<!-- 
+		<div class="form-group">
+		      <div class="row">
+		      	<div class="col-xs-2">
+		      	</div>
+					<div class="col-xs-2">
+						<button type="submit" onclick="scroll(0,0)" class="btn btn-primary">Save</button>
+		             </div>
+		        </div>
+		</div> -->
+		</form>
+	</div>
+
+
+
+</div>

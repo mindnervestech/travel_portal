@@ -128,6 +128,11 @@ var app = angular.module('travel_portal',['ngRoute','ngDialog','jlareau.pnotify'
 		controller: 'manageRateController'
 	})
 	
+	.when('/manageExchangeRate', {
+		templateUrl: '/assets/html/admin/manageExchangeRate.html',
+		controller: 'manageExchangeRateController'
+	})
+	
 	.when('/confirmBooking', {
 		templateUrl: '/assets/html/booking_process/confirm_booking.html',
 		controller: 'confirmbookingController'

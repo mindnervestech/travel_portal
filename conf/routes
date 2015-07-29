@@ -51,13 +51,17 @@ GET  /getVoucherConfirm/:bookingId    controllers.travelbusiness.AgentInfoContro
 GET  /getVoucherCancel/:bookingId    controllers.travelbusiness.AgentInfoController.getVoucherCancel(bookingId:Long)
 GET  /getVoucherOnRequest/:bookingId    controllers.travelbusiness.AgentInfoController.getVoucherOnRequest(bookingId:Long)
 GET  /getRoomType/:supplierCode 		controllers.travelbusiness.AgentInfoController.getRoomType(supplierCode:Long)
+GET /cancellationBookingMail 	controllers.travelbusiness.AgentInfoController.cancellationBookingMail()
+
 
 #manage Booking controller
 
 GET  /getAllAgentInfo/:agentCode      com.travelportal.controllers.ManageBookingController.getAllAgentInfo(agentCode:Long)
 GET  /getagentInfobyAll/:currentPage/:checkIn/:checkOut/:guest/:status/:bookingId/:agentCode        com.travelportal.controllers.ManageBookingController.getagentInfobyAll(currentPage:Integer,checkIn:String,checkOut:String,guest:String,status:String,bookingId:Long,agentCode:Long)
-GET  /getBookingPaymentInfo/:bookingId/:payment	   com.travelportal.controllers.ManageBookingController.getBookingPaymentInfo(bookingId:Long,payment:String)
+GET  /getBookingPaymentInfo/:bookingId/:payment/:total	   com.travelportal.controllers.ManageBookingController.getBookingPaymentInfo(bookingId:Long,payment:String,total:Long)
 GET  /getpaymentWise/:paymentStatus/:agentCode   com.travelportal.controllers.ManageBookingController.getpaymentWise(paymentStatus:String,agentCode:Long)
+POST /saveBookingfiles       com.travelportal.controllers.ManageBookingController.saveBookingfiles()
+
 
 #manage Rate controller    
 
@@ -65,6 +69,13 @@ GET  /getPendingRate     	 com.travelportal.controllers.ManageRateController.get
 GET  /getSupplier		     com.travelportal.controllers.ManageRateController.getSupplier()
 GET  /getSupplierWisePendingRate/:supplierCode     com.travelportal.controllers.ManageRateController.getSupplierWisePendingRate(supplierCode:Long)
 GET  /getAppPendingRate/:rateId			 com.travelportal.controllers.ManageRateController.getAppPendingRate(rateId:Long)
+
+#manage Exchange Rate
+GET 	/exchangeCurrency                 	com.travelportal.controllers.ManageExchangeRateController.exchangeCurrency()
+POST  	/saveCurrencyExchangeRate         com.travelportal.controllers.ManageExchangeRateController.saveCurrencyExchangeRate()
+GET    /getExchangeRate/:currId 	com.travelportal.controllers.ManageExchangeRateController.getExchangeRate(currId:Integer)
+
+
 #travelportal
 
 #Supplier Home Page
@@ -105,6 +116,7 @@ GET 	/countries					com.travelportal.controllers.TravelPortalUtilsController.get
 GET 	/cities/:countryCode		com.travelportal.controllers.TravelPortalUtilsController.getCities(countryCode: Integer)
 GET 	/hotelchains              	com.travelportal.controllers.TravelPortalUtilsController.getChainHotels()
 GET 	/currency                 	com.travelportal.controllers.TravelPortalUtilsController.getCurrency()
+
 GET 	/hotelbrands                com.travelportal.controllers.TravelPortalUtilsController.getHotelBrand()
 GET 	/starrating                	com.travelportal.controllers.TravelPortalUtilsController.getStarRatings()
 GET 	/marketrate                	com.travelportal.controllers.TravelPortalUtilsController.getMarketRate()
@@ -199,7 +211,7 @@ GET		/getPendingAgent			com.travelportal.controllers.AdminController.getPendingA
 GET		/getApprovedAgent			com.travelportal.controllers.AdminController.getApprovedAgent
 GET		/getRejectedAgent			com.travelportal.controllers.AdminController.getRejectedAgent
 GET		/getBlockAgent			com.travelportal.controllers.AdminController.getBlockAgent
-GET		/approveAgent/:id/:email/:agentCode			com.travelportal.controllers.AdminController.approveAgent(id: Long,email:String,agentCode: Long)
+GET		/approveAgent/:id/:email/:agentCode/:creditLimit			com.travelportal.controllers.AdminController.approveAgent(id: Long,email:String,agentCode: Long,creditLimit:Long)
 GET		/rejectAgent/:id			com.travelportal.controllers.AdminController.rejectAgent(id: Long)
 GET		/pendingAgent/:id		com.travelportal.controllers.AdminController.pendingAgent(id: Long)
 GET    /blockresultAgent/:id	com.travelportal.controllers.AdminController.blockresultAgent(id: Long)

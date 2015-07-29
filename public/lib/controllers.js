@@ -5030,3 +5030,42 @@ controller("manageRateController",['$scope','notificationService','$filter','$ro
 			});
 		}
 }]);
+
+angular.module('travel_portal').
+controller("manageExchangeRateController",['$scope','notificationService','$filter','$rootScope','$http','ngDialog',function($scope,notificationService,$filter,$rootScope, $http,ngDialog){
+	
+	$http.get("/exchangeCurrency").success(function(response) {
+		$scope.currency = response;
+		console.log($scope.currency);
+		
+	});
+	
+	
+	$scope.saveCurrencyRate = function(){
+		
+		console.log($scope.currencyRate);
+		$http.post('/saveCurrencyExchangeRate',$scope.currencyRate).success(function(data){
+			console.log('success');
+			notificationService.success("saveCurrency");
+		}).error(function(data, status, headers, config) {
+			console.log('ERROR');
+			notificationService.error("Please Enter Required Fields");
+		});
+		
+		
+	}
+	
+	$scope.showCurrency = function(selectedCurr){
+		
+		$http.get("/getExchangeRate/"+selectedCurr).success(function(response){
+			console.log("OK..........");
+			console.log(response);
+			$scope.currencyRate.curr_THB = response.curr_THB;
+			$scope.currencyRate.curr_SGD = response.curr_SGD;
+			$scope.currencyRate.curr_MYR = response.curr_MYR;
+			$scope.currencyRate.curr_INR = response.curr_INR;
+		});
+		
+	}
+	console.log("Hiiiii");
+}]);
