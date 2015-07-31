@@ -5,7 +5,7 @@
                               <div class="col-md-12" style="background-color: white;">
                             <h2 class="col-md-5" style="color: #428bca;">Hotel : {{ratedetail.hotelNm}}</h2>
                                <span class="col-md-1">TOTAL : </span>
-                              <span class="price col-md-3" style="float: left;text-align: left;">{{finalTotal}} <sup style="font-size: small;color: chocolate;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
+                              <span class="price col-md-3" style="float: left;text-align: left;" currency-rate styleValue="font-size: small;color: chocolate;top: -3px;" ng-model="finalTotal" rate="{{finalTotal}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span>
                            
                                <div class="col-md-2" >
                                                  <!-- <span class="price"><small>AVG/NIGHT</small>$620</span>  -->
@@ -14,6 +14,8 @@
                                 					    <input type="text" name="checkIn" value="{{ratedetail.checkIn}}" style="display: none;">
                                 					    <input type="text" name="bookingId" value="{{ratedetail.bookingId}}" style="display: none;">
                               						     <input type="text" name="checkOut" value="{{ratedetail.checkOut}}" style="display: none;">
+                              						     <input type="text" name="currencyExchangeRate" value="{{ratedetail.currencyExchangeRate}}" style="display: none;">
+                              						     <input type="text" name="agentCurrency" value="{{ratedetail.agentCurrency}}" style="display: none;">
                             						     <input type="text" name="nationalityCode" value="{{ratedetail.nationality}}" style="display: none;">
                             						      <input type="text" name="roomId" value="{{ratedetail.hotelbyRoom[0].roomId}}" style="display: none;">
                             						      <input type="text" name="adult" value="{{searchroom.adult}}" style="display: none;">
@@ -90,8 +92,8 @@
                                              
                                              </div>
                                              <div class="col-md-4">
-                                              <div class="col-md-4" style="margin-top: 20px;">
-                                         		<span class="price" style="font-size: 15px;">{{serchroom.total}} <sup style="font-size: 10px;color: chocolate;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
+                                              <div class="col-md-4" style="margin-top: 20px;padding: 0px;">
+                                         		 <span class="price" style="font-size: 15px;" currency-rate styleValue="font-size: small;color: chocolate;top: -3px;" ng-model="serchroom.total" rate="{{serchroom.total}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span> 
                                        		  </div>
                                        		  <div class="col-md-4" style="margin-top: 20px;padding: 0px;">
                                          		<span><a ng-click="showDateWiseDetails($index)">DateWise Rate</a></span>
@@ -126,7 +128,7 @@
                                         
                                 </div>
                                   <div class="col-md-12" ng-if="breakfastAddfree != '' && breakfastAddfree != null">
-                                  <label>Breakfast charges : {{breakfastAddfree}}</label>
+                                  Breakfast charges :<label currency-rate ng-model="breakfastAddfree" rate="{{breakfastAddfree}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></label>
                                   </div>
                                   
                                    <div class="col-md-12">
@@ -145,7 +147,7 @@
                                                                                                                      
                                         <dl class="info">
                                             <dt>Rate</dt>
-                                            <dd>{{Dateinfo.rate}} {{ratedetail.currencyShort}}</dd>
+                                             <dd currency-rate ng-model="Dateinfo.rate" rate="{{Dateinfo.rate}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></dd> 
                                             <dt ng-if="Dateinfo.meal != null">Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
                                         </dl>

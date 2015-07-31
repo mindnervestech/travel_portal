@@ -224,8 +224,8 @@ public class ApplicationController extends Controller{
 		List<Currency> currencies = Currency.getCurrency();
 		List<String> currencyList = new ArrayList<>();
 		for(Currency currency : currencies) {
-			if(currency.getCurrencyName().equals("USD - US Dollars") || currency.getCurrencyName().equals("THB - Thai Baht") ||currency.getCurrencyName().equals("INR - Indian Rupees") || currency.getCurrencyName().equals("EUR - Euro") || currency.getCurrencyName().equals("GBP - UK Pounds Sterling")){
-			currencyList.add(currency.getCurrencyName());
+			if(currency.getCurrencyName().equals("USD - US Dollars") || currency.getCurrencyName().equals("INR - Indian Rupees")){
+				currencyList.add(currency.getCurrencyName());
 			}
 		}
 		
@@ -262,11 +262,21 @@ public class ApplicationController extends Controller{
 			brandList.add(hotel.getBrandName());
 		}
 		
-		List<Currency> currencies = Currency.getCurrency();
+		/*List<Currency> currencies = Currency.getCurrency();
 		List<String> currencyList = new ArrayList<>();
 		for(Currency currency : currencies) {
 			currencyList.add(currency.getCurrencyName());
+		}*/
+		
+		List<Currency> currencies = Currency.getCurrency();
+		List<String> currencyList = new ArrayList<>();
+		for(Currency currency : currencies) {
+			if(currency.getCurrencyName().equals("THB - Thai Baht") || currency.getCurrencyName().equals("SGD - Singapore Dollars") || currency.getCurrencyName().equals("MYR - Malaysian Ringgits") || currency.getCurrencyName().equals("INR - Indian Rupees")){
+				currencyList.add(currency.getCurrencyName());
+			}
 		}
+		
+		
 		
 		List<HotelStarRatings> ratings = HotelStarRatings.gethotelStarratings();
 		List<String> ratingList = new ArrayList<>();

@@ -9,13 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.travelportal.domain.AmenitiesType;
 import com.travelportal.domain.BillingInformation;
 import com.travelportal.domain.BusinessCommunication;
@@ -40,11 +38,8 @@ import com.travelportal.domain.NightLife;
 import com.travelportal.domain.Salutation;
 import com.travelportal.domain.ShoppingFacility;
 import com.travelportal.domain.TransportationDirection;
-import com.travelportal.domain.rooms.ChildPolicies;
 import com.travelportal.domain.rooms.RoomAmenities;
-import com.travelportal.vm.AreaAttractionsSuppVM;
 import com.travelportal.vm.AreaAttractionsVM;
-import com.travelportal.vm.ChildpoliciVM;
 import com.travelportal.vm.HotelBillingInformation;
 import com.travelportal.vm.HotelCommunication;
 import com.travelportal.vm.HotelContactInformation;
@@ -52,9 +47,6 @@ import com.travelportal.vm.HotelDescription;
 import com.travelportal.vm.HotelGeneralInfoVM;
 import com.travelportal.vm.HotelHealthAndSafetyVM;
 import com.travelportal.vm.HotelInternalInformation;
-import com.travelportal.vm.HotelamenitiesVM;
-import com.travelportal.vm.HotelmealVM;
-import com.travelportal.vm.TransportationDirectionsSuppVM;
 import com.travelportal.vm.TransportationDirectionsVM;
 
 public class TravelPortalUtilsController extends Controller {

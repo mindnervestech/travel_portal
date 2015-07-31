@@ -9,17 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Query;
 import javax.persistence.Table;
 
-import com.travelportal.domain.rooms.ChildPolicies;
-
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
+
+import com.travelportal.domain.rooms.ChildPolicies;
 
 @Entity
 @Table(name="hotel_meal_plan")

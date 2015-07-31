@@ -383,11 +383,9 @@
                             <dl class="other-details">
                                 <dt class="feature">room Type:</dt><dd class="value">{{hotel.hotelbyRoom[0].roomName}}</dd>
                                 <dt class="feature">No Of Room:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}}</dd>
-                                 <dt class="feature">Per Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.totalParPerson}}<sup style="color: chocolate;top: -2px;" class="ng-binding">{{hotel.currencyShort}}</sup></dd>
-                                 <dt class="feature">Total Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * {{hotel.hotelBookingDetails.totalParPerson}}<sup style="color: chocolate;top: -2px;" class="ng-binding">{{hotel.currencyShort}}</sup></dd>
-                               <!--  <dt class="feature"></dt><dd class="value">{{hotel.hotelBookingDetails.total}}<sup style="color: chocolate;top: -2px;" class="ng-binding">{{hotel.currencyShort}}</sup></dd> -->
-                                <!-- <dt class="feature">taxes and fees:</dt><dd class="value">$10</dd> -->
-                                <dt class="total-price">Total Price</dt><dd class="total-price-value">{{hotel.hotelBookingDetails.total}}<sup style="color: chocolate;top: -2px;" class="ng-binding">{{hotel.currencyShort}}</sup></dd>
+                                 <dt class="feature">Per Room price:</dt><dd class="value" currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"> -2px;" class="ng-binding"></dd>
+                                <dt class="feature">Total Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * <span currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
+                               <dt class="total-price">Total Price</dt><dd class="total-price-value" currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
                             </dl>
                         </div>
                         

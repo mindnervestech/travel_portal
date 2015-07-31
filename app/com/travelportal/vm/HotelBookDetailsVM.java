@@ -30,6 +30,7 @@ public class HotelBookDetailsVM {
 	public String startRatingNm;
 	public int currencyId;
 	public String currencyNm;
+	public Double currencyExchangeRate;
 	public String adult;
 	public int noOfroom;
 	public double total;
@@ -393,10 +394,12 @@ public class HotelBookDetailsVM {
 	public void setPassengerInfo(List<PassengerBookingInfoVM> passengerInfo) {
 		this.passengerInfo = passengerInfo;
 	}
-
-	
-	
-	
+	public Double getCurrencyExchangeRate() {
+		return currencyExchangeRate;
+	}
+	public void setCurrencyExchangeRate(Double currencyExchangeRate) {
+		this.currencyExchangeRate = currencyExchangeRate;
+	}
 	
 	
 	

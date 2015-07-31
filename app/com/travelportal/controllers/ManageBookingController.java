@@ -1,12 +1,6 @@
 package com.travelportal.controllers;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,19 +10,14 @@ import java.util.List;
 import java.util.Map;
 
 import play.Play;
-import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Http.MultipartFormData.FilePart;
 
 import com.travelportal.domain.HotelBookingDetails;
-import com.travelportal.domain.HotelHealthAndSafety;
-import com.travelportal.domain.ImgPath;
 import com.travelportal.domain.RoomRegiterBy;
 import com.travelportal.domain.RoomRegiterByChild;
-import com.travelportal.domain.admin.BookingDocument;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.vm.AgentRegisVM;
 import com.travelportal.vm.ChildselectedVM;

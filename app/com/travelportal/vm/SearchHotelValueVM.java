@@ -7,6 +7,8 @@ public class SearchHotelValueVM {
 	
 	public String supplierCode;
 	public String countryCode;
+	public Double currencyExchangeRate;
+	public String agentCurrency;
 	public String cityCode;
 	public String checkIn;
 	public String checkOut;
@@ -46,7 +48,6 @@ public class SearchHotelValueVM {
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
 	}
-	
 	
 	public String getCityCode() {
 		return cityCode;
@@ -192,6 +193,18 @@ public class SearchHotelValueVM {
 	}
 	public void setBookingId(String bookingId) {
 		this.bookingId = bookingId;
+	}
+	public Double getCurrencyExchangeRate() {
+		return currencyExchangeRate;
+	}
+	public void setCurrencyExchangeRate(Double currencyExchangeRate) {
+		this.currencyExchangeRate = currencyExchangeRate;
+	}
+	public String getAgentCurrency() {
+		return agentCurrency;
+	}
+	public void setAgentCurrency(String agentCurrency) {
+		this.agentCurrency = agentCurrency;
 	}
 	
 		

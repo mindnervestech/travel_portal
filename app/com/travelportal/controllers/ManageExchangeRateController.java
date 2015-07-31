@@ -1,40 +1,18 @@
 package com.travelportal.controllers;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.travelportal.domain.Country;
-import com.travelportal.domain.Currency;
-import com.travelportal.domain.HotelProfile;
-import com.travelportal.domain.HotelRegistration;
-import com.travelportal.domain.admin.CurrencyExchangeRate;
-import com.travelportal.domain.allotment.AllotmentMarket;
-import com.travelportal.domain.rooms.ApplicableDateOnRate;
-import com.travelportal.domain.rooms.CancellationPolicy;
-import com.travelportal.domain.rooms.PersonRate;
-import com.travelportal.domain.rooms.RateDetails;
-import com.travelportal.domain.rooms.RateMeta;
-import com.travelportal.domain.rooms.RateSpecialDays;
-import com.travelportal.vm.AllotmentMarketVM;
-import com.travelportal.vm.CancellationPolicyVM;
-import com.travelportal.vm.CurrencyExchangeVM;
-import com.travelportal.vm.CurrencyVM;
-import com.travelportal.vm.HotelRegistrationVM;
-import com.travelportal.vm.NormalRateVM;
-import com.travelportal.vm.RateDetailsVM;
-import com.travelportal.vm.RateVM;
-import com.travelportal.vm.SpecialDaysRateVM;
-import com.travelportal.vm.SpecialRateVM;
 
 import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import com.travelportal.domain.Currency;
+import com.travelportal.domain.admin.CurrencyExchangeRate;
+import com.travelportal.vm.CurrencyExchangeVM;
+import com.travelportal.vm.CurrencyVM;
 
 public class ManageExchangeRateController extends Controller {
 

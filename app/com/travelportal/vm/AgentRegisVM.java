@@ -20,6 +20,7 @@ public class AgentRegisVM {
 	public String receiveNet;
 	public String commission;
 	public String currency;
+	public String currencyShort;
 	public String EmailAddr;	
 	public String loginId;
 	public String directCode;
@@ -202,6 +203,12 @@ public class AgentRegisVM {
 	}
 	public void setCommission(String commission) {
 		this.commission = commission;
+	}
+	public String getCurrencyShort() {
+		return currencyShort;
+	}
+	public void setCurrencyShort(String currencyShort) {
+		this.currencyShort = currencyShort;
 	}
 	
 		

@@ -2,7 +2,6 @@ package controllers.travelbusiness;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,19 +37,19 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.travelportal.domain.CancellationDateDiff;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.RoomRegiterBy;
 import com.travelportal.domain.RoomRegiterByChild;
+import com.travelportal.domain.admin.CurrencyExchangeRate;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
@@ -118,7 +117,25 @@ public class AgentInfoController extends Controller {
 				agRegisVM.setFirstName(agent.getFirstName());
 				agRegisVM.setLastName(agent.getLastName());
 				agRegisVM.setCompanyName(agent.getCompanyName());
-
+				agRegisVM.setCurrency(agent.getCurrency().getCurrencyName());
+				String[] currencySplit;
+				 currencySplit = agent.getCurrency().getCurrencyName().split(" - ");
+				 agRegisVM.setCurrencyShort(currencySplit[0]);
+				 
+				 String[] suppCurrencySplit;
+				 suppCurrencySplit =  hBookingDetails.getCurrencyId().getCurrencyName().split(" - ");
+				
+				List<CurrencyExchangeRate> cList = CurrencyExchangeRate.findCurrencyRate(agent.getCurrency().getId());
+			
+				for(CurrencyExchangeRate cExchangeRate:cList){
+					if(cExchangeRate.getCurrencyName().equals(suppCurrencySplit[0])){
+						hDetailsVM.currencyExchangeRate = cExchangeRate.getCurrencyRate();
+					}
+					
+				} 
+				
+				
+				
 				aList.add(agRegisVM);
 				hDetailsVM.setAgent(aList);
 			}

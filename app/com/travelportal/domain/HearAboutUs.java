@@ -20,10 +20,6 @@ public class HearAboutUs {
 	@Column(name="hear_aboutus")
 	private String hearAboutUs;
 	
-	
-	
-	
-	
 	public int getId() {
 		return id;
 	}

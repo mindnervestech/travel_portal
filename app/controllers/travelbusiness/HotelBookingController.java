@@ -17,7 +17,6 @@ import org.javers.core.diff.changetype.ValueChange;
 import org.javers.core.diff.changetype.container.ElementValueChange;
 import org.javers.core.diff.changetype.container.ListChange;
 import org.javers.core.diff.changetype.container.ValueAdded;
-import org.javers.core.diff.changetype.container.ValueRemoved;
 
 import play.Play;
 import play.data.Form;
@@ -55,7 +54,6 @@ import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
 import com.travelportal.vm.ChildselectedVM;
-import com.travelportal.vm.HotelBookDetailsVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.PassengerBookingInfoVM;
 import com.travelportal.vm.RateDatedetailVM;

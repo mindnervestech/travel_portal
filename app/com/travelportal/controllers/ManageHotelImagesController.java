@@ -21,7 +21,6 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
-import scala.Array;
 
 import com.travelportal.domain.HotelImagesPath;
 import com.travelportal.domain.InfoWiseImagesPath;

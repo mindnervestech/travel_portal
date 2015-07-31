@@ -1,7 +1,5 @@
 package com.travelportal.domain;
 
-import java.math.BigInteger;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,9 +23,6 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.travelportal.domain.rooms.HotelRoomTypes;
-import com.travelportal.domain.rooms.RateMeta;
-import com.travelportal.vm.ServicesVM;
 
 @Entity
 @Table(name="hotel_profile")

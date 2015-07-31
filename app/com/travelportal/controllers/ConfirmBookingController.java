@@ -8,25 +8,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.travelportal.domain.HotelBookingDates;
-import com.travelportal.domain.HotelBookingDetails;
-import com.travelportal.domain.HotelMealPlan;
-import com.travelportal.domain.RoomRegiterBy;
-import com.travelportal.domain.RoomRegiterByChild;
-import com.travelportal.domain.agent.AgentRegistration;
-import com.travelportal.vm.AgentRegisVM;
-import com.travelportal.vm.AgentRegistrationVM;
-import com.travelportal.vm.BookingDatesVM;
-import com.travelportal.vm.ChildselectedVM;
-import com.travelportal.vm.HotelBookDetailsVM;
-import com.travelportal.vm.HotelBookingDetailsVM;
-import com.travelportal.vm.HotelSearch;
-import com.travelportal.vm.PassengerBookingInfoVM;
-
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import com.travelportal.domain.HotelBookingDates;
+import com.travelportal.domain.HotelBookingDetails;
+import com.travelportal.domain.RoomRegiterBy;
+import com.travelportal.domain.RoomRegiterByChild;
+import com.travelportal.domain.agent.AgentRegistration;
+import com.travelportal.vm.AgentRegisVM;
+import com.travelportal.vm.BookingDatesVM;
+import com.travelportal.vm.ChildselectedVM;
+import com.travelportal.vm.HotelBookDetailsVM;
+import com.travelportal.vm.PassengerBookingInfoVM;
 
 public class ConfirmBookingController extends Controller {
 	

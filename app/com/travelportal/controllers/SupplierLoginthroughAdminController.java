@@ -1,13 +1,7 @@
 package com.travelportal.controllers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.ning.http.client.Response;
-import com.travelportal.domain.HotelRegistration;
-import com.travelportal.domain.Permissions;
-import com.travelportal.domain.agent.AgentRegistration;
 
 import play.data.DynamicForm;
 import play.db.jpa.Transactional;
@@ -15,6 +9,10 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.home;
+
+import com.travelportal.domain.HotelRegistration;
+import com.travelportal.domain.Permissions;
+import com.travelportal.domain.agent.AgentRegistration;
 
 public class SupplierLoginthroughAdminController extends Controller {
 

@@ -1,4 +1,4 @@
-package com.travelportal.domain.allotment;
+/*package com.travelportal.domain.allotment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -52,8 +52,8 @@ public class Allotment {
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Currency currencyId;
 	
-	/*@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private List<RateMeta> rate;*/
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	private List<RateMeta> rate;
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<AllotmentMarket> allotmentmarket;
 	
@@ -107,13 +107,13 @@ public class Allotment {
 		this.roomId = roomId;
 	}
 
-	/*public List<RateMeta> getRate() {
+	public List<RateMeta> getRate() {
 		return rate;
 	}
 
 	public void setRate(List<RateMeta> rate) {
 		this.rate = rate;
-	}*/
+	}
 
 	public List<AllotmentMarket> getAllotmentmarket() {
 		return allotmentmarket;
@@ -143,9 +143,9 @@ public class Allotment {
 			return null;
 		}
     }
-	public static Allotment getRateById(Long supplierCode,Date formDate,Date toDate,String currId,Long roomId) {/*List<Integer> rateid*/
+	public static Allotment getRateById(Long supplierCode,Date formDate,Date toDate,String currId,Long roomId) {List<Integer> rateid
 		
-	/*Calendar c = Calendar.getInstance();
+	Calendar c = Calendar.getInstance();
 	c.setTime(formDate);
 	c.set(Calendar.HOUR_OF_DAY, 0);
 	c.set(Calendar.MINUTE, 0);
@@ -159,7 +159,7 @@ public class Allotment {
 	c.set(Calendar.MILLISECOND, 0);
 	toDate = c.getTime();
 	System.out.println("|||||||");
-	*/	System.out.println(formDate);
+		System.out.println(formDate);
 		System.out.println(toDate);
 		
 		
@@ -222,3 +222,4 @@ public class Allotment {
     }
 	
 }
+*/

@@ -262,7 +262,7 @@
 				<label>Total</label>
 				</div>
 				<div class="col-md-4">
-				<label>{{agentinfo.total}}</label>
+				<label currency-rate ng-model="agentinfo.total" rate="{{agentinfo.total}}" supplier_curr="{{agentinfo.currencyExchangeRate}}" agent_curr="{{agentinfo.agent[0].currencyShort}}"></label>
 					
 				</div>
 				</div>
@@ -281,7 +281,7 @@
                                                                                                                      
                                         <dl class="info">
                                             <dt>Rate</dt>
-                                            <dd>{{Dateinfo.rate}} {{ratedetail.currencyShort}}</dd>
+                                            <dd currency-rate ng-model="Dateinfo.rate" rate="{{Dateinfo.rate}}" supplier_curr="{{agentinfo.currencyExchangeRate}}" agent_curr="{{agentinfo.agent[0].currencyShort}}"></dd>
                                             <dt ng-if="Dateinfo.meal != null">Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
                                         </dl>

@@ -1242,18 +1242,27 @@ travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDia
 		
 	$scope.init = function(hotelAllData){
 		
+		var currArr = hotelAllData.agentInfo.currency.split(" - ");
+		
 		angular.forEach(hotelAllData.hotellist, function(obj, index){ ///hotel_profile
-					//if(index == 0){
 						$scope.img = "/searchHotelInfo/getHotelImagePath/"+hotelAllData.hotellist[index].supplierCode+"/"+index;
 						console.log($scope.img);
-					//}
 				hotelAllData.hotellist[index].imgPaths = $scope.img;
+				hotelAllData.hotellist[index].agentCurrency = currArr[0];
+				
+				if(obj.currencyShort == "SGD"){
+					hotelAllData.hotellist[index].currencyExchangeRate = hotelAllData.currencyExchangeRate.curr_SGD;
+				}else if(obj.currencyShort == "INR"){
+					hotelAllData.hotellist[index].currencyExchangeRate = hotelAllData.currencyExchangeRate.curr_INR;
+				}else if(obj.currencyShort == "THB"){
+					hotelAllData.hotellist[index].currencyExchangeRate = hotelAllData.currencyExchangeRate.curr_THB;
+				}else if(obj.currencyShort == "MYR"){
+					hotelAllData.hotellist[index].currencyExchangeRate = hotelAllData.currencyExchangeRate.curr_MYR;
+				}
 						
 		});
 		
-		/*angular.forEach(response, function(obj, index){
-			$scope.imgArray[index] = "/searchHotelGenImg/getHotelGenImg/"+$scope.hotel.supplierCode+"/"+obj.indexValue;
-		});*/
+	
 		
 		angular.forEach(hotelAllData.hotellist, function(value, key){
 		angular.forEach(value.hotelbyRoom, function(obj, index){ 
@@ -1278,6 +1287,7 @@ travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDia
 		console.log(hotelAllData.hotellist);
 		$scope.hotelAllData = hotelAllData;
 		console.log($scope.hotelAllData);
+		
 		$scope.hotellistInfo = hotelAllData.hotellist;
 		
 		
@@ -1375,6 +1385,8 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.findHotelData.checkOut = $scope.hotelAllData.hotellist[0].checkOut;
 			$scope.findHotelData.cityCode = $scope.hotelAllData.hotellist[0].cityCode;
 			$scope.findHotelData.nationalityCode = $scope.hotelAllData.hotellist[0].nationality;
+			$scope.findHotelData.currencyExchangeRate = $scope.hotelAllData.hotellist[0].currencyExchangeRate;
+			$scope.findHotelData.agentCurrency = $scope.hotelAllData.hotellist[0].agentCurrency;
 			//$scope.findHotelData.id = $scope.hotelAllData.hotellist[0].startRating;
 			$scope.findHotelData.amenitiesCheck = $scope.amenities_check;
 			$scope.findHotelData.servicesCheck = $scope.services_check;
@@ -1439,6 +1451,8 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.findHotelData.checkOut = $scope.hotelAllData.hotellist[0].checkOut;
 			$scope.findHotelData.cityCode = $scope.hotelAllData.hotellist[0].cityCode;
 			$scope.findHotelData.nationalityCode = $scope.hotelAllData.hotellist[0].nationality;
+		//	$scope.findHotelData.currencyExchangeRate = $scope.hotelAllData.hotellist[0].currencyExchangeRate;
+			$scope.findHotelData.agentCurrency = $scope.hotelAllData.hotellist[0].agentCurrency;
 			//$scope.findHotelData.id = $scope.hotelAllData.hotellist[0].startRating;
 			$scope.findHotelData.amenitiesCheck = $scope.amenities_check;
 			$scope.findHotelData.servicesCheck = $scope.services_check;
@@ -1727,6 +1741,7 @@ $http.get("/searchCountries").success(function(response) {
 			console.log($scope.imgArray);
 		});
 		
+			
 		
 		angular.forEach(hotel.hotelbyRoom, function(obj, index){ 
 			$scope.roomImg = "/hoteldetailpage/getHotelRoomImagePath/"+hotel.hotelbyRoom[index].roomId+"?d="+new Date().getTime();
@@ -2080,6 +2095,8 @@ $http.get("/searchCountries").success(function(response) {
 		$http.get('/getDatewiseHotelRoom/'+$scope.hotel.checkIn+"/"+$scope.hotel.checkOut+"/"+$scope.hotel.nationality+"/"+$scope.hotel.supplierCode+"/"+roomid+"/"+$scope.hotel.bookingId)
 		.success(function(response){
 			console.log(response);
+			response.agentCurrency = $scope.hotel.agentCurrency;
+			response.currencyExchangeRate = $scope.hotel.currencyExchangeRate;
 			$scope.ratedetail = response;
 			console.log($scope.ratedetail);
 			
@@ -2235,17 +2252,15 @@ $http.get("/searchCountries").success(function(response) {
 			});
 			$scope.cAllow = "false";
 			console.log($scope.childcount);
-			
+			ngDialog.open({
+				template: '/assets/resources/html/show_Date_wise_info_InHotel.html',
+				scope : $scope,
+				closeByDocument:false,
+				//controller:'hoteProfileController',
+				className: 'ngdialog-theme-default'
+			});
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
-		});
-		
-		ngDialog.open({
-			template: '/assets/resources/html/show_Date_wise_info_InHotel.html',
-			scope : $scope,
-			closeByDocument:false,
-			//controller:'hoteProfileController',
-			className: 'ngdialog-theme-default'
 		});
 		
 		$scope.selectextraBed = function(){

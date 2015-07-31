@@ -33,7 +33,6 @@ import javax.mail.internet.MimeMultipart;
 import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
-import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -47,6 +46,7 @@ import com.mnt.travelbusiness.helper.PageScope;
 import com.travelportal.domain.CancellationDateDiff;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
+import com.travelportal.domain.Currency;
 import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.HotelImagesPath;
@@ -61,6 +61,7 @@ import com.travelportal.domain.RoomRegiterBy;
 import com.travelportal.domain.RoomRegiterByChild;
 import com.travelportal.domain.admin.BatchMarkup;
 import com.travelportal.domain.admin.BreakfastMarkup;
+import com.travelportal.domain.admin.CurrencyExchangeRate;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.CancellationPolicy;
@@ -78,6 +79,7 @@ import com.travelportal.vm.AgentRegistrationVM;
 import com.travelportal.vm.BatchMarkupInfoVM;
 import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.ChildselectedVM;
+import com.travelportal.vm.CurrencyExchangeVM;
 import com.travelportal.vm.HotelBookingDetailsVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.PassengerBookingInfoVM;
@@ -206,26 +208,7 @@ public class Application extends Controller {
     public static Result searchAgainHotelInfo() {
     	
     	DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-    	
-    	/*JsonNode json = request().body().asJson();
-    	DynamicForm form = DynamicForm.form().bindFromRequest();
-    	Json.fromJson(json, SearchHotelValueVM.class);
-    	SearchHotelValueVM searchHotelValueVM = Json.fromJson(json, SearchHotelValueVM.class);
-    		
-    		int flag = 0;
-    		
-    		
-    		Map<String, Object> mapObject = new HashMap<String, Object>();
-    		List<HotelSearch> hotellist = new ArrayList<>();
-    		Map<Long, Long> map = new HashMap<Long, Long>();
-    		Set<String> mapDate = new HashSet<String>();
-    		
-    		
-    		String fromDate = searchHotelValueVM.getCheckIn();
-    		String toDate = searchHotelValueVM.getCheckOut();
-    		//String[] sId = {searchVM.id};
-    		String cityId = searchHotelValueVM.getCity();
-    		String nationalityId = searchHotelValueVM.getNationalityCode();*/
+    	//Long.parseLong(session().get("agent"))
     	
     	Form<SearchHotelValueVM> HotelForm = Form.form(SearchHotelValueVM.class).bindFromRequest();
     	SearchHotelValueVM searchVM = HotelForm.get();
@@ -282,19 +265,27 @@ public class Application extends Controller {
     		
     		findMinRateInHotel(hotellist);  /* find min Rate in par Hotel function*/
 		
+    		AgentRegistration aRegistration = AgentRegistration.getallAgentCode(Long.parseLong(session().get("agent")));
+    		AgentRegistrationVM aVm = new AgentRegistrationVM(aRegistration);
+    		
+    		CurrencyExchangeVM cVm = new CurrencyExchangeVM();
+    		currencyExchangeRateDate(aVm, cVm);
+    		
     		
     		if(!hotelCount.isEmpty()){
     			mapObject.put("hotelAmenities", hotelAmenities);
     			mapObject.put("hotelServices", hotelServices);
     			mapObject.put("hotellocation",hotelLocation);
     		}
+    		
+    		mapObject.put("currencyExchangeRate", cVm);
+    		mapObject.put("agentInfo", aVm);
     		mapObject.put("hotelId", hotelNo);
     		mapObject.put("hotellist", hotellist);
     		mapObject.put("totalHotel",totalHotel);
     		
     		JsonNode personJson = Json.toJson(mapObject);
     
-    	//return ok(Json.toJson(mapObject));
     		return ok(searchHotel.render(personJson));
     }
     
@@ -359,11 +350,20 @@ public class Application extends Controller {
     		
     		findMinRateInHotel(hotellist);  /* find min Rate in par Hotel function*/
 		
+    		AgentRegistration aRegistration = AgentRegistration.getAgentCode(session().get("agent"));
+    		AgentRegistrationVM aVm = new AgentRegistrationVM(aRegistration);
+    		
+    		CurrencyExchangeVM cVm = new CurrencyExchangeVM();
+    		currencyExchangeRateDate(aVm, cVm);
+    		
     		if(!hotelCount.isEmpty()){
     			mapObject.put("hotelAmenities", hotelAmenities);
     			mapObject.put("hotelServices", hotelServices);
     			mapObject.put("hotellocation",hotelLocation);
     		}
+    		
+    		mapObject.put("currencyExchangeRate", cVm);
+    		mapObject.put("agentInfo", aVm);
     		mapObject.put("hotelId", hotelNo);
     		mapObject.put("hotellist", hotellist);
     		mapObject.put("totalHotel",totalHotel);
@@ -373,6 +373,26 @@ public class Application extends Controller {
     	return ok(searchHotel.render(personJson));
     }
     
+    public static void currencyExchangeRateDate(AgentRegistrationVM aVm, CurrencyExchangeVM cVm){
+    	Currency currency = Currency.getCurrencyByName(aVm.currency);
+		List<CurrencyExchangeRate> cList = CurrencyExchangeRate.findCurrencyRate(currency.getId());
+		
+		for(CurrencyExchangeRate cExchangeRate:cList){
+			cVm.currencySelect = cExchangeRate.getCurrId().getId();
+			if(cExchangeRate.getCurrencyName().equals("INR")){
+				cVm.curr_INR = cExchangeRate.getCurrencyRate();
+			}
+			if(cExchangeRate.getCurrencyName().equals("THB")){
+				cVm.curr_THB = cExchangeRate.getCurrencyRate();
+			}
+			if(cExchangeRate.getCurrencyName().equals("SGD")){
+				cVm.curr_SGD = cExchangeRate.getCurrencyRate();
+			}
+			if(cExchangeRate.getCurrencyName().equals("MYR")){
+				cVm.curr_MYR = cExchangeRate.getCurrencyRate();
+			}
+		}
+    }
 
 @Transactional(readOnly=false)
 public static Result getHotelImagePath(long supplierCode,long indexValue) {
@@ -507,8 +527,7 @@ public static void DateWiseSortFunction(List<HotelSearch> hotellist,String toDat
 							list.add(rateVM);
 							
 						}
-						
-						//
+
 						mapRm.put(room.getRoomId(), Long.parseLong("1"));
 						roomtyp.setHotelRoomRateDetail(list);
 						if(!roomtyp.hotelRoomRateDetail.isEmpty()){
@@ -1447,7 +1466,30 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 				if(bMarkup != null){
 					hProfileVM.breakfackRate = bMarkup.getBreakfastRate();
 				}
+				
+				//hProfileVM.currencyExchangeRate = searchHotelValueVM.currencyExchangeRate;
+				
 				for(HotelProfile hAmenities:hAmenities1){
+					
+					hProfileVM.agentCurrency = searchHotelValueVM.agentCurrency;
+					List<Currency> currencyList = Currency.getCurrency();
+					for(Currency curr:currencyList){
+						String[] currencySplit;
+						 currencySplit = curr.getCurrencyName().split(" - ");
+						if(currencySplit[0].equals(searchHotelValueVM.agentCurrency)){
+							List<CurrencyExchangeRate> cExchangeRate = CurrencyExchangeRate.findCurrencyRate(curr.getId());
+							
+							String[] currencySplit1;
+							 currencySplit1 = hAmenities.getCurrency().getCurrencyName().split(" - ");
+							for(CurrencyExchangeRate cExchange:cExchangeRate){
+								if(currencySplit1[0].equals(cExchange.getCurrencyName())){
+									hProfileVM.currencyExchangeRate = cExchange.getCurrencyRate();
+								}
+							}
+							
+						}
+					}
+					
 					fillHotelInfo(hAmenities,hProfileVM,fromDate,toDate,nationalityId,dayDiff);   /* Fill Hotel info function*/				for (int i = 0; i < dayDiff; i++) {
 
 					List<HotelRoomTypes> roomType = HotelRoomTypes
@@ -1572,21 +1614,41 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	
 }
 
+public static double currencyExchange(HotelSearch arg){
+	
+	return  (1/arg.currencyExchangeRate * arg.minRate);
+}
 
 public static class HotelComparatorByRateAsc implements Comparator<HotelSearch> {
 
 	@Override
 	public int compare(HotelSearch arg0, HotelSearch arg1) {
-		return arg0.minRate.doubleValue() > arg1.minRate.doubleValue() ? -1 : arg0.minRate.doubleValue() < arg1.minRate.doubleValue()?1:0;
+		return currencyExchange(arg0) > currencyExchange(arg1) ? -1 : currencyExchange(arg0) < currencyExchange(arg1)?1:0;
 	}
 }
+
 public static class HotelComparatorByRateDes implements Comparator<HotelSearch> {
+
+	@Override
+	public int compare(HotelSearch arg0, HotelSearch arg1) {
+		return currencyExchange(arg0) < currencyExchange(arg1) ? -1 : currencyExchange(arg0) > currencyExchange(arg1)?1:0;
+	}
+}
+
+/*public static class HotelComparatorByRateAsc implements Comparator<HotelSearch> {
+
+	@Override
+	public int compare(HotelSearch arg0, HotelSearch arg1) {
+		return arg0.minRate.doubleValue() > arg1.minRate.doubleValue() ? -1 : arg0.minRate.doubleValue() < arg1.minRate.doubleValue()?1:0;
+	}
+}*/
+/*public static class HotelComparatorByRateDes implements Comparator<HotelSearch> {
 
 	@Override
 	public int compare(HotelSearch arg0, HotelSearch arg1) {
 		return arg0.minRate.doubleValue() < arg1.minRate.doubleValue() ? -1 : arg0.minRate.doubleValue() > arg1.minRate.doubleValue()?1:0;
 	}
-}
+}*/
 public static class HotelComparatorByRatingAsc implements Comparator<HotelSearch> {
 
 	@Override
@@ -1703,7 +1765,8 @@ public static Result hoteldetailpage() {
 			
 		}
 		
-		
+		hProfileVM.agentCurrency = searchVM.agentCurrency;
+		hProfileVM.currencyExchangeRate = searchVM.currencyExchangeRate;
 		Long object = (Long) map.get(supplierid.longValue());
 		
 		if (object == null) {

@@ -3,9 +3,12 @@ package com.travelportal.controllers;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import play.db.jpa.Transactional;
+import play.libs.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
 
 import com.travelportal.domain.Country;
 import com.travelportal.domain.HotelRegistration;
@@ -24,11 +27,6 @@ import com.travelportal.vm.RateDetailsVM;
 import com.travelportal.vm.RateVM;
 import com.travelportal.vm.SpecialDaysRateVM;
 import com.travelportal.vm.SpecialRateVM;
-
-import play.db.jpa.Transactional;
-import play.libs.Json;
-import play.mvc.Controller;
-import play.mvc.Result;
 
 public class ManageRateController extends Controller {
 

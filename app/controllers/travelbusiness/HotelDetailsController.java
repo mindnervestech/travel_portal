@@ -17,18 +17,11 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-/*import play.activiti.engine.impl.util.json.JSONArray;
-import play.activiti.engine.impl.util.json.JSONException;
-import org.activiti.engine.impl.util.json.JSONObject;
-*/
-import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.libs.Json;
-import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
-import scala.util.parsing.json.JSONObject;
 import views.html.travelbusiness.hotelBookingInfo;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -58,7 +51,6 @@ import com.travelportal.domain.rooms.SpecialsMarket;
 import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.ChildselectedVM;
 import com.travelportal.vm.HotelBookingDetailsVM;
-import com.travelportal.vm.HotelHealthAndSafetyVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.PassengerBookingInfoVM;
 import com.travelportal.vm.RateDatedetailVM;
@@ -75,6 +67,10 @@ import com.travelportal.vm.SerachedRoomType;
 import com.travelportal.vm.ServicesVM;
 import com.travelportal.vm.SpecialsMarketVM;
 import com.travelportal.vm.SpecialsVM;
+/*import play.activiti.engine.impl.util.json.JSONArray;
+import play.activiti.engine.impl.util.json.JSONException;
+import org.activiti.engine.impl.util.json.JSONObject;
+*/
 
 public class HotelDetailsController extends Controller {
 
@@ -255,11 +251,6 @@ public class HotelDetailsController extends Controller {
 @Transactional(readOnly=true)
 public static Result hotelBookingpage() {
 	
-	/*JsonNode json = request().body().asJson();
-	DynamicForm form = DynamicForm.form().bindFromRequest();
-	Json.fromJson(json, SearchHotelValueVM.class);
-	SearchHotelValueVM searchVM = Json.fromJson(json, SearchHotelValueVM.class);*/
-	
 	Form<SearchHotelValueVM> HotelForm = Form.form(SearchHotelValueVM.class).bindFromRequest();
 	SearchHotelValueVM searchVM = HotelForm.get();
 	
@@ -303,7 +294,8 @@ public static Result hotelBookingpage() {
 		List<SerachedHotelbyDate> Datelist = new ArrayList<>();
 		HotelSearch hProfileVM = new HotelSearch();
 		hProfileVM.bookingId = searchVM.bookingId;
-		
+		hProfileVM.agentCurrency = searchVM.agentCurrency;
+		hProfileVM.currencyExchangeRate = searchVM.currencyExchangeRate;
 		
 		Long object = (Long) map.get(supplierid.longValue());
 		

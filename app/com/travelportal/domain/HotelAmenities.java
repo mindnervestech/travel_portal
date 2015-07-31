@@ -1,10 +1,6 @@
 package com.travelportal.domain;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,11 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.travelportal.domain.rooms.HotelRoomTypes;
-import com.travelportal.domain.rooms.RateMeta;
-
 import play.db.jpa.JPA;
-import play.libs.Json;
 
 
 @Entity

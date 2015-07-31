@@ -157,7 +157,8 @@
                                          </div>
                                          <div class="col-md-6" style="width:50% !important;border-bottom: none !important;">
                                         <div class="col-md-5"> <!-- ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null" -->
-                                          <span class="price"><small>Per Room Per Night</small>{{adultRate.rateAvg}} <sup style="font-size: small;color: chocolate;top: -3px;">{{hotel.currencyShort}}</sup></span>
+                                          <small>Per Room Per Night</small>
+                                          <span class="price" currency-rate styleValue="font-size: small;color: chocolate;top: -3px;" ng-model="adultRate.rateAvg" rate="{{adultRate.rateAvg}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
                                          </div>
                                          <div class="col-md-4"  ng-if="adultRate.mealTypeName != null">
                                         <span class="price"><small>Included</small><sup style="font-size: small;color: chocolate;top: 9px;">{{adultRate.mealTypeName}}</sup></span>
@@ -422,7 +423,7 @@
                                 <h2 class="box-title">{{hotel.hotelNm}}<small><i class="soap-icon-departure yellow-color"></i><span class="fourty-space">{{hotel.hotelAddr}}</span></small></h2>
                                  <span class="price clearfix">
                                     <small class="pull-left">Min/start</small>
-                                    <span class="pull-right">{{hotel.minRate}}<sup style="font-size: small;color: chocolate;top: -3px;">{{hotel.currencyShort}}</sup></span>
+                                    <span class="pull-right" currency-rate styleValue="font-size: small;color: chocolate;top: -3px;" ng-model="hotel.minRate" rate="{{hotel.minRate}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
                                 </span> 
                                  <div class="feedback clearfix">
                                  <div star-rating rating-value="hotel.stars" max="hotel.stars" on-rating-selected=""></div>

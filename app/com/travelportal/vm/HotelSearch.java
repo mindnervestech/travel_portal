@@ -25,6 +25,7 @@ public class HotelSearch {
 	public String cityName;
 	public int startRating;
 	public Double stars;
+	public Double currencyExchangeRate;
 	public String hotelBuiltYear;
 	public String checkInTime;
 	public String checkOutTime;
@@ -34,6 +35,7 @@ public class HotelSearch {
 	public int currencyId;
 	public String currencyName;
 	public String currencyShort;
+	public String agentCurrency;
 	public Double minRate;
 	/*public Set<HotelamenitiesVM> amenities;*/
 	public List<Integer> services1;
@@ -262,6 +264,18 @@ public class HotelSearch {
 	}
 	public void setCancellation_date_diff(int cancellation_date_diff) {
 		this.cancellation_date_diff = cancellation_date_diff;
+	}
+	public Double getCurrencyExchangeRate() {
+		return currencyExchangeRate;
+	}
+	public void setCurrencyExchangeRate(Double currencyExchangeRate) {
+		this.currencyExchangeRate = currencyExchangeRate;
+	}
+	public String getAgentCurrency() {
+		return agentCurrency;
+	}
+	public void setAgentCurrency(String agentCurrency) {
+		this.agentCurrency = agentCurrency;
 	}
 	
 	

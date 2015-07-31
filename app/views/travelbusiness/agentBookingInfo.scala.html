@@ -181,7 +181,7 @@
                              <td>{{agent.noOfroom}}</td>
  							 <td ng-if='agent.room_status != "available"'>{{agent.room_status}}</td>
                              <td ng-if='agent.room_status == "available"'>Confirm</td>
-                               <td>{{agent.total}}<sup style="font-size: small;color: chocolate;top: 0px;" class="ng-binding"> {{agent.curr}}</sup></td>
+                               <td currency-rate ng-model="agent.total" rate="{{agent.total}}" supplier_curr="{{agent.currencyExchangeRate}}" agent_curr="{{agent.agent[0].currencyShort}}">{{agent.total}}<sup style="font-size: small;color: chocolate;top: 0px;" class="ng-binding"> {{agent.curr}}</sup></td>
                             <!-- <td ng-if="agent.payment == 'no'">Outstanding</td>
                             <td ng-if="agent.payment == 'yes'">Received</td>  -->
                             <td>{{agent.payment}}</td>                          

@@ -7,29 +7,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-
-import net.coobird.thumbnailator.Thumbnails;
-
 import org.apache.commons.io.FilenameUtils;
-
-import com.travelportal.domain.HotelHealthAndSafety;
-import com.travelportal.domain.ImgPath;
-import com.travelportal.domain.InfoWiseImagesPath;
 
 import play.Play;
 import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
-//import org.junit.experimental.theories.internal.AllMembersSupplier;
-import play.mvc.Result;
 import play.mvc.Http.MultipartFormData.FilePart;
+import play.mvc.Result;
+//import org.junit.experimental.theories.internal.AllMembersSupplier;
 
 
 

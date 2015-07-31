@@ -3,7 +3,6 @@ package com.travelportal.domain;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,8 +12,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Query;
 import javax.persistence.Table;
-
-import com.travelportal.domain.rooms.Specials;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;

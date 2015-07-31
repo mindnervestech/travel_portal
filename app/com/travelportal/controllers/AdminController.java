@@ -16,9 +16,12 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import com.travelportal.domain.City;
-import com.travelportal.domain.Country;
-import com.travelportal.domain.Currency;
+import play.Play;
+import play.db.jpa.Transactional;
+import play.libs.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
+
 import com.travelportal.domain.HotelBrands;
 import com.travelportal.domain.HotelChain;
 import com.travelportal.domain.HotelProfile;
@@ -26,15 +29,8 @@ import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.MarketPolicyTypes;
 import com.travelportal.domain.agent.AgentRegistration;
-import com.travelportal.vm.AgentRegisVM;
 import com.travelportal.vm.AgentRegistrationVM;
 import com.travelportal.vm.HotelRegistrationVM;
-
-import play.Play;
-import play.db.jpa.Transactional;
-import play.libs.Json;
-import play.mvc.Controller;
-import play.mvc.Result;
 
 public class AdminController extends Controller {
 
