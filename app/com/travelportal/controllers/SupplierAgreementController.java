@@ -57,7 +57,6 @@ public static Result savepdf(){
      OutputStream out = null;
      BufferedImage image = null;
      File f = new File(imgPath);
-     System.out.println(imgPath);
      try {
     	 Files.copy(src.toPath(),f.toPath(),java.nio.file.StandardCopyOption.REPLACE_EXISTING);
     	
@@ -84,7 +83,6 @@ public static Result getshowpdf(){
 
 	DynamicForm form = DynamicForm.form().bindFromRequest();
 	//FilePart picture = request().body().asMultipartFormData().getFile("generalImg");
-	System.out.println(form.get("supplierCode"));
 		createDir(rootDir,Long.parseLong(form.get("supplierCode")));
 	
 	String PdfFile = rootDir + File.separator + Long.parseLong(form.get("supplierCode")) +File.separator+ "SupplierAgreement"+File.separator+"SupplierAgreement.pdf";
@@ -109,7 +107,6 @@ public static Result getPdfPath(long supplierCode) {
 	response().setHeader("Content-Disposition", "inline; filename="+"SupplierAgreement.pdf");
 	
 	String PdfFile = rootDir + File.separator + supplierCode +File.separator+ "SupplierAgreement"+File.separator+"SupplierAgreement.pdf";
-//	System.out.println("***********");
 	File f = new File(PdfFile);
 	
 	response().setHeader("Content-Length", ((int)f.length())+"");
@@ -125,15 +122,12 @@ public static Result getPdfPath1(long supplierCode) {
 	response().setHeader("Content-Disposition", "inline; filename="+"SupplierAgreement.pdf");
 	
 	String PdfFile = rootDir + File.separator + supplierCode +File.separator+ "SupplierAgreement"+File.separator+"SupplierAgreement.pdf";
-	System.out.println("***********");
 	File f = new File(PdfFile);
 	if(((int)f.length()) == 0)
 	{
 		found = "0";
-		System.out.println(found);
 	}else{
 		found ="1";
-		System.out.println(found);
 	}
 	Map m = new HashMap<>();
 	m.put("found", found);

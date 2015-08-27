@@ -14,6 +14,7 @@ public class RateVM {
 	public String toDate;
 	public String currency;
 	public Long supplierCode;
+	public String supplierName;
 	public NormalRateVM normalRate;
 	public double isSpecialRate;
 	public double isSpecialDaysRate;
@@ -158,6 +159,12 @@ public class RateVM {
 	}
 	public void setIsSpecialDaysRate(double isSpecialDaysRate) {
 		this.isSpecialDaysRate = isSpecialDaysRate;
+	}
+	public String getSupplierName() {
+		return supplierName;
+	}
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
 	}
 	
 	

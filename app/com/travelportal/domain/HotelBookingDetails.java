@@ -537,9 +537,6 @@ public class HotelBookingDetails {
 	public static List<HotelBookingDetails> getfindByDateWiseAgentWise(long agentId,int currentPage, int rowsPerPage,long totalPages, String status) {
 		int  start=0;
     	
-		System.out.println("---------");
-		System.out.println(status);
-		System.out.println("---------");
     	String sql="";
     
     		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 ORDER BY a.checkIn DESC";
@@ -566,9 +563,6 @@ public class HotelBookingDetails {
 	public static List<HotelBookingDetails> getfindByDateWiseAgentWise11(long agentId,int currentPage, int rowsPerPage,long totalPages,String status,Date fromDate,Date toDate) {
 		int  start=0;
     	
-		System.out.println("---------");
-		System.out.println(status);
-		System.out.println("---------");
     	String sql="";
     
     		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and a.checkIn BETWEEN ?3 and ?4 and a.checkOut BETWEEN ?3 and ?4 ORDER BY a.checkIn DESC";
@@ -621,9 +615,6 @@ public class HotelBookingDetails {
 	public static List<HotelBookingDetails> getfindByBookingId(long agentId,int currentPage, int rowsPerPage,long totalPages, String status,Long bookingId) {
 		int  start=0;
     	
-		System.out.println("---------");
-		System.out.println(status);
-		System.out.println("---------");
     	String sql="";
     	
     	
@@ -735,7 +726,6 @@ public class HotelBookingDetails {
     	if(size % rowsPerPage > 0) {
 			totalPages++;
 		}
-    	System.out.println("total pages ::"+totalPages);
     	return totalPages;
     }
 	
@@ -755,29 +745,17 @@ public class HotelBookingDetails {
     	if(size % rowsPerPage > 0) {
 			totalPages++;
 		}
-    	System.out.println("total pages ::"+totalPages);
     	return totalPages;
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	//--------------------------------------------------------------------------------------------------
 	public static List<HotelBookingDetails> getinfobyname(String guest,String status,long agentid1,String checkIn,String checkOut)
 	{
 		Query q = null;
-		System.out.println("guest"+guest+"checkIn"+checkIn+"checkOut"+checkOut);
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		if(!guest.equals("undefined") && !checkIn.equals("undefined") && !checkOut.equals("undefined") )
 		{
 			 q = JPA.em().createQuery("select c from HotelBookingDetails c where travellerfirstname LIKE CONCAT('%', :someSymbol, '%') AND room_status=:s1 AND agentId=:id1 and checkIn BETWEEN :todate and :fromdate and checkOut BETWEEN :todate and :fromdate");
-			 System.out.println("room status="+status+"agent id="+agentid1);
 			 q.setParameter("someSymbol", guest);
 			q.setParameter("s1",status);
 			q.setParameter("id1",agentid1);
@@ -795,7 +773,6 @@ public class HotelBookingDetails {
 		else if(guest.equals("undefined")&&!checkIn.equals("undefined")&&!checkOut.equals("undefined"))
 		{
 			 q = JPA.em().createQuery("select c from HotelBookingDetails c where  room_status=:s1 AND agentId=:id1 and checkIn BETWEEN :todate and :fromdate and checkOut BETWEEN :todate and :fromdate");
-			System.out.println("room status="+status+"agent id="+agentid1);
 			q.setParameter("s1",status);
 			q.setParameter("id1",agentid1);
 		
@@ -813,7 +790,6 @@ public class HotelBookingDetails {
 		else if(!guest.equals("undefined")&&checkIn.equals("undefined")&&checkOut.equals("undefined"))
 		{
 			 q = JPA.em().createQuery("select c from HotelBookingDetails c where travellerfirstname LIKE CONCAT('%', :someSymbol, '%')AND room_status=:s1 AND agentId=:id1");
-			 System.out.println("room status="+status+"agent id="+agentid1);
 			 q.setParameter("someSymbol", guest);	
 			q.setParameter("s1",status);
 			q.setParameter("id1",agentid1);
@@ -838,7 +814,6 @@ public class HotelBookingDetails {
     	if(size % rowsPerPage > 0) {
 			totalPages++;
 		}
-    	System.out.println("total pages ::"+totalPages);
     	return totalPages;
     }
 	
@@ -855,7 +830,6 @@ public class HotelBookingDetails {
     	if(size % rowsPerPage > 0) {
 			totalPages++;
 		}
-    	System.out.println("total pages ::"+totalPages);
     	return totalPages;
     }
 	
@@ -874,7 +848,6 @@ public class HotelBookingDetails {
 	    	if(size % rowsPerPage > 0) {
 				totalPages++;
 			}
-	    	System.out.println("total pages ::"+totalPages);
 	    	return totalPages;
 	    }
 	   
@@ -895,7 +868,6 @@ public class HotelBookingDetails {
 	    	if(size % rowsPerPage > 0) {
 				totalPages++;
 			}
-	    	System.out.println("total pages ::"+totalPages);
 	    	return totalPages;
 	    }
 	   
@@ -912,7 +884,6 @@ public class HotelBookingDetails {
 	    	if(size % rowsPerPage > 0) {
 				totalPages++;
 			}
-	    	System.out.println("total pages ::"+totalPages);
 	    	return totalPages;
 	    }
 	   
@@ -932,7 +903,6 @@ public class HotelBookingDetails {
     	if(size % rowsPerPage > 0) {
 			totalPages++;
 		}
-    	System.out.println("total pages ::"+totalPages);
     	return totalPages;
     }
 	
@@ -946,7 +916,6 @@ public class HotelBookingDetails {
     	if(size % rowsPerPage > 0) {
 			totalPages++;
 		}
-    	System.out.println("total pages ::"+totalPages);
     	return totalPages;
     }
 	
@@ -960,7 +929,6 @@ public class HotelBookingDetails {
     	if(size % rowsPerPage > 0) {
 			totalPages++;
 		}
-    	System.out.println("total pages ::"+totalPages);
     	return totalPages;
     }
 	
@@ -974,7 +942,6 @@ public class HotelBookingDetails {
     	if(size % rowsPerPage > 0) {
 			totalPages++;
 		}
-    	System.out.println("total pages ::"+totalPages);
     	return totalPages;
     }
 	
@@ -1055,7 +1022,6 @@ public class HotelBookingDetails {
     	if(size % rowsPerPage > 0) {
 			totalPages++;
 		}
-    	System.out.println("total pages ::"+totalPages);
     	return totalPages;
     }
 	@Transactional
@@ -1068,7 +1034,6 @@ public class HotelBookingDetails {
     	if(size % rowsPerPage > 0) {
 			totalPages++;
 		}
-    	System.out.println("total pages ::"+totalPages);
     	return totalPages;
     }
 	

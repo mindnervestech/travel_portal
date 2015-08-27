@@ -72,7 +72,6 @@ public class ManageBookingController extends Controller {
 
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		List<HotelBookDetailsVM> aDetailsVMs =  new ArrayList<>();
-		System.out.println("check in="+checkIn+"CheckOut="+bookingId);
 
 
 		long totalPages = 0;
@@ -311,7 +310,6 @@ public class ManageBookingController extends Controller {
          OutputStream out = null;
          BufferedImage image = null;
          File f = new File(docPath);
-         System.out.println(docPath);
          try {
         	 Files.copy(src.toPath(),f.toPath(),java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         	

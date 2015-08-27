@@ -246,7 +246,6 @@ public class MarkUpController extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result getSupplierRate(Long code) {
-		System.out.println(code);
 		// List<RateMeta> rateMetas = RateMeta.getRateSupplier(code);
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		List<RateVM> list = new ArrayList<>();
@@ -300,7 +299,6 @@ public class MarkUpController extends Controller {
 						sb.deleteCharAt(sb.indexOf(" "));
 					}
 					specialRateVM.weekDays.add(sb.toString());
-					System.out.println(sb.toString());
 					if (sb.toString().equals("Sun")) {
 						specialRateVM.rateDay0 = true;
 					}
@@ -418,8 +416,6 @@ public class MarkUpController extends Controller {
 				
 					for (long vm : specificMarkupVM.getRateSelected()) {
 
-						System.out.println(vm);
-
 						BatchMarkup batchmarkup1 = new BatchMarkup();
 						SaveDataInBatchMarkUp(batchmarkup1, specificMarkupVM,
 								agentvm);
@@ -445,7 +441,6 @@ public class MarkUpController extends Controller {
 										
 						BatchMarkup batchMarkup2 = BatchMarkup.findAgentSupplierRate(bm.getBatchMarkupId(), vm);
 						if(batchMarkup2 != null){
-							System.out.println(specificMarkupVM.getSpecificFlat());
 							SaveDataInBatchMarkUp(batchMarkup2, specificMarkupVM,
 									agentvm);
 							batchMarkup2.merge();
@@ -499,7 +494,6 @@ public class MarkUpController extends Controller {
 		for(long vm : batMarkupVM.getSupplier()){
 			
 			for(long agentvm : batMarkupVM.getAgent()){
-				System.out.println(vm);
 				List<BatchMarkup> batchmarkup1 = BatchMarkup.findAgentSupplierList(AgentRegistration.getAgentCode(String.valueOf(agentvm)), vm);
 
 				if(batchmarkup1 != null)
@@ -550,9 +544,6 @@ public static Result savespecificMarkup() {
 	SpecificMarkupVM specificMarkupVM = Json.fromJson(json,
 			SpecificMarkupVM.class);
 
-	System.out.println("&^&&^&&^&^&^&^&&&^");
-	System.out.println(specificMarkupVM.getRateSelected());
-	System.out.println("&^&&^&&^&^&^&^&&&^");
 
 	for (long agentvm : specificMarkupVM.getAgentSpecific()) {
 
@@ -564,7 +555,6 @@ public static Result savespecificMarkup() {
 
 			for (long vm : specificMarkupVM.getRateSelected()) {
 
-				System.out.println(vm);
 
 				if (specificMarkup == null) {
 					specificMarkup = new SpecificMarkup();
@@ -624,9 +614,6 @@ public static Result savespecificMarkup() {
 		SpecificMarkupVM specificMarkupVM = Json.fromJson(json,
 				SpecificMarkupVM.class);
 
-		System.out.println("&^&&^&&^&^&^&^&&&^");
-		System.out.println(specificMarkupVM.getRateSelected());
-		System.out.println("&^&&^&&^&^&^&^&&&^");
 
 		for (long agentvm : specificMarkupVM.getAgentSpecific()) {
 
@@ -638,8 +625,6 @@ public static Result savespecificMarkup() {
 				if (specificMarkupVM.getRateSelected().size() != 0) {
 
 					for (long vm : specificMarkupVM.getRateSelected()) {
-
-						System.out.println(vm);
 
 						batchmarkup = new BatchMarkup();
 						SaveDataInBatchMarkUp(batchmarkup, specificMarkupVM,

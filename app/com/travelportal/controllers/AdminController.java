@@ -230,7 +230,6 @@ public class AdminController extends Controller {
 		List<AgentRegistration> list = AgentRegistration.getApprovedAgent();
 		List<AgentRegistrationVM> vm = new ArrayList<>();
 		for(AgentRegistration hotel : list) {
-			System.out.println("9090909090909090909");
 			AgentRegistrationVM agentRegisVM = new AgentRegistrationVM(hotel);
 			vm.add(agentRegisVM);
 		}

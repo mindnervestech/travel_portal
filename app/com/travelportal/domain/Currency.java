@@ -22,10 +22,6 @@ public class Currency {
 	@Column(name="currency_nm")
 	private String currencyName;
 	
-	
-	
-	
-	
 	public int getId() {
 		return id;
 	}

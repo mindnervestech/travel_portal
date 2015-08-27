@@ -11,6 +11,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import com.travelportal.domain.Country;
+import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.ApplicableDateOnRate;
@@ -70,7 +71,6 @@ public class ManageRateController extends Controller {
 					
 					for(Country country:rMeta.getCountry()){
 					
-						System.out.println(country.getCountryName());
 						clist.add(country.getCountryName());
 					}
 					
@@ -253,6 +253,9 @@ public class ManageRateController extends Controller {
 					rateVM.setRoomName(rate.getRoomType().getRoomType());
 					rateVM.setRoomId(rate.getRoomType().getRoomId());
 					rateVM.setRateName(rate.getRateName());
+					rateVM.setSupplierCode(rate.getSupplierCode());
+					HotelProfile hProfile = HotelProfile.findById(rate.getSupplierCode());
+					rateVM.setSupplierName(hProfile.getSupplierName());
 					rateVM.setIsSpecialRate(rateDetails.getIsSpecialRate());
 					
 					rateVM.setId(rate.getId());
@@ -263,7 +266,6 @@ public class ManageRateController extends Controller {
 						
 						for(Country country:rMeta.getCountry()){
 						
-							System.out.println(country.getCountryName());
 							clist.add(country.getCountryName());
 						}
 						

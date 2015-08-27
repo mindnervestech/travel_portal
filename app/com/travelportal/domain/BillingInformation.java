@@ -245,7 +245,6 @@ public class BillingInformation {
     	
     	try
 		{
-    		System.out.println(id);
 		return (BillingInformation) JPA.em().createQuery("select c from BillingInformation c where c.supplier_code = ?1").setParameter(1, id).getSingleResult();
 		}
 		catch(Exception ex){

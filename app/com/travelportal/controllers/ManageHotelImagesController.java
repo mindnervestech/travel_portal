@@ -46,14 +46,10 @@ public static void createRootDir() {
 	
 /*List<FilePart> picture = request().body().asMultipartFormData().getFiles();
 
-System.out.println(form.get("supplierCode"));
-System.out.println(form.get("description"));
 
 createDir(rootDir,Long.parseLong(form.get("supplierCode")));
 for(int i=0; i< picture.size()-1 ;i++){
 	String fileName = picture.get(i).getFilename();
-	System.out.println("-------------------");
-	System.out.println(fileName);
 }*/
 
 	//savegeneralImg
@@ -65,9 +61,6 @@ for(int i=0; i< picture.size()-1 ;i++){
 		
 		FilePart picture = request().body().asMultipartFormData().getFile("generalImg");
 		
-		System.out.println(form.get("supplierCode"));
-		System.out.println(form.get("description"));
-	
 	
 		createDir(rootDir,Long.parseLong(form.get("supplierCode")),form.get("index"));
 		 String fileName = picture.getFilename();
@@ -79,7 +72,6 @@ for(int i=0; i< picture.size()-1 ;i++){
          OutputStream out = null;
          BufferedImage image = null;
          File f = new File(ThumbnailImage);
-         System.out.println(originalFileName);
          try {
         	   
                   BufferedImage originalImage = ImageIO.read(src);
@@ -103,7 +95,6 @@ for(int i=0; i< picture.size()-1 ;i++){
                  }
          }
            
- 		 System.out.println(fileName);
  		 
 		HotelImagesPath hotelImagesPath = HotelImagesPath.findByIdAndIndex(
 				Long.parseLong(form.get("supplierCode")),
@@ -161,11 +152,11 @@ for(int i=0; i< picture.size()-1 ;i++){
 			if(hImagesPath.getPicturePath() != null){
 				 f = new File(hImagesPath.getPicturePath());
 			}else{
-				f = new File("C:\\mypath\\default\\logo.jpg");
+				f = new File(rootDir+"/default/logo.jpg");
 			}
 		}
 		else{
-			f = new File("C:\\mypath\\default\\logo.jpg");
+			f = new File(rootDir+"/default/logo.jpg");
 		}
 				
         return ok(f);		

@@ -41,7 +41,6 @@ public class SupplierController extends Controller {
 	
 	@Transactional(readOnly=true)
     public static Result getPeriod(long supplierCode) {
-		System.out.println("*********Call Ok *****************8");
 		List<Specials> list = Specials.getperiod(supplierCode);
 		return ok(Json.toJson(list));
 		//return ok();
@@ -50,7 +49,6 @@ public class SupplierController extends Controller {
 	
 	@Transactional(readOnly=true)
 	 public static Result getfreeStay() {
-		System.out.println("*********Call Ok *****************8");
 		List<FreeStay> freelist = FreeStay.getFreeStay();
 		return ok(Json.toJson(freelist));
 				
@@ -69,9 +67,6 @@ public class SupplierController extends Controller {
 			specials.setToDate(format.parse(spec.toDate));
 			specials.setPromotionName(spec.promotionName);
 			specials.setSupplierCode(spec.supplierCode);
-			System.out.println("+++++++++++++");
-			System.out.println(spec.roomTypes);
-			System.out.println("+++++++++++++");
 			specials.setRoomTypes(HotelRoomTypes.findByListName(spec.roomTypes));
 			specials.save();
 			
@@ -104,7 +99,6 @@ public class SupplierController extends Controller {
 						selectedCountryVM.add(cityVM);
 					}
 					
-					System.out.println(vm.multiSelectGroup);
 				}
 				List<Country> listCity = new ArrayList<>();
 				for(SelectedCountryVM cityvm : selectedCountryVM){
@@ -133,8 +127,6 @@ public class SupplierController extends Controller {
 	
 	@Transactional(readOnly=false)
     public static Result deletePeriod(long id){
-		System.out.println("**************");
-		System.out.println(id);
 		
 		List<SpecialsMarket> specialsList = SpecialsMarket.findBySpecialsId(id);
 		for(SpecialsMarket special : specialsList) {
@@ -200,7 +192,6 @@ public class SupplierController extends Controller {
 								selectedCountryVM.add(cityVM);
 							}
 							
-							System.out.println(vm.multiSelectGroup);
 						}
 						List<Country> listCity = new ArrayList<>();
 						for(SelectedCountryVM cityvm : selectedCountryVM){
@@ -238,7 +229,6 @@ public class SupplierController extends Controller {
 							selectedCountryVM.add(cityVM);
 						}
 						
-						System.out.println(vm.multiSelectGroup);
 					}
 					List<Country> listCity = new ArrayList<>();
 					for(SelectedCountryVM cityvm : selectedCountryVM){
@@ -316,8 +306,6 @@ public class SupplierController extends Controller {
 				_conutryvm.countryName = _conutry.getCountryName();
 				if(id != 0) {
 					SpecialsMarket alotMarket = SpecialsMarket.findByIdCity(id);
-					System.out.println("*******************");
-					System.out.println(alotMarket);
 					for(Country cty : alotMarket.getCountry()){
 						if(cty.getCountryCode() == _conutry.getCountryCode()){
 							_conutryvm.tick = true;
@@ -376,7 +364,6 @@ public class SupplierController extends Controller {
 	public static Result setCitySelection() {
 		//JsonNode json = request().body().asJson().get("id");
 		JsonNode jn = request().body().asJson();
-		//System.out.println(json.asInt());
 		//jn.as
 		
 		VM c = Json.fromJson(jn, VM.class);

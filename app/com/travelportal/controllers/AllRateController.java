@@ -256,13 +256,9 @@ public class AllRateController extends Controller {
     										RoomAllotedRateWise rAllotedRateWise= RoomAllotedRateWise.findByRateIdandDate(rate.getId(), c.getTime());
     									
     										if(rAllotedRateWise != null){
-    										System.out.println(rAllotedRateWise.getRoomCount());
     										
     										aRoom = alloMarket.getChoose() - rAllotedRateWise.getRoomCount();
-    										System.out.println("++++++++++++++++++++++");
-    										System.out.println(aRoom);
     										if(aRoom < 1){
-    											System.out.println("aRoom NOt AAA");
     											flag1 = 1;
     										}
     										
@@ -381,7 +377,6 @@ public class AllRateController extends Controller {
             						    						
             						    						if (objectcancel == null) {
             						    							
-            													System.out.println(cancel.getIsNormal());
             													if(cancel.getIsNormal() > 2){
             														if(person.getIsNormal() == cancel.getIsNormal()){
             														CancellationPolicyVM vm = new CancellationPolicyVM(cancel);
@@ -750,7 +745,6 @@ public class AllRateController extends Controller {
     							totalNo.add(i, ord.rateAvg);
     							i++;
     						}
-    						System.out.println("+++++++++++++++ Count 1 ++++++++++++++++++++++++++++++++");
     						int ptotal = 0;
     						
     						ptotal = arrayCount.get(aCount) + roomTP.getPcount();

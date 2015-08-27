@@ -1,4 +1,4 @@
-@(hotel: com.fasterxml.jackson.databind.JsonNode)
+	@(hotel: com.fasterxml.jackson.databind.JsonNode)
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -61,7 +61,7 @@
                                         <div class="col-sm-2 col-md-1">
                                             <label>.</label>
                                              <div class="selector">
-                                                <select class="full-width" name="travellersalutation" data-ng-model="traveller.travellersalutation" placeholder="Country" > 
+                                                <select class="full-width" name="travellersalutation" data-ng-model="traveller.travellersalutation" style="opacity: 1;"> 
                                                         <option ng-repeat="salut in salutation" value="{{salut.salutationId}}">{{salut.salutationValue}}</option>                                                       
                                                 </select><span ng-repeat="salut in salutation" ng-if="salut.salutationId == traveller.travellersalutation" class="custom-select full-width">{{salut.salutationValue}}</span>
                                             </div>
@@ -83,9 +83,10 @@
                                         <div class="col-sm-6 col-md-5">
                                             <label>*Country of passport</label>
                                             <div class="selector">
-                                                <select class="full-width" name="travellercountry" data-ng-model="traveller.travellercountry" ng-change="onCountryChange()" placeholder="Country" > 
+                                          	  <input type="text" class="input-text full-width" value="{{hotel.countryName}}" placeholder="">
+                                                <!-- <select class="full-width" name="travellercountry" data-ng-model="traveller.travellercountry" ng-change="onCountryChange()" placeholder="Country" > 
                                                         <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
-                                                </select><span ng-repeat="country in searchCountries" ng-if="country.countryCode == hotel.countryCode" class="custom-select full-width">{{country.countryName}}</span>      <!-- <span ng-repeat="country in searchCountries" ng-if="country.countryCode == traveller.travellercountry" class="custom-select full-width">{{country.countryName}}</span> -->
+                                                </select><span ng-repeat="country in searchCountries" ng-if="country.countryCode == hotel.countryCode" class="custom-select full-width">{{country.countryName}}</span>      <span ng-repeat="country in searchCountries" ng-if="country.countryCode == traveller.travellercountry" class="custom-select full-width">{{country.countryName}}</span> -->
                                             </div>
                                         </div>
                                          <div class="col-sm-6 col-md-5">
@@ -190,7 +191,7 @@
                                     </div>
                                    <div class="row">
                                         <div class="form-group col-sm-6 col-md-5">
-                                            <div class="checkbox" ng-class="traveller.lateCheckin?'checked':''">
+                                            <div class="checkbox" ng-class="traveller.lateCheckout?'checked':''">
                                             <label>
                                                 <input type="checkbox" data-ng-model="traveller.lateCheckout" value="lateCheckout"> Late Check-Out
                                             </label>
@@ -301,13 +302,13 @@
                                 <hr>
                                   <div class="form-group row">
                                      <div class="col-sm-10 col-md-9" ng-if="hotel.hotelbyRoom[0].nonRefund == true">
-                                     <label style="color: chocolate;" tooltip="a tooltip comment ">Non Refund</label>  
+                                     <label style="color: chocolate;" tooltip="a tooltip comment ">Non Refundable</label>  
                                      </div>
                                      <div  ng-if="hotel.hotelbyRoom[0].nonRefund == false"> 
                                    
                                      <label class="col-sm-10 col-md-9" style="color: chocolate;" tooltip="a tooltip comment ">Cancellation Policy</label>     
                                      <div class="col-sm-10 col-md-9" ng-repeat="cancal in hotel.hotelbyRoom[0].hotelRoomRateDetail[0].cancellation">
-                                      <label ng-if="cancal.penaltyCharge == true" style="color: chocolate;">* prior {{cancal.days}} the penalty charges will be {{cancal.nights}} charges</label>
+                                      <label ng-if="cancal.penaltyCharge == true" style="color: chocolate;">* any cancellation made prior {{cancal.days}} nights th the arrival, is subject to change for {{cancal.nights}} nights</label>
                                       <label ng-if="cancal.penaltyCharge == false" style="color: chocolate;">* prior {{cancal.days}} the penalty charges will be {{cancal.percentage}} % of total stay</label>
                                      </div>                                
                                      </div>

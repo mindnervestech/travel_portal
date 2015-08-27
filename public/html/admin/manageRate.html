@@ -123,6 +123,7 @@
                     	<tr>
                            <th><a style="color: white;text-align: center;">Sr.No</a></th>
                             <th><a style="color: white;text-align: center;">Rate Name</a></th>
+                            <th><a style="color: white;text-align: center;">SupplierName</a></th>
                             <th><a style="color: white;text-align: center;">From Date</a></th>
                             <th><a style="color: white;text-align: center;">To Date</a></th>
                             <th style="width: 43%;text-align: center;"><a style="color: white;">Markets</a></th>
@@ -134,6 +135,7 @@
                 	
                     	<tr ng-repeat="rate in rateMetaDate track by $index">
           					<td style="padding: 5px;">{{$index+1}}</td>
+          					<td>{{rate.supplierName}}</td>
           					 <td>{{rate.rateName}}</td>
                            <td>{{rate.fromDate}}</td>
                            <td>{{rate.toDate}}</td>

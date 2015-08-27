@@ -100,6 +100,7 @@ import com.travelportal.vm.SpecialsVM;
 //import com.gargoylesoftware.htmlunit.javascript.host.Console;
 public class Application extends Controller {
 
+	final static String rootDir = Play.application().configuration().getString("mail.storage.path");
     public static Result index() {
     	
     	/*Form<SearchHotelValueVM> HotelForm = Form.form(SearchHotelValueVM.class).bindFromRequest();
@@ -404,11 +405,11 @@ public static Result getHotelImagePath(long supplierCode,long indexValue) {
 		if(hImagesPath.getPicturePath() != null){
 			 f = new File(hImagesPath.getPicturePath());
 		}else{
-			f = new File("C:\\mypath\\default\\logo.jpg");
+			f = new File(rootDir+"/default/logo.jpg");
 		}
 	}
 	else{
-		f = new File("C:\\mypath\\default\\logo.jpg");
+		f = new File(rootDir+"/default/logo.jpg");
 	}
 			
     return ok(f);		

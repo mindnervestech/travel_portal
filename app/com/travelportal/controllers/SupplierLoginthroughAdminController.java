@@ -18,14 +18,9 @@ public class SupplierLoginthroughAdminController extends Controller {
 
 	/*@Transactional
 	public static Result getsupplierLogin(String supplierCode,String supplierName) {
-		System.out.println("%%%%%%%%%%%%");
-		System.out.println(supplierCode);
-		System.out.println(supplierName);
 		
 		HotelRegistration user = HotelRegistration.findSupplier(supplierCode,supplierName);
-		System.out.println(user.getSupplierCode());
 		if(user != null) {
-			System.out.println("Home login");
 			//session().put("SUPPLIER", user.getSupplierCode());
 			long code = Long.parseLong(user.getSupplierCode());
 			return ok(home.render("Home Page", code));
@@ -41,10 +36,8 @@ public class SupplierLoginthroughAdminController extends Controller {
 	DynamicForm form = DynamicForm.form().bindFromRequest();
 	
 	HotelRegistration user = HotelRegistration.findSupplier(form.get("supplierCode"),form.get("hotelNm"));
-	//System.out.println(user.getSupplierCode());
 	long supplierpending = HotelRegistration.pendingData();
 	long agentpending = AgentRegistration.pendingData();
-	System.out.println(supplierpending);
 	System.out.println("SESSION VALUE   "+session().get("NAME"));
 	if(user != null) {
 		//session().put("SUPPLIER", user.getSupplierCode());

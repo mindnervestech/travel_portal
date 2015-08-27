@@ -331,7 +331,6 @@ public static HotelPrivateContacts findById(long id) {
 		
 		}
 		catch(Exception ex){
-		System.out.println("()()()()()ERORO()()()()()(");
 			return null;
 		}
     }

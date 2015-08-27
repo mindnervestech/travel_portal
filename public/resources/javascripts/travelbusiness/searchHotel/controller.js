@@ -2951,6 +2951,16 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 						
 		});
 		
+		angular.forEach($scope.hotel.hotelbyRoom, function(obj, index){ 
+			angular.forEach(obj.hotelRoomRateDetail[0].cancellation, function(obj1, index1){ 
+				if(obj1.days == "012" || obj1.days == "016" || obj1.days == "018"){
+					obj1.days = $scope.hotel.cancellation_date_diff;
+				}else{
+					obj1.days = parseInt(obj1.days) + $scope.hotel.cancellation_date_diff;
+				}
+			});
+		});
+		
 		$scope.traveller = $scope.hotel.hotelBookingDetails;
 		console.log($scope.hotel);
 		console.log($scope.traveller);
@@ -2977,7 +2987,7 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 		$scope.hotel.hotelBookingDetails.travellerlastname = $scope.traveller.travellerlastname;
 		$scope.hotel.hotelBookingDetails.travellerpassportNo = $scope.traveller.travellerpassportNo;
 		//$scope.hotel.hotelBookingDetails.travelleraddress = $scope.traveller.address;
-		$scope.hotel.hotelBookingDetails.travellercountry = $scope.traveller.travellercountry;
+		$scope.hotel.hotelBookingDetails.travellercountry = $scope.hotel.countryCode;
 		$scope.hotel.hotelBookingDetails.travellerphnaumber = $scope.traveller.travellerphnaumber;
 		$scope.hotel.hotelBookingDetails.travelleremail = $scope.traveller.travelleremail;
 		$scope.hotel.hotelBookingDetails.nonSmokingRoom = $scope.traveller.nonSmokingRoom;
@@ -3007,10 +3017,14 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
     		if(data != "NocreditLimit"){
     			$scope.flagA = 0;
     			 notificationService.success("Room Book Successfully");
-    		 $window.location.replace("http://li664-78.members.linode.com:9989/AgentBookingInfo");
-    		}else{
+    		// $window.location.replace("http://localhost:9000/AgentBookingInfo");
+    		 window.location = "/AgentBookingInfo";
+    		}else if(data == "NocreditLimit"){
+    			
     			$scope.flagA = "NocreditLimit";
     			notificationService.error("Credit Limit Is Less");
+    		}else if(data == "NullcreditLimit"){
+    			notificationService.error("Credit limit not define");
     		}
     		
     	}).error(function(data, status, headers, config) {

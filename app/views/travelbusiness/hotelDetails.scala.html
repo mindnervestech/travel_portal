@@ -44,7 +44,7 @@
                                 
                                         <ul class="slides">
                                       
-                               	<li ng-repeat="img in imgArray"><img src="{{img}}" alt="" /></li>
+                               	<li ng-repeat="img in imgArray"><img src="{{img}}" style="height:610px;"alt="" /></li>
                                           
                                         </ul>
                                     </div>
@@ -100,7 +100,7 @@
                                     <div class="details col-sm-7 col-md-8">
                                         <div>
                                             <div style="border-right: none;" class="col-md-12">
-                                                <h4 class="box-title"><span class="col-md-11">{{roomInfo.roomName}}</span><small class="col-md-5" style="color: #01b7f2;padding-right: 1px;width: 83px;">MAX GUESTS:</small><small class="col-md-4" style="padding-left: 1px;">{{roomInfo.hotelRoomRateDetail[0].adult_occupancy}} PERSONS</small></h4>
+                                                <h4 class="box-title"><span class="col-md-11">{{roomInfo.roomName}}</span><small class="col-md-5" style="color: #01b7f2;padding-right: 1px;width: 100px;">MAX GUESTS:</small><small class="col-md-4" style="padding-left: 1px;">{{roomInfo.hotelRoomRateDetail[0].adult_occupancy}} PERSONS</small></h4>
                                             </div>
                                              
                                             <div style="padding-left: 0;padding-bottom: 0;">
@@ -156,12 +156,13 @@
                                                 </div>
                                          </div>
                                          <div class="col-md-6" style="width:50% !important;border-bottom: none !important;">
-                                        <div class="col-md-5"> <!-- ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null" -->
+                                        
+                                         <div class="col-md-4"  ng-if="adultRate.mealTypeName != null" style="margin-top: 5px;">
+                                        <span class="price"><small>Included</small><sup style="font-size: small;color: chocolate;top: 9px;">{{adultRate.mealTypeName}}</sup></span>
+                                         </div>
+                                         <div class="col-md-5"> <!-- ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null" -->
                                           <small>Per Room Per Night</small>
                                           <span class="price" currency-rate styleValue="font-size: small;color: chocolate;top: -3px;" ng-model="adultRate.rateAvg" rate="{{adultRate.rateAvg}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
-                                         </div>
-                                         <div class="col-md-4"  ng-if="adultRate.mealTypeName != null">
-                                        <span class="price"><small>Included</small><sup style="font-size: small;color: chocolate;top: 9px;">{{adultRate.mealTypeName}}</sup></span>
                                          </div>
                                          
                                           <div class="col-md-4"  ng-if="adultRate.mealTypeName == null">
@@ -180,7 +181,7 @@
                                    
                                      <label style="color: #01B7F2;" tooltip="a tooltip comment ">Cancellation Policy</label>     
                                      <div ng-repeat="cancal in roomInfo.hotelRoomRateDetail[0].cancellation">
-                                      <label ng-if="cancal.penaltyCharge == true">* prior {{cancal.days}} the penalty charges will be {{cancal.nights}} charges</label>
+                                      <label ng-if="cancal.penaltyCharge == true">*Any cancellation made prior {{cancal.days}} nights th the arrival, is subject to change for 0{{cancal.nights | limitTo:-1}} nights</label>
                                       <label ng-if="cancal.penaltyCharge == false">* prior {{cancal.days}} the penalty charges will be {{cancal.percentage}} % of total stay</label>
                                      </div>                                
                                      </div>

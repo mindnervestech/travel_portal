@@ -17,6 +17,7 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import play.Play;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.libs.Json;
@@ -74,6 +75,8 @@ import org.activiti.engine.impl.util.json.JSONObject;
 
 public class HotelDetailsController extends Controller {
 
+	final static String rootDir = Play.application().configuration().getString("mail.storage.path");
+	
 	@Transactional(readOnly = false)
 	public static Result getHotelGenImg(long supplierCode,long indexValue) {
 
@@ -84,11 +87,11 @@ public class HotelDetailsController extends Controller {
 			if(hImagesPath.getPicturePath() != null){
 				 f = new File(hImagesPath.getPicturePath());
 			}else{
-				f = new File("C:\\mypath\\default\\logo.jpg");
+				f = new File(rootDir+"/default/logo.jpg");
 			}
 		}
 		else{
-			f = new File("C:\\mypath\\default\\logo.jpg");
+			f = new File(rootDir+"/default/logo.jpg");
 		}
 				
         return ok(f);	
@@ -107,10 +110,10 @@ public class HotelDetailsController extends Controller {
 			
 		 f = new File(infowiseimagesPath.getAmenitiesServices());
 			}else{
-				f = new File("C:\\mypath\\default\\logo.jpg");
+				f = new File(rootDir+"/default/logo.jpg");
 			}
 		}else{
-			    f = new File("C:\\mypath\\default\\logo.jpg");
+			    f = new File(rootDir+"/default/logo.jpg");
 		}
 		return ok(f);
 
@@ -128,10 +131,10 @@ public class HotelDetailsController extends Controller {
 			
 		 f = new File(infowiseimagesPath.getHotelRoom());
 			}else{
-				f = new File("C:\\mypath\\default\\logo.jpg");
+				f = new File(rootDir+"/default/logo.jpg");
 			}
 		}else{
-			    f = new File("C:\\mypath\\default\\logo.jpg");
+			    f = new File(rootDir+"/default/logo.jpg");
 		}
 		return ok(f);
 
@@ -148,10 +151,10 @@ public class HotelDetailsController extends Controller {
 			
 		 f = new File(infowiseimagesPath.getHotel_Lobby());
 			}else{
-				f = new File("C:\\mypath\\default\\logo.jpg");
+				f = new File(rootDir+"/default/logo.jpg");
 			}
 		}else{
-			    f = new File("C:\\mypath\\default\\logo.jpg");
+			    f = new File(rootDir+"/default/logo.jpg");
 		}
 		return ok(f);
 
@@ -232,10 +235,10 @@ public class HotelDetailsController extends Controller {
 			if(hRoomTypes.getRoomPic() != null){
 				f = new File(hRoomTypes.getRoomPic());
 			}else{
-				f = new File("C:\\mypath\\default\\logo.jpg");
+				f = new File(rootDir+"/default/logo.jpg");
 			}
 		}else{
-			f = new File("C:\\mypath\\default\\logo.jpg");
+			f = new File(rootDir+"/default/logo.jpg");
 		}
 	    return ok(f);		
 		

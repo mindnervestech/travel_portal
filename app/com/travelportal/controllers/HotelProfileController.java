@@ -874,7 +874,6 @@ public class HotelProfileController extends Controller {
          OutputStream out = null;
          BufferedImage image = null;
          File f = new File(imgPath);
-         System.out.println(imgPath);
          try {
         	 Files.copy(src.toPath(),f.toPath(),java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         	
@@ -890,7 +889,6 @@ public class HotelProfileController extends Controller {
                  }
          }
            
- 		 System.out.println(fileName);
  		ImgPath path = new ImgPath();
  		path.setImgpath(imgPath);
  		path.setDocname(fileName);
@@ -919,8 +917,6 @@ public class HotelProfileController extends Controller {
 	@Transactional(readOnly=false)
 	public static Result deleteDocument(int docId,int id) {
 
-		System.out.println(docId);
-		System.out.println(id);
 		HotelHealthAndSafety healthAndSafety =HotelHealthAndSafety.HealthSafetyfindById(docId);
 		/*ImgPath deletePath = null;
 		for(ImgPath path : healthAndSafety.getImgpath()){
@@ -1370,8 +1366,6 @@ public class HotelProfileController extends Controller {
 	public static Result updateBillingInfo() {
 
 		 DynamicForm form = DynamicForm.form().bindFromRequest();
-		 System.out.println("&&&&&&&&&&");	
-		 System.out.println(form.get("bankName"));
 		    
 		    BillingInformation billinginfo = BillingInformation.findById(Long.parseLong(form.get("supplierCode")));
 		    
@@ -1450,7 +1444,6 @@ public class HotelProfileController extends Controller {
 
 
 		DynamicForm form = DynamicForm.form().bindFromRequest();
-		//System.out.println(form.get("code"));
 
 		BusinessCommunication businesscommunication = BusinessCommunication.findById(Long.parseLong(form.get("supplierCode")));
 

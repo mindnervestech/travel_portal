@@ -300,7 +300,6 @@ public class TravelPortalUtilsController extends Controller {
 	public static Result findBillData(long supplierCode) {
 			
 		BillingInformation billinginformation = BillingInformation.findById(supplierCode);
-		System.out.println(billinginformation);
 		HotelBillingInformation hotelbillinginformation = new HotelBillingInformation();
 
 		hotelbillinginformation.setInvoiceToHotel(billinginformation.getInvoiceToHotel());
@@ -530,9 +529,7 @@ public class TravelPortalUtilsController extends Controller {
 	@Transactional(readOnly=true)
 	public static Result getAllData(long supplierCode) {
 		
-		System.out.print(">>>>>>sss.. suppler code " + supplierCode);
 		HotelProfile hotelProfile = HotelProfile.findAllData(supplierCode);
-		System.out.print("hotel name " + hotelProfile.getHotelName());
 		HotelGeneralInfoVM hotelgeneralinfoVM = new HotelGeneralInfoVM();
 
 		hotelgeneralinfoVM.setHotelNm(hotelProfile.getHotelName());
@@ -567,7 +564,6 @@ public class TravelPortalUtilsController extends Controller {
 		
 		if(hotelProfile.getStartRatings() != null)
 		{
-			System.out.println(hotelProfile.getStartRatings().getId());
 			
 		hotelgeneralinfoVM.setStartRating(hotelProfile.getStartRatings().getId());
 		}
@@ -580,10 +576,6 @@ public class TravelPortalUtilsController extends Controller {
 			hotelgeneralinfoVM.isAdmin = "Supplier";	
 		}
 			
-
-		System.out.println(supplierCode);
-		
-
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("hotelgeneralinfo", hotelgeneralinfoVM);

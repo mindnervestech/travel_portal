@@ -64,7 +64,6 @@ public class ApplicationController extends Controller{
 	        for(Permissions permissions2 : permissions){
 	        	permission.put(permissions2.getName() , String.valueOf(user.getPermissions().contains(permissions2)));
 	        }
-	        System.out.println(permission);
 			return ok(home.render("Home Page", code , Json.stringify(Json.toJson(permission)))); 
         }
         return ok(views.html.login.render(" "));
@@ -81,7 +80,6 @@ public class ApplicationController extends Controller{
 		final String value = session().get("NAME");
 		long supplierpending = HotelRegistration.pendingData();
 		long agentpending = AgentRegistration.pendingData();
-		System.out.println(supplierpending);
         if (value == null) {
         	
         	return ok(views.html.adminLogin.render());
@@ -96,10 +94,8 @@ public class ApplicationController extends Controller{
 	@Transactional
 	public static Result doAdminLogin() {
 		DynamicForm form = DynamicForm.form().bindFromRequest();
-		System.out.println(form.get("name"));
 		long supplierpending = HotelRegistration.pendingData();
 		long agentpending = AgentRegistration.pendingData();
-		System.out.println(supplierpending);
 		try {
 			AdminUser adminUser = AdminUser.doLogin(form.get("name"),form.get("pass"));
 			
@@ -139,7 +135,6 @@ public class ApplicationController extends Controller{
 		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
 		try {
 			HotelRegistration user = HotelRegistration.doLogin(form.get("email"),form.get("code"),form.get("pass"),form.get("type"));
-			System.out.println(user.getHotelAddress());
 			if(user != null) {
 				session().put("SUPPLIER", user.getSupplierCode());
 				long code = Long.parseLong(user.getSupplierCode());
@@ -149,7 +144,6 @@ public class ApplicationController extends Controller{
 		        for(Permissions permissions2 : permissions){
 		        	permission.put(permissions2.getName() , String.valueOf(user.getPermissions().contains(permissions2)));
 		        }
-		        System.out.println(permission);
 				return ok(home.render("Home Page", code , Json.stringify(Json.toJson(permission))));  //
 			}
 		
@@ -162,12 +156,9 @@ public class ApplicationController extends Controller{
 	@Transactional(readOnly=false)
 	public static Result findSupplier() {
 		DynamicForm form = DynamicForm.form().bindFromRequest();
-		System.out.println("-----------------");
-		System.out.println(form.get("supplierCode"));
 		HotelRegistration user = HotelRegistration.findSupplier(form.get("supplierCode"),form.get("hotelNm"));
 		long supplierpending = HotelRegistration.pendingData();
 		long agentpending = AgentRegistration.pendingData();
-		System.out.println(supplierpending);
 		if(user != null) {
 			//session().put("SUPPLIER", user.getSupplierCode());
 			long code = Long.parseLong(user.getSupplierCode());
@@ -183,7 +174,6 @@ public class ApplicationController extends Controller{
 		System.out.println("SESSION VALUE   "+session().get("NAME"));
 		session().clear();
 		long supplierpending = HotelRegistration.pendingData();
-		System.out.println(supplierpending);
 		return ok(views.html.adminLogin.render());
 	}	
 	
@@ -236,7 +226,6 @@ public class ApplicationController extends Controller{
 	@Transactional
 	public static Result getAdminForm() {
 		long supplierpending = HotelRegistration.pendingData();
-		System.out.println(supplierpending);
 		return ok(views.html.adminLogin.render());
 		
 	}
@@ -290,7 +279,6 @@ public class ApplicationController extends Controller{
 	@Transactional
 	public static Result getCityOfCountry() {
 		DynamicForm bindedForm = DynamicForm.form().bindFromRequest();
-		System.out.println(bindedForm.get("country"));
 		String countryName = bindedForm.get("country");
 		List<String> cities = new ArrayList<>();
 		
@@ -416,7 +404,6 @@ public class ApplicationController extends Controller{
 	
 	@Transactional
 	public static Result getpassword(String email) {
-		System.out.println(email);
 		HotelProfile hProfile = HotelProfile.findByEmail(email);
 		int flag = 0;
 		if(hProfile != null){

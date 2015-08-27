@@ -3,11 +3,13 @@
 							
                             <div id="booking" class="tab-pane fade active in">
                               <div class="col-md-12" style="background-color: white;">
-                            <h2 class="col-md-5" style="color: #428bca;">Hotel : {{ratedetail.hotelNm}}</h2>
+                            <h2 class="col-md-12" style="color: #428bca;">Hotel : {{ratedetail.hotelNm}}</h2>
                                <span class="col-md-1">TOTAL : </span>
                               <span class="price col-md-3" style="float: left;text-align: left;" currency-rate styleValue="font-size: small;color: chocolate;top: -3px;" ng-model="finalTotal" rate="{{finalTotal}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span>
-                           
-                               <div class="col-md-2" >
+                           			<div class="col-md-1 pull-right" style="margin-bottom: 9px;">
+                                             	<button type="button" class="btn btn-primary" ng-click="closePopup();closeThisDialog()">Close</button>
+                                		 </div>
+                               <div class="col-md-2 pull-right" >
                                                  <!-- <span class="price"><small>AVG/NIGHT</small>$620</span>  -->
                                                  <form action="/hotelBookingpage" method="post">
                               					        <input type="text" name="supplierCode"  value="{{ratedetail.supplierCode}}" style="display: none;">
@@ -31,9 +33,7 @@
                                                </form>
                                                 <!-- <a class="button btn-small full-width text-center" style="background: #7db921;" title=""  href="/hoteldetailpage">Book Now</a> -->
                                             </div>
-                                             <div class="col-md-1">
-                                             	<button type="button" class="btn btn-primary" ng-click="closePopup();closeThisDialog()">Close</button>
-                                		 </div>
+                                             
                                <!--  <h2 class="col-md-6">Room : {{roominfo.roomName}}</h2> -->
                                  </div>
                                 
@@ -93,9 +93,9 @@
                                              </div>
                                              <div class="col-md-4">
                                               <div class="col-md-4" style="margin-top: 20px;padding: 0px;">
-                                         		 <span class="price" style="font-size: 15px;" currency-rate styleValue="font-size: small;color: chocolate;top: -3px;" ng-model="serchroom.total" rate="{{serchroom.total}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span> 
+                                         		 <span class="price" style="font-size: 15px;" currency-rate styleValue="font-size: small;color: chocolate;top: -1px;" ng-model="serchroom.total" rate="{{serchroom.total}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span> 
                                        		  </div>
-                                       		  <div class="col-md-4" style="margin-top: 20px;padding: 0px;">
+                                       		  <div class="col-md-4" style="margin-top: 18px;padding: 0px;">
                                          		<span><a ng-click="showDateWiseDetails($index)">DateWise Rate</a></span>
                                        		  </div>
                                         

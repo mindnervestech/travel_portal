@@ -86,16 +86,22 @@ public class HotelBookingController extends Controller {
 		
 		AgentRegistration aRegistration = AgentRegistration.findById(Long.parseLong(session().get("agent")));
 		if(aRegistration.getPaymentMethod().equals("Credit") || aRegistration.getPaymentMethod().equals("Pre-Payment")){
-			if(aRegistration.getAvailableLimit() > Double.parseDouble(searchVM.hotelBookingDetails.getTotal())){
+			
+			if(aRegistration.getAvailableLimit() != null){
+			
+				if(aRegistration.getAvailableLimit() > Double.parseDouble(searchVM.hotelBookingDetails.getTotal())){
 				
-			Double availableLimit = aRegistration.getAvailableLimit() - Double.parseDouble(searchVM.hotelBookingDetails.getTotal());
-			aRegistration.setAvailableLimit(availableLimit);
-			aRegistration.merge();
-			saveBookingData(searchVM);
+					Double availableLimit = aRegistration.getAvailableLimit() - Double.parseDouble(searchVM.hotelBookingDetails.getTotal());
+					aRegistration.setAvailableLimit(availableLimit);
+					aRegistration.merge();
+					saveBookingData(searchVM);
 		
 		
+				}else{
+					flagAppro = "NocreditLimit";
+				}
 			}else{
-				flagAppro = "NocreditLimit";
+				flagAppro = "NullcreditLimit";
 			}
 		}else{
 			saveBookingData(searchVM);
@@ -760,7 +766,7 @@ public class HotelBookingController extends Controller {
 		Document document = new Document();
 		try {
 			
-			String fileName = "C://hotelVoucher"+".pdf";
+			String fileName = "C://hotelVoucher"+".pdf"; // rootDir+"/hotelVoucher"+".pdf"
 			PdfWriter.getInstance(document, new FileOutputStream(fileName));
 			
 		

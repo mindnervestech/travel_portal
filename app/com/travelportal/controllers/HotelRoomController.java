@@ -570,7 +570,6 @@ public static void createRootDir() {
 						selectedCountryVM.add(countryVM);
 					}
 					
-					//System.out.println(vm.multiSelectGroup);
 				}
 				List<Country> listCity = new ArrayList<>();
 				for(SelectedCountryVM countryvm : selectedCountryVM){
@@ -922,7 +921,6 @@ public static void createRootDir() {
 						
 						for(Country country:rMeta.getCountry()){
 						
-							System.out.println(country.getCountryName());
 							clist.add(country.getCountryName());
 						}
 						
@@ -1047,7 +1045,6 @@ public static void createRootDir() {
 						
 						for(Country country:rMeta.getCountry()){
 						
-							System.out.println(country.getCountryName());
 							clist.add(country.getCountryName());
 						}
 						
@@ -1191,13 +1188,11 @@ public static void createRootDir() {
 	@Transactional(readOnly=true)
     public static Result fetchToEditHotelDetails(long supplierCode) {
 		//this method is used to fetch the room details for edit. this method will return json data..
-		//System.out.println(supplierCode);
 		//HotelRoomTypes roomType = null;
 		/*if (roomId != -1) {
 			roomType = new HotelRoomTypes();
 			return ok(Json.toJson(roomType));
 		} else {*/
-			System.out.println(supplierCode);
 			List<HotelRoomTypes> roomTypeInfo = HotelRoomTypes.getHotelRoomDetails(supplierCode);
 		//}
 		return ok(Json.toJson(roomTypeInfo));
@@ -1207,7 +1202,6 @@ public static void createRootDir() {
 	@Transactional(readOnly=true)
     public static Result getroomtypesInfo(long RoomId) {
 		
-			System.out.println(RoomId);
 			HotelRoomTypes roomType = HotelRoomTypes.getHotelRoomDetailsInfo(RoomId);
 		
 		return ok(Json.toJson(roomType));
@@ -1222,10 +1216,6 @@ public static void createRootDir() {
 		Json.fromJson(json, RoomtypeVM.class);
 		RoomtypeVM roomtypeVM = Json.fromJson(json, RoomtypeVM.class);
 		
-		System.out.println("&^&&^&&^&^&^&^&&&^");
-		System.out.println(roomtypeVM.getRoomname());
-		System.out.println(roomtypeVM.getSupplierCode());
-		System.out.println("&^&&^&&^&^&^&^&&&^");
 		//HotelRoomTypes hotelroomTypes =HotelRoomTypes.findByIdAndName(roomtypeVM.getRoomname(),roomtypeVM.getSupplierCode());
 		
 		if(roomtypeVM.getRoomId()== null || roomtypeVM.getRoomId()=="")
@@ -1332,7 +1322,6 @@ public static void createRootDir() {
          OutputStream out = null;
          BufferedImage image = null;
          File f = new File(ThumbnailImage);
-         System.out.println(originalFileName);
          try {
         	   
                   BufferedImage originalImage = ImageIO.read(src);
@@ -1356,8 +1345,6 @@ public static void createRootDir() {
                  }
          }
            
- 		 System.out.println(fileName);
- 		
  		HotelRoomTypes hotelroomTypes =HotelRoomTypes.findById(Long.parseLong(form.get("roomId")));
  		 if(hotelroomTypes != null)
  		 {
@@ -1389,7 +1376,6 @@ public static void createRootDir() {
 	
 	@Transactional(readOnly=true)
 	public static Result getAvailableRoomAmenities() {
-		System.out.println("getAvailableRoomAmenities");
 		return ok(Json.toJson(RoomAmenities.getRoomAmenities()));
 	}
 	
@@ -1401,7 +1387,6 @@ public static void createRootDir() {
 		
 		/*for(RoomChildPolicies childPolicies: hotelroomtypes.getRoomchildPolicies()){
 			childPolicies.delete();
-			System.out.println("hii111111");
 		}*/
 		/*hotelroomtypes.setRoomchildPolicies(null);
 		hotelroomtypes.merge();*/
@@ -1503,7 +1488,6 @@ public static void createRootDir() {
 	public static Result setCitySelection() {
 		//JsonNode json = request().body().asJson().get("id");
 		JsonNode jn = request().body().asJson();
-		//System.out.println(json.asInt());
 		//jn.as
 		
 		VM c = Json.fromJson(jn, VM.class);
@@ -1534,7 +1518,6 @@ public static void createRootDir() {
 	public static Result setCountrySelection(long id) {
 		//JsonNode json = request().body().asJson().get("id");
 		JsonNode jn = request().body().asJson();
-		//System.out.println(json.asInt());
 		//jn.as
 		
 		VM c = Json.fromJson(jn, VM.class);

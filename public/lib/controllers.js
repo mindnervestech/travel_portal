@@ -5026,6 +5026,8 @@ controller("manageRateController",['$scope','notificationService','$filter','$ro
 						$scope.rateMetaDate = response;
 					});
 				}
+				notificationService.success("Rate Approved");
+				notificationService.success("add Markup on markup page");
 				
 			});
 		}

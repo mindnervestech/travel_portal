@@ -399,7 +399,7 @@ public class AgentInfoController extends Controller {
 		Document document = new Document();
 		try {
 			
-			String fileName = "C://hotelVoucher"+".pdf";
+			String fileName = "C://hotelVoucher"+".pdf";  // rootDir+"/hotelVoucher"+".pdf"
 			PdfWriter.getInstance(document, new FileOutputStream(fileName));
 			
 		
