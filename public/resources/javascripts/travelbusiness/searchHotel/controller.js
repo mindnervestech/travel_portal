@@ -1104,7 +1104,16 @@ $scope.showDateWiseDetails = function(index){
 });
 
 travelBusiness.controller('HomePageController', function ($scope,$http,$filter,ngDialog,$cookieStore) {
-
+	$scope.searchby = {
+			checkIn:0
+	}
+	$scope.$watch('searchby.checkIn',function(newValue){
+		console.log(newValue);
+		var arr = newValue.split("-");
+		jQuery("#checkOutDatePicker").datepicker( "option", "minDate", new Date(arr[2], arr[1] -1, arr[0]) );
+	});
+	
+	
 	$scope.loginSuccess = 0;
 	$scope.errorMsg = false;
 	$scope.loginAgent = function(){
@@ -1239,7 +1248,15 @@ travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDia
 	
 	console.log($scope.AgentCompany);
 	
-		
+	$scope.searchby = {
+			checkIn:0
+	}
+	$scope.$watch('searchby.checkIn',function(newValue){
+		console.log(newValue);
+		var arr = newValue.split("-");
+		jQuery("#checkOutDatePicker").datepicker( "option", "minDate", new Date(arr[2], arr[1] -1, arr[0]) );
+	});	
+	
 	$scope.init = function(hotelAllData){
 		
 		var currArr = hotelAllData.agentInfo.currency.split(" - ");
@@ -1697,6 +1714,15 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 	$scope.totalStayDays = 0;
 	$scope.noOfRoomShow = 1;
 	
+	$scope.searchby = {
+			checkIn:0
+	}
+	$scope.$watch('searchby.checkIn',function(newValue){
+		console.log(newValue);
+		var arr = newValue.split("-");
+		jQuery("#checkOutDatePicker").datepicker( "option", "minDate", new Date(arr[2], arr[1] -1, arr[0]) );
+	});	
+	
 $http.get("/searchCountries").success(function(response) {
 		
 		$scope.searchCountries = response;
@@ -1756,6 +1782,15 @@ $http.get("/searchCountries").success(function(response) {
 				}else{
 					obj1.days = parseInt(obj1.days) + hotel.cancellation_date_diff;
 				}
+				obj1.days;
+				
+				console.log(hotel.checkIn);
+				var arr = hotel.checkIn.split("-");
+				var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+				  var dateOut = new Date(datevalue);
+				  dateOut.setDate(dateOut.getDate() - 3);
+				  console.log($filter('date')(dateOut, "dd-MMM-yyyy"));
+				  obj1.cancellationDate = $filter('date')(dateOut, "dd-MMM-yyyy");
 			});
 		});
 		
