@@ -60,6 +60,9 @@ public class HotelRoomTypes {
 	private String description;
 	@Column(name="room_pic")
 	private String roomPic;
+	@Column(name="free_wifi")
+	private String freeWifi;
+	
 
 	@Column(name="room_size")
 	private String roomSize;
@@ -312,6 +315,14 @@ public class HotelRoomTypes {
 		this.breakfastRate = breakfastRate;
 	}
 	
+	
+	
+	public String getFreeWifi() {
+		return freeWifi;
+	}
+	public void setFreeWifi(String freeWifi) {
+		this.freeWifi = freeWifi;
+	}
 	public static List<RoomType> getAllRoomTypes(final Long supplierCode) {
 		Query q = JPA.em().createQuery("select r.roomId, r.roomType from HotelRoomTypes r where r.supplierCode = :supplierCode ");
 		q.setParameter("supplierCode", supplierCode);

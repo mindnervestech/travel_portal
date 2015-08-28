@@ -139,8 +139,8 @@ public static void createRootDir() {
 			}
 			
 			rateDetail.includeMeals = false;
-			rateDetail.meals ="Lunch";
-			rateDetail.onlineMeals = "Lunch";
+			rateDetail.meals ="Breakfast";
+			rateDetail.onlineMeals = "Breakfast";
 			specialDaysRateVM.rateDetails.add(rateDetail);
 		}
 		
@@ -170,8 +170,8 @@ public static void createRootDir() {
 			}
 			
 			rateDetail.includeMeals = false;
-			rateDetail.meals ="Lunch";
-			rateDetail.onlineMeals = "Lunch";
+			rateDetail.meals ="Breakfast";
+			rateDetail.onlineMeals = "Breakfast";
 			normal.rateDetails.add(rateDetail);
 			special.non_refund = true;
 			special.rateDetails.add(rateDetail);
@@ -1241,6 +1241,7 @@ public static void createRootDir() {
 			hotelroomTypes.setBreakfastInclude(roomtypeVM.getBreakfastInclude());
 			hotelroomTypes.setBreakfastRate(roomtypeVM.getBreakfastRate());
 			hotelroomTypes.setChildAge(roomtypeVM.getChildAge());
+			hotelroomTypes.setFreeWifi(roomtypeVM.getFreeWifi());
 			/*if(roomtypeVM.getExtraBedRate() != null){
 			hotelroomTypes.setExtraBedRate(Double.parseDouble(roomtypeVM.getExtraBedRate()));
 			}*/
@@ -1278,7 +1279,7 @@ public static void createRootDir() {
 			hotelroomTypes.setBreakfastInclude(roomtypeVM.getBreakfastInclude());
 			hotelroomTypes.setBreakfastRate(roomtypeVM.getBreakfastRate());
 			hotelroomTypes.setChildAge(roomtypeVM.getChildAge());
-			
+			hotelroomTypes.setFreeWifi(roomtypeVM.getFreeWifi());
 			/*if(roomtypeVM.getExtraBedRate() != null){
 			hotelroomTypes.setExtraBedRate(Double.parseDouble(roomtypeVM.getExtraBedRate()));
 			}*/

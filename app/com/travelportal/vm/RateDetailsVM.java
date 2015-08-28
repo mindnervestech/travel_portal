@@ -27,10 +27,14 @@ public class RateDetailsVM {
 		
 		if(person.getOnlineMealType() != null){
 			this.onlineMeals = person.getOnlineMealType().getMealTypeNm();
+		}else{
+			this.onlineMeals = "Breakfast";
 		}
 		
 		if(person.getMealType() != null) {
 			this.meals = person.getMealType().getMealTypeNm();
+		}else{
+			this.meals = "Breakfast";
 		}
 		
 	}

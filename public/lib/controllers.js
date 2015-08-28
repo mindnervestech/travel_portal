@@ -138,6 +138,7 @@ angular.module('travel_portal').
 	                                         function($scope, $http,notificationService, $rootScope,  $filter, $upload, ngDialog) {
 		
 		
+		
 		$scope.AddImgAndInfo= {
 				addImg:[],
 				supplierCode:''
@@ -339,7 +340,7 @@ angular.module('travel_portal').
 					$scope.roomTypeIns.breakfastRate = response.breakfastRate;
 					$scope.roomTypeIns.childAge = response.childAge;
 					$scope.roomTypeIns.roomSize = response.roomSize;
-					
+					$scope.roomTypeIns.freeWifi = response.freeWifi;
 					$scope.adultcount = [];
 					for(var i = 1; i <= response.maxOccupancy; i++){
 						$scope.adultcount[i] = i;
@@ -2074,7 +2075,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	
 //	   $scope.roomTypeIns = ( {chargesForChildren:"false"} );
 	$scope.rateMeta = [];
-	
+	$scope.showExtraBad = 0;
 	$scope.showData = function() {
 		$scope.rateMeta = [];
 		$scope.addNewButton = "false";
@@ -2148,6 +2149,8 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		
 		console.log($scope.fdate);
 		console.log($scope.tdate);
+		console.log(rate);
+		$scope.showExtraBad = rate.normalRate.rateDetails.length -1;
 		
 		if(rate.special.rateDetails.length == 0){
 			$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
@@ -2204,7 +2207,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			console.log($scope.rateObject);
 			// $scope.showMarketTable($scope.rateObject[i]);
 			//$scope.rateObject.normalRate.rateDetails[i] = ( {meals:"Lunch"} );
-			$scope.rateObject.normalRate.rateDetails[i].meals = "Lunch";
+			//$scope.rateObject.normalRate.rateDetails[i].meals = "Lunch";
 			//$scope.rateObject.normalRate.rateDetails[i].onlineMeals = "Lunch";
 			console.log(i);
 		}
@@ -2215,11 +2218,13 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
            angular.forEach(response.normalRate.rateDetails, function(value, key){
 				value.onlineRateValue = null;
 				value.rateValue = null;
+				$scope.showExtraBad = key;
 			});
            
            angular.forEach(response.special.rateDetails, function(value, key){
 				value.onlineRateValue = null;
 				value.rateValue = null;
+				
 			});
            
            angular.forEach(response.specialDaysRate, function(value, key){

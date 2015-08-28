@@ -104,6 +104,7 @@ travelBusiness.directive('starRate', function($compile) {
 	
 	});
 
+
 travelBusiness.directive('currencyRate', function($compile) {
 	
 	return {

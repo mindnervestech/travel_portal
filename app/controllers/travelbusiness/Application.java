@@ -266,7 +266,7 @@ public class Application extends Controller {
     		
     		findMinRateInHotel(hotellist);  /* find min Rate in par Hotel function*/
 		
-    		AgentRegistration aRegistration = AgentRegistration.getallAgentCode(Long.parseLong(session().get("agent")));
+    		AgentRegistration aRegistration = AgentRegistration.getAgentCode(session().get("agent"));
     		AgentRegistrationVM aVm = new AgentRegistrationVM(aRegistration);
     		
     		CurrencyExchangeVM cVm = new CurrencyExchangeVM();

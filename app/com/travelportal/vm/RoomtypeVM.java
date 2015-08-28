@@ -23,6 +23,7 @@ public class RoomtypeVM {
 	public String roomPicture;
 	public String roomSize;
 	public String roomSizeType;
+	public String freeWifi;
 	//public String extraBedRate;
 	
 	public int childAge;
@@ -165,6 +166,12 @@ public class RoomtypeVM {
 	}
 	public void setRoomSizeType(String roomSizeType) {
 		this.roomSizeType = roomSizeType;
+	}
+	public String getFreeWifi() {
+		return freeWifi;
+	}
+	public void setFreeWifi(String freeWifi) {
+		this.freeWifi = freeWifi;
 	}
 
 	
