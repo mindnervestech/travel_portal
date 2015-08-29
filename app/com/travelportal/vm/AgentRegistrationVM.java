@@ -38,8 +38,7 @@ public class AgentRegistrationVM {
 	public String agree;
 	public String status;
 	public String password;
-	
-	
+	private Double creditLimit;
 	
 	
 	public AgentRegistrationVM(AgentRegistration reg) {
@@ -70,6 +69,7 @@ public class AgentRegistrationVM {
 		this.webSite = reg.getWebSite();
 		this.status =reg.getStatus();	
 		this.password =reg.getPassword();
+		this.creditLimit = reg.getCreditLimit();
 	}
 	
 	

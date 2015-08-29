@@ -91,7 +91,7 @@ public class HotelServices {
 	public static List<Map> getservicesCount(List<Long> supplierCode) {  
 		 int priorityno = 1;
 		List<Object[]> list;
-		 list =JPA.em().createNativeQuery("select count(*) as total,ha.id,ha.service_nm from hotel_profile_services am,services ha where am.services_id = ha.id and am.hotel_profile_id IN ?1 and ha.priority_no ='"+priorityno+"' group by  am.services_id").setParameter(1,supplierCode).getResultList();
+		 list =JPA.em().createNativeQuery("select count(*) as total,ha.id,ha.service_nm from hotel_profile_services am,services ha where am.services_id = ha.id and am.hotel_profile_id IN ?1 group by  am.services_id").setParameter(1,supplierCode).getResultList();
 		 
 		 List<Map> list1 = new ArrayList<>();
 		 

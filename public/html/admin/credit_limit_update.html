@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="tabbable tabs-left">
-<form name="myForm" method="post" ng-submit="approvePending()" role="form" class="form-horizontal form-validate">
+<form name="myForm" method="post" role="form" class="form-horizontal form-validate">
 <div>					
 <div class="panel-body">
 	<div class="col-lg-12">
@@ -21,7 +21,7 @@
 				</div>
 				<div class="col-md-8">
 					
-						<input type="creditLimit" data-ng-model="generalInfo.creditLimit" pattern="\d*" title="Please enter numbers" placeholder="Credit Limit"
+						<input type="creditLimit" data-ng-model="creditLimit" pattern="\d*" title="Please enter numbers" placeholder="Credit Limit"
 							class="form-control">
 				</div>
 					
@@ -39,7 +39,7 @@
 				
 				<div class="col-md-6">
 			     <button type="submit"
-				class="btn btn-primary" ng-click="closeThisDialog()" style="width:102px;">OK</button>
+				class="btn btn-primary" ng-click="updateCreditLimit(agent.agentCode,creditLimit);closeThisDialog()" style="width:102px;">OK</button>
 				</div>
 				
 			</div> 

@@ -27,6 +27,7 @@
 						<th>Last Name</th>
 						<th>Email</th>
 						<th>Country</th>
+						<th>Payment Method</th>
 						<th>Agent Id</th>
 						<th></th>
 					</tr>
@@ -36,6 +37,8 @@
 						<td>{{user.lastName}}</td>
 						<td>{{user.EmailAddr}}</td>
 						<td>{{user.country}}</td>
+						<td ng-if="user.paymentMethod == 'Credit' || user.paymentMethod =='Pre-Payment'"><a ng-click="updatecreditLimit(user)"><u>{{user.paymentMethod}}</u></a></td>
+						<td ng-if="user.paymentMethod == 'Bank Transfer' || user.paymentMethod =='Bank Guarantee'">{{user.paymentMethod}}</td>
 						<td>{{user.agentCode}}</td>
 						<!-- <td><input type="button"  class="btn" value="Reject" ng-click="rejectUser(user.id,user)"></td> -->
 						<td><input name="" type="button" class="btn btn-primary"

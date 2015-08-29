@@ -3461,12 +3461,36 @@ controller("manageAgentController",['$scope','notificationService','$filter','$r
 		
 	}
 	
+	$scope.updatecreditLimit = function(agent){
+		$scope.agent = agent;
+		if(agent.paymentMethod == "Credit" || agent.paymentMethod == "Pre-Payment"){
+			ngDialog.open({
+				template: '/assets/html/admin/credit_limit_update.html',
+				scope : $scope,
+				className: 'ngdialog-theme-default'				
+			});
+		}
+	}
+	
+	$scope.updateCreditLimit = function(agentId,creditlimit){
+		console.log(agentId);
+		console.log(creditlimit);
+		$http.get('/creditLimitUpdate/'+agentId+'/'+creditlimit).success(function(response){
+			 notificationService.success("Credit Limit Update Successfully");
+			//$scope.pendingUsers.splice($scope.pendingUsers.indexOf($scope.generalInfo),1);
+			//$scope.getData();
+		});
+
+	}
+	
+	
 	$scope.approvePending = function() {
 		console.log($scope.generalInfo.paymentMethod);
 		$scope.userId = $scope.generalInfo.id;
 		$scope.email = $scope.generalInfo.EmailAddr;
 		$scope.agentCode = $scope.generalInfo.agentCode;
 		$scope.loginId = $scope.generalInfo.loginId;
+		
 		if($scope.generalInfo.creditLimit == undefined){
 			$scope.generalInfo.creditLimit = 0;
 		}

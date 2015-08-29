@@ -237,6 +237,24 @@ public class AdminController extends Controller {
 		return ok(Json.toJson(vm));
 	}
 	
+	
+	@Transactional
+	public static Result creditLimitUpdate(String agentId, String creditLimit){
+		
+		AgentRegistration aRegistration = AgentRegistration.getAgentCode(agentId);
+		if(aRegistration.getCreditLimit() == null && aRegistration.getAvailableLimit() == null){
+			aRegistration.setCreditLimit(0d);
+			aRegistration.setAvailableLimit(0d);
+		}
+		Double cLimit = aRegistration.getCreditLimit() + Double.parseDouble(creditLimit);
+		Double aLimit = aRegistration.getAvailableLimit() + Double.parseDouble(creditLimit);
+		aRegistration.setCreditLimit(cLimit);
+		aRegistration.setAvailableLimit(aLimit);
+		aRegistration.merge();
+		return ok();
+		
+	}
+	
 	@Transactional
 	public static Result getRejectedAgent() {
 		List<AgentRegistration> list = AgentRegistration.getAllRejectedAgent();
