@@ -83,7 +83,7 @@
                                         <div class="col-sm-6 col-md-5">
                                             <label>*Country of passport</label>
                                             <div class="selector">
-                                          	  <input type="text" class="input-text full-width" value="{{hotel.countryName}}" placeholder="">
+                                          	  <input type="text" class="input-text full-width" value="{{hotel.nationalityName}}" placeholder="">
                                                 <!-- <select class="full-width" name="travellercountry" data-ng-model="traveller.travellercountry" ng-change="onCountryChange()" placeholder="Country" > 
                                                         <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
                                                 </select><span ng-repeat="country in searchCountries" ng-if="country.countryCode == hotel.countryCode" class="custom-select full-width">{{country.countryName}}</span>      <span ng-repeat="country in searchCountries" ng-if="country.countryCode == traveller.travellercountry" class="custom-select full-width">{{country.countryName}}</span> -->
@@ -138,7 +138,7 @@
                                  <div class="toggle-container filters-container">
                                 <div class="panel style1 arrow-right">
                                     <h4 class="panel-title" style="background-color: #01b7f2;">
-                                        <a data-toggle="collapse" href="#room-regi" class="collapsed" style="color: white;">Room Registration</a>
+                                        <a data-toggle="collapse" href="#room-regi" class="collapsed" style="color: white;">Do you want to give the names, for other guests also ?</a>
                                     </h4>
                                     
                                     <div id="room-regi" class="panel-collapse collapse">
@@ -302,14 +302,14 @@
                                 <hr>
                                   <div class="form-group row">
                                      <div class="col-sm-10 col-md-9" ng-if="hotel.hotelbyRoom[0].nonRefund == true">
-                                     <label style="color: chocolate;" tooltip="a tooltip comment ">Non Refundable</label>  
+                                     <label style="color: chocolate;" tooltip="a tooltip comment ">Non Refundable/Non-Ammendable</label>  
                                      </div>
                                      <div  ng-if="hotel.hotelbyRoom[0].nonRefund == false"> 
                                    
                                      <label class="col-sm-10 col-md-9" style="color: chocolate;" tooltip="a tooltip comment ">Cancellation Policy</label>     
-                                     <div class="col-sm-10 col-md-9" ng-repeat="cancal in hotel.hotelbyRoom[0].hotelRoomRateDetail[0].cancellation">
-                                      <label ng-if="cancal.penaltyCharge == true" style="color: chocolate;">* any cancellation made prior {{cancal.days}} nights th the arrival, is subject to change for {{cancal.nights}} nights</label>
-                                      <label ng-if="cancal.penaltyCharge == false" style="color: chocolate;">* prior {{cancal.days}} the penalty charges will be {{cancal.percentage}} % of total stay</label>
+                                     <div class="col-sm-12 col-md-11" ng-repeat="cancal in hotel.hotelbyRoom[0].hotelRoomRateDetail[0].cancellation">
+                                      <label ng-if="cancal.penaltyCharge == true" style="color: chocolate;">* any cancellation made prior {{cancal.days}} nights th the arrival, is subject to change for {{cancal.nights | limitTo:-1}} nights({{cancal.cancellationDate}})</label>
+                                      <label ng-if="cancal.penaltyCharge == false" style="color: chocolate;">* Any cancellation made prior {{cancal.days}} nights to the arrival, is subject to charge for {{cancal.percentage}}% for total booking nights({{cancal.cancellationDate}})</label>
                                      </div>                                
                                      </div>
                                     
@@ -384,13 +384,14 @@
                             <dl class="other-details">
                                 <dt class="feature">room Type:</dt><dd class="value">{{hotel.hotelbyRoom[0].roomName}}</dd>
                                 <dt class="feature">No Of Room:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}}</dd>
-                                 <dt class="feature">Per Room price:</dt><dd class="value" currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"> -2px;" class="ng-binding"></dd>
-                                <dt class="feature">Total Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * <span currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
-                               <dt class="total-price">Total Price</dt><dd class="total-price-value" currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
+                                <!--  <dt class="feature">Per Room price:</dt><dd class="value" currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"> -2px;" class="ng-binding"></dd>
+                                <dt class="feature">Total Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * <span currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd> -->
+                                <!-- <dt class="feature">{{hotel.hotelBookingDetails.noOfroom}} Room x {{hotel.datediff}} Night</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * <span currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd> -->
+                               <dt class="total-price">Total Price</dt><dd class="total-price-value" currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" styleValue="font-size: 13px;color: chocolate;top: -1px;" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
                             </dl>
                         </div>
                         
-                        <div class="travelo-box contact-box">
+                       <!--  <div class="travelo-box contact-box">
                             <h4>Need Travelo Help?</h4>
                             <p>We would be more than happy to help you. Our team advisor are 24/7 at your service to help you.</p>
                             <address class="contact-details">
@@ -398,7 +399,7 @@
                                 <br>
                                 <a class="contact-email" href="#">helravelocom</a>
                             </address>
-                        </div>
+                        </div> -->
                     </div>
             </div>
           </div>

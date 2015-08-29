@@ -382,8 +382,8 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 	
 	$scope.indexCount = 0;
 	$scope.newRoom = function($event,index){
-		$scope.addRooms.push( {  } );
 		
+		$scope.addRooms.push( {  } );
 		$scope.indexCount = $scope.indexCount + 1;
 		console.log($scope.indexCount);
 		$scope.addRooms[$scope.indexCount].adult = "1 Adult";
@@ -1105,12 +1105,18 @@ $scope.showDateWiseDetails = function(index){
 
 travelBusiness.controller('HomePageController', function ($scope,$http,$filter,ngDialog,$cookieStore) {
 	$scope.searchby = {
-			checkIn:0
+			checkIn:"dd/mm/yyyy"
 	}
 	$scope.$watch('searchby.checkIn',function(newValue){
 		console.log(newValue);
 		var arr = newValue.split("-");
-		jQuery("#checkOutDatePicker").datepicker( "option", "minDate", new Date(arr[2], arr[1] -1, arr[0]) );
+		var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+		  var dateOut = new Date(datevalue);
+		  dateOut.setDate(dateOut.getDate() + 1);
+		  console.log($filter('date')(dateOut, "dd-MM-yyyy"));
+		
+		var arr1 = $filter('date')(dateOut, "dd-MM-yyyy").split("-");
+		jQuery("#checkOutDatePicker").datepicker( "option", "minDate", new Date(arr1[2], arr1[1] -1, arr1[0]) );
 	});
 	
 	
@@ -1249,12 +1255,18 @@ travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDia
 	console.log($scope.AgentCompany);
 	
 	$scope.searchby = {
-			checkIn:0
+			checkIn:"dd/mm/yyyy"
 	}
 	$scope.$watch('searchby.checkIn',function(newValue){
 		console.log(newValue);
 		var arr = newValue.split("-");
-		jQuery("#checkOutDatePicker").datepicker( "option", "minDate", new Date(arr[2], arr[1] -1, arr[0]) );
+		var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+		  var dateOut = new Date(datevalue);
+		  dateOut.setDate(dateOut.getDate() + 1);
+		  console.log($filter('date')(dateOut, "dd-MM-yyyy"));
+		
+		var arr1 = $filter('date')(dateOut, "dd-MM-yyyy").split("-");
+		jQuery("#checkOutDatePicker").datepicker( "option", "minDate", new Date(arr1[2], arr1[1] -1, arr1[0]) );
 	});	
 	
 	$scope.init = function(hotelAllData){
@@ -1715,12 +1727,18 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 	$scope.noOfRoomShow = 1;
 	
 	$scope.searchby = {
-			checkIn:0
+			checkIn:"dd/mm/yyyy"
 	}
 	$scope.$watch('searchby.checkIn',function(newValue){
 		console.log(newValue);
 		var arr = newValue.split("-");
-		jQuery("#checkOutDatePicker").datepicker( "option", "minDate", new Date(arr[2], arr[1] -1, arr[0]) );
+		var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+		  var dateOut = new Date(datevalue);
+		  dateOut.setDate(dateOut.getDate() + 1);
+		  console.log($filter('date')(dateOut, "dd-MM-yyyy"));
+		
+		var arr1 = $filter('date')(dateOut, "dd-MM-yyyy").split("-");
+		jQuery("#checkOutDatePicker").datepicker( "option", "minDate", new Date(arr1[2], arr1[1] -1, arr1[0]) );
 	});	
 	
 $http.get("/searchCountries").success(function(response) {
@@ -2703,17 +2721,18 @@ $http.get("/searchCountries").success(function(response) {
 	$scope.addRooms = [];
 	$scope.indexCount = 0;
 	$scope.newRoom = function($event,index){
-		//console.log(index);
-		$scope.addRooms.push( {  } );
-		console.log(index);
-		$scope.indexCount = $scope.indexCount + 1;
-		console.log($scope.indexCount);
-		$scope.addRooms[$scope.indexCount].adult = "1 Adult";
-		$scope.addRooms[$scope.indexCount].cAllow = "true";
-		$scope.addRooms[$scope.indexCount].id = $scope.indexCount;
-		//$event.preventDefault();
-		$scope.countTotal($scope.indexCount);
 		
+		if($scope.addRooms.length < 8){
+			$scope.addRooms.push( {  } );
+			console.log(index);
+			$scope.indexCount = $scope.indexCount + 1;
+			console.log($scope.indexCount);
+			$scope.addRooms[$scope.indexCount].adult = "1 Adult";
+			$scope.addRooms[$scope.indexCount].cAllow = "true";
+			$scope.addRooms[$scope.indexCount].id = $scope.indexCount;
+			//$event.preventDefault();
+			$scope.countTotal($scope.indexCount);
+		}
 		
 	};
 	
@@ -2993,6 +3012,14 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 				}else{
 					obj1.days = parseInt(obj1.days) + $scope.hotel.cancellation_date_diff;
 				}
+				
+				console.log($scope.hotel.checkIn);
+				var arr = $scope.hotel.checkIn.split("-");
+				var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+				  var dateOut = new Date(datevalue);
+				  dateOut.setDate(dateOut.getDate() - 3);
+				  console.log($filter('date')(dateOut, "dd-MMM-yyyy"));
+				  obj1.cancellationDate = $filter('date')(dateOut, "dd-MMM-yyyy");
 			});
 		});
 		
@@ -3022,7 +3049,7 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 		$scope.hotel.hotelBookingDetails.travellerlastname = $scope.traveller.travellerlastname;
 		$scope.hotel.hotelBookingDetails.travellerpassportNo = $scope.traveller.travellerpassportNo;
 		//$scope.hotel.hotelBookingDetails.travelleraddress = $scope.traveller.address;
-		$scope.hotel.hotelBookingDetails.travellercountry = $scope.hotel.countryCode;
+		$scope.hotel.hotelBookingDetails.travellercountry = $scope.hotel.nationality;
 		$scope.hotel.hotelBookingDetails.travellerphnaumber = $scope.traveller.travellerphnaumber;
 		$scope.hotel.hotelBookingDetails.travelleremail = $scope.traveller.travelleremail;
 		$scope.hotel.hotelBookingDetails.nonSmokingRoom = $scope.traveller.nonSmokingRoom;
@@ -3049,17 +3076,17 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 			console.log("Success");
 			console.log(data);
 			console.log("-----------");
-    		if(data != "NocreditLimit"){
-    			$scope.flagA = 0;
-    			 notificationService.success("Room Book Successfully");
-    		// $window.location.replace("http://localhost:9000/AgentBookingInfo");
-    		 window.location = "/AgentBookingInfo";
-    		}else if(data == "NocreditLimit"){
+    		if(data == "NocreditLimit"){
     			
     			$scope.flagA = "NocreditLimit";
     			notificationService.error("Credit Limit Is Less");
     		}else if(data == "NullcreditLimit"){
     			notificationService.error("Credit limit not define");
+    		}else{
+    			$scope.flagA = 0;
+    			notificationService.success("Room Book Successfully");
+    			// $window.location.replace("http://localhost:9000/AgentBookingInfo");
+    			window.location = "/AgentBookingInfo";
     		}
     		
     	}).error(function(data, status, headers, config) {

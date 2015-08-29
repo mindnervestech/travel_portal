@@ -22,7 +22,7 @@
                                            </div>
                                             <div class="col-md-3 col-md-offset-1">
                                              <span>TOTAL : </span>
-                                                <span class="price">{{total}} <sup style="font-size: small;color: chocolate;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
+                                                <span class="price">{{total}} <sup style="font-size: 17px;color: chocolate;top: -2px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
                                             </div>
                                            <div class="col-md-2 pull-right" ng-if="flag == 0">
                                                  <!-- <span class="price"><small>AVG/NIGHT</small>$620</span>  -->
@@ -53,6 +53,7 @@
                                                                                                                      
                                         <dl class="info">
                                             <dt>Rate</dt>
+                                             <!-- <span style="font-size: 19px;"><dd currency-rate ng-model="Dateinfo.rate" styleValue="font-size: small;top: 0px;" rate="{{Dateinfo.rate}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></dd></span> -->
                                             <dd>{{Dateinfo.rate}} {{ratedetail.currencyShort}}</dd>
                                             <dt>Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
@@ -70,6 +71,7 @@
                                                                          
                                         <dl class="info">
                                             <dt>Rate</dt>
+                                            <!--  <span style="font-size: 19px;"><dd currency-rate ng-model="Dateinfo.rate" styleValue="font-size: small;top: 0px;" rate="{{Dateinfo.rate}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></dd></span> -->
                                             <dd>{{Dateinfo.rate}}  {{ratedetail.currencyShort}}</dd>
                                             <dt>Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>

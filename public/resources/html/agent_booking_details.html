@@ -385,7 +385,7 @@
                                                  <button type="submit" ng-click="openAmendPopup(agentinfo);closeThisDialog()" class="btn btn-primary">Amend Booking</button>
                                                <!-- </form>  -->
 											</div>
-											<div class="col-md-2">
+											<div class="col-md-2" ng-if="agentinfo.room_status != 'cancel'">
 													 <button type="button" ng-click="voucher(agentinfo.id,agentinfo.room_status)" class="btn btn-primary">Voucher</button>
 											</div>
 											

@@ -162,7 +162,7 @@
                                          </div>
                                          <div class="col-md-5"> <!-- ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null" -->
                                           <small>Per Room Per Night</small>
-                                          <span class="price" currency-rate styleValue="font-size: small;color: chocolate;top: -3px;" ng-model="adultRate.rateAvg" rate="{{adultRate.rateAvg}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
+                                          <span class="price" currency-rate styleValue="font-size: 17px;color: chocolate;top: -2px;" ng-model="adultRate.rateAvg" rate="{{adultRate.rateAvg}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
                                          </div>
                                          
                                           <div class="col-md-4"  ng-if="adultRate.mealTypeName == null">
@@ -175,14 +175,14 @@
                                    </div>
                                      <div class="col-md-9 col-md-offset-1">
                                      <div ng-if="roomInfo.nonRefund == true">
-                                     <label style="color: #01B7F2;" tooltip="a tooltip comment ">Non Refund</label>  
+                                     <label style="color: #01B7F2;" tooltip="a tooltip comment ">Non Refundable/Non-Ammendable</label>  
                                      </div>
                                      <div ng-if="roomInfo.nonRefund == false">
                                    
                                      <label style="color: #01B7F2;" tooltip="a tooltip comment ">Cancellation Policy</label>     
                                      <div ng-repeat="cancal in roomInfo.hotelRoomRateDetail[0].cancellation">
-                                      <label ng-if="cancal.penaltyCharge == true">*Any cancellation made prior {{cancal.days}} nights th the arrival, is subject to change for 0{{cancal.nights | limitTo:-1}} nights({{cancal.cancellationDate}})</label>
-                                      <label ng-if="cancal.penaltyCharge == false">* prior {{cancal.days}} the penalty charges will be {{cancal.percentage}} % of total stay({{cancal.cancellationDate}})</label>
+                                      <label ng-if="cancal.penaltyCharge == true">*Any cancellation made prior {{cancal.days}} nights to the arrival, is subject to charge for 0{{cancal.nights | limitTo:-1}} nights({{cancal.cancellationDate}})</label>
+                                      <label ng-if="cancal.penaltyCharge == false">* Any cancellation made prior {{cancal.days}} nights to the arrival, is subject to charge for {{cancal.percentage}}% for total booking nights({{cancal.cancellationDate}})</label>
                                      </div>                                
                                      </div>
                                    <!-- <div class="form-group col-sm-3 col-md-3 col-md-offset-10">
@@ -424,7 +424,7 @@
                                 <h2 class="box-title">{{hotel.hotelNm}}<small><i class="soap-icon-departure yellow-color"></i><span class="fourty-space">{{hotel.hotelAddr}}</span></small></h2>
                                  <span class="price clearfix">
                                     <small class="pull-left">Min/start</small>
-                                    <span class="pull-right" currency-rate styleValue="font-size: small;color: chocolate;top: -3px;" ng-model="hotel.minRate" rate="{{hotel.minRate}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
+                                    <span class="pull-right" currency-rate styleValue="font-size: 17px;color: chocolate;top: -2px;" ng-model="hotel.minRate" rate="{{hotel.minRate}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
                                 </span> 
                                  <div class="feedback clearfix">
                                  <div star-rating rating-value="hotel.stars" max="hotel.stars" on-rating-selected=""></div>
@@ -434,7 +434,7 @@
                                 <p class="description">{{hotel.imgDescription}}</p>
                             </div>
                         </article>
-                        <div class="travelo-box contact-box">
+                        <!-- <div class="travelo-box contact-box">
                             <h4>Need Travelo Help?</h4>
                             <p>We would be more than happy to help you. Our team advisor are 24/7 at your service to help you.</p>
                             <address class="contact-details">
@@ -442,10 +442,10 @@
                                 <br>
                                 <a class="contact-email" href="#">helptravelocom</a>
                             </address>
-                        </div>
-                        <div class="travelo-box">
+                        </div> -->
+                       <!--  <div class="travelo-box">
                             <h4>Similar Listings</h4>
-                        </div>
+                        </div> -->
                         <div class="travelo-box book-with-us-box">
                                 <div class="panel style1 arrow-right">
                                     <h4 class="panel-title">
@@ -476,13 +476,13 @@
                                                 <div class="form-group">
                                                     <label>Check In</label>
                                                     <div class="datepicker-wrap">
-                                                    <input type="text" name="checkIn" data-ng-model="searchby.checkIn" class="input-text full-width" placeholder="dd/mm/yyyy" />
+                                                    <input type="text" name="checkIn" id="checkInDatePicker" data-ng-model="searchby.checkIn" class="input-text full-width" placeholder="dd/mm/yyyy" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                    <label>Check Out</label>
                                                    <div class="datepicker-wrap">
-                                                    <input type="text" name="checkOut" data-ng-model="searchby.checkOut" class="input-text full-width" placeholder="dd/mm/yyyy" />
+                                                    <input type="text" name="checkOut" id="checkOutDatePicker" data-ng-model="searchby.checkOut" class="input-text full-width" placeholder="dd/mm/yyyy" />
                                                   
                                                    </div>
                                                 </div>

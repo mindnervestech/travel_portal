@@ -928,12 +928,12 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 		hProfileVM.setHotelBuiltYear(String.valueOf(hAmenities.getHotelBuiltYear()));
 	}
 	
-	InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
+	/*InfoWiseImagesPath infowiseimagesPath = InfoWiseImagesPath.findById(hAmenities.getSupplier_code());
 	if(infowiseimagesPath != null){
 	if(infowiseimagesPath.getGeneralDescription() != null){
 	hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
 	}
-	}
+	}*/
 	List<HotelMealPlan> mealtype = HotelMealPlan.getmealtype(hAmenities.getSupplier_code());
 	hProfileVM.setMealPlan(mealtype);
 	

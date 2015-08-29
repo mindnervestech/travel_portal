@@ -97,8 +97,8 @@
 				
 				 <div class="row">
 				
-								 <div class="col-xs-1">
-                                            <label type="text">BookingId</label>
+								 <div class="col-xs-1" style="padding-right: 0px;">
+                                            <label type="text">Booking Id</label>
                                             <div>
                                             <input type="text" name="bookingId" ng-model="searchby.bookingId" style="height: 31px;width: 56px;">
                                             </div>
@@ -181,7 +181,7 @@
                              <td>{{agent.noOfroom}}</td>
  							 <td ng-if='agent.room_status != "available"'>{{agent.room_status}}</td>
                              <td ng-if='agent.room_status == "available"'>Confirm</td>
-                               <td currency-rate ng-model="agent.total" rate="{{agent.total}}" supplier_curr="{{agent.currencyExchangeRate}}" agent_curr="{{agent.agent[0].currencyShort}}">{{agent.total}}<sup style="font-size: small;color: chocolate;top: 0px;" class="ng-binding"> {{agent.curr}}</sup></td>
+                               <td currency-rate ng-model="agent.total"  styleValue="font-size: small;top: 0px;" rate="{{agent.total}}" supplier_curr="{{agent.currencyExchangeRate}}" agent_curr="{{agent.agent[0].currencyShort}}">{{agent.total}}<!-- <sup style="font-size: small;color: chocolate;top: 0px;" class="ng-binding"> {{agent.curr}}</sup> --></td>
                             <!-- <td ng-if="agent.payment == 'no'">Outstanding</td>
                             <td ng-if="agent.payment == 'yes'">Received</td>  -->
                             <td>{{agent.payment}}</td>                          
