@@ -1446,7 +1446,7 @@ DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 				List<HotelProfile> hAmenities1 = HotelProfile.findAllDataforamenities(hProfile.getId()
 						,searchHotelValueVM.getAmenitiesCheck(),searchHotelValueVM.getServicesCheck(),searchHotelValueVM.getLocationCheck(),searchHotelValueVM.getStarCheck());  
 				
-				List<BatchMarkup> batchMarkup = BatchMarkup.findMarkupAgentSupplier(AgentRegistration.findById(Long.parseLong(session().get("agent"))), supplierid.longValue());
+				List<BatchMarkup> batchMarkup = BatchMarkup.findMarkupAgentSupplier(AgentRegistration.findByIdOnCode(session().get("agent")), supplierid.longValue());
 				
 				for(BatchMarkup bm:batchMarkup){
 					BatchMarkupInfoVM baInfoVM = new BatchMarkupInfoVM();
@@ -1773,7 +1773,7 @@ public static Result hoteldetailpage() {
 		if (object == null) {
 			HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
 			
-			List<BatchMarkup> batchMarkup = BatchMarkup.findMarkupAgentSupplier(AgentRegistration.findById(Long.parseLong(session().get("agent"))), supplierid.longValue());
+			List<BatchMarkup> batchMarkup = BatchMarkup.findMarkupAgentSupplier(AgentRegistration.findByIdOnCode(session().get("agent")), supplierid.longValue());
 			
 			for(BatchMarkup bm:batchMarkup){
 				BatchMarkupInfoVM baInfoVM = new BatchMarkupInfoVM();
@@ -2006,7 +2006,7 @@ public static Result hoteldetailpage() {
 			if (object == null) {
 				HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());	
 				
-				List<BatchMarkup> batchMarkup = BatchMarkup.findMarkupAgentSupplier(AgentRegistration.findById(Long.parseLong(session().get("agent"))), Long.parseLong(supplierCode));
+				List<BatchMarkup> batchMarkup = BatchMarkup.findMarkupAgentSupplier(AgentRegistration.findByIdOnCode(session().get("agent")), Long.parseLong(supplierCode));
 				
 				for(BatchMarkup bm:batchMarkup){
 					BatchMarkupInfoVM baInfoVM = new BatchMarkupInfoVM();

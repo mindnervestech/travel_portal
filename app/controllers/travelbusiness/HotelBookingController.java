@@ -84,7 +84,7 @@ public class HotelBookingController extends Controller {
 		HotelSearch searchVM = HotelForm.get();
 		
 		
-		AgentRegistration aRegistration = AgentRegistration.findById(Long.parseLong(session().get("agent")));
+		AgentRegistration aRegistration = AgentRegistration.findByIdOnCode(session().get("agent"));
 		if(aRegistration.getPaymentMethod().equals("Credit") || aRegistration.getPaymentMethod().equals("Pre-Payment")){
 			
 			if(aRegistration.getAvailableLimit() != null){
