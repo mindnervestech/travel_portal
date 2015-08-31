@@ -2079,8 +2079,10 @@ blockquote {
     z-index: 0; }
 
 /* 2.2.11. Price section */
+/* #7db921 */
+
 .price {
-  color: #7db921;
+  color: #FF7F50;
   font-size: 1.6667em;
   text-transform: uppercase;
   float: right;
@@ -7415,7 +7417,7 @@ ul.search-tabs {
     color: #2d3e52;
     text-transform: none; }
   .booking-details .other-details .total-price-value {
-    color: #98ce44;
+    color: #FF7F50;
     font-size: 1.4em; }
 
 /* 5.1.6. Thankyou page */

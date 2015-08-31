@@ -5,7 +5,7 @@
                               <div class="col-md-12" style="background-color: white;">
                             <h2 class="col-md-12" style="color: #428bca;">Hotel : {{ratedetail.hotelNm}}</h2>
                                <span class="col-md-1">TOTAL : </span>
-                              <span class="price col-md-3" style="float: left;text-align: left;" currency-rate styleValue="font-size: 17px;color: chocolate;top: -2px;" ng-model="finalTotal" rate="{{finalTotal}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span>
+                              <span class="price col-md-3" style="float: left;text-align: left;" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="finalTotal" rate="{{finalTotal}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span>
                            			<div class="col-md-1 pull-right" style="margin-bottom: 9px;">
                                              	<button type="button" class="btn btn-primary" ng-click="closePopup();closeThisDialog()">Close</button>
                                 		 </div>
@@ -41,8 +41,8 @@
                                 <div class="filter-section gray-area clearfix" style="max-height: 170px;overflow: auto;">
                                        <div class="pull-right col-md-12" ng-repeat="serchroom in addRooms" style="margin: 1%;">
                                        <div class="col-md-8">
-                                       	 <div class="col-md-1" style="margin-top: 20px;">
-                                           	 <span>Room{{$index+1}}</span>
+                                       	 <div class="col-md-1" style="margin-top: 20px;width: 66px;">
+                                           	 <span>Room {{$index+1}}</span>
                                          </div>
                                           
                                              <div class="col-md-2">
@@ -94,7 +94,7 @@
                                              </div>
                                              <div class="col-md-4">
                                               <div class="col-md-4" style="margin-top: 20px;padding: 0px;">
-                                         		 <span class="price" style="font-size: 15px;" currency-rate styleValue="font-size: small;color: chocolate;top: -1px;" ng-model="serchroom.total" rate="{{serchroom.total}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span> 
+                                         		 <span class="price" style="font-size: 15px;" currency-rate styleValue="font-size: small;color: black;top: -1px;" ng-model="serchroom.total" rate="{{serchroom.total}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span> 
                                        		  </div>
                                        		  <div class="col-md-4" style="margin-top: 18px;padding: 0px;">
                                          		<span><a ng-click="showDateWiseDetails($index)">DateWise Rate</a></span>
@@ -107,7 +107,7 @@
                                          </div>
                                          </div>
                                        </div>
-                                        <div class="col-md-1 pull-right" style="margin-top: 20px;padding: 0px;">
+                                        <div class="col-md-1 pull-right" style="margin-top: 20px;padding: 0px;" ng-if="addRooms.length < 8">
                                          	<button class="full-width text-center" ng-click="newRoom()">Add Room</button>
                                          </div>
                                      
@@ -148,7 +148,7 @@
                                                                                                                      
                                         <dl class="info">
                                             <dt>Rate</dt><!-- styleValue="font-size: small;color: chocolate;top: -1px;" -->
-                                             <span style="font-size: 19px;"><dd currency-rate ng-model="Dateinfo.rate" styleValue="font-size: small;top: 0px;" rate="{{Dateinfo.rate}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></dd></span> 
+                                             <span style="font-size: 25px;"><dd currency-rate ng-model="Dateinfo.rate" styleValue="font-size: small;top: 0px;" rate="{{Dateinfo.rate}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></dd></span> 
                                             <dt ng-if="Dateinfo.meal != null">Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
                                         </dl>
@@ -164,7 +164,7 @@
                                                                          
                                         <dl class="info">
                                             <dt>Rate</dt>
-                                              <span style="font-size: 19px;"><dd currency-rate ng-model="Dateinfo.rate" styleValue="font-size: small;top: 0px;" rate="{{Dateinfo.rate}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></dd></span>
+                                              <span style="font-size: 25px;"><dd currency-rate ng-model="Dateinfo.rate" styleValue="font-size: small;top: 0px;" rate="{{Dateinfo.rate}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></dd></span>
                                             <dt ng-if="Dateinfo.meal != null">Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
                                              <label ng-show="Dateinfo.flag == 1" style="color: #ff3e3e;">Room Not Available</label>

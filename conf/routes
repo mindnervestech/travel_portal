@@ -211,7 +211,8 @@ GET		/getPendingAgent			com.travelportal.controllers.AdminController.getPendingA
 GET		/getApprovedAgent			com.travelportal.controllers.AdminController.getApprovedAgent
 GET		/getRejectedAgent			com.travelportal.controllers.AdminController.getRejectedAgent
 GET		/getBlockAgent			com.travelportal.controllers.AdminController.getBlockAgent
-GET		/approveAgent/:id/:email/:agentCode/:creditLimit			com.travelportal.controllers.AdminController.approveAgent(id: Long,email:String,agentCode: Long,creditLimit:Long)
+GET		/approveAgent/:id/:email/:agentCode/:creditLimit	com.travelportal.controllers.AdminController.approveAgent(id: Long,email:String,agentCode: Long,creditLimit:Long)
+GET    /creditLimitUpdate/:agentId/:creditlimit     com.travelportal.controllers.AdminController.creditLimitUpdate(agentId: String,creditlimit:String)
 GET		/rejectAgent/:id			com.travelportal.controllers.AdminController.rejectAgent(id: Long)
 GET		/pendingAgent/:id		com.travelportal.controllers.AdminController.pendingAgent(id: Long)
 GET    /blockresultAgent/:id	com.travelportal.controllers.AdminController.blockresultAgent(id: Long)

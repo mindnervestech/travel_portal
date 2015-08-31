@@ -158,11 +158,11 @@
                                          <div class="col-md-6" style="width:50% !important;border-bottom: none !important;">
                                         
                                          <div class="col-md-4"  ng-if="adultRate.mealTypeName != null" style="margin-top: 5px;">
-                                        <span class="price"><small>Included</small><sup style="font-size: small;color: chocolate;top: 9px;">{{adultRate.mealTypeName}}</sup></span>
+                                        <span class="price"><b><small>Included</small></b><sup style="font-size: small;color: chocolate;top: 9px;">{{adultRate.mealTypeName}}</sup></span>
                                          </div>
                                          <div class="col-md-5"> <!-- ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null" -->
-                                          <small>Per Room Per Night</small>
-                                          <span class="price" currency-rate styleValue="font-size: 17px;color: chocolate;top: -2px;" ng-model="adultRate.rateAvg" rate="{{adultRate.rateAvg}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
+                                          <b><small>Per Room Per Night</small></b>
+                                          <span class="price" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="adultRate.rateAvg" rate="{{adultRate.rateAvg}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
                                          </div>
                                          
                                           <div class="col-md-4"  ng-if="adultRate.mealTypeName == null">
@@ -424,7 +424,7 @@
                                 <h2 class="box-title">{{hotel.hotelNm}}<small><i class="soap-icon-departure yellow-color"></i><span class="fourty-space">{{hotel.hotelAddr}}</span></small></h2>
                                  <span class="price clearfix">
                                     <small class="pull-left">Min/start</small>
-                                    <span class="pull-right" currency-rate styleValue="font-size: 17px;color: chocolate;top: -2px;" ng-model="hotel.minRate" rate="{{hotel.minRate}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
+                                    <span class="pull-right" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="hotel.minRate" rate="{{hotel.minRate}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
                                 </span> 
                                  <div class="feedback clearfix">
                                  <div star-rating rating-value="hotel.stars" max="hotel.stars" on-rating-selected=""></div>
@@ -457,7 +457,7 @@
                                                 <div class="form-group">
                                                     <label>Country</label>
                                                    <div class="selector">
-                                                    <select class="full-width" name="countryCode1" data-ng-model="searchby.countryCode" ng-change="onCountryChange()" placeholder="Country"> 
+                                                    <select class="full-width" name="countryCode1" data-ng-model="searchby.countryCode" ng-change="onCountryChange(searchby.countryCode)" placeholder="Country"> 
                                                         <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
                                                     </select><span class="custom-select full-width">{{searchby.countryName}}</span>
                                                     <input type="text" name="countryCode" data-ng-model="searchby.countryCode" value="searchby.countryCode" style="display: none"/>

@@ -5,7 +5,7 @@
                               <div class="col-md-12" style="background-color: white;">
                             <h2 class="col-md-5" style="color: #428bca;">Hotel : {{ratedetail.hotelNm}}</h2>
                                <span class="col-md-1">TOTAL : </span>
-                              <span class="price col-md-3" style="float: left;text-align: left;">{{finalTotal}} <sup style="font-size: small;color: chocolate;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
+                              <span class="price col-md-3" style="float: left;text-align: left;">{{finalTotal}} <sup style="font-size: small;color: black;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
                            
                                <div class="col-md-2" >
                                                  <!-- <span class="price"><small>AVG/NIGHT</small>$620</span>  -->
@@ -58,7 +58,7 @@
                                            	 			<div class="selector">
                                                     		<select class="full-width" name="noOfchild" data-ng-model="serchroom.noOfchild" ng-change="noOfchildSelect(serchroom.noOfchild,$index)">
                                                        		<option ng-repeat="child in childcount" value="{{child}}">{{child}}</option>
-		                                                    </select><span ng-if="serchroom.noOfchild == null" class="custom-select full-width">0</span>
+		                                                    </select><span ng-if="serchroom.noOfchild == null" class="custom-select full-width">0</span>	
 		                                                    <span ng-if="serchroom.noOfchild != null" class="custom-select full-width">{{serchroom.noOfchild}}</span>
         	                                        	</div>
                                              </div>
@@ -93,7 +93,7 @@
                                              </div>
                                              <div class="col-md-4">
                                               <div class="col-md-4" style="margin-top: 20px;">
-                                         		<span class="price" style="font-size: 15px;">{{serchroom.total}} <sup style="font-size: 10px;color: chocolate;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
+                                         		<span class="price" style="font-size: 15px;">{{serchroom.total}} <sup style="font-size: 10px;color: black;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
                                        		  </div>
                                        		  <div class="col-md-4" style="margin-top: 20px;padding: 0px;">
                                          		<span><a ng-click="showDateWiseDetails($index)">DateWise Rate</a></span>

@@ -188,7 +188,7 @@
                                                 <div class="form-group">
                                                     <label>Country</label>
                                                    <div class="selector">
-                                                    <select class="full-width" name="countryCode1" data-ng-model="searchby.countryCode" ng-change="onCountryChange()" placeholder="Country"> 
+                                                    <select class="full-width" name="countryCode1" data-ng-model="searchby.countryCode" ng-change="onCountryChange(searchby.countryCode)" placeholder="Country"> 
                                                         <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
                                                     </select><span class="custom-select full-width">{{searchby.countryName}}</span>
                                                     <input type="text" name="countryCode" data-ng-model="searchby.countryCode" value="searchby.countryCode" style="display: none"/>
@@ -267,7 +267,7 @@
                                     <div class="details col-sm-7 col-md-8">
                                         <div>
                                             <div>   <!-- style="border-right: none;" -->
-                                                <h4 class="box-title">{{hotelInfo.hotelNm}}<small><i class="soap-icon-departure yellow-color"></i> {{hotelInfo.hotelAddr}}</small></h4>
+                                                <h4 class="box-title"><b>{{hotelInfo.hotelNm}}</b><small style="color: blue;font-size: 11px;"><i class="soap-icon-departure yellow-color"></i> {{hotelInfo.hotelAddr}}</small></h4>
                                                 <div class="amenities col-md-6">
                                                 <div  ng-repeat="ser in hotelInfo.services"> 
                                             		 <div class="col-md-3" ng-if="ser.serviceId == 7">
@@ -303,8 +303,8 @@
                                         <div>
                                             <p title="{{hotelInfo.hoteldescription}}">{{hotelInfo.hoteldescription | limitTo: 200}}...</p>
                                              <div style="width: 150px;">
-                                             	<lable>Starting from</lable>
-                                                  <span class="price" currency-rate styleValue="font-size: 17px;color: chocolate;top: -2px;" ng-model="hotelInfo.minRate" rate="{{hotelInfo.minRate}}" supplier_curr="{{hotelInfo.currencyExchangeRate}}" agent_curr="{{hotelInfo.agentCurrency}}"><small>MIN/START</small></span>
+                                             	<b><lable>Starting from</lable></b>
+                                                  <span class="price" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="hotelInfo.minRate" rate="{{hotelInfo.minRate}}" supplier_curr="{{hotelInfo.currencyExchangeRate}}" agent_curr="{{hotelInfo.agentCurrency}}"><small>MIN/START</small></span>
                                                  
                                                   
                                                 <!--  <form action="/hoteldetailpage" method="post">
@@ -354,18 +354,18 @@
                                          <div class="col-md-5" style="width:55% !important;border-bottom: none !important;padding-bottom: 0px;">
                                        <div ng-repeat="rateShow in roominfo.hotelRoomRateDetail[0].rateDetailsNormal">
                                         <div class="col-md-6" ng-if="rateShow.rateAvg != null && rateShow.adult == '1 Adult'">
-                                          <small>MIN/NIGHT</small>
-                                          <span class="price" currency-rate styleValue="font-size: 17px;color: chocolate;top: -2px;" ng-model="rateShow.rateAvg" rate="{{rateShow.rateAvg}}" supplier_curr="{{hotelInfo.currencyExchangeRate}}" agent_curr="{{hotelInfo.agentCurrency}}"></span>
-                                          <small>1 PERSON</small>
+                                          <b><small>MIN/NIGHT</small></b>
+                                          <span class="price" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="rateShow.rateAvg" rate="{{rateShow.rateAvg}}" supplier_curr="{{hotelInfo.currencyExchangeRate}}" agent_curr="{{hotelInfo.agentCurrency}}"></span>
+                                          <b><small>1 PERSON</small></b>
                                          </div>
                                          <div class="col-md-6"  ng-if="rateShow.rateAvg != null && rateShow.adult == '2 Adults'">
-                                         <small>MIN/NIGHT</small>
-                                        <span class="price" currency-rate styleValue="font-size: 17px;color: chocolate;top: -2px;" ng-model="rateShow.rateAvg" rate="{{rateShow.rateAvg}}" supplier_curr="{{hotelInfo.currencyExchangeRate}}" agent_curr="{{hotelInfo.agentCurrency}}"><small>MIN/NIGHT</small> <small>2 PERSONS</small></span>
-                                        <small>2 PERSON</small>
+                                         <b><small>MIN/NIGHT</small></b>
+                                        <span class="price" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="rateShow.rateAvg" rate="{{rateShow.rateAvg}}" supplier_curr="{{hotelInfo.currencyExchangeRate}}" agent_curr="{{hotelInfo.agentCurrency}}"><small>MIN/NIGHT</small> <small>2 PERSONS</small></span>
+                                        <b><small>2 PERSON</small></b>
                                          </div>
                                         <!--  <div class="col-md-4" ng-if="rateShow.rateAvg != null && rateShow.adult == '3 Adults'">
                                          <small>MIN/NIGHT</small>
-                                         <span class="price" currency-rate styleValue="font-size: 17px;color: chocolate;top: -2px;" ng-model="rateShow.rateAvg" rate="{{rateShow.rateAvg}}" supplier_curr="{{hotelInfo.currencyExchangeRate}}" agent_curr="{{hotelInfo.agentCurrency}}"><small>MIN/NIGHT</small> <small>3 PERSONS</small></span>
+                                         <span class="price" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="rateShow.rateAvg" rate="{{rateShow.rateAvg}}" supplier_curr="{{hotelInfo.currencyExchangeRate}}" agent_curr="{{hotelInfo.agentCurrency}}"><small>MIN/NIGHT</small> <small>3 PERSONS</small></span>
                                          <small>3 PERSON</small>
                                          </div> -->
                                          </div>

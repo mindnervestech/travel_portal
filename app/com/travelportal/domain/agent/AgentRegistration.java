@@ -381,6 +381,16 @@ public static List<AgentRegistration> getAgentData(int code) {/*List<Integer> ra
 	}
 	}
 	
+	public static AgentRegistration findByIdOnCode(long id) {
+		try{
+		Query query = JPA.em().createQuery("select h from AgentRegistration h where h.agentCode = ?1").setParameter(1, id);
+		return (AgentRegistration) query.getSingleResult();
+	}
+	catch(Exception ex){
+		return null;
+	}
+	}
+	
 	public static AgentRegistration findByemail(String email) {
 		try
 		{

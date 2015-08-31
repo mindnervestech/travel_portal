@@ -98,7 +98,7 @@
                                          <div class="col-xs-6">
                                                 <label>Country</label>
                                                 <div class="selector">
-                                                    <select class="full-width" name="countryCode" data-ng-model="searchby.country" ng-change="onCountryChange()" placeholder="Country" required> 
+                                                    <select class="full-width" name="countryCode" data-ng-model="searchby.country" ng-change="onCountryChange(searchby.country)" placeholder="Country" required> 
                                                         <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
                                                     </select>
                                                     

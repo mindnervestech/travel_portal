@@ -116,7 +116,7 @@ travelBusiness.directive('currencyRate', function($compile) {
 				  var calu = "";
 				  var calu = parseFloat((1 / attrs.supplierCurr) * newValue);
 				  calu = calu.toFixed(1);
-				  jQuery(element).append("<span>"+calu+" <sup style='"+attrs.stylevalue+"'>"+attrs.agentCurr+"</sup></span>");
+				  jQuery(element).append("<b><span>"+calu+" <sup style='"+attrs.stylevalue+"'>"+attrs.agentCurr+"</sup></span></b>");
               }); 
 	        }
 	};

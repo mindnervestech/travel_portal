@@ -1201,9 +1201,9 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 		$scope.searchCountries = response;
 	}); 
 
-	$scope.onCountryChange = function() {
+	$scope.onCountryChange = function(countryCode) {
 				console.log("for city");
-		$http.get('/searchCities/'+$scope.searchby.country)
+		$http.get('/searchCities/'+countryCode)
 		.success(function(data){
 			if(data) {
 				console.log("----");
@@ -1291,8 +1291,6 @@ travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDia
 						
 		});
 		
-	
-		
 		angular.forEach(hotelAllData.hotellist, function(value, key){
 		angular.forEach(value.hotelbyRoom, function(obj, index){ 
 			angular.forEach(obj.hotelRoomRateDetail[0].rateDetailsNormal, function(obj1, index1){ 
@@ -1331,6 +1329,7 @@ travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDia
 		$scope.searchby.nationalityName = $scope.hotellistInfo[0].nationalityName;
 		$scope.searchby.nationalityCode = $scope.hotellistInfo[0].nationality;
 		
+		$scope.onCountryChange($scope.searchby.countryCode);
 		
 		console.log($scope.searchby);
 	}
@@ -1340,9 +1339,9 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.searchCountries = response;
 	}); 
 
-	$scope.onCountryChange = function() {
+	$scope.onCountryChange = function(countryCode) {
 				console.log("for city");
-		$http.get('/searchCities/'+$scope.searchby.countryCode)
+		$http.get('/searchCities/'+countryCode)
 		.success(function(data){
 			if(data) {
 				console.log("----");
@@ -1843,6 +1842,8 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.searchby.checkOut = $scope.hotel.checkOut;
 		$scope.searchby.nationalityName = $scope.hotel.nationalityName;
 		$scope.searchby.nationalityCode = $scope.hotel.nationality;
+		
+		$scope.onCountryChange($scope.searchby.countryCode);
 		
 	}
 	
@@ -2985,7 +2986,7 @@ $http.get("/searchCountries").success(function(response) {
 });
 
 
-travelBusiness.controller('hotelBookingController', function ($scope,$http,$filter,ngDialog,notificationService,$window,$cookieStore) {
+travelBusiness.controller('hotelBookingController', function ($scope,$http,$filter,ngDialog,notificationService,$window,$cookieStore,$timeout) {
 	
 	$scope.AgentId = $cookieStore.get('AgentId');
 	$scope.AgentCompany = $cookieStore.get('AgentCompany');
@@ -3083,16 +3084,21 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
     		}else if(data == "NullcreditLimit"){
     			notificationService.error("Credit limit not define");
     		}else{
-    			$scope.flagA = 0;
+    			$scope.flagA = "success";
     			notificationService.success("Room Book Successfully");
     			// $window.location.replace("http://localhost:9000/AgentBookingInfo");
-    			window.location = "/AgentBookingInfo";
+    			$timeout(setAgentPage, 5000);
     		}
     		
     	}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
 		});
+	}
+	
+	
+	function setAgentPage() {
+		window.location = "/AgentBookingInfo";
 	}
 	
 	

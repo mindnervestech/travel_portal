@@ -68,15 +68,15 @@
                                         </div>
                                         <div class="col-sm-4 col-md-3">
                                             <label>*passenger first name</label>
-                                            <input type="text" data-ng-model="traveller.travellerfirstname" class="input-text full-width" value="" placeholder="" required>
+                                            <input type="text" data-ng-model="traveller.travellerfirstname" class="input-text full-width" value="" placeholder="" style="text-transform: capitalize;" required>
                                         </div>
                                        <div class="col-sm-4 col-md-3">
                                             <label>passenger Middle name</label>
-                                            <input type="text" data-ng-model="traveller.travellermiddlename" class="input-text full-width" value="" placeholder="">
+                                            <input type="text" data-ng-model="traveller.travellermiddlename" class="input-text full-width" value="" placeholder="" style="text-transform: capitalize;">
                                         </div>
                                         <div class="col-sm-4 col-md-3">
                                             <label>*passenger last name</label>
-                                            <input type="text" data-ng-model="traveller.travellerlastname" class="input-text full-width" value="" placeholder="" required>
+                                            <input type="text" data-ng-model="traveller.travellerlastname" class="input-text full-width" value="" placeholder="" style="text-transform: capitalize;" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -147,8 +147,11 @@
                                         <div class="form-group col-sm-3 col-md-2">
                                             <label>Room {{$index+1}}</label>
                                         </div>
-                                        <div class="form-group col-sm-6 col-md-5">
-                                               <input type="text" data-ng-model="rooms.regiterBy" class="input-text full-width" value="" placeholder="">
+                                        <div class="form-group col-sm-6 col-md-5" ng-if="$index == 0">
+                                               <input type="text" data-ng-model="rooms.regiterBy" class="input-text full-width" value="{{traveller.travellerfirstname}}" placeholder="" style="text-transform: capitalize;">
+                                        </div>
+                                        <div class="form-group col-sm-6 col-md-5" ng-if="$index != 0">
+                                               <input type="text" data-ng-model="rooms.regiterBy" class="input-text full-width" value="" placeholder="" style="text-transform: capitalize;">
                                         </div>
                                          <div class="form-group col-sm-6 col-md-5">
                                          <label class="col-sm-4 col-md-3" style="padding: 0px;width: 60px;">({{rooms.adult}}</label><label style="padding: 0px;" ng-if="rooms.noOfchild == null" class="col-sm-2 col-md-1">)</label>  <label class="col-sm-4 col-md-3" style="padding: 0px;" ng-if="rooms.noOfchild != null">, {{rooms.noOfchild}} child)</label>
@@ -341,6 +344,9 @@
                                 <div class="form-group row" ng-show="flagA =='NocreditLimit'">
 									<label style="color:red;">Credit Limit Is Less</label>
                                 </div>
+                                 <div class="form-group row" ng-show="flagA == 'success'">
+									<label style="color:#7fb231;">Dear {{traveller.travellerfirstname}} {{traveller.travellerlastname}},<br>Thank you, very much for the booking, we have received your booking, and is in process, however you will soon, receive the confirmation on your e-mail.<br> If you do not receive any email in 24 hours, please contact our office.Best Regards,<br>The Expedition Co., Ltd.</label>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -387,7 +393,7 @@
                                 <!--  <dt class="feature">Per Room price:</dt><dd class="value" currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"> -2px;" class="ng-binding"></dd>
                                 <dt class="feature">Total Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * <span currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd> -->
                                 <!-- <dt class="feature">{{hotel.hotelBookingDetails.noOfroom}} Room x {{hotel.datediff}} Night</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * <span currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd> -->
-                               <dt class="total-price">Total Price</dt><dd class="total-price-value" currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" styleValue="font-size: 13px;color: chocolate;top: -1px;" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
+                               <dt class="total-price">Total Price</dt><dd class="total-price-value" currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" styleValue="font-size: 13px;color: black;top: -1px;" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
                             </dl>
                         </div>
                         
