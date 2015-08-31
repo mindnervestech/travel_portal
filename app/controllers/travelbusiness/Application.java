@@ -448,7 +448,7 @@ public static void DateWiseSortFunction(List<HotelSearch> hotellist,String toDat
 
 			HotelProfile hAmenities = HotelProfile.findAllData(supplierid.longValue());
 			
-			List<BatchMarkup> batchMarkup = BatchMarkup.findMarkupAgentSupplier(AgentRegistration.findById(Long.parseLong(session().get("agent"))), supplierid.longValue());
+			List<BatchMarkup> batchMarkup = BatchMarkup.findMarkupAgentSupplier(AgentRegistration.findByIdOnCode(session().get("agent")), supplierid.longValue());
 			
 			for(BatchMarkup bm:batchMarkup){
 				BatchMarkupInfoVM baInfoVM = new BatchMarkupInfoVM();
