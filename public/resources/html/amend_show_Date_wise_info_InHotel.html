@@ -3,17 +3,21 @@
 							
                             <div id="booking" class="tab-pane fade active in">
                               <div class="col-md-12" style="background-color: white;">
-                            <h2 class="col-md-5" style="color: #428bca;">Hotel : {{ratedetail.hotelNm}}</h2>
+                            <h2 class="col-md-12" style="color: #428bca;">Hotel : {{ratedetail.hotelNm}}</h2>
                                <span class="col-md-1">TOTAL : </span>
-                              <span class="price col-md-3" style="float: left;text-align: left;">{{finalTotal}} <sup style="font-size: small;color: black;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
-                           
-                               <div class="col-md-2" >
+                              <span class="price col-md-3" style="float: left;text-align: left;" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="finalTotal" rate="{{finalTotal}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span>
+                           			<div class="col-md-1 pull-right" style="margin-bottom: 9px;">
+                                             	<button type="button" class="btn btn-primary" ng-click="closePopup();closeThisDialog()">Close</button>
+                                		 </div>
+                               <div class="col-md-2 pull-right" >
                                                  <!-- <span class="price"><small>AVG/NIGHT</small>$620</span>  -->
                                                  <form action="/hotelBookingpage" method="post">
                               					        <input type="text" name="supplierCode"  value="{{ratedetail.supplierCode}}" style="display: none;">
                                 					    <input type="text" name="checkIn" value="{{ratedetail.checkIn}}" style="display: none;">
                                 					    <input type="text" name="bookingId" value="{{ratedetail.bookingId}}" style="display: none;">
                               						     <input type="text" name="checkOut" value="{{ratedetail.checkOut}}" style="display: none;">
+                              						     <input type="text" name="currencyExchangeRate" value="{{ratedetail.currencyExchangeRate}}" style="display: none;">
+                              						     <input type="text" name="agentCurrency" value="{{ratedetail.agentCurrency}}" style="display: none;">
                             						     <input type="text" name="nationalityCode" value="{{ratedetail.nationality}}" style="display: none;">
                             						      <input type="text" name="roomId" value="{{ratedetail.hotelbyRoom[0].roomId}}" style="display: none;">
                             						      <input type="text" name="adult" value="{{searchroom.adult}}" style="display: none;">
@@ -29,19 +33,16 @@
                                                </form>
                                                 <!-- <a class="button btn-small full-width text-center" style="background: #7db921;" title=""  href="/hoteldetailpage">Book Now</a> -->
                                             </div>
-                                             <div class="col-md-1">
-                                             	<button type="button" class="btn btn-primary" ng-click="closePopup();closeThisDialog()">Close</button>
-                                		 </div>
+                                             
                                <!--  <h2 class="col-md-6">Room : {{roominfo.roomName}}</h2> -->
                                  </div>
                                 
                                  
-                               
                                 <div class="filter-section gray-area clearfix" style="max-height: 170px;overflow: auto;">
                                        <div class="pull-right col-md-12" ng-repeat="serchroom in addRooms" style="margin: 1%;">
                                        <div class="col-md-8">
-                                       	 <div class="col-md-1" style="margin-top: 20px;">
-                                           	 <span>Room{{$index+1}}</span>
+                                       	 <div class="col-md-1" style="margin-top: 20px;width: 66px;">
+                                           	 <span>Room {{$index+1}}</span>
                                          </div>
                                           
                                              <div class="col-md-2">
@@ -53,20 +54,20 @@
                              				 			           <span class="custom-select full-width" ng-if="serchroom.adult != null" >{{serchroom.adult | limitTo: 1}}</span>   <!-- {{ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal[0].adult}} -->
                                            			 </div>
                                            	</div>
-                                           	<div class="col-md-2" >  <!--  ng-if="serchroom.cAllow == 'true'" -->
+                                           	<div class="col-md-2" ng-if="serchroom.cAllow == 'true'">
                                            			<span>CHILD</span>
                                            	 			<div class="selector">
                                                     		<select class="full-width" name="noOfchild" data-ng-model="serchroom.noOfchild" ng-change="noOfchildSelect(serchroom.noOfchild,$index)">
-                                                       		<option ng-repeat="child in childcount" value="{{child}}">{{child}}</option>
-		                                                    </select><span ng-if="serchroom.noOfchild == null" class="custom-select full-width">0</span>	
+                                                       			<option value="0">0</option>
+                                                       			<option ng-repeat="child in childcount" value="{{child}}">{{child}}</option>
+		                                                    </select><span ng-if="serchroom.noOfchild == null" class="custom-select full-width">0</span>
 		                                                    <span ng-if="serchroom.noOfchild != null" class="custom-select full-width">{{serchroom.noOfchild}}</span>
         	                                        	</div>
                                              </div>
-                                             
-                                             <div class="col-md-2"  ng-repeat="child in serchroom.childselected">  <!--  ng-if="serchroom.cAllow == 'true'" -->
+                                             <div class="col-md-2" ng-if="serchroom.cAllow == 'true'" ng-repeat="child in serchroom.childselected">
                                            			<span>Age</span>
                                            	 			<div class="selector">
-                                                    		 <select class="full-width" name="childAge{{$parent.$index}}{{$index}}" data-ng-model="child.age" ng-change="parChildAge(child.age,$index,$parent.$index)">
+                                                    		 <select class="full-width" name="childAge{{serchroom.id}}{{$index}}" data-ng-model="child.age" ng-change="parChildAge(child.age,$index,serchroom.id)">
                                                          <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
@@ -91,11 +92,13 @@
                                              </div>
                                              
                                              </div>
+                                             
                                              <div class="col-md-4">
-                                              <div class="col-md-4" style="margin-top: 20px;">
-                                         		<span class="price" style="font-size: 15px;">{{serchroom.total}} <sup style="font-size: 10px;color: black;top: -3px;" class="ng-binding">{{ratedetail.currencyShort}}</sup></span>
+                                              <div class="col-md-4" style="margin-top: 20px;padding: 0px;">
+                                         		 
+                                         		 <span class="price" style="font-size: 15px;" currency-rate styleValue="font-size: small;color: black;top: -1px;" ng-model="serchroom.total" rate="{{serchroom.total}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span> 
                                        		  </div>
-                                       		  <div class="col-md-4" style="margin-top: 20px;padding: 0px;">
+                                       		  <div class="col-md-4" style="margin-top: 18px;padding: 0px;">
                                          		<span><a ng-click="showDateWiseDetails($index)">DateWise Rate</a></span>
                                        		  </div>
                                         
@@ -106,7 +109,8 @@
                                          </div>
                                          </div>
                                        </div>
-                                        <div class="col-md-1 pull-right" style="margin-top: 20px;padding: 0px;">
+                                        <div class="col-md-1 pull-right" style="margin-top: 20px;padding: 0px;" ng-if="addRooms.length < 5">
+                                        
                                          	<button class="full-width text-center" ng-click="newRoom()">Add Room</button>
                                          </div>
                                      
@@ -128,7 +132,7 @@
                                         
                                 </div>
                                   <div class="col-md-12" ng-if="breakfastAddfree != '' && breakfastAddfree != null">
-                                  <label>Breakfast charges : {{breakfastAddfree}}</label>
+                                  Breakfast charges :<label currency-rate ng-model="breakfastAddfree" rate="{{breakfastAddfree}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></label>
                                   </div>
                                   
                                    <div class="col-md-12">
@@ -146,8 +150,8 @@
                                         </div>
                                                                                                                      
                                         <dl class="info">
-                                            <dt>Rate</dt>
-                                            <dd>{{Dateinfo.rate}} {{ratedetail.currencyShort}}</dd>
+                                            <dt>Rate</dt><!-- styleValue="font-size: small;color: chocolate;top: -1px;" -->
+                                             <span style="font-size: 25px;"><dd currency-rate ng-model="Dateinfo.rate" styleValue="font-size: small;top: 0px;" rate="{{Dateinfo.rate}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></dd></span> 
                                             <dt ng-if="Dateinfo.meal != null">Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
                                         </dl>
@@ -163,7 +167,7 @@
                                                                          
                                         <dl class="info">
                                             <dt>Rate</dt>
-                                            <dd>{{Dateinfo.rate}}  {{ratedetail.currencyShort}}</dd>
+                                              <span style="font-size: 25px;"><dd currency-rate ng-model="Dateinfo.rate" styleValue="font-size: small;top: 0px;" rate="{{Dateinfo.rate}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></dd></span>
                                             <dt ng-if="Dateinfo.meal != null">Included</dt>
                                             <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
                                              <label ng-show="Dateinfo.flag == 1" style="color: #ff3e3e;">Room Not Available</label>
@@ -197,5 +201,6 @@ input.input-text,select,textarea,span.custom-select {
 .ngdialog.ngdialog-theme-default .ngdialog-content {
   min-height: 627px;
 }
+
 </style>     
                            

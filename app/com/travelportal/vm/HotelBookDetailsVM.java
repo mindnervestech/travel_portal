@@ -54,8 +54,8 @@ public class HotelBookDetailsVM {
 	public String nonRefund;
 	public String payment;
 	public List<PassengerBookingInfoVM> passengerInfo;
-	
-	
+	public Date latestCancellationDate;	
+	public String cancellationNightsCharge;
 	public String nonSmokingRoom;
 	public String twinBeds;
 	public String lateCheckout;
@@ -100,7 +100,6 @@ public class HotelBookDetailsVM {
 	public void setCheckOut(String checkOut) {
 		this.checkOut = checkOut;
 	}
-	
 		
 	public String getAdult() {
 		return adult;
@@ -400,6 +399,19 @@ public class HotelBookDetailsVM {
 	public void setCurrencyExchangeRate(Double currencyExchangeRate) {
 		this.currencyExchangeRate = currencyExchangeRate;
 	}
+	public Date getLatestCancellationDate() {
+		return latestCancellationDate;
+	}
+	public void setLatestCancellationDate(Date latestCancellationDate) {
+		this.latestCancellationDate = latestCancellationDate;
+	}
+	public String getCancellationNightsCharge() {
+		return cancellationNightsCharge;
+	}
+	public void setCancellationNightsCharge(String cancellationNightsCharge) {
+		this.cancellationNightsCharge = cancellationNightsCharge;
+	}
+	
 	
 	
 	

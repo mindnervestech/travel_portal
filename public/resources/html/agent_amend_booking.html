@@ -81,8 +81,8 @@
 									<input id="date" name="checkIn"
 										data-ng-model="agentinfo.checkInAmend"
 										class="input-filter form-control meal-font-text-size"
-										data-provide="datepicker" 
-										data-date-autoclose="true" data-date-format="dd-mm-yyyy" required>
+										data-provide="datepicker"
+										data-date-autoclose="true" data-date-start-date="{{agentinfo.startDate}}" data-date-format="dd-mm-yyyy" required>
  
 								</div>
 								<div class="col-md-2">
@@ -93,7 +93,7 @@
 									<input id="date" name="checkOut"
 										data-ng-model="agentinfo.checkOutAmend"
 										class="input-filter form-control meal-font-text-size"
-										data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy" required>
+										data-provide="datepicker" data-date-autoclose="true" data-date-start-date="{{agentinfo.startDate}}" data-date-format="dd-mm-yyyy" required>
 								
 								</div>
 								

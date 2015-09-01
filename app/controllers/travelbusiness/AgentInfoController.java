@@ -26,12 +26,15 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import play.Play;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.travelbusiness.agentBookingInfo;
 
+import com.fasterxml.jackson.annotation.JsonFormat.Value;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -47,6 +50,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
+import com.travelportal.domain.RoomAndDateWiseRate;
 import com.travelportal.domain.RoomRegiterBy;
 import com.travelportal.domain.RoomRegiterByChild;
 import com.travelportal.domain.admin.CurrencyExchangeRate;
@@ -57,6 +61,8 @@ import com.travelportal.vm.AgentRegisVM;
 import com.travelportal.vm.ChildselectedVM;
 import com.travelportal.vm.HotelBookDetailsVM;
 import com.travelportal.vm.PassengerBookingInfoVM;
+import com.travelportal.vm.RateDatedetailVM;
+import com.travelportal.vm.SearchHotelValueVM;
 
 public class AgentInfoController extends Controller {
 
@@ -108,16 +114,23 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setNoOfroom(hBookingDetails.getNoOfroom());
 			hDetailsVM.setTotalNightStay(hBookingDetails.getTotalNightStay());
 			hDetailsVM.setRoom_status(hBookingDetails.getRoom_status());
-
+			hDetailsVM.setLatestCancellationDate(hBookingDetails.getLatestCancellationDate());
+			hDetailsVM.setCancellationNightsCharge(hBookingDetails.getCancellationNightsCharge());
+			
+			
 			List<AgentRegisVM>aList = new ArrayList<>();
 			if(hBookingDetails.getAgentId() != null){
 				AgentRegistration agent = AgentRegistration.getAgentCode(hBookingDetails.getAgentId().toString());
 				AgentRegisVM agRegisVM=new AgentRegisVM();
+				
 				agRegisVM.setAgentCode(agent.getAgentCode());
 				agRegisVM.setFirstName(agent.getFirstName());
 				agRegisVM.setLastName(agent.getLastName());
 				agRegisVM.setCompanyName(agent.getCompanyName());
 				agRegisVM.setCurrency(agent.getCurrency().getCurrencyName());
+				agRegisVM.setCreditLimit(agent.getCreditLimit());
+				agRegisVM.setAvailableLimit(agent.getAvailableLimit());
+				
 				String[] currencySplit;
 				 currencySplit = agent.getCurrency().getCurrencyName().split(" - ");
 				 agRegisVM.setCurrencyShort(currencySplit[0]);
@@ -193,6 +206,22 @@ public class AgentInfoController extends Controller {
 					paInfoVM.noOfchild =String.valueOf(rBy.getNoOfchild());
 					paInfoVM.regiterBy = rBy.getRegiterBy();
 					paInfoVM.total = rBy.getTotal();
+				
+					List<RateDatedetailVM> rlist = new ArrayList<>();
+					List<RoomAndDateWiseRate> dateWiseRates = RoomAndDateWiseRate.getRoomRateInfoByRoomId(rBy.getId());
+					if(dateWiseRates != null){
+						for(RoomAndDateWiseRate roomDate:dateWiseRates){
+							RateDatedetailVM rDVM = new RateDatedetailVM();
+							rDVM.date = roomDate.getDate();
+							rDVM.day = roomDate.getDay();
+							rDVM.fulldate = roomDate.getFulldate();
+							rDVM.month = roomDate.getMonth();
+							rDVM.rate = String.valueOf(roomDate.getRate());
+							rlist.add(rDVM);
+						}
+						paInfoVM.rateDatedetail = rlist;
+					}
+					
 					List<ChildselectedVM> chList = new ArrayList<>();
 					List<RoomRegiterByChild> rByChild = RoomRegiterByChild.getRoomChildInfoByRoomId(rBy.getId());
 					if(rByChild != null){
@@ -348,6 +377,14 @@ public class AgentInfoController extends Controller {
 
 		cancelMail(hBookingDetails.getTravelleremail(),hBookingDetails);
 
+		Double Credit = 0d;
+		AgentRegistration aRegistration = AgentRegistration.findByIdOnCode(session().get("agent"));
+		if(aRegistration.getPaymentMethod().equals("Credit") && aRegistration.getPaymentMethod().equals("Pre-Payment")){
+			Credit = aRegistration.getAvailableLimit() + hBookingDetails.getTotal();
+			aRegistration.setAvailableLimit(Credit);
+			aRegistration.merge();
+		}
+		
 		List<HotelBookingDates> hotelBookingDates = HotelBookingDates.getDateBybookingId(id);
 		//RoomAllotedRateWise rateWise = RoomAllotedRateWise.findByRateId(hBookingDetails.getRate().getId());
 		for(HotelBookingDates hDates:hotelBookingDates){
@@ -1226,7 +1263,29 @@ public class AgentInfoController extends Controller {
 @Transactional(readOnly=true)
 	public static Result cancellationBookingMail(){
 	
-		return ok();
 	}
-
+	
+	 @Transactional(readOnly = false)
+	    public static Result bookingCancelAndCharge(Long bookingId,String nightRate,String pandingAmount) {
+	    	
+	    	DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+	    	System.out.println(nightRate);
+	    	System.out.println(session().get("agent"));
+	    	
+			HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingById(bookingId);
+			hBookingDetails.setRoom_status("cancel");
+			hBookingDetails.setCancelBookingCharges(Double.parseDouble(nightRate));
+			hBookingDetails.merge();
+			
+			Double Credit = 0d;
+			AgentRegistration aRegistration = AgentRegistration.findByIdOnCode(session().get("agent"));
+			if(aRegistration.getPaymentMethod().equals("Credit") || aRegistration.getPaymentMethod().equals("Pre-Payment")){
+				Credit = aRegistration.getAvailableLimit() + Double.parseDouble(pandingAmount);
+				aRegistration.setAvailableLimit(Credit);
+				aRegistration.merge();
+			}
+	        	
+	    
+			return ok();
+	 }
 }

@@ -26,7 +26,7 @@
 												data-toggle="tab" style="padding: 7px 5px;">Booking Info</a></li>
 											<li class="menu-li custom_menu"><a href="#Step2"
 												data-toggle="tab" style="padding: 7px 5px;"
-												ng-click="showdateWiseView(agentinfo.id)">Date Wise Booking Info</a></li>
+												ng-click="showdateWiseView(agentinfo)">Date Wise Booking Info</a></li>
 										
 											<li class="menu-li custom_menu"><a href="#Step3"
 												data-toggle="tab" style="padding: 7px 5px;"
@@ -377,7 +377,7 @@
 											<div class="form-group">
 		    								
 											<div class="col-md-2" ng-if="agentinfo.room_status == 'available'">
-													 <button type="button" ng-click="cancelbooking(agentinfo.id,agentinfo.nonRefund)" class="btn btn-primary">Cancel Booking</button>
+													 <button type="button" ng-click="cancelbooking(agentinfo.id,agentinfo.nonRefund,agentinfo)" class="btn btn-primary">Cancel Booking</button>
 											</div>
 											
 											<div class="col-md-2" ng-if="agentinfo.room_status == 'available' && agentinfo.nonRefund == 'false'">

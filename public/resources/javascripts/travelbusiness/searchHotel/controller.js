@@ -139,10 +139,10 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 	
 	
 	$scope.rateDatewise = [];
-	$scope.showdateWiseView = function(agent){
-		console.log(agent);
+	$scope.showdateWiseView = function(agentinfo){
+		console.log(agentinfo.id);
 		$scope.rateDatewise = [];
-		$http.get("/getbookDateWise/"+agent).success(function(response){
+		$http.get("/getbookDateWise/"+agentinfo.id).success(function(response){
 			console.log(response);
 			//$scope.bookinginfo = response;
 			
@@ -191,31 +191,62 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		});
 	}
 	
-	$scope.cancelbooking = function(agentId,nonrefund){
-		console.log(agentId);
-		console.log(nonrefund);
+	$scope.cancelbooking = function(bookingId, nonrefund, agentInfo){
+		
 		if(nonrefund == "true"){
 			ngDialog.close();
 			notificationService.error("This booking can not be cancel");
 		}else{
-		$http.get("/getbookingcancel/"+agentId).success(function(response){
+			console.log(agentInfo);
+			var pandingAmount = 0;
+			 var date = new Date();
+			 var night = agentInfo.cancellationNightsCharge.split("-");
+			 if(Date.parse($filter('date')(agentInfo.latestCancellationDate, "MM-dd-yyyy")) <= Date.parse($filter('date')(date, "MM-dd-yyyy"))){
+				
+				 if (confirm("On cancelation of this booking apply "+night[1]+" night charges!\n sure to cancel Booking ?")) {
+					    
+					 	var nightRate = 0;
+					 angular.forEach(agentInfo.passengerInfo,function(value,key){
+						 angular.forEach(value.rateDatedetail,function(value1,key1){
+							 	var i=0;
+							 		if(night[1] > key1){
+							 			console.log(value1.rate);
+							 			nightRate = parseInt(nightRate) + parseInt(value1.rate);
+							 		}
+						 }); 	
+					 });
+					 console.log("nightRate");
+					 console.log(nightRate);
+					 pandingAmount = parseInt(agentInfo.total) - parseInt(nightRate);
+					 console.log(pandingAmount);
+					 $http.get("/bookingCancelAndCharge/"+bookingId+"/"+nightRate+"/"+pandingAmount).success(function(response){
+						 console.log("success");
+					 });
+					 
+					 
+				 }
+			 }else{
+				 console.log("Not");
+				 $http.get("/getbookingcancel/"+bookingId).success(function(response){
+						
+						notificationService.success("Cancel Booking");
+						ngDialog.close();
+						$http.get("/getagentInfo/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.status).success(function(response){
+							
+							console.log(response);
+							totalPages = response.totalPages;
+							currentPage = response.currentPage;
+							$scope.pageNumber = response.currentPage;
+							$scope.pageSize = response.totalPages;
+							$scope.agentBook = response.results;
+							if(totalPages == 0) {
+								$scope.pageNumber = 0;
+							}
+							
+						});
+					});
+			 }
 			
-			notificationService.success("Cancel Booking");
-			ngDialog.close();
-			$http.get("/getagentInfo/"+currentPage+"/"+$scope.fromData+"/"+$scope.toDate+"/"+$scope.status).success(function(response){
-				
-				console.log(response);
-				totalPages = response.totalPages;
-				currentPage = response.currentPage;
-				$scope.pageNumber = response.currentPage;
-				$scope.pageSize = response.totalPages;
-				$scope.agentBook = response.results;
-				if(totalPages == 0) {
-					$scope.pageNumber = 0;
-				}
-				
-			});
-		});
 		}
 	}
 	
@@ -240,20 +271,29 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 	
 	$scope.roomType;
 	$scope.openAmendPopup = function(agentinfo){
+		
 		$scope.agentinfo = agentinfo;
 		
-		$http.get("/getRoomType/"+$scope.agentinfo.supplierCode).success(function(response){
-			console.log("send************ Vouchar");
-			console.log(response);
-			$scope.roomType = response;
-		});
-		ngDialog.open({
-			template: '/assets/resources/html/agent_amend_booking.html',
-			scope : $scope,
-			//controller:'hoteProfileController',
-			className: 'ngdialog-theme-default'
-		});
+		var pandingAmount = 0;
+		 var date = new Date();
+		 if(Date.parse($filter('date')(agentinfo.latestCancellationDate, "MM-dd-yyyy")) <= Date.parse($filter('date')(date, "MM-dd-yyyy"))){
+					 notificationService.error("you can not amend your booking");
+		 }else{
+			 $scope.agentinfo.startDate = $filter('date')(date, "dd-MM-yyyy")
+			 $http.get("/getRoomType/"+$scope.agentinfo.supplierCode).success(function(response){
+					$scope.roomType = response;
+				});
+				ngDialog.open({
+					template: '/assets/resources/html/agent_amend_booking.html',
+					scope : $scope,
+					//controller:'hoteProfileController',
+					className: 'ngdialog-theme-default'
+				});
+		 }
+		
 	}
+	
+	
 	
 	$scope.amendButton = 0;
 	$scope.dateAmendFunction = function(value1,value2,value3,agentinfo){
@@ -305,6 +345,8 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		.success(function(response){
 			console.log(response);
 			$scope.ratedetail = response;
+			$scope.ratedetail.agentCurrency = agentinfo.agent[0].currencyShort;
+			$scope.ratedetail.currencyExchangeRate = agentinfo.currencyExchangeRate;
 			console.log($scope.ratedetail);
 			
 			if($scope.ratedetail.hotelbyRoom.length !=0){
@@ -331,13 +373,16 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 					var childTotalRate = 0;
 					$scope.childselected = value.childselected;
 					angular.forEach(value.childselected,function(value1,key1){
-						if(value1.freeChild != "Free"){
+						if(value1.freeChild != "Free" && value1.freeChild != ""){
 							childTotalRate = parseInt(childTotalRate) + parseInt(value1.freeChild);
+							console.log("value1.freeChild");
+							console.log(childTotalRate);
 						}
 					});
-					
-					 $scope.total = $scope.total + childTotalRate
-					 console.log( $scope.total);
+					console.log("childTotalRate");
+					console.log(childTotalRate);
+					 $scope.total = $scope.total + childTotalRate;
+					 console.log($scope.total);
 					value.total = $scope.total;
 					value.rateDatedetail = $scope.rateDatedetail;
 				});
@@ -383,14 +428,15 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 	$scope.indexCount = 0;
 	$scope.newRoom = function($event,index){
 		
-		$scope.addRooms.push( {  } );
-		$scope.indexCount = $scope.indexCount + 1;
-		console.log($scope.indexCount);
-		$scope.addRooms[$scope.indexCount].adult = "1 Adult";
-		$scope.addRooms[$scope.indexCount].cAllow = "true";
-		$scope.addRooms[$scope.indexCount].id = index;
-		$scope.countTotal($scope.indexCount);
-		
+		if($scope.addRooms.length < 5){
+			$scope.addRooms.push( {  } );
+			$scope.indexCount = $scope.indexCount + 1;
+			console.log($scope.indexCount);
+			$scope.addRooms[$scope.indexCount].adult = "1 Adult";
+			$scope.addRooms[$scope.indexCount].cAllow = "true";
+			$scope.addRooms[$scope.indexCount].id = index;
+			$scope.countTotal($scope.indexCount);
+		}
 		
 	};
 	
@@ -1014,12 +1060,7 @@ $scope.breakfastFunction = function(){
 	$scope.finalTotal = 0;
 	var adultNo = 0;
 	var childNo = 0;
-	
-	console.log("%%%%%%%%%%%%%%");
-	console.log($scope.addRooms);
-	console.log("%%%%%%%%%%%%%%");
-
-	
+		
 	angular.forEach($scope.addRooms,function(value,key){
 		var arr =value.adult.split(" ");
 		adultNo = adultNo + parseInt(arr[0]);
@@ -2723,7 +2764,7 @@ $http.get("/searchCountries").success(function(response) {
 	$scope.indexCount = 0;
 	$scope.newRoom = function($event,index){
 		
-		if($scope.addRooms.length < 8){
+		if($scope.addRooms.length < 5){
 			$scope.addRooms.push( {  } );
 			console.log(index);
 			$scope.indexCount = $scope.indexCount + 1;

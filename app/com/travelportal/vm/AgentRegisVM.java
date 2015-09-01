@@ -31,6 +31,9 @@ public class AgentRegisVM {
 	public String agree;
 	public String status;
 	public String password;
+	private Double creditLimit;
+	private Double availableLimit;
+	
 	
 	public long getId() {
 		return id;
@@ -209,6 +212,18 @@ public class AgentRegisVM {
 	}
 	public void setCurrencyShort(String currencyShort) {
 		this.currencyShort = currencyShort;
+	}
+	public Double getCreditLimit() {
+		return creditLimit;
+	}
+	public void setCreditLimit(Double creditLimit) {
+		this.creditLimit = creditLimit;
+	}
+	public Double getAvailableLimit() {
+		return availableLimit;
+	}
+	public void setAvailableLimit(Double availableLimit) {
+		this.availableLimit = availableLimit;
 	}
 	
 		

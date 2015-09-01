@@ -90,6 +90,8 @@ public class HotelBookingDetails {
 	private RateMeta rate;
 	public String nonRefund;
 	private Date latestCancellationDate;
+	private String cancellationNightsCharge;
+	private Double cancelBookingCharges;
 	
 	public Long getSupplierCode() {
 		return supplierCode;
@@ -419,6 +421,18 @@ public class HotelBookingDetails {
 		this.payment = payment;
 	}
 	
+	public Double getCancelBookingCharges() {
+		return cancelBookingCharges;
+	}
+	public void setCancelBookingCharges(Double cancelBookingCharges) {
+		this.cancelBookingCharges = cancelBookingCharges;
+	}
+	public String getCancellationNightsCharge() {
+		return cancellationNightsCharge;
+	}
+	public void setCancellationNightsCharge(String cancellationNightsCharge) {
+		this.cancellationNightsCharge = cancellationNightsCharge;
+	}
 	public static List<HotelBookingDetails> allBookingData() {
     	return (List<HotelBookingDetails>) JPA.em().createQuery("select c from HotelBookingDetails c").getResultList();
     }

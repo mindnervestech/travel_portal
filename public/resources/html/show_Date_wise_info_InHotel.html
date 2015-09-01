@@ -92,8 +92,10 @@
                                              </div>
                                              
                                              </div>
+                                             
                                              <div class="col-md-4">
                                               <div class="col-md-4" style="margin-top: 20px;padding: 0px;">
+                                         		 
                                          		 <span class="price" style="font-size: 15px;" currency-rate styleValue="font-size: small;color: black;top: -1px;" ng-model="serchroom.total" rate="{{serchroom.total}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span> 
                                        		  </div>
                                        		  <div class="col-md-4" style="margin-top: 18px;padding: 0px;">
@@ -107,7 +109,8 @@
                                          </div>
                                          </div>
                                        </div>
-                                        <div class="col-md-1 pull-right" style="margin-top: 20px;padding: 0px;" ng-if="addRooms.length < 8">
+                                        <div class="col-md-1 pull-right" style="margin-top: 20px;padding: 0px;" ng-if="addRooms.length < 5">
+                                        
                                          	<button class="full-width text-center" ng-click="newRoom()">Add Room</button>
                                          </div>
                                      

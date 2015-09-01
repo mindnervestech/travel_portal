@@ -1384,7 +1384,7 @@ public static void findMinRateInHotel(List<HotelSearch> hotellist){
 }
 
 
-@Transactional(readOnly=true)
+@Transactional(readOnly=false)
 public static Result findHotelByData() {
 	
 DateFormat format = new SimpleDateFormat("dd-MM-yyyy");

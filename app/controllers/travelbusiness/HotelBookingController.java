@@ -53,6 +53,7 @@ import com.travelportal.domain.Salutation;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.rooms.RateMeta;
 import com.travelportal.domain.rooms.RoomAllotedRateWise;
+import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.ChildselectedVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.PassengerBookingInfoVM;
@@ -143,8 +144,6 @@ public class HotelBookingController extends Controller {
 		
 		AgentRegistration agRegistration = AgentRegistration.getAgentCode((session().get("agent")));
 		
-				
-		
 		hBookingDetails.setAgentId(Long.parseLong(session().get("agent")));
 		hBookingDetails.setHotelNm(searchVM.getHotelNm());
 		hBookingDetails.setHotelAddr(searchVM.getHotelAddr());
@@ -153,12 +152,40 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setAgentCompanyNm(agRegistration.getCompanyName());
 		hBookingDetails.setSupplierNm(searchVM.getSupplierNm());
 		hBookingDetails.setTotalNightStay(searchVM.getDatediff());
+		for(SerachHotelRoomType byRoom:searchVM.hotelbyRoom){
+			for(SerachedRoomRateDetail searchByRoom:byRoom.hotelRoomRateDetail){
+					int canellfirst = 0;
+					for(CancellationPolicyVM canellationP:searchByRoom.cancellation){
+						if(canellfirst == 0){
+						 hBookingDetails.setCancellationNightsCharge(canellationP.nights);
+						 
+						 Calendar c = Calendar.getInstance();
+							try {
+								c.setTime(format.parse(searchVM.getCheckIn()));
+							} catch (ParseException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							c.add(Calendar.DATE, - Integer.parseInt(canellationP.days));  // number of days to add
+							String cancellDate = format.format(c.getTime());
+							try {
+								hBookingDetails.setLatestCancellationDate(format.parse(cancellDate));
+							} catch (ParseException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						 
+						 canellfirst++;
+						} 
+					}
+			}
+		}
+		//hBookingDetails.setCancellationNightsCharge(searchVM.getHotelbyRoom());
+		
+		//CancellationDateDiff canDateDiff = CancellationDateDiff.getById(1);
 		
 		
-		CancellationDateDiff canDateDiff = CancellationDateDiff.getById(1);
-		
-		
-		Calendar c = Calendar.getInstance();
+		/*Calendar c = Calendar.getInstance();
 		try {
 			c.setTime(format.parse(searchVM.getCheckIn()));
 		} catch (ParseException e1) {
@@ -172,7 +199,7 @@ public class HotelBookingController extends Controller {
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 		
 		try {
 			hBookingDetails.setCheckIn(format.parse(searchVM.getCheckIn()));
