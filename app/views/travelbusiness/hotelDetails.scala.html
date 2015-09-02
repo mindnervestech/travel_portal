@@ -28,6 +28,94 @@
        <section id="content" ng-init="init(@hotel)">
             <div class="container">
                 <div class="row">
+                	  <div class="sidebar col-md-3">
+                    <article class="detailed-logo">
+                     <figure>
+                                <img width="114" height="85" src="{{imgArray[0]}}" alt="">
+                            </figure>
+                          <div class="details">
+                                <h2 class="box-title">{{hotel.hotelNm}}<small><i class="soap-icon-departure yellow-color"></i><span class="fourty-space">{{hotel.hotelAddr}}</span></small></h2>
+                                 <span class="price clearfix">
+                                    <small class="pull-left">Min/start</small>
+                                    <span class="pull-right" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="hotel.minRate" rate="{{hotel.minRate}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
+                                </span> 
+                                 <div class="feedback clearfix">
+                                 <div star-rating rating-value="hotel.stars" max="hotel.stars" on-rating-selected=""></div>
+                                   <!--  <div title="" class="five-stars-container" data-toggle="tooltip" data-placement="bottom" data-original-title="4 stars"><span class="five-stars" style="width: {{hotel.startRatingWidth}}%;"></span></div> -->
+                                   <!--  <span class="review pull-right">270 reviews</span> -->
+                                </div>
+                                <p class="description">{{hotel.imgDescription}}</p>
+                            </div>
+                        </article>
+                        <!-- <div class="travelo-box contact-box">
+                            <h4>Need Travelo Help?</h4>
+                            <p>We would be more than happy to help you. Our team advisor are 24/7 at your service to help you.</p>
+                            <address class="contact-details">
+                                <span class="contact-phone"><i class="soap-icon-phone"></i> 1-800-123-HELLO</span>
+                                <br>
+                                <a class="contact-email" href="#">helptravelocom</a>
+                            </address>
+                        </div> -->
+                       <!--  <div class="travelo-box">
+                            <h4>Similar Listings</h4>
+                        </div> -->
+                        <div class="travelo-box book-with-us-box">
+                                <div class="panel style1 arrow-right">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#modify-search-panel" class="collapsed">Modify Search</a>
+                                    </h4>
+                                    <div id="modify-search-panel" class="panel-collapse">
+                                        <div class="panel-content">
+                                          <form action="/searchAgainHotelInfo" method="post">  <!-- action="/searchAgainHotelInfo"   ng-submit="searchAgainHotel()"  -->
+                                                <div class="form-group">
+                                                    <label>Country</label>
+                                                   <div class="selector">
+                                                    <select class="full-width" name="countryCode1" data-ng-model="searchby.countryCode" ng-change="onCountryChange(searchby.countryCode)" placeholder="Country"> 
+                                                        <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
+                                                    </select><span class="custom-select full-width">{{searchby.countryName}}</span>
+                                                    <input type="text" name="countryCode" data-ng-model="searchby.countryCode" value="searchby.countryCode" style="display: none"/>
+                                      
+                                                   </div>
+                                                </div>
+                                                 <div class="form-group">
+                                                 	<label>City</label>
+                                                    <div class="selector">
+                                                    <select class="full-width" name="cityCode1" data-ng-model="searchby.cityCode" ng-change="onCityChange()">
+                                                           <option ng-repeat="city in searchCities" value="{{city.cityCode}}">{{city.cityName}}</option>
+                                                    </select><span class="custom-select full-width">{{searchby.cityName}}</span>
+                                                     <input type="text" name="cityCode" data-ng-model="searchby.cityCode" value="searchby.cityCode" style="display: none"/>
+                                                    </div>
+                                                 </div>
+                                                <div class="form-group">
+                                                    <label>Check In</label>
+                                                    <div class="datepicker-wrap">
+                                                    <input type="text" name="checkIn" id="checkInDatePicker" data-ng-model="searchby.checkIn" class="input-text full-width" placeholder="dd/mm/yyyy" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                   <label>Check Out</label>
+                                                   <div class="datepicker-wrap">
+                                                    <input type="text" name="checkOut" id="checkOutDatePicker" data-ng-model="searchby.checkOut" class="input-text full-width" placeholder="dd/mm/yyyy" />
+                                                  
+                                                   </div>
+                                                </div>
+                                                 <div class="form-group">
+                                                   <label>Nationality</label>
+                                                   <div class="selector">
+                                                    <select class="full-width"  name="nationalityCode1" data-ng-model="searchby.nationalityCode" placeholder="dd/mm/yyyy">
+                                                        <option ng-repeat="nationality in searchNationality" value="{{nationality.nationalityCode}}">{{nationality.nationality}}</option>
+                                                    </select><span class="custom-select full-width">{{searchby.nationalityName}}</span>
+                                                      <input type="text" name="nationalityCode" data-ng-model="searchby.nationalityCode" value="searchby.nationalityCode" style="display: none"/>
+                                                    </div>
+                                                 </div>
+                                                <br />
+                                                <button type="submit" class="btn-medium icon-check uppercase full-width">search again</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
                   <div id="main" class="col-md-9">
                         <div class="tab-container style1" id="hotel-main-content">
                             <ul class="tabs">
@@ -415,94 +503,7 @@
                         	</div>
                         </div>	
                     </div>
-                    <div class="sidebar col-md-3">
-                    <article class="detailed-logo">
-                     <figure>
-                                <img width="114" height="85" src="{{imgArray[0]}}" alt="">
-                            </figure>
-                          <div class="details">
-                                <h2 class="box-title">{{hotel.hotelNm}}<small><i class="soap-icon-departure yellow-color"></i><span class="fourty-space">{{hotel.hotelAddr}}</span></small></h2>
-                                 <span class="price clearfix">
-                                    <small class="pull-left">Min/start</small>
-                                    <span class="pull-right" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="hotel.minRate" rate="{{hotel.minRate}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
-                                </span> 
-                                 <div class="feedback clearfix">
-                                 <div star-rating rating-value="hotel.stars" max="hotel.stars" on-rating-selected=""></div>
-                                   <!--  <div title="" class="five-stars-container" data-toggle="tooltip" data-placement="bottom" data-original-title="4 stars"><span class="five-stars" style="width: {{hotel.startRatingWidth}}%;"></span></div> -->
-                                   <!--  <span class="review pull-right">270 reviews</span> -->
-                                </div>
-                                <p class="description">{{hotel.imgDescription}}</p>
-                            </div>
-                        </article>
-                        <!-- <div class="travelo-box contact-box">
-                            <h4>Need Travelo Help?</h4>
-                            <p>We would be more than happy to help you. Our team advisor are 24/7 at your service to help you.</p>
-                            <address class="contact-details">
-                                <span class="contact-phone"><i class="soap-icon-phone"></i> 1-800-123-HELLO</span>
-                                <br>
-                                <a class="contact-email" href="#">helptravelocom</a>
-                            </address>
-                        </div> -->
-                       <!--  <div class="travelo-box">
-                            <h4>Similar Listings</h4>
-                        </div> -->
-                        <div class="travelo-box book-with-us-box">
-                                <div class="panel style1 arrow-right">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" href="#modify-search-panel" class="collapsed">Modify Search</a>
-                                    </h4>
-                                    <div id="modify-search-panel" class="panel-collapse">
-                                        <div class="panel-content">
-                                          <form action="/searchAgainHotelInfo" method="post">  <!-- action="/searchAgainHotelInfo"   ng-submit="searchAgainHotel()"  -->
-                                                <div class="form-group">
-                                                    <label>Country</label>
-                                                   <div class="selector">
-                                                    <select class="full-width" name="countryCode1" data-ng-model="searchby.countryCode" ng-change="onCountryChange(searchby.countryCode)" placeholder="Country"> 
-                                                        <option ng-repeat="country in searchCountries" value="{{country.countryCode}}">{{country.countryName}}</option>                                                       
-                                                    </select><span class="custom-select full-width">{{searchby.countryName}}</span>
-                                                    <input type="text" name="countryCode" data-ng-model="searchby.countryCode" value="searchby.countryCode" style="display: none"/>
-                                      
-                                                   </div>
-                                                </div>
-                                                 <div class="form-group">
-                                                 	<label>City</label>
-                                                    <div class="selector">
-                                                    <select class="full-width" name="cityCode1" data-ng-model="searchby.cityCode" ng-change="onCityChange()">
-                                                           <option ng-repeat="city in searchCities" value="{{city.cityCode}}">{{city.cityName}}</option>
-                                                    </select><span class="custom-select full-width">{{searchby.cityName}}</span>
-                                                     <input type="text" name="cityCode" data-ng-model="searchby.cityCode" value="searchby.cityCode" style="display: none"/>
-                                                    </div>
-                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Check In</label>
-                                                    <div class="datepicker-wrap">
-                                                    <input type="text" name="checkIn" id="checkInDatePicker" data-ng-model="searchby.checkIn" class="input-text full-width" placeholder="dd/mm/yyyy" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                   <label>Check Out</label>
-                                                   <div class="datepicker-wrap">
-                                                    <input type="text" name="checkOut" id="checkOutDatePicker" data-ng-model="searchby.checkOut" class="input-text full-width" placeholder="dd/mm/yyyy" />
-                                                  
-                                                   </div>
-                                                </div>
-                                                 <div class="form-group">
-                                                   <label>Nationality</label>
-                                                   <div class="selector">
-                                                    <select class="full-width"  name="nationalityCode1" data-ng-model="searchby.nationalityCode" placeholder="dd/mm/yyyy">
-                                                        <option ng-repeat="nationality in searchNationality" value="{{nationality.nationalityCode}}">{{nationality.nationality}}</option>
-                                                    </select><span class="custom-select full-width">{{searchby.nationalityName}}</span>
-                                                      <input type="text" name="nationalityCode" data-ng-model="searchby.nationalityCode" value="searchby.nationalityCode" style="display: none"/>
-                                                    </div>
-                                                 </div>
-                                                <br />
-                                                <button type="submit" class="btn-medium icon-check uppercase full-width">search again</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
+                  
             </div>
           </div>
         </section>

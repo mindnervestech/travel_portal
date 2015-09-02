@@ -256,7 +256,7 @@
                             </div>
                            
                             <div class="hotel-list listing-style3 hotel">
-                                <article class="box" ng-repeat="hotelInfo in hotellistInfo  | orderBy:'perferhotel'" >  <!-- sortColumn:'perferhotel' -->  <!-- style="border: 4px solid #C8C6C6;" -->
+                                <article class="box" ng-repeat="hotelInfo in hotellistInfo  | orderBy:'perferhotel'" ng-class="$index % 2 == 0?'':'odd'">  <!-- .. sortColumn:'perferhotel' -->  <!-- style="border: 4px solid #C8C6C6;" -->
                                 
                                  
                                     <div class="col-md-12">
@@ -499,7 +499,9 @@ color: #9e9e9e;
 .clear-rating{
 	display: none !important;
 } 
-
+.odd{
+	background-color: ivory !important;
+}
 .caption{
 	display: none !important;
 }

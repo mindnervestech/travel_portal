@@ -51,6 +51,63 @@
        <section id="content" ng-init="init(@hotel)">  
             <div class="container">
                 <div class="row">
+                 <div class="sidebar col-sms-6 col-sm-4 col-md-3">
+                        <div class="booking-details travelo-box">
+                            <h4>Booking Details</h4>
+                            <article class="image-box hotel listing-style1">
+                                <figure class="clearfix">
+                                    <a href="" class="hover-effect middle-block" style="position: relative;"><img class="middle-item" width="270" height="160" alt=""  data-ng-src="{{hotel.imgPaths}}" style="position: absolute; top: 50%; margin-top: -37.5px; left: 50%; margin-left: -63.5px;"></a>
+                                    <div class="travel-title">
+                                        <h5 class="box-title">{{hotel.hotelNm}}<small>{{hotel.hotelAddr}}</small></h5>
+                                       <!--  <a href="hotel-detailed.html" class="button">EDIT</a> -->
+                                    </div>
+                                </figure>
+                                <div class="details">
+                                    <div class="feedback">
+                                        <div star-rating rating-value="hotel.stars" max="hotel.stars" on-rating-selected=""></div>
+                                        <!-- <span class="review">270 reviews</span> -->
+                                    </div>
+                                    <div class="constant-column-3 timing clearfix">
+                                        <div class="check-in">
+                                            <label>Check in</label>
+                                            <span>{{checkIn}}</span>
+                                        </div>
+                                        <div class="duration text-center">
+                                            <i class="soap-icon-clock"></i>
+                                            <span>{{hotel.datediff}} Nights</span>
+                                        </div>
+                                        <div class="check-out">
+                                            <label>Check out</label>
+                                            <span>{{checkOut}}</span>
+                                        </div>
+                                    </div>
+                                   <!--  <div class="guest">
+                                        <small class="uppercase">1 Standard family room for <span class="skin-color">3 Persons</span></small>
+                                    </div> -->
+                                </div>
+                            </article>
+                            
+                            <h4>Other Details</h4>
+                            <dl class="other-details">
+                                <dt class="feature">room Type:</dt><dd class="value">{{hotel.hotelbyRoom[0].roomName}}</dd>
+                                <dt class="feature">No Of Room:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}}</dd>
+                                <!--  <dt class="feature">Per Room price:</dt><dd class="value" currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"> -2px;" class="ng-binding"></dd>
+                                <dt class="feature">Total Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * <span currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd> -->
+                                <!-- <dt class="feature">{{hotel.hotelBookingDetails.noOfroom}} Room x {{hotel.datediff}} Night</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * <span currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd> -->
+                               <dt class="total-price">Total Price</dt><dd class="total-price-value" currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" styleValue="font-size: 13px;color: black;top: -1px;" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
+                            </dl>
+                        </div>
+                        
+                       <!--  <div class="travelo-box contact-box">
+                            <h4>Need Travelo Help?</h4>
+                            <p>We would be more than happy to help you. Our team advisor are 24/7 at your service to help you.</p>
+                            <address class="contact-details">
+                                <span class="contact-phone"><i class="soap-icon-phone"></i> 1-800-123-HELLO</span>
+                                <br>
+                                <a class="contact-email" href="#">helravelocom</a>
+                            </address>
+                        </div> -->
+                    </div>
                  <div id="main" class="col-sms-6 col-sm-8 col-md-9">
                         <div class="booking-section travelo-box">
                             
@@ -90,8 +147,8 @@
                                             </div>
                                         </div>
                                          <div class="col-sm-6 col-md-5">
-                                            <label>*Passport No</label>
-                                            <input type="text" data-ng-model="traveller.travellerpassportNo" class="input-text full-width" value="" placeholder="" required>
+                                            <label>Passport No</label>
+                                            <input type="text" data-ng-model="traveller.travellerpassportNo" class="input-text full-width" value="" placeholder="">
                                         </div>
                                        <!--  <div class="col-sm-6 col-md-5">
                                             <label>*Addresss</label>
@@ -350,63 +407,7 @@
                             </form>
                         </div>
                     </div>
-                   <div class="sidebar col-sms-6 col-sm-4 col-md-3">
-                        <div class="booking-details travelo-box">
-                            <h4>Booking Details</h4>
-                            <article class="image-box hotel listing-style1">
-                                <figure class="clearfix">
-                                    <a href="" class="hover-effect middle-block" style="position: relative;"><img class="middle-item" width="270" height="160" alt=""  data-ng-src="{{hotel.imgPaths}}" style="position: absolute; top: 50%; margin-top: -37.5px; left: 50%; margin-left: -63.5px;"></a>
-                                    <div class="travel-title">
-                                        <h5 class="box-title">{{hotel.hotelNm}}<small>{{hotel.hotelAddr}}</small></h5>
-                                       <!--  <a href="hotel-detailed.html" class="button">EDIT</a> -->
-                                    </div>
-                                </figure>
-                                <div class="details">
-                                    <div class="feedback">
-                                        <div star-rating rating-value="hotel.stars" max="hotel.stars" on-rating-selected=""></div>
-                                        <!-- <span class="review">270 reviews</span> -->
-                                    </div>
-                                    <div class="constant-column-3 timing clearfix">
-                                        <div class="check-in">
-                                            <label>Check in</label>
-                                            <span>{{checkIn}}</span>
-                                        </div>
-                                        <div class="duration text-center">
-                                            <i class="soap-icon-clock"></i>
-                                            <span>{{hotel.datediff}} Nights</span>
-                                        </div>
-                                        <div class="check-out">
-                                            <label>Check out</label>
-                                            <span>{{checkOut}}</span>
-                                        </div>
-                                    </div>
-                                   <!--  <div class="guest">
-                                        <small class="uppercase">1 Standard family room for <span class="skin-color">3 Persons</span></small>
-                                    </div> -->
-                                </div>
-                            </article>
-                            
-                            <h4>Other Details</h4>
-                            <dl class="other-details">
-                                <dt class="feature">room Type:</dt><dd class="value">{{hotel.hotelbyRoom[0].roomName}}</dd>
-                                <dt class="feature">No Of Room:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}}</dd>
-                                <!--  <dt class="feature">Per Room price:</dt><dd class="value" currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"> -2px;" class="ng-binding"></dd>
-                                <dt class="feature">Total Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * <span currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd> -->
-                                <!-- <dt class="feature">{{hotel.hotelBookingDetails.noOfroom}} Room x {{hotel.datediff}} Night</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * <span currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd> -->
-                               <dt class="total-price">Total Price</dt><dd class="total-price-value" currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" styleValue="font-size: 13px;color: black;top: -1px;" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
-                            </dl>
-                        </div>
-                        
-                       <!--  <div class="travelo-box contact-box">
-                            <h4>Need Travelo Help?</h4>
-                            <p>We would be more than happy to help you. Our team advisor are 24/7 at your service to help you.</p>
-                            <address class="contact-details">
-                                <span class="contact-phone"><i class="soap-icon-phone"></i> 1-800-123-HELLO</span>
-                                <br>
-                                <a class="contact-email" href="#">helravelocom</a>
-                            </address>
-                        </div> -->
-                    </div>
+                  
             </div>
           </div>
         </section>
