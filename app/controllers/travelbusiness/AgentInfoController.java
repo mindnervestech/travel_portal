@@ -124,6 +124,7 @@ public class AgentInfoController extends Controller {
 				AgentRegisVM agRegisVM=new AgentRegisVM();
 				
 				agRegisVM.setAgentCode(agent.getAgentCode());
+				
 				agRegisVM.setFirstName(agent.getFirstName());
 				agRegisVM.setLastName(agent.getLastName());
 				agRegisVM.setCompanyName(agent.getCompanyName());
@@ -1280,8 +1281,67 @@ public class AgentInfoController extends Controller {
 		
 	}
 	
-@Transactional(readOnly=true)
+	@Transactional(readOnly=true)
 	public static Result cancellationBookingMail(){
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+		Date date = new Date();
+		
+		List<HotelBookingDetails> hBookingDetails = HotelBookingDetails.allBookingData();
+		
+		
+		Calendar currentD = Calendar.getInstance();
+		currentD.setTime(date);
+		currentD.set(Calendar.MILLISECOND, 0);
+		
+		
+		for(HotelBookingDetails hDetails:hBookingDetails){
+			AgentRegistration aRegistration = AgentRegistration.findById(hDetails.getAgentId());
+			Date canclDate = null;
+			
+			Calendar canclD = Calendar.getInstance();
+			canclD.setTime(hDetails.getLatestCancellationDate());
+			canclD.set(Calendar.MILLISECOND, 0);
+			
+			/*if(currentD.get(Calendar.DAY_OF_YEAR) == canclD.get(Calendar.DAY_OF_YEAR)  && currentD.get(Calendar.YEAR)==canclD.get(Calendar.YEAR) && currentD.get(Calendar.MONTH) == canclD.get(Calendar.MONTH)){
+				final String username=Play.application().configuration().getString("username");
+		        final String password=Play.application().configuration().getString("password");
+		        
+		 		Properties props = new Properties();
+		 		props.put("mail.smtp.auth", "true");
+		 		props.put("mail.smtp.starttls.enable", "true");
+		 		props.put("mail.smtp.host", "smtp.gmail.com");
+		 		props.put("mail.smtp.port", "587");
+		  
+		 		Session session = Session.getInstance(props,
+		 		  new javax.mail.Authenticator() {
+		 			protected PasswordAuthentication getPasswordAuthentication() {
+		 				return new PasswordAuthentication(username, password);
+		 			}
+		 		  });
+		  
+		 		try{
+		 		   
+		  			Message feedback = new MimeMessage(session);
+		  			feedback.setFrom(new InternetAddress(username));
+		  			feedback.setRecipients(Message.RecipientType.TO,
+		  			InternetAddress.parse("yogesh_337@yahoo.com"));  //aRegistration.getEmailAddr()
+		  			feedback.setSubject("You SignIn For travel_portal");	  			
+		  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
+		  	         messageBodyPart.setText("Dear Sir/ Madam, \n\n your Booking in cancellation Policy  \n\n your Booking Id "+hDetails.getId()+" ");	  	    
+		  	         Multipart multipart = new MimeMultipart();	  	    
+		  	         multipart.addBodyPart(messageBodyPart);	            
+		  	         feedback.setContent(multipart);
+		  		     Transport.send(feedback);
+		       		} catch (MessagingException e) {
+		  			  throw new RuntimeException(e);
+		  		}
+		 		
+				
+			}*/
+		}
+		
+		return ok();
 	
 	}
 	
