@@ -38,27 +38,39 @@
                                
                                 <div class="panel style1 arrow-right">
                                     <h4 class="panel-title" style="padding: 0px;">
-                                        <a href="#Confirm" ng-click="selectData.status= 'available' ;showoAgentDataDateWise(selectData)" style="padding: 12px;">Confirmed Booking</a>
+                                        <a href="#Confirm" ng-click="selectData.status= 'available' ;agentProfile = false;showoAgentDataDateWise(selectData)" style="padding: 12px;">Confirmed Booking</a>
                                     </h4>
                                    
                                 </div>
                                 
                                 <div class="panel style1 arrow-right">
                                    <h4  class="panel-title" style="padding: 0px;">
-                                        <a  href="#On request"  ng-click="selectData.status= 'on request';showoAgentDataDateWise(selectData)" style="padding: 12px;">On Request Booking</a>
+                                        <a  href="#On request"  ng-click="selectData.status= 'on request';agentProfile = false;showoAgentDataDateWise(selectData)" style="padding: 12px;">On Request Booking</a>
                                 </h4>
                                     
                                    
                                 </div>
                                 <div class="panel style1 arrow-right">
                                     <h4 class="panel-title" style="padding: 0px;">
-                                        <a href="#Rejected"  ng-click="selectData.status= 'rejected';showoAgentDataDateWise(selectData)" style="padding: 12px;">Rejected Booking</a>
+                                        <a href="#Rejected"  ng-click="selectData.status= 'rejected';agentProfile = false;showoAgentDataDateWise(selectData)" style="padding: 12px;">Rejected Booking</a>
                                     </h4>
                                   
                                 </div>
                                  <div class="panel style1 arrow-right">
                                     <h4 class="panel-title" style="padding: 0px;">
-                                        <a href="#cancel"   ng-click="selectData.status= 'cancel';showoAgentDataDateWise(selectData)" style="padding: 12px;">Cancel Booking</a>
+                                        <a href="#cancel"   ng-click="selectData.status= 'cancel';agentProfile = false;showoAgentDataDateWise(selectData)" style="padding: 12px;">Cancel Booking</a>
+                                    </h4>
+                                   
+                                </div>
+                                <div class="panel style1 arrow-right">
+                                    <h4 class="panel-title" style="padding: 0px;">
+                                        <a href="" style="padding: 12px;">New Booking</a>
+                                    </h4>
+                                   
+                                </div>
+                                <div class="panel style1 arrow-right">
+                                    <h4 class="panel-title" style="padding: 0px;">
+                                        <a href="" ng-click="showAgentProfile()" style="padding: 12px;">Agent Profile</a>
                                     </h4>
                                    
                                 </div>
@@ -83,7 +95,7 @@
                         <!--------------------------------------------------------------------------------->
                         
                         
-                        <div id="section" style="width: 1045px;">
+                        <div id="section" style="width: 1045px;" ng-if="agentProfile == false">
 	                       
 	                    <div class="col-lg-12">
 	               
@@ -209,6 +221,43 @@
                         
                         <!------------------------------------------------------------------------------------->
        </div>
+       
+       <div id="section" style="width: 1045px;" ng-if="agentProfile == true">
+	                       
+				<form class="cruise-booking-form">
+                                <div class="person-information">
+                                    <h2>Agent Profile</h2>
+                                    <div class="row">
+                                        <div class="form-group col-md-11">
+                                            <label class="col-md-2" style="color: #01b7f2;">first name :</label> <span class="col-md-7">{{agentBook[0].agent[0].firstName}}</span>
+                                           
+                                        </div>
+                                    </div>
+                                     <div class="row">
+                                        <div class="form-group col-md-11">
+                                            <label class="col-md-2" style="color: #01b7f2;">last name :</label> <span class="col-md-7">{{agentBook[0].agent[0].lastName}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-11">
+                                            <label class="col-md-2" style="color: #01b7f2;">company name :</label> <span class="col-md-7">{{agentBook[0].agent[0].companyName}}</span>
+                                        </div>
+                                    </div>
+                                     <div class="row">
+                                        <div class="form-group col-md-11">
+                                            <label class="col-md-2" style="color: #01b7f2;">company address :</label> <span class="col-md-7">{{agentBook[0].agent[0].companyAddress}}</span>
+                                        </div>
+                                    </div>
+                                    
+                                  
+                                    
+                                </div>
+                               
+                               
+                            </form>	                 
+                        
+       </div>
+       
     </div>
    </div>
  </section>

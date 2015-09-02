@@ -130,6 +130,26 @@ public class AgentInfoController extends Controller {
 				agRegisVM.setCurrency(agent.getCurrency().getCurrencyName());
 				agRegisVM.setCreditLimit(agent.getCreditLimit());
 				agRegisVM.setAvailableLimit(agent.getAvailableLimit());
+				agRegisVM.setCountry(agent.getCountry().getCountryName());
+				agRegisVM.setCity(agent.getCity().getCityName());
+				agRegisVM.setCompanyAddress(agent.getCompanyAddress());
+				agRegisVM.setCommission(agent.getCommission());
+				agRegisVM.setBusiness(agent.getBusiness().getNatureofbusiness());
+				agRegisVM.setDirectCode(agent.getDirectCode());
+				agRegisVM.setDirectTelNo(agent.getDirectTelNo());
+				agRegisVM.setFaxCode(agent.getFaxCode());
+				agRegisVM.setFaxTelNo(agent.getFaxTelNo());
+				agRegisVM.setFinanceEmailAddr(agent.getFinanceEmailAddr());
+				agRegisVM.setHear(agent.getHear().getHearAboutUs());
+				agRegisVM.setLoginId(agent.getLoginId());
+				agRegisVM.setPassword(agent.getPassword());
+				agRegisVM.setPaymentMethod(agent.getPaymentMethod());
+				agRegisVM.setPosition(agent.getPosition());
+				agRegisVM.setPostalCode(agent.getPostalCode());
+				agRegisVM.setReceiveNet(agent.getReceiveNet());
+				agRegisVM.setStatus(agent.getStatus());
+				agRegisVM.setWebSite(agent.getWebSite());
+				
 				
 				String[] currencySplit;
 				 currencySplit = agent.getCurrency().getCurrencyName().split(" - ");

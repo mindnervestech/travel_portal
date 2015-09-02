@@ -8,6 +8,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 	$scope.fromData = "1";
 	$scope.toDate="1";
 	$scope.status = "1";
+	$scope.agentProfile = false;
 	var currentPage = 1;
 	var totalPages;
 	$scope.flag = 0;
@@ -63,6 +64,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			
 		});
 	};
+	
 	
 	$scope.showtable = function(checkIn,checkOut,guest,status, bookingId){
 		console.log(guest);
@@ -137,6 +139,9 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		});
 	}
 	
+	$scope.showAgentProfile = function(){
+		$scope.agentProfile = true;
+	}
 	
 	$scope.rateDatewise = [];
 	$scope.showdateWiseView = function(agentinfo){
