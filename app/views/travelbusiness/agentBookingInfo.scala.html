@@ -42,21 +42,21 @@
 						<div class="toggle-container filters-container"
 							style="font-size: 10px;">
 
-							<div class="panel style1 arrow-right" style="margin-bottom: 30px;">
+							<div class="panel style1 arrow-right" style="margin-bottom: 23px;">
 								<h4 class="panel-title" style="padding: 0px;">
 									<a href="/" style="padding: 12px;">Make New Booking</a>
 								</h4>
 							</div>
-							<div class="panel style1 arrow-right" style="margin-bottom: 30px;">
-								<h4 class="panel-title" ng-class="selectedTab==1 ? 'active':''" style="padding: 0px;">
-									<a href="" ng-class="selectedTab==1 ? 'active':''" ng-click="selectedTab=1;showAgentProfile()" style="padding: 12px;">Agent
+							<div class="panel style1 arrow-right" style="margin-bottom: 23px;">
+								<h4 class="panel-title" ng-class="selectedTab==1 ? 'activeTab':''" style="padding: 0px;">
+									<a href="" ng-class="selectedTab==1 ? 'activeTab':''" ng-click="selectedTab=1;showAgentProfile()" style="padding: 12px;">Agent
 										Profile</a>
 								</h4>
 
 							</div>
 							<div class="panel style1 arrow-right">
-								<h4 class="panel-title" ng-class="selectedTab==2 ? 'active':''" style="padding: 0px;">
-									<a href="#myBooking" ng-class="selectedTab==2 ? 'active':''" ng-click="selectedTab=2;agentProfile = false"
+								<h4 class="panel-title" ng-class="selectedTab==2 ? 'activeTab':''" style="padding: 0px;">
+									<a href="#myBooking" ng-class="selectedTab==2 ? 'activeTab':''" ng-click="selectedTab=2;agentProfile = false"
 										style="padding: 12px;">My Booking</a>
 								</h4>
 
@@ -349,7 +349,7 @@
 
 				</div>
 				<div class="row" ng-if="agentProfile == false">
-					<div class="col-sm-12 col-md-12">
+					<div class="col-sm-12 col-md-12" style="background-color: white;margin-left: 14px;">
 						<div class="form-group">
 							<table border="1"
 								style="width: 100%; font-size: small; text-align: center; margin-top: 28px;">
@@ -358,31 +358,37 @@
 										<th style="text-align: center;"><a style="color: white;">Booking
 												Id</a></th>
 										<th style="text-align: center; width: 80px;"><a
+											style="color: white;">Agent Name</a></th>		
+										<th style="text-align: center; width: 80px;"><a
 											style="color: white;">Guest Name</a></th>
 										<th style="text-align: center;"><a style="color: white;">Hotel
 												Name</a></th>
 										<th style="width: 91px; text-align: center;"><a
-											style="color: white;">Check In</a></th>
+											style="color: white;">Service Date</a></th>
 										<th style="width: 91px; text-align: center;"><a
 											style="color: white;">Check Out</a></th>
 
-										<th style="width: 56px; text-align: center;"><a
+										<!-- <th style="width: 56px; text-align: center;"><a
 											style="color: white;">Total Night</a></th>
 
 										<th style="text-align: center;"><a style="color: white;">Room
 												type</a></th>
 										<th style="text-align: center;"><a style="color: white;">No
-												of Room</a></th>
-										<th style="text-align: center;"><a style="color: white;">Room
+												of Room</a></th> -->
+										<th style="text-align: center;"><a style="color: white;">Booking
 												Status</a></th>
 										<th style="width: 83px; text-align: center;"><a
 											style="color: white;">Total</a></th>
 										<th style="width: 56px; text-align: center;"><a
 											style="color: white;">Payment</a></th>
+										<th style="width: 56px; text-align: center;"><a
+											style="color: white;">Voucher</a></th>
+										<th style="width: 56px; text-align: center;"><a
+											style="color: white;">Invoice</a></th>	
 
 
 										<!-- <th style="text-align: center;width: 45px;"><a style="color: white;">Nationality</a></th> -->
-										<th style="text-align: center;"><a style="color: white;">Edit</a></th>
+										<th style="text-align: center;width: 2px;"><a style="color: white;">Ammend/Cancel Booking</a></th>
 
 
 									</tr>
@@ -391,18 +397,20 @@
 
 									<tr ng-repeat="agent in agentBook">
 										<td>{{agent.id}}</td>
+										<td style="text-align: left;">{{agent.agent[0].firstName}}
+											{{agent.agent[0].lastName}}</td>
 										<td style="text-align: left;">{{agent.travellerfirstname}}
 											{{agent.travellerlastname}}</td>
 										<td style="text-align: left;">{{agent.supplierNm}}</td>
 										<td>{{agent.checkIn}}</td>
 										<td>{{agent.checkOut}}</td>
 
-										<td>{{agent.totalNightStay}}</td>
+										<!-- <td>{{agent.totalNightStay}}</td>
 
 										<td>{{agent.roomNm}}</td>
-										<td>{{agent.noOfroom}}</td>
-										<td ng-if='agent.room_status != "available"'>{{agent.room_status}}</td>
-										<td ng-if='agent.room_status == "available"'>Confirm</td>
+										<td>{{agent.noOfroom}}</td> -->
+										<td ng-if='agent.room_status != "available"' style="text-align: left;">{{agent.room_status}}</td>
+										<td ng-if='agent.room_status == "available"' style="text-align: left;">Confirm</td>
 										<td currency-rate ng-model="agent.total"
 											styleValue="font-size: small;top: 0px;"
 											rate="{{agent.total}}"
@@ -411,6 +419,8 @@
 										<!-- <td ng-if="agent.payment == 'no'">Outstanding</td>
                             <td ng-if="agent.payment == 'yes'">Received</td>  -->
 										<td>{{agent.payment}}</td>
+										<td></td>
+										<td></td>
 
 										<!--  <td>{{agent.nationalityNm}}</td> -->
 										<td><a ng-click="showDetails(agent)"
@@ -503,7 +513,7 @@
 .soap-icon-bag:before{
 	margin-left: -5px;
 }
-.active{
+.activeTab{
 	background-color: #01b7f2;
     color: white !important;
 }
