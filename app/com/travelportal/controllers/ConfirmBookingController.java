@@ -282,7 +282,7 @@ public class ConfirmBookingController extends Controller {
 	 List<HotelBookDetailsVM> aDetailsVMs =  new ArrayList<>();
 	 long totalPages = 0;
 		List<HotelBookingDetails> hoteDetails = null;
-		String status = "cancel";
+		String status = "Cancelled";
 		if(fromDate.equals("1") && toDate.equals("1") && agentNm.equals("1")){
 	 
 			totalPages = HotelBookingDetails.getAllBookingTotal(5, supplierCode,status);

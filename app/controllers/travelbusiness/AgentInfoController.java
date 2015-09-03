@@ -50,6 +50,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
+import com.travelportal.domain.NatureOfBusiness;
 import com.travelportal.domain.RoomAndDateWiseRate;
 import com.travelportal.domain.RoomRegiterBy;
 import com.travelportal.domain.RoomRegiterByChild;
@@ -393,7 +394,7 @@ public class AgentInfoController extends Controller {
 	public static Result getbookingcancel(long id){
 		int count= 0;
 		HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingById(id);
-		hBookingDetails.setRoom_status("cancel");
+		hBookingDetails.setRoom_status("Cancelled");
 		hBookingDetails.merge();
 
 		cancelMail(hBookingDetails.getTravelleremail(),hBookingDetails);
@@ -1353,7 +1354,7 @@ public class AgentInfoController extends Controller {
 	    	System.out.println(session().get("agent"));
 	    	
 			HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingById(bookingId);
-			hBookingDetails.setRoom_status("cancel");
+			hBookingDetails.setRoom_status("Cancelled");
 			hBookingDetails.setCancelBookingCharges(Double.parseDouble(nightRate));
 			hBookingDetails.merge();
 			
@@ -1368,4 +1369,39 @@ public class AgentInfoController extends Controller {
 	    
 			return ok();
 	 }
+	 
+	 @Transactional(readOnly = false)
+	    public static Result getNatureOfBusiness(){
+		 	
+		 List<NatureOfBusiness> natureOfBusinesses = NatureOfBusiness.getNatureOfBusiness();
+			//List<String> natureList = new ArrayList<>();
+		//	for(NatureOfBusiness natBusiness:natureOfBusinesses){
+		//		natureList.add(natBusiness.getNatureofbusiness());
+			//}
+			
+			return ok(Json.toJson(natureOfBusinesses));
+		 
+	 }
+	 
+	 
+	 @Transactional(readOnly=false)
+	public static Result editAgent() {
+		 DynamicForm form = DynamicForm.form().bindFromRequest();
+		 
+		 AgentRegistration aRegistration = AgentRegistration.getAgentCode(form.get("agentCode")); 
+		 aRegistration.setFirstName(form.get("firstName"));
+		 aRegistration.setLastName(form.get("lastName"));
+		 aRegistration.setCompanyAddress(form.get("companyAddress"));
+		 aRegistration.setCompanyName(form.get("companyName"));
+		 aRegistration.setBusiness(NatureOfBusiness.getNatureOfBusinessByName(form.get("business")));
+		 aRegistration.setPosition(form.get("position"));
+		 aRegistration.setDirectCode(form.get("directCode"));
+		 aRegistration.setDirectTelNo(form.get("directTelNo"));
+		 aRegistration.setWebSite(form.get("webSite"));
+		 
+		 
+		 aRegistration.merge();
+		return ok();
+	 }
+	 
 }

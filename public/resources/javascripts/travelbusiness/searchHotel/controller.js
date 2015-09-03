@@ -8,6 +8,8 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 	$scope.fromData = "1";
 	$scope.toDate="1";
 	$scope.status = "1";
+	$scope.creditUsed;
+	$scope.agentEdit;
 	$scope.agentProfile = false;
 	var currentPage = 1;
 	var totalPages;
@@ -22,6 +24,8 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		$scope.pageNumber = hotelAllData.currentPage;
 		$scope.pageSize = hotelAllData.totalPages;
 		$scope.agentBook = hotelAllData.results;
+		$scope.agentEdit = hotelAllData.results[0].agent[0];
+		$scope.creditUsed = parseInt($scope.agentBook[0].agent[0].creditLimit)-parseInt($scope.agentBook[0].agent[0].availableLimit);
 		if(totalPages == 0) {
 			$scope.pageNumber = 0;
 		}
@@ -138,6 +142,11 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			}
 		});
 	}
+	$scope.selectDate = {};
+	$scope.selectStatus = function(status){
+		$scope.selectDate.status = status;
+		$scope.showoAgentDataDateWise($scope.selectDate);
+	}
 	
 	$scope.showAgentProfile = function(){
 		$scope.agentProfile = true;
@@ -181,6 +190,33 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		$http.get("/getBookingPaymentInfo/"+bookingId+"/"+payment).success(function(response){
 			console.log("OK,,OK");
 		});
+		
+	}
+	
+	
+	$scope.natureOfBusiness;
+	$scope.editProfile = "show";
+	$scope.showEditProfile = function(){
+		
+		$scope.editProfile = "edit";
+		
+		$http.get("/getNatureOfBusiness").success(function(response){
+			$scope.natureOfBusiness = response;
+		});
+		
+	}
+	$scope.cancelEdit = function(){
+		$scope.editProfile = "show";
+	}
+	
+	$scope.saveAgentData = function(){
+		console.log($scope.agentEdit);
+		
+			$http.post('/editAgent', $scope.agentEdit).success(function(data){
+					console.log(data);
+					$scope.editProfile = "show";
+					notificationService.success("Agent Update Successfully");
+			});
 		
 	}
 	
@@ -262,7 +298,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			$http.get("/getVoucherConfirm/"+bookingId).success(function(response){
 				console.log("send Vouchar");
 			});
-		}else if(roomStatus == "cancel"){
+		}else if(roomStatus == "Cancelled"){
 			$http.get("/getVoucherCancel/"+bookingId).success(function(response){
 				console.log("send Vouchar");
 			});

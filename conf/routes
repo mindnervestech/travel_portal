@@ -52,6 +52,8 @@ GET  /getVoucherCancel/:bookingId    controllers.travelbusiness.AgentInfoControl
 GET  /getVoucherOnRequest/:bookingId    controllers.travelbusiness.AgentInfoController.getVoucherOnRequest(bookingId:Long)
 GET  /getRoomType/:supplierCode 		controllers.travelbusiness.AgentInfoController.getRoomType(supplierCode:Long)
 GET /cancellationBookingMail 	controllers.travelbusiness.AgentInfoController.cancellationBookingMail()
+POST /editAgent				controllers.travelbusiness.AgentInfoController.editAgent()
+GET  /getNatureOfBusiness      controllers.travelbusiness.AgentInfoController.getNatureOfBusiness()
 
 
 #manage Booking controller
@@ -61,7 +63,6 @@ GET  /getagentInfobyAll/:currentPage/:checkIn/:checkOut/:guest/:status/:bookingI
 GET  /getBookingPaymentInfo/:bookingId/:payment/:total	   com.travelportal.controllers.ManageBookingController.getBookingPaymentInfo(bookingId:Long,payment:String,total:Long)
 GET  /getpaymentWise/:paymentStatus/:agentCode   com.travelportal.controllers.ManageBookingController.getpaymentWise(paymentStatus:String,agentCode:Long)
 POST /saveBookingfiles       com.travelportal.controllers.ManageBookingController.saveBookingfiles()
-
 
 #manage Rate controller    
 
@@ -292,5 +293,4 @@ GET  /getRejectBooking/:id       com.travelportal.controllers.ConfirmBookingCont
 GET  /getconfBooking/:id       com.travelportal.controllers.ConfirmBookingController.getconfBooking(id:Long)
 GET  /getrejectInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	com.travelportal.controllers.ConfirmBookingController.getrejectInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)
 GET  /getcancelInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	com.travelportal.controllers.ConfirmBookingController.getcancelInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)
-
 GET  /generatePDF        controllers.travelbusiness.HotelBookingController.generatePDF()
