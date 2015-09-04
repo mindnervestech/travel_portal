@@ -151,12 +151,17 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 	$scope.showAgentProfile = function(){
 		$scope.agentProfile = true;
 	}
-	
+	$scope.passengerInfo;
 	$scope.rateDatewise = [];
 	$scope.showdateWiseView = function(agentinfo){
 		console.log(agentinfo.id);
-		$scope.rateDatewise = [];
-		$http.get("/getbookDateWise/"+agentinfo.id).success(function(response){
+		$scope.roomIndex = 1;
+		$scope.passengerInfo = agentinfo.passengerInfo;
+		$scope.rateDatewise = $scope.passengerInfo[0].rateDatedetail
+		console.log($scope.rateDatewise);
+		
+		//$scope.rateDatewise = [];
+		/*$http.get("/getbookDateWise/"+agentinfo.id).success(function(response){
 			console.log(response);
 			//$scope.bookinginfo = response;
 			
@@ -182,8 +187,16 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			});
 						
 			console.log($scope.rateDatewise);
-		});
+		});*/
 	}
+	
+	$scope.roomWiseRate = function(index){
+		$scope.roomIndex = index + 1;
+		console.log(index);
+		console.log($scope.passengerInfo);
+		$scope.rateDatewise = $scope.passengerInfo[index].rateDatedetail;
+	}
+	
 	$scope.bookingPayment = function(bookingId, payment){
 		console.log(bookingId);
 		console.log(payment);
@@ -3123,65 +3136,76 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 		
 		$scope.searchCountries = response;
 	}); 
-	
+	$scope.confirmMsg = 0;
+	$scope.confirmBooking = function(){
+		
+		$scope.confirmMsg = 1;
+		console.log($scope.confirmMsg);
+		$scope.savetravellerinfo();
+	}
 	$scope.savetravellerinfo = function(){
-		console.log($scope.traveller);
-		$scope.hotel.hotelBookingDetails.travellersalutation = $scope.traveller.travellersalutation;
-		$scope.hotel.hotelBookingDetails.travellerfirstname = $scope.traveller.travellerfirstname;
-		$scope.hotel.hotelBookingDetails.travellermiddlename = $scope.traveller.travellermiddlename;
-		$scope.hotel.hotelBookingDetails.travellerlastname = $scope.traveller.travellerlastname;
-		$scope.hotel.hotelBookingDetails.travellerpassportNo = $scope.traveller.travellerpassportNo;
-		//$scope.hotel.hotelBookingDetails.travelleraddress = $scope.traveller.address;
-		$scope.hotel.hotelBookingDetails.travellercountry = $scope.hotel.nationality;
-		$scope.hotel.hotelBookingDetails.travellerphnaumber = $scope.traveller.travellerphnaumber;
-		$scope.hotel.hotelBookingDetails.travelleremail = $scope.traveller.travelleremail;
-		$scope.hotel.hotelBookingDetails.nonSmokingRoom = $scope.traveller.nonSmokingRoom;
-		$scope.hotel.hotelBookingDetails.twinBeds = $scope.traveller.twinBeds;
-		$scope.hotel.hotelBookingDetails.lateCheckout = $scope.traveller.lateCheckout;
-		$scope.hotel.hotelBookingDetails.largeBed = $scope.traveller.largeBed;
-		$scope.hotel.hotelBookingDetails.highFloor = $scope.traveller.highFloor;
-		$scope.hotel.hotelBookingDetails.earlyCheckin = $scope.traveller.earlyCheckin;
-		$scope.hotel.hotelBookingDetails.airportTransfer = $scope.traveller.airportTransfer;
-		$scope.hotel.hotelBookingDetails.airportTransferInfo = $scope.traveller.airportTransferInfo;
-		$scope.hotel.hotelBookingDetails.enterComments = $scope.traveller.enterComments;
-		$scope.hotel.hotelBookingDetails.smokingRoom = $scope.traveller.smokingRoom;
-		$scope.hotel.hotelBookingDetails.wheelchair = $scope.traveller.wheelchair;
-		$scope.hotel.hotelBookingDetails.handicappedRoom = $scope.traveller.handicappedRoom;
 		
-		//$scope.hotel.hotelbyDate = null;
-		console.log($scope.hotel);
+		if($scope.confirmMsg == 0){
+			jQuery('#myModal').modal('show');
+		}
 		
-		
-		
-		$scope.flagA = 0;
-		$http.post('/saveHotelBookingInfo',$scope.hotel).success(function(data){
+		if($scope.confirmMsg == 1){
 			
-			console.log("Success");
-			console.log(data);
-			console.log("-----------");
-    		if(data == "NocreditLimit"){
-    			
-    			$scope.flagA = "NocreditLimit";
-    			notificationService.error("Credit Limit Is Less");
-    		}else if(data == "NullcreditLimit"){
-    			notificationService.error("Credit limit not define");
-    		}else{
-    			$scope.flagA = "success";
-    			notificationService.success("Room Book Successfully");
-    			// $window.location.replace("http://localhost:9000/AgentBookingInfo");
-    			$timeout(setAgentPage, 5000);
-    		}
-    		
-    	}).error(function(data, status, headers, config) {
-			console.log('ERROR');
-			notificationService.error("Please Enter Required Fields");
-		});
+			$scope.hotel.hotelBookingDetails.travellersalutation = $scope.traveller.travellersalutation;
+			$scope.hotel.hotelBookingDetails.travellerfirstname = $scope.traveller.travellerfirstname;
+			$scope.hotel.hotelBookingDetails.travellermiddlename = $scope.traveller.travellermiddlename;
+			$scope.hotel.hotelBookingDetails.travellerlastname = $scope.traveller.travellerlastname;
+			$scope.hotel.hotelBookingDetails.travellerpassportNo = $scope.traveller.travellerpassportNo;
+			$scope.hotel.hotelBookingDetails.travellercountry = $scope.hotel.nationality;
+			$scope.hotel.hotelBookingDetails.travellerphnaumber = $scope.traveller.travellerphnaumber;
+			$scope.hotel.hotelBookingDetails.travelleremail = $scope.traveller.travelleremail;
+			$scope.hotel.hotelBookingDetails.nonSmokingRoom = $scope.traveller.nonSmokingRoom;
+			$scope.hotel.hotelBookingDetails.twinBeds = $scope.traveller.twinBeds;
+			$scope.hotel.hotelBookingDetails.lateCheckout = $scope.traveller.lateCheckout;
+			$scope.hotel.hotelBookingDetails.largeBed = $scope.traveller.largeBed;
+			$scope.hotel.hotelBookingDetails.highFloor = $scope.traveller.highFloor;
+			$scope.hotel.hotelBookingDetails.earlyCheckin = $scope.traveller.earlyCheckin;
+			$scope.hotel.hotelBookingDetails.airportTransfer = $scope.traveller.airportTransfer;
+			$scope.hotel.hotelBookingDetails.airportTransferInfo = $scope.traveller.airportTransferInfo;
+			$scope.hotel.hotelBookingDetails.enterComments = $scope.traveller.enterComments;
+			$scope.hotel.hotelBookingDetails.smokingRoom = $scope.traveller.smokingRoom;
+			$scope.hotel.hotelBookingDetails.wheelchair = $scope.traveller.wheelchair;
+			$scope.hotel.hotelBookingDetails.handicappedRoom = $scope.traveller.handicappedRoom;
+			
+			console.log($scope.hotel);
+			
+			
+			
+			$scope.flagA = 0;
+			$http.post('/saveHotelBookingInfo',$scope.hotel).success(function(data){
+				
+				console.log("Success");
+				console.log(data);
+				console.log("-----------");
+	    		if(data == "NocreditLimit"){
+	    			
+	    			$scope.flagA = "NocreditLimit";
+	    			notificationService.error("Credit Limit Is Less");
+	    		}else if(data == "NullcreditLimit"){
+	    			notificationService.error("Credit limit not define");
+	    		}else{
+	    			//$scope.flagA = "success";
+	    			notificationService.success("Room Book Successfully");
+	    			window.location = "/AgentBookingInfo";
+	    			//$timeout(setAgentPage, 5000);
+	    		}
+	    		
+	    	}).error(function(data, status, headers, config) {
+				console.log('ERROR');
+				notificationService.error("Please Enter Required Fields");
+			});
+		}
 	}
 	
 	
-	function setAgentPage() {
+	/*function setAgentPage() {
 		window.location = "/AgentBookingInfo";
-	}
+	}*/
 	
 	
-});	
+	});	

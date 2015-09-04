@@ -4973,9 +4973,26 @@ controller("manageBookingController",['$scope','notificationService','$upload','
 	};*/
 	
 	
+	/*$scope.paymentValue = false;
+	$scope.bookingIdValue = "";
+	$scope.totalValue = "";
+	$scope.paymentMade = function(payment){
+		console.log($scope.paymentValue);
+		console.log($scope.bookingIdValue);
+		console.log($scope.totalValue);
+		
+		
+	}*/
+	
 	$scope.bookingPayment = function(bookingId, payment, total){
-		console.log(bookingId);
+		/*console.log(bookingId);
 		console.log(payment);
+		$scope.paymentValue = payment;
+		$scope.bookingIdValue = bookingId;
+		$scope.totalValue = total;
+		if($scope.paymentValue == true){
+			jQuery('#myModal').modal('show');
+		}*/
 		$http.get("/getBookingPaymentInfo/"+bookingId+"/"+payment+"/"+total).success(function(response){
 			console.log("OK,,OK");
 		});

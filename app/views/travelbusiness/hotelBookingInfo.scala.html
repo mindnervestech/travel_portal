@@ -463,6 +463,32 @@
   				line-height: 5px;
   		}
   </style>
+  
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" style="color: #0084e6;">Confirmation Message</h4>
+        </div>
+        <div class="modal-body">
+          <p>Dear (Agent Name),<br>Thank you, very much for the booking, we have received your booking, and is in process, however you will soon, receive the confirmation on your e-mail.</p>
+          <hr>
+          <p>If you do not receive any email in 24 hours, please contact our office.<br></p>
+          <p>Best Regards,<br>
+			The Expedition Co., Ltd.</p>
+        </div>
+        <div class="modal-footer">
+         <button type="button" class="btn btn-default" ng-click="confirmBooking()" data-dismiss="modal">Ok</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
 </body>
 </html>
   

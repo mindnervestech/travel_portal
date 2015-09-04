@@ -599,7 +599,30 @@ public class HotelBookingDetails {
 		
 	}
 	
-	
+	/*-------------------------*/
+	public static List<HotelBookingDetails> getfindByupComingDateWise(long agentId,int currentPage, int rowsPerPage,long totalPages,Date today) {
+		int  start=0;
+    	
+    	String sql="";
+    
+    		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and a.checkIn > ?2 ORDER BY a.checkIn DESC";
+    	
+    	if(currentPage >= 1 && currentPage <= totalPages) {
+			start = (currentPage*rowsPerPage)-rowsPerPage;
+		}
+		if(currentPage>totalPages && totalPages!=0) {
+			currentPage--;
+			start = (int) ((totalPages*rowsPerPage)-rowsPerPage); 
+		}
+    	Query q = JPA.em().createQuery(sql).setFirstResult(start).setMaxResults(rowsPerPage);
+		
+    	q.setParameter(1, agentId);
+   		q.setParameter(2, today);
+   		
+   		
+		return (List<HotelBookingDetails>)q.getResultList();
+		
+	}
 	
 	//00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 	
@@ -891,6 +914,21 @@ public class HotelBookingDetails {
 		
 			
 				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and a.checkIn BETWEEN ?3 and ?4 and a.checkOut BETWEEN ?3 and ?4").setParameter(1, agentId).setParameter(2, status).setParameter(3, fromDate).setParameter(4, toDate).getSingleResult();  
+			
+	    	
+	    	totalPages = size/rowsPerPage;
+			
+	    	if(size % rowsPerPage > 0) {
+				totalPages++;
+			}
+	    	return totalPages;
+	    }
+	   
+	   public static long getTotalUpComingDateWise(int rowsPerPage,long agentId,Date todayDate ) {
+			long totalPages = 0, size;
+		
+			
+				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and a.checkIn > ?2").setParameter(1, agentId).setParameter(2, todayDate).getSingleResult();  
 			
 	    	
 	    	totalPages = size/rowsPerPage;

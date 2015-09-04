@@ -277,7 +277,16 @@ public class AgentInfoController extends Controller {
 		//String status = "available";
 		List<HotelBookingDetails> hoteDetails = null;
 
-		if(fromDate.equals("1") && toDate.equals("1") && status.equals("1")){
+		if(status.equals("upComingBooking")){
+			Date date = new Date();
+				totalPages = HotelBookingDetails.getTotalUpComingDateWise(10 , Long.parseLong(session().get("agent")),date);
+			
+
+				hoteDetails = HotelBookingDetails.getfindByupComingDateWise(Long.parseLong(session().get("agent")), currentPage, 10, totalPages,date);
+			
+			
+			
+		}else if(fromDate.equals("1") && toDate.equals("1") && status.equals("1")){
 
 			totalPages = HotelBookingDetails.getAllagentBookingTotal(10, Long.parseLong(session().get("agent")));
 			hoteDetails = HotelBookingDetails.getfindByagent(Long.parseLong(session().get("agent")), currentPage, 10, totalPages);
@@ -321,13 +330,21 @@ public class AgentInfoController extends Controller {
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		//HotelBookDetailsVM hDetailsVM= new HotelBookDetailsVM();       
 		List<HotelBookDetailsVM> aDetailsVMs =  new ArrayList<>();
-		System.out.println("check in="+checkIn+"CheckOut="+checkOut);
+		
 
-
+		
 		long totalPages = 0;
 		List<HotelBookingDetails> hoteDetails = null;
+		if(status.equals("upComingBooking")){
+			Date date = new Date();
+				totalPages = HotelBookingDetails.getTotalUpComingDateWise(10 , Long.parseLong(session().get("agent")),date);
+			
 
-		if(!checkIn.equals("undefined") && !checkOut.equals("undefined")&&!guest.equals("undefined") && bookingId == 0){
+				hoteDetails = HotelBookingDetails.getfindByupComingDateWise(Long.parseLong(session().get("agent")), currentPage, 10, totalPages,date);
+			
+			
+			
+		}else if(!checkIn.equals("undefined") && !checkOut.equals("undefined")&&!guest.equals("undefined") && bookingId == 0){
 			try {
 				totalPages = HotelBookingDetails.getAllagentTotalDateWise1(10 , Long.parseLong(session().get("agent")) , format.parse(checkIn) , format.parse(checkOut) , status,guest);
 			} catch (ParseException e) {

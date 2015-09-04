@@ -131,7 +131,7 @@
 														<option value="available">Confirm</option>
 														<option value="on request">On request</option>
 														<option value="rejected">Rejected</option>
-														<option value="rejected">Up coming Booking</option>
+														<option value="upComingBooking">Up coming Booking</option>
 														
 													</select>
 												</div>
@@ -170,20 +170,8 @@
 								<p align="right">
                                <input type="button" class="btn btn-primary" ng-click="showEditProfile()"  value="Edit" />
                                 </p>
-								<div class="row">
-									<div class="form-group col-md-11">
-										<label class="col-md-3" style="color: #01b7f2;">first
-											name :</label> <span class="col-md-7">{{agentBook[0].agent[0].firstName}}</span>
-
-									</div>
-								</div>
-								<div class="row">
-									<div class="form-group col-md-11">
-										<label class="col-md-3" style="color: #01b7f2;">last
-											name :</label> <span class="col-md-7">{{agentBook[0].agent[0].lastName}}</span>
-									</div>
-								</div>
-								<div class="row">
+                                
+                                <div class="row">
 									<div class="form-group col-md-11">
 										<label class="col-md-3" style="color: #01b7f2;">company
 											name :</label> <span class="col-md-7">{{agentBook[0].agent[0].companyName}}</span>
@@ -197,53 +185,38 @@
 								</div>
 								<div class="row">
 									<div class="form-group col-md-11">
-										<label class="col-md-3" style="color: #01b7f2;">nature
-											of business :</label> <span class="col-md-7">{{agentBook[0].agent[0].business}}</span>
+										<label class="col-md-3" style="color: #01b7f2;">Contact person :
+											</label> <span class="col-md-7">{{agentBook[0].agent[0].firstName}} {{agentBook[0].agent[0].lastName}}</span>
+
 									</div>
 								</div>
+								<!-- <div class="row">
+									<div class="form-group col-md-11">
+										<label class="col-md-3" style="color: #01b7f2;">last
+											name :</label> <span class="col-md-7">{{agentBook[0].agent[0].lastName}}</span>
+									</div>
+								</div> -->
 								<div class="row">
 									<div class="form-group col-md-11">
 										<label class="col-md-3" style="color: #01b7f2;">Position/Designation
 											:</label> <span class="col-md-7">{{agentBook[0].agent[0].Position}}</span>
 									</div>
 								</div>
+								
+								<div class="row">
+									<div class="form-group col-md-11">
+										<label class="col-md-3" style="color: #01b7f2;">nature
+											of business :</label> <span class="col-md-7">{{agentBook[0].agent[0].business}}</span>
+									</div>
+								</div>
+								
 								<div class="row">
 									<div class="form-group col-md-11">
 										<label class="col-md-3" style="color: #01b7f2;">Preferred
 											currency :</label> <span class="col-md-7">{{agentBook[0].agent[0].currency}}</span>
 									</div>
 								</div>
-								<hr>
-								<div class="row">
-									<div class="form-group col-md-11">
-										<label class="col-md-3" style="color: #01b7f2;">
-											Preferred Payment Method :</label> <span class="col-md-7">{{agentBook[0].agent[0].paymentMethod}}</span>
-									</div>
-								</div>
 								
-								<div class="row" ng-if="agentBook[0].agent[0].paymentMethod == 'Credit' || agentBook[0].agent[0].paymentMethod == 'Pre-Payment'">
-								<div class="form-group col-md-11">
-									
-                                   		 <i class="soap-icon-bag circle col-md-1" style="color: darkorange;font-size: 19px;"></i>
-                                    	<label class="form-group col-md-11" style="font-size: 12px;margin-top: 10px;">Credit Information</label>
-                                    	<div class="form-group col-md-12">
-                                    	<label class="col-md-3" style="color: #01b7f2;">
-														Credit Limit :</label> <span class="col-md-8">{{agentBook[0].agent[0].creditLimit}}</span>
-										</div>
-										<div class="form-group col-md-12">
-                                    	               <label class="col-md-3" style="color: #01b7f2;">
-														available Credit Limit :</label> <span class="col-md-8">{{agentBook[0].agent[0].availableLimit}}</span>
-											</div>
-											<div class="form-group col-md-12">
-														<label class="col-md-3" style="color: #01b7f2;">
-														Credit Used :</label> <span class="col-md-8">{{creditUsed}}</span>
-											</div>			
-                             		  
-                            	  </div>
-								</div>
-
-								<hr>
-
 								<div class="row">
 									<div class="form-group col-md-11">
 										<label class="col-md-3" style="color: #01b7f2;">
@@ -257,6 +230,38 @@
 											webSite :</label> <span class="col-md-7">{{agentBook[0].agent[0].webSite}}</span>
 									</div>
 								</div>
+								
+								<hr>
+								<div class="row">
+									<div class="form-group col-md-11">
+										<label class="col-md-3" style="color: #01b7f2;">Payment 
+										Method :</label> <span class="col-md-7">{{agentBook[0].agent[0].paymentMethod}}</span>
+									</div>
+								</div>
+								
+								<div class="row" ng-if="agentBook[0].agent[0].paymentMethod == 'Credit' || agentBook[0].agent[0].paymentMethod == 'Pre-Payment'">
+								<div class="form-group col-md-11">
+									
+                                   		 <i class="soap-icon-bag circle col-md-1" style="color: darkorange;font-size: 19px;"></i>
+                                    	<label class="form-group col-md-11" style="font-size: 12px;margin-top: 10px;">Credit Information</label>
+                                    	<div class="form-group col-md-12">
+                                    	<label class="col-md-3" style="color: #01b7f2;">
+														Credit Limit :</label> <span class="col-md-8">{{agentBook[0].agent[0].creditLimit}}</span>
+										</div>
+										<div class="form-group col-md-12">
+														<label class="col-md-3" style="color: #01b7f2;">
+														Credit Used :</label> <span class="col-md-8">{{creditUsed}}</span>
+											</div>	
+										<div class="form-group col-md-12">
+                                    	               <label class="col-md-3" style="color: #01b7f2;">
+														available Credit Limit :</label> <span class="col-md-8">{{agentBook[0].agent[0].availableLimit}}</span>
+											</div>
+													
+                             		  
+                            	  </div>
+								</div>
+
+								<hr>
 
 
 							</div>
@@ -269,6 +274,20 @@
                                <input type="submit" class="btn btn-primary col-md-1 " value="Save" />
                                <input type="button" class="btn btn-primary col-md-1" ng-click="cancelEdit()" n value="Cancel"style="margin-left:10px"/>
                                 </p>
+                                <div class="row">
+									<div class="form-group col-md-11">
+										<label class="col-md-3" style="color: #01b7f2;">company
+											name :</label>
+											<input class="col-xs-6 ng-pristine ng-valid ng-touched" type="text" name="companyname" ng-model="agentEdit.companyName" style="height: 31px;" required>  
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-md-11">
+										<label class="col-md-3" style="color: #01b7f2;">company
+											address :</label>
+											<input class="col-xs-6 ng-pristine ng-valid ng-touched" type="text" name="companyAddress" ng-model="agentEdit.companyAddress" style="height: 31px;"> 
+									</div>
+								</div>
 								<div class="row">
 									<div class="form-group col-md-11">
 										<label class="col-md-3" style="color: #01b7f2;">first
@@ -285,20 +304,16 @@
 											<input class="col-xs-6 ng-pristine ng-valid ng-touched" type="text" name="lastname" ng-model="agentEdit.lastName" style="height: 31px;" required> 
 									</div>
 								</div>
+								
 								<div class="row">
 									<div class="form-group col-md-11">
-										<label class="col-md-3" style="color: #01b7f2;">company
-											name :</label>
-											<input class="col-xs-6 ng-pristine ng-valid ng-touched" type="text" name="companyname" ng-model="agentEdit.companyName" style="height: 31px;" required>  
+										<label class="col-md-3" style="color: #01b7f2;">Position/Designation
+											:</label>
+											<input class="col-xs-6 ng-pristine ng-valid ng-touched" type="text" name="position" ng-model="agentEdit.position" style="height: 31px;"> 
+											
 									</div>
 								</div>
-								<div class="row">
-									<div class="form-group col-md-11">
-										<label class="col-md-3" style="color: #01b7f2;">company
-											address :</label>
-											<input class="col-xs-6 ng-pristine ng-valid ng-touched" type="text" name="companyAddress" ng-model="agentEdit.companyAddress" style="height: 31px;"> 
-									</div>
-								</div>
+								
 								 <div class="row">
 									<div class="form-group col-md-11">
 										<label class="col-md-3" style="color: #01b7f2;">nature
@@ -309,21 +324,13 @@
 											 
 									</div>
 								</div> 
-								<div class="row">
-									<div class="form-group col-md-11">
-										<label class="col-md-3" style="color: #01b7f2;">Position/Designation
-											:</label>
-											<input class="col-xs-6 ng-pristine ng-valid ng-touched" type="text" name="position" ng-model="agentEdit.position" style="height: 31px;"> 
-											
-									</div>
-								</div>
+								
 								<!-- <div class="row">
 									<div class="form-group col-md-11">
 										<label class="col-md-3" style="color: #01b7f2;">Preferred
 											currency :</label> <span class="col-md-7">{{agentBook[0].agent[0].currency}}</span>
 									</div>
 								</div> -->
-							
 
 								<div class="row">
 									<div class="form-group col-md-11">

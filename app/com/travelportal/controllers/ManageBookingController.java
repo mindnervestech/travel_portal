@@ -18,6 +18,7 @@ import play.mvc.Result;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.RoomRegiterBy;
 import com.travelportal.domain.RoomRegiterByChild;
+import com.travelportal.domain.admin.CurrencyExchangeRate;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.vm.AgentRegisVM;
 import com.travelportal.vm.ChildselectedVM;
@@ -159,11 +160,53 @@ public class ManageBookingController extends Controller {
 			List<AgentRegisVM>aList = new ArrayList<>();
 			if(hBookingDetails.getAgentId() != null){
 				AgentRegistration agent = AgentRegistration.getAgentCode(hBookingDetails.getAgentId().toString());
-				AgentRegisVM agRegisVM=new AgentRegisVM();
+				
+AgentRegisVM agRegisVM=new AgentRegisVM();
+				
 				agRegisVM.setAgentCode(agent.getAgentCode());
+				
 				agRegisVM.setFirstName(agent.getFirstName());
 				agRegisVM.setLastName(agent.getLastName());
 				agRegisVM.setCompanyName(agent.getCompanyName());
+				agRegisVM.setCurrency(agent.getCurrency().getCurrencyName());
+				agRegisVM.setCreditLimit(agent.getCreditLimit());
+				agRegisVM.setAvailableLimit(agent.getAvailableLimit());
+				agRegisVM.setCountry(agent.getCountry().getCountryName());
+				agRegisVM.setCity(agent.getCity().getCityName());
+				agRegisVM.setCompanyAddress(agent.getCompanyAddress());
+				agRegisVM.setCommission(agent.getCommission());
+				agRegisVM.setBusiness(agent.getBusiness().getNatureofbusiness());
+				agRegisVM.setDirectCode(agent.getDirectCode());
+				agRegisVM.setDirectTelNo(agent.getDirectTelNo());
+				agRegisVM.setFaxCode(agent.getFaxCode());
+				agRegisVM.setFaxTelNo(agent.getFaxTelNo());
+				agRegisVM.setFinanceEmailAddr(agent.getFinanceEmailAddr());
+				agRegisVM.setHear(agent.getHear().getHearAboutUs());
+				agRegisVM.setLoginId(agent.getLoginId());
+				agRegisVM.setPassword(agent.getPassword());
+				agRegisVM.setPaymentMethod(agent.getPaymentMethod());
+				agRegisVM.setPosition(agent.getPosition());
+				agRegisVM.setPostalCode(agent.getPostalCode());
+				agRegisVM.setReceiveNet(agent.getReceiveNet());
+				agRegisVM.setStatus(agent.getStatus());
+				agRegisVM.setWebSite(agent.getWebSite());
+				
+				
+				String[] currencySplit;
+				 currencySplit = agent.getCurrency().getCurrencyName().split(" - ");
+				 agRegisVM.setCurrencyShort(currencySplit[0]);
+				 
+				 String[] suppCurrencySplit;
+				 suppCurrencySplit =  hBookingDetails.getCurrencyId().getCurrencyName().split(" - ");
+				
+				List<CurrencyExchangeRate> cList = CurrencyExchangeRate.findCurrencyRate(agent.getCurrency().getId());
+			
+				for(CurrencyExchangeRate cExchangeRate:cList){
+					if(cExchangeRate.getCurrencyName().equals(suppCurrencySplit[0])){
+						hDetailsVM.currencyExchangeRate = cExchangeRate.getCurrencyRate();
+					}
+					
+				} 
 
 				aList.add(agRegisVM);
 				hDetailsVM.setAgent(aList);
