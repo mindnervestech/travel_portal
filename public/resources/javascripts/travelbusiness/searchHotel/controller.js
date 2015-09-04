@@ -24,6 +24,10 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		$scope.pageNumber = hotelAllData.currentPage;
 		$scope.pageSize = hotelAllData.totalPages;
 		$scope.agentBook = hotelAllData.results;
+		
+		angular.forEach($scope.agentBook,function(value,key){
+			value.latestCancellationDate = $filter('date')(value.latestCancellationDate, "dd-MM-yyyy")
+		});
 		$scope.agentEdit = hotelAllData.results[0].agent[0];
 		$scope.creditUsed = parseInt($scope.agentBook[0].agent[0].creditLimit)-parseInt($scope.agentBook[0].agent[0].availableLimit);
 		if(totalPages == 0) {
@@ -62,6 +66,9 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			$scope.pageNumber = response.currentPage;
 			$scope.pageSize = response.totalPages;
 			$scope.agentBook = response.results;
+			angular.forEach($scope.agentBook,function(value,key){
+				value.latestCancellationDate = $filter('date')(value.latestCancellationDate, "dd-MM-yyyy")
+			});
 			if(totalPages == 0) {
 				$scope.pageNumber = 0;
 			}
@@ -91,6 +98,9 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		$scope.pageNumber = response1.currentPage;
 		$scope.pageSize = response1.totalPages;
 		$scope.agentBook = response1.results;
+		angular.forEach($scope.agentBook,function(value,key){
+			value.latestCancellationDate = $filter('date')(value.latestCancellationDate, "dd-MM-yyyy")
+		});
 		if(totalPages == 0) {
 			$scope.pageNumber = 0;
 		}
@@ -137,6 +147,9 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			$scope.pageNumber = response.currentPage;
 			$scope.pageSize = response.totalPages;
 			$scope.agentBook = response.results;
+			angular.forEach($scope.agentBook,function(value,key){
+				value.latestCancellationDate = $filter('date')(value.latestCancellationDate, "dd-MM-yyyy")
+			});
 			if(totalPages == 0) {
 				$scope.pageNumber = 0;
 			}
@@ -293,6 +306,9 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 							$scope.pageNumber = response.currentPage;
 							$scope.pageSize = response.totalPages;
 							$scope.agentBook = response.results;
+							angular.forEach($scope.agentBook,function(value,key){
+								value.latestCancellationDate = $filter('date')(value.latestCancellationDate, "dd-MM-yyyy")
+							});
 							if(totalPages == 0) {
 								$scope.pageNumber = 0;
 							}
@@ -1899,10 +1915,17 @@ $http.get("/searchCountries").success(function(response) {
 				console.log(hotel.checkIn);
 				var arr = hotel.checkIn.split("-");
 				var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+				  var d = new Date();
 				  var dateOut = new Date(datevalue);
 				  dateOut.setDate(dateOut.getDate() - 3);
-				  console.log($filter('date')(dateOut, "dd-MMM-yyyy"));
-				  obj1.cancellationDate = $filter('date')(dateOut, "dd-MMM-yyyy");
+				  if(dateOut < d){
+					  console.log($filter('date')(d, "dd-MMM-yyyy"));
+					  obj1.cancellationDate = $filter('date')(d, "dd-MMM-yyyy");
+				  }else{
+					  console.log($filter('date')(dateOut, "dd-MMM-yyyy"));
+					  obj1.cancellationDate = $filter('date')(dateOut, "dd-MMM-yyyy");
+				  }
+				  
 			});
 		});
 		
@@ -3112,10 +3135,17 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 				console.log($scope.hotel.checkIn);
 				var arr = $scope.hotel.checkIn.split("-");
 				var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+				 var d = new Date();
 				  var dateOut = new Date(datevalue);
 				  dateOut.setDate(dateOut.getDate() - 3);
 				  console.log($filter('date')(dateOut, "dd-MMM-yyyy"));
-				  obj1.cancellationDate = $filter('date')(dateOut, "dd-MMM-yyyy");
+				  if(dateOut < d){
+					  console.log($filter('date')(d, "dd-MMM-yyyy"));
+					  obj1.cancellationDate = $filter('date')(d, "dd-MMM-yyyy");
+				  }else{
+					  console.log($filter('date')(dateOut, "dd-MMM-yyyy"));
+					  obj1.cancellationDate = $filter('date')(dateOut, "dd-MMM-yyyy");
+				  }
 			});
 		});
 		

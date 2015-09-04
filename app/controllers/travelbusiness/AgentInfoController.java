@@ -331,8 +331,6 @@ public class AgentInfoController extends Controller {
 		//HotelBookDetailsVM hDetailsVM= new HotelBookDetailsVM();       
 		List<HotelBookDetailsVM> aDetailsVMs =  new ArrayList<>();
 		
-
-		
 		long totalPages = 0;
 		List<HotelBookingDetails> hoteDetails = null;
 		if(status.equals("upComingBooking")){
@@ -365,28 +363,35 @@ public class AgentInfoController extends Controller {
 			hoteDetails = HotelBookingDetails.getfindByDateWiseAgentWise1(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status,guest);
 
 		}
-		else if(guest.equals("undefined")&&!checkIn.equals("undefined") && !checkOut.equals("undefined") && bookingId == 0)
+		else if(guest.equals("undefined")&& (!checkIn.equals("undefined") || !checkOut.equals("undefined")) && bookingId == 0)
 		{
-
+			Date checkInDate = null;
+			if(!checkIn.equals("undefined")){
+			
 			try {
-				totalPages = HotelBookingDetails.getTotalDateWiseAgentWise11(10 , Long.parseLong(session().get("agent")), status,format.parse(checkIn),format.parse(checkOut));
-			} catch (NumberFormatException e) {
+				checkInDate = format.parse(checkIn);
+			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 			}
+			}
+			Date CheckOutDate = null;
+			if(!checkOut.equals("undefined")){
+				try {
+					CheckOutDate = format.parse(checkOut);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+			
+			
+				totalPages = HotelBookingDetails.getTotalDateWiseAgentWise11(10 , Long.parseLong(session().get("agent")), status,checkInDate,CheckOutDate);
+			
 
-			try {
-				hoteDetails = HotelBookingDetails.getfindByDateWiseAgentWise11(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status,format.parse(checkIn) , format.parse(checkOut));
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				hoteDetails = HotelBookingDetails.getfindByDateWiseAgentWise11(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status,checkInDate , CheckOutDate);
+			
 
 		}else if(bookingId != 0){
 			totalPages = HotelBookingDetails.getTotalBookingIdWise(10 , Long.parseLong(session().get("agent")), status, bookingId);

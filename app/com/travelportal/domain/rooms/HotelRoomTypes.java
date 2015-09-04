@@ -62,6 +62,8 @@ public class HotelRoomTypes {
 	private String roomPic;
 	@Column(name="free_wifi")
 	private String freeWifi;
+	@Column(name="room_bed")
+	private String roomBed;
 	
 
 	@Column(name="room_size")
@@ -315,8 +317,12 @@ public class HotelRoomTypes {
 		this.breakfastRate = breakfastRate;
 	}
 	
-	
-	
+	public String getRoomBed() {
+		return roomBed;
+	}
+	public void setRoomBed(String roomBed) {
+		this.roomBed = roomBed;
+	}
 	public String getFreeWifi() {
 		return freeWifi;
 	}

@@ -137,7 +137,7 @@
 												</div>
 												<div class="col-xs-3 col-md-offset-1" >
 													<button type="button"
-													ng-click="showtable(searchby.checkIn,searchby.checkOut,guest,selectData.status,searchby.bookingId)"
+													ng-click="showtable(searchby.checkIn,searchby.checkOut,guest,searchby.status,searchby.bookingId)"
 													class="btn btn-primary">Find</button>
 												</div>
 											</div>
@@ -373,7 +373,7 @@
 										<th style="width: 91px; text-align: center;"><a
 											style="color: white;">Service Date</a></th>
 										<th style="width: 91px; text-align: center;"><a
-											style="color: white;">Check Out</a></th>
+											style="color: white;">Deadling Date</a></th>
 
 										<!-- <th style="width: 56px; text-align: center;"><a
 											style="color: white;">Total Night</a></th>
@@ -410,7 +410,8 @@
 											{{agent.travellerlastname}}</td>
 										<td style="text-align: left;">{{agent.supplierNm}}</td>
 										<td>{{agent.checkIn}}</td>
-										<td>{{agent.checkOut}}</td>
+										<td ng-if="agent.nonRefund == 'false'">{{agent.latestCancellationDate}}</td>
+										<td ng-if="agent.nonRefund == 'true'">Non-Refundable</td>
 
 										<!-- <td>{{agent.totalNightStay}}</td>
 

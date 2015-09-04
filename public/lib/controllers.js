@@ -341,6 +341,8 @@ angular.module('travel_portal').
 					$scope.roomTypeIns.childAge = response.childAge;
 					$scope.roomTypeIns.roomSize = response.roomSize;
 					$scope.roomTypeIns.freeWifi = response.freeWifi;
+					$scope.roomTypeIns.roomBed = response.roomBed;
+					
 					$scope.adultcount = [];
 					for(var i = 1; i <= response.maxOccupancy; i++){
 						$scope.adultcount[i] = i;

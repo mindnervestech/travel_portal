@@ -511,9 +511,9 @@ public class HotelBookingDetails {
     	
     	String sql="";
     	if(!guest.equals("undefined")){
-    		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentId = ?1 and a.room_status = ?4 and travellerfirstname LIKE CONCAT('%', :someSymbol, '%') ORDER BY a.checkIn DESC";
+    		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentId = ?1 and (a.room_status = ?4 or ?4 = 'undefined') and travellerfirstname LIKE CONCAT('%', :someSymbol, '%') ORDER BY a.checkIn DESC";
     	}else{
-    		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentId = ?1 and a.room_status = ?4 and travellerfirstname LIKE CONCAT('%', :someSymbol, '%') ORDER BY a.checkIn DESC";
+    		sql = "Select a from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentId = ?1 and (a.room_status = ?4 or ?4 = 'undefined') and travellerfirstname LIKE CONCAT('%', :someSymbol, '%') ORDER BY a.checkIn DESC";
     	}
     	if(currentPage >= 1 && currentPage <= totalPages) {
 			start = (currentPage*rowsPerPage)-rowsPerPage;
@@ -579,7 +579,7 @@ public class HotelBookingDetails {
     	
     	String sql="";
     
-    		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and a.checkIn BETWEEN ?3 and ?4 and a.checkOut BETWEEN ?3 and ?4 ORDER BY a.checkIn DESC";
+    		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and (a.room_status = ?2 or ?2 = 'undefined') and a.checkIn BETWEEN ?3 and ?4 and a.checkOut BETWEEN ?3 and ?4 ORDER BY a.checkIn DESC";
     	
     	if(currentPage >= 1 && currentPage <= totalPages) {
 			start = (currentPage*rowsPerPage)-rowsPerPage;
@@ -631,7 +631,7 @@ public class HotelBookingDetails {
     
     	String sql="";
     
-    		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and travellerfirstname LIKE CONCAT('%', :someSymbol, '%') ORDER BY a.checkIn DESC";
+    		sql = "Select a from HotelBookingDetails a where a.agentId = ?1 and (a.room_status = ?2 or ?2 = 'undefined') and travellerfirstname LIKE CONCAT('%', :someSymbol, '%') ORDER BY a.checkIn DESC";
     	
     	if(currentPage >= 1 && currentPage <= totalPages) {
 			start = (currentPage*rowsPerPage)-rowsPerPage;
@@ -772,9 +772,9 @@ public class HotelBookingDetails {
 		long totalPages = 0, size;
 	
 		if(!guest.equals("undefined")){
-			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentId = ?1 and a.room_status = ?4 and a.travellerfirstname LIKE CONCAT('%', :someSymbol, '%')").setParameter(1, agentId).setParameter(2, fromDate).setParameter(3, toDate).setParameter(4, status).setParameter("someSymbol", guest).getSingleResult();  
+			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentId = ?1 and (a.room_status = ?4 or ?4 = 'undefined') and a.travellerfirstname LIKE CONCAT('%', :someSymbol, '%')").setParameter(1, agentId).setParameter(2, fromDate).setParameter(3, toDate).setParameter(4, status).setParameter("someSymbol", guest).getSingleResult();  
 		}else{
-			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentId = ?1 and a.room_status = ?4 and a.travellerfirstname LIKE CONCAT('%', :someSymbol, '%')").setParameter(1, agentId).setParameter(2, fromDate).setParameter(3, toDate).setParameter(4, status).setParameter("someSymbol", guest).getSingleResult();
+			size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.checkIn BETWEEN ?2 and ?3 and a.checkOut BETWEEN ?2 and ?3 and a.agentId = ?1 and (a.room_status = ?4 or ?4 = 'undefined') and a.travellerfirstname LIKE CONCAT('%', :someSymbol, '%')").setParameter(1, agentId).setParameter(2, fromDate).setParameter(3, toDate).setParameter(4, status).setParameter("someSymbol", guest).getSingleResult();
 		}
     	
     	totalPages = size/rowsPerPage;
@@ -877,7 +877,7 @@ public class HotelBookingDetails {
 			long totalPages = 0, size;
 		
 			
-				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and travellerfirstname LIKE CONCAT('%', :someSymbol, '%')").setParameter(1, agentId).setParameter(2, status).setParameter("someSymbol", guest).getSingleResult();  
+				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and (a.room_status = ?2 or ?2 = 'undefined') and travellerfirstname LIKE CONCAT('%', :someSymbol, '%')").setParameter(1, agentId).setParameter(2, status).setParameter("someSymbol", guest).getSingleResult();  
 			
 	    	
 	    	totalPages = size/rowsPerPage;
@@ -897,7 +897,7 @@ public class HotelBookingDetails {
 			if(status.equals("undefined")){
 				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and a.id = ?3").setParameter(1, agentId).setParameter(3, bookingId).getSingleResult();
 			}else{
-				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and a.id = ?3").setParameter(1, agentId).setParameter(2, status).setParameter(3, bookingId).getSingleResult();
+				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and (a.room_status = ?2 or ?2 = 'undefined') and a.id = ?3").setParameter(1, agentId).setParameter(2, status).setParameter(3, bookingId).getSingleResult();
 			}
 	    	
 	    	totalPages = size/rowsPerPage;
@@ -913,7 +913,7 @@ public class HotelBookingDetails {
 			long totalPages = 0, size;
 		
 			
-				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and a.room_status = ?2 and a.checkIn BETWEEN ?3 and ?4 and a.checkOut BETWEEN ?3 and ?4").setParameter(1, agentId).setParameter(2, status).setParameter(3, fromDate).setParameter(4, toDate).getSingleResult();  
+				size = (long) JPA.em().createQuery("Select count(*) from HotelBookingDetails a where a.agentId = ?1 and (a.room_status = ?2 or ?2 = 'undefined') and a.checkIn BETWEEN ?3 and ?4 and a.checkOut BETWEEN ?3 and ?4").setParameter(1, agentId).setParameter(2, status).setParameter(3, fromDate).setParameter(4, toDate).getSingleResult();  
 			
 	    	
 	    	totalPages = size/rowsPerPage;

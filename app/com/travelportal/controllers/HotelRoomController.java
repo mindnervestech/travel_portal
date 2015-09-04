@@ -1242,6 +1242,7 @@ public static void createRootDir() {
 			hotelroomTypes.setBreakfastRate(roomtypeVM.getBreakfastRate());
 			hotelroomTypes.setChildAge(roomtypeVM.getChildAge());
 			hotelroomTypes.setFreeWifi(roomtypeVM.getFreeWifi());
+			hotelroomTypes.setRoomBed(roomtypeVM.getRoomBed());
 			/*if(roomtypeVM.getExtraBedRate() != null){
 			hotelroomTypes.setExtraBedRate(Double.parseDouble(roomtypeVM.getExtraBedRate()));
 			}*/
@@ -1280,6 +1281,7 @@ public static void createRootDir() {
 			hotelroomTypes.setBreakfastRate(roomtypeVM.getBreakfastRate());
 			hotelroomTypes.setChildAge(roomtypeVM.getChildAge());
 			hotelroomTypes.setFreeWifi(roomtypeVM.getFreeWifi());
+			hotelroomTypes.setRoomBed(roomtypeVM.getRoomBed());
 			/*if(roomtypeVM.getExtraBedRate() != null){
 			hotelroomTypes.setExtraBedRate(Double.parseDouble(roomtypeVM.getExtraBedRate()));
 			}*/
