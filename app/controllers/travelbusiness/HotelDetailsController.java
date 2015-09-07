@@ -609,6 +609,7 @@ public static long findDateDiff(Date toDates, Date formDate, long dayDiff){
 public static void fillRoomInfo(HotelRoomTypes room,SerachedRoomType roomtyp){
 	roomtyp.setRoomId(room.getRoomId());
 	roomtyp.setRoomName(room.getRoomType());
+	roomtyp.setRoomBed(room.getRoomBed());
 	roomtyp.setDescription(room.getDescription());
 	roomtyp.setChildAllowedFreeWithAdults(room.getChildAllowedFreeWithAdults());
 	roomtyp.setMaxAdultsWithchild(room.getMaxAdultOccSharingWithChildren());
@@ -1102,6 +1103,7 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 					count++;
 					
 					sHotelRoomType.setRoomId(roomTP.getRoomId());
+					sHotelRoomType.setRoomBed(roomTP.getRoomBed());
 					sHotelRoomType.setRoomName(roomTP.getRoomName());
 					sHotelRoomType.setDescription(roomTP.getDescription());
 					sHotelRoomType.setRoomSize(roomTP.getRoomSize());

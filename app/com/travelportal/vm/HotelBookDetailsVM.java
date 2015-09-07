@@ -14,6 +14,7 @@ import com.travelportal.domain.HotelStarRatings;
 public class HotelBookDetailsVM {
 	
 	public long id;
+	public String bookingId;
 	public long supplierCode;
 	public String hotelNm;
 	public String supplierNm;
@@ -410,6 +411,12 @@ public class HotelBookDetailsVM {
 	}
 	public void setCancellationNightsCharge(String cancellationNightsCharge) {
 		this.cancellationNightsCharge = cancellationNightsCharge;
+	}
+	public String getBookingId() {
+		return bookingId;
+	}
+	public void setBookingId(String bookingId) {
+		this.bookingId = bookingId;
 	}
 	
 	

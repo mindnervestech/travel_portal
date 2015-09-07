@@ -44,7 +44,7 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 #Agent Info
 GET   /AgentBookingInfo   	controllers.travelbusiness.AgentInfoController.AgentBookingInfo()
 GET   /getagentInfo/:currentPage/:fromDate/:toDate/:status          controllers.travelbusiness.AgentInfoController.getagentInfo(currentPage :Integer,fromDate:String,toDate:String,status:String)
-GET   /getagentInfobynm/:currentPage/:checkIn/:checkOut/:guest/:status/:bookingId         controllers.travelbusiness.AgentInfoController.getagentInfobynm(currentPage :Integer,checkIn:String,checkOut:String,guest:String,status:String,bookingId:Long)
+GET   /getagentInfobynm/:currentPage/:checkIn/:checkOut/:guest/:status/:bookingId         controllers.travelbusiness.AgentInfoController.getagentInfobynm(currentPage :Integer,checkIn:String,checkOut:String,guest:String,status:String,bookingId:String)
 GET  /bookingCancelAndCharge/:bookingId/:nightRate/:pandingAmount  			controllers.travelbusiness.AgentInfoController.bookingCancelAndCharge(bookingId:Long, nightRate:String,pandingAmount:String)
 GET  /getbookingcancel/:id			 controllers.travelbusiness.AgentInfoController.getbookingcancel(id:Long)
 GET  /getVoucherConfirm/:bookingId    controllers.travelbusiness.AgentInfoController.getVoucherConfirm(bookingId:Long)

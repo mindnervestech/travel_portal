@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
@@ -323,6 +324,17 @@ public class HotelBookingController extends Controller {
 		if(searchVM.bookingId != ""){
 			hBookingDetails.merge();
 		}else{
+			AgentRegistration aRegistration = AgentRegistration.findByIdOnCode(session().get("agent"));
+			String companyTwoChar = aRegistration.getCompanyName().substring(0, 2);
+			
+			String[] dateEdit;
+			dateEdit = searchVM.getCheckIn().split("-");
+			
+			Random randomGenerator = new Random();
+			int randomInt = randomGenerator.nextInt(10000);
+			
+			String newBookingId = companyTwoChar +"-"+dateEdit[0]+dateEdit[1]+dateEdit[2].substring(2, 4)+"-"+randomInt;
+			hBookingDetails.setBookingId(newBookingId);
 			hBookingDetails.save();
 		}
 		

@@ -15,6 +15,7 @@ public class SerachedRoomType {
 	public String breakfastInclude;
 	public int breakfastRate;
 	public int childAge;
+	public String roomBed;
 	
 	public List<SerachedRoomRateDetail> hotelRoomRateDetail;
 	public List<RoomAmenitiesVm> amenities;
@@ -119,6 +120,12 @@ public class SerachedRoomType {
 	}
 	public void setMaxAdultsWithchild(int maxAdultsWithchild) {
 		this.maxAdultsWithchild = maxAdultsWithchild;
+	}
+	public String getRoomBed() {
+		return roomBed;
+	}
+	public void setRoomBed(String roomBed) {
+		this.roomBed = roomBed;
 	}
 	
 	

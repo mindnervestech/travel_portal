@@ -188,7 +188,7 @@
                                     <div class="details col-sm-7 col-md-8">
                                         <div>
                                             <div style="border-right: none;" class="col-md-12">
-                                                <h4 class="box-title"><span class="col-md-11">{{roomInfo.roomName}}</span><small class="col-md-5" style="color: #01b7f2;padding-right: 1px;width: 100px;">MAX GUESTS:</small><small class="col-md-4" style="padding-left: 1px;">{{roomInfo.hotelRoomRateDetail[0].adult_occupancy}} PERSONS</small></h4>
+                                                <h4 class="box-title"><span class="col-md-11">{{roomInfo.roomBed}} {{roomInfo.roomName}}</span><small class="col-md-5" style="color: #01b7f2;padding-right: 1px;width: 100px;">MAX GUESTS:</small><small class="col-md-4" style="padding-left: 1px;">{{roomInfo.hotelRoomRateDetail[0].adult_occupancy}} PERSONS</small></h4>
                                             </div>
                                              
                                             <div style="padding-left: 0;padding-bottom: 0;">
@@ -248,14 +248,16 @@
                                          <div class="col-md-4"  ng-if="adultRate.mealTypeName != null" style="margin-top: 5px;">
                                         <span class="price"><b><small>Included</small></b><sup style="font-size: small;color: chocolate;top: 9px;">{{adultRate.mealTypeName}}</sup></span>
                                          </div>
+										
+										<div class="col-md-4"  ng-if="adultRate.mealTypeName == null">
+                                        <span class="price"><sup style="font-size: small;color: chocolate;top: 9px;">Room only</sup></span>
+                                         </div> 
+										
                                          <div class="col-md-5"> <!-- ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null" -->
                                           <b><small>Per Room Per Night</small></b>
                                           <span class="price" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="adultRate.rateAvg" rate="{{adultRate.rateAvg}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
                                          </div>
                                          
-                                          <div class="col-md-4"  ng-if="adultRate.mealTypeName == null">
-                                        <span class="price"><sup style="font-size: small;color: chocolate;top: 9px;">Room only</sup></span>
-                                         </div> 
                                        
                                          </div>
                                          </div>

@@ -103,6 +103,7 @@ public class AgentInfoController extends Controller {
 
 			HotelBookDetailsVM hDetailsVM= new HotelBookDetailsVM();
 			hDetailsVM.setId(hBookingDetails.getId());
+			hDetailsVM.setBookingId(hBookingDetails.getBookingId());
 			hDetailsVM.setAdult(hBookingDetails.getAdult());
 			hDetailsVM.setCheckIn(format.format(hBookingDetails.getCheckIn()));
 			hDetailsVM.setCheckOut(format.format(hBookingDetails.getCheckOut()));
@@ -325,7 +326,7 @@ public class AgentInfoController extends Controller {
 	/*----------------------------------------------------------------------------------------------------------------------------------------*/
 
 	@Transactional(readOnly=true)
-	public static Result getagentInfobynm(int currentPage,String checkIn,String checkOut,String guest,String status,Long bookingId) {
+	public static Result getagentInfobynm(int currentPage,String checkIn,String checkOut,String guest,String status,String bookingId) {
 
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		//HotelBookDetailsVM hDetailsVM= new HotelBookDetailsVM();       
@@ -342,7 +343,7 @@ public class AgentInfoController extends Controller {
 			
 			
 			
-		}else if(!checkIn.equals("undefined") && !checkOut.equals("undefined")&&!guest.equals("undefined") && bookingId == 0){
+		}else if(!checkIn.equals("undefined") && !checkOut.equals("undefined")&&!guest.equals("undefined") && bookingId.equals("0")){
 			try {
 				totalPages = HotelBookingDetails.getAllagentTotalDateWise1(10 , Long.parseLong(session().get("agent")) , format.parse(checkIn) , format.parse(checkOut) , status,guest);
 			} catch (ParseException e) {
@@ -356,14 +357,14 @@ public class AgentInfoController extends Controller {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else if(checkIn.equals("undefined") && checkOut.equals("undefined") && !guest.equals("undefined") && bookingId == 0){
+		}else if(checkIn.equals("undefined") && checkOut.equals("undefined") && !guest.equals("undefined") && bookingId.equals("0")){
 
 			totalPages = HotelBookingDetails.getTotalDateWiseAgentWise1(10 , Long.parseLong(session().get("agent")), status,guest);
 
 			hoteDetails = HotelBookingDetails.getfindByDateWiseAgentWise1(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status,guest);
 
 		}
-		else if(guest.equals("undefined")&& (!checkIn.equals("undefined") || !checkOut.equals("undefined")) && bookingId == 0)
+		else if(guest.equals("undefined")&& (!checkIn.equals("undefined") || !checkOut.equals("undefined")) && bookingId.equals("0"))
 		{
 			Date checkInDate = null;
 			if(!checkIn.equals("undefined")){
@@ -393,9 +394,10 @@ public class AgentInfoController extends Controller {
 				hoteDetails = HotelBookingDetails.getfindByDateWiseAgentWise11(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status,checkInDate , CheckOutDate);
 			
 
-		}else if(bookingId != 0){
-			totalPages = HotelBookingDetails.getTotalBookingIdWise(10 , Long.parseLong(session().get("agent")), status, bookingId);
-			hoteDetails = HotelBookingDetails.getfindByBookingId(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status,bookingId);
+		}else if(!bookingId.equals("0")){
+			HotelBookingDetails hDetails = HotelBookingDetails.findBookingIdDetail(bookingId);
+			totalPages = HotelBookingDetails.getTotalBookingIdWise(10 , Long.parseLong(session().get("agent")), status, hDetails.getId());
+			hoteDetails = HotelBookingDetails.getfindByBookingId(Long.parseLong(session().get("agent")), currentPage, 10, totalPages , status, hDetails.getId());
 		}
 
 		fullBookingInfo(hoteDetails, aDetailsVMs);

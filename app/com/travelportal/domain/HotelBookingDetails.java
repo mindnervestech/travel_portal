@@ -71,6 +71,7 @@ public class HotelBookingDetails {
 	private String smokingRoom;
 	private String wheelchair;
 	private String handicappedRoom;
+	private String bookingId;
 	
 	
 	
@@ -433,6 +434,13 @@ public class HotelBookingDetails {
 	public void setCancellationNightsCharge(String cancellationNightsCharge) {
 		this.cancellationNightsCharge = cancellationNightsCharge;
 	}
+	
+	public String getBookingId() {
+		return bookingId;
+	}
+	public void setBookingId(String bookingId) {
+		this.bookingId = bookingId;
+	}
 	public static List<HotelBookingDetails> allBookingData() {
     	return (List<HotelBookingDetails>) JPA.em().createQuery("select c from HotelBookingDetails c").getResultList();
     }
@@ -443,6 +451,10 @@ public class HotelBookingDetails {
 	
 	public static HotelBookingDetails findBookingById(long id) {
     	return (HotelBookingDetails) JPA.em().createQuery("select c from HotelBookingDetails c where c.id = ?1").setParameter(1, id).getSingleResult();
+    }
+	
+	public static HotelBookingDetails findBookingIdDetail(String id) {
+    	return (HotelBookingDetails) JPA.em().createQuery("select c from HotelBookingDetails c where c.bookingId = ?1").setParameter(1, id).getSingleResult();
     }
 	
 	

@@ -84,11 +84,11 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		console.log(checkOut);
 		console.log(bookingId);
 		if(guest=="")
-	{
+		{
 			guest="undefined";
-	}
+		}
 		if(bookingId == "" || bookingId == undefined){
-			bookingId = 0;
+			bookingId = "0";
 		}
 		
 		$http.get("/getagentInfobynm/"+currentPage+"/"+checkIn+"/"+checkOut+"/"+guest+"/"+status+"/"+bookingId).success(function(response1){
