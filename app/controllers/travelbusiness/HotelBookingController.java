@@ -153,6 +153,7 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setSupplierNm(searchVM.getSupplierNm());
 		hBookingDetails.setTotalNightStay(searchVM.getDatediff());
 		for(SerachHotelRoomType byRoom:searchVM.hotelbyRoom){
+			if(byRoom.nonRefund == false){
 			for(SerachedRoomRateDetail searchByRoom:byRoom.hotelRoomRateDetail){
 					int canellfirst = 0;
 					for(CancellationPolicyVM canellationP:searchByRoom.cancellation){
@@ -166,6 +167,7 @@ public class HotelBookingController extends Controller {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
+							
 							c.add(Calendar.DATE, - Integer.parseInt(canellationP.days));  // number of days to add
 							String cancellDate = format.format(c.getTime());
 							try {
@@ -179,6 +181,7 @@ public class HotelBookingController extends Controller {
 						} 
 					}
 			}
+		}
 		}
 		//hBookingDetails.setCancellationNightsCharge(searchVM.getHotelbyRoom());
 		

@@ -23,6 +23,7 @@ import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.collection.generic.BitOperations.Int;
 import views.html.travelbusiness.hotelBookingInfo;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -32,6 +33,7 @@ import com.travelportal.domain.Country;
 import com.travelportal.domain.HotelAmenities;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.HotelImagesPath;
+import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.InfoWiseImagesPath;
@@ -39,6 +41,7 @@ import com.travelportal.domain.InternalContacts;
 import com.travelportal.domain.admin.BreakfastMarkup;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.CancellationPolicy;
+import com.travelportal.domain.rooms.ChildPolicies;
 import com.travelportal.domain.rooms.HotelRoomTypes;
 import com.travelportal.domain.rooms.PersonRate;
 import com.travelportal.domain.rooms.RateDetails;
@@ -355,8 +358,6 @@ public static Result hotelBookingpage() {
 			hotelBookings.setTotalParPerson(searchVM.totalParPerson);
 			
 			List<PassengerBookingInfoVM> pList = new ArrayList<>();
-			System.out.println("_+_+_+_+Yogesh_+_+_+_+_+-");
-			System.out.println(searchVM.getFinalTotalDetails().toString());
 			 JSONArray array = null;
 			 JSONArray childArray = null;
 			 JSONArray rateArray = null;
@@ -428,7 +429,71 @@ public static Result hotelBookingpage() {
 				      
 				 }   
 				 hotelBookings.setPassengerInfo(pList);
+				 DateFormat formatRenew = new SimpleDateFormat("yyyy-MM-dd");
+				// List<String> hh= new ArrayList<>();
+				 List<Date> newYear = new ArrayList<>();
+				 int newDate = 0;
+				 int newYearValue = 2015;
+				 for(newDate=0;newDate<3;newDate++){
+					 String dateconcat = newYearValue+"-12-31";
+					// hh.add(dateconcat);
+					 Date renewDate = null;
+					try {
+						renewDate = formatRenew.parse(dateconcat);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						if(formatRenew.parse(searchVM.checkIn).before(renewDate) && formatRenew.parse(searchVM.checkOut).after(renewDate)){
+							 newYear.add(renewDate);
+						}
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					 newYearValue++;
+				 }
+				 
+				 double totalChild =0d;
+				 double totalAdult =0d;
+				 double totalMealAdd = 0d;
+				 List<HotelMealPlan> mealtype = HotelMealPlan.getmealtype(hAmenities.getSupplier_code());
+				 for(HotelMealPlan hMealPlan:mealtype){
+					 for(Date d:newYear){
+						 int hpPlan = HotelMealPlan.getHotelMealCompulsory(hMealPlan.getId(),d);
+						if(hpPlan != 0){
+							HotelMealPlan hPlan = HotelMealPlan.findById(hpPlan);
+							for(PassengerBookingInfoVM p:pList){
+								double cal = 0d;
+								
+								String[] value = p.adult.split(" ");
+								cal = Double.valueOf(value[0]) * hPlan.getRate();
+								totalAdult = totalAdult + cal;
+								for(ChildPolicies child:hPlan.getChild()){
+									if(p.childselected != null){
+										
+									for(ChildselectedVM selectChild:p.childselected){
+										if(Integer.parseInt(selectChild.age) > child.getAllowedChildAgeFrom() && Integer.parseInt(selectChild.age) < child.getAllowedChildAgeTo()){
+											totalChild = totalChild + child.getCharge();
+										}
+									}
+									}
+								}
+							
+							}
+							 System.out.println(totalAdult);
+							 System.out.println(totalChild);
+							 totalMealAdd = totalMealAdd + (totalAdult + totalChild);
+						}
+						
+					 }
+					
+					 
+				 }
 			
+				 hProfileVM.setMealCompulsory(totalMealAdd);
 			hProfileVM.setHotelBookingDetails(hotelBookings);
 			
 			//HotelBookingDetailsVM

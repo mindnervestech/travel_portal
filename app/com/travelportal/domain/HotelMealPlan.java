@@ -1,5 +1,7 @@
 package com.travelportal.domain;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +20,8 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 import com.travelportal.domain.rooms.ChildPolicies;
+import com.travelportal.domain.rooms.HotelRoomTypes;
+import com.travelportal.domain.rooms.RateMeta;
 
 @Entity
 @Table(name="hotel_meal_plan")
@@ -51,7 +55,7 @@ public class HotelMealPlan { //supplier specific records...
 
 	@Column(name="age_criteria")
 	private String ageCriteria;
-	private long SupplierCode;
+	private long supplierCode;
 	@Column(name="taxvalue")
 	private Double taxvalue;
 	@Column(name="taxtype")
@@ -70,14 +74,12 @@ public class HotelMealPlan { //supplier specific records...
 		this.id = id;
 	}
 	
+	
 	public long getSupplierCode() {
-		return SupplierCode;
+		return supplierCode;
 	}
-	/**
-	 * @param mealPlanNm the mealPlanNm to set
-	 */
-	public void setSupplierCode(long SupplierCode) {
-		this.SupplierCode = SupplierCode;
+	public void setSupplierCode(long supplierCode) {
+		this.supplierCode = supplierCode;
 	}
 	/**
 	 * @return the mealPlanNm
@@ -205,7 +207,7 @@ public class HotelMealPlan { //supplier specific records...
 		this.child.add(child);
 	}
 	public static List<HotelMealPlan> getmealtype(long supplierCode) {
-		return JPA.em().createQuery("select c from HotelMealPlan c where c.SupplierCode = ?1").setParameter(1, supplierCode).getResultList();
+		return JPA.em().createQuery("select c from HotelMealPlan c where c.supplierCode = ?1").setParameter(1, supplierCode).getResultList();
 	}
 	
 	//findById
@@ -220,8 +222,28 @@ public class HotelMealPlan { //supplier specific records...
 	public static HotelMealPlan getHotelMealPlanIdByCode(int code) {
 		return (HotelMealPlan) JPA.em().createQuery("select c from HotelMealPlan c where id = ?1").setParameter(1, code).getSingleResult();
 	}
+	
+	public static int getHotelMealCompulsory(int code,Date date) {
+		
+		try{
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			
+		 String SDate = null;
+		
+			SDate = format.format(date);
+		 
+			Integer mealId;
+			return mealId =(Integer) JPA.em().createNativeQuery("select hmp.id from hotel_meal_plan hmp where '"+SDate+"'  between hmp.from_period and hmp.to_period and id = '"+code+"'").getSingleResult();
+			
+		//return (HotelMealPlan) JPA.em().createQuery("select c from HotelMealPlan c where ?2 between toPeriod and fromPeriod and id = ?1").setParameter(1, code).setParameter(2, SDate).getSingleResult();
+		}
+		catch(Exception ex){
+			return 0;
+		}
 		
 	
+	}
+
 	
 	@Transactional
     public void save() {

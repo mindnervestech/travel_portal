@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.travelportal.domain.HotelMealPlan;
-import com.travelportal.domain.admin.BatchMarkup;
 
 public class HotelSearch {
 	
@@ -49,6 +48,7 @@ public class HotelSearch {
 	public List<SerachedHotelbyDate> hotelbyDate; 
 	public List<HotelMealPlan> mealPlan;
 	public SpecificMarkupInfoVM markup;
+	public Double mealCompulsory;
 	//public String flag;
 	
 	public Long getSupplierCode() {
@@ -276,6 +276,12 @@ public class HotelSearch {
 	}
 	public void setAgentCurrency(String agentCurrency) {
 		this.agentCurrency = agentCurrency;
+	}
+	public Double getMealCompulsory() {
+		return mealCompulsory;
+	}
+	public void setMealCompulsory(Double mealCompulsory) {
+		this.mealCompulsory = mealCompulsory;
 	}
 	
 	

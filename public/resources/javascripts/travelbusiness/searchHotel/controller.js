@@ -555,7 +555,26 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 						console.log(value2.flag);
 					}
 					if(value2.allotmentmarket.allocation == 3){
-						console.log(value2.availableRoom);
+						
+						var arr = $scope.ratedetail.checkIn.split("-");
+						var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+						  var d = new Date();
+						  var dateOut = new Date(datevalue);
+						  
+						  var periodDay = value2.allotmentmarket.period.split(" ");
+						  dateOut.setDate(dateOut.getDate() -  parseInt(periodDay[0]));
+						  
+						  console.log(dateOut);
+						  console.log(d);
+						  if(dateOut <= d){
+							  	flag = 1;
+							  	angular.forEach($scope.rateDatedetail,function(value3,key3){
+									if(value3.fulldate == value.date){
+										value3.flag = 1;
+									}
+								});
+						  }else{
+						
 						if(value2.availableRoom < (roomNo+1)){
 							flag = 1;
 							angular.forEach($scope.rateDatedetail,function(value3,key3){
@@ -571,6 +590,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 								}
 							});
 						}
+					 }	
 					}
 					
 				  });
@@ -809,7 +829,25 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			angular.forEach(value.roomType,function(value1,key1){
 				angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
 					if(value2.allotmentmarket.allocation == 3){
-						console.log(value2.availableRoom);
+						
+						var arr = $scope.ratedetail.checkIn.split("-");
+						var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+						  var d = new Date();
+						  var dateOut = new Date(datevalue);
+						  
+						  var periodDay = value2.allotmentmarket.period.split(" ");
+						  dateOut.setDate(dateOut.getDate() -  parseInt(periodDay[0]));
+						  
+						  console.log(dateOut);
+						  console.log(d);
+						  if(dateOut <= d){
+							  	flag = 1;
+							  	angular.forEach($scope.rateDatedetail,function(value3,key3){
+									if(value3.fulldate == value.date){
+										value3.flag = 1;
+									}
+								});
+						  }else{
 						if(value2.availableRoom < roomNo){
 							flag = 1;
 							angular.forEach($scope.rateDatedetail,function(value3,key3){
@@ -826,6 +864,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 								}
 							});
 						}
+						  }	
 					}
 					
 				  });
@@ -1843,7 +1882,7 @@ travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filt
 		console.log(newValue);
 		var arr = newValue.split("-");
 		var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
-		  var dateOut = new Date(datevalue);
+		 var dateOut = new Date(datevalue);
 		  dateOut.setDate(dateOut.getDate() + 1);
 		  console.log($filter('date')(dateOut, "dd-MM-yyyy"));
 		
@@ -2168,23 +2207,42 @@ $http.get("/searchCountries").success(function(response) {
 			angular.forEach(value.roomType,function(value1,key1){
 				angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
 					if(value2.allotmentmarket.allocation == 3){
-						console.log(value2.availableRoom);
-						if(value2.availableRoom < roomNo){
-							flag = 1;
-							angular.forEach($scope.rateDatedetail,function(value3,key3){
-								if(value3.fulldate == value.date){
-									value3.flag = 1;
-								}
-							});
+						var arr = $scope.ratedetail.checkIn.split("-");
+						var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+						  var d = new Date();
+						  var dateOut = new Date(datevalue);
+						  
+						  var periodDay = value2.allotmentmarket.period.split(" ");
+						  dateOut.setDate(dateOut.getDate() -  parseInt(periodDay[0]));
+						  
+						  console.log(dateOut);
+						  console.log(d);
+						  if(dateOut <= d){
+							  	flag = 1;
+							  	angular.forEach($scope.rateDatedetail,function(value3,key3){
+									if(value3.fulldate == value.date){
+										value3.flag = 1;
+									}
+								});
+						  }else{
+						
+							  	if(value2.availableRoom < roomNo){
+							  			flag = 1;
+							  			angular.forEach($scope.rateDatedetail,function(value3,key3){
+							  				if(value3.fulldate == value.date){
+							  					value3.flag = 1;	
+							  				}
+							  	});
 							
-						}else{
-							flag = 0;
-							angular.forEach($scope.rateDatedetail,function(value3,key3){
-								if(value3.fulldate == value.date){
-									value3.flag = 0;
-								}
-							});
-						}
+							  	}else{
+							  			flag = 0;
+							  			angular.forEach($scope.rateDatedetail,function(value3,key3){
+							  				if(value3.fulldate == value.date){
+							  					value3.flag = 0;
+							  				}
+							  	});
+							  	}
+						  }	
 					}
 					
 				  });
@@ -2309,7 +2367,8 @@ $http.get("/searchCountries").success(function(response) {
 				$scope.rateDatedetailRoomWise = $scope.ratedetail.hotelBookingDetails.passengerInfo[0].rateDatedetail;
 				$scope.currentRoom = 1;
 			}else{
-			
+				
+				
 			//$scope.fillrateDatedetai($scope.adultString);
 			angular.forEach($scope.ratedetail.hotelbyDate,function(value,key){
 				
@@ -2368,21 +2427,42 @@ $http.get("/searchCountries").success(function(response) {
 				angular.forEach(value.roomType,function(value1,key1){
 					angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
 						if(value2.allotmentmarket.allocation == 3){
-							console.log(value2.availableRoom);
-							if(value2.availableRoom < 1){
-								angular.forEach($scope.rateDatedetail,function(value3,key3){
-									if(value3.fulldate == value.date){
-										value3.flag = 1;
+							
+									var arr = $scope.ratedetail.checkIn.split("-");
+							var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+							  var d = new Date();
+							  var dateOut = new Date(datevalue);
+							  
+							  var periodDay = value2.allotmentmarket.period.split(" ");
+							  dateOut.setDate(dateOut.getDate() -  parseInt(periodDay[0]));
+							  
+							  console.log(dateOut);
+							  console.log(d);
+							  if(dateOut <= d){
+								  	flag = 1;
+								  	angular.forEach($scope.rateDatedetail,function(value3,key3){
+										if(value3.fulldate == value.date){
+											value3.flag = 1;
+										}
+									});
+							  }else{
+								  console.log(value2.availableRoom);
+									if(value2.availableRoom < 1){
+										angular.forEach($scope.rateDatedetail,function(value3,key3){
+											if(value3.fulldate == value.date){
+												value3.flag = 1;
+											}
+										});
+										
+									}else{
+										angular.forEach($scope.rateDatedetail,function(value3,key3){
+											if(value3.fulldate == value.date){
+												value3.flag = 0;
+											}
+										});
 									}
-								});
-								
-							}else{
-								angular.forEach($scope.rateDatedetail,function(value3,key3){
-									if(value3.fulldate == value.date){
-										value3.flag = 0;
-									}
-								});
-							}
+							  }
+													
 						}
 						
 					  });
@@ -2438,6 +2518,10 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.selectextraBed = function(){
 			console.log("------Select---------");
 		}
+	}
+	
+	$scope.caluAllotRoom = function(){
+		
 	}
 	
 	$scope.batchMarkupFunction = function(){
@@ -3010,21 +3094,41 @@ $http.get("/searchCountries").success(function(response) {
 					}
 					if(value2.allotmentmarket.allocation == 3){
 						console.log(value2.availableRoom);
-						if(value2.availableRoom < (roomNo+1)){
-							flag = 1;
-							angular.forEach($scope.rateDatedetail,function(value3,key3){
-								if(value3.fulldate == value.date){
-									value3.flag = 1;
-								}
-							});
+						var arr = $scope.ratedetail.checkIn.split("-");
+						var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+						  var d = new Date();
+						  var dateOut = new Date(datevalue);
+						  
+						  var periodDay = value2.allotmentmarket.period.split(" ");
+						  dateOut.setDate(dateOut.getDate() -  parseInt(periodDay[0]));
+						  
+						  console.log(dateOut);
+						  console.log(d);
+						  if(dateOut <= d){
+							  	flag = 1;
+							  	angular.forEach($scope.rateDatedetail,function(value3,key3){
+									if(value3.fulldate == value.date){
+										value3.flag = 1;
+									}
+								});
+						  }else{
+						
+							  if(value2.availableRoom < (roomNo+1)){
+								  flag = 1;
+								  angular.forEach($scope.rateDatedetail,function(value3,key3){
+									  if(value3.fulldate == value.date){
+										  value3.flag = 1;
+									  }
+								  });
 							
-						}else{
-							angular.forEach($scope.rateDatedetail,function(value3,key3){
-								if(value3.fulldate == value.date){
-									value3.flag = 0;
-								}
-							});
-						}
+							  }else{
+								  angular.forEach($scope.rateDatedetail,function(value3,key3){
+									  if(value3.fulldate == value.date){
+										  value3.flag = 0;
+									  }
+								  });
+							  }
+						  }	
 					}
 					
 				  });
@@ -3201,6 +3305,8 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 			$scope.hotel.hotelBookingDetails.smokingRoom = $scope.traveller.smokingRoom;
 			$scope.hotel.hotelBookingDetails.wheelchair = $scope.traveller.wheelchair;
 			$scope.hotel.hotelBookingDetails.handicappedRoom = $scope.traveller.handicappedRoom;
+			$scope.hotel.hotelBookingDetails.total = parseInt($scope.hotel.hotelBookingDetails.total) + parseInt($scope.hotel.mealCompulsory);
+			
 			
 			console.log($scope.hotel);
 			
