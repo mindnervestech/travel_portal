@@ -2,6 +2,8 @@ package controllers.travelbusiness;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,8 +11,27 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
+import java.util.UUID;
 
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
@@ -335,6 +356,7 @@ public class HotelBookingController extends Controller {
 			
 			String newBookingId = companyTwoChar +"-"+dateEdit[0]+dateEdit[1]+dateEdit[2].substring(2, 4)+"-"+randomInt;
 			hBookingDetails.setBookingId(newBookingId);
+			hBookingDetails.setUuId(UUID.randomUUID().toString());
 			hBookingDetails.save();
 		}
 		
@@ -1984,8 +2006,6 @@ public class HotelBookingController extends Controller {
 			bookingInfoRefNoTable1.setPaddingBottom(4);
 			bookingInfoTable.addCell(bookingInfoRefNoTable1);
 			
-		
-			
 			PdfPCell  bookingInfoHotelNameTable1 = new PdfPCell(bookingInfoHotelNameTable);
 			bookingInfoHotelNameTable1.setBorder(Rectangle.NO_BORDER);
 			bookingInfoHotelNameTable1.setBackgroundColor(new BaseColor(255, 255, 255));
@@ -2448,48 +2468,68 @@ public class HotelBookingController extends Controller {
 			File file = new File(fileName);
 			
 			
-		/*	
+			
 			final String username=Play.application().configuration().getString("username");
 	        final String password=Play.application().configuration().getString("password");
+	        /*   
+	        Properties props = new Properties();
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.port", "587");
+			props.put("mail.smtp.starttls.enable", "true");
+			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			});
+			try
+			{
+				MimeBodyPart attachPart = new MimeBodyPart();
+				Message message = new MimeMessage(session);
+				message.setFrom(new InternetAddress(username));
+				message.setRecipients(Message.RecipientType.TO,
+						InternetAddress.parse("yogeshpatil424@gmail.com"));
+				message.setSubject("Confirmation Mail");
+				Multipart multipart = new MimeMultipart();
+				BodyPart messageBodyPart = new MimeBodyPart();
+				messageBodyPart = new MimeBodyPart();
+				
+				VelocityEngine ve = new VelocityEngine();
+				ve.setProperty( RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,"org.apache.velocity.runtime.log.Log4JLogChute" );
+				ve.setProperty("runtime.log.logsystem.log4j.logger","clientService");
+				ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath"); 
+				ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+				ve.init();
+			
+				
+		        Template t = ve.getTemplate("/public/emailTemplet/template.vm"); 
+		        VelocityContext context = new VelocityContext();
+		        context.put("uuId", hBookingDetails.getUuId());
+		        
+		        
+		        StringWriter writer = new StringWriter();
+		        t.merge( context, writer );
+		        String content = writer.toString(); 
+				
+				messageBodyPart.setContent(content, "text/html");
+				multipart.addBodyPart(messageBodyPart);
+				  try {
+						attachPart.attachFile(file);
+			  	      } catch (IOException e) {
+			  	       	// TODO Auto-generated catch block
+			  	       		e.printStackTrace();
+			  	    }
+				 multipart.addBodyPart(attachPart);
+				message.setContent(multipart);
+				Transport.send(message);
+				System.out.println("Sent test message successfully....");
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			} */
 	        
-	 		Properties props = new Properties();
-	 		props.put("mail.smtp.auth", "true");
-	 		props.put("mail.smtp.starttls.enable", "true");
-	 		props.put("mail.smtp.host", "smtp.gmail.com");
-	 		props.put("mail.smtp.port", "587");
-	  
-	 		Session session = Session.getInstance(props,
-	 		  new javax.mail.Authenticator() {
-	 			protected PasswordAuthentication getPasswordAuthentication() {
-	 				return new PasswordAuthentication(username, password);
-	 			}
-	 		  });
-	  
-	 		try{
-	 		   
-	 			MimeBodyPart attachPart = new MimeBodyPart();
-	  			Message feedback = new MimeMessage(session);
-	  			feedback.setFrom(new InternetAddress(username));
-	  			feedback.setRecipients(Message.RecipientType.TO,
-	  			InternetAddress.parse(email));
-	  			feedback.setSubject("Confirm Booking");	  			
-	  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
-	  			messageBodyPart.setText("Thank you for booking with theexpeditionthailand.  Your booking is Confirm. please find attached hotel voucher . \n\n We wish you a pleasant stay. \n\n The theexpeditionthailand.com team.");
-	  			//messageBodyPart.setText("You Your Agent Code : "+aRegistration.getAgentCode() +"Password :"+aRegistration.getPassword());	  	    
-	  	         Multipart multipart = new MimeMultipart();	  	    
-	  	         multipart.addBodyPart(messageBodyPart);	
-	  	       try {
-				attachPart.attachFile(file);
-	  	       		} catch (IOException e) {
-	  	       				// TODO Auto-generated catch block
-	  	       				e.printStackTrace();
-	  	       			}
-	  	         multipart.addBodyPart(attachPart);
-	  	         feedback.setContent(multipart);
-	  		     Transport.send(feedback);
-	       		} catch (MessagingException e) {
-	  			  throw new RuntimeException(e);
-	  		}*/
+	        
 		  
 			//return ok(file);
 		} catch (Exception e) {

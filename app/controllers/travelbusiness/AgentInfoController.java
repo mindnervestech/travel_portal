@@ -32,7 +32,7 @@ import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.travelbusiness.agentBookingInfo;
+import views.html.travelbusiness.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat.Value;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -48,6 +48,7 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.mnt.travelbusiness.helper.PageScope;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.NatureOfBusiness;
@@ -67,6 +68,13 @@ import com.travelportal.vm.SearchHotelValueVM;
 
 public class AgentInfoController extends Controller {
 
+	
+	  public static Result confirmationPage() {
+	    	
+		  String uuId = request().getQueryString("bId");
+	    	//String bookingId = "MN-180915-7598";
+	    	return ok(confirmationPage.render(uuId));
+	    }
 
 	@Transactional(readOnly=true)
 	public static Result AgentBookingInfo(){ 
@@ -1428,4 +1436,16 @@ public class AgentInfoController extends Controller {
 		return ok();
 	 }
 	 
+	 @Transactional(readOnly=false)
+	 public static Result getConfirmationInfo(String bookingId,String confirmationId,String nameConfirm,String status){
+		 System.out.println("-=-==bookingId=-=-=");
+		 System.out.println(bookingId);
+		HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingIdDetail(bookingId);
+		hBookingDetails.setRoom_status(status);
+		hBookingDetails.setConfirmationId(confirmationId);
+		hBookingDetails.setConfirmProcessUser(nameConfirm);
+		hBookingDetails.merge();
+		
+		 return ok();
+	 }
 }

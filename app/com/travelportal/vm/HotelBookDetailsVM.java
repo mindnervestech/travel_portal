@@ -69,6 +69,7 @@ public class HotelBookDetailsVM {
 	public String smokingRoom;
 	public String wheelchair;
 	public String handicappedRoom;
+	public String uuId;
 	
 	
 	public String getHotelNm() {
@@ -417,6 +418,12 @@ public class HotelBookDetailsVM {
 	}
 	public void setBookingId(String bookingId) {
 		this.bookingId = bookingId;
+	}
+	public String getUuId() {
+		return uuId;
+	}
+	public void setUuId(String uuId) {
+		this.uuId = uuId;
 	}
 	
 	

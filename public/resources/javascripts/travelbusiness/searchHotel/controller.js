@@ -3345,3 +3345,56 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 	
 	
 	});	
+
+
+
+
+travelBusiness.controller('BookingConfirmRejectController', function ($scope,$http,$filter,ngDialog,$cookieStore,notificationService) {
+	
+	$scope.bookingData;
+
+	$scope.doThis = 0;
+	$scope.confirmationBookingId = function(bookingId, confirmationId, nameConfirm,status){
+		
+		console.log(bookingId);
+		
+		if(confirmationId == undefined){
+			confirmationId = "";
+		}
+		
+		if(status == "Rejected"){
+			if(nameConfirm == null || nameConfirm == "" || nameConfirm == undefined){
+				$scope.doThis = 1;
+			}else{
+				$scope.doThis = 0;
+			}
+		}else{
+			
+			$scope.doThis = 0;
+		}
+		if($scope.doThis == 0){
+		$http.get("/getConfirmationInfo/"+bookingId+"/"+confirmationId+"/"+nameConfirm+"/"+status).success(function(response){
+			if(status == "available"){
+				notificationService.success("Booking Confirm");
+				$scope.doThis = 0;
+			}
+			if(status == "Rejected"){
+				notificationService.success("Booking Reject");
+				$scope.doThis = 0;
+			}
+		});
+	 }
+	}
+	
+	$scope.getAllBookingData = function(uuId){
+		console.log(uuId);
+		$http.get("/getBookingInfo/"+uuId).success(function(response){
+			console.log("Ok..hi");
+			console.log(response);
+			$scope.bookingData = response;
+		});
+	}
+	
+	
+
+});

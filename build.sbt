@@ -13,7 +13,9 @@ libraryDependencies ++= Seq(
 	"com.itextpdf" % "itextpdf" % "5.5.4",
     "com.itextpdf.tool" % "xmlworker" % "1.0.0",
 	"commons-io" % "commons-io" % "2.1",
-	"org.javers" % "javers-core" % "1.1.1"
+	"org.javers" % "javers-core" % "1.1.1",
+	"org.apache.velocity" % "velocity" % "1.7",
+	"org.apache.velocity" % "velocity-tools" % "2.0"
 )     
 
 play.Project.playJavaSettings

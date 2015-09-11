@@ -1,0 +1,105 @@
+@(uuId: String)
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!--[if IE 8]>          <html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>          <html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->  <html> <!--<![endif]-->
+<head>
+    <!-- Page Title -->
+    <title>Travelo | Responsive HTML5 Travel Template</title>
+    
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Travelo | Responsive HTML5 Travel Template">
+    <meta name="author" content="SoapTheme">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	@include_css()
+    
+ 
+    
+    <script type="text/javascript" src="assets/resources/js/pace.min.js" data-pace-options='{ "ajax": false }'></script>
+    <!-- <script type="text/javascript" src="assets/resources/js/page-loading.js"></script> -->
+</head>
+ <body data-ng-app="travel-business" data-ng-controller="BookingConfirmRejectController"> 
+
+    <div id="page-wrapper">
+         @header()
+         
+        <div id="main" class="col-md-12" ng-init="getAllBookingData('@uuId')">
+                      
+                        
+                        <ul class="tabs">
+                               <!--  <li class="active"><a data-toggle="tab" href="#photos-tab">photos</a></li> -->
+                             
+                                
+                            </ul>
+                        <div id="hotel-features" class="tab-container">
+                            
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active">
+                                   <form method="post" name="myForm" ng-submit="confirmationBookingId(bookingData.bookingId, confirmationId, nameConfirm,'available')" role="form" >
+                                    <div class="long-description">
+                                    <div class="form-group row">
+                                        <div class="col-sm-5 col-md-4">
+                                           
+                                        </div>
+                                      
+                                        <div class="col-sm-5 col-md-4" style="text-align: center;">
+                                           <a class="button btn-small yellow-bg white-color" href="#">BOOKING ID:{{bookingData.bookingId}}</a>
+                                        </div>
+                                    </div>
+                                    <br>
+                                        <div class="form-group row">
+                                        <div class="col-sm-5 col-md-4">
+                                           
+                                        </div>
+                                      
+                                        <div class="col-sm-5 col-md-4">
+                                            <label>Confirmation Id</label>
+                                            <input type="text" class="input-text full-width" ng-model="confirmationId" value="" required>
+                                        </div>
+                                    </div>
+                                     <div class="form-group row">
+                                        <div class="col-sm-5 col-md-4">
+                                           
+                                        </div>
+                                        <div class="col-sm-5 col-md-4">
+                                            <label>Name</label>
+                                            <input type="text" class="input-text full-width" ng-model="nameConfirm" value="" required>
+                                            <label style="color:red" ng-if="doThis == 1">Please fill out this field</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                    <div class="col-sm-5 col-md-4">
+                                    </div>
+                                        <div class="col-sm-3 col-md-2">
+                                             <button type="submit" class="full-width btn-small">CONFIRM</button>
+                                        </div>
+                                        <div class="col-sm-3 col-md-2">
+                                             <button type="button" class="full-width btn-small" ng-click="confirmationBookingId(bookingData.bookingId, confirmationId, nameConfirm,'Rejected')">Reject</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                   </form>
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+      
+    </div>
+    
+   <!--  @include_js() -->
+
+	
+</body>
+</html>
+<style>
+	#loading-id{
+		display: none;
+	}
+
+</style>

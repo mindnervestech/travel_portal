@@ -93,6 +93,9 @@ public class HotelBookingDetails {
 	private Date latestCancellationDate;
 	private String cancellationNightsCharge;
 	private Double cancelBookingCharges;
+	private String confirmationId;
+	private String confirmProcessUser;
+	private String uuId;
 	
 	public Long getSupplierCode() {
 		return supplierCode;
@@ -441,6 +444,26 @@ public class HotelBookingDetails {
 	public void setBookingId(String bookingId) {
 		this.bookingId = bookingId;
 	}
+	
+	public String getConfirmationId() {
+		return confirmationId;
+	}
+	public void setConfirmationId(String confirmationId) {
+		this.confirmationId = confirmationId;
+	}
+	public String getConfirmProcessUser() {
+		return confirmProcessUser;
+	}
+	public void setConfirmProcessUser(String confirmProcessUser) {
+		this.confirmProcessUser = confirmProcessUser;
+	}
+	
+	public String getUuId() {
+		return uuId;
+	}
+	public void setUuId(String uuId) {
+		this.uuId = uuId;
+	}
 	public static List<HotelBookingDetails> allBookingData() {
     	return (List<HotelBookingDetails>) JPA.em().createQuery("select c from HotelBookingDetails c").getResultList();
     }
@@ -455,6 +478,10 @@ public class HotelBookingDetails {
 	
 	public static HotelBookingDetails findBookingIdDetail(String id) {
     	return (HotelBookingDetails) JPA.em().createQuery("select c from HotelBookingDetails c where c.bookingId = ?1").setParameter(1, id).getSingleResult();
+    }
+	
+	public static HotelBookingDetails finduuIdDetail(String id) {
+    	return (HotelBookingDetails) JPA.em().createQuery("select c from HotelBookingDetails c where c.uuId = ?1").setParameter(1, id).getSingleResult();
     }
 	
 	
