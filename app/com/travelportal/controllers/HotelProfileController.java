@@ -117,7 +117,7 @@ public class HotelProfileController extends Controller {
 		hotelprofile.setPartOfChain(form.get("hotelPartOfChain"));
 		hotelprofile.setHotelEmailAddr(form.get("email"));
 		hotelprofile.setMarketPolicyType(MarketPolicyTypes.getMarketPolicyTypesIdByCode(Integer.parseInt(form.get("marketSpecificPolicyCode"))));
-		hotelprofile.setHoteBrands(HotelBrands.getHotelBrandsbyCode(Integer.parseInt(form.get("brandHotelCode"))));
+		hotelprofile.setHoteBrands(form.get("brandHotelCode"));
 		hotelprofile.setPassword(form.get("primaryPasswd"));
 		hotelprofile.setStartRatings(HotelStarRatings.getHotelRatingsById(Integer.parseInt(form.get("startRating"))));
 		hotelprofile.setVerifyPassword(form.get("verifiedPasswd"));

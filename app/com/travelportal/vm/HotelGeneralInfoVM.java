@@ -14,8 +14,10 @@ public class HotelGeneralInfoVM {
 	public int cityCode;
 	public String zipCode;
 	public String HotelPartOfChain;
-	public int chainHotelCode;
-	public int BrandHotelCode;
+	//public int chainHotelCode;
+	//public int BrandHotelCode;
+	public String chainHotelCode;
+	public String BrandHotelCode;
 	public boolean isHealthSafetyCompliance;
 	public int currencyCode;
 	public int marketSpecificPolicyCode;
@@ -127,32 +129,24 @@ public class HotelGeneralInfoVM {
 	/**
 	 * @return the chainHotelCode
 	 */
-	public int getChainHotelCode() {
-		return chainHotelCode;
-	}
-	/**
-	 * @param chainHotelCode the chainHotelCode to set
-	 */
-	public void setChainHotelCode(int chainHotelCode) {
-		this.chainHotelCode = chainHotelCode;
-	}
-	/**
-	 * @return the brandHotelCode
-	 */
-	public int getBrandHotelCode() {
-		return BrandHotelCode;
-	}
-	/**
-	 * @param brandHotelCode the brandHotelCode to set
-	 */
-	public void setBrandHotelCode(int brandHotelCode) {
-		BrandHotelCode = brandHotelCode;
-	}
+	
 	/**
 	 * @return the isHealthSafetyCompliance
 	 */
 	public boolean isHealthSafetyCompliance() {
 		return isHealthSafetyCompliance;
+	}
+	public String getChainHotelCode() {
+		return chainHotelCode;
+	}
+	public void setChainHotelCode(String chainHotelCode) {
+		this.chainHotelCode = chainHotelCode;
+	}
+	public String getBrandHotelCode() {
+		return BrandHotelCode;
+	}
+	public void setBrandHotelCode(String brandHotelCode) {
+		BrandHotelCode = brandHotelCode;
 	}
 	/**
 	 * @param isHealthSafetyCompliance the isHealthSafetyCompliance to set

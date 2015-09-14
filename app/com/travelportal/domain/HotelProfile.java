@@ -62,11 +62,18 @@ public class HotelProfile {
 	@Column(name="hotel_part_of_chain")
 	private String partOfChain;
 	
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	/*@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelBrands hoteBrands;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private HotelChain chainHotel;
+	*/
+	
+	@Column(name="hotwlBrands")
+	private String hoteBrands;
+	
+	@Column(name="chainHotel")
+	private String chainHotel;
 	
 	@Column(name="safetyMeasuresCompliance")
 	private boolean safetyMeasuresCompliance;
@@ -311,15 +318,7 @@ public class HotelProfile {
 	/**
 	 * @return the hoteBrands
 	 */
-	public HotelBrands getHoteBrands() {
-		return hoteBrands;
-	}
-	/**
-	 * @param hoteBrands the hoteBrands to set
-	 */
-	public void setHoteBrands(HotelBrands hoteBrands) {
-		this.hoteBrands = hoteBrands;
-	}
+	
 	/**
 	 * @return the currency
 	 */
@@ -384,21 +383,29 @@ public class HotelProfile {
 	/**
 	 * @return the chainHotel
 	 */
-	public HotelChain getChainHotel() {
-		return chainHotel;
-	}
-	/**
-	 * @param chainHotel the chainHotel to set
-	 */
-	public void setChainHotel(HotelChain chainHotel) {
-		this.chainHotel = chainHotel;
-	}
+	
 	/**
 	 * @return the safetyMeasuresCompliance
 	 */
 	public boolean isSafetyMeasuresCompliance() {
 		return safetyMeasuresCompliance;
 	}
+	public String getHoteBrands() {
+		return hoteBrands;
+	}
+
+	public void setHoteBrands(String hoteBrands) {
+		this.hoteBrands = hoteBrands;
+	}
+
+	public String getChainHotel() {
+		return chainHotel;
+	}
+
+	public void setChainHotel(String chainHotel) {
+		this.chainHotel = chainHotel;
+	}
+
 	/**
 	 * @param safetyMeasuresCompliance the safetyMeasuresCompliance to set
 	 */
@@ -782,7 +789,9 @@ public class HotelProfile {
 	public void setPerfer(String perfer) {
 		this.perfer = perfer;
 	}
-
+	
+	
+	
 	
 	public static List<Integer> getCityId() {  
 	

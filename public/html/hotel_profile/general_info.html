@@ -114,17 +114,19 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Hotel affiliate to</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.chainHotelCode" data-ng-options="hotelchainname.chainHotelCode as hotelchainname.chainHotelName for hotelchainname in hotelchain" disabled="disabled" required>
+					<!-- <select class="form-control" data-ng-model="generalInfo.chainHotelCode" data-ng-options="hotelchainname.chainHotelCode as hotelchainname.chainHotelName for hotelchainname in hotelchain" disabled="disabled" required>
 						<option>Select Hotel affiliate...</option>
-					</select>
+					</select> -->
+					<input type="text" id="chainHotelCode" name="chainHotelCode" data-ng-model="generalInfo.chainHotelCode" placeholder="Chain Hotel Code" class="form-control" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Please choose your hotel brand :</label>
 				<div class="col-md-9">
-					<select class="form-control" data-ng-model="generalInfo.brandHotelCode" data-ng-options="hotelbrandname.brandsCode as hotelbrandname.brandName for hotelbrandname in hotelbrand" disabled="disabled" required>
+					<!-- <select class="form-control" data-ng-model="generalInfo.brandHotelCode" data-ng-options="hotelbrandname.brandsCode as hotelbrandname.brandName for hotelbrandname in hotelbrand" disabled="disabled" required>
 						<option>Select Hotel Brand...</option>
-					</select>
+					</select> -->
+					<input type="text" id="brandHotelCode" name="brandHotelCode" data-ng-model="generalInfo.brandHotelCode" placeholder="Brand Hotel Code" class="form-control" disabled="disabled" required>
 				</div>
 			</div>
 			</div>

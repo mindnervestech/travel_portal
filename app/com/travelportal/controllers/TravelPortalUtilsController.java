@@ -547,7 +547,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelgeneralinfoVM.setHotelPartOfChain(hotelProfile.getPartOfChain());
 		if(hotelProfile.getChainHotel() != null)
 		{
-		hotelgeneralinfoVM.setChainHotelCode(hotelProfile.getChainHotel().getChainHotelCode());
+		hotelgeneralinfoVM.setChainHotelCode(hotelProfile.getChainHotel());
 		}
 		hotelgeneralinfoVM.setEmail(hotelProfile.getHotelEmailAddr());
 		hotelgeneralinfoVM.setPrimaryPasswd(hotelProfile.getPassword());
@@ -559,7 +559,7 @@ public class TravelPortalUtilsController extends Controller {
 		}
 		if(hotelProfile.getHoteBrands() != null)
 		{
-		hotelgeneralinfoVM.setBrandHotelCode(hotelProfile.getHoteBrands().getBrandsCode());
+		hotelgeneralinfoVM.setBrandHotelCode(hotelProfile.getHoteBrands());
 		}
 		
 		if(hotelProfile.getStartRatings() != null)

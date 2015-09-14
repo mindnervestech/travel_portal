@@ -2681,7 +2681,7 @@ public class HotelBookingController extends Controller {
 			
 			try
 			{
-				MimeBodyPart attachPart = new MimeBodyPart();
+				//MimeBodyPart attachPart = new MimeBodyPart();
 				Message message = new MimeMessage(session);
 				message.setFrom(new InternetAddress(username,"CheckInRooms"));
 				message.setRecipients(Message.RecipientType.TO,
@@ -2711,13 +2711,13 @@ public class HotelBookingController extends Controller {
 				
 				messageBodyPart.setContent(content, "text/html");
 				multipart.addBodyPart(messageBodyPart);
-				  try {
+				  /*try {
 						attachPart.attachFile(file);
 			  	      } catch (IOException e) {
 			  	       	// TODO Auto-generated catch block
 			  	       		e.printStackTrace();
 			  	    }
-				 multipart.addBodyPart(attachPart);
+				 multipart.addBodyPart(attachPart);*/
 				message.setContent(multipart);
 				Transport.send(message);
 				System.out.println("Sent test message successfully....");

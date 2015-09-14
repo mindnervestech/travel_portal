@@ -104,8 +104,8 @@ public class AdminController extends Controller {
 		hotelProfile.setCity(register.getCity());
 		if(register.isPartOfChain()) {
 			hotelProfile.setPartOfChain("true");
-			hotelProfile.setHoteBrands(HotelBrands.getHotelBrandsByName(register.getHotelBrand()));
-			hotelProfile.setChainHotel(HotelChain.getHotelChainByName(register.getChainHotel()));
+			hotelProfile.setHoteBrands(register.getHotelBrand());
+			hotelProfile.setChainHotel(register.getChainHotel());
 		} else {
 			hotelProfile.setPartOfChain("false");
 		}
