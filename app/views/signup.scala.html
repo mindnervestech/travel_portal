@@ -1,4 +1,4 @@
-@(countries: List[String], hotelChain: List[String], hotelBrand: List[String], currencies: List[String], ratings: List[String])
+@(countries: List[String], currencies: List[String], ratings: List[String])
 
 <!DOCTYPE html>
 
@@ -161,19 +161,7 @@
 		
 		<tr>
 		<td id="chainSelect">				
-				<!-- <div class="row" style="margin-top: 3%;" >
-					<div class="form-group">
-						<label class="col-md-4 control-label">Please choose your hotel chain affiliate from the drop down menu</label>
-							<div class="col-md-5">
-								<select class="form-control" name="chainHotel">
-										<option value="">--Select hotel chain affiliate--</option>
-										 @for(chain <- hotelChain) {
-										        <option value="@chain">@chain</option>
-										  }
-								</select>
-							</div>
-					</div>
-				</div> -->
+				
 				<div class="row" style="margin-top: 2%;">
 					<div class="form-group">
 						<label class="col-md-4 control-label"><b>Please choose your hotel chain affiliate from the drop down menu :</b></label>
@@ -187,19 +175,7 @@
 		
 		<tr>
 		<td  id="chainSelect2">		
-				<!-- <div class="row" style="margin-top: 1%;">
-					<div class="form-group">
-						<label class="col-md-4 control-label">Please choose your hotel brand:</label>
-							<div class="col-md-5">
-								<select class="form-control" name="hotelBrand">
-										<option value="">--Select hotel brand--</option>
-										@for(brand <- hotelBrand) {
-										        <option value="@brand">@brand</option>
-										  }
-								</select>
-							</div>
-					</div>
-				</div> -->
+				
 				<div class="row" style="margin-top: 2%;">
 					<div class="form-group">
 						<label class="col-md-4 control-label"><b>Please choose your hotel brand:</b></label>

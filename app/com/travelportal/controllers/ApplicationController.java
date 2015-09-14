@@ -240,7 +240,7 @@ public class ApplicationController extends Controller{
 			countryList.add(country.getCountryName());
 		}
 		
-		List<HotelChain> hotelChains = HotelChain.getChainHotels();
+		/*List<HotelChain> hotelChains = HotelChain.getChainHotels();
 		List<String> chainList = new ArrayList<>();
 		for(HotelChain hotel: hotelChains) {
 			chainList.add(hotel.getChainHotelName());
@@ -250,7 +250,7 @@ public class ApplicationController extends Controller{
 		List<String> brandList = new ArrayList<>();
 		for(HotelBrands hotel: brands) {
 			brandList.add(hotel.getBrandName());
-		}
+		}*/
 		
 		/*List<Currency> currencies = Currency.getCurrency();
 		List<String> currencyList = new ArrayList<>();
@@ -274,7 +274,7 @@ public class ApplicationController extends Controller{
 			ratingList.add(rating.getstarRatingTxt());
 		}
 		
-		return ok(views.html.signup.render(countryList, chainList, brandList, currencyList, ratingList));
+		return ok(views.html.signup.render(countryList, currencyList, ratingList));
 	}
 	
 	@Transactional
