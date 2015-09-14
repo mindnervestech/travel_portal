@@ -22,6 +22,9 @@ GET	   /hotelBookingpage/getHotelImagePath/:supplierCode/:index			controllers.tr
 #POST  /findByServices 		    controllers.travelbusiness.Application.findByServices()
 #POST  /findBylocation				    controllers.travelbusiness.Application.findBylocation()
 POST  /findHotelByData	        controllers.travelbusiness.Application.findHotelByData()
+GET   /agentLogOut					 controllers.travelbusiness.Application.agentLogOut
+
+
 #Hotel Details
 POST    /hotelBookingpage		controllers.travelbusiness.HotelDetailsController.hotelBookingpage()
 GET   /searchHotelGenImg/getHotelGenImg/:supplierCode/:index			controllers.travelbusiness.HotelDetailsController.getHotelGenImg(supplierCode:Long,index:Long)

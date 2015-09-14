@@ -53,6 +53,7 @@ import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.HotelImagesPath;
 import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.HotelProfile;
+import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.InternalContacts;
@@ -120,13 +121,21 @@ public class Application extends Controller {
 		if(agent != null) {
 			System.out.println("SESSION VALUE   "+session().get("agent"));
 			AgentRegistrationVM aVm=new AgentRegistrationVM(agent);
-			session().put("agent", agent.getAgentCode());
+			session("agent", agent.getAgentCode());
 			return ok(Json.toJson(aVm));
 		}
 		
 		return ok(Json.toJson("0"));
     	
     }
+    
+    
+    @Transactional
+	public static Result agentLogOut() {
+		System.out.println("SESSION VALUE --==-  "+session().get("agent"));
+		session().clear();
+		return ok(home.render());
+	}	
   
         
     @Transactional(readOnly=true)

@@ -2,6 +2,7 @@ package controllers.travelbusiness;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,17 +25,17 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import views.html.travelbusiness.confirmationPage;
+import views.html.travelbusiness.agentBookingInfo;
+
 
 import play.Play;
 import play.data.DynamicForm;
-import play.data.Form;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.travelbusiness.*;
 
-import com.fasterxml.jackson.annotation.JsonFormat.Value;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -48,7 +49,6 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.mnt.travelbusiness.helper.PageScope;
 import com.travelportal.domain.HotelBookingDates;
 import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.NatureOfBusiness;
@@ -64,7 +64,6 @@ import com.travelportal.vm.ChildselectedVM;
 import com.travelportal.vm.HotelBookDetailsVM;
 import com.travelportal.vm.PassengerBookingInfoVM;
 import com.travelportal.vm.RateDatedetailVM;
-import com.travelportal.vm.SearchHotelValueVM;
 
 public class AgentInfoController extends Controller {
 
@@ -296,7 +295,7 @@ public class AgentInfoController extends Controller {
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		List<HotelBookDetailsVM> aDetailsVMs =  new ArrayList<>();
 		long totalPages = 0;
-		//String status = "available";
+		//String status = "Confirm";
 		List<HotelBookingDetails> hoteDetails = null;
 
 		if(status.equals("upComingBooking")){
@@ -442,10 +441,10 @@ public class AgentInfoController extends Controller {
 		hBookingDetails.setRoom_status("Cancelled");
 		hBookingDetails.merge();
 
-		cancelMail(hBookingDetails.getTravelleremail(),hBookingDetails);
-
 		Double Credit = 0d;
 		AgentRegistration aRegistration = AgentRegistration.findByIdOnCode(session().get("agent"));
+		
+		cancelMail(aRegistration.getEmailAddr(),hBookingDetails);
 		if(aRegistration.getPaymentMethod().equals("Credit") && aRegistration.getPaymentMethod().equals("Pre-Payment")){
 			Credit = aRegistration.getAvailableLimit() + hBookingDetails.getTotal();
 			aRegistration.setAvailableLimit(Credit);
@@ -1315,8 +1314,51 @@ public class AgentInfoController extends Controller {
 		
 	}
 	
-	public static void cancelMail(String email1,HotelBookingDetails hBookingDetails){
-		System.out.println("Delete");
+	public static void cancelMail(String email,HotelBookingDetails hBookingDetails){
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+		Date date = new Date();
+		
+			
+				final String username=Play.application().configuration().getString("username");
+		        final String password=Play.application().configuration().getString("password");
+		        
+		 		Properties props = new Properties();
+		 		props.put("mail.smtp.auth", "true");
+		 		props.put("mail.smtp.starttls.enable", "true");
+		 		props.put("mail.smtp.host", "smtp.checkinrooms.com");
+		 		props.put("mail.smtp.port", "587");
+		  
+		 		Session session = Session.getInstance(props,
+		 		  new javax.mail.Authenticator() {
+		 			protected PasswordAuthentication getPasswordAuthentication() {
+		 				return new PasswordAuthentication(username, password);
+		 			}
+		 		  });
+		  
+		 		try{
+		 		   
+		  			Message feedback = new MimeMessage(session);
+		  			try {
+						feedback.setFrom(new InternetAddress(username,"CheckInRooms"));
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		  			feedback.setRecipients(Message.RecipientType.TO,
+		  			InternetAddress.parse(email));  
+		  			feedback.setSubject("Booking in cancel");	  			
+		  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
+		  	         messageBodyPart.setText("Dear Sir/ Madam, \n\n your Booking in cancellation Policy  \n\n your Booking Id "+hBookingDetails.getId()+" ");	  	    
+		  	         Multipart multipart = new MimeMultipart();	  	    
+		  	         multipart.addBodyPart(messageBodyPart);	            
+		  	         feedback.setContent(multipart);
+		  		     Transport.send(feedback);
+		       		} catch (MessagingException e) {
+		  			  throw new RuntimeException(e);
+		  		}
+		 	
+		
 	}
 	
 	@Transactional(readOnly=true)
@@ -1349,14 +1391,14 @@ public class AgentInfoController extends Controller {
 			canclD.setTime(hDetails.getLatestCancellationDate());
 			canclD.set(Calendar.MILLISECOND, 0);
 			
-			/*if(currentD.get(Calendar.DAY_OF_YEAR) == canclD.get(Calendar.DAY_OF_YEAR)  && currentD.get(Calendar.YEAR)==canclD.get(Calendar.YEAR) && currentD.get(Calendar.MONTH) == canclD.get(Calendar.MONTH)){
+			if(currentD.get(Calendar.DAY_OF_YEAR) == canclD.get(Calendar.DAY_OF_YEAR)  && currentD.get(Calendar.YEAR)==canclD.get(Calendar.YEAR) && currentD.get(Calendar.MONTH) == canclD.get(Calendar.MONTH)){
 				final String username=Play.application().configuration().getString("username");
 		        final String password=Play.application().configuration().getString("password");
 		        
 		 		Properties props = new Properties();
 		 		props.put("mail.smtp.auth", "true");
 		 		props.put("mail.smtp.starttls.enable", "true");
-		 		props.put("mail.smtp.host", "smtp.gmail.com");
+		 		props.put("mail.smtp.host", "smtp.checkinrooms.com");
 		 		props.put("mail.smtp.port", "587");
 		  
 		 		Session session = Session.getInstance(props,
@@ -1369,9 +1411,14 @@ public class AgentInfoController extends Controller {
 		 		try{
 		 		   
 		  			Message feedback = new MimeMessage(session);
-		  			feedback.setFrom(new InternetAddress(username));
+		  			try {
+						feedback.setFrom(new InternetAddress(username,"CheckInRooms"));
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 		  			feedback.setRecipients(Message.RecipientType.TO,
-		  			InternetAddress.parse("yogesh_337@yahoo.com"));  //aRegistration.getEmailAddr()
+		  			InternetAddress.parse(aRegistration.getEmailAddr()));  //aRegistration.getEmailAddr()
 		  			feedback.setSubject("You SignIn For travel_portal");	  			
 		  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
 		  	         messageBodyPart.setText("Dear Sir/ Madam, \n\n your Booking in cancellation Policy  \n\n your Booking Id "+hDetails.getId()+" ");	  	    
@@ -1384,7 +1431,7 @@ public class AgentInfoController extends Controller {
 		  		}
 		 		
 				
-			}*/
+			}
 		}
 		
 		return ok();
@@ -1405,6 +1452,9 @@ public class AgentInfoController extends Controller {
 			
 			Double Credit = 0d;
 			AgentRegistration aRegistration = AgentRegistration.findByIdOnCode(session().get("agent"));
+			
+			cancelMail(aRegistration.getEmailAddr(),hBookingDetails);
+			
 			if(aRegistration.getPaymentMethod().equals("Credit") || aRegistration.getPaymentMethod().equals("Pre-Payment")){
 				Credit = aRegistration.getAvailableLimit() + Double.parseDouble(pandingAmount);
 				aRegistration.setAvailableLimit(Credit);

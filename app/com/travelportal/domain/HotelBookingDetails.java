@@ -1153,7 +1153,7 @@ public class HotelBookingDetails {
 	    
 	
 	public static List<HotelBookingDetails> getfindBysupplierDatewise(Date fromDate,Date toDate,long supplierCode) {
-		return JPA.em().createQuery("select c from HotelBookingDetails c where c.checkIn BETWEEN ?2 and ?3 and c.checkOut BETWEEN ?2 and ?3 and c.supplierCode = ?1 and c.room_status = 'available'").setParameter(1, supplierCode).setParameter(2, fromDate).setParameter(3, toDate).getResultList();
+		return JPA.em().createQuery("select c from HotelBookingDetails c where c.checkIn BETWEEN ?2 and ?3 and c.checkOut BETWEEN ?2 and ?3 and c.supplierCode = ?1 and c.room_status = 'Confirm'").setParameter(1, supplierCode).setParameter(2, fromDate).setParameter(3, toDate).getResultList();
 	}
 	
 	public static List<HotelBookingDetails> getfindBysupplierOnRequest(long supplierCode) {

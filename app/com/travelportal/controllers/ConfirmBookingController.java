@@ -33,7 +33,7 @@ public class ConfirmBookingController extends Controller {
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
     	 List<HotelBookDetailsVM> aDetailsVMs =  new ArrayList<>();
     		long totalPages = 0;
-    		String status = "available";
+    		String status = "Confirm";
     		List<HotelBookingDetails> hoteDetails = null;
     		
     		if(fromDate.equals("1") && toDate.equals("1") && agentcompanyNm.equals("1")){
@@ -355,7 +355,7 @@ public class ConfirmBookingController extends Controller {
 	@Transactional
 	public static Result getconfBooking(long id){
 		HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingById(id);
-		hBookingDetails.setRoom_status("available");
+		hBookingDetails.setRoom_status("Confirm");
 		hBookingDetails.merge();
 		return ok();
 		

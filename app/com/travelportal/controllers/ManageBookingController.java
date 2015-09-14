@@ -48,7 +48,7 @@ public class ManageBookingController extends Controller {
 		List<HotelBookDetailsVM> aDetailsVMs =  new ArrayList<>();
 		long totalPages = 0;
 		int currentPage = 1;
-		String status = "available";
+		String status = "Confirm";
 
 		List<HotelBookingDetails> hoteDetails = null;
 
@@ -296,7 +296,7 @@ AgentRegisVM agRegisVM=new AgentRegisVM();
 		List<HotelBookDetailsVM> aDetailsVMs =  new ArrayList<>();
 		long totalPages = 0;
 		int currentPage = 1;
-		String status = "available";
+		String status = "Confirm";
 
 		List<HotelBookingDetails> hoteDetails = null;
 

@@ -366,11 +366,11 @@
 										</div>
 											<div class="form-group">
 		    								
-											<div class="col-md-2" ng-if="agentinfo.room_status == 'available'">
+											<div class="col-md-2" ng-if="agentinfo.room_status == 'Confirm'">
 													 <button type="button" ng-click="cancelbooking(agentinfo.id,agentinfo.nonRefund,agentinfo)" class="btn btn-primary">Cancel Booking</button>
 											</div>
 											
-											<div class="col-md-2" ng-if="agentinfo.room_status == 'available' && agentinfo.nonRefund == 'false'">
+											<div class="col-md-2" ng-if="agentinfo.room_status == 'Confirm' && agentinfo.nonRefund == 'false'">
 												   
                                                  <button type="submit" ng-click="openAmendPopup(agentinfo);closeThisDialog()" class="btn btn-primary">Amend Booking</button>
                                                <!-- </form>  -->

@@ -128,7 +128,8 @@
 														data-ng-model="searchby.status"
 														ng-change="selectStatus(searchby.status)">
 														<option value="Cancelled">Cancelled</option>
-														<option value="available">Confirm</option>
+														<option value="Confirm pending">Confirm pending</option>
+														<option value="Confirm">Confirm</option>
 														<option value="on request">On request</option>
 														<option value="rejected">Rejected</option>
 														<option value="upComingBooking">Up coming Booking</option>
@@ -417,8 +418,8 @@
 
 										<td>{{agent.roomNm}}</td>
 										<td>{{agent.noOfroom}}</td> -->
-										<td ng-if='agent.room_status != "available"' style="text-align: left;">{{agent.room_status}}</td>
-										<td ng-if='agent.room_status == "available"' style="text-align: left;">Confirm</td>
+										<td ng-if='agent.room_status != "Confirm"' style="text-align: left;">{{agent.room_status}}</td>
+										<td ng-if='agent.room_status == "Confirm"' style="text-align: left;">Confirm</td>
 										<td currency-rate ng-model="agent.total"
 											styleValue="font-size: small;top: 0px;"
 											rate="{{agent.total}}"

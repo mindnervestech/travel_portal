@@ -1,6 +1,15 @@
 
 
-travelBusiness.controller('AgentBookingController', function ($scope,$http,$filter,ngDialog,$cookieStore,notificationService) {
+travelBusiness.controller('AgentBookingController', function ($scope,$http,$filter,ngDialog,$cookieStore,notificationService,$cookies) {
+	
+	
+	var session = $cookies['PLAY_SESSION'];
+	
+	if(session != undefined){
+		$scope.sessionValue = 1
+	}else{
+		$scope.sessionValue = 0;
+	}
 	
 	
 	$scope.pageNumber;
@@ -333,7 +342,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 	$scope.voucher = function(bookingId, roomStatus){
 		
 		console.log(roomStatus);
-		if(roomStatus == "available"){
+		if(roomStatus == "Confirm"){
 			$http.get("/getVoucherConfirm/"+bookingId).success(function(response){
 				console.log("send Vouchar");
 			});
@@ -1263,7 +1272,17 @@ $scope.showDateWiseDetails = function(index){
 	
 });
 
-travelBusiness.controller('HomePageController', function ($scope,$http,$filter,ngDialog,$cookieStore) {
+travelBusiness.controller('HomePageController', function ($scope,$http,$filter,ngDialog,$cookieStore,$cookies) {
+	
+	
+	var session = $cookies['PLAY_SESSION'];
+	
+	if(session != undefined){
+		$scope.sessionValue = 1
+	}else{
+		$scope.sessionValue = 0;
+	}
+	
 	$scope.searchby = {
 			checkIn:"dd/mm/yyyy"
 	}
@@ -1406,7 +1425,16 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 
 
 
-travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDialog,$cookieStore) {
+travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDialog,$cookieStore,$cookies) {
+	
+	
+	var session = $cookies['PLAY_SESSION'];
+	
+	if(session != undefined){
+		$scope.sessionValue = 1
+	}else{
+		$scope.sessionValue = 0;
+	}
 	
 	$scope.searchby = {};
 	$scope.AgentId = $cookieStore.get('AgentId');
@@ -1876,7 +1904,16 @@ $http.get("/searchCountries").success(function(response) {
 
 
 
-travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filter,ngDialog,$cookieStore) {
+travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filter,ngDialog,$cookieStore,$cookies) {
+	
+	
+	var session = $cookies['PLAY_SESSION'];
+	
+	if(session != undefined){
+		$scope.sessionValue = 1
+	}else{
+		$scope.sessionValue = 0;
+	}
 	
 	$scope.AgentId = $cookieStore.get('AgentId');
 	$scope.AgentCompany = $cookieStore.get('AgentCompany');
@@ -3218,7 +3255,16 @@ $http.get("/searchCountries").success(function(response) {
 });
 
 
-travelBusiness.controller('hotelBookingController', function ($scope,$http,$filter,ngDialog,notificationService,$window,$cookieStore,$timeout) {
+travelBusiness.controller('hotelBookingController', function ($scope,$http,$filter,ngDialog,notificationService,$window,$cookieStore,$timeout,$cookies) {
+	
+	
+	var session = $cookies['PLAY_SESSION'];
+	
+	if(session != undefined){
+		$scope.sessionValue = 1
+	}else{
+		$scope.sessionValue = 0;
+	}
 	
 	$scope.AgentId = $cookieStore.get('AgentId');
 	$scope.AgentCompany = $cookieStore.get('AgentCompany');
@@ -3359,7 +3405,16 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 
 
 
-travelBusiness.controller('BookingConfirmRejectController', function ($scope,$http,$filter,ngDialog,$cookieStore,notificationService) {
+travelBusiness.controller('BookingConfirmRejectController', function ($scope,$http,$filter,ngDialog,$cookieStore,notificationService,$cookies) {
+	
+	
+	var session = $cookies['PLAY_SESSION'];
+	
+	if(session != undefined){
+		$scope.sessionValue = 1
+	}else{
+		$scope.sessionValue = 0;
+	}
 	
 	$scope.bookingData;
 
