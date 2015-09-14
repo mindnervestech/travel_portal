@@ -1,5 +1,6 @@
 package com.travelportal.controllers;
 
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -340,6 +341,70 @@ public class ApplicationController extends Controller{
 				
 	
 		aRegistration.save();
+		
+		final String username=Play.application().configuration().getString("username");
+        final String password=Play.application().configuration().getString("password");
+        
+ 		Properties props = new Properties();
+ 		props.put("mail.smtp.auth", "true");
+ 		props.put("mail.smtp.starttls.enable", "true");
+ 		props.put("mail.smtp.host", "smtp.checkinrooms.com");
+ 		props.put("mail.smtp.port", "587");
+  
+ 		Session session = Session.getInstance(props,
+ 		  new javax.mail.Authenticator() {
+ 			protected PasswordAuthentication getPasswordAuthentication() {
+ 				return new PasswordAuthentication(username, password);
+ 			}
+ 		  });
+  
+ 		try{
+ 		   
+  			Message feedback = new MimeMessage(session);
+  			try {
+				feedback.setFrom(new InternetAddress(username,"CheckInRooms"));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+  			feedback.setRecipients(Message.RecipientType.TO,
+  			InternetAddress.parse(agentVm.EmailAddr));
+  			feedback.setSubject("You SignIn For travel_portal");	  			
+  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
+  	         messageBodyPart.setText("You SignIn For travel_portal \n Your Agent Code : "+randomInt +"Password :"+agentVm.password);	  	    
+  	         Multipart multipart = new MimeMultipart();	  	    
+  	         multipart.addBodyPart(messageBodyPart);	            
+  	         feedback.setContent(multipart);
+  		     Transport.send(feedback);
+       		} catch (MessagingException e) {
+  			  throw new RuntimeException(e);
+  		}
+ 		
+ 		AdminUser adUser = AdminUser.doLogin("admin","admin");
+ 		
+ 		try{
+  		   
+  			Message feedback = new MimeMessage(session);
+  			try {
+				feedback.setFrom(new InternetAddress(username,"CheckInRooms"));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+  			feedback.setRecipients(Message.RecipientType.TO,
+  			InternetAddress.parse(adUser.getEmail()));
+  			feedback.setSubject("You SignIn For travel_portal");	  			
+  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
+  	         messageBodyPart.setText("New Agent SignIn For travel_portal \n Agent Code : "+randomInt +" Agent Company Name :"+agentVm.companyName);	  	    
+  	         Multipart multipart = new MimeMultipart();	  	    
+  	         multipart.addBodyPart(messageBodyPart);	            
+  	         feedback.setContent(multipart);
+  		     Transport.send(feedback);
+       		} catch (MessagingException e) {
+  			  throw new RuntimeException(e);
+  		}
+ 		
+		
 		//return ok(views.html.agentLogin.render());
 		return ok(views.html.travelbusiness.home.render());
 		
@@ -397,6 +462,73 @@ public class ApplicationController extends Controller{
 				
 		register.save();
 		
+		
+		
+		final String username=Play.application().configuration().getString("username");
+        final String password=Play.application().configuration().getString("password");
+        
+ 		Properties props = new Properties();
+ 		props.put("mail.smtp.auth", "true");
+ 		props.put("mail.smtp.starttls.enable", "true");
+ 		props.put("mail.smtp.host", "smtp.checkinrooms.com");
+ 		props.put("mail.smtp.port", "587");
+  
+ 		Session session = Session.getInstance(props,
+ 		  new javax.mail.Authenticator() {
+ 			protected PasswordAuthentication getPasswordAuthentication() {
+ 				return new PasswordAuthentication(username, password);
+ 			}
+ 		  });
+  
+ 		try{
+ 		   
+  			Message feedback = new MimeMessage(session);
+  			try {
+				feedback.setFrom(new InternetAddress(username,"CheckInRooms"));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+  			feedback.setRecipients(Message.RecipientType.TO,
+  			InternetAddress.parse(hotelSignUpVM.email));
+  			feedback.setSubject("You SignIn For travel_portal");	  			
+  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
+  	         messageBodyPart.setText("Dear Sir/ Madam, \n\n Greetings from The Expedition Co., Ltd….!!!  \n\n Thank you very much for registering/subscribing with The Expedition; we are delighted to have you on board, now that you are a supplier with us, you can update your services, such as  \n\n - Manage Hotel Images \n - Manage Allotment \n - Manage Rates \n - Special Promotion \n\n and many other services, \n\n You can now login here,http://localhost:9000/login \n\n with the below information :- \n\n Email : "+hotelSignUpVM.email+"\n Supplier Code :  "+randomInt +" \n Password :"+hotelSignUpVM.password+"\n\nWhile putting in your contract rates, if you require any assistance, please do not hesitate to call us at, the below mentioned no during our office hours. \n\nHope the above mentioned details are clear for any clarification please feel free to contact us. \n\nBest Regards,\n\nTHE EXPEDITION TEAM ");	  	    
+  	         Multipart multipart = new MimeMultipart();	  	    
+  	         multipart.addBodyPart(messageBodyPart);	            
+  	         feedback.setContent(multipart);
+  		     Transport.send(feedback);
+       		} catch (MessagingException e) {
+  			  throw new RuntimeException(e);
+  		}
+ 		
+ 		AdminUser adUser = AdminUser.doLogin("admin","admin");
+ 		
+ 		try{
+  		   
+  			Message feedback = new MimeMessage(session);
+  			try {
+				feedback.setFrom(new InternetAddress(username,"CheckInRooms"));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+  			feedback.setRecipients(Message.RecipientType.TO,
+  			InternetAddress.parse(adUser.getEmail()));
+  			feedback.setSubject("You SignIn For travel_portal");	  			
+  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
+  	         messageBodyPart.setText("New Supplier SignIn For travel_portal \n Supplier Code : "+randomInt +" Supplier Name :"+hotelSignUpVM.supplierName);	  	    
+  	         Multipart multipart = new MimeMultipart();	  	    
+  	         multipart.addBodyPart(messageBodyPart);	            
+  	         feedback.setContent(multipart);
+  		     Transport.send(feedback);
+       		} catch (MessagingException e) {
+  			  throw new RuntimeException(e);
+  		}
+ 		
+ 		
+ 		
+		
 		return ok(views.html.login.render(" "));
 	}
 	
@@ -408,6 +540,43 @@ public class ApplicationController extends Controller{
 		int flag = 0;
 		if(hProfile != null){
 
+		final String username=Play.application().configuration().getString("username");
+        final String password=Play.application().configuration().getString("password");
+        
+ 		Properties props = new Properties();
+ 		props.put("mail.smtp.auth", "true");
+ 		props.put("mail.smtp.starttls.enable", "true");
+ 		props.put("mail.smtp.host", "smtp.checkinrooms.com");
+ 		props.put("mail.smtp.port", "587");
+  
+ 		Session session = Session.getInstance(props,
+ 		  new javax.mail.Authenticator() {
+ 			protected PasswordAuthentication getPasswordAuthentication() {
+ 				return new PasswordAuthentication(username, password);
+ 			}
+ 		  });
+  
+ 		try{
+ 		   
+  			Message feedback = new MimeMessage(session);
+  			try {
+				feedback.setFrom(new InternetAddress(username,"CheckInRooms"));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+  			feedback.setRecipients(Message.RecipientType.TO,
+  			InternetAddress.parse(email));
+  			feedback.setSubject("travel_portal Info");	  			
+  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
+  	         messageBodyPart.setText("You Your Supplier Code : "+hProfile.getSupplier_code() +"Password :"+hProfile.getPassword());	  	    
+  	         Multipart multipart = new MimeMultipart();	  	    
+  	         multipart.addBodyPart(messageBodyPart);	            
+  	         feedback.setContent(multipart);
+  		     Transport.send(feedback);
+       		} catch (MessagingException e) {
+  			  throw new RuntimeException(e);
+  		}
  		flag= 0;
  		
 		}else{

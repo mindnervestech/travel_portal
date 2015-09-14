@@ -1,6 +1,7 @@
 package controllers.travelbusiness;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -54,7 +55,6 @@ import com.travelportal.domain.HotelMealPlan;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.HotelStarRatings;
-import com.travelportal.domain.InfoWiseImagesPath;
 import com.travelportal.domain.InternalContacts;
 import com.travelportal.domain.RoomAndDateWiseRate;
 import com.travelportal.domain.RoomRegiterBy;
@@ -196,6 +196,43 @@ public class Application extends Controller {
 		int flag = 0;
 		if(aRegistration != null){
 
+		final String username=Play.application().configuration().getString("username");
+        final String password=Play.application().configuration().getString("password");
+        
+ 		Properties props = new Properties();
+ 		props.put("mail.smtp.auth", "true");
+ 		props.put("mail.smtp.starttls.enable", "true");
+ 		props.put("mail.smtp.host", "smtp.checkinrooms.com");
+ 		props.put("mail.smtp.port", "587");
+  
+ 		Session session = Session.getInstance(props,
+ 		  new javax.mail.Authenticator() {
+ 			protected PasswordAuthentication getPasswordAuthentication() {
+ 				return new PasswordAuthentication(username, password);
+ 			}
+ 		  });
+  
+ 		try{
+ 		   
+  			Message feedback = new MimeMessage(session);
+  			try {
+				feedback.setFrom(new InternetAddress(username,"CheckInRooms"));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+  			feedback.setRecipients(Message.RecipientType.TO,
+  			InternetAddress.parse(email));
+  			feedback.setSubject("travel_portal Info");	  			
+  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
+  	         messageBodyPart.setText("You Your Agent Code : "+aRegistration.getAgentCode() +"Password :"+aRegistration.getPassword());	  	    
+  	         Multipart multipart = new MimeMultipart();	  	    
+  	         multipart.addBodyPart(messageBodyPart);	            
+  	         feedback.setContent(multipart);
+  		     Transport.send(feedback);
+       		} catch (MessagingException e) {
+  			  throw new RuntimeException(e);
+  		}
  		flag= 0;
  		
 		}else{

@@ -1,5 +1,6 @@
 package com.travelportal.controllers;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -128,13 +129,13 @@ public class AdminController extends Controller {
 		}
 		
 		
-		/*final String username=Play.application().configuration().getString("username");
+		final String username=Play.application().configuration().getString("username");
 	        final String password=Play.application().configuration().getString("password");
 	        
 	 		Properties props = new Properties();
 	 		props.put("mail.smtp.auth", "true");
 	 		props.put("mail.smtp.starttls.enable", "true");
-	 		props.put("mail.smtp.host", "smtp.gmail.com");
+	 		props.put("mail.smtp.host", "smtp.checkinrooms.com");
 	 		props.put("mail.smtp.port", "587");
 	  
 	 		Session session = Session.getInstance(props,
@@ -147,7 +148,12 @@ public class AdminController extends Controller {
 	 		try{
 	 		   
 	  			Message feedback = new MimeMessage(session);
-	  			feedback.setFrom(new InternetAddress(username));
+	  			try {
+					feedback.setFrom(new InternetAddress(username,"CheckInRooms"));
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	  			feedback.setRecipients(Message.RecipientType.TO,
 	  			InternetAddress.parse(email));
 	  			feedback.setSubject("You Approved For travel_portal");	  			
@@ -159,7 +165,7 @@ public class AdminController extends Controller {
 	  		     Transport.send(feedback);
 	       		} catch (MessagingException e) {
 	  			  throw new RuntimeException(e);
-	  		}*/
+	  		}
 	 		
 	 			
 		return ok();
