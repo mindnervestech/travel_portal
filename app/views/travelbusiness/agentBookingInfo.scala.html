@@ -427,7 +427,10 @@
 										<!-- <td ng-if="agent.payment == 'no'">Outstanding</td>
                             <td ng-if="agent.payment == 'yes'">Received</td>  -->
 										<td>{{agent.payment}}</td>
-										<td></td>
+										<td><a ng-click="openVoucherPopUp(agent)"
+											style="cursor: pointer;" data-toggle="modal"><span
+												class="glyphicon glyphicon-print" aria-hidden="true"
+												style="font-size: 19px; padding: 4px; margin-left: 0px;"></span></a></td>
 										<td></td>
 
 										<!--  <td>{{agent.nationalityNm}}</td> -->

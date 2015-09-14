@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" >
+<head>
+</head>
+<body>
+   <label>Dear Reservation / Sales, </label><br>
+   <label>Greetings from CheckInRooms ... !!!! </label><br>
+   <label>Please make the reservation as per below mentioned details :- </label><br><br>
+   
+   <label style="color:blue;"><b><u>PASSENGER  INFORMATION </u></b></label><br><br>
+	
+
+	<table>
+		<tr>
+			<td style="width: 65%;">Name :</td>
+			<td>$searchVM.hotelBookingDetails.travellerfirstname</td>
+		</tr>
+		<tr>
+			<td style="width: 65%;">Middle Name :</td>
+			<td>$searchVM.hotelBookingDetails.travellermiddlename</td>
+		</tr>
+		<tr>
+			<td style="width: 65%;">Last Name :</td>
+			<td>$searchVM.hotelBookingDetails.travellerlastname</td>
+		</tr>
+		<tr>
+			<td style="width: 65%;">Country Of Passport:</td>
+			<td>$searchVM.nationalityName</td>
+		</tr>
+		<tr>
+			<td style="width: 65%;">Passport No:</td>
+			<td>$searchVM.hotelBookingDetails.travellerpassportNo</td>
+		</tr>
+		<tr>
+			<td style="width: 65%;">Total Passenger:</td>
+			<td>Adult: $adultCount, child: $childCount</td>
+		</tr>
+		
+	</table><br><br>
+  <label style="color:rgb(102, 156, 53);"><b><u>BOOKING INFORMATION </u></b></label><br><br>
+	<table>
+		<tr>
+			<td style="width: 65%;">Check in date :</td>
+			<td>$searchVM.checkIn</td>
+		</tr>
+		<tr>
+			<td style="width: 65%;">Check out date :</td>
+			<td>$searchVM.checkOut</td>
+		</tr>
+		<tr>
+			<td style="width: 65%;">Total Night(s) :</td>
+			<td>$searchVM.datediff</td>
+		</tr>
+		<tr>
+			<td style="width: 65%;">Total Room(s) :</td>
+			<td>$searchVM.hotelBookingDetails.noOfroom</td>
+		</tr>
+		<tr>
+			<td style="width: 65%;">Room Category:</td>
+			<td>$searchVM.hotelbyRoom[0].roomName</td>
+		</tr>
+		<tr>
+			<td style="width: 65%;">Room Type:</td>
+			<td>$searchVM.hotelbyRoom[0].roomBed</td>
+		</tr>
+		<tr>
+			<td style="width: 65%;">Extra Bed:</td>
+			<td>$extraBedAllowed</td>
+		</tr>
+	</table><br><br>
+ <label style="color:rgb(213, 132, 0);"><b><u>SPECIAL REQUESTS </u></b></label><br><br>
+	<table>
+		<tr>
+			<td style="width: 87%;" >Non - Smoking Room :</td>
+			<td>$nonSmokingRoom</td>
+		</tr>
+		<tr>
+			<td style="width: 87%;" >Smoking Room :</td>
+			<td>$smokingRoom</td>
+		</tr>
+		<tr>
+			<td style="width: 87%;" >Early Check In :</td>
+			<td>$earlyCheckin</td>
+		</tr>
+		<tr>
+			<td style="width: 87%;" >Late Check out :</td>
+			<td>$lateCheckout</td>
+		</tr>
+		<tr>
+			<td style="width: 87%;" >Large Beds:</td>
+			<td>$largeBed</td>
+		</tr>
+		<tr>
+			<td style="width: 87%;">Handicapped Room:</td>
+			<td>$handicappedRoom</td>
+		</tr>
+		<tr>
+			<td style="width: 87%;" >Wheel Chair :</td>
+			<td>$wheelchair</td>
+		</tr>
+	</table><br><br>
+	
+	<label style="color:rgb(227, 36, 0);"><b><u>PRICE </u></b></label><br><br>
+	<table>
+		<tr>
+			<td style="width: 80%;">Room Rate :</td>
+			<td>....</td>
+		</tr>
+		<tr>
+			<td style="width: 80%;">Extra Bed :</td>
+			<td>....</td>
+		</tr>
+		<tr>
+			<td style="width: 80%;">Child ABF	 :</td>
+			<td>....</td>
+		</tr>
+		
+	</table><br><br>
+	
+	<label>Please click on the button to confirm the booking. </label><br><br>
+	<div width="auto" align="center" valign="middle" height="32" style="border-radius: 5px;width: 90px; font-size: 13px; font-family: Roboto, Arial, Helvetica, sans-serif; color: rgb(255, 255, 255); font-weight: 300; padding-left: 18px; padding-right: 18px; text-align: center; word-break: break-word; background-color: rgb(208, 93, 104); background-clip: padding-box;"><a href="http://localhost:9000/confirmationPage?bId=$uuId"><span style="font-size: 16px; font-weight: 300; line-height: 24px;">OK</span></a></div><br><br>
+	<label>Hope the above mentioned details are clear for any clarification please feel free to contact us. </label><br><br>
+	<label>Best Regards,</label><br><br>
+	<label>CheckInRooms</label><br>
+	<label>Reservation Team </label><br>
+	<label>res@checkinrooms.com</label><br>
+	
+	
+	
+	
+</body>
+</html>

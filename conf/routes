@@ -54,7 +54,7 @@ GET  /getRoomType/:supplierCode 		controllers.travelbusiness.AgentInfoController
 GET /cancellationBookingMail 	controllers.travelbusiness.AgentInfoController.cancellationBookingMail()
 POST /editAgent				controllers.travelbusiness.AgentInfoController.editAgent()
 GET  /getNatureOfBusiness      controllers.travelbusiness.AgentInfoController.getNatureOfBusiness()
-
+GET    /hotel_profile/getVoucherPdfPath/:bookingId			 controllers.travelbusiness.AgentInfoController.getVoucherPdfPath(bookingId:String)
 
 #manage Booking controller
 
@@ -294,3 +294,9 @@ GET  /getconfBooking/:id       com.travelportal.controllers.ConfirmBookingContro
 GET  /getrejectInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	com.travelportal.controllers.ConfirmBookingController.getrejectInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)
 GET  /getcancelInfo/:supplierCode/:currentPage/:fromDate/:toDate/:agentNm	    	com.travelportal.controllers.ConfirmBookingController.getcancelInfo(supplierCode:Long,currentPage :Integer,fromDate:String,toDate:String,agentNm:String)
 GET  /generatePDF        controllers.travelbusiness.HotelBookingController.generatePDF()
+
+#confirmaAndReject
+
+GET    /confirmationPage	controllers.travelbusiness.AgentInfoController.confirmationPage()
+GET    /getConfirmationInfo/:bookingId/:confirmationId/:nameConfirm/:status    controllers.travelbusiness.BookingConfirmRejectController.getConfirmationInfo(bookingId:String,confirmationId:String,nameConfirm:String,status:String)
+GET    /getBookingInfo/:uuId           controllers.travelbusiness.BookingConfirmRejectController.getBookingInfo(uuId:String)        

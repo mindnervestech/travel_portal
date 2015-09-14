@@ -68,6 +68,19 @@ import com.travelportal.vm.SearchHotelValueVM;
 
 public class AgentInfoController extends Controller {
 
+	final static String rootDir = Play.application().configuration().getString("mail.storage.path");
+	
+	  static {
+      createRootDir();
+	  }
+
+	  public static void createRootDir() {
+		  File file = new File(rootDir);
+		  if (!file.exists()) {
+			  file.mkdir();
+		  }
+      
+	  }
 	
 	  public static Result confirmationPage() {
 	    	
@@ -1447,5 +1460,21 @@ public class AgentInfoController extends Controller {
 		hBookingDetails.merge();
 		
 		 return ok();
+	 }
+	 
+	 
+	 
+	  @Transactional(readOnly=false)
+	 public static Result getVoucherPdfPath(String bookingId) {
+	 	response().setContentType("application/pdf");
+	 	response().setHeader("Content-Disposition", "inline; filename="+"HotelVoucher.pdf");
+	 	
+	 	String PdfFile = rootDir + File.separator + "BookingVoucherDocuments"+File.separator+ bookingId + File.separator+"HotelVoucher.pdf";
+	 	File f = new File(PdfFile);
+	 	
+	 	response().setHeader("Content-Length", ((int)f.length())+"");
+	     return ok(f);	
+	 	
+	 	
 	 }
 }

@@ -1,9 +1,12 @@
 package controllers.travelbusiness;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.StringWriter;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,7 +20,6 @@ import java.util.UUID;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -61,7 +63,6 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.travelportal.domain.BookingHistory;
-import com.travelportal.domain.CancellationDateDiff;
 import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
@@ -330,10 +331,10 @@ public class HotelBookingController extends Controller {
 						if(rateObj.availableRoom < Integer.parseInt(searchVM.hotelBookingDetails.getNoOfroom())){
 							hBookingDetails.setRoom_status("on request");
 						}else{
-							hBookingDetails.setRoom_status("available");
+							hBookingDetails.setRoom_status("Confirm pending");
 						}
 						}else{
-							hBookingDetails.setRoom_status("available");
+							hBookingDetails.setRoom_status("Confirm pending");
 						}
 					}
 				}
@@ -364,8 +365,8 @@ public class HotelBookingController extends Controller {
 		if(hBookingDetails.getRoom_status().equals("on request")){
 			onRequestMail(hBookingDetails.getTravelleremail());
 		}
-		if(hBookingDetails.getRoom_status().equals("available")){
-			generatePDF1(hBookingDetails.getTravelleremail(),hBookingDetails.getId());
+		if(hBookingDetails.getRoom_status().equals("Confirm pending")){
+			generatePDF1(searchVM,hBookingDetails.getId());
 		}
 		
 		
@@ -1642,8 +1643,13 @@ public class HotelBookingController extends Controller {
 		
 	}
 	
-	
-  public static void generatePDF1(String email,Long bookingId) {
+	public static void createDir(String rootDir, long supplierCode, String bookingID) {
+        File file3 = new File(rootDir + File.separator+"BookingVoucherDocuments"+File.separator+bookingID);
+        if (!file3.exists()) {
+                file3.mkdirs();
+        }
+	}
+  public static void generatePDF1(HotelSearch searchVM,Long bookingId) {
 		
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		final String rootDir = Play.application().configuration().getString("mail.storage.path");
@@ -1655,11 +1661,8 @@ public class HotelBookingController extends Controller {
 		
 		HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingById(bookingId);
 		
-		/*Rectangle layout = new Rectangle(PageSize.A4);
-	    layout.setBorderColor(BaseColor.BLACK);  //Border color
-	    layout.setBorderWidth(6);      //Border width  
-	    layout.setBorder(Rectangle.BOX);  //Border on 4 sides
-*/		
+		createDir(rootDir,hBookingDetails.getSupplierCode(),hBookingDetails.getBookingId());
+		
 		
 		Document document = new Document();
 		try {
@@ -2457,8 +2460,6 @@ public class HotelBookingController extends Controller {
 				        
 			
 			document.add(AddMainTable); 
-			//document.add(Chunk.NEWLINE);
-			
 			
 			response().setContentType("application/pdf");
 			response().setHeader("Content-Disposition",
@@ -2468,13 +2469,38 @@ public class HotelBookingController extends Controller {
 			File file = new File(fileName);
 			
 			
+			//FilePart picture = request().body().asMultipartFormData().getFile(file);
+			
+		
+			 String pdfVoucherPath = rootDir + File.separator+"BookingVoucherDocuments"+File.separator+hBookingDetails.getBookingId()+ File.separator+"HotelVoucher.pdf";
+			
+	         
+	         OutputStream out = null;
+	        // BufferedImage image = null;
+	         File fsave = new File(pdfVoucherPath);
+	         try {
+	        	 Files.copy(file.toPath(),fsave.toPath(),java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+	        	
+	         } catch (FileNotFoundException e) {
+	                 e.printStackTrace();
+	         } catch (IOException e) {
+	                 e.printStackTrace();
+	         } finally {
+	                 try {
+	                         if(out != null) out.close();
+	                 } catch (IOException e) {
+	                         e.printStackTrace();
+	                 }
+	         }
+			
+			
 			
 			final String username=Play.application().configuration().getString("username");
 	        final String password=Play.application().configuration().getString("password");
-	        /*   
+	           
 	        Properties props = new Properties();
 			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.host", "smtp.checkinrooms.com");
 			props.put("mail.smtp.port", "587");
 			props.put("mail.smtp.starttls.enable", "true");
 			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
@@ -2484,12 +2510,12 @@ public class HotelBookingController extends Controller {
 			});
 			try
 			{
-				MimeBodyPart attachPart = new MimeBodyPart();
+				/*MimeBodyPart attachPart = new MimeBodyPart();*/
 				Message message = new MimeMessage(session);
 				message.setFrom(new InternetAddress(username));
 				message.setRecipients(Message.RecipientType.TO,
-						InternetAddress.parse("yogeshpatil424@gmail.com"));
-				message.setSubject("Confirmation Mail");
+						InternetAddress.parse(searchVM.getHotel_email()));
+				message.setSubject("Confirmation Of Booking");
 				Multipart multipart = new MimeMultipart();
 				BodyPart messageBodyPart = new MimeBodyPart();
 				messageBodyPart = new MimeBodyPart();
@@ -2502,9 +2528,181 @@ public class HotelBookingController extends Controller {
 				ve.init();
 			
 				
-		        Template t = ve.getTemplate("/public/emailTemplet/template.vm"); 
+		        Template t = ve.getTemplate("/public/emailTemplet/beforeConfirmationSupplier.vm"); 
 		        VelocityContext context = new VelocityContext();
 		        context.put("uuId", hBookingDetails.getUuId());
+		        context.put("agentName",hBookingDetails.getAgentNm());
+		        context.put("searchVM",searchVM);
+		        
+		        String[] countAdult;
+		        int adult = 0;
+		        int child = 0;
+		        for(PassengerBookingInfoVM pInfoVM:searchVM.hotelBookingDetails.passengerInfo){
+		        	countAdult = pInfoVM.adult.split(" ");
+		        	adult = adult + Integer.parseInt(countAdult[0]);
+		        	child = child + Integer.parseInt(pInfoVM.noOfchild);
+		        }
+		        
+		        context.put("adultCount",adult);
+		        context.put("childCount",child);
+		       
+		        if (searchVM.hotelBookingDetails.nonSmokingRoom != null){
+		        	if (searchVM.hotelBookingDetails.nonSmokingRoom.equals("true")) {
+		        		context.put("nonSmokingRoom","Yes");
+		        	}else{
+		        		context.put("nonSmokingRoom","No");
+		        	}
+		        }else{
+		        	context.put("nonSmokingRoom","No");
+		        }
+				
+				
+				if(searchVM.hotelBookingDetails.earlyCheckin != null){
+					if (searchVM.hotelBookingDetails.earlyCheckin.equals("true")) {
+						context.put("earlyCheckin","Yes");
+					}else{
+						context.put("earlyCheckin","No");
+					}
+				}else{
+		        	context.put("earlyCheckin","No");
+		        }
+				
+				if(searchVM.hotelBookingDetails.handicappedRoom != null){
+					if (searchVM.hotelBookingDetails.handicappedRoom.equals("true")) {
+						context.put("handicappedRoom","Yes");
+					}else{
+						context.put("handicappedRoom","No");
+					}
+				}else{
+		        	context.put("handicappedRoom","No");
+		        }
+				
+				if (searchVM.hotelBookingDetails.highFloor != null) {
+					if (searchVM.hotelBookingDetails.highFloor.equals(true)) {
+						context.put("highFloor","Yes");
+					}else{
+						context.put("highFloor","No");
+					}
+				}else{
+		        	context.put("highFloor","No");
+		        }
+				
+				if(searchVM.hotelBookingDetails.largeBed != null){
+					if (searchVM.hotelBookingDetails.largeBed.equals("true")) {
+						context.put("largeBed","Yes");
+					}else{
+						context.put("largeBed","No");	
+					}
+				}else{
+					context.put("largeBed","No");
+				}
+				
+				
+				
+				if(searchVM.hotelBookingDetails.lateCheckout != null){
+					if (searchVM.hotelBookingDetails.lateCheckout.equals("true")) {
+						context.put("lateCheckout","Yes");
+					}else{
+						context.put("lateCheckout","No");
+					}
+				}else{
+					context.put("lateCheckout","No");
+				}
+				
+				if (searchVM.hotelBookingDetails.smokingRoom != null){
+					if (searchVM.hotelBookingDetails.smokingRoom.equals("true")) {
+						context.put("smokingRoom","Yes");
+					}else{
+						context.put("smokingRoom","No");
+					}
+				}else{
+					context.put("smokingRoom","No");
+				}
+				
+				
+				if (searchVM.hotelBookingDetails.twinBeds != null){
+					if (searchVM.hotelBookingDetails.twinBeds.equals("true")) {
+						context.put("twinBeds","Yes");
+					}else{
+						context.put("twinBeds","No");
+					}
+				}else{
+					context.put("twinBeds","No");
+				}
+				
+				if(searchVM.hotelBookingDetails.wheelchair != null){
+					if (searchVM.hotelBookingDetails.wheelchair.equals("true")) {
+						context.put("wheelchair","Yes");
+					}else{
+						context.put("wheelchair","No");
+					}
+				}else{
+					context.put("wheelchair","No");
+				}
+				
+				if (searchVM.hotelbyRoom.get(0).extraBedAllowed != null){
+					if (searchVM.hotelbyRoom.get(0).extraBedAllowed.equals("true")) {
+						context.put("extraBedAllowed","Yes");
+					}else{
+						context.put("extraBedAllowed","No");
+					}
+				}else{
+					context.put("extraBedAllowed","No");
+				}
+				
+				
+			
+		        
+		        
+		        StringWriter writer = new StringWriter();
+		        t.merge( context, writer );
+		        String content = writer.toString(); 
+				
+				messageBodyPart.setContent(content, "text/html");
+				multipart.addBodyPart(messageBodyPart);
+				 /* try {
+						attachPart.attachFile(file);
+			  	      } catch (IOException e) {
+			  	       	// TODO Auto-generated catch block
+			  	       		e.printStackTrace();
+			  	    }
+				 multipart.addBodyPart(attachPart);*/
+				message.setContent(multipart);
+				Transport.send(message);
+				System.out.println("Sent test message successfully....");
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			} 
+			
+			/*-----------------Agent Mail----------------------*/
+			AgentRegistration aRegistration = AgentRegistration.findByIdOnCode(session().get("agent"));
+			
+			try
+			{
+				MimeBodyPart attachPart = new MimeBodyPart();
+				Message message = new MimeMessage(session);
+				message.setFrom(new InternetAddress(username));
+				message.setRecipients(Message.RecipientType.TO,
+						InternetAddress.parse(aRegistration.getEmailAddr()));
+				message.setSubject("Confirmation Of Booking Agent");
+				Multipart multipart = new MimeMultipart();
+				BodyPart messageBodyPart = new MimeBodyPart();
+				messageBodyPart = new MimeBodyPart();
+				
+				VelocityEngine ve = new VelocityEngine();
+				ve.setProperty( RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,"org.apache.velocity.runtime.log.Log4JLogChute" );
+				ve.setProperty("runtime.log.logsystem.log4j.logger","clientService");
+				ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath"); 
+				ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+				ve.init();
+			
+				
+		        Template t = ve.getTemplate("/public/emailTemplet/beforeConfirmationAgent.vm"); 
+		        VelocityContext context = new VelocityContext();
+		        context.put("uuId", hBookingDetails.getUuId());
+		        context.put("agentName",hBookingDetails.getAgentNm());
 		        
 		        
 		        StringWriter writer = new StringWriter();
@@ -2527,7 +2725,7 @@ public class HotelBookingController extends Controller {
 			catch (Exception e)
 			{
 				e.printStackTrace();
-			} */
+			} 
 	        
 	        
 		  

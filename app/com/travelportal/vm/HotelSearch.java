@@ -12,6 +12,7 @@ public class HotelSearch {
 	public String supplierNm;
 	public String hotelAddr;
 	public String hoteldescription;
+	public String hotel_email;
 	public String imgPaths;
 	public String imgDescription;
 	public String checkIn;
@@ -282,6 +283,12 @@ public class HotelSearch {
 	}
 	public void setMealCompulsory(Double mealCompulsory) {
 		this.mealCompulsory = mealCompulsory;
+	}
+	public String getHotel_email() {
+		return hotel_email;
+	}
+	public void setHotel_email(String hotel_email) {
+		this.hotel_email = hotel_email;
 	}
 	
 	

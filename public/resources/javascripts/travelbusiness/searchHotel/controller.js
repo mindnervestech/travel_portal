@@ -76,6 +76,16 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		});
 	};
 	
+	$scope.openVoucherPopUp = function(booking){
+		$scope.voucherPdg = "/hotel_profile/getVoucherPdfPath/"+booking.bookingId;
+		
+		ngDialog.open({
+			template: '/assets/resources/html/showVoucherPdf.html',
+			scope : $scope,
+			//controller:'hoteProfileController',
+			className: 'ngdialog-theme-default'
+		});
+	}
 	
 	$scope.showtable = function(checkIn,checkOut,guest,status, bookingId){
 		console.log(guest);
@@ -3374,7 +3384,7 @@ travelBusiness.controller('BookingConfirmRejectController', function ($scope,$ht
 		}
 		if($scope.doThis == 0){
 		$http.get("/getConfirmationInfo/"+bookingId+"/"+confirmationId+"/"+nameConfirm+"/"+status).success(function(response){
-			if(status == "available"){
+			if(status == "Confirm"){
 				notificationService.success("Booking Confirm");
 				$scope.doThis = 0;
 			}

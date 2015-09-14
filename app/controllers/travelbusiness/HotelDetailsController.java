@@ -660,7 +660,8 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	hProfileVM.setHotelNm(hAmenities.getHotelName());
 	hProfileVM.setPerferhotel(hAmenities.getPerfer());
 	hProfileVM.setSupplierNm(hAmenities.getSupplierName());
-
+	hProfileVM.setHotel_email(hAmenities.getHotelEmailAddr());
+	
 	if (hAmenities.getStartRatings() != null) {
 		hProfileVM.setStartRating(hAmenities.getStartRatings()
 				.getId());

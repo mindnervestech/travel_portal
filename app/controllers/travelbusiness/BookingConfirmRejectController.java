@@ -11,26 +11,18 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import com.travelportal.domain.HotelBookingDetails;
-import com.travelportal.domain.RoomAndDateWiseRate;
-import com.travelportal.domain.RoomRegiterBy;
-import com.travelportal.domain.RoomRegiterByChild;
-import com.travelportal.domain.admin.CurrencyExchangeRate;
 import com.travelportal.domain.agent.AgentRegistration;
-import com.travelportal.vm.AgentRegisVM;
-import com.travelportal.vm.ChildselectedVM;
 import com.travelportal.vm.HotelBookDetailsVM;
-import com.travelportal.vm.PassengerBookingInfoVM;
-import com.travelportal.vm.RateDatedetailVM;
 
 public class BookingConfirmRejectController extends Controller {
 
+	final static String rootDir = Play.application().configuration().getString("mail.storage.path");
 	
  
 	 @Transactional(readOnly=false)
 	 public static Result getConfirmationInfo(String bookingId,String confirmationId,String nameConfirm,String status){
-		 System.out.println("-=-==bookingId=-=-=");
-		 System.out.println(bookingId);
-		HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingIdDetail(bookingId);
+
+		 HotelBookingDetails hBookingDetails = HotelBookingDetails.findBookingIdDetail(bookingId);
 		hBookingDetails.setRoom_status(status);
 		hBookingDetails.setConfirmationId(confirmationId);
 		hBookingDetails.setConfirmProcessUser(nameConfirm);
