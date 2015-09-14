@@ -1690,7 +1690,7 @@ public class HotelBookingController extends Controller {
 			float[] bookingAddImgWidth = {2f};
 			BookingAddImg.setWidths(bookingAddImgWidth);
 			
-			final String RESOURCE = rootDir+"/"	+"Tag EXP.jpg";
+			final String RESOURCE = rootDir+"/"	+"TagEXP.jpg";
 			Image logoimg = Image.getInstance(RESOURCE);
 			logoimg.scaleAbsolute(500f, 70f);
 			
