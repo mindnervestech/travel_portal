@@ -132,8 +132,8 @@ public class AdminController extends Controller {
 		}
 		
 		
-		final String username=Play.application().configuration().getString("supportUser");
-        final String password=Play.application().configuration().getString("supportPassword");
+		final String username=Play.application().configuration().getString("username");
+        final String password=Play.application().configuration().getString("password");
 	        
 	        
 	        Properties props = new Properties();
@@ -351,8 +351,8 @@ public class AdminController extends Controller {
 		register.merge();
 		
 		
-		final String username=Play.application().configuration().getString("supportUser");
-        final String password=Play.application().configuration().getString("supportPassword");
+		final String username=Play.application().configuration().getString("username");
+        final String password=Play.application().configuration().getString("password");
         
         
         Properties props = new Properties();
