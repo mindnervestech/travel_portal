@@ -1,5 +1,6 @@
 package com.travelportal.controllers;
 
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,12 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.persistence.NoResultException;
 
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+
 import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -36,8 +43,6 @@ import com.travelportal.domain.City;
 import com.travelportal.domain.Country;
 import com.travelportal.domain.Currency;
 import com.travelportal.domain.HearAboutUs;
-import com.travelportal.domain.HotelBrands;
-import com.travelportal.domain.HotelChain;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.HotelStarRatings;
@@ -345,7 +350,102 @@ public class ApplicationController extends Controller{
 		final String username=Play.application().configuration().getString("username");
         final String password=Play.application().configuration().getString("password");
         
- 		Properties props = new Properties();
+        
+        Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.host", "smtp.checkinrooms.com");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.starttls.enable", "true");
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+        try
+		{
+			//MimeBodyPart attachPart = new MimeBodyPart();
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(username,"CheckInRooms"));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(agentVm.EmailAddr));
+			message.setSubject("thank you for registration");
+			Multipart multipart = new MimeMultipart();
+			BodyPart messageBodyPart = new MimeBodyPart();
+			messageBodyPart = new MimeBodyPart();
+			
+			VelocityEngine ve = new VelocityEngine();
+			ve.setProperty( RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,"org.apache.velocity.runtime.log.Log4JLogChute" );
+			ve.setProperty("runtime.log.logsystem.log4j.logger","clientService");
+			ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath"); 
+			ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+			ve.init();
+		
+			
+	        Template t = ve.getTemplate("/public/emailTemplet/newAgentRegister.vm"); 
+	        VelocityContext context = new VelocityContext();
+	        context.put("agentName", agentVm.companyName);
+	        
+	        
+	        StringWriter writer = new StringWriter();
+	        t.merge( context, writer );
+	        String content = writer.toString(); 
+			
+			messageBodyPart.setContent(content, "text/html");
+			multipart.addBodyPart(messageBodyPart);
+			
+			message.setContent(multipart);
+			Transport.send(message);
+			System.out.println("Sent test message successfully....");
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		} 
+    	AdminUser adUser = AdminUser.doLogin("admin","admin");
+    	
+        try
+		{
+			//MimeBodyPart attachPart = new MimeBodyPart();
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(username,"CheckInRooms"));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(adUser.getEmail()));
+			message.setSubject("thank you for registration");
+			Multipart multipart = new MimeMultipart();
+			BodyPart messageBodyPart = new MimeBodyPart();
+			messageBodyPart = new MimeBodyPart();
+			
+			VelocityEngine ve = new VelocityEngine();
+			ve.setProperty( RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,"org.apache.velocity.runtime.log.Log4JLogChute" );
+			ve.setProperty("runtime.log.logsystem.log4j.logger","clientService");
+			ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath"); 
+			ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+			ve.init();
+		
+			
+	        Template t = ve.getTemplate("/public/emailTemplet/newAgentRegisterAdminMail.vm"); 
+	        VelocityContext context = new VelocityContext();
+	        context.put("AgentCompany", agentVm.getCompanyName());
+	        context.put("contactPerson", agentVm.getFirstName());
+	        
+	        
+	        StringWriter writer = new StringWriter();
+	        t.merge( context, writer );
+	        String content = writer.toString(); 
+			
+			messageBodyPart.setContent(content, "text/html");
+			multipart.addBodyPart(messageBodyPart);
+			
+			message.setContent(multipart);
+			Transport.send(message);
+			System.out.println("Sent test message successfully....");
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		} 
+        
+ 		/*Properties props = new Properties();
  		props.put("mail.smtp.auth", "true");
  		props.put("mail.smtp.starttls.enable", "true");
  		props.put("mail.smtp.host", "smtp.checkinrooms.com");
@@ -378,11 +478,11 @@ public class ApplicationController extends Controller{
   		     Transport.send(feedback);
        		} catch (MessagingException e) {
   			  throw new RuntimeException(e);
-  		}
+  		}*/
  		
- 		AdminUser adUser = AdminUser.doLogin("admin","admin");
+ 	//	AdminUser adUser = AdminUser.doLogin("admin","admin");
  		
- 		try{
+ 		/*try{
   		   
   			Message feedback = new MimeMessage(session);
   			try {
@@ -395,7 +495,7 @@ public class ApplicationController extends Controller{
   			InternetAddress.parse(adUser.getEmail()));
   			feedback.setSubject("You SignIn For travel_portal");	  			
   			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
-  	         messageBodyPart.setText("New Agent SignIn For travel_portal \n Agent Code : "+randomInt +" Agent Company Name :"+agentVm.companyName);	  	    
+  	         messageBodyPart.setText("Dear Admin (CheckInRoom),  \n\n Please note that a new (Agent) has registered, the details are as follows : \n\n Company Name : "+ agentVm.companyName +"\n Contact Person  :  :"+agentVm.companyName+"\n\nPlease sign in the admin panel, to approve or reject the agent. ");	  	    
   	         Multipart multipart = new MimeMultipart();	  	    
   	         multipart.addBodyPart(messageBodyPart);	            
   	         feedback.setContent(multipart);
@@ -403,7 +503,7 @@ public class ApplicationController extends Controller{
        		} catch (MessagingException e) {
   			  throw new RuntimeException(e);
   		}
- 		
+ 		*/
 		
 		//return ok(views.html.agentLogin.render());
 		return ok(views.html.travelbusiness.home.render());
@@ -467,7 +567,102 @@ public class ApplicationController extends Controller{
 		final String username=Play.application().configuration().getString("username");
         final String password=Play.application().configuration().getString("password");
         
- 		Properties props = new Properties();
+        Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.host", "smtp.checkinrooms.com");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.starttls.enable", "true");
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+        try
+		{
+			//MimeBodyPart attachPart = new MimeBodyPart();
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(username,"CheckInRooms"));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(hotelSignUpVM.email));
+			message.setSubject("thank you for registration");
+			Multipart multipart = new MimeMultipart();
+			BodyPart messageBodyPart = new MimeBodyPart();
+			messageBodyPart = new MimeBodyPart();
+			
+			VelocityEngine ve = new VelocityEngine();
+			ve.setProperty( RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,"org.apache.velocity.runtime.log.Log4JLogChute" );
+			ve.setProperty("runtime.log.logsystem.log4j.logger","clientService");
+			ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath"); 
+			ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+			ve.init();
+		
+			
+	        Template t = ve.getTemplate("/public/emailTemplet/newSupplierRegister.vm"); 
+	        VelocityContext context = new VelocityContext();
+	        context.put("hotelName", hotelSignUpVM.getHotelName());
+	        
+	        
+	        StringWriter writer = new StringWriter();
+	        t.merge( context, writer );
+	        String content = writer.toString(); 
+			
+			messageBodyPart.setContent(content, "text/html");
+			multipart.addBodyPart(messageBodyPart);
+			
+			message.setContent(multipart);
+			Transport.send(message);
+			System.out.println("Sent test message successfully....");
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		} 
+        
+        AdminUser adUser = AdminUser.doLogin("admin","admin");
+        try
+		{
+			//MimeBodyPart attachPart = new MimeBodyPart();
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(username,"CheckInRooms"));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(adUser.getEmail()));
+			message.setSubject("thank you for registration");
+			Multipart multipart = new MimeMultipart();
+			BodyPart messageBodyPart = new MimeBodyPart();
+			messageBodyPart = new MimeBodyPart();
+			
+			VelocityEngine ve = new VelocityEngine();
+			ve.setProperty( RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,"org.apache.velocity.runtime.log.Log4JLogChute" );
+			ve.setProperty("runtime.log.logsystem.log4j.logger","clientService");
+			ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath"); 
+			ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+			ve.init();
+		
+			
+	        Template t = ve.getTemplate("/public/emailTemplet/newSupplierRegisterAdminMail.vm"); 
+	        VelocityContext context = new VelocityContext();
+	        context.put("hotelName", hotelSignUpVM.getHotelName());
+	        context.put("country", hotelSignUpVM.getCountry());
+	        context.put("city", hotelSignUpVM.getCity());
+	        context.put("supplierName", hotelSignUpVM.getSupplierName());
+	        
+	        
+	        StringWriter writer = new StringWriter();
+	        t.merge( context, writer );
+	        String content = writer.toString(); 
+			
+			messageBodyPart.setContent(content, "text/html");
+			multipart.addBodyPart(messageBodyPart);
+			
+			message.setContent(multipart);
+			Transport.send(message);
+			System.out.println("Sent test message successfully....");
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		} 
+ 		/*Properties props = new Properties();
  		props.put("mail.smtp.auth", "true");
  		props.put("mail.smtp.starttls.enable", "true");
  		props.put("mail.smtp.host", "smtp.checkinrooms.com");
@@ -517,14 +712,14 @@ public class ApplicationController extends Controller{
   			InternetAddress.parse(adUser.getEmail()));
   			feedback.setSubject("You SignIn For travel_portal");	  			
   			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
-  	         messageBodyPart.setText("New Supplier SignIn For travel_portal \n Supplier Code : "+randomInt +" Supplier Name :"+hotelSignUpVM.supplierName);	  	    
+  	         messageBodyPart.setText("Dear Admin (CheckInRoom),  \n\n Please note that a new (Supplier) has registered, the details are as follows : \n\n Hotel Name  : "+hotelSignUpVM.hotelName +"\n Country  :"+hotelSignUpVM.country+"\n City   :"+hotelSignUpVM.city+"\n\n Contact Person  :"+hotelSignUpVM.supplierName+"\n\nPlease sign in the admin panel, to approve or reject the Supplier. \n\n");	  	    
   	         Multipart multipart = new MimeMultipart();	  	    
   	         multipart.addBodyPart(messageBodyPart);	            
   	         feedback.setContent(multipart);
   		     Transport.send(feedback);
        		} catch (MessagingException e) {
   			  throw new RuntimeException(e);
-  		}
+  		}*/
  		
  		
  		
@@ -543,7 +738,7 @@ public class ApplicationController extends Controller{
 		final String username=Play.application().configuration().getString("username");
         final String password=Play.application().configuration().getString("password");
         
- 		Properties props = new Properties();
+ 		/*Properties props = new Properties();
  		props.put("mail.smtp.auth", "true");
  		props.put("mail.smtp.starttls.enable", "true");
  		props.put("mail.smtp.host", "smtp.checkinrooms.com");
@@ -576,7 +771,7 @@ public class ApplicationController extends Controller{
   		     Transport.send(feedback);
        		} catch (MessagingException e) {
   			  throw new RuntimeException(e);
-  		}
+  		}*/
  		flag= 0;
  		
 		}else{

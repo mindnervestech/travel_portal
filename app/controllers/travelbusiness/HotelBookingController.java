@@ -165,7 +165,7 @@ public class HotelBookingController extends Controller {
 		}
 		
 		
-		AgentRegistration agRegistration = AgentRegistration.getAgentCode((session().get("agent")));
+		AgentRegistration agRegistration = AgentRegistration.getAgentCode(session().get("agent"));
 		
 		hBookingDetails.setAgentId(Long.parseLong(session().get("agent")));
 		hBookingDetails.setHotelNm(searchVM.getHotelNm());
@@ -2540,7 +2540,10 @@ public class HotelBookingController extends Controller {
 		        for(PassengerBookingInfoVM pInfoVM:searchVM.hotelBookingDetails.passengerInfo){
 		        	countAdult = pInfoVM.adult.split(" ");
 		        	adult = adult + Integer.parseInt(countAdult[0]);
-		        	child = child + Integer.parseInt(pInfoVM.noOfchild);
+		        	if(pInfoVM.noOfchild != null){
+		        	
+		        		child = child + Integer.parseInt(pInfoVM.noOfchild);
+		        	}
 		        }
 		        
 		        context.put("adultCount",adult);

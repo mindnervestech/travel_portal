@@ -1,21 +1,26 @@
 package com.travelportal.controllers;
 
-import java.io.UnsupportedEncodingException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.Message;
 import javax.mail.internet.MimeMultipart;
+
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import play.Play;
 import play.db.jpa.Transactional;
@@ -23,8 +28,6 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import com.travelportal.domain.HotelBrands;
-import com.travelportal.domain.HotelChain;
 import com.travelportal.domain.HotelProfile;
 import com.travelportal.domain.HotelRegistration;
 import com.travelportal.domain.HotelStarRatings;
@@ -129,10 +132,63 @@ public class AdminController extends Controller {
 		}
 		
 		
-		final String username=Play.application().configuration().getString("username");
-	        final String password=Play.application().configuration().getString("password");
+		final String username=Play.application().configuration().getString("supportUser");
+        final String password=Play.application().configuration().getString("supportPassword");
 	        
-	 		Properties props = new Properties();
+	        
+	        Properties props = new Properties();
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.host", "smtp.checkinrooms.com");
+			props.put("mail.smtp.port", "587");
+			props.put("mail.smtp.starttls.enable", "true");
+			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			});
+	        try
+			{
+				//MimeBodyPart attachPart = new MimeBodyPart();
+				Message message = new MimeMessage(session);
+				message.setFrom(new InternetAddress(username,"CheckInRooms"));
+				message.setRecipients(Message.RecipientType.TO,
+						InternetAddress.parse(email));
+				message.setSubject("Approved Supplier");
+				Multipart multipart = new MimeMultipart();
+				BodyPart messageBodyPart = new MimeBodyPart();
+				messageBodyPart = new MimeBodyPart();
+				
+				VelocityEngine ve = new VelocityEngine();
+				ve.setProperty( RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,"org.apache.velocity.runtime.log.Log4JLogChute" );
+				ve.setProperty("runtime.log.logsystem.log4j.logger","clientService");
+				ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath"); 
+				ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+				ve.init();
+			
+				
+		        Template t = ve.getTemplate("/public/emailTemplet/approvedNewSupplierMail.vm"); 
+		        VelocityContext context = new VelocityContext();
+		        context.put("hotelEmail", register.getEmail());
+		        context.put("supplierCode", register.getSupplierCode());
+		        context.put("password", register.getPassword());
+		        
+		        StringWriter writer = new StringWriter();
+		        t.merge( context, writer );
+		        String content = writer.toString(); 
+				
+				messageBodyPart.setContent(content, "text/html");
+				multipart.addBodyPart(messageBodyPart);
+				
+				message.setContent(multipart);
+				Transport.send(message);
+				System.out.println("Sent test message successfully....");
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			} 
+	        
+	 		/*Properties props = new Properties();
 	 		props.put("mail.smtp.auth", "true");
 	 		props.put("mail.smtp.starttls.enable", "true");
 	 		props.put("mail.smtp.host", "smtp.checkinrooms.com");
@@ -165,7 +221,7 @@ public class AdminController extends Controller {
 	  		     Transport.send(feedback);
 	       		} catch (MessagingException e) {
 	  			  throw new RuntimeException(e);
-	  		}
+	  		}*/
 	 		
 	 			
 		return ok();
@@ -295,73 +351,61 @@ public class AdminController extends Controller {
 		register.merge();
 		
 		
-		/*HotelProfile hotelp = HotelProfile.findById(supplierCode);
-		
-		if(hotelp == null){			
+		final String username=Play.application().configuration().getString("supportUser");
+        final String password=Play.application().configuration().getString("supportPassword");
+        
+        
+        Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.host", "smtp.checkinrooms.com");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.starttls.enable", "true");
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+        try
+		{
+			//MimeBodyPart attachPart = new MimeBodyPart();
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(username,"CheckInRooms"));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(email));
+			message.setSubject("thank you for registration");
+			Multipart multipart = new MimeMultipart();
+			BodyPart messageBodyPart = new MimeBodyPart();
+			messageBodyPart = new MimeBodyPart();
+			
+			VelocityEngine ve = new VelocityEngine();
+			ve.setProperty( RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,"org.apache.velocity.runtime.log.Log4JLogChute" );
+			ve.setProperty("runtime.log.logsystem.log4j.logger","clientService");
+			ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath"); 
+			ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+			ve.init();
 		
 			
-		HotelProfile hotelProfile = new HotelProfile();
-		
-		hotelProfile.setSupplier_code(Long.parseLong(register.getSupplierCode()));
-		hotelProfile.setHotelName(register.getHotelName());
-		hotelProfile.setSupplierName(register.getSupplierName());
-		hotelProfile.setAddress(register.getHotelAddress());
-		hotelProfile.setCountry(register.getCountry());
-		hotelProfile.setCurrency(register.getCurrency());
-		hotelProfile.setCity(register.getCity());
-		if(register.isPartOfChain()) {
-			hotelProfile.setPartOfChain("true");
-			hotelProfile.setHoteBrands(HotelBrands.getHotelBrandsByName(register.getHotelBrand()));
-			hotelProfile.setChainHotel(HotelChain.getHotelChainByName(register.getChainHotel()));
-		} else {
-			hotelProfile.setPartOfChain("false");
-		}
-		
-		hotelProfile.setHotelEmailAddr(register.getEmail());
-		hotelProfile.setMarketPolicyType(MarketPolicyTypes.getMarketPolicyByName(register.getPolicy()));
-		hotelProfile.setPassword(register.getPassword());
-		hotelProfile.setStartRatings(HotelStarRatings.getHotelRatingsByName(register.getStarRating()));
-		hotelProfile.setLaws(register.isLaws());
-		hotelProfile.setZipCode(register.getZipcode());
-		hotelProfile.save();
-		
-		
-		}
-		*/
-		
-		/*final String username=Play.application().configuration().getString("username");
-	        final String password=Play.application().configuration().getString("password");
+	        Template t = ve.getTemplate("/public/emailTemplet/approvedNewSupplierMail.vm"); 
+	        VelocityContext context = new VelocityContext();
+	        context.put("agentEmail", register.getEmailAddr());
+	        context.put("agentCode", register.getAgentCode());
+	        context.put("password", register.getPassword());
 	        
-	 		Properties props = new Properties();
-	 		props.put("mail.smtp.auth", "true");
-	 		props.put("mail.smtp.starttls.enable", "true");
-	 		props.put("mail.smtp.host", "smtp.gmail.com");
-	 		props.put("mail.smtp.port", "587");
-	  
-	 		Session session = Session.getInstance(props,
-	 		  new javax.mail.Authenticator() {
-	 			protected PasswordAuthentication getPasswordAuthentication() {
-	 				return new PasswordAuthentication(username, password);
-	 			}
-	 		  });
-	  
-	 		try{
-	 		   
-	  			Message feedback = new MimeMessage(session);
-	  			feedback.setFrom(new InternetAddress(username));
-	  			feedback.setRecipients(Message.RecipientType.TO,
-	  			InternetAddress.parse(email));
-	  			feedback.setSubject("You Approved For travel_portal");	  			
-	  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
-	  	         messageBodyPart.setText("You Approved For travel_portal \n Your Agent code : "+agentCode);	  	    
-	  	         Multipart multipart = new MimeMultipart();	  	    
-	  	         multipart.addBodyPart(messageBodyPart);	            
-	  	         feedback.setContent(multipart);
-	  		     Transport.send(feedback);
-	       		} catch (MessagingException e) {
-	  			  throw new RuntimeException(e);
-	  		}*/
-	 		
+	        StringWriter writer = new StringWriter();
+	        t.merge( context, writer );
+	        String content = writer.toString(); 
+			
+			messageBodyPart.setContent(content, "text/html");
+			multipart.addBodyPart(messageBodyPart);
+			
+			message.setContent(multipart);
+			Transport.send(message);
+			System.out.println("Sent test message successfully....");
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		} 
 	 			
 		return ok();
 	}

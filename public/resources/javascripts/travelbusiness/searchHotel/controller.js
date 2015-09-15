@@ -1283,6 +1283,7 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 		$scope.sessionValue = 0;
 	}
 	
+	
 	$scope.searchby = {
 			checkIn:"dd/mm/yyyy"
 	}
@@ -1360,6 +1361,7 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 				$scope.errorMsg = true;
 				console.log($scope.errorMsg);
 			}else{
+				$scope.sessionValue = 1;
 				$scope.Agentresponse = response;
 				$scope.AgentId = $scope.Agentresponse.agentCode;
 				$scope.AgentCompany = $scope.Agentresponse.companyName;
