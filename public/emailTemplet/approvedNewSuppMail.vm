@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="initial-scale=1.0"/>
+<meta name="format-detection" content="telephone=no"/>
+<title>Booking Confirm</title>
+<body>
+<table>
+	<tr>
+		<td>(&&Logo&&)</td>
+		<td>checkinrooms</td>
+	</tr>
+	<tr>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+	</tr>
+	<tr>
+		<td><span style="font-size: 15px; line-height: 24px;">Dear Sir/ Madam, <br><br> Greetings from The Expedition Co., Ltd...!!!  <br><br> Thank you very much for registering/subscribing with The Expedition; we are delighted to have you on board, now that you are a supplier with us, you can update your services, such as  <br><br> - Manage Hotel Images <br> - Manage Allotment <br> - Manage Rates <br> - Special Promotion <br><br> and many other services, <br><br>  with the below information :- <br><br> Email : $hotelEmail <br> Supplier Code :  $supplierCode  <br> Password : $password<br><br> While putting in your contract rates, if you require any assistance, please do not hesitate to call us at, the below mentioned no during our office hours. <br><br>Hope the above mentioned details are clear for any clarification please feel free to contact us. <br><br>Best Regards,<br><br>THE EXPEDITION TEAM "<br> </span><br style="line-height: 24px;"><br style="line-height: 24px;"></td>
+	</tr>
+</table>
+</body>
+</html>

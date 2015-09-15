@@ -37,6 +37,9 @@ import com.travelportal.vm.AgentRegistrationVM;
 import com.travelportal.vm.HotelRegistrationVM;
 
 public class AdminController extends Controller {
+	
+	final static String username=Play.application().configuration().getString("supportUser");
+    final static String password=Play.application().configuration().getString("supportPassword");
 
 	@Transactional
 	public static Result getPendingUsers() {
@@ -131,12 +134,11 @@ public class AdminController extends Controller {
 		
 		}
 		
+	//	final String username=Play.application().configuration().getString("username");
+     //   final String password=Play.application().configuration().getString("password");
 		
-		final String username=Play.application().configuration().getString("username");
-        final String password=Play.application().configuration().getString("password");
-	        
-	        
-	        Properties props = new Properties();
+		
+		  Properties props = new Properties();
 			props.put("mail.smtp.auth", "true");
 			props.put("mail.smtp.host", "smtp.checkinrooms.com");
 			props.put("mail.smtp.port", "587");
@@ -153,7 +155,7 @@ public class AdminController extends Controller {
 				message.setFrom(new InternetAddress(username,"CheckInRooms"));
 				message.setRecipients(Message.RecipientType.TO,
 						InternetAddress.parse(email));
-				message.setSubject("Approved Supplier");
+				message.setSubject("Approved User");
 				Multipart multipart = new MimeMultipart();
 				BodyPart messageBodyPart = new MimeBodyPart();
 				messageBodyPart = new MimeBodyPart();
@@ -166,11 +168,12 @@ public class AdminController extends Controller {
 				ve.init();
 			
 				
-		        Template t = ve.getTemplate("/public/emailTemplet/approvedNewSupplierMail.vm"); 
+		        Template t = ve.getTemplate("/public/emailTemplet/approvedNewSuppMail.vm"); 
 		        VelocityContext context = new VelocityContext();
 		        context.put("hotelEmail", register.getEmail());
 		        context.put("supplierCode", register.getSupplierCode());
 		        context.put("password", register.getPassword());
+		        
 		        
 		        StringWriter writer = new StringWriter();
 		        t.merge( context, writer );
@@ -187,42 +190,7 @@ public class AdminController extends Controller {
 			{
 				e.printStackTrace();
 			} 
-	        
-	 		/*Properties props = new Properties();
-	 		props.put("mail.smtp.auth", "true");
-	 		props.put("mail.smtp.starttls.enable", "true");
-	 		props.put("mail.smtp.host", "smtp.checkinrooms.com");
-	 		props.put("mail.smtp.port", "587");
-	  
-	 		Session session = Session.getInstance(props,
-	 		  new javax.mail.Authenticator() {
-	 			protected PasswordAuthentication getPasswordAuthentication() {
-	 				return new PasswordAuthentication(username, password);
-	 			}
-	 		  });
-	  
-	 		try{
-	 		   
-	  			Message feedback = new MimeMessage(session);
-	  			try {
-					feedback.setFrom(new InternetAddress(username,"CheckInRooms"));
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	  			feedback.setRecipients(Message.RecipientType.TO,
-	  			InternetAddress.parse(email));
-	  			feedback.setSubject("You Approved For travel_portal");	  			
-	  			 BodyPart messageBodyPart = new MimeBodyPart();	  	       
-	  	         messageBodyPart.setText("You Approved For travel_portal \n Your Supplier Code : "+supplierCode);	  	    
-	  	         Multipart multipart = new MimeMultipart();	  	    
-	  	         multipart.addBodyPart(messageBodyPart);	            
-	  	         feedback.setContent(multipart);
-	  		     Transport.send(feedback);
-	       		} catch (MessagingException e) {
-	  			  throw new RuntimeException(e);
-	  		}*/
-	 		
+	
 	 			
 		return ok();
 	}
@@ -349,11 +317,6 @@ public class AdminController extends Controller {
 		register.setCreditLimit(creditLimit.doubleValue());
 		register.setAvailableLimit(creditLimit.doubleValue());
 		register.merge();
-		
-		
-		final String username=Play.application().configuration().getString("username");
-        final String password=Play.application().configuration().getString("password");
-        
         
         Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -372,7 +335,7 @@ public class AdminController extends Controller {
 			message.setFrom(new InternetAddress(username,"CheckInRooms"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(email));
-			message.setSubject("thank you for registration");
+			message.setSubject("Approved Agent");
 			Multipart multipart = new MimeMultipart();
 			BodyPart messageBodyPart = new MimeBodyPart();
 			messageBodyPart = new MimeBodyPart();
@@ -385,7 +348,7 @@ public class AdminController extends Controller {
 			ve.init();
 		
 			
-	        Template t = ve.getTemplate("/public/emailTemplet/approvedNewSupplierMail.vm"); 
+	        Template t = ve.getTemplate("/public/emailTemplet/approvedNewAgentMail.vm"); 
 	        VelocityContext context = new VelocityContext();
 	        context.put("agentEmail", register.getEmailAddr());
 	        context.put("agentCode", register.getAgentCode());

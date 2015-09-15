@@ -55,6 +55,9 @@ import com.travelportal.vm.HotelSignUpVM;
 
 
 public class ApplicationController extends Controller{
+	
+	final static String username=Play.application().configuration().getString("supportUser");
+    final static String password=Play.application().configuration().getString("supportPassword");
 
 	@Transactional
 	public static Result login() {
@@ -347,8 +350,8 @@ public class ApplicationController extends Controller{
 	
 		aRegistration.save();
 		
-		final String username=Play.application().configuration().getString("username");
-        final String password=Play.application().configuration().getString("password");
+	//	final String username=Play.application().configuration().getString("username");
+      //  final String password=Play.application().configuration().getString("password");
         
         
         Properties props = new Properties();
@@ -564,8 +567,8 @@ public class ApplicationController extends Controller{
 		
 		
 		
-		final String username=Play.application().configuration().getString("username");
-        final String password=Play.application().configuration().getString("password");
+	//	final String username=Play.application().configuration().getString("username");
+    //    final String password=Play.application().configuration().getString("password");
         
         Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -735,10 +738,10 @@ public class ApplicationController extends Controller{
 		int flag = 0;
 		if(hProfile != null){
 
-		final String username=Play.application().configuration().getString("username");
-        final String password=Play.application().configuration().getString("password");
+		//final String username=Play.application().configuration().getString("username");
+     //   final String password=Play.application().configuration().getString("password");
         
- 		/*Properties props = new Properties();
+ 		Properties props = new Properties();
  		props.put("mail.smtp.auth", "true");
  		props.put("mail.smtp.starttls.enable", "true");
  		props.put("mail.smtp.host", "smtp.checkinrooms.com");
@@ -771,7 +774,7 @@ public class ApplicationController extends Controller{
   		     Transport.send(feedback);
        		} catch (MessagingException e) {
   			  throw new RuntimeException(e);
-  		}*/
+  		}
  		flag= 0;
  		
 		}else{
