@@ -8,8 +8,8 @@
 <body>
 <table>
 	<tr>
-		<td>(&&Logo&&)</td>
-		<td>checkinrooms</td>
+	<td style="color: #0084e6;">(&&Logo&&)</td>
+		<td style="font-size: 23px;color: #0084e6;>CheckInRooms</td>
 	</tr>
 	<tr>
 		<td></td>

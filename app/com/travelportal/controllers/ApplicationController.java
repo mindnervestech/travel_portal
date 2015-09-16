@@ -322,7 +322,9 @@ public class ApplicationController extends Controller{
 		aRegistration.setFirstName(agentVm.firstName);
 		aRegistration.setLastName(agentVm.lastName);
 		aRegistration.setBusiness(NatureOfBusiness.getNatureOfBusinessByName(agentVm.business));
-		aRegistration.setHear(HearAboutUs.getHearAboutUsByName(agentVm.hear));
+		if(agentVm.hear != null && agentVm.hear != ""){
+			aRegistration.setHear(HearAboutUs.getHearAboutUsByName(agentVm.hear));
+		}
 		aRegistration.setPosition(agentVm.Position);
 		aRegistration.setCompanyName(agentVm.companyName);
 		aRegistration.setCompanyAddress(agentVm.companyAddress);

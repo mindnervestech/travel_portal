@@ -173,7 +173,7 @@ border: 3px solid #fdb714;
 								<div class="form-group">
 									<label class="col-md-3 control-label">*Title:</label>
 									<div class="col-md-6">
-										<select class="form-control" id="title" name="title" placeholder="" required>
+										<select class="form-control valid" id="title" name="title" placeholder="" required>
 											<option value="">--Select title--</option> @for(title <-
 											salutation) {
 											<option value="@title">@title</option> }
@@ -185,7 +185,7 @@ border: 3px solid #fdb714;
 								<div class="form-group">
 									<label class="col-md-3 control-label">*First Name:</label>
 									<div class="col-md-6">
-										<input type="text" name="firstName" class="form-control"
+										<input type="text" name="firstName" class="form-control valid"
 											required>
 									</div>
 								</div>
@@ -197,7 +197,7 @@ border: 3px solid #fdb714;
 								<div class="form-group">
 									<label class="col-md-3 control-label">*Last Name:</label>
 									<div class="col-md-6">
-										<input type="text" name="lastName" class="form-control"
+										<input type="text" name="lastName" class="form-control valid"
 											required>
 									</div>
 								</div>
@@ -207,7 +207,7 @@ border: 3px solid #fdb714;
 									<label class="col-md-3 control-label">*Country:</label>
 
 									<div class="col-md-6">
-										<select class="form-control" id="cntry" name="country"
+										<select class="form-control valid" id="cntry" name="country"
 											onchange="getCountry()" required>
 											<option value="">--Select country--</option> @for(country <-
 											countries) {
@@ -221,7 +221,7 @@ border: 3px solid #fdb714;
 									<label class="col-md-3 control-label">*Nature of
 										Business:</label>
 									<div class="col-md-6">
-										<select class="form-control" id="business" name="business"
+										<select class="form-control valid" id="business" name="business"
 											required>
 											<option value="">--Select Nature Of Business--</option> @for(business <-
 											natureOfBusiness) {
@@ -291,7 +291,7 @@ border: 3px solid #fdb714;
 									<div class="form-group">
 										<label class="col-md-3 control-label">*Company Name:</label>
 										<div class="col-md-6">
-											<input type="text" name="companyName" class="form-control"
+											<input type="text" name="companyName" class="form-control valid"
 												required>
 										</div>
 									</div>
@@ -306,14 +306,14 @@ border: 3px solid #fdb714;
 
 										<div class="col-md-6">
 											<textarea id="companyAddress" name="companyAddress" rows="2"
-												class="form-control" required></textarea>
+												class="form-control valid" required></textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-md-3 control-label">*Company City:</label>
 										<div class="col-md-6">
-											<select class="form-control" id="myCity" name="city" required>
+											<select class="form-control valid" id="myCity" name="city" required>
 												<option value="">-- Choose City --</option>
 											</select>
 										</div>
@@ -335,7 +335,7 @@ border: 3px solid #fdb714;
 										<label class="col-md-3 control-label">*Preferred
 											Payment Method: </label>
 										<div class="col-md-6">
-											<select class="form-control" id="paymentMethod"
+											<select class="form-control valid" id="paymentMethod"
 												onchange="getpaymentMode()" name="paymentMethod" required>
 												<option value="">-- Choose Payment Method --</option>
 												<option value="Credit">Credit</option>
@@ -364,7 +364,8 @@ border: 3px solid #fdb714;
 												choose if you want to receive net or commissionable rate:</b></label>
 										<div class="col-md-2">
 											<input type="radio" name="receiveNet" value="net"
-												onclick="isreceiveNet(true)"> Net &nbsp&nbsp <input
+												onclick="isreceiveNet(true)"> Net &nbsp&nbsp 
+										<input
 												type="radio" name="receiveNet" value="commission"
 												checked="checked" onclick="isreceiveNet(false)">
 											Commission
@@ -411,7 +412,7 @@ border: 3px solid #fdb714;
 										<label class="col-md-3 control-label">*Preferred
 											currency you like to book in: </label>
 										<div class="col-md-6">
-											<select class="form-control" id="currency" name="currency"
+											<select class="form-control valid" id="currency" name="currency"
 												required>
 												<option value="">--Select Currency--</option> @for(Currencys <-
 												Currency) {
@@ -425,7 +426,7 @@ border: 3px solid #fdb714;
 										<label class="col-md-3 control-label">*E-mail Address:</label>
 
 										<div class="col-md-6">
-											<input type="email" id="EmailAddr" name="EmailAddr" class="form-control required"
+											<input type="email" id="EmailAddr" name="EmailAddr" class="form-control valid required"
 												required>
 										</div>
 									</div>
@@ -436,7 +437,7 @@ border: 3px solid #fdb714;
 											Address:</label>
 
 										<div class="col-md-6">
-											<input type="email" id="cEmailAddr" name="cEmailAddr" class="form-control required"
+											<input type="email" id="cEmailAddr" name="cEmailAddr" class="form-control valid required"
 												required>
 										</div>
 									</div>
@@ -447,7 +448,7 @@ border: 3px solid #fdb714;
 									<label class="col-md-3 control-label">*Choose your
 										login ID: </label>
 									<div class="col-md-6">
-										<input type="text" name="loginId" class="form-control"
+										<input type="text" name="loginId" class="form-control valid"
 											required>
 									</div>
 								</div>
@@ -455,7 +456,7 @@ border: 3px solid #fdb714;
 								<div class="form-group">
 									<label class="col-md-3 control-label">*Password:</label>
 									<div class="col-md-6">
-										<input type="password" name="password" class="form-control"
+										<input type="password" name="password" class="form-control valid"
 											required> <label>(minimum 6 characters)</label>
 									</div>
 								</div>
@@ -464,12 +465,12 @@ border: 3px solid #fdb714;
 									<label class="col-md-3 control-label">*Direct
 										Telephone:</label>
 									<div class="col-md-2 setwidth">
-										<input type="text" name="directCode" class="form-control required number"
+										<input type="text" name="directCode" class="form-control required number valid"
 											required> 
 									</div>
 
 									<div class="col-md-3">
-										<input type="text" name="directTelNo" class="form-control required number"
+										<input type="text" name="directTelNo" class="form-control required number valid"
 											required>
 
 									</div>
@@ -481,13 +482,13 @@ border: 3px solid #fdb714;
 								<div class="form-group">
 									<label class="col-md-3 control-label">*Direct Fax:</label>
 									<div class="col-md-2 setwidth">
-										<input type="text" name="faxCode" class="form-control required number"
+										<input type="text" name="faxCode" class="form-control required number valid"
 											required>
 
 									</div>
 
 									<div class="col-md-3">
-										<input type="text" name="faxTelNo" class="form-control required number"
+										<input type="text" name="faxTelNo" class="form-control required number valid"
 											required>
 
 									</div>
@@ -499,8 +500,7 @@ border: 3px solid #fdb714;
 								<div class="form-group">
 									<label class="col-md-3 control-label">Web Site: </label>
 									<div class="col-md-6">
-										<input type="text" name="webSite" class="form-control"
-											required>
+										<input type="text" name="webSite" class="form-control">
 									</div>
 								</div>
 
@@ -792,10 +792,10 @@ function getcheck(){
 
 	}
 	
-	if($("#business").val() == ''){
+	/*  if($("#business").val() == ''){
 		 alert("Nature of Business required field");
 			
-	} 
+	}   */
 	 
     if($("#EmailAddr").val() != $("#cEmailAddr").val()){
    			alert("E-mail Address not match");
@@ -811,7 +811,7 @@ function validateForm() {
 		 if($("#business").val() == ''){
 			 alert("Nature of Business required field");
 			 $("#business").val().focus;
-			 $('#nextButton').addClass('disabled');
+			// $('#nextButton').addClass('disabled');
 			 
 			 //disabled
 			 return false;
@@ -883,7 +883,20 @@ function validateForm() {
 					var $id = tab.find("a").attr("href");
 					var $approved = 1;
 					// Check all input validation
-					$($id + " input").each(
+					$($id + " input.valid").each(
+							function() {
+								if (!$(this).val()) {
+									$(this).css('border-color', 'red');
+									$(this).parent().parent().find("i.alert")
+											.removeClass("alert-hide");
+									$approved = 0;
+								} else {
+									$(this).parent().parent().find("i.alert")
+											.addClass("alert-hide");
+								}
+							});
+					
+					$($id + " select.valid").each(
 							function() {
 								if (!$(this).val()) {
 									$(this).css('border-color', 'red');
@@ -899,13 +912,26 @@ function validateForm() {
 						return false;
 
 				},
+				
 				'onTabClick' : function(tab, navigation, index) {
 					// select id of current tab content
 					var $id = tab.find("a").attr("href");
 					console.log($id);
 					var $approved = 1;
 					// Check all input validation
-					$($id + " input").each(
+					$($id + " input.valid").each(
+							function() {
+								if (!$(this).val()) {
+									$(this).css('border-color', 'red');
+									$(this).parent().parent().find("i.alert")
+											.removeClass("alert-hide");
+									$approved = 0;
+								} else {
+									$(this).parent().parent().find("i.alert")
+											.addClass("alert-hide");
+								}
+							});
+					$($id + " select.valid").each(
 							function() {
 								if (!$(this).val()) {
 									$(this).css('border-color', 'red');
@@ -930,4 +956,7 @@ function validateForm() {
 				'nextSelector' : '.button-next',
 				'previousSelector' : '.button-previous'
 			});
+	
+	
+	
 </script>
