@@ -23,6 +23,8 @@ public class SerachHotelRoomType {
 	public int applyPromotion;
 	public String roomSize;
 	//public String extraBedRate;
+	public int applyFlatPromotion;
+	public int applybirdPromotion;
 	public String breakfastInclude;
 	public int breakfastRate;
 	public int childAge;
@@ -144,6 +146,18 @@ public class SerachHotelRoomType {
 	}
 	public void setRoomBed(String roomBed) {
 		this.roomBed = roomBed;
+	}
+	public int getApplyFlatPromotion() {
+		return applyFlatPromotion;
+	}
+	public void setApplyFlatPromotion(int applyFlatPromotion) {
+		this.applyFlatPromotion = applyFlatPromotion;
+	}
+	public int getApplybirdPromotion() {
+		return applybirdPromotion;
+	}
+	public void setApplybirdPromotion(int applybirdPromotion) {
+		this.applybirdPromotion = applybirdPromotion;
 	}
 	
 	

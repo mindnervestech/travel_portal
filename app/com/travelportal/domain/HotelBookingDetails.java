@@ -78,9 +78,14 @@ public class HotelBookingDetails {
 	public String payment;
 	private Long roomId;
 	private String roomName;
+	private String applyPromotion;
 	private String promotionname;
 	private int stayDays_inpromotion;
 	private int payDays_inpromotion;
+	private Double flatRateInPro;
+	private int earlyBirdPro;
+	private Double earlyBirdDiscountPro;
+	private String applicableBirdPro;
 	private String typeOfStay_inpromotion;
 	private String room_status;
 	private Long agentId;
@@ -458,6 +463,36 @@ public class HotelBookingDetails {
 		this.confirmProcessUser = confirmProcessUser;
 	}
 	
+	public String getApplyPromotion() {
+		return applyPromotion;
+	}
+	public void setApplyPromotion(String applyPromotion) {
+		this.applyPromotion = applyPromotion;
+	}
+	public Double getFlatRateInPro() {
+		return flatRateInPro;
+	}
+	public void setFlatRateInPro(Double flatRateInPro) {
+		this.flatRateInPro = flatRateInPro;
+	}
+	public int getEarlyBirdPro() {
+		return earlyBirdPro;
+	}
+	public void setEarlyBirdPro(int earlyBirdPro) {
+		this.earlyBirdPro = earlyBirdPro;
+	}
+	public Double getEarlyBirdDiscountPro() {
+		return earlyBirdDiscountPro;
+	}
+	public void setEarlyBirdDiscountPro(Double earlyBirdDiscountPro) {
+		this.earlyBirdDiscountPro = earlyBirdDiscountPro;
+	}
+	public String getApplicableBirdPro() {
+		return applicableBirdPro;
+	}
+	public void setApplicableBirdPro(String applicableBirdPro) {
+		this.applicableBirdPro = applicableBirdPro;
+	}
 	public String getUuId() {
 		return uuId;
 	}

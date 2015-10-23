@@ -12,9 +12,14 @@ public class SpecialsMarketVM {
 	public boolean multiple;
 	public boolean combined;
 	public boolean breakfast;
+	public String earlyBird;
+	public String earlyBirdDisount;
+	public String earlyBirdRateCalculat;
+	public Double flatRate;
 	public String adultRate;
 	public String childRate;
 	public String applyToMarket;
+	public String apply;
 	public List<AllocatedCitiesVM> allocatedCities = new ArrayList<AllocatedCitiesVM>();
 	
 }

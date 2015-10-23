@@ -35,6 +35,10 @@ public class SpecialsMarket {
 	private String stayDays;
 	private String payDays;
 	private String typeOfStay;
+	public String earlyBird;
+	public String earlyBirdDisount;
+	public String earlyBirdRateCalculat;
+	public Double flatRate;
 	private boolean multiple;
 	private boolean combined;
 	public boolean breakfast;
@@ -128,6 +132,35 @@ public class SpecialsMarket {
 	public void setChildRate(String childRate) {
 		this.childRate = childRate;
 	}
+	
+	public String getEarlyBird() {
+		return earlyBird;
+	}
+	public void setEarlyBird(String earlyBird) {
+		this.earlyBird = earlyBird;
+	}
+	public String getEarlyBirdDisount() {
+		return earlyBirdDisount;
+	}
+	public void setEarlyBirdDisount(String earlyBirdDisount) {
+		this.earlyBirdDisount = earlyBirdDisount;
+	}
+	public String getEarlyBirdRateCalculat() {
+		return earlyBirdRateCalculat;
+	}
+	public void setEarlyBirdRateCalculat(String earlyBirdRateCalculat) {
+		this.earlyBirdRateCalculat = earlyBirdRateCalculat;
+	}
+	
+	
+	
+	
+	public Double getFlatRate() {
+		return flatRate;
+	}
+	public void setFlatRate(Double flatRate) {
+		this.flatRate = flatRate;
+	}
 	public static SpecialsMarket findByIdCity(long Code) {
 		try
 		{
@@ -185,13 +218,35 @@ public class SpecialsMarket {
 			spm.setId(Long.parseLong(o[0].toString()));
 			spm.setCombined(Boolean.parseBoolean(o[1].toString()));
 			spm.setMultiple(Boolean.parseBoolean(o[2].toString()));
-			spm.setPayDays(o[3].toString());
-			spm.setStayDays(o[4].toString());
-			spm.setTypeOfStay(o[5].toString());
+			if(o[3] != null){	
+				spm.setPayDays(o[3].toString());
+			}	
+			if(o[4] != null){
+				spm.setStayDays(o[4].toString());
+			}	
+			if(o[5] != null){
+				spm.setTypeOfStay(o[5].toString());
+			}	
 			spm.setApplyToMarket(o[7].toString());
-			spm.setAdultRate(o[8].toString());
+			if(o[8] != null){
+				spm.setAdultRate(o[8].toString());
+			}
 			spm.setBreakfast(Boolean.parseBoolean(o[9].toString()));
-			spm.setChildRate(o[10].toString());
+			if(o[10] != null){
+				spm.setChildRate(o[10].toString());
+			}	
+			if(o[11] != null){	
+				spm.setEarlyBird(o[11].toString());
+			}	
+			if(o[12] != null){
+				spm.setEarlyBirdDisount(o[12].toString());
+			}	
+			if(o[13] != null){	
+				spm.setEarlyBirdRateCalculat(o[13].toString());
+			}	
+			if(o[14] != null){
+				spm.setFlatRate(Double.valueOf(o[14].toString()));
+			}	
 			list1.add(spm);
 		}
 		

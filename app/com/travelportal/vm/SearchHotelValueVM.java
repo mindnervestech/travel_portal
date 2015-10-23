@@ -23,6 +23,7 @@ public class SearchHotelValueVM {
 	public List<Integer> amenitiesCheck;
 	public List<Integer> starCheck;
 	public String finalTotalDetails;
+	public String applyPromo;
 	public String roomId;
 	public String total;
 	public String adult;
@@ -205,6 +206,12 @@ public class SearchHotelValueVM {
 	}
 	public void setAgentCurrency(String agentCurrency) {
 		this.agentCurrency = agentCurrency;
+	}
+	public String getApplyPromo() {
+		return applyPromo;
+	}
+	public void setApplyPromo(String applyPromo) {
+		this.applyPromo = applyPromo;
 	}
 	
 		

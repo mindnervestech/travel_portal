@@ -31,6 +31,7 @@ public class Specials {
 	private Date fromDate;
 	private Date toDate;
 	private String promotionName;
+	private String promotionType;
 	private Long supplierCode;
 	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<HotelRoomTypes> roomTypes;
@@ -76,6 +77,12 @@ public class Specials {
 		this.supplierCode = supplierCode;
 	}
 	
+	public String getPromotionType() {
+		return promotionType;
+	}
+	public void setPromotionType(String promotionType) {
+		this.promotionType = promotionType;
+	}
 	public static Specials findBySpecialsID(Long id) {
     	Query query = JPA.em().createQuery("Select a from Specials a where a.id = ?1");
 		query.setParameter(1, id);
@@ -93,6 +100,15 @@ public class Specials {
 		query.setParameter(1, promotionName);
 		query.setParameter(2, fromDate);
 		query.setParameter(3, toDate);
+    	return (Specials) query.getSingleResult();
+    }
+	
+	public static Specials findSpecialType(String promotionName, String promotionType, Date fromDate,Date toDate) {
+    	Query query = JPA.em().createQuery("Select s from Specials s where s.promotionName = ?1 and s.promotionType = ?4 and s.fromDate = ?2 and s.toDate = ?3");
+		query.setParameter(1, promotionName);
+		query.setParameter(2, fromDate);
+		query.setParameter(3, toDate);
+		query.setParameter(4, promotionType);
     	return (Specials) query.getSingleResult();
     }
 	
@@ -136,6 +152,7 @@ public class Specials {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			sp.setPromotionType(o[5].toString());
 			
 			list1.add(sp);
 		}

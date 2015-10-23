@@ -217,6 +217,7 @@ public static void createRootDir() {
 				rateMeta.setSupplierCode(rate.supplierCode);
 				rateMeta.setCurrency(rate.currency);
 				rateMeta.setRateName(rate.rateName);
+				rateMeta.setMinNight(rate.minNight);
 				rateMeta.setStatus("pending");
 				rateMeta.setRoomType(HotelRoomTypes.findById(rate.roomId));
 				
@@ -519,6 +520,7 @@ public static void createRootDir() {
 
 				RateMeta rateMeta = RateMeta.findById(rate.getId());
 				rateMeta.setRateName(rate.rateName);
+				rateMeta.setMinNight(rate.minNight);
 				rateMeta.merge();
 				
 				
@@ -1035,6 +1037,7 @@ public static void createRootDir() {
 					rateVM.setRoomName(rate.getRoomType().getRoomType());
 					rateVM.setRoomId(rate.getRoomType().getRoomId());
 					rateVM.setRateName(rate.getRateName());
+					rateVM.setMinNight(rate.getMinNight());
 					rateVM.setIsSpecialRate(rateDetails.getIsSpecialRate());
 					
 					rateVM.setId(rate.getId());

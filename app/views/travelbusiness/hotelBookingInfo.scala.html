@@ -94,7 +94,10 @@
                                 <!--  <dt class="feature">Per Room price:</dt><dd class="value" currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"> -2px;" class="ng-binding"></dd>
                                 <dt class="feature">Total Room price:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * <span currency-rate ng-model="hotel.hotelBookingDetails.totalParPerson" rate="{{hotel.hotelBookingDetails.totalParPerson}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd> -->
                                 <!-- <dt class="feature">{{hotel.hotelBookingDetails.noOfroom}} Room x {{hotel.datediff}} Night</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}} * <span currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd> -->
-                               <dt class="total-price">Total Price</dt><dd class="total-price-value" currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" styleValue="font-size: 13px;color: black;top: -1px;" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
+                               <dt class="total-price" ng-if="totalAddGala == 0">Total Price</dt><dd class="total-price-value" ng-if="totalAddGala == 0" currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" styleValue="font-size: 13px;color: black;top: -1px;" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
+                               <dt class="feature" ng-if="totalAddGala != 0">Gala Dinner</dt><dd class="total-price-value" ng-if="totalAddGala != 0" currency-rate ng-model="hotel.mealCompulsory" rate="{{hotel.mealCompulsory}}" styleValue="font-size: 10px;color: black;top: -1px;" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
+                               <dt class="total-price" ng-if="totalAddGala != 0">Total Price</dt><dd class="total-price-value" ng-if="totalAddGala != 0" currency-rate ng-model="totalAddGala" rate="{{totalAddGala}}" styleValue="font-size: 13px;color: black;top: -1px;" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
+                               
                             </dl>
                         </div>
                         
@@ -348,10 +351,10 @@
                                     
                                    </div>  
                                  <hr>
-                                <div class="form-group row">
+                                <div class="form-group row" ng-show="checkBoxShow == 0">
                                      
                                          <div class="col-sm-10 col-md-9">
-                                             <div class="checkbox">
+                                             <div class="checkbox" >
                                             <label>
                                                 <input type="checkbox" data-ng-model="termsAndConditions"> I accept to all the terms and conditions and cancellation policy
                                             </label>
@@ -364,7 +367,6 @@
                                         <button type="button" class="full-width btn-large" disabled="disabled" style="background-color: gainsboro;">CONFIRM BOOKING</button>
                                     </div>
                                 </div>
-                               
                                
                                 <div class="form-group row" ng-if="termsAndConditions == true">
                                     <div class="col-sm-6 col-md-5">
@@ -447,11 +449,11 @@
           <h4 class="modal-title" style="color: #0084e6;">Confirmation Message</h4>
         </div>
         <div class="modal-body">
-          <p>Dear (Agent Name),<br>Thank you, very much for the booking, we have received your booking, and is in process, however you will soon, receive the confirmation on your e-mail.</p>
+          <p>Dear {{hotel.agentName}},<br>Thank you, very much for the booking, we have received your booking, and is in process, however you will soon, receive the confirmation on your e-mail.</p>
           <hr>
           <p>If you do not receive any email in 24 hours, please contact our office.<br></p>
           <p>Best Regards,<br>
-			The Expedition Co., Ltd.</p>
+			CheckInRoom</p>
         </div>
         <div class="modal-footer">
          <button type="button" class="btn btn-default" ng-click="confirmBooking()" data-dismiss="modal">Ok</button>

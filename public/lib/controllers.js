@@ -3079,6 +3079,7 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 	
 	$scope.checkDatesandcountry = {}
 	$scope.savePeriod = function() {
+		
 		$scope.specialsObject[0].supplierCode = supplierCode;
 		console.log($scope.specialsObject);
 		
@@ -3101,6 +3102,29 @@ controller("manageSpecialsController",['$scope','notificationService','$filter',
 				} 
 			});
 		});
+		
+		
+		
+		 /*angular.forEach($scope.rateObject, function(value, key){
+			 angular.forEach(value.allocatedCities, function(value1, key1){
+				 angular.forEach($scope.rateMeta1,function(value2, key2){
+					 angular.forEach(value2.allocatedCountry,function(value3, key3){
+					 
+				 if(value1.ticked == true){
+					 console.log(value1.name);
+					 console.log(value3);
+					 if(value1.name == value3){
+						flag = 1; 
+						
+					 }
+				 	}
+				   });
+				 });
+			  });
+			});*/
+		
+		
+		
 			/*console.log(arraycountry);
 			 $http.get("/checkPeriod/"+supplierCode+'/'+tDate,).success(function(response){
 				 

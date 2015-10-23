@@ -8,6 +8,7 @@ public class RateVM {
 	public long id;
 	public String name;
 	public String rateName;
+	public int minNight;
 	public Long roomId;
 	public String roomName;
 	public String fromDate;
@@ -165,6 +166,12 @@ public class RateVM {
 	}
 	public void setSupplierName(String supplierName) {
 		this.supplierName = supplierName;
+	}
+	public int getMinNight() {
+		return minNight;
+	}
+	public void setMinNight(int minNight) {
+		this.minNight = minNight;
 	}
 	
 	

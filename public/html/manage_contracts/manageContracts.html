@@ -104,6 +104,18 @@
 			<!--  <input type="text" name="rateV" ng-model="teValue" value="" class="form-control required number"> -->
 			<div id="demo{{$index}}" class="collapse in">
 			 <!-- <button ng-show="ooo" id="formBSend" type="submit" class="btn"> Submit</button> -->
+			<div class="row">
+						<label class="col-md-2" style="margin-left: 7px;"><b>Min Night Stay:</b></label>
+							<div class="col-md-3">
+								<select class="form-control col-md-3" data-ng-model="rate.minNight" >
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+								</select>
+							</div>
+				</div>
 			<fieldset class="billinside">
 				<legend style="width: 9%; border-bottom: none;font-size: 12;"><b>Normal Rate</b></legend>
 				<table class="table">
@@ -156,10 +168,11 @@
 				
 			</fieldset>
 			<div>
-			<input type="checkbox" name="vehicle" data-ng-model="rate.non_refund" ng-checked="rate.non_refund == true" style="margin-top: 21px;">non refundable/Non-Ammendable<br>
-			<fieldset class="billinside" style="margin-top: 2%;" ng-if="rate.non_refund == false">
+			
+			<fieldset class="billinside" style="margin-top: 2%;">
 						<legend style="width: 22%; border-bottom: none;width: 23%;font-size: 12px;"><b>Cancellation Policy and Charges</b></legend>
-						<div>
+						<input type="checkbox" name="vehicle" data-ng-model="rate.non_refund" ng-checked="rate.non_refund == true" style="margin-top: 21px;">non refundable/Non-Ammendable<br>
+						<div ng-if="rate.non_refund == false">
 						<table class="table" style="font-size: 12px;" ng-repeat="cancel in rate.cancellation track by $index">
 							<tr>
 								<td>
@@ -259,11 +272,11 @@
 					</tbody>
 				</table>
 				</fieldset>	
-					<input type="checkbox" name="vehicle" data-ng-model="rate.special.non_refund" ng-checked="rate.special.non_refund == true" style="margin-top: 21px;">non refundable<br>
 					
-					<fieldset class="billinside" style="margin-top: 2%;" ng-if="rate.special.non_refund == false">
+					<fieldset class="billinside" style="margin-top: 2%;">
 						<legend style="width: 22%; border-bottom: none;width: 23%;font-size: 12px;"><b>Cancellation Policy and Charges</b></legend>
-						<div>
+						<input type="checkbox" name="vehicle" data-ng-model="rate.special.non_refund" ng-checked="rate.special.non_refund == true">non refundable<br>
+						<div ng-if="rate.special.non_refund == false">
 						<table class="table" style="font-size: 12px;" ng-repeat="cancel in rate.special.cancellation track by $index">
 							<tr>
 								<td>
@@ -377,7 +390,7 @@
 					</tbody>
 				</table>
 				</fieldset>	
-					<input type="checkbox" name="vehicle" data-ng-model="special.non_refund" ng-checked="special.non_refund == true" style="margin-top: 21px;">non refundable<br>
+					<input type="checkbox" name="vehicle" data-ng-model="special.non_refund" ng-checked="special.non_refund == true">non refundable<br>
 					<fieldset class="billinside" style="margin-top: 2%;" ng-if="special.non_refund == false">
 						<legend style="width: 22%; border-bottom: none;width: 23%;font-size: 12px;"><b>Cancellation Policy and Charges</b></legend>
 						<div>
@@ -714,6 +727,19 @@
 					
 				
 				</div>	
+				
+				<div class="row">
+						<label class="col-md-2" style="margin-left: 7px;"><b>Min Night Stay:</b></label>
+							<div class="col-md-3">
+								<select class="form-control col-md-3" data-ng-model="rate.minNight" >
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+								</select>
+							</div>
+				</div>
 			<fieldset class="billinside">
 				<legend style="width: 9%; border-bottom: none;font-size: 12;"><b>Normal Rate</b></legend>
 				<table class="table">

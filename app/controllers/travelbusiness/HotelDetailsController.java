@@ -39,6 +39,7 @@ import com.travelportal.domain.HotelServices;
 import com.travelportal.domain.InfoWiseImagesPath;
 import com.travelportal.domain.InternalContacts;
 import com.travelportal.domain.admin.BreakfastMarkup;
+import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.domain.allotment.AllotmentMarket;
 import com.travelportal.domain.rooms.CancellationPolicy;
 import com.travelportal.domain.rooms.ChildPolicies;
@@ -266,6 +267,9 @@ public static Result hotelBookingpage() {
 	Map<String, String[]> map1 = request().queryString();
 	Map<Long, Long> map = new HashMap<Long, Long>();
 	
+	System.out.println("-=-=-=-=-=-=-");
+	System.out.println(searchVM.checkIn);
+	System.out.println(searchVM.checkOut);
 	String fromDate = searchVM.checkIn;
 	String toDate = searchVM.checkOut;
 	String nationalityId = searchVM.nationalityCode;
@@ -354,6 +358,7 @@ public static Result hotelBookingpage() {
 				hotelBookings.setNoOfchild(searchVM.noOfchild);
 		    }
 			hotelBookings.setTotal(searchVM.total);
+			hotelBookings.setApplyPromo(searchVM.applyPromo);
 			
 			hotelBookings.setTotalParPerson(searchVM.totalParPerson);
 			
@@ -434,6 +439,21 @@ public static Result hotelBookingpage() {
 				 List<Date> newYear = new ArrayList<>();
 				 int newDate = 0;
 				 int newYearValue = 2015;
+				 String[] searchVMcheckIn = searchVM.checkIn.split("-");
+				 String searchCheckIn = searchVMcheckIn[2]+"-"+searchVMcheckIn[1]+"-"+searchVMcheckIn[0];
+				 String[] searchVMcheckOut = searchVM.checkOut.split("-");
+				 String searchCheckOut = searchVMcheckOut[2]+"-"+searchVMcheckOut[1]+"-"+searchVMcheckOut[0];
+				 
+				/* Date renewDate = null;
+				 String dateconcat = newYearValue+"-12-31";
+				 try {
+						renewDate = formatRenew.parse(dateconcat);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				 
+				 newYear.add(renewDate);*/
 				 for(newDate=0;newDate<3;newDate++){
 					 String dateconcat = newYearValue+"-12-31";
 					// hh.add(dateconcat);
@@ -445,7 +465,7 @@ public static Result hotelBookingpage() {
 						e.printStackTrace();
 					}
 					try {
-						if(formatRenew.parse(searchVM.checkIn).before(renewDate) && formatRenew.parse(searchVM.checkOut).after(renewDate)){
+						if(formatRenew.parse(searchCheckIn).before(renewDate) && formatRenew.parse(searchCheckOut).after(renewDate)){
 							 newYear.add(renewDate);
 						}
 					} catch (ParseException e) {
@@ -523,7 +543,7 @@ public static Result hotelBookingpage() {
 						List<SerachedRoomRateDetail> list = new ArrayList<>();
 						SerachedRoomType roomtyp = new SerachedRoomType();
 						fillRoomInfo(room,roomtyp);  /*fill room info function*/
-						specialsPromotion(roomtyp,format,Integer.parseInt(nationalityId),room.getRoomId(),checkInDate.getTime());
+						specialsPromotion(roomtyp,format,Integer.parseInt(nationalityId),room.getRoomId(),checkInDate.getTime(),formDate);
 						
 						for (RateMeta rate : rateMeta1) {
 							
@@ -543,6 +563,7 @@ public static Result hotelBookingpage() {
 							rateVM.setAdult_occupancy(room
 									.getMaxAdultOccupancy());
 							rateVM.setId(rate.getId());
+							rateVM.setMinNight(rate.getMinNight());
 							allotmentmarketInfo(alloMarket,rateVM,format,nationalityId,rate.getId(),checkInDate.getTime());
 							SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
 							
@@ -714,6 +735,12 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	hProfileVM.setImgDescription(infowiseimagesPath.getGeneralDescription());
 		}
 	}
+	
+	AgentRegistration aRegistration= AgentRegistration.getAgentCode(session().get("agent"));
+	hProfileVM.setAvailableLimit(aRegistration.getAvailableLimit());
+	hProfileVM.setPaymentType(aRegistration.getPaymentMethod());
+	hProfileVM.setAgentName(aRegistration.getFirstName()+" "+aRegistration.getLastName());
+	
 	
 	//hProfileVM.setFlag("0");
 }
@@ -1075,16 +1102,24 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 	
 	Map<Long, List<SpecialsVM>> mapSpecials = new HashMap<Long, List<SpecialsVM>>();
 	Map<Long, Integer> promoMap = new HashMap<Long, Integer>();
+	Map<Long, Integer> promoFlatMap = new HashMap<Long, Integer>();
+	Map<Long, Integer> promoBirdMap = new HashMap<Long, Integer>();
 	Map<Long, Boolean> nonrefundRoom = new HashMap<Long, Boolean>();
 	
 		int dataVar = 0;
 		int countRoom = count;
 		boolean refundValue = false;
 		List<Integer> arrayCount = new ArrayList<Integer>();
+		List<Integer> arrayCountFlat = new ArrayList<Integer>();
+		List<Integer> arrayCountBird = new ArrayList<Integer>();
 		for (SerachedHotelbyDate date : hotel.hotelbyDate) {
 			int newHotel=countRoom; 
 			dataVar++;
 			int aCount = 0;
+			int aCountF = 0;
+			int aCountB = 0;
+			int fcount =0;
+			int bcount =0;
 			for (SerachedRoomType roomTP : date.getRoomType()) {
 				
 				Double total = 0.0;
@@ -1117,7 +1152,22 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 					sHotelRoomType.setBreakfastInclude(roomTP.getBreakfastInclude());
 					sHotelRoomType.setBreakfastRate(roomTP.getBreakfastRate());
 					sHotelRoomType.setChildAge(roomTP.getChildAge());
-					arrayCount.add(aCount, roomTP.getPcount());
+					for (SpecialsVM specialObj : roomTP.specials){
+						
+						if(specialObj.promotionType.equals("flatPromotion")){
+								fcount = 1;
+						}
+						
+						if(specialObj.promotionType.equals("birdPromotion")){
+							bcount = 1;
+						}
+					
+				}
+
+				
+		    	arrayCount.add(aCount, roomTP.getPcount());
+				arrayCountFlat.add(aCountF, fcount);
+				arrayCountBird.add(aCountB, bcount);
 					
 					sHotelRoomType.setAmenities(roomTP.getAmenities());
 					for (SerachedRoomRateDetail rateObj : roomTP
@@ -1134,6 +1184,7 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 									.add(searchRateDetailsVM);
 
 						}
+						sRateDetail.setMinNight(rateObj.getMinNight());
 						sRateDetail.setAdult_occupancy(rateObj.getAdult_occupancy());
 						sRateDetail.setCancellation(rateObj.getCancellation());
 						if(rateObj.non_refund == true){
@@ -1156,8 +1207,30 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 					}
 					
 					int ptotal = 0;
+					int ptotalf = 0;
+					int ptotalb = 0;
 					ptotal = arrayCount.get(aCount) + roomTP.getPcount();
+					for (SpecialsVM specialObj : roomTP.specials){
+						if(specialObj.promotionType.equals("nightPromotion")){
+						for (SpecialsMarketVM marketObj : specialObj.markets){
+							if(diffInpromo < Integer.parseInt(marketObj.stayDays)){
+								ptotal = 1;
+							}
+						 }
+						}
+						
+						if(specialObj.promotionType.equals("flatPromotion")){
+							ptotalf = arrayCountFlat.get(aCountF) + roomTP.getPcount();
+						}
+						
+						if(specialObj.promotionType.equals("birdPromotion")){
+							ptotalb = arrayCountBird.get(aCountB) + roomTP.getPcount();
+						}
+						
+					}
 					arrayCount.set(aCount, ptotal);
+					arrayCountFlat.set(aCountF, ptotalf);
+					arrayCountBird.set(aCountB, ptotalb);
 					
 					for (SerachedRoomRateDetail rateObj : roomTP
 							.getHotelRoomRateDetail()) {
@@ -1184,6 +1257,8 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 					}
 					mapRM.put(roomTP.getRoomId(), sRateDetail);
 					promoMap.put(roomTP.getRoomId(),arrayCount.get(aCount));
+					promoFlatMap.put(roomTP.getRoomId(),arrayCountFlat.get(aCountF));
+					promoBirdMap.put(roomTP.getRoomId(),arrayCountBird.get(aCountB));
 					if(roomTP.getSpecials()!= null){
 						mapSpecials.put(roomTP.getRoomId(), (List<SpecialsVM>) roomTP.getSpecials());
 						}
@@ -1197,6 +1272,8 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 				
 				hotel.hotelbyRoom.add(sHotelRoomType);
 				 }
+				 aCountF++;
+				 aCountB++;
 				 aCount++;
 			}
 			
@@ -1222,6 +1299,35 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 				}
 			}
 		  }
+			
+			for (Entry<Long, Integer> entry : promoBirdMap.entrySet()) {
+				if(room.getRoomId() == entry.getKey()){
+					room.setPcount(entry.getValue());
+					diffProm = diffInpromo.intValue();
+					if(entry.getValue() == 0 && diffProm == 0){
+						room.setApplybirdPromotion(0);
+					}else if(entry.getValue() >= diffProm){
+						room.setApplybirdPromotion(1);
+						}else{
+							room.setApplybirdPromotion(0);
+						}
+				}
+			  }
+			
+			for (Entry<Long, Integer> entry : promoFlatMap.entrySet()) {
+				if(room.getRoomId() == entry.getKey()){
+					room.setPcount(entry.getValue());
+					diffProm = diffInpromo.intValue();
+					if(entry.getValue() == 0 && diffProm == 0){
+						room.setApplyFlatPromotion(0);
+					}else if(entry.getValue() >= diffProm){
+						room.setApplyFlatPromotion(1);
+						}else{
+							room.setApplyFlatPromotion(0);
+						}
+				}
+			  }
+			
 		}
 		
 		for(SerachHotelRoomType room:hotel.hotelbyRoom){
@@ -1283,17 +1389,25 @@ public static void allotmentmarketInfo(AllotmentMarket alloMarket,SerachedRoomRa
 }
 
 
-public static void specialsPromotion(SerachedRoomType roomtyp,DateFormat format,int nationalityId,Long roomId,Date checkInD) {
+public static void specialsPromotion(SerachedRoomType roomtyp,DateFormat format,int nationalityId,Long roomId,Date checkInD,Date fromDate) {
+	Date date = new Date();
+	long dayDiff = 0;
 	int count = 0;
+	
 	List<SpecialsVM> listsp = new ArrayList<>();
 	List<Specials> specialsList = Specials.findSpecialByDateandroom(checkInD,roomId);
 	for(Specials special : specialsList) {
+		
+		Date changeDate = fromDate;
+		
 		SpecialsVM specialsVM = new SpecialsVM();
 		specialsVM.id = special.getId();
 		specialsVM.fromDate = format.format(special.getFromDate());
 		specialsVM.toDate = format.format(special.getToDate());
 		specialsVM.promotionName = special.getPromotionName();
 		specialsVM.supplierCode = special.getSupplierCode();
+		specialsVM.promotionType = special.getPromotionType();
+		
 		    								
 	List<SpecialsMarket> marketList = SpecialsMarket.findBySpecialsIdnationality(special.getId(),nationalityId);
 		for(SpecialsMarket market : marketList) {
@@ -1303,12 +1417,29 @@ public static void specialsPromotion(SerachedRoomType roomtyp,DateFormat format,
 			vm.payDays = market.getPayDays();
 			vm.stayDays = market.getStayDays();
 			vm.typeOfStay = market.getTypeOfStay();
+			vm.earlyBird = market.getEarlyBird();
+			vm.earlyBirdDisount = market.getEarlyBirdDisount();
+			vm.earlyBirdRateCalculat = market.getEarlyBirdRateCalculat();
 			vm.applyToMarket = market.getApplyToMarket();
 			vm.breakfast = market.isBreakfast();
 			vm.adultRate = market.getAdultRate();
+			vm.flatRate = market.getFlatRate();
 			vm.childRate = market.getChildRate();
+			vm.apply = "1"; 
+			
 			vm.id = market.getId();
-				specialsVM.markets.add(vm);
+			
+				if(special.getPromotionType().equals("birdPromotion")){
+					Calendar c = Calendar.getInstance(); 
+					c.setTime(changeDate); 
+					c.add(Calendar.DATE, Integer.parseInt(market.getEarlyBird()) * -1);
+					changeDate = c.getTime();
+					if(date.getTime() < changeDate.getTime()){
+						specialsVM.markets.add(vm);
+					}
+				}else{
+					specialsVM.markets.add(vm);
+				}
 		}
 		
 		if(!specialsVM.markets.isEmpty()){

@@ -295,12 +295,29 @@ public class HotelBookingController extends Controller {
 			hBookingDetails.setRoomId(byRoom.roomId);
 			hBookingDetails.setRoomName(byRoom.roomName);
 			if(byRoom.specials != null){
+				hBookingDetails.setApplyPromotion(searchVM.hotelBookingDetails.applyPromo);
 			for(SpecialsVM speci:byRoom.specials){
-				hBookingDetails.setPromotionname(speci.promotionName);
-				for(SpecialsMarketVM smarket:speci.markets){
-					hBookingDetails.setPayDays_inpromotion(Integer.parseInt(smarket.payDays));
-					hBookingDetails.setStayDays_inpromotion(Integer.parseInt(smarket.stayDays));
-					hBookingDetails.setTypeOfStay_inpromotion(smarket.typeOfStay);
+				if(speci.promotionType.equals("nightPromotion")){
+					hBookingDetails.setPromotionname(speci.promotionName);
+					for(SpecialsMarketVM smarket:speci.markets){
+						hBookingDetails.setPayDays_inpromotion(Integer.parseInt(smarket.payDays));
+						hBookingDetails.setStayDays_inpromotion(Integer.parseInt(smarket.stayDays));
+						hBookingDetails.setTypeOfStay_inpromotion(smarket.typeOfStay);
+					}
+				}
+				if(speci.promotionType.equals("flatPromotion")){
+					hBookingDetails.setPromotionname(speci.promotionName);
+					for(SpecialsMarketVM smarket:speci.markets){
+						hBookingDetails.setFlatRateInPro(smarket.flatRate);
+					}
+				}
+				if(speci.promotionType.equals("birdPromotion")){
+					hBookingDetails.setPromotionname(speci.promotionName);
+					for(SpecialsMarketVM smarket:speci.markets){
+						hBookingDetails.setEarlyBirdPro(Integer.parseInt(smarket.earlyBird));
+						hBookingDetails.setEarlyBirdDiscountPro(Double.parseDouble(smarket.earlyBirdDisount));
+						hBookingDetails.setApplicableBirdPro(smarket.earlyBirdRateCalculat);
+					}
 				}
 			}
 		  }

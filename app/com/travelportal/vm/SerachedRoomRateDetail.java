@@ -17,7 +17,7 @@ public class SerachedRoomRateDetail {
 	public int availableRoom;
 	public boolean non_refund;
 	
-	
+	public int minNight;
 	public int adult_occupancy;
 	public long getId() {
 		return id;
@@ -62,6 +62,12 @@ public class SerachedRoomRateDetail {
 	}
 	public void setAvailableRoom(int availableRoom) {
 		this.availableRoom = availableRoom;
+	}
+	public int getMinNight() {
+		return minNight;
+	}
+	public void setMinNight(int minNight) {
+		this.minNight = minNight;
 	}
 	
 	

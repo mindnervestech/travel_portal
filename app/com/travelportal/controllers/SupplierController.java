@@ -68,6 +68,7 @@ public class SupplierController extends Controller {
 			specials.setPromotionName(spec.promotionName);
 			specials.setSupplierCode(spec.supplierCode);
 			specials.setRoomTypes(HotelRoomTypes.findByListName(spec.roomTypes));
+			specials.setPromotionType(spec.promotionType);
 			specials.save();
 			
 			for(SpecialsMarketVM market: spec.markets) {
@@ -84,8 +85,12 @@ public class SupplierController extends Controller {
 				}
 				specialsMarket.setChildRate(market.childRate);
 				specialsMarket.setAdultRate(market.adultRate);
+				specialsMarket.setEarlyBird(market.earlyBird);
+				specialsMarket.setEarlyBirdDisount(market.earlyBirdDisount);
+				specialsMarket.setEarlyBirdRateCalculat(market.earlyBirdRateCalculat);
+				specialsMarket.setFlatRate(market.flatRate);
 				specialsMarket.setApplyToMarket(market.applyToMarket);
-				specialsMarket.setSpecial(Specials.findSpecial(spec.promotionName, format.parse(spec.fromDate), format.parse(spec.toDate)));
+				specialsMarket.setSpecial(Specials.findSpecialType(spec.promotionName, spec.promotionType, format.parse(spec.fromDate), format.parse(spec.toDate)));
 				specialsMarket.save();
 				
 				//RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType));
@@ -159,6 +164,7 @@ public class SupplierController extends Controller {
 			specials.setToDate(format.parse(spec.toDate));
 			specials.setPromotionName(spec.promotionName);
 			specials.setSupplierCode(spec.supplierCode);
+			specials.setPromotionType(spec.promotionType);
 			specials.setRoomTypes(HotelRoomTypes.findByListName(spec.roomTypes));
 			specials.merge();
 			
@@ -168,6 +174,10 @@ public class SupplierController extends Controller {
 					SpecialsMarket specialsMarket = new SpecialsMarket();
 					specialsMarket.setStayDays(market.stayDays);
 					specialsMarket.setPayDays(market.payDays);
+					specialsMarket.setFlatRate(market.flatRate);
+					specialsMarket.setEarlyBird(market.earlyBird);
+					specialsMarket.setEarlyBirdDisount(market.earlyBirdDisount);
+					specialsMarket.setEarlyBirdRateCalculat(market.earlyBirdRateCalculat);
 					specialsMarket.setTypeOfStay(market.typeOfStay);
 					specialsMarket.setCombined(market.combined);
 					specialsMarket.setBreakfast(market.breakfast);
@@ -207,6 +217,10 @@ public class SupplierController extends Controller {
 					specialsMarket.setStayDays(market.stayDays);
 					specialsMarket.setPayDays(market.payDays);
 					specialsMarket.setTypeOfStay(market.typeOfStay);
+					specialsMarket.setFlatRate(market.flatRate);
+					specialsMarket.setEarlyBird(market.earlyBird);
+					specialsMarket.setEarlyBirdDisount(market.earlyBirdDisount);
+					specialsMarket.setEarlyBirdRateCalculat(market.earlyBirdRateCalculat);
 					specialsMarket.setCombined(market.combined);
 					specialsMarket.setBreakfast(market.breakfast);
 					if(market.breakfast == false){
@@ -257,6 +271,7 @@ public class SupplierController extends Controller {
 			specialsVM.toDate = format.format(special.getToDate());
 			specialsVM.promotionName = special.getPromotionName();
 			specialsVM.supplierCode = special.getSupplierCode();
+			specialsVM.promotionType = special.getPromotionType();
 			for(HotelRoomTypes room : special.getRoomTypes()) {
 				RoomType type = new RoomType();
 				type.roomType = room.getRoomType();
@@ -277,6 +292,10 @@ public class SupplierController extends Controller {
 				vm.childRate = market.getChildRate();
 				vm.applyToMarket = market.getApplyToMarket();
 				vm.id = market.getId();
+				vm.earlyBird = market.getEarlyBird();
+				vm.earlyBirdDisount = market.getEarlyBirdDisount();
+				vm.earlyBirdRateCalculat = market.getEarlyBirdRateCalculat();
+				vm.flatRate = market.getFlatRate();
 				specialsVM.markets.add(vm);
 			}
 			

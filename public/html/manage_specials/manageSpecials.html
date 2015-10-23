@@ -74,10 +74,26 @@
 							</div>
 					</div>
 			</div>
+			<div class="row" style="margin-top: 3%;margin-left: 2%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>Promotion Type:</b></label>
+							<div class="col-md-9">	
+								<div class="col-md-10">
+									<input type="radio" name="promotionType" ng-model="special.promotionType" value="nightPromotion">Night promotion<br>
+								</div>
+								<div class="col-md-10">
+									<input type="radio" name="promotionType" ng-model="special.promotionType" value="flatPromotion">Flat rate promotion<br>
+								</div>
+								<div class="col-md-10">
+									<input type="radio" name="promotionType" ng-model="special.promotionType" value="birdPromotion">Early bird promotion<br>
+								</div>
+						  </div>	
+					</div>
+			</div>
 			
 				
 			
-			<div>
+			<div  ng-if="special.promotionType == 'nightPromotion'">
 			<fieldset class="billinside" ng-repeat="market in special.markets track by $index" style="margin-top: 5%;">
 						<a data-toggle="collapse" data-target="#mrkt{{$index}}" aria-expanded="true" aria-controls="mrkt{{$index}}" style="cursor: pointer;">
 						<legend style="width: 8%; border-bottom: none;font-size: 12px;"><b>Market {{$index+1}}</b></legend>
@@ -187,6 +203,171 @@
 						<input type="button" id="rateRule" value="ADD NEW MARKET" ng-click="addNewSavedMarket($index)" style="float:right;margin-top: 1%;margin-right: 1%;"><br> 
 					
 				</div>
+				
+				<!-- --------------flat rate promotio-------------- -->
+				
+				<div ng-if="special.promotionType == 'flatPromotion'">
+			<fieldset class="billinside" ng-repeat="market in special.markets track by $index" style="margin-top: 5%;">
+						<a data-toggle="collapse" data-target="#mrkt{{$index}}" aria-expanded="true" aria-controls="mrkt{{$index}}" style="cursor: pointer;">
+						<legend style="width: 8%; border-bottom: none;font-size: 12px;"><b>Market {{$index+1}}</b></legend>
+						</a>
+						<div id="mrkt{{$index}}" class="collapse in">
+							<table style="font-size: 11px;">
+								<tr>
+									<th colspan="2">Rule</th>
+									<th>Applicable Markets</th>
+								</tr>
+								<tr>
+									<td style="padding-right: 52px;">
+										<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="form-group">
+												<label class="col-md-4 control-label">Flat Rate:</label>
+													<div class="col-md-5">
+														<input type="text" class="form-control" ng-model="market.flatRate">
+											  </div>
+										   </div>
+										</div>	
+									</td>
+									
+									<td>
+										 <label style="float: left"><b>Apply to all Markets?<br>
+			<label>(Based on Passenger Nationality)</label>
+					<input type="radio" name="applyToMarket{{$index}}" value='true' data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)" required>Yes
+					<input type="radio" name="applyToMarket{{$index}}" value='false' data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)" required>No
+				</b></label><br>
+				<div ng-show="market.applyToMarket == 'false'" style="margin-left: 5%;">
+					<div multi-select input-model="market.allocatedCities"
+					button-label="icon name" item-label="icon name maker"
+					tick-property="ticked" orientation="vertical"
+					group-property="multiSelectGroup"
+					on-open="msOpen( data )" on-item-click="checkCountry(data)" style="width: 78%;">
+				</div>
+					
+				</div> 
+									</td>
+									
+								</tr>
+								<tr>
+									
+								</tr>
+							</table>
+								
+						</div>
+						<input type="button" value="DELETE" ng-click="deleteMarket($parent.$index,$index)" style="float:right;margin-top: 1%;margin-right: 1%;" ng-show="showRemoveMarket == true"><br>
+					</fieldset>
+						 <input type="button" id="rateRule" value="ADD NEW MARKET" ng-click="addNewMarket($index)" style="float:right;margin-top: 1%;margin-right: 1%;"><br> 
+					
+				</div>
+				
+				<!-- ---------------------------early bird promotion--------------- -->
+				
+				<div ng-if="special.promotionType == 'birdPromotion'">
+				<fieldset class="billinside" ng-repeat="market in special.markets track by $index" style="margin-top: 5%;">
+						<a data-toggle="collapse" data-target="#mrkt{{$index}}" aria-expanded="true" aria-controls="mrkt{{$index}}" style="cursor: pointer;">
+						<legend style="width: 8%; border-bottom: none;font-size: 12px;"><b>Market {{$index+1}}</b></legend>
+						</a>
+						<div id="mrkt{{$index}}" class="collapse in">
+							<table style="font-size: 11px;">
+								<tr>
+									<th colspan="2">Rule</th>
+									<th>Applicable Markets</th>
+								</tr>
+								<tr>
+									<td style="padding-right: 52px;">
+										<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="form-group">
+												<label class="col-md-5 control-label">Early bird:</label>
+													<div class="col-md-7">
+														<select class="form-control"  data-ng-model="market.earlyBird" required>
+															<option value="7">1 Week</option>
+															<option value="14">2 Week</option>
+															<option value="21">3 Week</option>
+															<option value="30">1 month</option>
+															<option value="60">2 month</option>
+															<option value="90">3 month</option>
+															<option value="120">4 month</option>
+															<option value="150">5 month</option>
+															<option value="180">6 month</option>
+															<option value="210">7 month</option>
+															<option value="240">8 month</option>
+														</select>
+											  </div>
+										   </div>
+										</div>	
+									</td>
+									
+									<td>
+										 <label style="float: left"><b>Apply to all Markets?<br>
+			<label>(Based on Passenger Nationality)</label>
+					<input type="radio" name="applyToMarket{{$index}}" value='true' data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)" required>Yes
+					<input type="radio" name="applyToMarket{{$index}}" value='false' data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)" required>No
+				</b></label><br>
+				<div ng-show="market.applyToMarket == 'false'" style="margin-left: 5%;">
+					<div multi-select input-model="market.allocatedCities"
+					button-label="icon name" item-label="icon name maker"
+					tick-property="ticked" orientation="vertical"
+					group-property="multiSelectGroup"
+					on-open="msOpen( data )" on-item-click="checkCountry(data)" style="width: 78%;">
+				</div>
+					
+				</div> 
+									</td>
+									
+								</tr>
+								
+								
+								<tr>
+									
+									<td>
+										<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="form-group">
+												<label class="col-md-4 control-label">Discount:</label>
+													<div class="col-md-6">
+														
+														<input type="text" class="form-control" ng-model="market.earlyBirdDisount">
+											  </div>
+											  <div class="col-md-1" style="padding: 0px;font-size: 18px;">
+											  		<label>%</label>
+											  </div>
+										   </div>
+										</div>	
+										</div>
+									</td>	
+										
+								</tr>
+								<tr>
+								<td>
+										<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="form-group">
+												<label class="col-md-4 control-label">Applicable:</label>
+													<div class="col-md-6">
+														<select class="form-control"  data-ng-model="market.earlyBirdRateCalculat" required>
+															<option value="flatRate">Flat Rate</option>
+															<option value="contractRate">ContractRate</option>
+														</select>											  
+													</div>
+										   </div>
+										</div>	
+										</div>
+										</td>
+									</tr>
+							</table>
+								
+						</div>
+						<input type="button" value="DELETE" ng-click="deleteMarket($parent.$index,$index)" style="float:right;margin-top: 1%;margin-right: 1%;" ng-show="showRemoveMarket == true"><br>
+					</fieldset>
+						 <input type="button" id="rateRule" value="ADD NEW MARKET" ng-click="addNewMarket($index)" style="float:right;margin-top: 1%;margin-right: 1%;"><br> 
+					
+				</div>
+				
+				<!-- ----------------end promotion-------------- -->
+				
+				
+				
+				
+				
 			</div>	
 		
 			<div class="form-group">
@@ -252,10 +433,26 @@
 							</div>
 					</div>
 			</div>
+			<div class="row" style="margin-top: 3%;margin-left: 2%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>Promotion Type:</b></label>
+							<div class="col-md-9">	
+								<div class="col-md-10">
+									<input type="radio" name="promotionType" ng-model="special.promotionType" value="nightPromotion">Night promotion<br>
+								</div>
+								<div class="col-md-10">
+									<input type="radio" name="promotionType" ng-model="special.promotionType" value="flatPromotion">Flat rate promotion<br>
+								</div>
+								<div class="col-md-10">
+									<input type="radio" name="promotionType" ng-model="special.promotionType" value="birdPromotion">Early bird promotion<br>
+								</div>
+						  </div>	
+					</div>
+			</div>
 			
-				
 			
-			<div>
+			
+			<div ng-if="special.promotionType == 'nightPromotion'">
 			<fieldset class="billinside" ng-repeat="market in special.markets track by $index" style="margin-top: 5%;">
 						<a data-toggle="collapse" data-target="#mrkt{{$index}}" aria-expanded="true" aria-controls="mrkt{{$index}}" style="cursor: pointer;">
 						<legend style="width: 8%; border-bottom: none;font-size: 12px;"><b>Market {{$index+1}}</b></legend>
@@ -362,6 +559,167 @@
 						 <input type="button" id="rateRule" value="ADD NEW MARKET" ng-click="addNewMarket($index)" style="float:right;margin-top: 1%;margin-right: 1%;"><br> 
 					
 				</div>
+				
+				<!-- --------------flat rate promotio-------------- -->
+				
+				<div ng-if="special.promotionType == 'flatPromotion'">
+			<fieldset class="billinside" ng-repeat="market in special.markets track by $index" style="margin-top: 5%;">
+						<a data-toggle="collapse" data-target="#mrkt{{$index}}" aria-expanded="true" aria-controls="mrkt{{$index}}" style="cursor: pointer;">
+						<legend style="width: 8%; border-bottom: none;font-size: 12px;"><b>Market {{$index+1}}</b></legend>
+						</a>
+						<div id="mrkt{{$index}}" class="collapse in">
+							<table style="font-size: 11px;">
+								<tr>
+									<th colspan="2">Rule</th>
+									<th>Applicable Markets</th>
+								</tr>
+								<tr>
+									<td style="padding-right: 52px;">
+										<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="form-group">
+												<label class="col-md-4 control-label">Flat Rate:</label>
+													<div class="col-md-5">
+														<input type="text" class="form-control" ng-model="market.flatRate">
+											  </div>
+										   </div>
+										</div>	
+									</td>
+									
+									<td>
+										 <label style="float: left"><b>Apply to all Markets?<br>
+			<label>(Based on Passenger Nationality)</label>
+					<input type="radio" name="applyToMarket{{$index}}" value='true' data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)" required>Yes
+					<input type="radio" name="applyToMarket{{$index}}" value='false' data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)" required>No
+				</b></label><br>
+				<div ng-show="market.applyToMarket == 'false'" style="margin-left: 5%;">
+					<div multi-select input-model="market.allocatedCities"
+					button-label="icon name" item-label="icon name maker"
+					tick-property="ticked" orientation="vertical"
+					group-property="multiSelectGroup"
+					on-open="msOpen( data )" on-item-click="checkCountry(data)" style="width: 78%;">
+				</div>
+					
+				</div> 
+									</td>
+									
+								</tr>
+								<tr>
+									
+								</tr>
+							</table>
+								
+						</div>
+						<input type="button" value="DELETE" ng-click="deleteMarket($parent.$index,$index)" style="float:right;margin-top: 1%;margin-right: 1%;" ng-show="showRemoveMarket == true"><br>
+					</fieldset>
+						 <input type="button" id="rateRule" value="ADD NEW MARKET" ng-click="addNewMarket($index)" style="float:right;margin-top: 1%;margin-right: 1%;"><br> 
+					
+				</div>
+				
+				<!-- ---------------------------early bird promotion--------------- -->
+				
+				<div ng-if="special.promotionType == 'birdPromotion'">
+				<fieldset class="billinside" ng-repeat="market in special.markets track by $index" style="margin-top: 5%;">
+						<a data-toggle="collapse" data-target="#mrkt{{$index}}" aria-expanded="true" aria-controls="mrkt{{$index}}" style="cursor: pointer;">
+						<legend style="width: 8%; border-bottom: none;font-size: 12px;"><b>Market {{$index+1}}</b></legend>
+						</a>
+						<div id="mrkt{{$index}}" class="collapse in">
+							<table style="font-size: 11px;">
+								<tr>
+									<th colspan="2">Rule</th>
+									<th>Applicable Markets</th>
+								</tr>
+								<tr>
+									<td style="padding-right: 52px;">
+										<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="form-group">
+												<label class="col-md-5 control-label">Early bird:</label>
+													<div class="col-md-7">
+														<select class="form-control"  data-ng-model="market.earlyBird" required>
+															<option value="7">1 Week</option>
+															<option value="14">2 Week</option>
+															<option value="21">3 Week</option>
+															<option value="30">1 month</option>
+															<option value="60">2 month</option>
+															<option value="90">3 month</option>
+															<option value="120">4 month</option>
+															<option value="150">5 month</option>
+															<option value="180">6 month</option>
+															<option value="210">7 month</option>
+															<option value="240">8 month</option>
+														</select>
+											  </div>
+										   </div>
+										</div>	
+									</td>
+									
+									<td>
+										 <label style="float: left"><b>Apply to all Markets?<br>
+			<label>(Based on Passenger Nationality)</label>
+					<input type="radio" name="applyToMarket{{$index}}" value='true' data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)" required>Yes
+					<input type="radio" name="applyToMarket{{$index}}" value='false' data-ng-model="market.applyToMarket" ng-click="showMarketTable(market)" required>No
+				</b></label><br>
+				<div ng-show="market.applyToMarket == 'false'" style="margin-left: 5%;">
+					<div multi-select input-model="market.allocatedCities"
+					button-label="icon name" item-label="icon name maker"
+					tick-property="ticked" orientation="vertical"
+					group-property="multiSelectGroup"
+					on-open="msOpen( data )" on-item-click="checkCountry(data)" style="width: 78%;">
+				</div>
+					
+				</div> 
+									</td>
+									
+								</tr>
+								
+								
+								<tr>
+									
+									<td>
+										<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="form-group">
+												<label class="col-md-4 control-label">Discount:</label>
+													<div class="col-md-6">
+														
+														<input type="text" class="form-control" ng-model="market.earlyBirdDisount">
+											  </div>
+											  <div class="col-md-1" style="padding: 0px;font-size: 18px;">
+											  		<label>%</label>
+											  </div>
+										   </div>
+										</div>	
+										</div>
+									</td>	
+										
+								</tr>
+								<tr>
+								<td>
+										<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="row" style="margin-top: 3%;margin-left: 2%;">
+											<div class="form-group">
+												<label class="col-md-4 control-label">Applicable:</label>
+													<div class="col-md-6">
+														<select class="form-control"  data-ng-model="market.earlyBirdRateCalculat" required>
+															<option value="flatRate">Flat Rate</option>
+															<option value="contractRate">ContractRate</option>
+														</select>											  
+													</div>
+										   </div>
+										</div>	
+										</div>
+										</td>
+									</tr>
+							</table>
+								
+						</div>
+						<input type="button" value="DELETE" ng-click="deleteMarket($parent.$index,$index)" style="float:right;margin-top: 1%;margin-right: 1%;" ng-show="showRemoveMarket == true"><br>
+					</fieldset>
+						 <input type="button" id="rateRule" value="ADD NEW MARKET" ng-click="addNewMarket($index)" style="float:right;margin-top: 1%;margin-right: 1%;"><br> 
+					
+				</div>
+				
+				<!-- ----------------end promotion-------------- -->
+				
 			</div>	
 			<input type="button" value="DELETE PERIOD" ng-click="deletePeriod($index)" style="float:left; margin-top: 3%;margin-left: 5%;" ng-show="showRemovePeriod == true">
 			<input type="button" value="SAVE PERIOD" class="btn btn-primary" onclick="scroll(0,0)" ng-click="savePeriod()" style="float:left; margin-top: 3%;margin-left: 15%;">

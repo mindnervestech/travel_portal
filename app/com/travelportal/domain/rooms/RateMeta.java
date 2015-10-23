@@ -53,6 +53,8 @@ public class RateMeta {
 	private Long supplierCode;
 	@Column(name="status")
 	private String status;
+	@Column(name="min_night")
+	private int minNight;
 	
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -125,6 +127,14 @@ public class RateMeta {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public int getMinNight() {
+		return minNight;
+	}
+	
+	public void setMinNight(int minNight) {
+		this.minNight = minNight;
 	}
 	public static RateMeta findRateMeta(String rateName, String currency, HotelRoomTypes roomType) {
 	    	Query query = JPA.em().createQuery("Select r from RateMeta r where r.rateName = ?1 and r.currency = ?2 and r.roomType = ?5");
@@ -225,7 +235,7 @@ public class RateMeta {
 		 
 		 List<Object[]> list;
 	
-		list =JPA.em().createNativeQuery("select am.rate_id,am.currency,am.rate_name,am.roomType_room_id,am.supplierCode from rate_meta am,hotel_profile hpp,rate_meta_country rmcountry,applicable_dateonrate adr where am.rate_id = adr.rate_rate_id and am.rate_id = rmcountry.rate_meta_rate_id and am.supplierCode = hpp.supplier_code and am.status = 'approved' and am.supplierCode = '"+supplier+"' and rmcountry.country_country_code = '"+countryId+"' and am.roomType_room_id = '"+roomId+"' and adr.Date_selected = '"+SDate+"'").getResultList();  // 
+		list =JPA.em().createNativeQuery("select am.rate_id,am.currency,am.rate_name,am.roomType_room_id,am.supplierCode,am.min_night from rate_meta am,hotel_profile hpp,rate_meta_country rmcountry,applicable_dateonrate adr where am.rate_id = adr.rate_rate_id and am.rate_id = rmcountry.rate_meta_rate_id and am.supplierCode = hpp.supplier_code and am.status = 'approved' and am.supplierCode = '"+supplier+"' and rmcountry.country_country_code = '"+countryId+"' and am.roomType_room_id = '"+roomId+"' and adr.Date_selected = '"+SDate+"'").getResultList();  // 
 	
 	
 	 List<RateMeta> list1 = new ArrayList<>();
@@ -243,6 +253,8 @@ public class RateMeta {
 			if(o[4] != null){
 			am.setSupplierCode(Long.parseLong(o[4].toString()));
 			}
+			am.setMinNight(Integer.parseInt(o[5].toString()));
+			
 			list1.add(am);
 		}
 		
@@ -274,7 +286,7 @@ public class RateMeta {
 		 
 		 List<Object[]> list;
 	
-		list =JPA.em().createNativeQuery("select am.rate_id,am.currency,am.rate_name,am.roomType_room_id,am.supplierCode from rate_meta am,applicable_dateonrate ad where am.rate_id = ad.rate_rate_id and am.roomType_room_id = '"+roomId+"' and am.currency= '"+currency+"' and ad.Date_selected = '"+SDate+"'").getResultList();   
+		list =JPA.em().createNativeQuery("select am.rate_id,am.currency,am.rate_name,am.roomType_room_id,am.supplierCode,am.min_night from rate_meta am,applicable_dateonrate ad where am.rate_id = ad.rate_rate_id and am.roomType_room_id = '"+roomId+"' and am.currency= '"+currency+"' and ad.Date_selected = '"+SDate+"'").getResultList();   
 		
 	 List<RateMeta> list1 = new ArrayList<>();
 		
@@ -290,6 +302,7 @@ public class RateMeta {
 			if(o[4] != null){
 			am.setSupplierCode(Long.parseLong(o[4].toString()));
 			}
+			am.setMinNight(Integer.parseInt(o[5].toString()));
 			list1.add(am);
 		}
 		

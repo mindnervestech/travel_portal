@@ -212,10 +212,12 @@
                                         </div>
                                         <div>
                                             <p>{{roomInfo.description}}</p>
+                                            <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"> Special Promotion<i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span>
                                              <div style="width: 150px;">
                                                  <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomInfo.roomId)" style="background: #98ce44;">Book Now</a>
-                                                 <span class="ng-scope"><a ng-click="roomWiseInfo(roomInfo)" style="cursor: pointer;">Room Info</a></span>
-												 <!-- <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"> Special Promotion<i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span> -->
+                                                 <span class="ng-scope"><a ng-click="roomWiseInfo(roomInfo)" style="cursor: pointer;">Room Info</a></span><br>
+                                                 <span class="ng-scope" style="color: red;" ng-if="hotel.datediff < roomInfo.hotelRoomRateDetail[0].minNight">Min {{roomInfo.hotelRoomRateDetail[0].minNight}} nights stay</span>
+												 <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"> Special Promotion<i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span> 
                                             </div> 
                                         </div>
                                     </div>
@@ -263,18 +265,38 @@
                                          </div>
                                      </div>
                                    </div>
-                                     <div class="col-md-9 col-md-offset-1">
+                                     <div class="col-md-11">
                                      <div ng-if="roomInfo.nonRefund == true">
                                      <label style="color: #01B7F2;" tooltip="a tooltip comment ">Non Refundable/Non-Ammendable</label>  
                                      </div>
                                      <div ng-if="roomInfo.nonRefund == false">
                                    
-                                     <label style="color: #01B7F2;" tooltip="a tooltip comment ">Cancellation Policy</label>     
+                                   
+                                   	 <div class="toggle-container filters-container">
+                           			    <div class="panel style1 arrow-right">
+                                 		   <h4 class="panel-title">
+                                   		     <a data-toggle="collapse" href="#room-regi" class="collapsed" style="color: #01B7F2;">Cancellation Policy</a>
+                                   			 </h4>
+                                    
+                                   		 <div id="room-regi" class="panel-collapse collapse">
+                                		   <div ng-repeat="cancal in roomInfo.hotelRoomRateDetail[0].cancellation">
+                                    			  <label ng-if="cancal.penaltyCharge == true">*Any cancellation made prior {{cancal.days}} nights to the arrival, is subject to charge for 0{{cancal.nights | limitTo:-1}} nights({{cancal.cancellationDate}})</label>
+                                   				   <label ng-if="cancal.penaltyCharge == false">* Any cancellation made prior {{cancal.days}} nights to the arrival, is subject to charge for {{cancal.percentage}}% for total booking nights({{cancal.cancellationDate}})</label>
+                                    		 </div> 
+                                    </div>
+                                </div>
+                                </div>
+                                   
+                                   
+                                   </div>
+                                   
+                                   
+                                     <!-- <label style="color: #01B7F2;" tooltip="a tooltip comment ">Cancellation Policy</label>     
                                      <div ng-repeat="cancal in roomInfo.hotelRoomRateDetail[0].cancellation">
                                       <label ng-if="cancal.penaltyCharge == true">*Any cancellation made prior {{cancal.days}} nights to the arrival, is subject to charge for 0{{cancal.nights | limitTo:-1}} nights({{cancal.cancellationDate}})</label>
                                       <label ng-if="cancal.penaltyCharge == false">* Any cancellation made prior {{cancal.days}} nights to the arrival, is subject to charge for {{cancal.percentage}}% for total booking nights({{cancal.cancellationDate}})</label>
-                                     </div>                                
-                                     </div>
+                                     </div>  -->                               
+                                     
                                    <!-- <div class="form-group col-sm-3 col-md-3 col-md-offset-10">
                                      <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomInfo.roomId)" style="background: #98ce44;margin-top: 2%;margin-left: 49%;" title="">BOOK NOW</a>
                                      </div> -->

@@ -50,6 +50,9 @@ public class HotelSearch {
 	public List<HotelMealPlan> mealPlan;
 	public SpecificMarkupInfoVM markup;
 	public Double mealCompulsory;
+	public Double availableLimit;
+	public String paymentType;
+	public String agentName;
 	//public String flag;
 	
 	public Long getSupplierCode() {
@@ -289,6 +292,24 @@ public class HotelSearch {
 	}
 	public void setHotel_email(String hotel_email) {
 		this.hotel_email = hotel_email;
+	}
+	public Double getAvailableLimit() {
+		return availableLimit;
+	}
+	public void setAvailableLimit(Double availableLimit) {
+		this.availableLimit = availableLimit;
+	}
+	public String getPaymentType() {
+		return paymentType;
+	}
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+	public String getAgentName() {
+		return agentName;
+	}
+	public void setAgentName(String agentName) {
+		this.agentName = agentName;
 	}
 	
 	

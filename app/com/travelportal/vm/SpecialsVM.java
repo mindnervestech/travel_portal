@@ -9,6 +9,7 @@ public class SpecialsVM {
 	public String fromDate;
 	public String toDate;
 	public String promotionName;
+	public String promotionType;
 	public Long supplierCode;
 	public List<Long> roomTypes = new ArrayList<>();
 	public List<RoomType> roomallInfo = new ArrayList<>();

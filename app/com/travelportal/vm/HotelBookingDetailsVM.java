@@ -34,6 +34,7 @@ public class HotelBookingDetailsVM {
 	public String smokingRoom;
 	public String wheelchair;
 	public String handicappedRoom;
+	public String applyPromo;
 	
 	public List<PassengerBookingInfoVM> passengerInfo;
 	
@@ -201,6 +202,12 @@ public class HotelBookingDetailsVM {
 	}
 	public void setPassengerInfo(List<PassengerBookingInfoVM> passengerInfo) {
 		this.passengerInfo = passengerInfo;
+	}
+	public String getApplyPromo() {
+		return applyPromo;
+	}
+	public void setApplyPromo(String applyPromo) {
+		this.applyPromo = applyPromo;
 	}
 		
 	
