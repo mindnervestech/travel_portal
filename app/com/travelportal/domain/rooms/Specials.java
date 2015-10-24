@@ -152,7 +152,7 @@ public class Specials {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			sp.setPromotionType(o[5].toString());
+				sp.setPromotionType(o[5].toString());
 			
 			list1.add(sp);
 		}

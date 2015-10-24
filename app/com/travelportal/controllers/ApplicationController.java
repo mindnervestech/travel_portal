@@ -98,6 +98,10 @@ public class ApplicationController extends Controller{
 		
 	}
 	
+	@Transactional
+	public static Result startPage() {
+		return ok(views.html.startPage.render());
+	}
 	
 		
 	@Transactional
