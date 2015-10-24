@@ -51,6 +51,7 @@ import com.travelportal.domain.Permissions;
 import com.travelportal.domain.Salutation;
 import com.travelportal.domain.agent.AgentRegistration;
 import com.travelportal.vm.AgentRegisVM;
+import com.travelportal.vm.AgentRegistrationVM;
 import com.travelportal.vm.HotelSignUpVM;
 
 
@@ -100,7 +101,7 @@ public class ApplicationController extends Controller{
 	
 	@Transactional
 	public static Result startPage() {
-		return ok(views.html.startPage.render());
+		return ok(views.html.startPage.render(" "));
 	}
 	
 		
@@ -122,9 +123,13 @@ public class ApplicationController extends Controller{
 		return ok(views.html.adminLogin.render());
 	}
 	
-	@Transactional
+/*	@Transactional
 	public static Result doAgentLogin() {
-		/*DynamicForm form = DynamicForm.form().bindFromRequest();
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		
+		System.out.println("=-=-=-=-=-=-=-==-=-=-=-=-");
+		System.out.println(form.get("code"));
+		return ok(home.render());
 		try {
 			AgentRegistration agentUser = AgentRegistration.doLogin(form.get("code"),form.get("loginId"),form.get("pass"));
 			
@@ -136,16 +141,29 @@ public class ApplicationController extends Controller{
 		
 		} catch(NoResultException e) { }
 		System.out.println("SESSION VALUE   "+session().get("AGENT"));
-		return ok(views.html.agentLogin.render());*/
+		return ok(views.html.agentLogin.render());
+		
+		
+		-----------new---------
+		
+		AgentRegistration agent = AgentRegistration.findagentinfo(loginID, password, agentId);
+		   
+		if(agent != null) {
+			System.out.println("SESSION VALUE   "+session().get("agent"));
+			AgentRegistrationVM aVm=new AgentRegistrationVM(agent);
+			session("agent", agent.getAgentCode());
+			return ok(Json.toJson(aVm));
+		}
+		
+		return ok(Json.toJson("0"));
 		
 		return ok();
 	
-	}
+	}*/
 	
 	@Transactional
 	public static Result doSupplierLogin() {
 		DynamicForm form = DynamicForm.form().bindFromRequest();
-		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
 		try {
 			HotelRegistration user = HotelRegistration.doLogin(form.get("email"),form.get("code"),form.get("pass"),form.get("type"));
 			if(user != null) {

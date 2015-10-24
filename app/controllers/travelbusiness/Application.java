@@ -113,6 +113,44 @@ public class Application extends Controller {
     	return ok(home.render());
     }
     
+    
+	@Transactional
+	public static Result doAgentLogin() {
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		
+		return ok(home.render());
+	/*	try {
+			AgentRegistration agentUser = AgentRegistration.doLogin(form.get("code"),form.get("loginId"),form.get("pass"));
+			
+			if(agentUser != null) {
+				session("agent", agent.getAgentCode());
+				session().put("agent", String.valueOf(agentUser.getId()));
+				long code = agentUser.getId();
+				return ok(agentHome.render("Home Page", code));
+			}
+		
+		} catch(NoResultException e) { }
+		System.out.println("SESSION VALUE   "+session().get("AGENT"));
+		return ok(views.html.agentLogin.render());*/
+		
+		
+		/*-----------new---------
+		
+		AgentRegistration agent = AgentRegistration.findagentinfo(loginID, password, agentId);
+		   
+		if(agent != null) {
+			System.out.println("SESSION VALUE   "+session().get("agent"));
+			AgentRegistrationVM aVm=new AgentRegistrationVM(agent);
+			session("agent", agent.getAgentCode());
+			return ok(Json.toJson(aVm));
+		}
+		
+		return ok(Json.toJson("0"));*/
+		
+		//return ok();
+	
+	}
+    
     @Transactional(readOnly=false)
     public static Result checkAgentinfo(String loginID,String password,String agentId){
     	

@@ -91,7 +91,7 @@ GET		/signUp						com.travelportal.controllers.ApplicationController.getSignUpFo
 GET		/adminsignUp						com.travelportal.controllers.ApplicationController.getAdminForm
 GET		/agentsignUp						com.travelportal.controllers.ApplicationController.getAgentSignUpForm
 GET		/login						com.travelportal.controllers.ApplicationController.login
-GET		/startPage						com.travelportal.controllers.ApplicationController.startPage
+GET		/travel						com.travelportal.controllers.ApplicationController.startPage
 GET    /getpassword/:email					com.travelportal.controllers.ApplicationController.getpassword(email: String)
 GET		/agentlogin						com.travelportal.controllers.ApplicationController.agentlogin
 POST	/getCityOfCountry			com.travelportal.controllers.ApplicationController.getCityOfCountry
@@ -100,7 +100,7 @@ POST    /agentregister				com.travelportal.controllers.ApplicationController.age
 GET		/adminLogin					com.travelportal.controllers.ApplicationController.adminLogin
 POST	/doAdminLogin				com.travelportal.controllers.ApplicationController.doAdminLogin
 GET 	/doAdminLogin				com.travelportal.controllers.ApplicationController.adminLogin
-POST	/doAgentLogin				com.travelportal.controllers.ApplicationController.doAgentLogin
+POST	/doAgentLogin				controllers.travelbusiness.Application.doAgentLogin
 GET		/adminLogout				com.travelportal.controllers.ApplicationController.adminLogout
 POST	/hotel_profile				com.travelportal.controllers.ApplicationController.doSupplierLogin
 GET 	/hotel_profile				com.travelportal.controllers.ApplicationController.login

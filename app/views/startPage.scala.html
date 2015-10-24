@@ -1,6 +1,7 @@
+@(error: String)
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="travel_portal">
 <head><title>Start Page</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +9,7 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="Thu, 19 Nov 1900 08:52:00 GMT">
     <!--Loading bootstrap css-->
-<!--     <link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,800italic,400,700,800">
+     <link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,800italic,400,700,800">
     <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
     <link type="text/css" rel="stylesheet"
 	href='@routes.Assets.at("app/vendors/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css")'>
@@ -17,42 +18,85 @@
 
   <link type="text/css" rel="stylesheet"
 	href='@routes.Assets.at("app/vendors/bootstrap/css/bootstrap.min.css")'>
-    Loading style vendors
+   <!--  Loading style vendors -->
    <link type="text/css" rel="stylesheet"
 	href='@routes.Assets.at("app/vendors/animate.css/animate.css")'>
    <link type="text/css" rel="stylesheet"
 	href='@routes.Assets.at("app/vendors/iCheck/skins/all.css")'>
-    Loading style
+    <!-- Loading style -->
     <link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/themes/style1/pink-blue.css")' class="default-style">
     <link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/themes/style1/pink-blue.css")' id="theme-change" class="style-change color-change">
     <link type="text/css" rel="stylesheet" href='@routes.Assets.at("app/css/style-responsive.css")'>
     <link type="text/css" href='@routes.Assets.at("bower_components/ng-dialog/css/ngDialog.min.css")' rel="stylesheet" type="text/css" media="all" />
-<link type="text/css" href='@routes.Assets.at("bower_components/ng-dialog/css/ngDialog-theme-default.min.css")' rel="stylesheet" type="text/css" media="all" /> -->
+<link type="text/css" href='@routes.Assets.at("bower_components/ng-dialog/css/ngDialog-theme-default.min.css")' rel="stylesheet" type="text/css" media="all" /> 
     <link rel="shortcut icon" href="images/favicon.ico">
 </head>
-<body id="signin-page" style="height: 539px;">
+<body id="signin-page" style="height: 539px;" ng-controller="LoginController">
+<a id="btn-register" href="/adminsignUp" style="float: right;color:cyan;"><b>Admin Page</b></a>
+<a style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+<a id="btn-register" href="/login" style="float: right;color:cyan;"><b>Supplier Login</b></a>
 <div class="page-form">
+	
+    <form id="loginForm" action="doAgentLogin" method="post" class="form">
+        <div class="header-content"><h1>Agent Log In</h1></div>
+        <div class="body-content"><!-- <p>Log in with a social network:</p> -->
+         
+            <div class="form-group">
+                <div class="input-icon right"><i class="fa fa-user"></i><input type="loginId" name="loginId" placeholder="loginId" class="form-control" required></div>
+            </div>
+            <div class="form-group">
+                <div class="input-icon right"><i class="fa fa-user"></i><input type="password" placeholder="Password"  name="pass" class="form-control" required></div>
+            </div>
+             <div class="form-group">
+                <div class="input-icon right"><i class="fa fa-key"></i><input type="text" placeholder="code" name="code" class="form-control" required></div>
+            </div>
+            
+           
+            <div class="form-group pull-left">
+              <!--   <div class="checkbox-list"><label><input type="checkbox">&nbsp;
+                    Keep me signed in</label></div> -->
+            </div>
+            <div class="form-group">
+                <p style="color: red;">@error</p>
+            </div>
+            <div class="form-group pull-right">
+                <button type="submit" value="Login" class="btn btn-success" style="margin-top: 8px;">Log In
+                    &nbsp;<i class="fa fa-chevron-circle-right"></i></button>
+            </div>
+            
+            <div class="clearfix"></div>
+            <div class="forget-password"><h4>Forgotten your Password?</h4>
+
+                <p>no worries, click <a ng-click="forgotpass()" class='btn-forgot-pwd'>here</a> to reset your password.</p></div>
+            <hr>
+            <p>Don't have an account? <a id="btn-register" href="/agentsignUp">Register Now</a></p></div>
+    </form>
+</div>
+
+
+
+<!-- div class="page-form">
 	
    
        
-        <div class="body-content"><!-- <p>Log in with a social network:</p> -->
+        <div class="body-content"><p>Log in with a social network:</p>
          
 
             <hr>
-            <p style="margin-left: 21px;">Don't have an account? <a id="btn-register" href="/signUp">Register Now</a></p></div>
+            <p style="margin-left: 21px;">Don't have an account? <a id="btn-register" href="/signUp">Register Now</a></p>
             <p style="margin-left: 21px;">Agent Register Page <a id="btn-register" href="/agentsignUp" style="color: #dc6767;">Agent Register Page</a></p>
              <p style="margin-left: 21px;">Admin Page <a id="btn-register" href="/adminsignUp" style="color: #dc6767;">Admin Page</a></p>
               <p style="margin-left: 21px;">Supplier Login Page <a id="btn-register" href="/login" style="color: #dc6767;">Supplier Login</a></p>
               <p style="margin-left: 21px;">Agent Login Page <a id="btn-register" href="/" style="color: #dc6767;">Agent Login</a></p></div>
              
   
-</div>
+</div> -->
 
-<!--  
+ 
 <script src='@routes.Assets.at("app/js/jquery-1.10.2.min.js")'></script>
 <script src='@routes.Assets.at("app/js/jquery-migrate-1.2.1.min.js")'></script>
 	<script src='@routes.Assets.at("app/js/jquery-ui.js")'></script>
-loading bootstrap js
+<!-- loading bootstrap js -->
  <script
 	src='@routes.Assets.at("bower_components/angular/angular.min.js")'></script>
 	
@@ -102,7 +146,7 @@ loading bootstrap js
 <script src='@routes.Assets.at("app/js/html5shiv.js")'></script>	
 <script src='@routes.Assets.at("app/js/respond.min.js")'></script>
 <script src='@routes.Assets.at("app/vendors/iCheck/icheck.min.js")'></script>
-	<script src='@routes.Assets.at("app/vendors/iCheck/custom.min.js")'></script> -->
+	<script src='@routes.Assets.at("app/vendors/iCheck/custom.min.js")'></script> 
 
 </body>
 </html>
