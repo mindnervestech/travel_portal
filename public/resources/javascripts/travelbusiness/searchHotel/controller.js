@@ -3148,8 +3148,8 @@ $http.get("/searchCountries").success(function(response) {
 		//$scope.total = parseInt(totalcount) + parseInt(totalchileValue);
 		
 	
-		$scope.batchMarkupFunction();
 		$scope.commanPromotionFunction();
+		$scope.batchMarkupFunction();
 		
 		console.log(totalchileValue);
 		console.log($scope.total);

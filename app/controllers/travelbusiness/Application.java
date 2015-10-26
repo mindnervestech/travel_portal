@@ -30,6 +30,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.persistence.NoResultException;
 
 import play.Play;
 import play.data.DynamicForm;
@@ -117,37 +118,20 @@ public class Application extends Controller {
 	@Transactional
 	public static Result doAgentLogin() {
 		DynamicForm form = DynamicForm.form().bindFromRequest();
-		
-		return ok(home.render());
-	/*	try {
-			AgentRegistration agentUser = AgentRegistration.doLogin(form.get("code"),form.get("loginId"),form.get("pass"));
+			
+		try {
+			AgentRegistration agentUser = AgentRegistration.findagentinfo(form.get("loginId"),form.get("pass"),form.get("code"));
 			
 			if(agentUser != null) {
-				session("agent", agent.getAgentCode());
 				session().put("agent", String.valueOf(agentUser.getId()));
 				long code = agentUser.getId();
-				return ok(agentHome.render("Home Page", code));
+				return ok(home.render());
 			}
 		
 		} catch(NoResultException e) { }
 		System.out.println("SESSION VALUE   "+session().get("AGENT"));
-		return ok(views.html.agentLogin.render());*/
+		return ok(views.html.startPage.render("Invalid Credentials")); 
 		
-		
-		/*-----------new---------
-		
-		AgentRegistration agent = AgentRegistration.findagentinfo(loginID, password, agentId);
-		   
-		if(agent != null) {
-			System.out.println("SESSION VALUE   "+session().get("agent"));
-			AgentRegistrationVM aVm=new AgentRegistrationVM(agent);
-			session("agent", agent.getAgentCode());
-			return ok(Json.toJson(aVm));
-		}
-		
-		return ok(Json.toJson("0"));*/
-		
-		//return ok();
 	
 	}
     
