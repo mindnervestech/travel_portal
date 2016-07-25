@@ -33,10 +33,11 @@
     <link rel="shortcut icon" href="images/favicon.ico">
 </head>
 <body id="signin-page" style="height: 539px;" ng-controller="LoginController">
+<a id="btn-register" href="/travel" style="float: right;color:cyan;"><b>Agent Login</b></a>
 <div class="page-form">
 	
     <form id="loginForm" action="/hotel_profile" method="post" class="form">
-        <div class="header-content"><h1>Log In</h1></div>
+        <div class="header-content"><h1>Supplier Log In</h1></div>
         <div class="body-content"><!-- <p>Log in with a social network:</p> -->
          
             <div class="form-group">
@@ -75,7 +76,7 @@
                 <p>no worries, click <a ng-click="forgotpass()" class='btn-forgot-pwd'>here</a> to reset your password.</p></div>
             <hr>
             <p>Don't have an account? <a id="btn-register" href="/signUp">Register Now</a></p></div>
-             <p style="margin-left: 21px;">Admin Page <a id="btn-register" href="/adminsignUp" style="color: #dc6767;">Admin Page</a></p></div>
+             <!-- <p style="margin-left: 21px;">Admin Page <a id="btn-register" href="/adminsignUp" style="color: #dc6767;">Admin Page</a></p></div> -->
     </form>
 </div>
 

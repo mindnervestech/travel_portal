@@ -1602,16 +1602,18 @@ travelBusiness.controller('PageController', function ($scope,$http,$filter,ngDia
 		$scope.hotellistInfo = hotelAllData.hotellist;
 		
 		
+		if($scope.hotellistInfo.length > 0){
+			$scope.searchby.countryName = $scope.hotellistInfo[0].countryName;
+			$scope.searchby.countryCode = $scope.hotellistInfo[0].countryCode;
+			
+			$scope.searchby.cityName =$scope.hotellistInfo[0].cityName;
+			$scope.searchby.cityCode =$scope.hotellistInfo[0].cityCode;
+			$scope.searchby.checkIn  = $scope.hotellistInfo[0].checkIn;
+			$scope.searchby.checkOut = $scope.hotellistInfo[0].checkOut;
+			$scope.searchby.nationalityName = $scope.hotellistInfo[0].nationalityName;
+			$scope.searchby.nationalityCode = $scope.hotellistInfo[0].nationality;
+		}
 		
-		$scope.searchby.countryName = $scope.hotellistInfo[0].countryName;
-		$scope.searchby.countryCode = $scope.hotellistInfo[0].countryCode;
-		
-		$scope.searchby.cityName =$scope.hotellistInfo[0].cityName;
-		$scope.searchby.cityCode =$scope.hotellistInfo[0].cityCode;
-		$scope.searchby.checkIn  = $scope.hotellistInfo[0].checkIn;
-		$scope.searchby.checkOut = $scope.hotellistInfo[0].checkOut;
-		$scope.searchby.nationalityName = $scope.hotellistInfo[0].nationalityName;
-		$scope.searchby.nationalityCode = $scope.hotellistInfo[0].nationality;
 		
 		$scope.onCountryChange($scope.searchby.countryCode);
 		
