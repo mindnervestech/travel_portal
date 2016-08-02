@@ -153,7 +153,7 @@ angular.module('travel_portal').
 			angular.forEach(response, function(obj, index){
 				$scope.AddImgAndInfo.addImg.push({
 					pictureName:obj.pictureName,
-					img:"/hotel_profile/getImagePath/"+obj.supplierCode+"/"+obj.indexValue,
+					img:"/hotel_profile/getImagePath/"+obj.supplierCode+"/"+obj.indexValue+"?d="+new Date().getTime(),
 					description:obj.pictureDescription
 				})
 				
