@@ -601,7 +601,7 @@ public static void DateWiseSortFunction(List<HotelSearch> hotellist,String toDat
 						mapRm.put(room.getRoomId(), Long.parseLong("1"));
 						roomtyp.setHotelRoomRateDetail(list);
 						if(!roomtyp.hotelRoomRateDetail.isEmpty()){
-						roomlist.add(roomtyp);
+							roomlist.add(roomtyp);
 						}
 					}
 					
@@ -896,11 +896,17 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 				diffProm = diffInpromo.intValue();
 				if(entry.getValue() == 0 && diffProm == 0){
 					room.setApplyPromotion(0);
-				}else if(entry.getValue() >= diffProm){
+				}else if(diffProm >= entry.getValue()){
+					 room.setApplyPromotion(1);
+					}else{
+						room.setApplyPromotion(0);
+			       }
+				
+				/*else if(entry.getValue() >= diffProm){
 					room.setApplyPromotion(1);
 					}else{
 						room.setApplyPromotion(0);
-					}
+					}*/
 			}
 		  }
 			
@@ -2497,11 +2503,18 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 				diffProm =diffInpromo.intValue();
 				if(entry.getValue() == 0 && diffProm == 0){
 					room.setApplyPromotion(0);
-				}else if(entry.getValue() >= diffProm){
+				}else if(diffProm >= entry.getValue()){
+					 room.setApplyPromotion(1);
+					}else{
+						room.setApplyPromotion(0);
+			       }
+				
+				
+				/*else if(entry.getValue() >= diffProm){
 					room.setApplyPromotion(1);
-				}else{
+				  }else{
 					room.setApplyPromotion(0);
-				}
+				}*/
 			}
 		  }
 			
