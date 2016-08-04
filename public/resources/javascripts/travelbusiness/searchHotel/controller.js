@@ -906,8 +906,12 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		
 		$scope.commanPromotionFunction();
 		$scope.batchMarkupFunction();
+		$scope.totalValueRate = 0;
+		angular.forEach($scope.rateDatedetail,function(value,key){
+			$scope.totalValueRate = $scope.totalValueRate + value.rate;
+		});
 		
-		
+		$scope.addRooms[index].totalValueRate = $scope.totalValueRate;
 		$scope.addRooms[index].total = $scope.total;
 		$scope.addRooms[index].rateDatedetail = $scope.rateDatedetail;
 		$scope.addRooms[index].childselected = $scope.childselected;
@@ -1280,6 +1284,7 @@ $scope.batchMarkupFunction = function(){
 
 $scope.breakfastFunction = function(){
 	$scope.finalTotal = 0;
+	$scope.finalTotalOther = 0;
 	var adultNo = 0;
 	var childNo = 0;
 		
@@ -1298,6 +1303,7 @@ $scope.breakfastFunction = function(){
 		}
 		console.log(value.total);
 		$scope.finalTotal = $scope.finalTotal + parseInt(value.total);
+		$scope.finalTotalOther = $scope.finalTotalOther + parseInt(value.totalValueRate);
 		
 	});
 	
@@ -2412,7 +2418,12 @@ $http.get("/searchCountries").success(function(response) {
 		
 		$scope.commanPromotionFunction();
 		$scope.batchMarkupFunction();
+		$scope.totalValueRate = 0;
+		angular.forEach($scope.rateDatedetail,function(value,key){
+			$scope.totalValueRate = $scope.totalValueRate + value.rate;
+		});
 		
+		$scope.addRooms[index].totalValueRate = $scope.totalValueRate;
 		$scope.addRooms[index].total = $scope.total;
 		$scope.addRooms[index].rateDatedetail = $scope.rateDatedetail;
 		$scope.addRooms[index].childselected = $scope.childselected;
@@ -2487,7 +2498,6 @@ $http.get("/searchCountries").success(function(response) {
 			if($scope.ratedetail.bookingId != null){
 				$scope.addRooms = $scope.ratedetail.hotelBookingDetails.passengerInfo;
 				//$scope.rateDatedetailRoomWise = $scope.ratedetail.hotelBookingDetails.passengerInfo[0].rateDatedetail;
-				
 				angular.forEach($scope.addRooms,function(value,key){
 					$scope.rateDatedetail = [];
 					$scope.fillrateDatedetai(value.adult);
@@ -2503,8 +2513,16 @@ $http.get("/searchCountries").success(function(response) {
 						childTotalRate = parseInt(childTotalRate + value1.freeChild);
 					});
 					 $scope.total = $scope.total + childTotalRate
+					 
 					value.total = $scope.total;
 					value.rateDatedetail = $scope.rateDatedetail;
+					$scope.totalValueRate = 0;
+					angular.forEach(value.rateDatedetail,function(value1,key1){
+						$scope.totalValueRate = $scope.totalValueRate + value1.rate;
+					});
+					value.totalValueRate = $scope.totalValueRate;
+					
+					$scope.addRooms[index].totalValueRate = $scope.totalValueRate;
 				});
 				$scope.breakfastFunction(); 
 				//$scope.rateDatedetail = 
@@ -2625,8 +2643,12 @@ $http.get("/searchCountries").success(function(response) {
 			console.log($scope.rateDatedetail);
 			$scope.commanPromotionFunction();
 			$scope.batchMarkupFunction();
+			$scope.totalValueRate = 0;
+			angular.forEach($scope.rateDatedetail,function(value,key){
+				$scope.totalValueRate = $scope.totalValueRate + value.rate;
+			});
 			
-			
+			$scope.addRooms[0].totalValueRate = $scope.totalValueRate;
 			$scope.addRooms[0].total = $scope.total;
 			$scope.addRooms[0].rateDatedetail = $scope.rateDatedetail; 
 			$scope.rateDatedetailRoomWise = $scope.rateDatedetail;
@@ -2974,15 +2996,13 @@ $http.get("/searchCountries").success(function(response) {
 			if(value.noOfchild != undefined){
 				angular.forEach(value.childselected,function(value1,key1){
 					if(value1.age != ""){
-						console.log("-----------------");
 						childNo = childNo + 1;
-						console.log(value.noOfchild);
-						console.log(childNo);
 					}
 				});
 			}
 			console.log(value.total);
 			$scope.finalTotal = $scope.finalTotal + parseInt(value.total);
+			//$scope.finalTotalOther = $scope.finalTotalOther + parseInt(value.totalValueRate);
 			
 		});
 		
@@ -3158,6 +3178,11 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.total = $scope.total + parseInt(totalchileValue);
 	
 		console.log(pIndex);
+		$scope.totalValueRate = 0;
+		angular.forEach($scope.rateDatedetail,function(value1,key1){
+			$scope.totalValueRate = $scope.totalValueRate + value1.rate;
+		});
+		$scope.addRooms[pIndex].totalValueRate = $scope.totalValueRate;
 		$scope.addRooms[pIndex].total = $scope.total;
 		$scope.breakfastFunction(); 
 		
@@ -3387,8 +3412,11 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.commanPromotionFunction();
 		$scope.batchMarkupFunction();
 		console.log($scope.total);
-		
-
+		$scope.totalValueRate = 0;
+		angular.forEach($scope.rateDatedetail,function(value1,key1){
+			$scope.totalValueRate = $scope.totalValueRate + value1.rate;
+		});
+		$scope.addRooms[roomNo].totalValueRate = $scope.totalValueRate;
 		$scope.addRooms[roomNo].total = $scope.total;
 		
 		$scope.breakfastFunction();

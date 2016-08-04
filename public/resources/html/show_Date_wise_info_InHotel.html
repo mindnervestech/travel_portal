@@ -97,7 +97,8 @@
                                              <div class="col-md-4">
                                               <div class="col-md-4" style="margin-top: 20px;padding: 0px;">
                                          		 
-                                         		 <span class="price" style="font-size: 15px;" currency-rate styleValue="font-size: small;color: black;top: -1px;" ng-model="serchroom.total" rate="{{serchroom.total}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span> 
+                                         		 <span class="price" style="font-size: 15px;" currency-rate styleValue="font-size: small;color: black;top: -1px;" ng-model="serchroom.total" rate="{{serchroom.total}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span>
+                                         		 <span ng-if="serchroom.totalValueRate > serchroom.total" class="notprice" style="font-size: 15px;" currency-rate styleValue="font-size: small;color: black;top: -1px;" ng-model="serchroom.totalValueRate" rate="{{serchroom.totalValueRate}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></span>
                                        		  </div>
                                        		  <div class="col-md-4" style="margin-top: 18px;padding: 0px;">
                                          		<span><a ng-click="showDateWiseDetails($index)">DateWise Rate</a></span>
@@ -201,6 +202,17 @@ input.input-text,select,textarea,span.custom-select {
 
 .ngdialog.ngdialog-theme-default .ngdialog-content {
   min-height: 627px;
+}
+
+.notprice{
+	color: red;
+    font-size: 1.6667em;
+    text-transform: uppercase;
+    float: right;
+    text-align: right;
+    line-height: 1;
+    display: block;
+    text-decoration: line-through;
 }
 
 </style>     

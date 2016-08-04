@@ -891,23 +891,23 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 				}
 			}
 			for (Entry<Long, Integer> entry : promoMap.entrySet()) {
-			if(room.getRoomId() == entry.getKey()){
-				room.setPcount(entry.getValue());
-				diffProm = diffInpromo.intValue();
-				if(entry.getValue() == 0 && diffProm == 0){
-					room.setApplyPromotion(0);
-				}else if(diffProm >= entry.getValue()){
-					 room.setApplyPromotion(1);
-					}else{
+				if(room.getRoomId() == entry.getKey()){
+					room.setPcount(entry.getValue());
+					diffProm = diffInpromo.intValue();
+					if(entry.getValue() == 0 && diffProm == 0){
 						room.setApplyPromotion(0);
-			       }
-				
-				/*else if(entry.getValue() >= diffProm){
-					room.setApplyPromotion(1);
-					}else{
-						room.setApplyPromotion(0);
-					}*/
-			}
+					}else if(diffProm >= entry.getValue() && entry.getValue() > 0){
+						 room.setApplyPromotion(1);
+						}else{
+							room.setApplyPromotion(0);
+				       }
+					
+					/*else if(entry.getValue() >= diffProm){
+						room.setApplyPromotion(1);
+						}else{
+							room.setApplyPromotion(0);
+						}*/
+				}
 		  }
 			
 			for (Entry<Long, Integer> entry : promoBirdMap.entrySet()) {
@@ -2498,24 +2498,24 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 				}
 			}
 			for (Entry<Long, Integer> entry : promoMap.entrySet()) {
-			if(room.getRoomId() == entry.getKey()){
-				room.setPcount(entry.getValue());
-				diffProm =diffInpromo.intValue();
-				if(entry.getValue() == 0 && diffProm == 0){
-					room.setApplyPromotion(0);
-				}else if(diffProm >= entry.getValue()){
-					 room.setApplyPromotion(1);
-					}else{
+				if(room.getRoomId() == entry.getKey()){
+					room.setPcount(entry.getValue());
+					diffProm =diffInpromo.intValue();
+					if(entry.getValue() == 0 && diffProm == 0){
 						room.setApplyPromotion(0);
-			       }
-				
-				
-				/*else if(entry.getValue() >= diffProm){
-					room.setApplyPromotion(1);
-				  }else{
-					room.setApplyPromotion(0);
-				}*/
-			}
+					}else if(diffProm >= entry.getValue() && entry.getValue() > 0){
+						 room.setApplyPromotion(1);
+						}else{
+							room.setApplyPromotion(0);
+				       }
+					
+					
+					/*else if(entry.getValue() >= diffProm){
+						room.setApplyPromotion(1);
+					  }else{
+						room.setApplyPromotion(0);
+					}*/
+				}
 		  }
 			
 			for (Entry<Long, Integer> entry : promoBirdMap.entrySet()) {
