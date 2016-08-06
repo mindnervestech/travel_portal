@@ -89,7 +89,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		$scope.voucherPdg = "/hotel_profile/getVoucherPdfPath/"+booking.bookingId;
 		
 		ngDialog.open({
-			template: '/assets/resources/html/showVoucherPdf.html',
+			template: '/assets/resources/html/htmltemplet/showVoucherPdf.html',
 			scope : $scope,
 			//controller:'hoteProfileController',
 			className: 'ngdialog-theme-default'
@@ -270,7 +270,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 		console.log(agentinfo);
 		$scope.agentinfo = agentinfo;
 		ngDialog.open({
-			template: '/assets/resources/html/agent_booking_details.html',
+			template: '/assets/resources/html/htmltemplet/agent_booking_details.html',
 			scope : $scope,
 			//controller:'hoteProfileController',
 			className: 'ngdialog-theme-default'
@@ -373,7 +373,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 					$scope.roomType = response;
 				});
 				ngDialog.open({
-					template: '/assets/resources/html/agent_amend_booking.html',
+					template: '/assets/resources/html/htmltemplet/agent_amend_booking.html',
 					scope : $scope,
 					//controller:'hoteProfileController',
 					className: 'ngdialog-theme-default'
@@ -496,7 +496,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			console.log($scope.childcount);
 			if(openPopup == 0){
 				ngDialog.open({
-					template: '/assets/resources/html/amend_show_Date_wise_info_InHotel.html',
+					template: '/assets/resources/html/htmltemplet/amend_show_Date_wise_info_InHotel.html',
 					scope : $scope,
 					closeByDocument:false,
 					//controller:'hoteProfileController',
@@ -1405,7 +1405,7 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 	$scope.loginAgent = function(){
 		
 		ngDialog.open({
-			template: '/assets/resources/html/loginAgent.html',
+			template: '/assets/resources/html/htmltemplet/loginAgent.html',
 			scope : $scope,
 			//controller:'hoteProfileController',
 			className: 'ngdialog-theme-default'
@@ -1424,7 +1424,7 @@ travelBusiness.controller('HomePageController', function ($scope,$http,$filter,n
 		ngDialog.close();
 		
 		ngDialog.open({
-			template: '/assets/resources/html/forgotPassword.html',
+			template: '/assets/resources/html/htmltemplet/forgotPassword.html',
 			scope : $scope,
 			//controller:'hoteProfileController',
 			className: 'ngdialog-theme-default'
@@ -2469,7 +2469,17 @@ $http.get("/searchCountries").success(function(response) {
 	
 	$scope.rateDatedetailRoomWise = []; 
 	$scope.childcount = [];
-	$scope.dateWiseInfo = function(roomid){
+	
+	$scope.showRatePromotionwise = function(roomInfo,typePromo){
+		$scope.typePromo = typePromo;
+		console.log($scope.typePromo);
+		console.log(roomInfo);
+		ngDialog.close();
+		$scope.dateWiseInfo(roomInfo.roomId,$scope.typePromo);
+	}
+	
+	$scope.dateWiseInfo = function(roomid,typePromo){
+		$scope.typePromo = typePromo;
 		$scope.addRooms.push({});
 		$scope.addRooms[0].adult = "1 Adult";
 		$scope.addRooms[0].cAllow = "true";
@@ -2485,8 +2495,6 @@ $http.get("/searchCountries").success(function(response) {
 			response.currencyExchangeRate = $scope.hotel.currencyExchangeRate;
 			$scope.ratedetail = response;
 			console.log($scope.ratedetail);
-			
-			
 			
 			var total = 0;
 			var flag =0;
@@ -2741,7 +2749,10 @@ $http.get("/searchCountries").success(function(response) {
 	    	$scope.total = $scope.total  + $scope.rateDatedetail[j].rate;
 	    }
 	   
-				
+		
+	    console.log("88888888888888console.log($scope.ratedetail);8888888888888888888");
+	    console.log($scope.ratedetail);
+	    console.log($scope.typePromo);
 		
 		if($scope.ratedetail.hotelbyRoom[0].applyPromotion == 1){	
 			
@@ -2919,60 +2930,100 @@ $http.get("/searchCountries").success(function(response) {
 		console.log($scope.totalFlatCal);
 		console.log($scope.totalNightCal);
 		console.log($scope.totalBirdCal);
-		if($scope.totalFlatCal == 0 && $scope.totalNightCal == 0 && $scope.totalBirdCal == 0){
-			
-		}else{
-			if($scope.totalFlatCal == 0){
-				$scope.totalFlatCal = 100000000;
-			}
-			if($scope.totalNightCal == 0){
-				$scope.totalNightCal = 100000000;
-			}
-			if($scope.totalBirdCal == 0){
-				$scope.totalBirdCal = 100000000;
-			}
-			
-			if($scope.totalFlatCal > $scope.totalNightCal &&  $scope.totalBirdCal > $scope.totalNightCal){
-				$scope.applyPromo = "nightPromotion";
-				$scope.total = $scope.totalNightCal;
-			}else if($scope.totalNightCal > $scope.totalFlatCal && $scope.totalBirdCal > $scope.totalFlatCal){
-				$scope.applyPromo = "flatPromotion";
-				angular.forEach($scope.ratedetail.hotelbyRoom[0].specials, function(value, index){
-				  if(value.promotionType == "flatPromotion"){
-					   for(i=0;i<$scope.rateDatedetail.length;i++){
-							 $scope.rateDatedetail[i].rate = value.markets[0].flatRate;
-						}
-				  }
-				});
-				$scope.total = $scope.totalFlatCal;
+		
+		if($scope.typePromo == "maxRate"){
+			if($scope.totalFlatCal == 0 && $scope.totalNightCal == 0 && $scope.totalBirdCal == 0){
 				
-			}else if($scope.totalFlatCal > $scope.totalBirdCal && $scope.totalNightCal > $scope.totalBirdCal){
-				console.log("*****Rate 123");
-				$scope.applyPromo = "birdPromotion";
-				angular.forEach($scope.ratedetail.hotelbyRoom[0].specials, function(value, index){
-					  if(value.promotionType == "birdPromotion"){
-						  if(value.markets[0].earlyBirdRateCalculat == "flatRate"){
-							   if($scope.ratedetail.hotelbyRoom[0].applyFlatPromotion == 1){
-								   angular.forEach($scope.ratedetail.hotelbyRoom[0].specials, function(value1, index1){
-										  if(value1.promotionType == "flatPromotion"){
-											  for(i=0;i<$scope.rateDatedetail.length;i++){
-												  console.log($scope.rateDatedetail[i].rate);
-										 			$scope.rateDatedetail[i].rate = value1.markets[0].flatRate - value1.markets[0].flatRate / 100 * value.markets[0].earlyBirdDisount;
-												}
-										  }
-									  });
-							  }
-						  }else  if(value.markets[0].earlyBirdRateCalculat == "contractRate"){
-							   angular.forEach($scope.rateDatedetail, function(value1, index1){
-								   value1.rate = value1.rate - value1.rate / 100 * value.markets[0].earlyBirdDisount;
-							   });
-						  }					 
+			}else{
+				if($scope.totalFlatCal == 0){
+					$scope.totalFlatCal = 100000000;
+				}
+				if($scope.totalNightCal == 0){
+					$scope.totalNightCal = 100000000;
+				}
+				if($scope.totalBirdCal == 0){
+					$scope.totalBirdCal = 100000000;
+				}
+				
+				if($scope.totalFlatCal > $scope.totalNightCal &&  $scope.totalBirdCal > $scope.totalNightCal){
+					$scope.applyPromo = "nightPromotion";
+					$scope.total = $scope.totalNightCal;
+				}else if($scope.totalNightCal > $scope.totalFlatCal && $scope.totalBirdCal > $scope.totalFlatCal){
+					$scope.applyPromo = "flatPromotion";
+					angular.forEach($scope.ratedetail.hotelbyRoom[0].specials, function(value, index){
+					  if(value.promotionType == "flatPromotion"){
+						   for(i=0;i<$scope.rateDatedetail.length;i++){
+								 $scope.rateDatedetail[i].rate = value.markets[0].flatRate;
+							}
 					  }
 					});
-				$scope.total =  $scope.totalBirdCal;
-			
+					$scope.total = $scope.totalFlatCal;
+					
+				}else if($scope.totalFlatCal > $scope.totalBirdCal && $scope.totalNightCal > $scope.totalBirdCal){
+					console.log("*****Rate 123");
+					$scope.applyPromo = "birdPromotion";
+					angular.forEach($scope.ratedetail.hotelbyRoom[0].specials, function(value, index){
+						  if(value.promotionType == "birdPromotion"){
+							  if(value.markets[0].earlyBirdRateCalculat == "flatRate"){
+								   if($scope.ratedetail.hotelbyRoom[0].applyFlatPromotion == 1){
+									   angular.forEach($scope.ratedetail.hotelbyRoom[0].specials, function(value1, index1){
+											  if(value1.promotionType == "flatPromotion"){
+												  for(i=0;i<$scope.rateDatedetail.length;i++){
+													  console.log($scope.rateDatedetail[i].rate);
+											 			$scope.rateDatedetail[i].rate = value1.markets[0].flatRate - value1.markets[0].flatRate / 100 * value.markets[0].earlyBirdDisount;
+													}
+											  }
+										  });
+								  }
+							  }else  if(value.markets[0].earlyBirdRateCalculat == "contractRate"){
+								   angular.forEach($scope.rateDatedetail, function(value1, index1){
+									   value1.rate = value1.rate - value1.rate / 100 * value.markets[0].earlyBirdDisount;
+								   });
+							  }					 
+						  }
+						});
+					$scope.total =  $scope.totalBirdCal;
+				
+				}
 			}
+		}else if($scope.typePromo == "nightPromotion"){
+			$scope.applyPromo = "nightPromotion";
+			$scope.total = $scope.totalNightCal;
+		}else if($scope.typePromo == "flatPromotion"){
+			$scope.applyPromo = "flatPromotion";
+			angular.forEach($scope.ratedetail.hotelbyRoom[0].specials, function(value, index){
+			  if(value.promotionType == "flatPromotion"){
+				   for(i=0;i<$scope.rateDatedetail.length;i++){
+						 $scope.rateDatedetail[i].rate = value.markets[0].flatRate;
+					}
+			  }
+			});
+			$scope.total = $scope.totalFlatCal;
+		}else if($scope.typePromo == "birdPromotion"){
+			$scope.applyPromo = "birdPromotion";
+			angular.forEach($scope.ratedetail.hotelbyRoom[0].specials, function(value, index){
+				  if(value.promotionType == "birdPromotion"){
+					  if(value.markets[0].earlyBirdRateCalculat == "flatRate"){
+						   if($scope.ratedetail.hotelbyRoom[0].applyFlatPromotion == 1){
+							   angular.forEach($scope.ratedetail.hotelbyRoom[0].specials, function(value1, index1){
+									  if(value1.promotionType == "flatPromotion"){
+										  for(i=0;i<$scope.rateDatedetail.length;i++){
+											  console.log($scope.rateDatedetail[i].rate);
+									 			$scope.rateDatedetail[i].rate = value1.markets[0].flatRate - value1.markets[0].flatRate / 100 * value.markets[0].earlyBirdDisount;
+											}
+									  }
+								  });
+						  }
+					  }else  if(value.markets[0].earlyBirdRateCalculat == "contractRate"){
+						   angular.forEach($scope.rateDatedetail, function(value1, index1){
+							   value1.rate = value1.rate - value1.rate / 100 * value.markets[0].earlyBirdDisount;
+						   });
+					  }					 
+				  }
+				});
+			$scope.total =  $scope.totalBirdCal;
 		}
+		
 		
 		console.log($scope.total);
 		
@@ -3270,8 +3321,6 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.day = arr[0];
 			$scope.month = arr[1];
 			$scope.date = arr[2];
-			console.log("------");
-			console.log(value.flag);
 			
 			angular.forEach(value.roomType,function(value1,key1){
 				angular.forEach(value1.hotelRoomRateDetail,function(value2,key2){
@@ -3453,7 +3502,7 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.hotelif = $scope.hotel;
 		$scope.roomIF = roomInfo;
 		ngDialog.open({
-			template: '/assets/resources/html/room_wise_info.html',
+			template: '/assets/resources/html/htmltemplet/room_wise_info.html',
 			scope : $scope,
 			//controller:'hoteProfileController',
 			className: 'ngdialog-theme-default'
@@ -3467,7 +3516,7 @@ $http.get("/searchCountries").success(function(response) {
 		console.log($scope.roomPromotion);
 		
 		ngDialog.open({
-			template: '/assets/resources/html/promotionInfo.html',
+			template: '/assets/resources/html/htmltemplet/promotionInfo.html',
 			scope : $scope,
 			//controller:'hoteProfileController',
 			className: 'ngdialog-theme-default'

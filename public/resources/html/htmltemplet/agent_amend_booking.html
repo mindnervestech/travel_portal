@@ -1,0 +1,193 @@
+<!-- <section id="content">
+            <div class="col-md-12">   container
+                <div id="main"> -->
+<link type="text/css" href="assets/resources/components/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" type="text/css" media="all" /> 
+<div class="panel panel-green">
+	<!-- <div class="panel-heading clearfix">
+		<span class="mts pull-left">On Request Details</span>
+	
+	</div> -->
+	<div class="panel-body">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="tabbable tabs-left">
+
+
+							 <div class="row">
+								<div class="col-md-12">
+									
+			<table class="col-md-12 table">
+			<tr>
+				<b>Booking Details	</b></tr>
+				<tr class="info">
+					<th>Check In:</th>
+					<td>{{agentinfo.checkIn}}</td>
+					<th>Check Out:</th>
+					<td>{{agentinfo.checkOut}}</td>
+				</tr>
+				<tr class="info">
+					<th>City :</th>
+					<td>{{agentinfo.cityNm}}</td>
+					<th>Nationality :</th>
+					<td>{{agentinfo.nationalityNm}}</td>
+				</tr>
+				<tr class="info">
+					<th>Pax First Name :</th>
+					<td>{{agentinfo.travellerfirstname}}</td>
+					<th>Pax Last Name :</th>
+					<td>{{agentinfo.travellerlastname}}</td>
+				</tr>
+				<tr class="info">
+					<th>Room Name :</th>
+					<td>{{agentinfo.roomNm}}</td>
+					<th></th>
+					<td></td>
+				</tr>
+			</table>
+			
+			<table class="col-md-12 table">
+			<tr>
+				<tr class="info" ng-repeat="pax in agentinfo.passengerInfo">
+					<th style="width: 180px;">Room {{$index+1}}:</th>
+					<td>{{pax.regiterBy}}</td>
+					
+				</tr>
+							
+				
+			</table>
+               
+										
+							<div class="form-group">
+							<hr>
+								<div class="col-md-12">
+								  <div class="col-md-3">
+										<input type="radio" data-ng-model = "agentinfo.date" ng-click="dateAmendFunction('true','false','false',agentinfo)" name="amend" value="true">Date
+								  </div>
+								  <div class="col-md-3">
+										<input type="radio" data-ng-model = "agentinfo.room" ng-click="dateAmendFunction('false','true','false',agentinfo)" name="amend" value="true">Room
+								  </div>
+							 	 <div class="col-md-3">
+										<input type="radio" data-ng-model = "agentinfo.Passenger" ng-click="dateAmendFunction('false','false','true',agentinfo)" name="amend" value="true">Pax
+							 	 </div>
+							  </div>
+							 <div class="col-md-12" ng-if="agentinfo.date == 'true'">
+							 <hr>
+								<div class="col-md-2">
+									<label>Check In :</label>
+								</div>
+								<div class="col-md-4">
+									
+									<input id="date" name="checkIn"
+										data-ng-model="agentinfo.checkInAmend"
+										class="input-filter form-control meal-font-text-size"
+										data-provide="datepicker"
+										data-date-autoclose="true" data-date-start-date="{{agentinfo.startDate}}" data-date-format="dd-mm-yyyy" required>
+ 
+								</div>
+								<div class="col-md-2">
+									<label>Check Out :</label>
+								</div>
+								<div class="col-md-4">
+								
+									<input id="date" name="checkOut"
+										data-ng-model="agentinfo.checkOutAmend"
+										class="input-filter form-control meal-font-text-size"
+										data-provide="datepicker" data-date-autoclose="true" data-date-start-date="{{agentinfo.startDate}}" data-date-format="dd-mm-yyyy" required>
+								
+								</div>
+								
+							</div>
+							<div class="col-md-12" ng-if="agentinfo.room == 'true'">
+								<hr>
+								<div class="col-md-12">
+								<div class="col-md-2">
+									<label>Room Type:</label>
+								</div>
+								<div class="col-md-5">
+                                                    <select class="full-width" name="roomIdAmend" data-ng-model="agentinfo.roomIdAmend" required>
+                                                           <option ng-repeat="room in roomType" value="{{room.roomId}}">{{room.roomType}}</option>
+                                                    </select>
+								</div>
+								</div>
+								<div class="col-md-12" ng-if="roomNotavailableMsg == 1">
+									<label style="color:red;">Room Not available</label>
+								</div>
+								
+								<hr>
+							</div>
+							</div>				
+
+										
+
+											<div class="form-group">
+		    								  <div class="col-md-12">
+		    								   <hr>
+											<div class="col-md-2" ng-if="agentinfo.room_status == 'Confirm' && amendButton == 0">
+											     <button type="submit" ng-click="amendBookingInfo(agentinfo,0)" class="btn btn-primary">Proceed for Amend</button>
+											</div>
+											
+											   <div class="col-md-2" ng-if="amendButton == 1">
+											  
+                                                 <!-- <span class="price"><small>AVG/NIGHT</small>$620</span>  -->
+                                                 <form action="/hotelBookingpage" method="post">
+                              					        <input type="text" name="supplierCode"  value="{{ratedetail.supplierCode}}" style="display: none;">
+                                					    <input type="text" name="checkIn" value="{{ratedetail.checkIn}}" style="display: none;">
+                                					    <input type="text" name="bookingId" value="{{ratedetail.bookingId}}" style="display: none;">
+                              						     <input 	type="text" name="checkOut" value="{{ratedetail.checkOut}}" style="display: none;">
+                            						     <input type="text" name="nationalityCode" value="{{ratedetail.nationality}}" style="display: none;">
+                            						      <input type="text" name="roomId" value="{{ratedetail.hotelbyRoom[0].roomId}}" style="display: none;">
+                            						      <input type="text" name="adult" value="{{searchroom.adult}}" style="display: none;">
+                            						      <input type="text" name="noOfroom" value="{{finalTotalDetails.length}}" style="display: none;">
+                            						      <input type="text" name="total" value="{{finalTotal}}" style="display: none;">
+                            						      <input type="text" name="finalTotalDetails" value="{{addRooms}}" style="display: none;">
+                            						       <span ng-if="serchroom.childAllow == 'true'"><input type="text" name="noOfchild" value="{{serchroom.noOfchild}}" style="display: none;"></span>
+                            						       <span ng-if="serchroom.childAllow == 'false' || serchroom.childAllow == ''"><input type="text" name="noOfchild" value="NoChild" style="display: none;"></span>
+                            						      <input type="text" name="total" value="{{total}}" style="display: none;">  
+                            						      <input type="text" name="totalParPerson"  value="{{totalParPerson}}" style="display: none;">
+                                               <button type="submit" class="btn btn-primary" >Proceed for Amend</button>
+                                               </form>
+                                            </div>
+											
+											
+											<div class="col-md-2 pull-right">
+													 <button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
+											</div>
+										 </div>
+				
+		    							</div>
+										
+								</div>
+							</div>
+						</div>
+					</div> 
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<style>
+
+.ngdialog-content {
+width: 960px !important;
+height: 470px;
+}
+
+.meal-font-text-size{
+font-size: 12px;
+}
+
+
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+  min-height: 470px;
+  }
+
+
+ .menu-li{
+	  background-color: gainsboro !important;
+} 
+
+</style>
+<script type="text/javascript" src="assets/resources/components/bootstrap-datepicker/js/bootstrap-datepicker.js")'></script>

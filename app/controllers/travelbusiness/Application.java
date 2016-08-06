@@ -2499,11 +2499,12 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 			}
 			for (Entry<Long, Integer> entry : promoMap.entrySet()) {
 				if(room.getRoomId() == entry.getKey()){
-					room.setPcount(entry.getValue());
+					//room.setPcount(entry.getValue());
 					diffProm =diffInpromo.intValue();
 					if(entry.getValue() == 0 && diffProm == 0){
 						room.setApplyPromotion(0);
 					}else if(diffProm >= entry.getValue() && entry.getValue() > 0){
+						room.setPcount(1);
 						 room.setApplyPromotion(1);
 						}else{
 							room.setApplyPromotion(0);
@@ -2520,11 +2521,12 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 			
 			for (Entry<Long, Integer> entry : promoBirdMap.entrySet()) {
 				if(room.getRoomId() == entry.getKey()){
-					room.setPcount(entry.getValue());
+					//room.setPcount(entry.getValue());
 					diffProm = diffInpromo.intValue();
 					if(entry.getValue() == 0 && diffProm == 0){
 						room.setApplybirdPromotion(0);
 					}else if(entry.getValue() >= diffProm){
+						room.setPcount(1);
 						room.setApplybirdPromotion(1);
 						}else{
 							room.setApplybirdPromotion(0);
@@ -2534,11 +2536,12 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 			
 			for (Entry<Long, Integer> entry : promoFlatMap.entrySet()) {
 				if(room.getRoomId() == entry.getKey()){
-					room.setPcount(entry.getValue());
+					//room.setPcount(entry.getValue());
 					diffProm = diffInpromo.intValue();
 					if(entry.getValue() == 0 && diffProm == 0){
 						room.setApplyFlatPromotion(0);
 					}else if(entry.getValue() >= diffProm){
+						room.setPcount(1);
 						room.setApplyFlatPromotion(1);
 						}else{
 							room.setApplyFlatPromotion(0);

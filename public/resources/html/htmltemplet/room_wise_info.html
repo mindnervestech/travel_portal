@@ -1,0 +1,173 @@
+<div id="main" class="col-md-12">
+                        <div class="tab-container style1" id="hotel-main-content">
+                            <ul class="tabs">
+                                <li class="active"><a data-toggle="tab" href="#photos-tab">Room</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="photos-tab" class="tab-pane fade in active">
+                                    <article class="box" style="padding-bottom: 1px;">
+                                
+                                 
+                                    <div class="col-md-12" style="padding: 9px;">
+                                    <figure class="col-sm-5 col-md-4" style="padding-left:0;">
+                                     <!-- <img data-ng-src="{{img}}" alt="">  -->
+                                        <a title="" class="hover-effect" style="background: gainsboro;"><img width="284" height="160" alt="" data-ng-src="{{roomIF.roomimgPaths}}"></a>
+                                    </figure>
+                                    <div class="details col-sm-7 col-md-8">
+                                      
+                                         <div>
+                                         <h2 class="col-md-10 ng-binding" style="color: #428bca;padding: 41px;">{{roomIF.roomBed}} {{roomIF.roomName}}</h2>
+                                           
+                                        </div> 
+                                        <div class="col-md-4 pull-right">
+                                        <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomIF.roomId,'maxRate')" style="background: #7db921;" title="">Book Now</a>
+                                        </div>
+                                    </div>
+		 							</div>
+		 							
+                                                                       
+                                  
+                                </article>
+                                </div>
+                                <div id="map-tab" class="tab-pane fade">
+                                    
+                                </div>
+                                <div id="steet-view-tab" class="tab-pane fade" style="height: 500px;">
+                                    
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div id="hotel-features" class="tab-container" style="margin-top: 9px;">
+                            <ul class="tabs">
+                                <li class="active"><a href="#hotel-description" data-toggle="tab">Description</a></li>
+                                <li><a href="#room-amenities" data-toggle="tab">Room Amenities</a></li>
+                                 <li><a href="#room-child" data-toggle="tab">Room Child Policy</a></li>
+                            </ul>
+                            <div class="tab-content">
+                            	<div class="tab-pane fade in active" id="hotel-description">
+                                     <div class="intro table-wrapper full-width hidden-table-sms">
+                                        <div class="col-sm-5 col-lg-5 features table-cell">
+                                            <ul>
+                                          
+                                                <li><label>HOTEL NAME:</label>{{hotelif.hotelNm}}</li>
+                                                <li><label>ROOM TYPE:</label>{{roomIF.roomName}}</li>
+                                                <li><label>MAX GUESTS:</label>{{roomIF.hotelRoomRateDetail[0].adult_occupancy}}</li>
+                                                 <li><label>ROOM SIZE:</label>{{roomIF.roomSize}}</li>
+                                                <li ng-if="roomIF.childAllowedFreeWithAdults != null"><label>FREE CHILD ALLOW:</label>{{roomIF.childAllowedFreeWithAdults}}</li>
+                                                <li ng-if="roomIF.extraBedAllowed == 'true'"><label>EXTRA BED:</label>YES</li>
+                                                <li ng-if="roomIF.extraBedAllowed == 'false'"><label>EXTRA BED:</label>NO</li>
+                                                <li ng-if="roomIF.roomSuiteType == 'true'"><label>ROOM SUITE:</label>YES</li>
+                                                <li ng-if="roomIF.roomSuiteType == 'false'"><label>ROOM SUITE:</label>NO</li>
+                                               
+                                            </ul>
+                                        </div>
+                                        <div class="col-sm-7 col-lg-8 table-cell testimonials">
+                                            <div class="testimonial style1">
+                                                
+                                            <div class="testimonial-viewport" style="overflow: hidden; position: relative;"><ul class="slides " style="width: 600%; -webkit-transition: 0s; transition: 0s; -webkit-transform: translate3d(0px, 0px, 0px); transform: translate3d(0px, 0px, 0px);">
+                                                    <li class="testimonial-active-slide" style="width: 473px; float: left; display: block; height: 173px;">
+                                                        <p class="description" style="color: black;">{{roomIF.description}}</p>
+                                                    </li>
+                                                   
+                                                   
+                                                </ul></div></div>
+                                        </div>
+                                    </div> 
+                                  
+                                </div>
+                                                               
+                                <div class="tab-pane fade" id="room-amenities" style="height: 307px;overflow: auto;">
+                                                                        
+                                    <h2>Hotel Amenities</h2>
+                                    <ul class="amenities clearfix style2" style="line-height: 2.7em;">
+                                    	<div  ng-repeat="roomamenities in roomIF.amenities">
+                                        <li class="col-md-4 col-sm-6">  <!-- ng-if="hotelamenities.amenitiesCode == 30" -->
+                                            <div class="icon-box style2"><i class="{{roomamenities.amenitiesicon}} circle"></i>{{roomamenities.amenityNm}}</div>
+                                        </li>
+                                        </div>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" id="room-child" style="height: 307px;overflow: auto;">
+                                                   
+                                                   <div class="intro table-wrapper full-width hidden-table-sms">
+                                        
+                                        <div class="col-sm-7 col-lg-8 table-cell cruise-itinerary">
+                                            <div class="travelo-box">
+                                                <h4 class="box-title">Room Child Policy</h4>
+                                                {{hotelif.currencyShort}}
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sr.No</th>
+                                                            <th>Child Age From</th>
+                                                            <th>Child Age To</th>
+                                                            <th>Price</th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="child in roomIF.roomchildPolicies">
+                                                        <tr>
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{child.allowedChildAgeFrom}}</td>
+                                                            <td>{{child.allowedChildAgeTo}}</td>
+                                                            <td>{{child.extraChildRate}}</td>
+                                                            
+                                                           <!--  <td ng-if="child.netRate == '% of'">{{child.years}}% Extra on room rate </td>
+                                                            <td ng-if="child.netRate == 'add to Room Rate'"><sup style="font-size: 11px;color: chocolate;top: 0px;" class="ng-binding">{{hotelif.currencyShort}}</sup> {{child.years}} Extra on room rate </td> -->
+                                                           <!--  <td>{{child.netRate}}</td> -->
+                                                        </tr> 
+                                                       
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                             	
+                        	</div>
+                        	
+                        	
+                        </div>	
+                        
+                    </div>
+
+<style>
+
+.ngdialog-content{
+
+background-color: #f5f5f5 !important;
+height: 620px;
+overflow-x: initial;
+}
+
+#hotel-description .features label, #cruise-description .features label, #travel-guide .features label{
+width: 127px;
+}
+
+</style>
+<!-- <div class="tab-content" style="background-color: white;">
+                            
+                            <div id="booking" class="tab-pane fade active in">
+                              <div class="col-md-12" style="background-color: white;">
+                            <h2 class="col-md-6" style="color: #428bca;">Room : {{roomIF.roomName}}</h2>
+                                <h2 class="col-md-6">Room : {{roominfo.roomName}}</h2>
+                                 </div>
+                                <div class="filter-section gray-area clearfix">
+                                     
+                                        <div class="pull-right col-md-12" style="margin: 1%;">
+                                           
+                                        </div>
+                                </div>
+                               
+                            </div>
+          </div> -->
+                            
+                     <!--   <style>
+                       input.input-text, select, textarea, span.custom-select{
+                       background: white;
+                       }
+                       
+                       </style>   -->   
+                           

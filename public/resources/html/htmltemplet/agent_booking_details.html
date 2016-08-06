@@ -1,0 +1,420 @@
+<div class="panel panel-green">
+	<!-- <div class="panel-heading clearfix">
+		<span class="mts pull-left">On Request Details</span>
+	
+	</div> -->
+	<div class="panel-body">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="tabbable tabs-left">
+
+
+
+							 <div class="row">
+								<div class="col-md-12">
+									<script type="text/javascript">
+									jQuery('#myTab a').click(function(e) {
+											e.preventDefault();
+											jQuery(this).tab('show');
+										})
+									</script>
+									<div class="tabbable">
+
+										<ul class="nav nav-pills" id="myTab" style="font-size: small;">
+											<li class="active menu-li custom_menu"><a href="#step1"
+												data-toggle="tab" style="padding: 7px 5px;">Booking Info</a></li>
+											<li class="menu-li custom_menu"><a href="#Step2"
+												data-toggle="tab" style="padding: 7px 5px;"
+												ng-click="showdateWiseView(agentinfo)">Date Wise Booking Info</a></li>
+										
+											<li class="menu-li custom_menu"><a href="#Step3"
+												data-toggle="tab" style="padding: 7px 5px;"
+												ng-click="specialRequest(agentinfo.id)">Special request</a></li>
+											
+										</ul>
+										<div class="tab-content" id="myTabContent"
+											style="overflow: hidden;">
+
+											<div class="tab-pane active" id="step1">
+												<form name="myForm" method="post"  role="form" class="form-horizontal form-validate">
+					
+<div class="panel-body">
+	<div class="col-lg-12">
+		<div class="row">
+			
+					
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Check In Date</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="checkIn" data-ng-model="agentinfo.checkIn"
+							class="form-control meal-font-text-size" disabled="disabled" required style="width: 179px;margin-left: 10px;">
+				</div>
+				<div class="col-md-2">
+				<label>Check Out Date</label>
+				</div>
+				<div class="col-md-4">
+				
+				<input type="text" name="checkOut" data-ng-model="agentinfo.checkOut"
+							class="form-control meal-font-text-size" disabled="disabled" required style="width: 175px;padding-left: 10px;">
+							</div>
+				</div>
+				</div>
+				
+			</div>
+			
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>City</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="City" data-ng-model="agentinfo.cityNm"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				<div class="col-md-2">
+				<label>Nationality</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="nationalityNm" data-ng-model="agentinfo.nationalityNm"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				</div>
+				
+			</div>
+			
+			<div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Passenger First Name</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="travellerfirstname" data-ng-model="agentinfo.travellerfirstname"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				<div class="col-md-2">
+				<label>Passenger Last Name</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="travellerlastname" data-ng-model="agentinfo.travellerlastname"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				</div>
+				
+			</div>
+						
+			<!-- <div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Passenger Address</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="travelleraddress" data-ng-model="agentinfo.travelleraddress"
+							class="form-control meal-font-text-size" disabled="disabled">
+				</div>
+				<div class="col-md-2">
+				<label>Passenger Ph Number</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="travellerphnaumber" data-ng-model="agentinfo.travellerphnaumber"
+							class="form-control meal-font-text-size" disabled="disabled">
+				</div>
+				</div>
+				
+			</div> -->
+			
+			<!-- <div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Passenger Email</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="travelleremail" data-ng-model="agentinfo.travelleremail"
+							class="form-control meal-font-text-size" disabled="disabled">
+				</div>
+				</div>
+				
+			</div> -->
+			<hr>
+			<div>
+			<div class="form-group" ng-show="agentinfo.promotionname != null">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Promotion Name</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="promotionname" data-ng-model="agentinfo.promotionname"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				<div class="col-md-1">
+				<label>Stay Days</label>
+				</div>
+				<div class="col-md-2">
+					<input type="text" name="stayDays_inpromotion" data-ng-model="agentinfo.stayDays_inpromotion"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				
+				<div class="col-md-1">
+				<label>Pay Days</label>
+				</div>
+				<div class="col-md-2">
+					<input type="text" name="payDays_inpromotion" data-ng-model="agentinfo.payDays_inpromotion"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				</div>
+				
+			</div>
+			<div class="form-group" ng-show="agentinfo.promotionname != null">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Stay Days In Promotion</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="stayDays_inpromotion" data-ng-model="agentinfo.stayDays_inpromotion"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				<div class="col-md-2">
+				<label>Pay Days In Promotion</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="payDays_inpromotion" data-ng-model="agentinfo.payDays_inpromotion"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				</div>
+				
+			</div>
+			 <div class="form-group">
+		
+				<div class="col-md-12">
+				<div class="col-md-2">
+				<label>Agent First Name</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="noOfroom" data-ng-model="agentinfo.agent[0].firstName"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				<div class="col-md-2">
+				<label>Agent Last Name</label>
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="total" data-ng-model="agentinfo.agent[0].lastName"
+							class="form-control meal-font-text-size" disabled="disabled" required>
+				</div>
+				</div>
+				
+			</div> 
+			</div>
+									
+    			</div>
+    			
+    			
+</div>
+		
+
+                
+
+</form>
+											</div>
+											<div class="tab-pane" id="Step2">
+												<div id="booking">
+											<div class="form-group">
+		
+				<div class="col-md-12" ng-repeat="dateWise in passengerInfo">
+				<div class="col-md-1" style="width: 78px;">
+				<label>Room {{$index+1}}: </label>
+				</div>
+				<div class="col-md-4">
+				<span>{{dateWise.adult}}</span>
+				<span ng-repeat="child in dateWise.childselected">
+					,child {{$parent.$index+1}}({{child.age}})
+				</span>
+				
+				</div>
+				<div class="col-md-3">
+					<span class="price" style="font-size: 15px;" currency-rate styleValue="font-size: small;color: black;top: -1px;" ng-model="dateWise.total" rate="{{dateWise.total}}" supplier_curr="{{agentinfo.currencyExchangeRate}}" agent_curr="{{agentinfo.agent[0].currencyShort}}"></span>
+								
+				</div>
+				<div class="col-md-2">
+				<label><a ng-click="roomWiseRate($index)">Date Wise Rate</a></label>
+								
+				</div>
+				
+				</div>
+				
+			</div>
+				<div class="form-group">
+						<div class="col-md-12" style="background-color: #428bca;margin-top: 10px;">
+							<label style="font-size: 17px;">Room {{roomIndex}}</label>
+						</div>
+				</div>
+			
+	
+											 <div class="col-md-12" style="background-color: white;height: 325px !important;overflow: auto;">
+                                <div class="booking-history col-md-4" ng-repeat="Dateinfo in rateDatewise">
+                                
+                                 <div class="booking-info clearfix">  
+                                        <div class="date">
+                                           <label class="month">{{Dateinfo.month}}</label>
+                                            <label class="date">{{Dateinfo.date}}</label>
+                                            <label class="day">{{Dateinfo.day}}</label>
+                                        </div>
+                                                                                                                     
+                                        <dl class="info">
+                                            <dt>Rate</dt>
+                                            <span style="font-size: 24px;"><dd currency-rate ng-model="Dateinfo.rate" rate="{{Dateinfo.rate}}" styleValue="font-size: small;color: black;top: -1px;" supplier_curr="{{agentinfo.currencyExchangeRate}}" agent_curr="{{agentinfo.agent[0].currencyShort}}"></dd></span>
+                                            <dt ng-if="Dateinfo.meal != null">Included</dt>
+                                            <dd ng-if="Dateinfo.meal != null">{{Dateinfo.meal}}</dd>
+                                        </dl>
+                                      <!--   <button class="btn-mini status">Book Now</button> -->
+                                    </div>
+                                   
+                                </div>
+								</div>
+								</div>
+						</div>
+
+										<div class="tab-pane" id="Step3">
+												<div style="height: 390px;">
+											<div class="form-group">
+		
+											<div class="col-md-12">
+				<div class="col-md-1">
+				<label ng-if="agentinfo.nonSmokingRoom == 'true'"><i class="soap-icon-check-1" style="font-size: 28px;color: green;"></i></label>
+				<label ng-if="agentinfo.nonSmokingRoom != 'true'"><i class="soap-icon-close" style="font-size: 28px;color: red;"></i></label>
+				</div>
+				<div class="col-md-4">
+					<label>Non-Smoking Room</label>
+				</div>
+				<div class="col-md-1">
+				<label ng-if="agentinfo.twinBeds == 'true'"><i class="soap-icon-check-1" style="font-size: 28px;color: green;"></i></label>
+				<label ng-if="agentinfo.twinBeds != 'true'"><i class="soap-icon-close" style="font-size: 28px;color: red;"></i></label>
+				</div>
+				<div class="col-md-4">
+					<label>Twin Beds</label>
+				</div>
+				</div>
+				
+				
+				<div class="col-md-12">
+				<div class="col-md-1">
+				<label ng-if="agentinfo.lateCheckin == 'true'"><i class="soap-icon-check-1" style="font-size: 28px;color: green;"></i></label>
+				<label ng-if="agentinfo.lateCheckin != 'true'"><i class="soap-icon-close" style="font-size: 28px;color: red;"></i></label>
+				</div>
+				<div class="col-md-4">
+					<label>Late Check-in</label>
+				</div>
+				<div class="col-md-1">
+				<label ng-if="agentinfo.largeBed == 'true'"><i class="soap-icon-check-1" style="font-size: 28px;color: green;"></i></label>
+				<label ng-if="agentinfo.largeBed != 'true'"><i class="soap-icon-close" style="font-size: 28px;color: red;"></i></label>
+				</div>
+				<div class="col-md-4">
+					<label>Large Bed</label>
+				</div>
+				</div>
+				
+				<div class="col-md-12">
+				<div class="col-md-1">
+				<label ng-if="agentinfo.highFloor == 'true'"><i class="soap-icon-check-1" style="font-size: 28px;color: green;"></i></label>
+				<label ng-if="agentinfo.highFloor != 'true'"><i class="soap-icon-close" style="font-size: 28px;color: red;"></i></label>
+				</div>
+				<div class="col-md-4">
+					<label>High Floor</label>
+				</div>
+				<div class="col-md-1">
+				<label ng-if="agentinfo.earlyCheckin == 'true'"><i class="soap-icon-check-1" style="font-size: 28px;color: green;"></i></label>
+				<label ng-if="agentinfo.earlyCheckin != 'true'"><i class="soap-icon-close" style="font-size: 28px;color: red;"></i></label>
+				</div>
+				<div class="col-md-4">
+					<label>Early check-in</label>
+				</div>
+				</div>
+				
+				<div class="col-md-12">
+				<div class="col-md-1">
+				<label ng-if="agentinfo.airportTransfer == 'true'"><i class="soap-icon-check-1" style="font-size: 28px;color: green;"></i></label>
+				<label ng-if="agentinfo.airportTransfer != 'true'"><i class="soap-icon-close" style="font-size: 28px;color: red;"></i></label>
+				</div>
+				<div class="col-md-4">
+					<label>Airport transfer</label>
+				</div>
+				
+				</div>
+				<div class="col-md-12" ng-if="agentinfo.airportTransfer == 'true'">
+				<textarea class="input-text full-width" disabled="disabled">{{agentinfo.airportTransferInfo}}</textarea>
+				</div>
+				
+				<div class="col-md-12" ng-if="agentinfo.airportTransfer == 'true'">
+				<label class="col-md-12" style="font-size: 10px;">PLEASE ENTER COMMENTS IN ENGLISH OR SPANISH.</label>
+				<textarea class="input-text full-width" disabled="disabled">{{agentinfo.enterComments}}</textarea>
+				</div>
+												</div>
+			
+			
+	
+										
+											</div>
+										</div>
+											<div class="form-group">
+		    								
+											<div class="col-md-2" ng-if="agentinfo.room_status == 'Confirm'">
+													 <button type="button" ng-click="cancelbooking(agentinfo.id,agentinfo.nonRefund,agentinfo)" class="btn btn-primary">Cancel Booking</button>
+											</div>
+											
+											<div class="col-md-2" ng-if="agentinfo.room_status == 'Confirm' && agentinfo.nonRefund == 'false'">
+												   
+                                                 <button type="submit" ng-click="openAmendPopup(agentinfo);closeThisDialog()" class="btn btn-primary">Amend Booking</button>
+                                               <!-- </form>  -->
+											</div>
+											<div class="col-md-2" ng-if="agentinfo.room_status != 'Cancelled'">
+													 <button type="button" ng-click="voucher(agentinfo.id,agentinfo.room_status)" class="btn btn-primary">Voucher</button>
+											</div>
+											
+											<div class="col-md-2 pull-right">
+													 <button type="button" ng-click="closeThisDialog()" class="btn btn-primary">Close</button>
+											</div>
+										
+				
+		    							</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> 
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<style>
+.ngdialog-content {
+width: 970px !important;
+}
+
+.meal-font-text-size{
+font-size: 12px;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+  min-height: 599px;
+  }
+
+
+ .menu-li{
+	  background-color: gainsboro !important;
+} 
+
+</style>
