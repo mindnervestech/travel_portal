@@ -2530,7 +2530,7 @@ public class HotelBookingController extends Controller {
 			{
 				/*MimeBodyPart attachPart = new MimeBodyPart();*/
 				Message message = new MimeMessage(session);
-				message.setFrom(new InternetAddress(username,"CheckInRooms"));
+				message.setFrom(new InternetAddress("yogeshpatil424@gmail.com","CheckInRooms"));
 				message.setRecipients(Message.RecipientType.TO,
 						InternetAddress.parse(searchVM.getHotel_email()));
 				message.setSubject("Confirmation Of Booking");
