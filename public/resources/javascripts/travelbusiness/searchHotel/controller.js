@@ -2248,6 +2248,7 @@ $http.get("/searchCountries").success(function(response) {
 	
 	$scope.closePopup = function(){
 		$scope.addRooms = [];
+		$scope.indexCount = 0;
 		/*$scope.addRooms.push({});
 		$scope.addRooms[0].adult = "1 Adult";
 		$scope.addRooms[0].cAllow = "true";
