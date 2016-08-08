@@ -2517,12 +2517,12 @@ public class HotelBookingController extends Controller {
 	           
 	        Properties props = new Properties();
 			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.host", "smtp.checkinrooms.com");
+			props.put("mail.smtp.host", "smtp.gmail.com");
 			props.put("mail.smtp.port", "587");
 			props.put("mail.smtp.starttls.enable", "true");
 			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(username, password);
+					return new PasswordAuthentication("yogeshpatil424@gmail.com", "337@yogesh");
 				}
 			});
 			try
