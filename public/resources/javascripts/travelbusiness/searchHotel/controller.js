@@ -2680,7 +2680,7 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.cAllow = "false";
 			console.log($scope.childcount);
 			ngDialog.open({
-				template: '/assets/resources/html/show_Date_wise_info_InHotel.html',
+				template: '/assets/resources/html/htmltemplet/show_Date_wise_info_InHotel.html',
 				scope : $scope,
 				closeByDocument:false,
 				//controller:'hoteProfileController',
