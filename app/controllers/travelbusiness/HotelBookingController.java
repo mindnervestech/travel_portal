@@ -2156,38 +2156,45 @@ public class HotelBookingController extends Controller {
 			toatlPassengerAdult.setBorderWidth(1f);
 			bookingPayDetailsTable.addCell(toatlPassengerAdult);
 			
-			String[] noAdults;
-  			noAdults = hBookingDetails.getAdult().split(" ");
-			
-			PdfPCell toatlPassengerAdult1 = new PdfPCell(new Paragraph(noAdults[0],font2));
-			toatlPassengerAdult1.setBackgroundColor(new BaseColor(224, 224, 224));
-			toatlPassengerAdult1.setBorderColor(BaseColor.WHITE);
-			toatlPassengerAdult1.setBorderWidth(1f);
-			bookingPayDetailsTable.addCell(toatlPassengerAdult1);
-			
-			PdfPCell noOfChild = new PdfPCell(new Paragraph("Child :",font2));
-			noOfChild.setBackgroundColor(new BaseColor(224, 224, 224));
-			noOfChild.setBorderColor(BaseColor.WHITE);
-			noOfChild.setBorderWidth(1f);
-			bookingPayDetailsTable.addCell(noOfChild);
-			
-			PdfPCell noOfChild1 = new PdfPCell(new Paragraph(String.valueOf(hBookingDetails.getNoOfchild()),font2));
-			noOfChild1.setBackgroundColor(new BaseColor(224, 224, 224));
-			noOfChild1.setBorderColor(BaseColor.WHITE);
-			noOfChild1.setBorderWidth(1f);
-			bookingPayDetailsTable.addCell(noOfChild1);	
-			
-			PdfPCell infact = new PdfPCell(new Paragraph("Infant :",font2));
-			infact.setBackgroundColor(new BaseColor(224, 224, 224));
-			infact.setBorderColor(BaseColor.WHITE);
-			infact.setBorderWidth(1f);
-			bookingPayDetailsTable.addCell(infact);
-			
-			PdfPCell infact1 = new PdfPCell(new Paragraph(hBookingDetails.getRoom_status().toString(),font2));
-			infact1.setBackgroundColor(new BaseColor(224, 224, 224));
-			infact1.setBorderColor(BaseColor.WHITE);
-			infact1.setBorderWidth(1f);
-			bookingPayDetailsTable.addCell(infact1);	
+			int adultCount = 0;
+			int childCount = 0;
+  			for(PassengerBookingInfoVM vm:searchVM.hotelBookingDetails.passengerInfo){
+  				String[] noAdults;
+  	  			noAdults = vm.adult.split(" ");
+  	  			adultCount = adultCount + Integer.parseInt(noAdults[0]);
+  	  		    childCount = childCount + Integer.parseInt(vm.noOfchild);
+  			}
+  				
+  				PdfPCell toatlPassengerAdult1 = new PdfPCell(new Paragraph(String.valueOf(adultCount),font2));
+  				toatlPassengerAdult1.setBackgroundColor(new BaseColor(224, 224, 224));
+  				toatlPassengerAdult1.setBorderColor(BaseColor.WHITE);
+  				toatlPassengerAdult1.setBorderWidth(1f);
+  				bookingPayDetailsTable.addCell(toatlPassengerAdult1);
+  				
+  				PdfPCell noOfChild = new PdfPCell(new Paragraph("Child :",font2));
+  				noOfChild.setBackgroundColor(new BaseColor(224, 224, 224));
+  				noOfChild.setBorderColor(BaseColor.WHITE);
+  				noOfChild.setBorderWidth(1f);
+  				bookingPayDetailsTable.addCell(noOfChild);
+  				
+  				PdfPCell noOfChild1 = new PdfPCell(new Paragraph(String.valueOf(childCount),font2));
+  				noOfChild1.setBackgroundColor(new BaseColor(224, 224, 224));
+  				noOfChild1.setBorderColor(BaseColor.WHITE);
+  				noOfChild1.setBorderWidth(1f);
+  				bookingPayDetailsTable.addCell(noOfChild1);	
+  				
+  				PdfPCell infact = new PdfPCell(new Paragraph("Infant :",font2));
+  				infact.setBackgroundColor(new BaseColor(224, 224, 224));
+  				infact.setBorderColor(BaseColor.WHITE);
+  				infact.setBorderWidth(1f);
+  				bookingPayDetailsTable.addCell(infact);
+  				
+  				PdfPCell infact1 = new PdfPCell(new Paragraph(hBookingDetails.getRoom_status().toString(),font2));
+  				infact1.setBackgroundColor(new BaseColor(224, 224, 224));
+  				infact1.setBorderColor(BaseColor.WHITE);
+  				infact1.setBorderWidth(1f);
+  				bookingPayDetailsTable.addCell(infact1);
+				
 			
 		/*------ Table ---------*/	
 			
