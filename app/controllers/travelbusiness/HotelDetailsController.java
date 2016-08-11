@@ -724,6 +724,8 @@ public static void fillHotelInfo(HotelProfile hAmenities,HotelSearch hProfileVM,
 	InternalContacts internalCont = InternalContacts.findById(hAmenities.getSupplier_code());
 	if(internalCont != null){
 		hProfileVM.setCheckInTime(internalCont.getCheckInTime());
+		hProfileVM.setCheckInTimeType(internalCont.getCheckInType());
+		hProfileVM.setCheckOutTimeType(internalCont.getCheckOutType());
 		hProfileVM.setCheckOutTime(internalCont.getCheckOutTime());
 		hProfileVM.setRoomVoltage(internalCont.getRoomVoltage());
 		hProfileVM.setHotelBuiltYear(String.valueOf(hAmenities.getHotelBuiltYear()));

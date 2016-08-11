@@ -28,7 +28,9 @@ public class HotelSearch {
 	public Double currencyExchangeRate;
 	public String hotelBuiltYear;
 	public String checkInTime;
+	public String checkInTimeType;
 	public String checkOutTime;
+	public String checkOutTimeType;
 	public String roomVoltage;
 	public int cancellation_date_diff;
 	public String bookingId;
@@ -310,6 +312,18 @@ public class HotelSearch {
 	}
 	public void setAgentName(String agentName) {
 		this.agentName = agentName;
+	}
+	public String getCheckInTimeType() {
+		return checkInTimeType;
+	}
+	public void setCheckInTimeType(String checkInTimeType) {
+		this.checkInTimeType = checkInTimeType;
+	}
+	public String getCheckOutTimeType() {
+		return checkOutTimeType;
+	}
+	public void setCheckOutTimeType(String checkOutTimeType) {
+		this.checkOutTimeType = checkOutTimeType;
 	}
 	
 	
