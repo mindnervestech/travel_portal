@@ -848,7 +848,7 @@ public class HotelBookingController extends Controller {
 		Document document = new Document();
 		try {
 			
-			String fileName = "C://hotelVoucher"+".pdf"; // rootDir+"/hotelVoucher"+".pdf"
+			String fileName = rootDir+"/hotelVoucher"+".pdf"; //  "C://hotelVoucher"+".pdf";
 			PdfWriter.getInstance(document, new FileOutputStream(fileName));
 			
 		
@@ -2162,7 +2162,10 @@ public class HotelBookingController extends Controller {
   				String[] noAdults;
   	  			noAdults = vm.adult.split(" ");
   	  			adultCount = adultCount + Integer.parseInt(noAdults[0]);
-  	  		    childCount = childCount + Integer.parseInt(vm.noOfchild);
+  	  			if(vm.noOfchild != null){
+  	  				childCount = childCount + Integer.parseInt(vm.noOfchild);
+  	  			}
+  	  		    
   			}
   				
   				PdfPCell toatlPassengerAdult1 = new PdfPCell(new Paragraph(String.valueOf(adultCount),font2));
