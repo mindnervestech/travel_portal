@@ -2477,7 +2477,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		
 		var flag = 0;
 		console.log($scope.rateObject);
-		 angular.forEach($scope.rateObject, function(value, key){
+		 /*angular.forEach($scope.rateObject, function(value, key){
 			 angular.forEach(value.allocatedCities, function(value1, key1){
 				 angular.forEach($scope.rateMeta1,function(value2, key2){
 					 angular.forEach(value2.allocatedCountry,function(value3, key3){
@@ -2493,7 +2493,7 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 				   });
 				 });
 			  });
-			});
+			});*/
 		 
 		 angular.forEach($scope.rateObject, function(value, key){
 			 angular.forEach(value.normalRate.rateDetails, function(value1, key1){

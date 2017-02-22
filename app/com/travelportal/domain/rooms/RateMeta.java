@@ -263,6 +263,43 @@ public class RateMeta {
 		
 	 }
 	 
+	 public static List<RateMeta> getdatecheckRateId(Long roomId, int countryId, Date date, long supplier,long rateId) {  
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		 String SDate = null;
+		
+			SDate = format.format(date);
+		 
+		 List<Object[]> list;
+	
+		list =JPA.em().createNativeQuery("select am.rate_id,am.currency,am.rate_name,am.roomType_room_id,am.supplierCode,am.min_night from rate_meta am,hotel_profile hpp,rate_meta_country rmcountry,applicable_dateonrate adr where am.rate_id = adr.rate_rate_id and am.rate_id = rmcountry.rate_meta_rate_id and am.supplierCode = hpp.supplier_code and am.status = 'approved' and am.rate_id = '"+rateId+"' and am.supplierCode = '"+supplier+"' and rmcountry.country_country_code = '"+countryId+"' and am.roomType_room_id = '"+roomId+"' and adr.Date_selected = '"+SDate+"'").getResultList();   
+	
+	
+	 List<RateMeta> list1 = new ArrayList<>();
+		
+		for(Object[] o :list) {
+		
+			RateMeta am = new RateMeta();
+			
+			am.setId(Long.parseLong(o[0].toString()));
+			am.setCurrency(o[1].toString());
+			
+			am.setRateName(o[2].toString());
+				
+			am.setRoomType(HotelRoomTypes.findById(Long.parseLong(o[3].toString())));
+			if(o[4] != null){
+			am.setSupplierCode(Long.parseLong(o[4].toString()));
+			}
+			if(o[5] != null){
+				am.setMinNight(Integer.parseInt(o[5].toString()));
+			}
+			list1.add(am);
+		}
+		
+		return list1;
+		
+	 }
+	 
 	 public static List<RateMeta> getpendingRate(String  status){
 		 Query query = JPA.em().createQuery("Select r from RateMeta r where r.status = ?1");
 			query.setParameter(1, status);

@@ -163,7 +163,7 @@
                               <li><a href="#hotel-useful-info" data-toggle="tab">Useful Info</a></li>
                                  <!--  <li><a href="#hotel-sport-amenities" data-toggle="tab" ng-click="sport_amenities()">Leisure & Sport Amenities</a></li> -->
                             </ul>
-                            <div class="tab-content">
+                            <div class="tab-content" style="background: none;">
                             	<div class="tab-pane fade" id="hotel-descr">
                                    
                                     <div class="long-description">
@@ -178,7 +178,7 @@
                                     <h2>Available Rooms</h2>
                                  
                                     <div class="hotel-list listing-style3 hotel">
-                                    <article class="box" style="border: 2px solid #C8C6C6;" ng-repeat="roomInfo in hotel.hotelbyRoom | limitTo: noOfRoomShow">   <!-- ng-repeat="hotelInfo in hotellistInfo" -->
+                                    <article class="box" style="border: 2px solid #C8C6C6;box-shadow: 5px 5px 5px 5px #888888;" ng-repeat="roomInfo in hotel.hotelbyRoom | limitTo: noOfRoomShow">   <!-- ng-repeat="hotelInfo in hotellistInfo" -->
                                     <div class="col-md-12" style="border-bottom: 2px solid #C8C6C6;">
                                     <figure class="col-sm-5 col-md-4" style="padding-left:0;">
                                      <!-- <img data-ng-src="{{img}}" alt="">  -->
@@ -214,7 +214,7 @@
                                             <p>{{roomInfo.description}}</p>
                                             <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"> Special Promotion<i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span>
                                              <div style="width: 150px;">
-                                                 <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomInfo.roomId,'maxRate')" style="background: #98ce44;">Book Now</a>
+                                                 <!-- <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomInfo.roomId,'maxRate')" style="background: #98ce44;">Book Now</a> -->
                                                  <span class="ng-scope"><a ng-click="roomWiseInfo(roomInfo)" style="cursor: pointer;">Room Info</a></span><br>
                                                  <span class="ng-scope" style="color: red;" ng-if="hotel.datediff < roomInfo.hotelRoomRateDetail[0].minNight">Min {{roomInfo.hotelRoomRateDetail[0].minNight}} nights stay</span>
 												 <!-- <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"> Special Promotion<i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span> --> 
@@ -222,11 +222,50 @@
                                         </div>
                                     </div>
 		 							</div>
-                                   <div class="row" ng-repeat="adultRate in roomInfo.hotelRoomRateDetail[0].rateDetailsNormal | orderBy: 'adult'" style="margin-bottom: 1px;">
-                                    <div class="details col-sm-12 col-md-12" style="padding-bottom: 0;padding-top: 0;">  
+                                   <div>
+                                    <table border="1" class="table table-inverse" style="border-top: none;border-bottom: none;border-left: none;border-right: none;">	
+                                    	<tr ng-repeat="adultRate in roomInfo.hotelRoomRateDetail[0].rateDetailsNormal | orderBy:'rateAvg'" ng-if="adultRate.showFirstTime == 0">
+                                    		<td class="col-md-5">
+                                    		 <div class="col-md-12">
+												
+												<div class="col-md-12 form-group"  ng-if="adultRate.mealTypeName == null">
+		                                        		<span><sup style="font-size: small;color: chocolate;top: 9px;">Room only</sup></span>
+		                                         </div> 
+		                                          <div class="col-md-12 form-group"  ng-if="adultRate.isNonRefund == true">
+		                                        		<span><sup style="font-size: small;color: chocolate;top: 9px;">Non Refundable</sup></span>
+		                                         </div> 
+		                                         <!-- <div class="col-md-12 form-group"  ng-if="adultRate.isNonRefund == false">
+		                                        		<span><sup style="font-size: small;color: chocolate;top: 9px;">Refundable</sup></span>
+		                                         </div> -->
+		                                         <div class="col-md-12 form-group"  ng-if="adultRate.mealTypeName != null" style="margin-top: 5px;">
+		                                         	<span class="col-md-12" style="font-size: 16px;padding-left: 0px;">Included</span></b>
+		                                        	<span><sup style="font-size: small;color: chocolate;top: 9px;">{{adultRate.mealTypeName}}</sup></span>
+		                                         </div>
+		                                         <div ng-repeat="cancal in adultRate.cancellation" ng-if="adultRate.isNonRefund == false">
+                                    			  <span class="col-md-12" ng-if="cancal.penaltyCharge == true">*Any cancellation made prior {{cancal.days}} nights to the arrival, is subject to charge for 0{{cancal.nights | limitTo:-1}} nights({{cancal.cancellationDate}})</span>
+                                   				   <span class="col-md-12" ng-if="cancal.penaltyCharge == false">* Any cancellation made prior {{cancal.days}} nights to the arrival, is subject to charge for {{cancal.percentage}}% for total booking nights({{cancal.cancellationDate}})</span>
+                                    		 </div> 
+                                             </div>
+                                    		</td>
+                                    		
+                                    		<td class="col-md-2" style="text-align: center;">
+                                    			<b><small>Per Room Per Night</small></b>
+                                          		<span class="price" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="adultRate.rateAvg" rate="{{adultRate.rateAvg}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
+                                    		</td>
+                                    		 <td class="col-md-2" style="text-align: center;">
+                                    		 	<b><small>Total</small></b>
+                                    		 	<span class="price" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="adultRate.rateAvg * hotel.datediff" rate="{{adultRate.rateAvg * hotel.datediff}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
+                                    		 
+                                    		</td> 
+                                    		<td class="col-md-2">
+                                    			<a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomInfo.roomId,'maxRate',adultRate.rateId)" style="background: #98ce44;">Available</a>
+                                    		</td>
+                                    	</tr>
+                                    </table>
+                                   <!--  <div class="details col-sm-12 col-md-12" style="padding-bottom: 0;padding-top: 0;">  
                                     <div style="border-bottom: 1px solid #f5f5f5 !important;float: left;width: 98%;margin-top: 5px;">
-                                         <div class="col-md-6" style="width:50% !important;border-bottom: none !important;border-right: none;">  <!-- style="width: 106px;" -->
-                                         <!-- <i class="soap-icon-check-1" style="color: #7db921;"></i> -->
+                                         <div class="col-md-6" style="width:50% !important;border-bottom: none !important;border-right: none;">  style="width: 106px;"
+                                         <i class="soap-icon-check-1" style="color: #7db921;"></i>
                                          <h4 class="box-title col-md-6" style="margin-top: 15px;"><span>{{adultRate.adult  | limitTo: 1}} GUESTS</span><span style="margin-left: 8px;"><i ng-repeat="adultRate in roomInfo.hotelRoomRateDetail[0].rateDetailsNormal | limitTo:$index+1" class="soap-icon-user"></i></span></h4>
                                            <div class="amenities col-md-6">   
                                              <div  ng-repeat="ameniti in roominfo.amenities"> 
@@ -255,7 +294,7 @@
                                         <span class="price"><sup style="font-size: small;color: chocolate;top: 9px;">Room only</sup></span>
                                          </div> 
 										
-                                         <div class="col-md-5"> <!-- ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null" -->
+                                         <div class="col-md-5"> ng-if="roominfo.hotelRoomRateDetail[0].rateDetailsNormal[0].rateAvg != null"
                                           <b><small>Per Room Per Night</small></b>
                                           <span class="price" currency-rate styleValue="font-size: 17px;color: black;top: -2px;" ng-model="adultRate.rateAvg" rate="{{adultRate.rateAvg}}" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></span>
                                          </div>
@@ -263,9 +302,9 @@
                                        
                                          </div>
                                          </div>
-                                     </div>
+                                     </div> -->
                                    </div>
-                                     <div class="col-md-11">
+                                     <!-- <div class="col-md-11">
                                      <div ng-if="roomInfo.nonRefund == true">
                                      <label style="color: #01B7F2;" tooltip="a tooltip comment ">Non Refundable/Non-Ammendable</label>  
                                      </div>
@@ -291,16 +330,8 @@
                                    </div>
                                    
                                    
-                                     <!-- <label style="color: #01B7F2;" tooltip="a tooltip comment ">Cancellation Policy</label>     
-                                     <div ng-repeat="cancal in roomInfo.hotelRoomRateDetail[0].cancellation">
-                                      <label ng-if="cancal.penaltyCharge == true">*Any cancellation made prior {{cancal.days}} nights to the arrival, is subject to charge for 0{{cancal.nights | limitTo:-1}} nights({{cancal.cancellationDate}})</label>
-                                      <label ng-if="cancal.penaltyCharge == false">* Any cancellation made prior {{cancal.days}} nights to the arrival, is subject to charge for {{cancal.percentage}}% for total booking nights({{cancal.cancellationDate}})</label>
-                                     </div>  -->                               
-                                     
-                                   <!-- <div class="form-group col-sm-3 col-md-3 col-md-offset-10">
-                                     <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomInfo.roomId)" style="background: #98ce44;margin-top: 2%;margin-left: 49%;" title="">BOOK NOW</a>
-                                     </div> -->
-                                   </div>  
+                                  
+                                   </div>   -->
                                 </article>
                                 <a class="button btn-small full-width text-center" ng-if="hotel.hotelbyRoom.length > noOfRoomShow" ng-click="showAllRooms()" style="background: #01b7f2;"><span class="glyphicon glyphicon-chevron-down" style="font-size: 15px;top: 4px;"></span><span style="margin-left: 10px;">Show More Available Room</span></a>
                                    </div> 
@@ -544,6 +575,7 @@
          display: none;
         }
         
+   
   </style>
 </body>
 </html>

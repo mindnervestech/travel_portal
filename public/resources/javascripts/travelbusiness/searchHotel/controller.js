@@ -87,7 +87,6 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 	
 	$scope.openVoucherPopUp = function(booking){
 		$scope.voucherPdg = "/hotel_profile/getVoucherPdfPath/"+booking.bookingId;
-		
 		ngDialog.open({
 			template: '/assets/resources/html/htmltemplet/showVoucherPdf.html',
 			scope : $scope,
@@ -2071,6 +2070,29 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.searchNationality = response;
 	}); 
 	
+	$scope.findCancellationDate = function(obj1,hotel){
+		if(obj1.days == "012" || obj1.days == "016" || obj1.days == "018"){
+			obj1.days = hotel.cancellation_date_diff;
+		}else{
+			obj1.days = parseInt(obj1.days) + hotel.cancellation_date_diff;
+		}
+		
+		console.log(hotel.checkIn);
+		var arr = hotel.checkIn.split("-");
+		var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+		 var d = new Date();
+		  var dateOut = new Date(datevalue);
+		  dateOut.setDate(dateOut.getDate() - 3);
+		  console.log($filter('date')(dateOut, "dd-MMM-yyyy"));
+		  if(dateOut < d){
+			  console.log($filter('date')(d, "dd-MMM-yyyy"));
+			  obj1.cancellationDate = $filter('date')(d, "dd-MMM-yyyy");
+		  }else{
+			  console.log($filter('date')(dateOut, "dd-MMM-yyyy"));
+			  obj1.cancellationDate = $filter('date')(dateOut, "dd-MMM-yyyy");
+		  }
+	}
+	
 	$scope.init = function(hotel){
 		
 		$scope.hotel = hotel;
@@ -2095,27 +2117,13 @@ $http.get("/searchCountries").success(function(response) {
 		
 		angular.forEach(hotel.hotelbyRoom, function(obj, index){ 
 			angular.forEach(obj.hotelRoomRateDetail[0].cancellation, function(obj1, index1){ 
-				if(obj1.days == "012" || obj1.days == "016" || obj1.days == "018"){
-					obj1.days = hotel.cancellation_date_diff;
-				}else{
-					obj1.days = parseInt(obj1.days) + hotel.cancellation_date_diff;
-				}
-				obj1.days;
-				
-				console.log(hotel.checkIn);
-				var arr = hotel.checkIn.split("-");
-				var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
-				  var d = new Date();
-				  var dateOut = new Date(datevalue);
-				  dateOut.setDate(dateOut.getDate() - 3);
-				  if(dateOut < d){
-					  console.log($filter('date')(d, "dd-MMM-yyyy"));
-					  obj1.cancellationDate = $filter('date')(d, "dd-MMM-yyyy");
-				  }else{
-					  console.log($filter('date')(dateOut, "dd-MMM-yyyy"));
-					  obj1.cancellationDate = $filter('date')(dateOut, "dd-MMM-yyyy");
-				  }
+				$scope.findCancellationDate(obj1,hotel);
 				  
+			});
+			angular.forEach(obj.hotelRoomRateDetail[0].rateDetailsNormal, function(obj2, index2){ 
+				angular.forEach(obj2.cancellation, function(obj1, index1){ 
+					$scope.findCancellationDate(obj1,hotel);
+				});
 			});
 		});
 		
@@ -2479,7 +2487,8 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.dateWiseInfo(roomInfo.roomId,$scope.typePromo);
 	}
 	
-	$scope.dateWiseInfo = function(roomid,typePromo){
+	$scope.dateWiseInfo = function(roomid,typePromo,rateId){
+		console.log(rateId);
 		$scope.typePromo = typePromo;
 		$scope.addRooms.push({});
 		$scope.addRooms[0].adult = "1 Adult";
@@ -2489,7 +2498,7 @@ $http.get("/searchCountries").success(function(response) {
 		
 			$scope.rateDatedetail = [];
 		
-		$http.get('/getDatewiseHotelRoom/'+$scope.hotel.checkIn+"/"+$scope.hotel.checkOut+"/"+$scope.hotel.nationality+"/"+$scope.hotel.supplierCode+"/"+roomid+"/"+$scope.hotel.bookingId)
+		$http.get('/getDatewiseHotelRoom/'+$scope.hotel.checkIn+"/"+$scope.hotel.checkOut+"/"+$scope.hotel.nationality+"/"+$scope.hotel.supplierCode+"/"+roomid+"/"+$scope.hotel.bookingId+"/"+rateId)
 		.success(function(response){
 			console.log(response);
 			response.agentCurrency = $scope.hotel.agentCurrency;
@@ -2674,7 +2683,6 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.childcount = [];
 			angular.forEach($scope.ratedetail.hotelbyRoom, function(value, index){
 				for(var i=0;i<value.maxAdultsWithchild;i++){
-					
 					$scope.childcount[i] = i+1;
 				}
 			});
@@ -3568,29 +3576,15 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 			$scope.checkBoxShow = 1;
 		}
 		
-		
 		angular.forEach($scope.hotel.hotelbyRoom, function(obj, index){ 
-			angular.forEach(obj.hotelRoomRateDetail[0].cancellation, function(obj1, index1){ 
-				if(obj1.days == "012" || obj1.days == "016" || obj1.days == "018"){
-					obj1.days = $scope.hotel.cancellation_date_diff;
-				}else{
-					obj1.days = parseInt(obj1.days) + $scope.hotel.cancellation_date_diff;
-				}
+			angular.forEach(obj.hotelRoomRateDetail[0].cancellation, function(obj1, index1){
+				$scope.findCancellationDate(obj1,$scope.hotel);
 				
-				console.log($scope.hotel.checkIn);
-				var arr = $scope.hotel.checkIn.split("-");
-				var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
-				 var d = new Date();
-				  var dateOut = new Date(datevalue);
-				  dateOut.setDate(dateOut.getDate() - 3);
-				  console.log($filter('date')(dateOut, "dd-MMM-yyyy"));
-				  if(dateOut < d){
-					  console.log($filter('date')(d, "dd-MMM-yyyy"));
-					  obj1.cancellationDate = $filter('date')(d, "dd-MMM-yyyy");
-				  }else{
-					  console.log($filter('date')(dateOut, "dd-MMM-yyyy"));
-					  obj1.cancellationDate = $filter('date')(dateOut, "dd-MMM-yyyy");
-				  }
+			});
+			angular.forEach(obj.hotelRoomRateDetail[0].rateDetailsNormal, function(obj2, index2){ 
+				angular.forEach(obj2.cancellation, function(obj1, index1){ 
+					$scope.findCancellationDate(obj1,$scope.hotel);
+				});
 			});
 		});
 		
@@ -3609,6 +3603,7 @@ travelBusiness.controller('hotelBookingController', function ($scope,$http,$filt
 		$scope.checkOut = $filter('date')(new Date(datevalue1), "MMM dd,yyyy");
 		console.log($scope.checkIn);
 	}
+	
 	
 	$http.get("/searchCountries").success(function(response) {
 		

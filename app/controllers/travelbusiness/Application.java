@@ -771,12 +771,16 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 					sHotelRoomType.setAmenities(roomTP.getAmenities());
 					for (SerachedRoomRateDetail rateObj : roomTP
 							.getHotelRoomRateDetail()) {
-					
+						int showFirstTime = 0;
 						for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
 							SearchRateDetailsVM searchRateDetailsVM = new SearchRateDetailsVM();
 							searchRateDetailsVM
 									.setRateAvg(detailsVM.getRateValue());
 							searchRateDetailsVM.setAdult(detailsVM.getAdult());
+							searchRateDetailsVM.setShowFirstTime(showFirstTime);
+							showFirstTime =1;
+							searchRateDetailsVM.setNonRefund(detailsVM.isNonRefund);
+							searchRateDetailsVM.setCancellation(detailsVM.cancellation);
 							searchRateDetailsVM.setMealTypeName(detailsVM.mealTypeName);
 							searchRateDetailsVMs.add(searchRateDetailsVM);
 							sRateDetail.rateDetailsNormal
@@ -797,7 +801,7 @@ public static void fillRoomsInHotelInfo(List<HotelSearch> hotellist,List<SerachH
 					promoBirdMap.put(roomTP.getRoomId(),roomTP.getPcount());
 					if(!roomTP.getSpecials().isEmpty()){
 						mapSpecials.put(roomTP.getRoomId(), (List<SpecialsVM>) roomTP.getSpecials());
-						}
+					}
 
 				}else {
 					List<Double> totalNo = new ArrayList<Double>();
@@ -1202,23 +1206,24 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 					for (int j = 0; j < sdayDiff; j++) {
     					
 						if(checkInDate.getTime().equals(specialfromDate.getTime())){
+							SearchRateDetailsVM vmSet = new SearchRateDetailsVM(
+									person);
 							if (person.getIsNormal() == rDays.getIsSpecialdaysRate()) {
-								SearchRateDetailsVM vm = new SearchRateDetailsVM(
-										person);
-								vm.rateAvg = person.getRateValue(); 
-								if(person.getMealType() != null){
-								vm.mealTypeName = person.getMealType().getMealTypeNm();
-								}
-								vm.adult = person.getNumberOfPersons();
 								
-															
-								rateVM.rateDetails.add(vm);
+								vmSet.rateAvg = person.getRateValue(); 
+								if(person.getMealType() != null){
+									vmSet.mealTypeName = person.getMealType().getMealTypeNm();
+								}
+								//vm.isNonRefund = ;
+								vmSet.adult = person.getNumberOfPersons();
+								vmSet.rateId = rateVM.id; 				
+								
 								}
 							
 							findrate = 1;
 							for(CancellationPolicy cancel:cancellation) {
 								objectcancel = (Long) mapcancel.get(cancel.getId());
-	    						
+								vmSet.isNonRefund = cancel.isNon_refund();
 	    						if (objectcancel == null) {
 	    							
 								System.out.println(cancel.getIsNormal());
@@ -1227,12 +1232,14 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 									CancellationPolicyVM vm = new CancellationPolicyVM(cancel);
 									rateVM.cancellation.add(vm);
 									rateVM.non_refund = cancel.isNon_refund();
+									
 									}
 								}
 								mapcancel.put(cancel.getId(), Long.parseLong("1"));
 	    						}
-								
 							}
+							vmSet.cancellation = rateVM.cancellation;
+							rateVM.rateDetails.add(vmSet);
 						}
 						
     					specialfromDate.add(Calendar.DATE, 1);
@@ -1253,20 +1260,23 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				vm.mealTypeName = person.getMealType().getMealTypeNm();
 				}
 			vm.adult = person.getNumberOfPersons();
-			rateVM.rateDetails.add(vm);
+			vm.rateId = rateVM.id;
 			
 			for(CancellationPolicy cancel:cancellation) {
 				objectcancel = (Long) mapcancel.get(cancel.getId());
-				
+				vm.isNonRefund = cancel.isNon_refund();
 				if (objectcancel == null) {
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
 					rateVM.non_refund = cancel.isNon_refund();
+				
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
 			 }
+			vm.cancellation = rateVM.cancellation;
+			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 1 && specialRateVM.rateDay1) {
 			if (person.getIsNormal() == 1) {
@@ -1277,11 +1287,11 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				vm.mealTypeName = person.getMealType().getMealTypeNm();
 				}
 			vm.adult = person.getNumberOfPersons();
-			rateVM.rateDetails.add(vm);
+			vm.rateId = rateVM.id;
 			
 			for(CancellationPolicy cancel:cancellation) {
 				objectcancel = (Long) mapcancel.get(cancel.getId());
-				
+				vm.isNonRefund = cancel.isNon_refund();
 				if (objectcancel == null) {
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
@@ -1291,6 +1301,8 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
 			 }
+			vm.cancellation = rateVM.cancellation;
+			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 2 && specialRateVM.rateDay2) {
 			if (person.getIsNormal() == 1) {
@@ -1301,20 +1313,23 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				vm.mealTypeName = person.getMealType().getMealTypeNm();
 				}
 			vm.adult = person.getNumberOfPersons();
-			rateVM.rateDetails.add(vm);
+			vm.rateId = rateVM.id;
 			
 			for(CancellationPolicy cancel:cancellation) {
 				objectcancel = (Long) mapcancel.get(cancel.getId());
-				
+				vm.isNonRefund = cancel.isNon_refund();
 				if (objectcancel == null) {
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
 					rateVM.non_refund = cancel.isNon_refund();
+					
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
 			 }
+			vm.cancellation = rateVM.cancellation;
+			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 3 && specialRateVM.rateDay3) {
 			if (person.getIsNormal() == 1) {
@@ -1325,20 +1340,23 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				vm.mealTypeName = person.getMealType().getMealTypeNm();
 				}
 			vm.adult = person.getNumberOfPersons();
-			rateVM.rateDetails.add(vm);
+			vm.rateId = rateVM.id;
 			
 			for(CancellationPolicy cancel:cancellation) {
 				objectcancel = (Long) mapcancel.get(cancel.getId());
-				
+				vm.isNonRefund = cancel.isNon_refund();
 				if (objectcancel == null) {
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
 					rateVM.non_refund = cancel.isNon_refund();
+					
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
 			 }
+			vm.cancellation = rateVM.cancellation;
+			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 4 && specialRateVM.rateDay4) {
 			if (person.getIsNormal() == 1) {
@@ -1349,20 +1367,23 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				vm.mealTypeName = person.getMealType().getMealTypeNm();
 				}
 			vm.adult = person.getNumberOfPersons();
-			rateVM.rateDetails.add(vm);
+			vm.rateId = rateVM.id;
 			
 			for(CancellationPolicy cancel:cancellation) {
 				objectcancel = (Long) mapcancel.get(cancel.getId());
-				
+				vm.isNonRefund = cancel.isNon_refund();
 				if (objectcancel == null) {
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
 					rateVM.non_refund = cancel.isNon_refund();
+					
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
 			 }
+			vm.cancellation = rateVM.cancellation;
+			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 5 && specialRateVM.rateDay5) {
 			if (person.getIsNormal() == 1) {
@@ -1373,20 +1394,22 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				vm.mealTypeName = person.getMealType().getMealTypeNm();
 				}
 			vm.adult = person.getNumberOfPersons();
-			rateVM.rateDetails.add(vm);
-			
+			vm.rateId = rateVM.id;
 			for(CancellationPolicy cancel:cancellation) {
 				objectcancel = (Long) mapcancel.get(cancel.getId());
-				
+				vm.isNonRefund = cancel.isNon_refund();
 				if (objectcancel == null) {
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
 					rateVM.non_refund = cancel.isNon_refund();
+					
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
 			 }
+			vm.cancellation = rateVM.cancellation;
+			rateVM.rateDetails.add(vm);
 			}
 		}else if(days == 6 && specialRateVM.rateDay6) {
 			if (person.getIsNormal() == 1) {
@@ -1397,20 +1420,22 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				vm.mealTypeName = person.getMealType().getMealTypeNm();
 				}
 			vm.adult = person.getNumberOfPersons();
-			rateVM.rateDetails.add(vm);
-			
+			vm.rateId = rateVM.id;
 			for(CancellationPolicy cancel:cancellation) {
 				objectcancel = (Long) mapcancel.get(cancel.getId());
-				
+				vm.isNonRefund = cancel.isNon_refund();
 				if (objectcancel == null) {
 				if(cancel.getIsNormal() == 1) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
 					rateVM.non_refund = cancel.isNon_refund();
+					
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
 			 }
+			vm.cancellation = rateVM.cancellation;
+			rateVM.rateDetails.add(vm);
 			}
 		}else{
 			if (person.getIsNormal() == 0) {
@@ -1421,20 +1446,22 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				vm.mealTypeName = person.getMealType().getMealTypeNm();
 				}
 			vm.adult = person.getNumberOfPersons();
-			rateVM.rateDetails.add(vm);
-			
+			vm.rateId = rateVM.id;
 			for(CancellationPolicy cancel:cancellation) {
 				objectcancel = (Long) mapcancel.get(cancel.getId());
-				
+				vm.isNonRefund = cancel.isNon_refund();
 				if (objectcancel == null) {
 				if(cancel.getIsNormal() == 0) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
 					rateVM.non_refund = cancel.isNon_refund();
+					
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
 			 }
+			vm.cancellation = rateVM.cancellation;
+			rateVM.rateDetails.add(vm);
 			}
 		}
 		
@@ -1448,20 +1475,23 @@ public static void personRatereturn(List<PersonRate> personRate,SearchSpecialRat
 				vm.mealTypeName = person.getMealType().getMealTypeNm();
 				}
 			vm.adult = person.getNumberOfPersons();
-			rateVM.rateDetails.add(vm);
+			vm.rateId = rateVM.id;
 			
 			for(CancellationPolicy cancel:cancellation) {
 				objectcancel = (Long) mapcancel.get(cancel.getId());
-				
+				vm.isNonRefund = cancel.isNon_refund();
 				if (objectcancel == null) {
 				if(cancel.getIsNormal() == 0) {
 					CancellationPolicyVM vm1 = new CancellationPolicyVM(cancel);
 					rateVM.cancellation.add(vm1);
 					rateVM.non_refund = cancel.isNon_refund();
+					
 				}
 				mapcancel.put(cancel.getId(), Long.parseLong("1"));
 				}
 			 }
+			vm.cancellation = rateVM.cancellation;
+			rateVM.rateDetails.add(vm);
 			}
 		
 	}
@@ -2076,7 +2106,7 @@ public static Result hoteldetailpage() {
 
 
 @Transactional(readOnly = true)
-	public static Result getDatewiseHotelRoom(String checkIn,String checkOut,String nationality,String supplierCode1,String roomCode,String bookingId) {
+	public static Result getDatewiseHotelRoom(String checkIn,String checkOut,String nationality,String supplierCode1,String roomCode,String bookingId,Long rateId) {
 	
 		//
 	
@@ -2225,10 +2255,10 @@ public static Result hoteldetailpage() {
 						Long objectRm = (Long) mapRm.get(room.getRoomId());
 						if (objectRm == null) {
 
-							List<RateMeta> rateMeta1 = RateMeta.getdatecheck(
+							List<RateMeta> rateMeta1 = RateMeta.getdatecheckRateId(
 									room.getRoomId(),
 									Integer.parseInt(nationalityId), checkInDate.getTime(),
-									hAmenities.getSupplier_code()); // Long.parseLong(roomId[0])
+									hAmenities.getSupplier_code(),rateId); // Long.parseLong(roomId[0])
 
 							int ib = 1;
 							List<SerachedRoomRateDetail> list = new ArrayList<>();
@@ -2259,9 +2289,8 @@ public static Result hoteldetailpage() {
 								SearchSpecialRateVM specialRateVM = new SearchSpecialRateVM();
 								
 								SpecialRateReturn(specialRateVM,rateDetails);/* Special Rate Return function*/
-								
+								int ppppp=0;
 								personRatereturn(personRate,specialRateVM,rateDetails,days,rateVM, reDays, format, checkInDate); /* person Rate return function*/
-								
 								
 								list.add(rateVM);
 								
@@ -2369,7 +2398,6 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 							}
 						
 					}
-
 					
 			    	arrayCount.add(aCount, roomTP.getPcount());
 					arrayCountFlat.add(aCountF, fcount);
@@ -2379,12 +2407,17 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 					sHotelRoomType.setAmenities(roomTP.getAmenities());
 					for (SerachedRoomRateDetail rateObj : roomTP
 							.getHotelRoomRateDetail()) {
-					
+						int showFirstTime = 0;
 						for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
 							SearchRateDetailsVM searchRateDetailsVM = new SearchRateDetailsVM();
 							searchRateDetailsVM
 									.setRateAvg(detailsVM.getRateValue());
 							searchRateDetailsVM.setAdult(detailsVM.getAdult());
+							searchRateDetailsVM.setNonRefund(rateObj.non_refund);
+							searchRateDetailsVM.setShowFirstTime(showFirstTime);
+							showFirstTime = 1;
+							searchRateDetailsVM.setRateId(detailsVM.rateId);
+							searchRateDetailsVM.setCancellation(detailsVM.cancellation);
 							searchRateDetailsVM.setMealTypeName(detailsVM.mealTypeName);
 							searchRateDetailsVMs.add(searchRateDetailsVM);
 							sRateDetail.rateDetailsNormal
@@ -2445,7 +2478,7 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 							.getHotelRoomRateDetail()) {
 						
 						int x=0;
-						for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
+						/*for (SearchRateDetailsVM detailsVM : rateObj.rateDetails) {
 							
 							if(detailsVM.getRateValue() > totalNo.get(x)){
 								total= totalNo.get(x);
@@ -2454,12 +2487,11 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 							}
 						
 							hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x).setRateAvg(total);
-						
 							sRateDetail.rateDetailsNormal
 									.add(hotelRMlist.get(newHotel).hotelRoomRateDetail.get(0).rateDetailsNormal.get(x));
 							x++;
 							
-						}
+						}*/
 						if(rateObj.non_refund == true){
 							refundValue = true;
 							nonrefundRoom.put(roomTP.getRoomId(), rateObj.non_refund);
