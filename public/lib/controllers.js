@@ -1391,7 +1391,7 @@ angular.module('travel_portal').
 			console.log('success');
 			//$scope.saveUpdateDocumentation = true;
 			 notificationService.success("Save Successfully");
-			
+			 $location.path("/profile0");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
@@ -1621,7 +1621,7 @@ angular.module('travel_portal').
 			$rootScope.supplierName=data.NAME;
 			$rootScope.supplierAddr=data.ADDR;
 			$rootScope.supplierCurrency=data.Currency;
-
+			
 			//$scope.saveDescription($scope.supp);
 			notificationService.success("Save Successfully");
 		}).error(function(data, status, headers, config) {
@@ -1658,6 +1658,7 @@ angular.module('travel_portal').
 			
 			notificationService.success("Save Successfully");
 			ngDialog.close();
+			$location.path("/profile8");
 			//$scope.mealPlanSuccessMsg = true;
 			//$scope.mealpolicy = [];
 		}).error(function(data, status, headers, config) {
@@ -1740,6 +1741,7 @@ angular.module('travel_portal').
 				$scope.attractionnotfind = "true";
 			}
 			 notificationService.success("Save Successfully");
+			 $location.path("/profile12");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
@@ -1787,6 +1789,7 @@ angular.module('travel_portal').
 			console.log('success');
 			notificationService.success("Internal Info Save Successfully");
 			$scope.InternalInfoSuccess = true;
+			$location.path("/profile3");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
@@ -1858,7 +1861,7 @@ angular.module('travel_portal').
 			console.log('success');
 			notificationService.success("Save Successfully");
 			//$scope.Contactinfosuccess = true;
-
+			$location.path("/profile4");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
@@ -1877,14 +1880,13 @@ angular.module('travel_portal').
 			delete $scope.bill.swifiCode;
 			delete $scope.bill.accountNo;
 			delete $scope.bill.accountType;
-			
 		}
 		console.log($scope.bill);
 		$http.post('/updatebillingInfo',$scope.bill).success(function(data){
 			console.log('success');
 			notificationService.success("Save Successfully");
 		//	$scope.BillinfoSucccess = true;
-
+			$location.path("/profile7");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
@@ -1902,7 +1904,7 @@ angular.module('travel_portal').
 			console.log('success');
 			notificationService.success("Save Successfully");
 			//$scope.communciatsuccess = true;
-
+			$location.path("/profile5");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
@@ -1923,6 +1925,7 @@ angular.module('travel_portal').
 			console.log('success');
 			notificationService.success("Save Successfully");
 			//$scope.Descriptinsuccess = true;
+			$location.path("/profile2");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
@@ -1938,6 +1941,7 @@ angular.module('travel_portal').
 			console.log('success');
 			notificationService.success("Save Successfully");
 			//$scope.leisuresucess = true;
+			$location.path("/profile10");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
@@ -1972,6 +1976,7 @@ angular.module('travel_portal').
 			console.log('success');
 			notificationService.success(' Successfully');
 			$scope.businessSucess = true;
+			//$location.path("/profile9");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
@@ -2013,6 +2018,7 @@ angular.module('travel_portal').
 			console.log('success');
 			notificationService.success("Save Successfully");
 			//$scope.amenitiesSuccess = true;
+			$location.path("/profile9");
 		}).error(function(data, status, headers, config) {
 			console.log('ERROR');
 			notificationService.error("Please Enter Required Fields");
