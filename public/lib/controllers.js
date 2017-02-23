@@ -689,8 +689,10 @@ angular.module('travel_portal').
 				$scope.getallData=response;
 				console.log(response);
 				$rootScope.hotelName = response.hotelgeneralinfo.hotelNm;
+				$rootScope.supplierName = response.hotelgeneralinfo.supplierNm;
 				$rootScope.hotelAddress =  response.hotelgeneralinfo.hotelAddr;
 				$cookieStore.put('hotelName',$rootScope.hotelName);
+				$cookieStore.put('supplierName',$rootScope.supplierName);
 				$cookieStore.put('hotelAddress',$rootScope.hotelAddress);
 				 $cookieStore.put('cityCode',response.hotelgeneralinfo.cityCode);
 				
@@ -733,7 +735,7 @@ angular.module('travel_portal').
 				 
 			});
 	}
-	
+	$rootScope.supplierName= $cookieStore.get('supplierName');
 	$rootScope.hotelName= $cookieStore.get('hotelName');
 	$rootScope.hotelAddress= $cookieStore.get('hotelAddress');
 	
