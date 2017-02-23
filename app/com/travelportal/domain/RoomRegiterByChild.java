@@ -21,6 +21,10 @@ public class RoomRegiterByChild {
 	private Long id;
 	@Column(name="age")
 	private int age;
+	@Column(name="first_name")
+	private String firstName;
+	@Column(name="last_name")
+	private String lastName;
 	@Column(name="breakfast")
 	private String breakfast;
 	@Column(name="child_rate")
@@ -78,6 +82,22 @@ public class RoomRegiterByChild {
 
 	public void setRoomRegiterBy(RoomRegiterBy roomRegiterBy) {
 		this.roomRegiterBy = roomRegiterBy;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public static RoomRegiterByChild getRoomInfoById(int code) {

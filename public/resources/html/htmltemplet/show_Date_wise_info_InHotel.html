@@ -20,6 +20,7 @@
                               						     <input type="text" name="agentCurrency" value="{{ratedetail.agentCurrency}}" style="display: none;">
                             						     <input type="text" name="nationalityCode" value="{{ratedetail.nationality}}" style="display: none;">
                             						      <input type="text" name="roomId" value="{{ratedetail.hotelbyRoom[0].roomId}}" style="display: none;">
+                            						      <input type="text" name="rateId" value="{{ratedetail.hotelbyRoom[0].hotelRoomRateDetail[0].rateDetailsNormal[0].rateId}}" style="display: none;">
                             						      <input type="text" name="adult" value="{{searchroom.adult}}" style="display: none;">
                             						      <input type="text" name="noOfroom" value="{{finalTotalDetails.length}}" style="display: none;">
                             						      <input type="text" name="total" value="{{finalTotal}}" style="display: none;">
@@ -136,13 +137,13 @@
                                   <div class="col-md-12" ng-if="breakfastAddfree != '' && breakfastAddfree != null">
                                   Breakfast charges :<label currency-rate ng-model="breakfastAddfree" rate="{{breakfastAddfree}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></label>
                                   </div>
-                                  <div ng-repeat="roomRate in addRooms">
+                                  <!-- <div ng-repeat="roomRate in addRooms"> -->
                                    <div class="col-md-12" style="background-color: #f5f5f5;">
-                                  <label style="font-size: 18px;"><u>Room {{roomRate.id + 1}}</u></label>
+                                  <label style="font-size: 18px;"><u>Room {{currentRoom}}</u></label>
                                   </div>
                                   
                                 <div id="booking" class="col-md-12" style="background-color: white;height: 325px !important;overflow: auto;">
-                                <div class="booking-history col-md-4" ng-repeat="Dateinfo in roomRate.rateDatedetail">
+                                <div class="booking-history col-md-4" ng-repeat="Dateinfo in rateDatedetailRoomWise">
                               
                                  <div class="booking-info clearfix" ng-if="flag == 0"> <!--  Dateinfo.flag == 0   -->
                                         <div class="date">
@@ -150,7 +151,6 @@
                                             <label class="date">{{Dateinfo.date}}</label>
                                             <label class="day">{{Dateinfo.day}}</label>
                                         </div>
-                                                                                                                     
                                         <dl class="info">
                                             <dt>Rate</dt><!-- styleValue="font-size: small;color: chocolate;top: -1px;" -->
                                              <span style="font-size: 25px;"><dd currency-rate ng-model="Dateinfo.rate" styleValue="font-size: small;top: 0px;" rate="{{Dateinfo.rate}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></dd></span> 
@@ -166,7 +166,6 @@
                                             <label class="date">{{Dateinfo.date}}</label>
                                             <label class="day">{{Dateinfo.day}}</label>
                                         </div>
-                                                                         
                                         <dl class="info">
                                             <dt>Rate</dt>
                                               <span style="font-size: 25px;"><dd currency-rate ng-model="Dateinfo.rate" styleValue="font-size: small;top: 0px;" rate="{{Dateinfo.rate}}" supplier_curr="{{ratedetail.currencyExchangeRate}}" agent_curr="{{ratedetail.agentCurrency}}"></dd></span>
@@ -180,7 +179,7 @@
                                    
                                 </div>
 								</div>
-								</div>
+								<!-- </div> -->
                             </div>
           </div>
                             

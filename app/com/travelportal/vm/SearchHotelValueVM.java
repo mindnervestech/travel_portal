@@ -18,6 +18,7 @@ public class SearchHotelValueVM {
 	public String sortData;
 	public String noSort;
 	public String sortByRating;
+	public String rateId;
 	public List<Integer> servicesCheck;
 	public List<Integer> locationCheck;
 	public List<Integer> amenitiesCheck;

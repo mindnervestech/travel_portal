@@ -71,6 +71,7 @@ import com.travelportal.domain.HotelBookingDetails;
 import com.travelportal.domain.HotelStarRatings;
 import com.travelportal.domain.RoomAndDateWiseRate;
 import com.travelportal.domain.RoomRegiterBy;
+import com.travelportal.domain.RoomRegiterByAdult;
 import com.travelportal.domain.RoomRegiterByChild;
 import com.travelportal.domain.Salutation;
 import com.travelportal.domain.agent.AgentRegistration;
@@ -80,6 +81,7 @@ import com.travelportal.vm.CancellationPolicyVM;
 import com.travelportal.vm.ChildselectedVM;
 import com.travelportal.vm.HotelSearch;
 import com.travelportal.vm.PassengerBookingInfoVM;
+import com.travelportal.vm.PassengerInRoomInfoVM;
 import com.travelportal.vm.RateDatedetailVM;
 import com.travelportal.vm.SearchRateDetailsVM;
 import com.travelportal.vm.SerachHotelRoomType;
@@ -624,7 +626,14 @@ public class HotelBookingController extends Controller {
 		for(PassengerBookingInfoVM passBookingInfoVM:searchVM.hotelBookingDetails.passengerInfo){
 			RoomRegiterBy regiterBy = new RoomRegiterBy();
 			regiterBy.setAdult(passBookingInfoVM.adult);
-			regiterBy.setRegiterBy(passBookingInfoVM.regiterBy);
+			int index = 0;
+			for(PassengerInRoomInfoVM inRoom:passBookingInfoVM.passengerInRoom){
+				if(index == 0){
+					regiterBy.setRegiterBy(inRoom.firstName+" "+inRoom.lastName);
+					index++;
+				}
+			}	
+			//regiterBy.setRegiterBy(passBookingInfoVM.regiterBy);
 			regiterBy.setTotal(passBookingInfoVM.total);
 			if(passBookingInfoVM.noOfchild != null){
 				regiterBy.setNoOfchild(Integer.parseInt(passBookingInfoVM.noOfchild));
@@ -633,9 +642,23 @@ public class HotelBookingController extends Controller {
 			regiterBy.setRoomIndex(i);
 			i++;
 			regiterBy.save();
-			if(passBookingInfoVM.childselected != null){
 			
+			for(PassengerInRoomInfoVM inRoom:passBookingInfoVM.passengerInRoom){
+				
+				RoomRegiterByAdult rAdult = new RoomRegiterByAdult();
+				if(inRoom.typePassenger.equals("adult")){
+					rAdult.setFirstName(inRoom.firstName);
+					rAdult.setLastName(inRoom.lastName);
+					rAdult.setRoomRegiterBy(regiterBy);
+					rAdult.save();
+				}
+				
+			}
+			if(passBookingInfoVM.childselected != null){
+			int childFlag =0;
+			int noOfChild = 0;
 				for(ChildselectedVM chVm:passBookingInfoVM.childselected){
+					childFlag =0;
 					RoomRegiterByChild regiterByChild = new RoomRegiterByChild();
 					if(chVm.age != null && chVm.age != ""){
 						regiterByChild.setAge(Integer.parseInt(chVm.age));
@@ -646,8 +669,18 @@ public class HotelBookingController extends Controller {
 					}
 					regiterByChild.setFree_child(chVm.freeChild);
 					regiterByChild.setRoomRegiterBy(RoomRegiterBy.getRoomInfoById(regiterBy.getId()));
+					for(PassengerInRoomInfoVM inRoom:passBookingInfoVM.passengerInRoom){
+						if(inRoom.typePassenger.equals("child")){
+							if(childFlag == noOfChild){
+							
+								regiterByChild.setFirstName(inRoom.firstName);
+								regiterByChild.setLastName(inRoom.lastName);
+							}
+							childFlag++;
+						}
+					}
 					regiterByChild.save();
-				
+					noOfChild++;
 				}
 			}
 			for(RateDatedetailVM rDatedetailVM:passBookingInfoVM.rateDatedetail){
@@ -848,7 +881,7 @@ public class HotelBookingController extends Controller {
 		Document document = new Document();
 		try {
 			
-			String fileName = rootDir+"/hotelVoucher"+".pdf"; //  "C://hotelVoucher"+".pdf";
+			String fileName = "C://hotelVoucher"+".pdf"; // rootDir+"/hotelVoucher"+".pdf"; 
 			PdfWriter.getInstance(document, new FileOutputStream(fileName));
 			
 		
@@ -2542,7 +2575,7 @@ public class HotelBookingController extends Controller {
 				Message message = new MimeMessage(session);
 				message.setFrom(new InternetAddress("yogeshpatil424@gmail.com","CheckInRooms"));
 				message.setRecipients(Message.RecipientType.TO,
-						InternetAddress.parse(searchVM.getHotel_email()));
+						InternetAddress.parse("yogeshpatil424@gmail.com"));//searchVM.getHotel_email()));
 				message.setSubject("Confirmation Of Booking");
 				Multipart multipart = new MimeMultipart();
 				BodyPart messageBodyPart = new MimeBodyPart();
