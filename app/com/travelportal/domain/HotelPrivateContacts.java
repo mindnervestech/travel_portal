@@ -45,7 +45,7 @@ public class HotelPrivateContacts {
 	private Salutation salutation_salutation_id;
     private long supplier_code;
     
-    
+	private int mainContactPhoneNo;
 	
 	public long getSupplierCode() {
 		return supplier_code;
@@ -356,5 +356,15 @@ public static HotelPrivateContacts findById(long id) {
     public void refresh() {
         JPA.em().refresh(this);
     }
+
+
+	public int getMainContactPhoneNo() {
+		return mainContactPhoneNo;
+	}
+
+	public void setMainContactPhoneNo(int mainContactPhoneNo) {
+		this.mainContactPhoneNo = mainContactPhoneNo;
+	}
+
 	
 }

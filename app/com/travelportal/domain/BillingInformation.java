@@ -56,7 +56,7 @@ public class BillingInformation {
 	public String branchName;
 	@Column(name="swift_code")
 	public String swiftCode;
-	
+	private int mainContactPhoneNo;
 	private long supplier_code;
 	/**
 	 * @return the invoiceToHotel
@@ -276,6 +276,14 @@ public class BillingInformation {
     public void refresh() {
         JPA.em().refresh(this);
     }
+
+	public int getMainContactPhoneNo() {
+		return mainContactPhoneNo;
+	}
+
+	public void setMainContactPhoneNo(int mainContactPhoneNo) {
+		this.mainContactPhoneNo = mainContactPhoneNo;
+	}
 	
 	
 }

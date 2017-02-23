@@ -824,6 +824,7 @@ angular.module('travel_portal').
 	}
 	$scope.getContactInfo = function()
 	{
+		$scope.getInternalInfo();
 		$http.get("/salutation").success(function(response){
 			$scope.salutation=response;
 		});
@@ -1814,10 +1815,40 @@ angular.module('travel_portal').
 			$scope.contactInfo.rDirectTelNo="";
 			$scope.contactInfo.rExtNo="";
 
-
 		}
 	}
 
+	$scope.sameaddPhone = function(){
+		if($scope.internalInfo.directTelephoneSame == true){
+			$scope.internalInfo.directTelCode=$scope.internalInfo.guestTelCode;
+			$scope.internalInfo.directTelNo=$scope.internalInfo.guestTel;
+			$scope.internalInfo.directFaxCode=$scope.internalInfo.guestFax;
+			$scope.internalInfo.directFaxNo=$scope.internalInfo.guestFaxCode;
+		}
+		else{
+			$scope.internalInfo.directTelCode="";
+			$scope.internalInfo.directTelNo="";
+			$scope.internalInfo.directFaxCode="";
+			$scope.internalInfo.directFaxNo="";
+		}
+	}
+	
+	$scope.directsamedata = function(){
+		if($scope.contactInfo.directPhoneDetailSame == true){
+			$scope.contactInfo.dTelCode=$scope.internalInfo.guestTelCode;
+			$scope.contactInfo.dTelNo=$scope.internalInfo.guestTel;
+			
+			$scope.contactInfo.dFaxCode=$scope.internalInfo.guestFaxCode;
+			$scope.contactInfo.dFaxNo=$scope.internalInfo.guestFax;
+		}else{
+			$scope.contactInfo.dTelCode="";
+			$scope.contactInfo.dTelNo="";
+			
+			$scope.contactInfo.dFaxCode="";
+			$scope.contactInfo.dFaxNo="";
+		}
+	}
+	
 	$scope.Contactinfosuccess = false;
 	$scope.SaveContactinfo = function() {
 

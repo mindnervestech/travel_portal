@@ -33,8 +33,8 @@
 									& SPORT</a></li> -->
 							<li><a href="#profile10" data-toggle="tab">AREA
 									ATTRACTIONS</a></li>
-							<li><a href="#profile11" data-toggle="tab">TRANSPORTATION
-									& DIRECTIONS</a></li>
+							<!-- <li><a href="#profile11" data-toggle="tab">TRANSPORTATION
+									& DIRECTIONS</a></li> -->
 							<li><a href="#profile12" data-toggle="tab">HEALTH &amp;
 									SAFETY</a></li>
 						</ul>
@@ -79,9 +79,9 @@
 			</div>		
 			
 			<div class="form-group">
-				<label class="col-md-3 control-label">*Number of Floors:</label>
+				<label class="col-md-3 control-label">Number of Floors:</label>
 				<div class="col-md-3">
-					<input type="text" name="noOffloor" data-ng-model="internalInfo.noOffloor" pattern="\d*" title="Please enter numbers" class="form-control" required>
+					<input type="text" name="noOffloor" data-ng-model="internalInfo.noOffloor" pattern="\d*" title="Please enter numbers" class="form-control">
 					<!--  <span class="error" ng-show="myForm.noOffloor.$error.number" style="color: red;">Not valid number!</span> -->
 				</div>
 				
@@ -133,8 +133,10 @@
 					<input type="text" name="webSiteUrl" data-ng-model="internalInfo.webSiteUrl" class="form-control">
 				</div>
 		</div>
-       	
-					
+		
+       		<label>If the Direct Telephone is the same as Guest Telephone check here: </label>
+			<input type="checkbox" ng-model="internalInfo.directTelephoneSame" ng-checked="internalInfo.directTelephoneSame" ng-change="sameaddPhone()">
+			
 			 <div class="form-group">
 				<label class="col-md-3 control-label">*Direct Telephone:</label>
 				<div class="col-md-2 setwidth">
@@ -213,7 +215,7 @@
 						<option value="">Select</option>
 						<option value="AM">AM</option>
 						<option value="PM">PM</option>
-						<option value="HR">HR</option>
+						<option value="HRS">HRS</option>
 					</select>
 				</div>
 				
@@ -227,7 +229,7 @@
 						<option value="">Select</option>
 						<option value="AM">AM</option>
 						<option value="PM">PM</option>
-						<option value="HR">HR</option>
+						<option value="HRS">HRS</option>
 					</select>
 				</div>
 			</div>

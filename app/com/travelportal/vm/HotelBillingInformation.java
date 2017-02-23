@@ -19,6 +19,8 @@ public class HotelBillingInformation {
 	public String accountType;
 	public String branchName;
 	public String swiftCode;
+	
+	public int mobileNo;
 	/**
 	 * @return the supplierCode
 	 */
@@ -165,9 +167,12 @@ public class HotelBillingInformation {
 	public void setBranchName(String branchName) {
 		this.branchName = branchName;
 	}
-	
-
-	
+	public int getMobileNo() {
+		return mobileNo;
+	}
+	public void setMobileNo(int mobileNo) {
+		this.mobileNo = mobileNo;
+	}
 	
 	
 }

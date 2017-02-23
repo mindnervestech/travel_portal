@@ -267,6 +267,7 @@ public class TravelPortalUtilsController extends Controller {
 		{
 		hotelcontactinformation.setSalutationCode(hotelprivatecontacts.getSalutation_salutation_id().getSalutationId());
 		}
+		hotelcontactinformation.setmPhoneNo(hotelprivatecontacts.getMainContactPhoneNo());
 		hotelcontactinformation.setReservationDetailSame(hotelprivatecontacts.getReservationSameAsMainContact());
 		hotelcontactinformation.setrContactName(hotelprivatecontacts.getReservationContactPersonName());
 		hotelcontactinformation.setrTitle(hotelprivatecontacts.getReservationContactPersonTitle());
@@ -319,6 +320,7 @@ public class TravelPortalUtilsController extends Controller {
 		hotelbillinginformation.setBranchName(billinginformation.getBranchName());
 		hotelbillinginformation.setAccountType(billinginformation.getAccountType());
 		hotelbillinginformation.setSwiftCode(billinginformation.getSwiftCode());
+		hotelbillinginformation.setMobileNo(billinginformation.getMainContactPhoneNo());
 		if(billinginformation.getSalutationCode() != null){
 			hotelbillinginformation.setSalutationCode(billinginformation.getSalutationCode().getSalutationId());
 		}

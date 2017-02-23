@@ -24,6 +24,8 @@ public class HotelContactInformation {
 	public int rDeptFaxNo;
 	public int rDeptFaxCode;
 	public int deptExtNo;
+	private int mPhoneNo;
+	
 	/**
 	 * @return the supplierCode
 	 */
@@ -236,10 +238,12 @@ public class HotelContactInformation {
 	public void setrDeptFaxCode(int rDeptFaxCode) {
 		this.rDeptFaxCode = rDeptFaxCode;
 	}
-	
-	
-	
-	
+	public int getmPhoneNo() {
+		return mPhoneNo;
+	}
+	public void setmPhoneNo(int mPhoneNo) {
+		this.mPhoneNo = mPhoneNo;
+	}
 	
 	
 	

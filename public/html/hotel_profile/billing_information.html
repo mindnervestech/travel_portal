@@ -33,8 +33,8 @@
 									& SPORT</a></li> -->
 							<li><a href="#profile10" data-toggle="tab">AREA
 									ATTRACTIONS</a></li>
-							<li><a href="#profile11" data-toggle="tab">TRANSPORTATION
-									& DIRECTIONS</a></li>
+							<!-- <li><a href="#profile11" data-toggle="tab">TRANSPORTATION
+									& DIRECTIONS</a></li> -->
 							<li><a href="#profile12" data-toggle="tab">HEALTH &amp;
 									SAFETY</a></li>
 						</ul>
@@ -76,88 +76,94 @@
 					<div class="form-group">
 						<label class="col-md-5 control-label">*First Name:</label>
 						<div class="col-md-7">
-						<input type="text" name="firstName" data-ng-model="bill.aFirstName" class="form-control" style="text-transform: capitalize;" required>
-					</div>
+							<input type="text" name="firstName" data-ng-model="bill.aFirstName" class="form-control" style="text-transform: capitalize;" required>
+						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="col-md-5 control-label">*Last Name:</label>
 						<div class="col-md-7">
-						<input type="text" name="lastname" data-ng-model="bill.aLastName" class="form-control" style="text-transform: capitalize;" required>
-					</div>
+							<input type="text" name="lastname" data-ng-model="bill.aLastName" class="form-control" style="text-transform: capitalize;" required>
+						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="col-md-5 control-label">*Designation:</label>
 						<div class="col-md-7">
-						<input type="text" name="title" data-ng-model="bill.title" class="form-control" required>
+							<input type="text" name="title" data-ng-model="bill.title" class="form-control" required>
+						</div>
 					</div>
-					</div>
-					
-								<div class="form-group">
-						<label class="col-md-5 control-label">*salutation:</label>
-						<div class="col-md-7">
-						<!-- <input type="text" name="title" data-ng-model="bill.title" class="form-control" required> -->
-						<select class="form-control" name="salutationCode" data-ng-model="bill.salutationCode" data-ng-options="salut.salutationId as salut.salutationValue for salut in salutation" required>
-							<option>--choose one--</option>
-							
-					</select>
-					</div>
-					</div>
-							
-					
-						<div class="form-group">
-				<label class="col-md-5 control-label">*Direct E-mail:</label>
-				<div class="col-md-7">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-						<input type="email" name="Email" data-ng-model="bill.dEmailAddr" class="form-control" required>
-					</div>
-				</div>
-			</div>
-					
 					
 					<div class="form-group">
-				<label class="col-md-5 control-label">*Direct Telephone:</label>
-				<div class="col-md-2 setwidth">
-					<input type="text" name="dTelCode" data-ng-model="bill.dTelCode" pattern="\d*" title="Please enter numbers" class="form-control" required>
-					<!-- <span class="error" ng-show="billinfo.dTelCode.$error.number" style="color: red;">Not valid number!</span> -->
-				</div>
-				<p style="float: left;">-</p>
-					<div class="col-md-4">
-					<input type="text" name="dTelNo" data-ng-model="bill.dTelNo" pattern="\d*" title="Please enter numbers" class="form-control" required>
-					<!-- <span class="error" ng-show="billinfo.dTelNo.$error.number" style="color: red;">Not valid number!</span> -->
-				</div>
-			</div>
-			
-				<div class="form-group">
-				<label class="col-md-5 control-label">*Direct Fax:</label>
-				<div class="col-md-2 setwidth">
-					<input type="text" name="dFaxCode" data-ng-model="bill.dFaxCode" pattern="\d*" title="Please enter numbers" class="form-control" required>
-					<!-- <span class="error" ng-show="billinfo.dFaxCode.$error.number" style="color: red;">Not valid number!</span> -->
-				</div>
-							<p style="float: left;">-</p>
-				
-					<div class="col-md-4">
-					<input type="text" name="dFaxNo" data-ng-model="bill.dFaxNo" pattern="\d*" title="Please enter numbers" class="form-control" required>
-					<!-- <span class="error" ng-show="billinfo.dFaxNo.$error.number" style="color: red;">Not valid number!</span> -->
-				</div>
-			</div>
-					
-				<div class="form-group">
-						<label class="col-md-5 control-label">Extension:</label>
+						<label class="col-md-5 control-label">*salutation:</label>
 						<div class="col-md-7">
-						<input type="text" name="dExtNo" data-ng-model="bill.dExtNo" pattern="\d*" title="Please enter numbers" class="form-control" >
-						<!-- <span class="error" ng-show="billinfo.dExtNo.$error.number" style="color: red;">Not valid number!</span> -->
+							<!-- <input type="text" name="title" data-ng-model="bill.title" class="form-control" required> -->
+							<select class="form-control" name="salutationCode" data-ng-model="bill.salutationCode" data-ng-options="salut.salutationId as salut.salutationValue for salut in salutation" required>
+								<option>--choose one--</option>
+							</select>
+						</div>
 					</div>
+						
+					<div class="form-group">
+						<label class="col-md-5 control-label">*Mobile No:</label>
+						<div class="col-md-3">
+							<input type="text" name="mPhoneNo" data-ng-model="bill.mobileNo" pattern="\d*" title="Please enter numbers" class="form-control" required>
+							<!-- <span class="error" ng-show="contact.dTelNo.$error.number" style="color: red;">Not valid number!</span> -->
+						</div>
+						<div class="col-md-4">
+							(-not allow special character and character)
+						</div>
 					</div>	
 					
+					<div class="form-group">
+						<label class="col-md-5 control-label">*Direct E-mail:</label>
+						<div class="col-md-7">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+								<input type="email" name="Email" data-ng-model="bill.dEmailAddr" class="form-control" required>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-5 control-label">*Direct Telephone:</label>
+						<div class="col-md-2 setwidth">
+							<input type="text" name="dTelCode" data-ng-model="bill.dTelCode" pattern="\d*" title="Please enter numbers" class="form-control" required>
+							<!-- <span class="error" ng-show="billinfo.dTelCode.$error.number" style="color: red;">Not valid number!</span> -->
+						</div>
+						<p style="float: left;">-</p>
+						<div class="col-md-4">
+							<input type="text" name="dTelNo" data-ng-model="bill.dTelNo" pattern="\d*" title="Please enter numbers" class="form-control" required>
+							<!-- <span class="error" ng-show="billinfo.dTelNo.$error.number" style="color: red;">Not valid number!</span> -->
+						</div>
+					</div>
+			
+					<div class="form-group">
+						<label class="col-md-5 control-label">*Direct Fax:</label>
+						<div class="col-md-2 setwidth">
+							<input type="text" name="dFaxCode" data-ng-model="bill.dFaxCode" pattern="\d*" title="Please enter numbers" class="form-control" required>
+							<!-- <span class="error" ng-show="billinfo.dFaxCode.$error.number" style="color: red;">Not valid number!</span> -->
+						</div>
+						<p style="float: left;">-</p>
+						<div class="col-md-4">
+							<input type="text" name="dFaxNo" data-ng-model="bill.dFaxNo" pattern="\d*" title="Please enter numbers" class="form-control" required>
+							<!-- <span class="error" ng-show="billinfo.dFaxNo.$error.number" style="color: red;">Not valid number!</span> -->
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-5 control-label">Extension:</label>
+						<div class="col-md-7">
+							<input type="text" name="dExtNo" data-ng-model="bill.dExtNo" pattern="\d*" title="Please enter numbers" class="form-control" >
+							<!-- <span class="error" ng-show="billinfo.dExtNo.$error.number" style="color: red;">Not valid number!</span> -->
+						</div>
+					</div>	
 				</div>
-			    </div>
+			</div>
 			   
-			 </fieldset>
-			 <br>
-			</div>			
+		</fieldset>
+		<br>
+	</div>			
 			
 			<fieldset class="billinside">
   			<legend style="width: 50%;border-bottom: none;">Bank-to-Bank Wire Servicess</legend>
