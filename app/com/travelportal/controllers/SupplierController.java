@@ -90,31 +90,47 @@ public class SupplierController extends Controller {
 				specialsMarket.setEarlyBirdRateCalculat(market.earlyBirdRateCalculat);
 				specialsMarket.setFlatRate(market.flatRate);
 				specialsMarket.setApplyToMarket(market.applyToMarket);
-				specialsMarket.setSpecial(Specials.findSpecialType(spec.promotionName, spec.promotionType, format.parse(spec.fromDate), format.parse(spec.toDate)));
-				specialsMarket.save();
-				
-				//RateMeta rateObject = RateMeta.findRateMeta(rate.rateName,rate.currency,format.parse(rate.fromDate),format.parse(rate.toDate),HotelRoomTypes.findByName(rate.roomType));
-				 SpecialsMarket SpecM = SpecialsMarket.findByTopid();
-				List<SelectedCountryVM> selectedCountryVM = new ArrayList<>(); 	
-				for(AllocatedCitiesVM vm: market.allocatedCities) {
-					if(vm.multiSelectGroup == false && vm.name != null){
-						SelectedCountryVM cityVM = new SelectedCountryVM();
-						cityVM.name = vm.name;
-						cityVM.ticked = vm.ticked;
-						selectedCountryVM.add(cityVM);
+				String listroom = "";
+				int i = 1;
+				for(Long lg:spec.roomTypes){
+					if(spec.roomTypes.size() == i){
+						listroom = listroom + lg;
+					}else{
+						listroom = listroom + lg+",";
 					}
-					
+					i++;
 				}
-				List<Country> listCity = new ArrayList<>();
-				for(SelectedCountryVM cityvm : selectedCountryVM){
-					Country _city = Country.getCountryByName(cityvm.name);
-					
-					if(cityvm.ticked){
-						listCity.add(_city);
-					}
-				}
-				SpecM.setCountry(listCity);
 				
+				Specials sList= Specials.findSpecialByDatePromoAndroom(spec.promotionName, spec.promotionType, format.parse(spec.fromDate), format.parse(spec.toDate),listroom);
+				if(sList != null){
+					specialsMarket.setSpecial(Specials.findBySpecialsID(sList.getId()));
+				}else{
+					specialsMarket.setSpecial(Specials.findSpecialType(spec.promotionName, spec.promotionType, format.parse(spec.fromDate), format.parse(spec.toDate)));
+				}
+				
+					specialsMarket.save();
+				
+				
+					 SpecialsMarket SpecM = SpecialsMarket.findByTopid();
+					List<SelectedCountryVM> selectedCountryVM = new ArrayList<>(); 	
+					for(AllocatedCitiesVM vm: market.allocatedCities) {
+						if(vm.multiSelectGroup == false && vm.name != null){
+							SelectedCountryVM cityVM = new SelectedCountryVM();
+							cityVM.name = vm.name;
+							cityVM.ticked = vm.ticked;
+							selectedCountryVM.add(cityVM);
+						}
+						
+					}
+					List<Country> listCity = new ArrayList<>();
+					for(SelectedCountryVM cityvm : selectedCountryVM){
+						Country _city = Country.getCountryByName(cityvm.name);
+						
+						if(cityvm.ticked){
+							listCity.add(_city);
+						}
+					}
+					SpecM.setCountry(listCity);
 			}
 		}
 		

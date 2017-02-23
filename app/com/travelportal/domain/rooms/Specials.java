@@ -112,6 +112,49 @@ public class Specials {
     	return (Specials) query.getSingleResult();
     }
 	
+	public static Specials findSpecialByDatePromoAndroom(String promotionName, String promotionType, Date fromDate,Date toDate,String roomId) { 
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		int i =0;
+		 String fDate = null;
+		 String lDate = null;
+		
+			fDate = format.format(fromDate);
+			lDate = format.format(toDate);
+		 
+		 List<Object[]> list;
+	
+		list =JPA.em().createNativeQuery("Select * from specials s,specials_hotel_room_types sprt where s.id = sprt.specials_id and s.promotionName = '"+promotionName+"' and s.promotionType = '"+promotionType+"' and s.fromDate = '"+fDate+"' and s.toDate = '"+lDate+"' and sprt.roomTypes_room_id IN ("+roomId+")").getResultList();  // 
+		
+	// List<Specials> list1 = new ArrayList<>();
+	 Specials sp = new Specials();
+		for(Object[] o :list) {
+			i++;
+			sp.setId(Long.parseLong(o[0].toString()));
+			try {
+				sp.setFromDate(format.parse(o[1].toString()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			sp.setPromotionName(o[2].toString());
+			try {
+				sp.setToDate(format.parse(o[3].toString()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				sp.setPromotionType(o[5].toString());
+			
+			//list1.add(sp);
+		}
+		if(i == 2){
+			sp = null;
+		}
+		
+		return sp;
+		
+	 }
+	
 	public static List<Specials> findSpecialByDate(Date fromDate,Date toDate,String promotionName) {
     	Query query = JPA.em().createQuery("Select s from Specials s where s.fromDate = ?1 and s.toDate = ?2 and s.promotionName = ?3");
 		query.setParameter(1, fromDate);
