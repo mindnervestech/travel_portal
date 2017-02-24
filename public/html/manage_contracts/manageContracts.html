@@ -101,6 +101,14 @@
 			<a data-toggle="collapse" data-target="#demo{{$index}}" aria-expanded="true" aria-controls="demo{{$index}}" style="cursor: pointer;">
 			<legend style="width: 75%; border-bottom: none;font-size: 18;">&nbsp;&nbsp;&nbsp;&nbsp;{{rate.rateName}}</legend>
 			</a>
+				<div class="row" style="margin-bottom: 3%;margin-left: 2%;">
+					<div class="form-group">
+						<label class="col-md-3 control-label"><b>Rate Name:</b></label>
+						<div class="col-md-3">
+								<input type="text" data-ng-model="rate.rateName" id="focus" class="form-control required" required>
+							</div>
+						</div>
+					</div>	
 			<!--  <input type="text" name="rateV" ng-model="teValue" value="" class="form-control required number"> -->
 			<div id="demo{{$index}}" class="collapse in">
 			 <!-- <button ng-show="ooo" id="formBSend" type="submit" class="btn"> Submit</button> -->
@@ -680,9 +688,9 @@
 						</form>
 						
 			</fieldset>	
-			 <div ng-show="addNewButton"> 
+			 <!-- <div ng-show="addNewButton"> 
 					  <input type="button" class="btn btn-primary" value="ADD NEW RATE" ng-click="createNewRate()" style="float:left; margin-top: 3%;margin-left: 29%;">
-					  </div>  	 
+					  </div>  	 --> 
 					<input type="button" class="btn btn-primary" value="UPDATE RATES" style="margin-top: 3%;margin-left: 10%;" ng-show="showRateUpdate == true" onclick="scroll(0,0)" ng-click="updateRateMeta()">
 					<p style="color: green;margin-top: 5%;margin-left: 39%;" ng-show="isUpdated == true"><b>Rate updated successfully</b></p>
 			</div>
@@ -1292,7 +1300,7 @@
 				
 				</form>
 			</fieldset>	
-						<input type="button" value="ADD ADDITIONAL RATES" ng-click="addNewRate()" style="float:left; margin-top: 1%;margin-left: 1%;">
+						<!-- <input type="button" value="ADD ADDITIONAL RATES" ng-click="addNewRate()" style="float:left; margin-top: 1%;margin-left: 1%;"> -->
 		
 				<div class="col-md-3" style="margin-top: 6%;margin-left: 12%;">
 					<input type="button" class="btn btn-success" value="GO BACK" ng-click="showContractPage()">
