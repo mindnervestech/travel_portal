@@ -115,6 +115,43 @@
                                     </div>
                                 </div>
                         </div>
+                         <div class="travelo-box book-with-us-box" ng-if="hotel.hotelBookingDetails != null">
+                        <div class="booking-details travelo-box">
+                            <h4>Booking Details</h4>
+                            
+                            
+                            <dl class="other-details">
+                             <article class="image-box hotel listing-style1">
+                                <div class="details">
+                                    <div class="constant-column-3 timing clearfix">
+                                        <div class="check-in">
+                                            <label>Check in</label>
+                                            <span>{{checkIn}}</span>
+                                        </div>
+                                        <div class="duration text-center">
+                                            <i class="soap-icon-clock"></i>
+                                            <span>{{hotel.hotelBookingDetails.nightStay}} Nights</span>
+                                        </div>
+                                        <div class="check-out">
+                                            <label>Check out</label>
+                                            <span>{{checkOut}}</span>
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+                            </article>
+                                <dt class="feature">room Type:</dt><dd class="value">{{hotel.hotelBookingDetails.roomName}}</dd>
+                                <dt class="feature">No Of Room:</dt><dd class="value">{{hotel.hotelBookingDetails.noOfroom}}</dd>
+                                <div ng-repeat="roomPass in hotel.hotelBookingDetails.passengerInfo">
+                                	<dt class="feature">Room {{$index+1}}</dt><dd class="value">{{roomPass.regiterBy}}</dd>
+                                </div>
+                                
+                               <dt class="total-price">Total Price</dt><dd class="total-price-value" currency-rate ng-model="hotel.hotelBookingDetails.total" rate="{{hotel.hotelBookingDetails.total}}" styleValue="font-size: 13px;color: black;top: -1px;" supplier_curr="{{hotel.currencyExchangeRate}}" agent_curr="{{hotel.agentCurrency}}"></dd>
+                               
+                            </dl>
+                        </div>
+                      
+                    </div>
                     </div>
                   <div id="main" class="col-md-9">
                         <div class="tab-container style1" id="hotel-main-content">

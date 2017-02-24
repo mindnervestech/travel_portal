@@ -402,6 +402,28 @@ public static Result hotelBookingpage() {
 								 pVm.number = j+1;
 								 pLists.add(pVm);
 							 }
+							 JSONArray array1 = null;
+							 try {
+								 array1 = jsonObj.getJSONArray("passengerInRoom");
+								 int pl = 0;
+								 for(int j=0; j<array1.length(); j++){
+									 pl = 0;
+									 org.json.JSONObject jsonObj1  = array1.getJSONObject(j);
+									 for(PassengerInRoomInfoVM p:pLists){
+										 if(j == pl){
+											 p.firstName = jsonObj1.getString("firstName");
+											 p.lastName =  jsonObj1.getString("lastName");
+											 p.typePassenger =  jsonObj1.getString("typePassenger");
+										 }
+										 pl++;
+									 }
+								 }
+								} catch (Exception e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							
+							
 							 pInfoVM.passengerInRoom = pLists;		 
 						 try{
 						
@@ -1244,6 +1266,7 @@ public static void fillRoomsInHotelInfo1(HotelSearch hotel, List<SerachHotelRoom
 							searchRateDetailsVM.setAdult(detailsVM.getAdult());
 							searchRateDetailsVM.setShowFirstTime(showFirstTime);
 							showFirstTime =1;
+							searchRateDetailsVM.setRateId(detailsVM.rateId);
 							searchRateDetailsVM.setNonRefund(detailsVM.isNonRefund);
 							searchRateDetailsVM.setCancellation(detailsVM.cancellation);
 							searchRateDetailsVM.setMealTypeName(detailsVM.mealTypeName);

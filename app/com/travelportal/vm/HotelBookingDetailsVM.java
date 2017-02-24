@@ -35,6 +35,11 @@ public class HotelBookingDetailsVM {
 	public String wheelchair;
 	public String handicappedRoom;
 	public String applyPromo;
+	public Long roomId;
+	public String roomName;
+	public String checkIn;
+	public String checkOut;
+	public String nightStay;
 	
 	public List<PassengerBookingInfoVM> passengerInfo;
 	
@@ -209,7 +214,19 @@ public class HotelBookingDetailsVM {
 	public void setApplyPromo(String applyPromo) {
 		this.applyPromo = applyPromo;
 	}
-		
+	public Long getRoomId() {
+		return roomId;
+	}
+	public void setRoomId(Long roomId) {
+		this.roomId = roomId;
+	}
+	public String getRoomName() {
+		return roomName;
+	}
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
+	}
+	
 	
 	
 	

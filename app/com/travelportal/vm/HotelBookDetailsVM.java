@@ -42,6 +42,7 @@ public class HotelBookDetailsVM {
 	public int travellercountry;
 	public String travellercountryNm;
 	public String travellerphnaumber;
+	public Long rateId;
 	public long roomId;
 	public String roomNm;
 	public String promotionname;
@@ -424,6 +425,12 @@ public class HotelBookDetailsVM {
 	}
 	public void setUuId(String uuId) {
 		this.uuId = uuId;
+	}
+	public Long getRateId() {
+		return rateId;
+	}
+	public void setRateId(Long rateId) {
+		this.rateId = rateId;
 	}
 	
 	

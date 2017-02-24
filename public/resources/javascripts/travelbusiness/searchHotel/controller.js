@@ -413,7 +413,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			$scope.amendBookingInfo(agentinfo, 1);
 			$scope.amendButton = 1;
 		}
-		
+		console.log($scope.agentinfo);
 		console.log($scope.agentinfo.date);
 		console.log($scope.agentinfo.room);
 		console.log($scope.agentinfo.Passenger);
@@ -429,7 +429,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			$scope.addRooms = [];	
 			$scope.rateDatedetail = [];
 		
-		$http.get('/getDatewiseHotelRoom/'+agentinfo.checkInAmend+"/"+agentinfo.checkOutAmend+"/"+agentinfo.nationality+"/"+agentinfo.supplierCode+"/"+agentinfo.roomIdAmend+"/"+agentinfo.id)
+		$http.get('/getDatewiseHotelRoom/'+agentinfo.checkInAmend+"/"+agentinfo.checkOutAmend+"/"+agentinfo.nationality+"/"+agentinfo.supplierCode+"/"+agentinfo.roomIdAmend+"/"+agentinfo.id+"/"+agentinfo.rateId)
 		.success(function(response){
 			console.log(response);
 			$scope.ratedetail = response;
@@ -2147,7 +2147,12 @@ $http.get("/searchCountries").success(function(response) {
 		
 				
 		console.log($scope.hotel);
-		
+		var arr = hotel.hotelBookingDetails.checkIn.split("-");
+		var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+		$scope.checkIn = $filter('date')(new Date(datevalue), "MMM dd,yyyy");
+		var arr1 = hotel.hotelBookingDetails.checkOut.split("-");
+		var datevalue1 = (arr1[1]+"/"+arr1[0]+"/"+arr1[2])
+		$scope.checkOut = $filter('date')(new Date(datevalue1), "MMM dd,yyyy");
 		
 		$scope.searchby.countryName = $scope.hotel.countryName;
 		$scope.searchby.countryCode = $scope.hotel.countryCode;
@@ -2513,9 +2518,8 @@ $http.get("/searchCountries").success(function(response) {
 			
 			$scope.adultString = "1 Adult";
 			
-			if($scope.ratedetail.bookingId != null){
+			/*if($scope.ratedetail.bookingId != null){
 				$scope.addRooms = $scope.ratedetail.hotelBookingDetails.passengerInfo;
-				//$scope.rateDatedetailRoomWise = $scope.ratedetail.hotelBookingDetails.passengerInfo[0].rateDatedetail;
 				angular.forEach($scope.addRooms,function(value,key){
 					$scope.rateDatedetail = [];
 					$scope.fillrateDatedetai(value.adult);
@@ -2543,11 +2547,10 @@ $http.get("/searchCountries").success(function(response) {
 					$scope.addRooms[index].totalValueRate = $scope.totalValueRate;
 				});
 				$scope.breakfastFunction(); 
-				//$scope.rateDatedetail = 
 				console.log($scope.addRooms);
 				$scope.rateDatedetailRoomWise = $scope.ratedetail.hotelBookingDetails.passengerInfo[0].rateDatedetail;
 				$scope.currentRoom = 1;
-			}else{
+			}else{*/
 				
 				
 			//$scope.fillrateDatedetai($scope.adultString);
@@ -2676,7 +2679,7 @@ $http.get("/searchCountries").success(function(response) {
 			
 			//$scope.flag = flag;
 			
-		}
+		//}
 			$scope.flag = flag;
 			console.log(total);
 			console.log(flag);

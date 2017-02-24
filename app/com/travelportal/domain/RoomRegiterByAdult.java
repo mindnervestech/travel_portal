@@ -1,5 +1,7 @@
 package com.travelportal.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -57,6 +59,15 @@ public class RoomRegiterByAdult {
 
 	public void setRoomRegiterBy(RoomRegiterBy roomRegiterBy) {
 		this.roomRegiterBy = roomRegiterBy;
+	}
+	
+	public static List<RoomRegiterByAdult> getRoomAdultInfoByRoomId(int code) {
+		try{
+		return (List<RoomRegiterByAdult>) JPA.em().createQuery("select c from RoomRegiterByAdult c where c.roomRegiterBy.id = ?1").setParameter(1, code).getResultList();
+		}
+		catch(Exception ex){
+			return null;
+		}
 	}
 
 	@Transactional

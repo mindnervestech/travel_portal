@@ -177,6 +177,16 @@ public class HotelBookingController extends Controller {
 		hBookingDetails.setAgentCompanyNm(agRegistration.getCompanyName());
 		hBookingDetails.setSupplierNm(searchVM.getSupplierNm());
 		hBookingDetails.setTotalNightStay(searchVM.getDatediff());
+		
+		for(SerachHotelRoomType byRoom:searchVM.hotelbyRoom){
+			for(SerachedRoomRateDetail searchByRoom:byRoom.hotelRoomRateDetail){
+				for(SearchRateDetailsVM sRateDetailsVM:searchByRoom.rateDetailsNormal){
+					hBookingDetails.setRate(RateMeta.findById(sRateDetailsVM.rateId));
+				}
+				
+			}
+		}
+		
 		for(SerachHotelRoomType byRoom:searchVM.hotelbyRoom){
 			if(byRoom.nonRefund == false){
 			for(SerachedRoomRateDetail searchByRoom:byRoom.hotelRoomRateDetail){
@@ -401,13 +411,26 @@ public class HotelBookingController extends Controller {
 			List<RoomRegiterBy> regiterByOldObjDelete = RoomRegiterBy.getRoomInfoByBookingId(Long.parseLong(searchVM.bookingId));
 			for(RoomRegiterBy roomRegiterBy:regiterByOldObjDelete){
 				List<RoomAndDateWiseRate> rDateWiseRate = RoomAndDateWiseRate.getRoomRateInfoByRoomId(roomRegiterBy.getId());
-				for(RoomAndDateWiseRate rdr:rDateWiseRate){
-					rdr.delete();
+				if(rDateWiseRate != null){
+					for(RoomAndDateWiseRate rdr:rDateWiseRate){
+						rdr.delete();
+					}
 				}
+				
 				List<RoomRegiterByChild> rByChilds = RoomRegiterByChild.getRoomChildInfoByRoomId(roomRegiterBy.getId());
-				for(RoomRegiterByChild rrBC:rByChilds){
-					rrBC.delete();
+				if(rByChilds != null){
+					for(RoomRegiterByChild rrBC:rByChilds){
+						rrBC.delete();
+					}
 				}
+				
+				List<RoomRegiterByAdult> rByAdults = RoomRegiterByAdult.getRoomAdultInfoByRoomId(roomRegiterBy.getId());
+				if(rByAdults != null){
+					for(RoomRegiterByAdult rrBA:rByAdults){
+						rrBA.delete();
+					}
+				}
+				
 				roomRegiterBy.delete();
 			}
 			

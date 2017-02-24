@@ -98,7 +98,7 @@
 								</div>
 								
 							</div>
-							<div class="col-md-12" ng-if="agentinfo.room == 'true'">
+							<!-- <div class="col-md-12" ng-if="agentinfo.room == 'true'">
 								<hr>
 								<div class="col-md-12">
 								<div class="col-md-2">
@@ -115,7 +115,7 @@
 								</div>
 								
 								<hr>
-							</div>
+							</div> -->
 							</div>				
 
 										
@@ -124,7 +124,18 @@
 		    								  <div class="col-md-12">
 		    								   <hr>
 											<div class="col-md-2" ng-if="agentinfo.room_status == 'Confirm' && amendButton == 0">
-											     <button type="submit" ng-click="amendBookingInfo(agentinfo,0)" class="btn btn-primary">Proceed for Amend</button>
+											     <!-- <button type="submit" ng-click="amendBookingInfo(agentinfo,0)" class="btn btn-primary">Proceed for Amend</button> -->
+											     <form action="/hoteldetailpage" method="post">
+                              					        <input type="text" name="supplierCode"  value="{{agentinfo.supplierCode}}" style="display: none;">
+                                					    <input type="text" name="checkIn" value="{{agentinfo.checkInAmend}}" style="display: none;">
+                                					    <input type="text" name="checkOut" value="{{agentinfo.checkOutAmend}}" style="display: none;">
+                                					    <input type="text" name="nationalityCode" value="{{agentinfo.nationality}}" style="display: none;">
+                                					    <input type="text" name="currencyExchangeRate" value="{{agentinfo.currencyExchangeRate}}" style="display: none;">
+                                					    <input type="text" name="agentCurrency" value="{{agentinfo.agent[0].currencyShort}}" style="display: none;">
+                                					    <input type="text" name="bookingId" value="{{agentinfo.id}}" style="display: none;">
+                            						      
+                                               <button type="submit" class="btn btn-primary" >Proceed for Amend</button>
+                                               </form>
 											</div>
 											
 											   <div class="col-md-2" ng-if="amendButton == 1">
@@ -134,6 +145,7 @@
                               					        <input type="text" name="supplierCode"  value="{{ratedetail.supplierCode}}" style="display: none;">
                                 					    <input type="text" name="checkIn" value="{{ratedetail.checkIn}}" style="display: none;">
                                 					    <input type="text" name="bookingId" value="{{ratedetail.bookingId}}" style="display: none;">
+                                					    <input type="text" name="rateId" value="{{agentinfo.rateId}}" style="display: none;">
                               						     <input 	type="text" name="checkOut" value="{{ratedetail.checkOut}}" style="display: none;">
                             						     <input type="text" name="nationalityCode" value="{{ratedetail.nationality}}" style="display: none;">
                             						      <input type="text" name="roomId" value="{{ratedetail.hotelbyRoom[0].roomId}}" style="display: none;">

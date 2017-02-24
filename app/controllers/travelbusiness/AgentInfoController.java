@@ -138,6 +138,9 @@ public class AgentInfoController extends Controller {
 			hDetailsVM.setRoom_status(hBookingDetails.getRoom_status());
 			hDetailsVM.setLatestCancellationDate(hBookingDetails.getLatestCancellationDate());
 			hDetailsVM.setCancellationNightsCharge(hBookingDetails.getCancellationNightsCharge());
+			if(hBookingDetails.getRate() != null){
+				hDetailsVM.setRateId(hBookingDetails.getRate().getId());
+			}
 			
 			
 			List<AgentRegisVM>aList = new ArrayList<>();
