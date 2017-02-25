@@ -523,6 +523,7 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			$scope.addRooms[$scope.indexCount].adult = "1 Adult";
 			$scope.addRooms[$scope.indexCount].cAllow = "true";
 			$scope.addRooms[$scope.indexCount].id = index;
+			
 			$scope.countTotal($scope.indexCount);
 		}
 		
@@ -2508,7 +2509,7 @@ $http.get("/searchCountries").success(function(response) {
 			console.log(response);
 			response.agentCurrency = $scope.hotel.agentCurrency;
 			response.currencyExchangeRate = $scope.hotel.currencyExchangeRate;
-			$scope.ratedetail = response;
+			$scope.ratedetail = angular.copy(response);
 			console.log($scope.ratedetail);
 			
 			var total = 0;
@@ -2518,10 +2519,25 @@ $http.get("/searchCountries").success(function(response) {
 			
 			$scope.adultString = "1 Adult";
 			
-			/*if($scope.ratedetail.bookingId != null){
-				$scope.addRooms = $scope.ratedetail.hotelBookingDetails.passengerInfo;
-				angular.forEach($scope.addRooms,function(value,key){
-					$scope.rateDatedetail = [];
+			if($scope.ratedetail.bookingId != null){
+				$scope.addRooms = [];
+				console.log("=============================++++++++++++++++++++==");
+				console.log(response.hotelBookingDetails.passengerInfo);
+				$scope.addRooms = angular.copy(response.hotelBookingDetails.passengerInfo);
+				var loop = angular.copy(response.hotelBookingDetails.passengerInfo);
+				angular.forEach(loop,function(value,key){
+					value.id = key;
+					//$scope.newRoom();
+					$scope.showRateAdultwise(value.adult,undefined,key,null);
+					$scope.noOfchildSelect(value.noOfchild,key)
+					console.log("99999999999999990000000000000000000000000ooppppppppp");
+					console.log(value.childselected);
+					angular.forEach(value.childselected,function(value1,key1){
+						$scope.parChildAge(value1.age,key1,key);
+					});
+					$scope.indexCount = key;
+					/*$scope.rateDatedetail = [];
+					console.log(value.adult);
 					$scope.fillrateDatedetai(value.adult);
 					value.total = $scope.totalParPerson
 					$scope.total = $scope.totalParPerson;
@@ -2544,13 +2560,14 @@ $http.get("/searchCountries").success(function(response) {
 					});
 					value.totalValueRate = $scope.totalValueRate;
 					
-					$scope.addRooms[index].totalValueRate = $scope.totalValueRate;
+					$scope.addRooms[index].totalValueRate = $scope.totalValueRate;*/
 				});
+				$scope.showDateWiseDetails(0);
 				$scope.breakfastFunction(); 
 				console.log($scope.addRooms);
-				$scope.rateDatedetailRoomWise = $scope.ratedetail.hotelBookingDetails.passengerInfo[0].rateDatedetail;
+				//$scope.rateDatedetailRoomWise = $scope.ratedetail.hotelBookingDetails.passengerInfo[0].rateDatedetail;
 				$scope.currentRoom = 1;
-			}else{*/
+			}else{
 				
 				
 			//$scope.fillrateDatedetai($scope.adultString);
@@ -2679,7 +2696,7 @@ $http.get("/searchCountries").success(function(response) {
 			
 			//$scope.flag = flag;
 			
-		//}
+		}
 			$scope.flag = flag;
 			console.log(total);
 			console.log(flag);
@@ -3051,7 +3068,7 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.finalTotal = 0;
 		var adultNo = 0;
 		var childNo = 0;
-		
+		console.log($scope.addRooms);
 			
 		angular.forEach($scope.addRooms,function(value,key){
 			var arr =value.adult.split(" ");
@@ -3169,7 +3186,8 @@ $http.get("/searchCountries").success(function(response) {
 		$scope.total = $scope.totalParPerson;
 		var totalcount = $scope.total;
 		console.log(totalcount);
-		
+		console.log($scope.addRooms);
+		console.log(pIndex);
 		$scope.rateDatedetail = [];
 		console.log($scope.addRooms[pIndex]);
 		$scope.fillrateDatedetai($scope.addRooms[pIndex].adult);
@@ -3264,6 +3282,7 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.addRooms[$scope.indexCount].cAllow = "true";
 			$scope.addRooms[$scope.indexCount].id = $scope.indexCount;
 			//$event.preventDefault();
+			console.log($scope.addRooms);
 			$scope.countTotal($scope.indexCount);
 		}
 		
