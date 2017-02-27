@@ -132,8 +132,8 @@
 							<th>Adults</th>
 							<th>Net Payable Rates</th>
 							<th>Rate Basis</th>
-							<th>Min B 2 C Selling Rates<br /> (Ex:on Hotel website,Agoda etc)</th>
-							<th>Rate Basis</th>
+							 <!-- <th>Min B 2 C Selling Rates<br /> (Ex:on Hotel website,Agoda etc)</th>
+							<th>Rate Basis</th> -->
 						</tr>
 						<tr data-ng-repeat="rateData in rate.normalRate.rateDetails track by $index">
 							<td><lable>{{rateData.name}} </lable><br><br><lable ng-if="showExtraBad == $index">Extra Bed</lable></td>
@@ -144,7 +144,7 @@
 								<input type="radio" name="{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.includeMeals">Yes
 								<input type="radio" name="{{rateData.name}}{{$parent.$index}}" data-ng-value="false" data-ng-model="rateData.includeMeals">No
 								<div ng-show="rateData.includeMeals == true">
-									<div class="col-md-6">
+									<div class="col-md-3">
 										<select class="form-control" data-ng-model="rateData.meals" style="padding: 0px;">
 												<option data-ng-repeat="type in mealTypes">{{type.mealTypeNm}}</option>
 										</select>
@@ -152,8 +152,8 @@
 								</div>
 								
 							</td>
-							<td style="width: 207px;"><input type="text" ng-model="rateData.onlineRateValue" onkeypress="javascript:return isNumber (event)" value="" style="width: 88%;" required> 
-							<!-- <span class="error" ng-show="contact.rateValue{{$index}}.$error.number" style="color: red;">Not valid number!</span> -->
+							<!--  <td style="width: 207px;"><input type="text" ng-model="rateData.onlineRateValue" onkeypress="javascript:return isNumber (event)" value="" style="width: 88%;" required> 
+							<span class="error" ng-show="contact.rateValue{{$index}}.$error.number" style="color: red;">Not valid number!</span>
 							</td>
 							<td>*Include Meals?
 								<input type="radio" name="online{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.onlineIncludeMeals">Yes
@@ -166,7 +166,7 @@
 									</div>
 								</div>
 								
-							</td>
+							</td> -->
 							
 						</tr>
 						
@@ -756,8 +756,8 @@
 							<th>Adults</th>
 							<th>Net Payable Rates</th>
 							<th>Rate Basis</th>
-							<th>Min B 2 C Selling Rates<br /> (Ex:on Hotel website,Agoda etc)</th>
-							<th>Rate Basis</th>
+							<!-- <th>Min B 2 C Selling Rates<br /> (Ex:on Hotel website,Agoda etc)</th>
+							<th>Rate Basis</th> -->
 						</tr>
 						<tr data-ng-repeat="rateData in rate.normalRate.rateDetails track by $index">
 							<td><lable>{{rateData.name}} </lable><br><br><lable ng-if="showExtraBad == $index">Extra Bed</lable></td>
@@ -766,7 +766,7 @@
 								<input type="radio" name="create{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.includeMeals">Yes
 								<input type="radio" name="create{{rateData.name}}{{$parent.$index}}" data-ng-value="false" data-ng-model="rateData.includeMeals" checked>No
 								<div ng-show="rateData.includeMeals == true">
-									<div class="col-md-8">
+									<div class="col-md-3">
 										<select class="form-control" data-ng-model="rateData.meals" style="padding: 0px;">
 												
 												<option data-ng-repeat="type in mealTypes">{{type.mealTypeNm}}</option>
@@ -775,7 +775,7 @@
 								</div>
 								
 							</td>
-							<td style="width: 207px;"><input type="text" name="onlineRateValue{{$index}}" ng-model="rateData.onlineRateValue" value="" class="form-control required number" onkeypress="javascript:return isNumber (event)" style="width: 88%;"> </td>
+							<!-- <td style="width: 207px;"><input type="text" name="onlineRateValue{{$index}}" ng-model="rateData.onlineRateValue" value="" class="form-control required number" onkeypress="javascript:return isNumber (event)" style="width: 88%;"> </td>
 							<td>*Include Meals?
 								<input type="radio" name="create1{{rateData.name}}{{$parent.$index}}" data-ng-value="true" data-ng-model="rateData.onlineIncludeMeals">Yes
 								<input type="radio" name="create1{{rateData.name}}{{$parent.$index}}" data-ng-value="false" data-ng-model="rateData.onlineIncludeMeals" checked>No
@@ -788,7 +788,7 @@
 									</div>
 								</div>
 								
-							</td>
+							</td> -->
 						</tr>
 						
 					</tbody>
