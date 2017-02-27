@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	@include_css()
 </head>
+
 <body data-ng-app="travel-business" data-ng-controller="hotelDetailsController">
     <div id="page-wrapper">
         @header()
@@ -115,6 +116,18 @@
                                     </div>
                                 </div>
                         </div>
+                        
+                        <div class="travelo-box book-with-us-box">
+                                <div class="panel style1 arrow-right">
+                                    
+                                    <div id="modify-search-panel" class="panel-collapse">
+                                        <div class="panel-content">
+                                          <img src="http://bangkok.sawadee.com/imgdwt/bangkok-map.jpg" style="width:225px;" ng-click="getGoogleMap(hotel.hotelAddr)" />
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        
                          <div class="travelo-box book-with-us-box" ng-if="hotel.hotelBookingDetails != null">
                         <div class="booking-details travelo-box">
                             <h4>Booking Details</h4>

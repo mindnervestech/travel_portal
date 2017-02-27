@@ -2008,7 +2008,7 @@ $http.get("/searchCountries").success(function(response) {
 
 
 
-travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filter,ngDialog,$cookieStore,$cookies) {
+travelBusiness.controller('hotelDetailsController', function ($scope,$http,$filter,ngDialog,$cookieStore,$cookies,$sce) {
 	
 	
 	var session = $cookies['PLAY_SESSION'];
@@ -2094,10 +2094,26 @@ $http.get("/searchCountries").success(function(response) {
 		  }
 	}
 	
+	$scope.getGoogleMap = function(hotelAddress){
+		$scope.hotelAddress = hotelAddress;
+		var html = '<iframe id="map" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q='+$scope.hotelAddress+'&amp;z=15&amp;output=embed" width="100%" height="580" frameborder="0" style="border:0" class="iframe"> </iframe>';
+		$scope.googleMapAdress = $sce.trustAsHtml(html);
+		
+		console.log($scope.googleMapAdress);
+		ngDialog.open({
+			template: '/assets/resources/html/htmltemplet/googleMapPage.html',
+			scope : $scope,
+			className: 'ngdialog-theme-default'
+		});
+	}
+	
+	$scope.htmlSafe = function (data) {
+        return $sce.trustAsHtml(data);
+    }
+	
 	$scope.init = function(hotel){
 		
 		$scope.hotel = hotel;
-	
 		$scope.noOfRoomShow = 1;
 		
 		$http.get('/getAllImgs/'+$scope.hotel.supplierCode).success(function(response){
@@ -2148,12 +2164,15 @@ $http.get("/searchCountries").success(function(response) {
 		
 				
 		console.log($scope.hotel);
-		var arr = hotel.hotelBookingDetails.checkIn.split("-");
-		var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
-		$scope.checkIn = $filter('date')(new Date(datevalue), "MMM dd,yyyy");
-		var arr1 = hotel.hotelBookingDetails.checkOut.split("-");
-		var datevalue1 = (arr1[1]+"/"+arr1[0]+"/"+arr1[2])
-		$scope.checkOut = $filter('date')(new Date(datevalue1), "MMM dd,yyyy");
+		if($scope.hotel.hotelBookingDetails != null){
+			var arr = $scope.hotel.hotelBookingDetails.checkIn.split("-");
+			var datevalue = (arr[1]+"/"+arr[0]+"/"+arr[2])
+			$scope.checkIn = $filter('date')(new Date(datevalue), "MMM dd,yyyy");
+			var arr1 = $scope.hotel.hotelBookingDetails.checkOut.split("-");
+			var datevalue1 = (arr1[1]+"/"+arr1[0]+"/"+arr1[2])
+			$scope.checkOut = $filter('date')(new Date(datevalue1), "MMM dd,yyyy");
+			
+		}
 		
 		$scope.searchby.countryName = $scope.hotel.countryName;
 		$scope.searchby.countryCode = $scope.hotel.countryCode;
