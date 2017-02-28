@@ -262,12 +262,17 @@
                                         </div>
                                         <div>
                                             <p>{{roomInfo.description}}</p>
-                                            <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"> Special Promotion<i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span>
-                                             <div style="width: 150px;">
-                                                 <!-- <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomInfo.roomId,'maxRate')" style="background: #98ce44;">Book Now</a> -->
+                                             <div>
+                                             <div>
+                                             	<span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"> Special Promotion<i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span>
+                                             	<hr style="margin-top:5px;margin-bottom:5px;">
+                                             </div>
+                                            <div>
+                                             <!-- <a class="button btn-small full-width text-center" ng-click="dateWiseInfo(roomInfo.roomId,'maxRate')" style="background: #98ce44;">Book Now</a> -->
                                                  <span class="ng-scope"><a ng-click="roomWiseInfo(roomInfo)" style="cursor: pointer;">Room Info</a></span><br>
                                                  <span class="ng-scope" style="color: red;" ng-if="hotel.datediff < roomInfo.hotelRoomRateDetail[0].minNight">Min {{roomInfo.hotelRoomRateDetail[0].minNight}} nights stay</span>
-												 <!-- <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"> Special Promotion<i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span> --> 
+												 <!-- <span ng-show="roomInfo.pcount == 1" class="ng-scope"><a ng-click="showPromotion(roomInfo)"> Special Promotion<i title="Special Promotion between date" class="soap-icon-plane-left takeoff-effect1 circle" style="background: #01b7f2;color: white;"></i></a></span> -->
+                                            </div>
                                             </div> 
                                         </div>
                                     </div>
