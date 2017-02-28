@@ -108,7 +108,22 @@
 								<input type="text" data-ng-model="rate.rateName" id="focus" class="form-control required" required>
 							</div>
 						</div>
+						<label style="margin-left: 50%;float: left;margin-top: -30px;"><b>Apply to all Markets?<br>
+						<label>(Based on Passenger Nationality)</label>
+						<input type="radio" name="applyToRate{{$index}}" data-ng-value="true" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate)">Yes
+						<input type="radio" name="applyToRate{{$index}}" data-ng-value="false" data-ng-model="rate.applyToMarket" ng-click="showMarketTable(rate)">No
+					</b></label><br>
+					<div ng-show="rate.applyToMarket == false" style="width: 45%;margin-left: 47%;float: left;">
+						<div multi-select input-model="rate.allocatedCities" 
+							button-label="icon name" item-label="icon name maker"
+							tick-property="ticked" orientation="vertical"
+							group-property="multiSelectGroup"
+							on-open="msOpen( data )"
+							on-item-click="checkCountry(data)">
+						</div>
 					</div>	
+				</div>	
+				
 			<!--  <input type="text" name="rateV" ng-model="teValue" value="" class="form-control required number"> -->
 			<div id="demo{{$index}}" class="collapse in">
 			 <!-- <button ng-show="ooo" id="formBSend" type="submit" class="btn"> Submit</button> -->
