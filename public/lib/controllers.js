@@ -2242,7 +2242,6 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 	
 	$scope.createNewRate = function() {
 		
-		
 		for(var i=0;i<$scope.rateObject.length;i++) {
 			$scope.rateObject.splice(i,1);
 			console.log($scope.rateObject);
@@ -2251,8 +2250,8 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 			//$scope.rateObject.normalRate.rateDetails[i].meals = "Lunch";
 			//$scope.rateObject.normalRate.rateDetails[i].onlineMeals = "Lunch";
 			console.log(i);
+			
 		}
-		
 		$http.get('/getRateObject/'+$scope.formData.room).success(function(response){
 			
 			
@@ -2277,7 +2276,9 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
            
          console.log(response);
 			$scope.rateObject.push(response);
-			console.log($scope.rateObject);
+			console.log($scope.rateObject[0]);
+			$scope.obj = {"allocation":"1","period":"1 day"};
+			$scope.rateObject[0].allotmentmarket = $scope.obj; 
 			$scope.showMarketTable($scope.rateObject[0]);
 			$scope.messageShow = " ";
 			$scope.link = " ";
@@ -2501,7 +2502,6 @@ controller("manageContractsController",['$scope','notificationService','$rootSco
 		
 		console.log($scope.rateObject);
 		console.log($scope.rateMeta1);
-		
 		for(var i=0;i<$scope.rateObject.length;i++) {
 			console.log(i);
 			

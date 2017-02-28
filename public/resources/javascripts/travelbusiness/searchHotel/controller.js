@@ -1333,6 +1333,7 @@ $scope.breakfastFunction = function(){
 		var childbreakfastRate = 0;
 		var finalBreakfastCharg = 0;
 		var bothAdultChildbreakfast = 0;
+		var breakfastCharg = 0;
 		adultbreakfastRate = adultNo * parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].adultRate);
 		childbreakfastRate = childNo * parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].childRate);
 		
@@ -1340,7 +1341,8 @@ $scope.breakfastFunction = function(){
 		finalBreakfastCharg = bothAdultChildbreakfast / 100 * parseInt($scope.ratedetail.breakfackRate);
 		console.log(finalBreakfastCharg);
 		
-		$scope.breakfastAddfree = divDays *  finalBreakfastCharg;
+		breakfastCharg = bothAdultChildbreakfast + finalBreakfastCharg;
+		$scope.breakfastAddfree = divDays *  breakfastCharg;
 	   console.log($scope.breakfastAddfree);
 	   $scope.finalTotal = $scope.finalTotal+ $scope.breakfastAddfree;
     }
@@ -3131,6 +3133,7 @@ $http.get("/searchCountries").success(function(response) {
 			var childbreakfastRate = 0;
 			var finalBreakfastCharg = 0;
 			var bothAdultChildbreakfast = 0;
+			var breakfastCharg
 			adultbreakfastRate = adultNo * parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].adultRate);
 			childbreakfastRate = childNo * parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].childRate);
 			
@@ -3138,7 +3141,8 @@ $http.get("/searchCountries").success(function(response) {
 			finalBreakfastCharg = bothAdultChildbreakfast / 100 * parseInt($scope.ratedetail.breakfackRate);
 			console.log(finalBreakfastCharg);
 			
-			$scope.breakfastAddfree = divDays *  finalBreakfastCharg;
+			breakfastCharg = bothAdultChildbreakfast + finalBreakfastCharg;
+			$scope.breakfastAddfree = divDays *  breakfastCharg;
 		   console.log($scope.breakfastAddfree);
 		   $scope.finalTotal = $scope.finalTotal+ $scope.breakfastAddfree;
 	    }
