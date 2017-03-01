@@ -699,7 +699,10 @@ travelBusiness.controller('AgentBookingController', function ($scope,$http,$filt
 			}
 		});
 		console.log(totalchileValue);
-		
+		console.log($scope.dateDifferent);
+		console.log(totalchileValue);
+		totalchileValue = $scope.dateDifferent * totalchileValue;
+		console.log(totalchileValue);
 		//$scope.total = parseInt(totalcount) + parseInt(totalchileValue);
 		
 	
@@ -2712,7 +2715,6 @@ $http.get("/searchCountries").success(function(response) {
 			$scope.addRooms[0].rateDatedetail = $scope.rateDatedetail; 
 			$scope.rateDatedetailRoomWise = $scope.rateDatedetail;
 			$scope.currentRoom = 1;
-			
 			$scope.breakfastFunction(); 
 			
 			//$scope.flag = flag;
@@ -3108,7 +3110,7 @@ $http.get("/searchCountries").success(function(response) {
 		});
 		
 		console.log($scope.finalTotal);
-		
+		$scope.dateDifferent = $scope.ratedetail.datediff;
 		var divDays = 0;
 		
 		if($scope.ratedetail.hotelbyRoom[0].applyPromotion == 1){	
@@ -3136,7 +3138,6 @@ $http.get("/searchCountries").success(function(response) {
 			var breakfastCharg
 			adultbreakfastRate = adultNo * parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].adultRate);
 			childbreakfastRate = childNo * parseInt($scope.ratedetail.hotelbyRoom[0].specials[0].markets[0].childRate);
-			
 			bothAdultChildbreakfast = adultbreakfastRate + childbreakfastRate;
 			finalBreakfastCharg = bothAdultChildbreakfast / 100 * parseInt($scope.ratedetail.breakfackRate);
 			console.log(finalBreakfastCharg);
@@ -3269,10 +3270,25 @@ $http.get("/searchCountries").success(function(response) {
 				totalchileValue = parseInt(totalchileValue) + parseInt(value.freeChild);
 			}
 		});
-	
+		console.log(totalchileValue);
+		console.log($scope.dateDifferent);
 		
+		/*console.log($scope.rateDatedetail);
+		console.log($scope.rateDatedetailRoomWise);
+		angular.forEach($scope.rateDatedetailRoomWise, function(value, index){
+			
+			angular.forEach($scope.rateDatedetail, function(value1, index1){
+				if(value.fulldate == value1.fulldate){
+					console.log(value1.rate);
+					console.log(totalchileValue);
+					value.rate = value1.rate + totalchileValue;
+				}
+			});
+		});*/
+		console.log(totalchileValue);
+		totalchileValue = $scope.dateDifferent * totalchileValue;
+		console.log(totalchileValue);
 		//$scope.total = parseInt(totalcount) + parseInt(totalchileValue);
-		
 	
 		$scope.commanPromotionFunction();
 		$scope.batchMarkupFunction();
@@ -3280,7 +3296,6 @@ $http.get("/searchCountries").success(function(response) {
 		console.log(totalchileValue);
 		console.log($scope.total);
 		$scope.total = $scope.total + parseInt(totalchileValue);
-	
 		console.log(pIndex);
 		$scope.totalValueRate = 0;
 		angular.forEach($scope.rateDatedetail,function(value1,key1){
