@@ -2474,7 +2474,7 @@ $http.get("/searchCountries").success(function(response) {
 		
 		
 		angular.forEach($scope.ratedetail.hotelbyRoom,function(value,key){
-			if(value.maxAdultsWithchild > arr1[0]){
+			if(value.maxAdultsWithchild >= arr1[0]){
 				$scope.addRooms[index].cAllow = "true";
 				//$scope.cAllow = "true";
 				//$scope.childnotallowMsg = "false";
