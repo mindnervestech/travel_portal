@@ -213,6 +213,7 @@ public class ApplicationController extends Controller{
 		System.out.println("SESSION VALUE   "+session().get("SUPPLIER"));
 		session().clear();
 		return ok(views.html.login.render(" "));
+		
 	}	
 	
 	
@@ -249,9 +250,12 @@ public class ApplicationController extends Controller{
 				currencyList.add(currency.getCurrencyName());
 			}
 		}
-		
-		
-		return ok(views.html.agentsignup.render(countryList,salList,hearlist,natureList,currencyList));
+		List<City> cityes = City.getAll();
+		List<String> cityList = new ArrayList<>();
+		for(City city : cityes) {
+			cityList.add(city.getCityName());
+		}
+		return ok(views.html.agentsignup.render(countryList,salList,hearlist,natureList,currencyList,cityList));
 	}
 	
 	@Transactional

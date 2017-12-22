@@ -1,5 +1,5 @@
 @(countries: List[String],salutation: List[String],hearAboutUs:
-List[String],natureOfBusiness: List[String],Currency: List[String])
+List[String],natureOfBusiness: List[String],Currency: List[String],City: List[String])
 
 <!DOCTYPE html>
 
@@ -283,8 +283,7 @@ border: 3px solid #fdb714;
 									<div class="form-group">
 										<label class="col-md-3 control-label">Position/Designation:</label>
 										<div class="col-md-6">
-											<input type="text" name="Position" class="form-control"
-												required>
+											<input type="text" name="Position" class="form-control valid" required>
 										</div>
 									</div>
 
@@ -305,20 +304,21 @@ border: 3px solid #fdb714;
 											Address: </label>
 
 										<div class="col-md-6">
-											<textarea id="companyAddress" name="companyAddress" rows="2"
-												class="form-control valid" required></textarea>
+											<input type="text" id="companyAddress" name="companyAddress"
+												class="form-control valid" required>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-md-3 control-label">*Company City:</label>
 										<div class="col-md-6">
-											<select class="form-control valid" id="myCity" name="city" required>
+											<select class="form-control valid" id="myCity" name="city" required="required">
 												<option value="">-- Choose City --</option>
+												
 											</select>
 										</div>
 									</div>
-
+									
 
 
 
@@ -326,7 +326,7 @@ border: 3px solid #fdb714;
 										<label class="col-md-3 control-label">Company
 											Zip/Postal Code:</label>
 										<div class="col-md-6">
-											<input type="text" name="postalCode" class="form-control"
+											<input type="text" name="postalCode" class="form-control valid"
 												required>
 										</div>
 									</div>
@@ -527,7 +527,7 @@ border: 3px solid #fdb714;
 										<div>
    									 
 											<label class="col-md-5 control-label">Thank you for
-												registering with Destinations Of The World.</label>
+												registering with The Expedition Co., Ltd..</label>
 										</div>
 
 									</div>
@@ -538,10 +538,10 @@ border: 3px solid #fdb714;
 										<div class="col-md-6">
 											<textarea id="registering" name="registering" rows="9"
 												class="form-control"
-												placeholder=" DESTINATION OF THE WORLD
+												placeholder=" The Expedition Co., Ltd.
 Terms and Conditions 
 
-In these Terms and Conditions for Destinations of the World (&quot;TECL&quot;, &quot;our&quot;, &quot;us&quot; or &quot;we&quot;), the terms &quot;you&quot; and &quot;your&quot; refers to the Travel Business (i.e. a travel company such as travel agents, tour operator, other wholesaler or airline providing ground services to customers), that wishes to purchase a variety of travel components, including but not limited to, accommodation, transfers, sightseeing tours, excursions and meals out (collectively referred to as &quot;Travel Components&quot;) on our website or via XML for onward sale to the end customer (&quot;Customer). 
+In these Terms and Conditions for The Expedition Co., Ltd. (&quot;TECL&quot;, &quot;our&quot;, &quot;us&quot; or &quot;we&quot;), the terms &quot;you&quot; and &quot;your&quot; refers to the Travel Business (i.e. a travel company such as travel agents, tour operator, other wholesaler or airline providing ground services to customers), that wishes to purchase a variety of travel components, including but not limited to, accommodation, transfers, sightseeing tours, excursions and meals out (collectively referred to as &quot;Travel Components&quot;) on our website or via XML for onward sale to the end customer (&quot;Customer). 
 
 Please read these Terms and Conditions carefully. By accessing our online reservation system you represent to TECL that:
 
@@ -677,7 +677,7 @@ iii. 	Travel Business shall not personally or through any third party, decompile
 i. 	Any booking and/or any use of our services shall comply with all local, national or international applicable legal provisions. 
 ii. 	We reserve the right to amend these Terms and Conditions if and when necessary. It is Travel Business' responsibility to be aware, remain current and comply by our Terms and Conditions.
 iii. 	Without prejudice to any of TECL's other rights, we reserves the right to deny access to our online reservation service, cancel bookings, or terminate this agreement wherever and whenever we believe you are in breach of our Terms and Conditions. 
-iv. 	You agree to comply with all TECL's terms and conditions and legal statements, including but not limited to, these Terms and Conditions, Destinations of the World Terms of Use, Destinations of the World Privacy Policy, NDA, any legal agreement between you and TECL, any legal statements we release, and any applicable local, national or international law that relates to our services and/or online reservation system, including the UK Data Protection Act (1998). In the event of a conflict between the provisions, the most stringent conditions shall take order of precedence. 
+iv. 	You agree to comply with all TECL's terms and conditions and legal statements, including but not limited to, these Terms and Conditions, The Expedition Co., Ltd. Terms of Use, The Expedition Co., Ltd. Privacy Policy, NDA, any legal agreement between you and TECL, any legal statements we release, and any applicable local, national or international law that relates to our services and/or online reservation system, including the UK Data Protection Act (1998). In the event of a conflict between the provisions, the most stringent conditions shall take order of precedence. 
 v. 	If any of the obligations in these Terms and Conditions is at any time held by any jurisdiction to be void, invalid or unenforceable, it shall be treated as changed or reduced only to the extent minimally necessary to bring it within the laws of that jurisdiction. To prevent it from being void it shall then be considered binding in its changed or reduced form. Subject to that, each provision shall be interpreted as severable and shall not in any way affect any other of these terms.
 vi. 	The waiver, in one instance, of any act, condition or requirement stipulated in these Terms and Conditions shall not constitute a continuing waiver or a waiver of the same act, condition or requirement in other instances, unless specifically so stated.  If we choose not to exercise any rights under these Terms and Conditions, it shall in no way constitute a waiver of those rights, nor shall it excuse you from any of your requirements under these Terms and Conditions. 
 vii.	All references to time shall be based on the Gregorian calendar.
@@ -696,13 +696,13 @@ ii. 	These Terms and Conditions and any dispute and/or claim arising out of or i
 
 
 Read and accepted the Terms and Conditions Contract:
-Destinations of the World JLT
+The Expedition Co., Ltd. JLT
 
 Contact Name : _____________________________________
 
 __________________________________________
 
-Destinations of the World JLT
+The Expedition Co., Ltd. JLT
 Mazaya Business Avenue
 42nd Floor, Tower BB2 
 Jumeirah Lakes Towers
@@ -838,12 +838,13 @@ function validateForm() {
 					console.log(data);
 					$('#myCity').children().remove().end();
 					$('#myCity').append(
-							'<option value="0">--Select city--</option>');
+							'<option value="">--Select city--</option>');
 					$.each(data, function(key, value) {
 						console.log(value);
 						$('#myCity').append(
 								'<option value="' + value + '">'
 										+ value + '</option>');
+						
 					});
 
 				}
