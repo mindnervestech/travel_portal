@@ -1151,7 +1151,7 @@ public class HotelProfileController extends Controller {
 
 
 		HotelProfile hotelprofile = HotelProfile.findById(Long.parseLong(form.get("supplierCode")));
-
+		System.out.println("hoteldescription=="+hoteldescription.getDescription());
 		hotelprofile.setHotelProfileDesc(hoteldescription.getDescription());
 		hotelprofile.setLocation(Location.getlocationIdByCode(hoteldescription.getHotelLocation()));
 		if(hoteldescription.getShoppingFacilityCode() != 0){
@@ -1160,7 +1160,7 @@ public class HotelProfileController extends Controller {
 		if(hoteldescription.getNightLifeCode() != 0){
 			hotelprofile.setNightLife(NightLife.getNightLifeByCode(hoteldescription.getNightLifeCode()));
 		}
-		
+		System.out.println("get services=="+hoteldescription.getServices());
 		hotelprofile.setServices(HotelServices.getallhotelservice(hoteldescription.getServices()));
 		hotelprofile.setlocation1(hoteldescription.getLocation1());
 		hotelprofile.setlocation2(hoteldescription.getLocation2());
